@@ -1,0 +1,54 @@
+.bbpa-advanced-consent-test-card__modes-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+
+.bbpa-advanced-consent-test-card__summary {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 12px;
+  position: relative;
+}
+
+.bbpa-advanced-consent-test-card__mode-badge {
+  background: #dcfce7;
+  border-radius: 999px;
+  color: #166534;
+  display: inline-block;
+  font-weight: 600;
+  margin: 0 0 8px;
+  padding: 2px 10px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.bbpa-advanced-consent-test-card__data-title {
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.bbpa-advanced-consent-test-card__summary ul {
+  margin: 0 0 0 18px;
+  list-style: disc;
+}
+
+.bbpa-advanced-consent-test-card__help {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.bbpa-advanced-consent-test-card .components-notice__content {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 782px) {
+  .bbpa-advanced-consent-test-card__modes-grid {
+    grid-template-columns: 1fr;
+  }
+}

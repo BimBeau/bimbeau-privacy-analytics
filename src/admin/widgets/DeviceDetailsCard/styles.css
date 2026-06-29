@@ -1,0 +1,36 @@
+.bbpa-device-details-card__charts {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 16px;
+	margin-top: 8px;
+}
+
+.bbpa-device-details-card__section {
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 12px;
+	background: #fff;
+}
+
+.bbpa-device-details-card__section-title {
+	margin: 0 0 8px;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.bbpa-device-details-card__chart {
+	height: 240px;
+}
+
+.bbpa-device-details-card__tooltip {
+	background: #1d2327;
+	color: #fff;
+	font-size: 12px;
+	line-height: 1.4;
+	padding: 8px;
+	border-radius: 3px;
+}
+
+.bbpa-device-details-card__empty {
+	margin: 8px 0 0;
+}

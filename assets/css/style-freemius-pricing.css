@@ -1,0 +1,245 @@
+/* BimBeau Privacy Analytics Freemius pricing page overrides. */
+
+:root {
+    /* Blue / Accent BimBeau Privacy Analytics */
+    --fs-ds-blue-10: #e7edff;
+    --fs-ds-blue-50: #d7dfff;
+    --fs-ds-blue-100: #b9c6ff;
+    --fs-ds-blue-200: #8fa2ff;
+    --fs-ds-blue-300: #657cf5;
+    --fs-ds-blue-400: #3858e9;
+    --fs-ds-blue-500: #3003e1;
+    --fs-ds-blue-600: #2502b3;
+    --fs-ds-blue-700: #180270;
+    --fs-ds-blue-800: #10014a;
+    --fs-ds-blue-900: #080026;
+
+    /* Neutral */
+    --fs-ds-neutral-10: #ffffff;
+    --fs-ds-neutral-50: #eceeef;
+    --fs-ds-neutral-100: #d9dddf;
+    --fs-ds-neutral-200: #b7bdc1;
+    --fs-ds-neutral-300: #8f979d;
+    --fs-ds-neutral-400: #6f777d;
+    --fs-ds-neutral-500: #50575e;
+    --fs-ds-neutral-600: #3c434a;
+    --fs-ds-neutral-700: #2c3338;
+    --fs-ds-neutral-800: #242a2e;
+    --fs-ds-neutral-900: #1d2327;
+
+    --fs-ds-neutral-900-fade-60: rgba(29, 35, 39, .6);
+    --fs-ds-neutral-900-fade-92: rgba(29, 35, 39, .08);
+
+    /* Green / Teal BimBeau Privacy Analytics */
+    --fs-ds-green-10: #d2f6f1;
+    --fs-ds-green-100: #b9eee8;
+    --fs-ds-green-200: #89dfd4;
+    --fs-ds-green-300: #4ecdc0;
+    --fs-ds-green-400: #0b9f8c;
+    --fs-ds-green-500: #087f70;
+    --fs-ds-green-600: #06675b;
+    --fs-ds-green-700: #055046;
+    --fs-ds-green-800: #033a33;
+    --fs-ds-green-900: #02231f;
+
+    /* Red / Error */
+    --fs-ds-red-10: #ffebec;
+    --fs-ds-red-100: #f8cdd2;
+    --fs-ds-red-200: #ee9da6;
+    --fs-ds-red-300: #df6875;
+    --fs-ds-red-400: #c13a47;
+    --fs-ds-red-500: #a8323e;
+    --fs-ds-red-600: #8f2a35;
+    --fs-ds-red-700: #70212a;
+    --fs-ds-red-800: #541920;
+    --fs-ds-red-900: #381115;
+
+    /* Yellow / Warning */
+    --fs-ds-yellow-10: #fff3cd;
+    --fs-ds-yellow-100: #f5dfa1;
+    --fs-ds-yellow-200: #e8c95f;
+    --fs-ds-yellow-300: #d0aa2f;
+    --fs-ds-yellow-400: #ab8411;
+    --fs-ds-yellow-500: #8f6e0e;
+    --fs-ds-yellow-600: #73580b;
+    --fs-ds-yellow-700: #594408;
+    --fs-ds-yellow-800: #403006;
+    --fs-ds-yellow-900: #261d04;
+
+    --fs-ds-white-10: #ffffff;
+}
+
+#root .fs-button,
+#fs_pricing_app .fs-button {
+    border-radius: 100px;
+}
+
+#root .fs-button.fs-button--type-primary.fs-button--outline,
+#fs_pricing_app .fs-button.fs-button--type-primary.fs-button--outline {
+    background-color: var(--fs-ds-blue-400);
+    color: var(--fs-ds-neutral-10);
+    border: 1px solid var(--fs-ds-blue-400);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+#root .fs-button.fs-button--type-primary.fs-button--outline:focus:not(:disabled),
+#root .fs-button.fs-button--type-primary.fs-button--outline:hover:not(:disabled),
+#root .fs-button.fs-button--type-primary.fs-button--outline:active:not(:disabled),
+#fs_pricing_app .fs-button.fs-button--type-primary.fs-button--outline:focus:not(:disabled),
+#fs_pricing_app .fs-button.fs-button--type-primary.fs-button--outline:hover:not(:disabled),
+#fs_pricing_app .fs-button.fs-button--type-primary.fs-button--outline:active:not(:disabled) {
+    background-color: var(--fs-ds-green-300);
+    color: var(--fs-ds-neutral-10);
+    border-color: var(--fs-ds-green-300);
+}
+
+#root .fs-button:focus:not(:disabled),
+#fs_pricing_app .fs-button:focus:not(:disabled) {
+    box-shadow: 0;
+}
+
+
+#root .fs-package .fs-package-content,
+#fs_pricing_app .fs-package .fs-package-content {
+    padding-bottom: 0;
+}
+
+#root .fs-package,
+#fs_pricing_app .fs-package {
+    border-bottom: 1px solid var(--fs-ds-theme-border-color);
+}
+
+#fs_pricing_app strong {
+    font-weight: 600;
+}
+
+.bbpa-freemius-pricing-page,
+.bbpa-freemius-pricing-page * {
+    box-sizing: border-box;
+}
+
+.fs-pricing-page,
+.fs-pricing-page * {
+    box-sizing: border-box;
+}
+
+.fs-pricing-page {
+    --bbpa-freemius-accent: var(--color-3);
+    --bbpa-freemius-accent-dark: #243cbd;
+    --bbpa-freemius-surface: #ffffff;
+    --bbpa-freemius-border: #dcdcde;
+    --bbpa-freemius-text: #1d2327;
+    --bbpa-freemius-muted: #646970;
+
+    color: var(--bbpa-freemius-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#root .fs-app-main .fs-section--plans-and-pricing .fs-section--billing-cycles .fs-billing-cycles li.fs-selected-billing-cycle,
+#fs_pricing_app .fs-app-main .fs-section--plans-and-pricing .fs-section--billing-cycles .fs-billing-cycles li.fs-selected-billing-cycle {
+    background: var(--fs-ds-blue-10);
+    color: var(--fs-ds-blue-400);
+}
+
+#root .fs-app-header .fs-plugin-title-and-logo,
+#fs_pricing_app .fs-app-header .fs-plugin-title-and-logo {
+    border: none;
+}
+
+#root .fs-app-main .fs-section--plans-and-pricing .fs-annual-discount,
+#fs_pricing_app .fs-app-main .fs-section--plans-and-pricing .fs-annual-discount {
+    font-weight: normal;
+    font-size: small;
+    color: var(--fs-ds-blue-400);
+}
+
+#root .fs-app-main .fs-section--plans-and-pricing .fs-section--billing-cycles .fs-billing-cycles li,
+#fs_pricing_app .fs-app-main .fs-section--plans-and-pricing .fs-section--billing-cycles .fs-billing-cycles li {
+    padding: 10px 20px;
+}
+
+#root .fs-section--packages .fs-package-tab.fs-package-tab--selected a,
+#fs_pricing_app .fs-section--packages .fs-package-tab.fs-package-tab--selected a {
+    border-color: var(--fs-ds-blue-400);
+}
+
+.fs-pricing-page a,
+.fs-pricing-page .button-link {
+    color: var(--bbpa-freemius-accent);
+}
+
+.fs-pricing-page a:hover,
+.fs-pricing-page a:focus,
+.fs-pricing-page .button-link:hover,
+.fs-pricing-page .button-link:focus {
+    color: var(--bbpa-freemius-accent-dark);
+}
+
+.fs-pricing-page .fs-plan,
+.fs-pricing-page .fs-card,
+.fs-pricing-page .fs-pricing-plan {
+    background: var(--bbpa-freemius-surface);
+    border-color: var(--bbpa-freemius-border);
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(29, 35, 39, 0.08);
+}
+
+.fs-pricing-page .fs-plan.fs-selected,
+.fs-pricing-page .fs-plan:hover,
+.fs-pricing-page .fs-pricing-plan.fs-selected,
+.fs-pricing-page .fs-pricing-plan:hover {
+    border-color: var(--bbpa-freemius-accent);
+    box-shadow: 0 16px 36px rgba(56, 88, 233, 0.14);
+}
+
+.fs-pricing-page .fs-plan .button-primary,
+.fs-pricing-page .fs-pricing-plan .button-primary,
+.fs-pricing-page .fs-checkout-button,
+.fs-pricing-page .fs-upgrade-button {
+    background: var(--bbpa-freemius-accent);
+    border-color: var(--bbpa-freemius-accent);
+    border-radius: 999px;
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: none;
+}
+
+#root .fs-package .fs-undiscounted-price:after,
+#fs_pricing_app .fs-package .fs-undiscounted-price:after {
+    display: block;
+    content: "";
+    position: absolute;
+    height: 0.1px;
+    left: -4px;
+    right: -4px;
+    top: 60%;
+    transform: translateY(-50%) skewY(0deg);
+    background-color: var(--fs-ds-theme-heading-text-color);
+}
+
+.fs-pricing-page .fs-plan .button-primary:hover,
+.fs-pricing-page .fs-plan .button-primary:focus,
+.fs-pricing-page .fs-pricing-plan .button-primary:hover,
+.fs-pricing-page .fs-pricing-plan .button-primary:focus,
+.fs-pricing-page .fs-checkout-button:hover,
+.fs-pricing-page .fs-checkout-button:focus,
+.fs-pricing-page .fs-upgrade-button:hover,
+.fs-pricing-page .fs-upgrade-button:focus {
+    background: var(--bbpa-freemius-accent-dark);
+    border-color: var(--bbpa-freemius-accent-dark);
+    color: #ffffff;
+}
+
+.fs-pricing-page .fs-badge,
+.fs-pricing-page .fs-ribbon,
+.fs-pricing-page .fs-plan-badge {
+    background: var(--bbpa-freemius-accent);
+    color: #ffffff;
+}
+
+.fs-pricing-page .fs-feature,
+.fs-pricing-page .fs-plan-feature,
+.fs-pricing-page .fs-plan-description {
+    color: var(--bbpa-freemius-muted);
+}

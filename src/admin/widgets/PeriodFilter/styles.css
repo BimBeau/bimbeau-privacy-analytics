@@ -1,0 +1,178 @@
+.bbpa-admin-app .bbpa-period-filter {
+	display: grid;
+	gap: var(--bbpa-gap-sm);
+}
+.bbpa-admin-app .bbpa-period-filter__header {
+	display: grid;
+}
+
+.bbpa-admin-app .bbpa-period-filter__trigger {
+	justify-content: flex-start;
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: var(--bbpa-gap-xs);
+	text-align: left;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	padding-right: 25px;
+	color: #50575e;
+	border-color: transparent;
+	box-shadow: inset 0 0 0 1px #f6f7f7;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.bbpa-admin-app .bbpa-period-filter__trigger:hover,
+.bbpa-admin-app .bbpa-period-filter__trigger:focus {
+	color: #50575e;
+	border-color: transparent;
+	box-shadow: inset 0 0 0 1px #f6f7f7;
+}
+
+.bbpa-admin-app .bbpa-period-filter__trigger-preset {
+	background-color: #f6f7f7;
+	border-radius: 2px;
+	padding: 2px 6px;
+}
+
+.bbpa-admin-app .bbpa-period-filter__trigger-range {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.bbpa-admin-app .bbpa-period-filter__trigger-icon {
+	margin-left: auto;
+	flex: 0 0 auto;
+	fill: none;
+}
+
+.bbpa-period-filter__popover-content {
+	display: grid;
+	gap: var(--bbpa-gap-lg);
+	max-width: 100%;
+	width: 100%;
+	min-width: 0;
+	padding: var(--bbpa-gap-lg);
+}
+
+.bbpa-period-filter__presets {
+	width: 100%;
+	min-width: 0;
+	display: grid;
+	gap: var(--bbpa-gap-sm);
+}
+
+.bbpa-period-filter__calendar {
+	--rdp-cell-size: 40px;
+	--rdp-caption-font-size: 14px;
+	--rdp-accent-color: var(--color-3);
+	--rdp-background-color: var(--color-5);
+	--rdp-accent-color-dark: var(--color-3);
+	--rdp-background-color-dark: var(--color-3);
+	--rdp-outline: var(--color-3);
+	--rdp-outline-selected: var(--color-3);
+	--rdp-selected-color: var(--bbpa-color-on-accent);
+	margin: 0;
+}
+
+@media (max-width: 1450px) {
+	.bbpa-admin-app .bbpa-period-filter__trigger svg {
+		display: none;
+	}
+}
+
+.bbpa-period-filter__calendar .rdp-months {
+	gap: var(--bbpa-gap-md);
+}
+
+.bbpa-period-filter__calendar .rdp-caption {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.bbpa-period-filter__calendar .rdp-nav_icon {
+	width: var(--bbpa-gap-md);
+	height: var(--bbpa-gap-md);
+}
+
+.bbpa-period-filter__presets-links {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.bbpa-period-filter__popover .components-button {
+	border: 1px solid var(--color-3);
+	border-radius: 0;
+	box-shadow: none !important;
+	justify-content: center;
+	padding: var(--bbpa-gap-sm);
+	width: 100%;
+	border-right: none;
+}
+
+
+.bbpa-period-filter__popover .components-button:first-child {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.bbpa-period-filter__popover .components-button:last-child {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-right: 1px solid var(--color-3);
+}
+
+.bbpa-period-filter__popover .components-popover__content {
+	background: #fff;
+	border-radius: 4px;
+	box-shadow: 0 0 0 1px #ccc, 0 2px 3px #0000000d, 0 4px 5px #0000000a, 0 12px 12px #00000008, 0 16px 16px #00000005;
+	box-sizing: border-box;
+	width: fit-content;
+}
+
+.bbpa-period-filter__calendar .rdp-caption_label {
+	font-weight: normal;
+	border: none;
+	padding: 0;
+}
+
+.bbpa-period-filter__calendar .rdp-month {
+	width: 100%;
+}
+
+.bbpa-period-filter__calendar .rdp-table {
+	border-collapse: collapse;
+	margin: 0;
+	width: 100%;
+	max-width: none;
+}
+
+.bbpa-period-filter__calendar .rdp-cell {
+	height: 100%;
+	padding: 0;
+	text-align: center;
+}
+
+.bbpa-period-filter__calendar .rdp-day,
+.bbpa-period-filter__calendar .rdp-weeknumber {
+	width: 100%;
+	max-width: none;
+}
+
+
+.bbpa-period-filter__calendar .rdp-day_selected,
+.bbpa-period-filter__calendar .rdp-day_selected:focus-visible,
+.bbpa-period-filter__calendar .rdp-day_selected:hover {
+	background: color-mix(in srgb, var(--color-3) 10%, #0000);
+	opacity: 1;
+	color: var(--color-3);
+}
+
+.bbpa-period-filter__calendar .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+	background: color-mix(in srgb, var(--color-3) 10%, #0000);
+}

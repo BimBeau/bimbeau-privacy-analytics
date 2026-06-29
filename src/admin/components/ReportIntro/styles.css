@@ -1,0 +1,39 @@
+.bbpa-report-panel__intro {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bbpa-gap-sm);
+  margin: 0 0 var(--bbpa-gap-md);
+  color: var(--color-2);
+}
+
+.bbpa-report-panel__intro svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  color: var(--color-2);
+}
+
+.bbpa-report-panel__intro p {
+  margin: 0;
+}
+
+.bbpa-channel-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.bbpa-channel-label svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--color-2);
+}
+
+@media (max-width: 600px) {
+  .bbpa-report-panel__intro {
+    align-items: flex-start;
+  }
+}

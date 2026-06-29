@@ -1,0 +1,60 @@
+:root,
+body.bbpa-app-shell,
+body.bbpa-app-login-shell,
+body.bbpa-app-shell #bbpa-app,
+body.bbpa-app-login-shell #bbpa-front-login {
+	--wp-admin-theme-color: #3858e9;
+	--wp-admin-theme-color--rgb: 56, 88, 233;
+	--wp-admin-theme-color-darker-10: #2145e6;
+	--wp-admin-theme-color-darker-10--rgb: 33, 69, 230;
+	--wp-admin-theme-color-darker-20: #183ad6;
+	--wp-admin-theme-color-darker-20--rgb: 24, 58, 214;
+	--wp-admin-border-width-focus: 2px;
+}
+
+body.wp-admin,
+body.wp-admin #bbpa-admin .bbpa-admin-app,
+body.bbpa-app-shell #bbpa-app .bbpa-admin-app,
+.bbpa-period-filter__popover {
+	--color-1: #1d2327;
+	--color-2: #2c3338;
+	--color-3: rgb(56, 88, 233);
+	--color-4: #89dfd4;
+	--color-5: #f6f7f7;
+	--color-6: #d2f6f1;
+	--color-7: #0b9f8c;
+	--color-8: #ffebec;
+	--color-9: #c13a47;
+	--color-10: #fff3cd;
+	--color-11: #ab8411;
+	--bbpa-color-accent: #00f;
+	--bbpa-color-accent-soft: #e7edff;
+	--bbpa-color-accent-dark: #3003e1;
+	--bbpa-color-accent-darker: #180270;
+	--bbpa-color-on-accent: #fff;
+	--bbpa-gap-xs: 6px;
+	--bbpa-gap-sm: 8px;
+	--bbpa-gap-md: 12px;
+	--bbpa-gap-lg: 16px;
+	--bbpa-radius-sm: 4px;
+	--bbpa-skeleton-bg: var(--color-5);
+}
+
+body.bbpa-app-shell {
+	width: 100%;
+	max-width: none !important;
+	margin: 0;
+	font-weight: 400;
+	overflow-x: hidden;
+}
+
+body.bbpa-app-shell #bbpa-app,
+body.bbpa-app-shell #bbpa-app .bbpa-admin-app {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: none !important;
+	margin-inline: 0 !important;
+	display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

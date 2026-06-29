@@ -1,0 +1,33 @@
+@use 'flag-icons/sass/variables' with (
+	$flag-icons-path: '~flag-icons/flags',
+	$flag-icons-use-square: false
+);
+
+/*
+ * Keep rectangular flag-icons classes only. BimBeau Privacy Analytics uses fi fi-xx classes and
+ * omits the square modifier, so the build only emits 4x3 SVG assets.
+ */
+.fib,
+.fi {
+	background-size: contain;
+	background-position: 50%;
+	background-repeat: no-repeat;
+}
+
+.fi {
+	--bbpa-flag-base-url: '/wp-content/plugins/bimbeau-privacy-analytics/assets/images/flags/4x3';
+	position: relative;
+	display: inline-block;
+	width: 1.333333em;
+	line-height: 1em;
+}
+
+.fi::before {
+	content: '\00a0';
+}
+
+@each $country in variables.$flag-icons-included-countries {
+	.fi-#{$country} {
+		background-image: url(#{variables.$flag-icons-path}#{variables.$flag-icons-rect-path}/#{$country}.svg);
+	}
+}

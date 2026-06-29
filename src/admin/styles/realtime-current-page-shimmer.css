@@ -1,0 +1,57 @@
+.bbpa-admin-app .bbpa-table-scroll > table.bbpa-report-table--realtime-visits {
+  width: 100%;
+  min-width: 1280px;
+  max-width: none;
+  table-layout: auto;
+}
+
+.bbpa-admin-app .bbpa-report-table--realtime-visits th,
+.bbpa-admin-app .bbpa-report-table--realtime-visits td {
+  white-space: nowrap;
+}
+
+.bbpa-admin-app .bbpa-report-table--realtime-visits tbody td.bbpa-realtime-current-page-cell:not(:empty) {
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(105deg,
+      currentColor,
+      currentColor 46%,
+      hsla(0, 0%, 100%, .04) 49%,
+      hsla(0, 0%, 100%, .75) 50%,
+      hsla(0, 0%, 100%, .04) 51%,
+      currentColor 54%,
+      currentColor);
+  background-position: 135% 0;
+  background-size: 280% 100%;
+  -webkit-text-fill-color: transparent;
+  animation: bbpa-current-page-text-shimmer 2s linear infinite;
+}
+
+@keyframes bbpa-current-page-text-shimmer {
+  0% {
+    background-position: 135% 0;
+  }
+
+  100% {
+    background-position: -35% 0;
+  }
+}
+
+@media (max-width: 782px) {
+  .bbpa-admin-app .bbpa-table-scroll > table.bbpa-report-table--realtime-visits {
+    min-width: 1280px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbpa-admin-app .bbpa-report-table--realtime-visits tbody td.bbpa-realtime-current-page-cell:not(:empty) {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}

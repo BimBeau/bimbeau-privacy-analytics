@@ -1,0 +1,3456 @@
+# Copyright (C) 2026 BimBeau (BimBeau Privacy Analytics)
+# This file is distributed under the GPLv3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: BimBeau Privacy Analytics Pro 6.78.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bimbeau-privacy-"
+"analytics\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-05-12 11:04+0200\n"
+"Last-Translator: BimBeau\n"
+"Language-Team: Portuguese (Portugal)\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: bpa\n"
+"X-Generator: Poedit 2.4.3\n"
+
+#. Plugin Name of the plugin
+#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#, fuzzy
+msgid "BimBeau Privacy Analytics"
+msgstr "Analytics do BimBeau Privacy Analytics"
+
+#. Description of the plugin
+#: bimbeau-privacy-analytics.php
+msgid "Privacy-friendly, self-hosted analytics for WordPress."
+msgstr "Analytics autoalojado e respeitador da privacidade para WordPress."
+
+#. Author of the plugin
+#: bimbeau-privacy-analytics.php
+msgid "BimBeau"
+msgstr "BimBeau"
+
+#: admin/admin.php
+msgid "Update"
+msgstr "Atualizar"
+
+#: admin/admin.php src/admin/components/ProBadge/index.js
+msgid "Pro"
+msgstr "Pro"
+
+#: admin/admin.php
+msgid "Upgrade to Pro"
+msgstr "Atualizar para Pro"
+
+#: admin/admin.php src/admin/panels/SettingsPanel.js
+msgid "Contact"
+msgstr "Contacto"
+
+#: admin/admin.php
+msgid ""
+"Base tracking remains active. Enriched tracking is declarable through an "
+"external CMP. Data granularity depends on collected signals."
+msgstr ""
+"O rastreio base permanece ativo. O rastreio enriquecido pode ser declarado "
+"através de uma CMP externa. A granularidade dos dados depende dos sinais "
+"recolhidos."
+
+#: admin/admin.php
+msgid "Loading, please wait…"
+msgstr "A carregar, aguarde…"
+
+#: admin/admin.php
+msgid "Current runtime state"
+msgstr "Estado de execução atual"
+
+#: admin/admin.php
+msgid ""
+"Technical diagnostics are indicative and remain limited to script attributes "
+"and CMP markers."
+msgstr ""
+"Os diagnósticos técnicos são indicativos e permanecem limitados aos "
+"atributos dos scripts e aos marcadores da CMP."
+
+#: admin/admin.php
+msgid "Current PWA icon preview"
+msgstr "Pré-visualização atual do ícone PWA"
+
+#: admin/admin.php
+msgid ""
+"Preview uses the same runtime icon resolution as the standalone app manifest "
+"and loading splash."
+msgstr ""
+"A pré-visualização usa a mesma resolução de ícone em execução que o "
+"manifesto da aplicação autónoma e o ecrã de carregamento."
+
+#: admin/admin.php
+msgid "Source"
+msgstr "Origem"
+
+#: admin/admin.php
+msgid "Generation status"
+msgstr "Estado de geração"
+
+#: admin/admin.php
+msgid "Custom generated icon"
+msgstr "Ícone personalizado gerado"
+
+#: admin/admin.php
+msgid "Plugin fallback icon"
+msgstr "Ícone de recurso do plugin"
+
+#: admin/admin.php
+msgid "Custom icon set is ready."
+msgstr "O conjunto de ícones personalizado está pronto."
+
+#: admin/admin.php
+msgid "Fallback icon set is active."
+msgstr "O conjunto de ícones de recurso está ativo."
+
+#: admin/admin.php
+msgid "Source image is too small (minimum 512x512)."
+msgstr "A imagem de origem é demasiado pequena (mínimo 512x512)."
+
+#: admin/admin.php
+msgid "Source image is invalid."
+msgstr "A imagem de origem é inválida."
+
+#: admin/admin.php
+msgid "Icon generation failed on this server."
+msgstr "A geração do ícone falhou neste servidor."
+
+#: admin/admin.php
+msgid "Unknown generation status."
+msgstr "Estado de geração desconhecido."
+
+#: admin/admin.php includes/rest/class-bbpa-admin-controller.php
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/EventsPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: admin/admin.php
+msgid "No preview icon URL is available."
+msgstr "Nenhum URL de ícone de pré-visualização está disponível."
+
+#: admin/admin.php src/admin/constants/index.js
+msgid "Dashboard"
+msgstr "Painel"
+
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+msgid "Real-time"
+msgstr "Tempo real"
+
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+msgid "Pages"
+msgstr "Páginas"
+
+#: admin/admin.php src/admin/constants/index.js
+#, fuzzy
+msgid "Acquisition"
+msgstr "Aquisição"
+
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Referring sites"
+msgstr "Sites de referência"
+
+#: admin/admin.php src/admin/constants/index.js
+msgid "Internal searches"
+msgstr "Pesquisas internas"
+
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/GeolocationPanel.js src/admin/panels/SettingsPanel.js
+msgid "Geolocation"
+msgstr "Geolocalização"
+
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitors"
+msgstr "Visitantes"
+
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "Devices"
+msgstr "Dispositivos"
+
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Events"
+msgstr "Eventos"
+
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Settings"
+msgstr "Definições"
+
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
+#, fuzzy, php-format
+msgid "%s overview"
+msgstr "%s visualização de página"
+
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
+#, fuzzy, php-format
+msgid "%s data is not available for this period."
+msgstr "Nenhum dado disponível para este período."
+
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
+#, fuzzy, php-format
+msgid "View %s dashboard"
+msgstr "Painel"
+
+#. translators: 1: Start date, 2: End date for the selected reporting period.
+#: admin/dashboard-widget.php
+#, php-format
+msgid "Period: %1$s to %2$s"
+msgstr "Período: de %1$s a %2$s"
+
+#: admin/dashboard-widget.php
+msgid "Period: last 30 days"
+msgstr "Período: últimos 30 dias"
+
+#: admin/dashboard-widget.php
+msgid ""
+"Enable at least one analytics panel to display KPI values in this widget."
+msgstr ""
+"Ative pelo menos um painel de analytics para apresentar valores de KPI neste "
+"widget."
+
+#: admin/dashboard-widget.php src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Visits"
+msgstr "Visitas"
+
+#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Page views"
+msgstr "Visualizações de página"
+
+#: admin/dashboard-widget.php
+msgid "Referrers"
+msgstr "Referenciadores"
+
+#: bimbeau-privacy-analytics.php
+msgid "BimBeau Privacy Analytics Pro"
+msgstr "BimBeau Privacy Analytics Pro"
+
+#: bimbeau-privacy-analytics.php
+msgid "BimBeau Privacy Analytics Free"
+msgstr "BimBeau Privacy Analytics Free"
+
+#. translators: 1: BimBeau Privacy Analytics package being activated, 2: BimBeau Privacy Analytics package already active.
+#: bimbeau-privacy-analytics.php
+#, php-format
+msgid ""
+"%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
+"first, then activate %1$s."
+msgstr ""
+"%1$s não pode ser ativado enquanto %2$s já estiver ativo. Desative primeiro "
+"%2$s e depois ative %1$s."
+
+#: bimbeau-privacy-analytics.php
+msgid "BimBeau Privacy Analytics activation blocked"
+msgstr "Ativação do BimBeau Privacy Analytics bloqueada"
+
+#. translators: 1: BimBeau Privacy Analytics package deactivated automatically, 2: BimBeau Privacy Analytics package left active.
+#: bimbeau-privacy-analytics.php
+#, php-format
+msgid ""
+"%1$s was deactivated because only one BimBeau Privacy Analytics package can "
+"be active at a time. %2$s remains active."
+msgstr ""
+"%1$s foi desativado porque apenas um pacote BimBeau Privacy Analytics pode "
+"estar ativo de cada vez. %2$s permanece ativo."
+
+#: includes/aggregation.php
+msgid "BimBeau Privacy Analytics aggregated retention cleanup"
+msgstr "Limpeza da retenção agregada do BimBeau Privacy Analytics"
+
+#: includes/geolocation.php
+msgid "Once Monthly"
+msgstr "Uma vez por mês"
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Every 15 days"
+msgstr "A cada 15 dias"
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Every 45 days"
+msgstr "A cada 45 dias"
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Every 60 days"
+msgstr "A cada 60 dias"
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Every 3 months"
+msgstr "A cada 3 meses"
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Every 6 months"
+msgstr "A cada 6 meses"
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Every year"
+msgstr "Todos os anos"
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Every 2 years"
+msgstr "A cada 2 anos"
+
+#: includes/geolocation.php
+msgid "Local GeoLite database is unavailable."
+msgstr "A base de dados GeoLite local está indisponível."
+
+#: includes/geolocation.php
+msgid "Unable to read the local GeoLite database."
+msgstr "Não foi possível ler a base de dados GeoLite local."
+
+#: includes/geolocation.php
+msgid "No geolocation record found for this IP."
+msgstr "Nenhum registo de geolocalização encontrado para este IP."
+
+#: includes/geolocation.php
+msgid "Unable to determine the visitor IP."
+msgstr "Não foi possível determinar o IP do visitante."
+
+#: includes/raw-logs.php
+msgid "BimBeau Privacy Analytics raw log cleanup"
+msgstr "Limpeza dos registos brutos do BimBeau Privacy Analytics"
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "This analytics panel is disabled for navigation."
+msgstr "Este painel de analytics está desativado para navegação."
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
+msgid "Authentication is required to access analytics data."
+msgstr "É necessária autenticação para aceder aos dados de analytics."
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind connection succeeded."
+msgstr "Ligação à MaxMind concluída com sucesso."
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
+msgid "GeoIP database updated successfully."
+msgstr "Base de dados GeoIP atualizada com sucesso."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "GeoIP database is available."
+msgstr "A base de dados GeoIP está disponível."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "GeoIP database is not available yet."
+msgstr "A base de dados GeoIP ainda não está disponível."
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
+#: src/admin/panels/EventsPanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Unknown country"
+msgstr "País desconhecido"
+
+#: includes/rest/class-bbpa-hit-controller.php
+msgid "Invalid page path."
+msgstr "Caminho da página inválido."
+
+#: includes/rest/class-bbpa-hit-controller.php
+msgid "Page path exceeds maximum length."
+msgstr "O caminho da página excede o comprimento máximo."
+
+#: includes/rest/class-bbpa-hit-controller.php
+msgid "Referrer domain exceeds maximum length."
+msgstr "O domínio referenciador excede o comprimento máximo."
+
+#: includes/rest/class-bbpa-hit-controller.php
+msgid "Invalid timestamp bucket."
+msgstr "Intervalo de data/hora inválido."
+
+#: includes/rest/class-bbpa-hit-controller.php
+msgid "Invalid visit identifier."
+msgstr "Identificador de visita inválido."
+
+#: includes/rest/class-bbpa-report-controller.php
+msgid "Visitors details are available in BimBeau Privacy Analytics Pro."
+msgstr ""
+"Os detalhes dos visitantes estão disponíveis no BimBeau Privacy Analytics "
+"Pro."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Local database mode is required to update the GeoIP database."
+msgstr ""
+"É necessário o modo de base de dados local para atualizar a base de dados "
+"GeoIP."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to create a temporary file for the GeoIP database download."
+msgstr ""
+"Não foi possível criar um ficheiro temporário para descarregar a base de "
+"dados GeoIP."
+
+#. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, php-format
+msgid "GeoIP database download failed: %s"
+msgstr "A transferência da base de dados GeoIP falhou: %s"
+
+#. translators: %d: HTTP status code returned by the GeoIP download request.
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, php-format
+msgid "GeoIP database download failed with HTTP status %d."
+msgstr "A transferência da base de dados GeoIP falhou com o estado HTTP %d."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "GeoIP database download returned an empty response body."
+msgstr ""
+"A transferência da base de dados GeoIP devolveu um corpo de resposta vazio."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "GeoIP database download size does not match the manifest."
+msgstr ""
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, fuzzy
+msgid "GeoIP database checksum does not match the manifest."
+msgstr "A base de dados GeoIP ainda não está disponível."
+
+#. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, fuzzy, php-format
+msgid "GeoIP database manifest request failed: %s"
+msgstr "A transferência da base de dados GeoIP falhou: %s"
+
+#. translators: %d: HTTP status code returned by the GeoIP manifest request.
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, fuzzy, php-format
+msgid "GeoIP database manifest request failed with HTTP status %d."
+msgstr "A transferência da base de dados GeoIP falhou com o estado HTTP %d."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, fuzzy
+msgid "GeoIP database manifest is not valid JSON."
+msgstr "O ficheiro da base de dados GeoIP não é legível."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, fuzzy
+msgid "GeoIP database manifest metadata is invalid."
+msgstr "A base de dados GeoIP está disponível."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "GeoIP database file is not readable."
+msgstr "O ficheiro da base de dados GeoIP não é legível."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "GeoIP archive file is not readable."
+msgstr "O ficheiro de arquivo GeoIP não é legível."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, fuzzy
+msgid "Server is missing required gzip extraction capabilities."
+msgstr "O servidor não tem as capacidades necessárias de extração de arquivos."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to allocate temporary workspace for GeoIP extraction."
+msgstr ""
+"Não foi possível alocar uma área de trabalho temporária para a extração "
+"GeoIP."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to create temporary workspace for GeoIP extraction."
+msgstr ""
+"Não foi possível criar uma área de trabalho temporária para a extração GeoIP."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "GeoIP archive is empty or unreadable."
+msgstr "O arquivo GeoIP está vazio ou ilegível."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "GeoIP archive decompression failed."
+msgstr "A descompressão do arquivo GeoIP falhou."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+#, fuzzy
+msgid "Unable to write decompressed GeoIP MMDB file."
+msgstr "Não foi possível gravar o arquivo GeoIP descomprimido."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "GeoIP MMDB file is not readable."
+msgstr "O ficheiro MMDB GeoIP não é legível."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to resolve GeoIP destination path."
+msgstr "Não foi possível resolver o caminho de destino GeoIP."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to create GeoIP destination directory."
+msgstr "Não foi possível criar o diretório de destino GeoIP."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to read GeoIP MMDB file before storage."
+msgstr "Não foi possível ler o ficheiro MMDB GeoIP antes do armazenamento."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to write GeoIP database temporary file."
+msgstr "Não foi possível gravar o ficheiro temporário da base de dados GeoIP."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to replace GeoIP database file atomically."
+msgstr ""
+"Não foi possível substituir atomicamente o ficheiro da base de dados GeoIP."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "Unable to create a temporary file for GeoIP operations."
+msgstr "Não foi possível criar um ficheiro temporário para as operações GeoIP."
+
+#. translators: 1: MaxMind API response code, 2: MaxMind API error details.
+#: includes/services/class-bbpa-maxmind-service.php
+#, php-format
+msgid "MaxMind API error (%1$s): %2$s."
+msgstr "Erro da API MaxMind (%1$s): %2$s."
+
+#. translators: %s: MaxMind API response code.
+#: includes/services/class-bbpa-maxmind-service.php
+#, php-format
+msgid "MaxMind API error (%s)."
+msgstr "Erro da API MaxMind (%s)."
+
+#: includes/services/class-bbpa-maxmind-service.php
+msgid "Invalid MaxMind API response."
+msgstr "Resposta da API MaxMind inválida."
+
+#: includes/settings.php src/admin/panels/SettingsPanel.js
+msgid "MaxMind Account ID is required."
+msgstr "O ID da conta MaxMind é obrigatório."
+
+#: includes/settings.php src/admin/panels/SettingsPanel.js
+msgid "MaxMind Account ID must be numeric."
+msgstr "O ID da conta MaxMind deve ser numérico."
+
+#: includes/settings.php src/admin/panels/SettingsPanel.js
+msgid "MaxMind License Key is required."
+msgstr "A chave de licença MaxMind é obrigatória."
+
+#: includes/settings.php
+msgid "MaxMind credentials are required to enable IP geolocation."
+msgstr ""
+"As credenciais MaxMind são obrigatórias para ativar a geolocalização por IP."
+
+#: includes/settings.php src/admin/AdminApp.js
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
+msgid "%s Visitor"
+msgstr "%s visitante"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
+msgid "%s Visitors"
+msgstr "%s visitantes"
+
+#: src/admin/AdminApp.js
+msgid "Missing admin configuration."
+msgstr "Configuração de administração em falta."
+
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
+msgid "Session expired, reload the application."
+msgstr ""
+
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
+#, fuzzy
+msgid "Reload application"
+msgstr "Geolocalização"
+
+#: src/admin/AdminApp.js
+msgid "No panel available for this screen."
+msgstr "Nenhum painel disponível para este ecrã."
+
+#: src/admin/AdminApp.js
+msgid "Install BimBeau Privacy Analytics app"
+msgstr "Instalar aplicação BimBeau Privacy Analytics"
+
+#: src/admin/AdminApp.js
+msgid "Get faster access from your home screen with an app-like experience."
+msgstr ""
+"Tenha acesso mais rápido a partir do ecrã inicial com uma experiência "
+"semelhante a uma aplicação."
+
+#: src/admin/AdminApp.js
+msgid "Install app"
+msgstr "Instalar aplicação"
+
+#: src/admin/AdminApp.js
+msgid "BimBeau Privacy Analytics app installation was accepted."
+msgstr "A instalação da aplicação BimBeau Privacy Analytics foi aceite."
+
+#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
+msgid "API error"
+msgstr "Erro de API"
+
+#: src/admin/api/useAdminEndpoint.js
+msgid "unknown endpoint"
+msgstr "endpoint desconhecido"
+
+#: src/admin/api/useAdminEndpoint.js
+msgid "unknown status"
+msgstr "estado desconhecido"
+
+#: src/admin/api/useAdminEndpoint.js
+msgid ""
+"The server returned invalid JSON. Check the endpoint response preview for "
+"details."
+msgstr ""
+"O servidor devolveu JSON inválido. Verifique a pré-visualização da resposta "
+"do endpoint para obter detalhes."
+
+#: src/admin/api/useAdminEndpoint.js
+msgid ""
+"The server returned an unexpected response. Check the endpoint response "
+"preview for details."
+msgstr ""
+"O servidor devolveu uma resposta inesperada. Verifique a pré-visualização da "
+"resposta do endpoint para obter detalhes."
+
+#: src/admin/api/useAdminEndpoint.js
+msgid "Parser error:"
+msgstr "Erro do analisador:"
+
+#: src/admin/api/useAdminEndpoint.js
+msgid "Empty response body."
+msgstr "Corpo de resposta vazio."
+
+#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
+msgid "Missing REST configuration."
+msgstr "Configuração REST em falta."
+
+#: src/admin/api/useAdminEndpoint.js src/admin/hooks/useRealtimeSnapshot.js
+msgid "Loading error."
+msgstr "Erro de carregamento."
+
+#: src/admin/components/AdminErrorBoundary/index.js
+msgid "BimBeau Privacy Analytics cannot load the admin interface."
+msgstr ""
+"O BimBeau Privacy Analytics não consegue carregar a interface de "
+"administração."
+
+#. translators: %s: current admin panel and page label.
+#: src/admin/components/AdminErrorBoundary/index.js
+msgid "Panel/page: %s"
+msgstr "Painel/página: %s"
+
+#. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
+msgid "Component undefined: %s"
+msgstr "Componente indefinido: %s"
+
+#. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
+msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
+msgstr ""
+"Possível incompatibilidade Gutenberg/@wordpress/components: %s indefinido"
+
+#. translators: %s: comma-separated WordPress script handles checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
+msgid "Script handles checked: %s"
+msgstr "Identificadores de script verificados: %s"
+
+#. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
+msgid "Global namespaces checked: %s"
+msgstr "Espaços de nomes globais verificados: %s"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "Enriched tracker diagnostic"
+msgstr "Diagnóstico do rastreio enriquecido"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid ""
+"This diagnostic separates script DOM presence, runtime execution, and "
+"enriched payload activity. It never proves user consent."
+msgstr ""
+"Este diagnóstico separa a presença do script no DOM, a execução em runtime e "
+"a atividade do payload enriquecido. Nunca prova o consentimento do "
+"utilizador."
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "Available granularities"
+msgstr "Granularidades disponíveis"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "Run diagnostic"
+msgstr "Executar diagnóstico"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "Status"
+msgstr "Estado"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "Reason"
+msgstr "Motivo"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "Detected scripts"
+msgstr "Scripts detetados"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "CMP markers"
+msgstr "Marcadores CMP"
+
+#: src/admin/components/AdvancedConsentTestCard/index.js
+msgid "Legal caution: technical diagnostics do not establish legal consent."
+msgstr ""
+"Aviso legal: os diagnósticos técnicos não comprovam consentimento legal."
+
+#: src/admin/components/AppSidebar/index.js
+msgid "Navigation"
+msgstr "Navegação"
+
+#: src/admin/components/AppSidebar/index.js
+msgid "BimBeau Privacy Analytics navigation"
+msgstr "Navegação do BimBeau Privacy Analytics"
+
+#: src/admin/components/ConsentComplianceNotice/index.js
+msgid "Consent compliance reminder"
+msgstr "Lembrete de conformidade do consentimento"
+
+#: src/admin/components/ConsentComplianceNotice/index.js
+msgid ""
+"BimBeau Privacy Analytics provides technical diagnostics only. Your CMP "
+"remains the source of truth for consent workflows."
+msgstr ""
+"O BimBeau Privacy Analytics fornece apenas diagnósticos técnicos. A sua CMP "
+"continua a ser a fonte de verdade dos fluxos de consentimento."
+
+#: src/admin/components/DataState/index.js
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Loading…"
+msgstr "A carregar…"
+
+#: src/admin/components/DataState/index.js
+msgid "Endpoint:"
+msgstr "Endpoint:"
+
+#: src/admin/components/DataState/index.js
+msgid "Response preview:"
+msgstr "Pré-visualização da resposta:"
+
+#. translators: %s: card title.
+#: src/admin/components/DataTableCard/index.js
+msgid "Loading: %s"
+msgstr "A carregar: %s"
+
+#: src/admin/components/EventScriptModal.js
+msgid "Event:"
+msgstr "Evento:"
+
+#: src/admin/components/EventScriptModal.js
+msgid "unknown"
+msgstr "desconhecido"
+
+#: src/admin/components/EventScriptModal.js
+msgid "Event ID:"
+msgstr "ID do evento:"
+
+#: src/admin/components/EventScriptModal.js
+msgid "Timestamp:"
+msgstr "Carimbo de data/hora:"
+
+#: src/admin/components/EventScriptModal.js
+msgid "Captured variables"
+msgstr "Variáveis capturadas"
+
+#: src/admin/components/EventScriptModal.js
+msgid "Copy"
+msgstr "Copiar"
+
+#: src/admin/components/EventScriptModal.js
+msgid "Close"
+msgstr "Fechar"
+
+#: src/admin/components/GeoCountriesStatusNotice.js
+msgid "Enable geolocation aggregation"
+msgstr "Ativar agregação geográfica"
+
+#: src/admin/components/GeoCountriesStatusNotice.js
+msgid "Enter the MaxMind credentials"
+msgstr "Introduza as credenciais MaxMind"
+
+#: src/admin/components/GeoCountriesStatusNotice.js
+msgid "Traffic data is pending"
+msgstr "Os dados de tráfego estão pendentes"
+
+#: src/admin/components/PageDetailsHeatMap/index.js
+msgid "No hourly details available for this page."
+msgstr "Nenhum detalhe horário disponível para esta página."
+
+#: src/admin/components/PageDetailsHeatMap/index.js
+msgid "Page details heatmap by day and hour"
+msgstr "Mapa de calor dos detalhes da página por dia e hora"
+
+#: src/admin/components/PrivacyRuntimeStateNotice/index.js
+msgid "Privacy runtime diagnostics"
+msgstr "Diagnósticos de privacidade em runtime"
+
+#: src/admin/components/PrivacyRuntimeStateNotice/index.js
+msgid "Runtime granularity is reported from available granularities."
+msgstr ""
+"A granularidade em runtime é comunicada a partir das granularidades "
+"disponíveis."
+
+#: src/admin/components/PrivacyRuntimeStateNotice/index.js
+msgid "Technical state does not prove consent collection validity."
+msgstr "O estado técnico não comprova a validade da recolha de consentimento."
+
+#: src/admin/components/PwaStatsAppCard/index.js
+msgid "PWA Stats App"
+msgstr "App PWA de estatísticas"
+
+#: src/admin/components/PwaStatsAppCard/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "This feature is available in BimBeau Privacy Analytics Pro."
+msgstr "Esta funcionalidade está disponível no BimBeau Privacy Analytics Pro."
+
+#: src/admin/components/PwaStatsAppCard/index.js
+msgid "PWA URL"
+msgstr "URL da PWA"
+
+#: src/admin/components/PwaStatsAppCard/index.js
+msgid "Use this URL to open the standalone analytics app."
+msgstr "Use este URL para abrir a aplicação autónoma de analytics."
+
+#: src/admin/components/PwaStatsAppCard/index.js
+#: src/admin/panels/EventsPanel.js
+msgid "Copy URL"
+msgstr "Copiar URL"
+
+#: src/admin/components/PwaStatsAppCard/index.js
+msgid "Open PWA"
+msgstr "Abrir PWA"
+
+#: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
+#: src/admin/panels/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Direct"
+msgstr "Acesso direto"
+
+#: src/admin/components/ReportExportAction/index.js
+msgid ""
+"Excel export requires the PHP Zip extension to be installed on this server."
+msgstr "A exportação Excel requer a extensão PHP Zip instalada neste servidor."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "No results match the current filters."
+msgstr "Nenhum resultado corresponde aos filtros atuais."
+
+#. translators: %d: maximum export row count.
+#: src/admin/components/ReportExportAction/index.js
+msgid ""
+"The export exceeds the %d row limit. Narrow the date range or search filter, "
+"then try again."
+msgstr ""
+"A exportação excede o limite de %d linhas. Reduza o intervalo de datas ou o "
+"filtro de pesquisa e tente novamente."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export access is refused for the current account or license."
+msgstr "O acesso à exportação foi recusado para a conta ou licença atual."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "The export file could not be generated."
+msgstr "Não foi possível gerar o ficheiro de exportação."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export is running. The file downloads when ready."
+msgstr ""
+"A exportação está em execução. O ficheiro será transferido quando estiver "
+"pronto."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export is queued. The file downloads when ready."
+msgstr ""
+"A exportação está em fila. O ficheiro será transferido quando estiver pronto."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "The completed export is missing a download URL."
+msgstr "A exportação concluída não tem URL de transferência."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "The export job could not be completed."
+msgstr "Não foi possível concluir a tarefa de exportação."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "The export job is missing a status URL."
+msgstr "A tarefa de exportação não tem URL de estado."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "The export is still running. Try again in a few moments."
+msgstr ""
+"A exportação ainda está em execução. Tente novamente dentro de instantes."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export report"
+msgstr "Exportar relatório"
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export ready. Download started."
+msgstr "Exportação pronta. Transferência iniciada."
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export Excel"
+msgstr "Exportar Excel"
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export CSV"
+msgstr "Exportar CSV"
+
+#: src/admin/components/ReportExportAction/index.js
+msgid "Export JSON"
+msgstr "Exportar JSON"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Zoom in map"
+msgstr "Aproximar mapa"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Zoom out map"
+msgstr "Afastar mapa"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Reset map zoom"
+msgstr "Repor zoom do mapa"
+
+#. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#: src/admin/components/WorldMap/index.js
+msgid "%1$s: %2$s visits%3$s"
+msgstr "%1$s: %2$s visitas%3$s"
+
+#. translators: %s: approximation scope label.
+#: src/admin/components/WorldMap/index.js
+msgid " (%s)"
+msgstr " (%s)"
+
+#: src/admin/components/WorldMap/index.js
+msgid "approximate country area"
+msgstr "área aproximada do país"
+
+#: src/admin/components/WorldMap/index.js
+msgid ""
+"City data is available for the selected period, but none of the cities have "
+"usable coordinates yet."
+msgstr ""
+"Existem dados de cidades para o período selecionado, mas nenhuma cidade tem "
+"ainda coordenadas utilizáveis."
+
+#: src/admin/components/WorldMap/index.js
+msgid ""
+"No geolocated visits are available. Check your geolocation settings to start "
+"collecting city data."
+msgstr ""
+"Nenhuma visita geolocalizada está disponível. Verifique as suas definições "
+"de geolocalização para começar a recolher dados de cidades."
+
+#: src/admin/components/WorldMap/index.js
+msgid ""
+"No geolocated visits are available. Check your geolocation settings to start "
+"collecting country data."
+msgstr ""
+"Nenhuma visita geolocalizada está disponível. Verifique as suas definições "
+"de geolocalização para começar a recolher dados de países."
+
+#. translators: %s: visitor count.
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "%s visitors"
+msgstr "%s visitantes"
+
+#. translators: %s: share of total visitors.
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "%s of total visitors"
+msgstr "%s do total de visitas"
+
+#. translators: %s: visit count.
+#: src/admin/components/WorldMap/index.js
+msgid "%s visits"
+msgstr "%s visitas"
+
+#: src/admin/components/WorldMap/index.js
+msgid "World map"
+msgstr "Mapa-mundo"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Loading world map"
+msgstr "A carregar mapa-mundo"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map zoom controls"
+msgstr "Controlos de zoom do mapa"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "Repor"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map legend"
+msgstr "Legenda do mapa"
+
+#: src/admin/constants/index.js
+msgid "Today"
+msgstr "Hoje"
+
+#: src/admin/constants/index.js
+msgid "Yesterday"
+msgstr "Ontem"
+
+#: src/admin/constants/index.js
+msgid "7d"
+msgstr "7d"
+
+#: src/admin/constants/index.js
+msgid "7 days"
+msgstr "7 dias"
+
+#: src/admin/constants/index.js
+msgid "30d"
+msgstr "30d"
+
+#: src/admin/constants/index.js
+msgid "30 days"
+msgstr "30 dias"
+
+#: src/admin/constants/index.js
+msgid "90d"
+msgstr "90d"
+
+#: src/admin/constants/index.js
+msgid "90 days"
+msgstr "90 dias"
+
+#: src/admin/constants/index.js
+msgid "6m"
+msgstr "6m"
+
+#: src/admin/constants/index.js
+msgid "6 months"
+msgstr "6 meses"
+
+#: src/admin/constants/index.js
+msgid "12m"
+msgstr "12m"
+
+#: src/admin/constants/index.js
+msgid "12 months"
+msgstr "12 meses"
+
+#: src/admin/constants/index.js
+msgid "24m"
+msgstr "24m"
+
+#: src/admin/constants/index.js
+msgid "24 months"
+msgstr "24 meses"
+
+#: src/admin/index.js
+msgid "New visitor"
+msgstr "Novo visitante"
+
+#: src/admin/index.js
+msgid "Page viewed"
+msgstr "Página visualizada"
+
+#: src/admin/index.js
+msgid "Visitor inactive"
+msgstr "Visitante inativo"
+
+#: src/admin/index.js src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Página desconhecida"
+
+#: src/admin/index.js
+msgid "Unknown visitor"
+msgstr "Visitante desconhecido"
+
+#: src/admin/index.js
+msgid "Dismiss notification"
+msgstr "Fechar notificação"
+
+#: src/admin/lib/channelLabels.js
+msgid "Organic Search"
+msgstr "Pesquisa orgânica"
+
+#: src/admin/lib/channelLabels.js
+msgid "Paid Search"
+msgstr "Pesquisa paga"
+
+#: src/admin/lib/channelLabels.js
+msgid "Referrals"
+msgstr "Referências"
+
+#: src/admin/lib/channelLabels.js
+msgid "Paid Social"
+msgstr "Redes sociais pagas"
+
+#: src/admin/lib/channelLabels.js
+msgid "Organic Social"
+msgstr "Redes sociais orgânicas"
+
+#: src/admin/lib/channelLabels.js
+msgid "Email"
+msgstr "E-mail"
+
+#: src/admin/lib/channelLabels.js
+msgid "Other Campaigns"
+msgstr "Outras campanhas"
+
+#: src/admin/lib/channelLabels.js
+msgid "AI Assistants"
+msgstr "Assistentes de IA"
+
+#: src/admin/lib/channelLabels.js
+msgid "Other"
+msgstr "Outro"
+
+#: src/admin/lib/locationLabel.js
+msgid "Approximate position"
+msgstr "Posição aproximada"
+
+#: src/admin/lib/locationLabel.js
+msgid "Approximate city"
+msgstr "Cidade aproximada"
+
+#. translators: %d: geolocation accuracy radius in kilometers.
+#: src/admin/lib/locationLabel.js
+msgid "Approx. %d km"
+msgstr "Aprox. %d km"
+
+#: src/admin/lib/locationLabel.js src/admin/panels/EventsPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No available"
+msgstr "Não disponível"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Monday"
+msgstr "Segunda-feira"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Mon"
+msgstr "Seg"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Tuesday"
+msgstr "Terça-feira"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Tue"
+msgstr "Ter"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Wednesday"
+msgstr "Quarta-feira"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Wed"
+msgstr "Qua"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Thursday"
+msgstr "Quinta-feira"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Thu"
+msgstr "Qui"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Friday"
+msgstr "Sexta-feira"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Fri"
+msgstr "Sex"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Saturday"
+msgstr "Sábado"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Sat"
+msgstr "Sáb"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Sunday"
+msgstr "Domingo"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Sun"
+msgstr "Dom"
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "Hourly heatmaps are unavailable for pages not found (404)."
+msgstr ""
+"Os mapas de calor horários estão indisponíveis para páginas não encontradas "
+"(404)."
+
+#: src/admin/lib/pageDetailsHeatmap.js
+#, fuzzy
+msgid ""
+"Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
+msgstr ""
+"Os mapas de calor horários estão desativados pelo filtro "
+"bpa_hourly_aggregation_enabled."
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid ""
+"Hourly heatmaps are unavailable because the hourly aggregation table is "
+"missing."
+msgstr ""
+"Os mapas de calor horários estão indisponíveis porque a tabela de agregação "
+"horária está em falta."
+
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid ""
+"Hourly heatmaps require hourly page aggregation data for the selected source."
+msgstr ""
+"Os mapas de calor horários requerem dados de agregação horária de páginas "
+"para a origem selecionada."
+
+#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
+#: src/admin/lib/pageDetailsHeatmap.js
+msgid "%1$s at %2$s — %3$s: %4$s"
+msgstr "%1$s às %2$s — %3$s: %4$s"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Acquisition channels"
+msgstr ""
+
+#: src/admin/panels/AcquisitionPanel.js
+#, fuzzy
+msgid "No acquisition channel data is available for this period."
+msgstr "Nenhum dado de perfil de visitante disponível para este período."
+
+#: src/admin/panels/AcquisitionPanel.js
+#, fuzzy
+msgid "Table: Acquisition channels"
+msgstr "Tabela: visitantes"
+
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/EventsPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr ""
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Traffic share"
+msgstr ""
+
+#. translators: %s: Total visits in the selected range.
+#: src/admin/panels/AcquisitionPanel.js
+#, fuzzy
+msgid "Total visits: %s"
+msgstr "%s do total de visitas"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "Computador"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Mobile"
+msgstr "Telemóvel"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Bot"
+msgstr "Bot"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Slot"
+msgstr "Espaço"
+
+#: src/admin/panels/EventsPanel.js
+msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
+msgstr ""
+"O espaço de KPI é inválido e deve ser um número inteiro maior ou igual a 2."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Snippet cannot be empty."
+msgstr "O snippet não pode estar vazio."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Snippet syntax looks valid."
+msgstr "A sintaxe do snippet parece válida."
+
+#: src/admin/panels/EventsPanel.js
+msgid "All events"
+msgstr "Todos os eventos"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Loading events configuration…"
+msgstr "A carregar configuração dos eventos…"
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
+"run actions."
+msgstr ""
+"A configuração de eventos está bloqueada no plano gratuito. Atualize para "
+"Pro para guardar e executar ações."
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Some saved KPI slot values are invalid. Use only numeric slots greater than "
+"or equal to 2."
+msgstr ""
+"Alguns valores guardados de espaços de KPI são inválidos. Use apenas espaços "
+"numéricos maiores ou iguais a 2."
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"KPI slot conflicts detected. Each active KPI slot must be unique before "
+"saving."
+msgstr ""
+"Foram detetados conflitos de espaços de KPI. Cada espaço de KPI ativo deve "
+"ser único antes de guardar."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Reorder KPI event"
+msgstr "Reordenar evento KPI"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Include in KPI"
+msgstr "Incluir no KPI"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Enable event"
+msgstr "Ativar evento"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Event ID"
+msgstr "ID do evento"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Label (max 25 characters)"
+msgstr "Etiqueta (máx. 25 caracteres)"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Trigger type"
+msgstr "Tipo de acionador"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Click"
+msgstr "Clique"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Page view"
+msgstr "Visualização de página"
+
+#: src/admin/panels/EventsPanel.js
+msgid "CSS selectors"
+msgstr "Seletores CSS"
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Add one or more CSS selectors as tags to target clickable elements, for "
+"example .cta-button or #signup."
+msgstr ""
+"Adicione um ou mais seletores CSS como etiquetas para segmentar elementos "
+"clicáveis, por exemplo .cta-button ou #signup."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Target page"
+msgstr "Página de destino"
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Search by title across published posts, pages, and public custom post types."
+msgstr ""
+"Pesquise por título em artigos, páginas e tipos de conteúdo personalizados "
+"públicos publicados."
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Webhook triggers are server-side. Browser JavaScript snippets are not "
+"executed for this trigger."
+msgstr ""
+"Os acionadores webhook são do lado do servidor. Os snippets JavaScript do "
+"navegador não são executados para este acionador."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Webhook URL"
+msgstr "URL do webhook"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Regenerate token"
+msgstr "Regenerar token"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Generate token"
+msgstr "Gerar token"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Allowed webhook params"
+msgstr "Parâmetros webhook permitidos"
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Comma-separated allowlist for incoming webhook payload keys. Only "
+"allowlisted variables are stored and shown in event context."
+msgstr ""
+"Lista de permissões separada por vírgulas para chaves de payload de webhooks "
+"recebidos. Apenas variáveis permitidas são guardadas e mostradas no contexto "
+"do evento."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Action"
+msgstr "Ação"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Server action template"
+msgstr "Modelo de ação do servidor"
+
+#: src/admin/panels/EventsPanel.js
+msgid "JavaScript snippet"
+msgstr "Snippet JavaScript"
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Configure a server-side action payload template for incoming webhook events. "
+"Browser JavaScript APIs are not available for this trigger."
+msgstr ""
+"Configure um modelo de payload de ação do servidor para eventos webhook "
+"recebidos. As APIs JavaScript do navegador não estão disponíveis para este "
+"acionador."
+
+#: src/admin/panels/EventsPanel.js
+msgid ""
+"Paste JavaScript code (without <script> tags) to run when this event is "
+"triggered. Available placeholders depend on trigger type. Do not wrap "
+"placeholders such as {{page_url}} in quotes. They are injected as escaped "
+"JavaScript values."
+msgstr ""
+"Cole código JavaScript (sem tags <script>) para executar quando este evento "
+"for acionado. Os placeholders disponíveis dependem do tipo de acionador. Não "
+"coloque placeholders como {{page_url}} entre aspas. São injetados como "
+"valores JavaScript escapados."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Available variables for this trigger type:"
+msgstr "Variáveis disponíveis para este tipo de acionador:"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Check syntax"
+msgstr "Verificar sintaxe"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Syntax checks are available for browser JavaScript snippets only."
+msgstr ""
+"As verificações de sintaxe só estão disponíveis para snippets JavaScript do "
+"navegador."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Remove event"
+msgstr "Remover evento"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Add event"
+msgstr "Adicionar evento"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Triggered events"
+msgstr "Eventos acionados"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Triggered events captured by the advanced tracker are listed."
+msgstr "Os eventos acionados capturados pelo rastreador avançado são listados."
+
+#: src/admin/panels/EventsPanel.js
+msgid "Total events"
+msgstr "Total de eventos"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr "Linhas"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Event"
+msgstr "Evento"
+
+#: src/admin/panels/EventsPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search"
+msgstr "Pesquisar"
+
+#: src/admin/panels/EventsPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search…"
+msgstr "Pesquisar…"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Label"
+msgstr "Rótulo"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Event time"
+msgstr "Hora do evento"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Type"
+msgstr "Tipo"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Triggered page"
+msgstr "Página acionada"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr "País"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr "Cidade"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Operating system"
+msgstr "Sistema operativo"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser"
+msgstr "Navegador"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Device"
+msgstr "Dispositivo"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Details"
+msgstr "Detalhes"
+
+#: src/admin/panels/EventsPanel.js
+msgid "All pages"
+msgstr "Todas as páginas"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
+msgid "View"
+msgstr "Ver"
+
+#: src/admin/panels/EventsPanel.js
+msgid "No triggered events found."
+msgstr "Nenhum evento acionado encontrado."
+
+#: src/admin/panels/EventsPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "Página anterior"
+
+#: src/admin/panels/EventsPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "Página seguinte"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Page"
+msgstr "Página"
+
+#: src/admin/panels/EventsPanel.js
+msgid "results"
+msgstr "resultados"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Confirm event removal"
+msgstr "Confirmar remoção do evento"
+
+#: src/admin/panels/EventsPanel.js
+msgid "Do you want to remove this event?"
+msgstr "Pretende remover este evento?"
+
+#: src/admin/panels/EventsPanel.js src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "No country data available for the selected period."
+msgstr "Nenhum dado de país disponível para o período selecionado."
+
+#. translators: 1: country name, 2: visitor count.
+#: src/admin/panels/GeoCountriesPanel.js
+#, fuzzy
+msgid "%1$s — %2$s visitors"
+msgstr "%1$s — %2$s visitas"
+
+#. translators: 1: country name, 2: no data label.
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "%1$s — %2$s"
+msgstr "%1$s — %2$s"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+msgid "No data"
+msgstr "Sem dados"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+msgid "Unknown country flag"
+msgstr "Bandeira de país desconhecida"
+
+#. translators: %s: country name.
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+msgid "Flag of %s"
+msgstr "Bandeira de %s"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+msgid "Top countries"
+msgstr "Principais países"
+
+#: src/admin/panels/GeoCountriesPanel.js
+#, fuzzy
+msgid "Legacy visits"
+msgstr "Visitantes diários"
+
+#: src/admin/panels/GeolocationPanel.js
+msgid "Countries"
+msgstr "Países"
+
+#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+msgid "Url"
+msgstr "URL"
+
+#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+msgid "No popular pages available."
+msgstr "Nenhuma página popular disponível."
+
+#: src/admin/panels/OverviewPanel.js
+msgid "Top referrers"
+msgstr "Principais origens"
+
+#: src/admin/panels/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Referrer"
+msgstr "Referenciador"
+
+#: src/admin/panels/OverviewPanel.js
+msgid "No referrers available."
+msgstr "Nenhum referenciador disponível."
+
+#: src/admin/panels/OverviewPanel.js
+msgid "Hourly heatmap global"
+msgstr "Mapa de calor horário global"
+
+#: src/admin/panels/OverviewPanel.js
+msgid "Global hourly heatmap by day and hour"
+msgstr "Mapa de calor horário global por dia e hora"
+
+#: src/admin/panels/OverviewPanel.js
+msgid "No global hourly data available for this period."
+msgstr "Nenhum dado horário global disponível para este período."
+
+#: src/admin/panels/OverviewPanel.js
+msgid "Global hourly heatmaps require hourly page aggregation data."
+msgstr ""
+"Os mapas de calor horários globais requerem dados de agregação horária de "
+"páginas."
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "Hash do ID do visitante"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "Hora de ligação"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "Página atual"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "Versão do navegador"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "Resolução"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Fullscreen is unavailable in this browser context."
+msgstr "O ecrã inteiro está indisponível neste contexto do navegador."
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Loading real-time data…"
+msgstr "A carregar dados em tempo real…"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgstr "Visitante"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Exit fullscreen"
+msgstr "Sair do ecrã inteiro"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Fullscreen"
+msgstr "Ecrã inteiro"
+
+#: src/admin/panels/RealtimePanel.js
+msgid ""
+"Essential-only scope: enriched visit details and precise map markers are "
+"unavailable."
+msgstr ""
+"Âmbito apenas essencial: detalhes de visita enriquecidos e marcadores de "
+"mapa precisos estão indisponíveis."
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Table: Real-time visitors"
+msgstr "Tabela: visitantes em tempo real"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "No visits in the current activity window."
+msgstr "Sem visitas na janela de atividade atual."
+
+#: src/admin/panels/SearchTermsPanel.js
+msgid "Search terms"
+msgstr "Termos de pesquisa"
+
+#: src/admin/panels/SearchTermsPanel.js
+msgid "Search term"
+msgstr "Termo de pesquisa"
+
+#: src/admin/panels/SearchTermsPanel.js
+msgid "No search terms available."
+msgstr "Nenhum termo de pesquisa disponível."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Disabled"
+msgstr "Desativado"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 30 days (default)"
+msgstr "A cada 30 dias (predefinição)"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Keep report details for %(days)s days"
+msgstr "Keep report details for %(days)s days"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Keep report details for 1 year"
+msgstr "Keep report details for 1 year"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Keep report details for %(years)s years"
+msgstr "Keep report details for %(years)s years"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Keep totals for 1 year"
+msgstr "Keep totals for 1 year"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Keep totals for %(years)s years"
+msgstr "Keep totals for %(years)s years"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Run every day"
+msgstr "Executar todos os dias"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Run every %(days)s days"
+msgstr "Executar a cada %(days)s dias"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Data scope list"
+msgstr "Lista de âmbito dos dados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Unable to load the GeoIP database status."
+msgstr "Não foi possível carregar o estado da base de dados GeoIP."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Settings saved."
+msgstr "Definições guardadas."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Error while saving."
+msgstr "Erro ao guardar."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Unable to connect to MaxMind."
+msgstr "Não foi possível ligar à MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Unable to update the GeoIP database."
+msgstr "Não foi possível atualizar a base de dados GeoIP."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Pending schedule"
+msgstr "Agendamento pendente"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "ok"
+msgstr "ok"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "error"
+msgstr "erro"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "pending"
+msgstr "pendente"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Analytics data purged."
+msgstr "Dados de analytics purgados."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Error while purging."
+msgstr "Erro ao purgar."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Aggregated analytics data purged."
+msgstr "Dados de analytics agregados purgados."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Stats"
+msgstr "Estatísticas"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to dashboards, KPI cards, and analytics reports."
+msgstr "Acesso a painéis, cartões de KPI e relatórios de analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to plugin configuration and administration options."
+msgstr "Acesso à configuração do plugin e às opções de administração."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to the plugin Contact page."
+msgstr "Acesso à página de Contacto do plugin."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "General"
+msgstr "Geral"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Tracking & privacy"
+msgstr "Rastreio e privacidade"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "App"
+msgstr "App"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Maintenance"
+msgstr "Manutenção"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "PWA URL is unavailable."
+msgstr "O URL da PWA está indisponível."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "PWA URL copied."
+msgstr "URL da PWA copiado."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Unable to copy the PWA URL."
+msgstr "Não foi possível copiar o URL da PWA."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Loading settings…"
+msgstr "A carregar definições…"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Role access"
+msgstr "Acesso por função"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Administrators keep full access. Select additional roles that can open "
+"analytics pages, plugin settings, or the Contact page."
+msgstr ""
+"Os administradores mantêm acesso total. Selecione funções adicionais que "
+"possam abrir páginas de analytics, definições do plugin ou a página de "
+"Contacto."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No additional roles available."
+msgstr "Nenhuma função adicional disponível."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Allowed"
+msgstr "Permitido"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Hidden"
+msgstr "Oculto"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Interface branding"
+msgstr "Identidade da interface"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "White-label interface controls are available in Pro."
+msgstr "Os controlos da interface de marca branca estão disponíveis no Pro."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Use white-label interface"
+msgstr "Usar interface de marca branca"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Hide the BimBeau Privacy Analytics logo in the admin header and display the "
+"localized analytics title instead."
+msgstr ""
+"Oculta o logótipo do BimBeau Privacy Analytics no cabeçalho de administração "
+"e apresenta o título de estatísticas localizado em alternativa."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Enabled panels"
+msgstr "Painéis ativados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visible"
+msgstr "Visível"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
+msgstr ""
+"Oculto enquanto \"Ativar estatísticas avançadas após consentimento\" estiver "
+"desativado."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Quick stats"
+msgstr "Estatísticas rápidas"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Enable Quick Stats on selected post types: add a Views (30d) column in the "
+"posts list and display a stats summary metabox while editing each post."
+msgstr ""
+"Ative Estatísticas rápidas nos tipos de conteúdo selecionados: adicione uma "
+"coluna Visualizações (30d) na lista de artigos e mostre uma metabox de "
+"resumo estatístico ao editar cada artigo."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No post types available."
+msgstr "Nenhum tipo de conteúdo disponível."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
+"database or MaxMind API."
+msgstr ""
+"Escolha como o BimBeau Privacy Analytics resolve a geolocalização: base de "
+"dados GeoLite local ou API MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Geolocation source"
+msgstr "Origem da geolocalização"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Local GeoLite database (default)"
+msgstr "Base de dados GeoLite local (predefinição)"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind API credentials"
+msgstr "Credenciais da API MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid ""
+"Local database mode downloads the GeoLite MMDB file through the official "
+"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
+msgstr ""
+"O modo de base de dados local descarrega o ficheiro MMDB GeoLite a partir "
+"dos mirrors do BimBeau Privacy Analytics. O modo API usa pedidos MaxMind em "
+"tempo real."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind Account ID"
+msgstr "ID da conta MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Numeric Account ID used for MaxMind API requests."
+msgstr "ID numérico da conta usado para pedidos à API MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind License Key"
+msgstr "Chave de licença MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "License Key used for MaxMind API requests."
+msgstr "Chave de licença usada para pedidos à API MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Test MaxMind connection"
+msgstr "Testar ligação à MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Automatic GeoIP database updates"
+msgstr "Atualizações automáticas da base de dados GeoIP"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Controls the cron frequency for local GeoIP database updates."
+msgstr ""
+"Controla a frequência cron para atualizações da base de dados GeoIP local."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Update now"
+msgstr "Atualizar agora"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Current state"
+msgstr "Estado atual"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last attempt"
+msgstr "Última tentativa"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Next scheduled retry"
+msgstr "Nova tentativa agendada"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last successful update"
+msgstr "Última atualização bem-sucedida"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Database size"
+msgstr "Tamanho da base de dados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last error code"
+msgstr "Último código de erro"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Retry count"
+msgstr "Número de tentativas"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Behavior: plugin activation completes quickly, and temporary local database "
+"unavailability does not block the rest of BimBeau Privacy Analytics."
+msgstr ""
+"Comportamento: a ativação do plugin termina rapidamente e a "
+"indisponibilidade temporária da base de dados local não bloqueia o resto do "
+"BimBeau Privacy Analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Privacy"
+msgstr "Privacidade"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced stats require consent"
+msgstr "As estatísticas avançadas requerem consentimento"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential stats only"
+msgstr "Apenas estatísticas essenciais"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Essential stats run without consent. Advanced stats run only after "
+"Statistics / Analytics consent."
+msgstr ""
+"As estatísticas essenciais funcionam sem consentimento. As estatísticas "
+"avançadas funcionam apenas após consentimento de Estatísticas / Analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential stats"
+msgstr "Estatísticas essenciais"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No consent required"
+msgstr "Sem consentimento obrigatório"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Limited audience stats only. No ads, no cross-site tracking, no third-party "
+"reuse."
+msgstr ""
+"Apenas estatísticas de audiência limitadas. Sem anúncios, sem rastreio entre "
+"sites e sem reutilização por terceiros."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential data"
+msgstr "Dados essenciais"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script:"
+msgstr "Script:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced stats"
+msgstr "Estatísticas avançadas"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Requires consent"
+msgstr "Requer consentimento"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Adds detailed visit insights after consent."
+msgstr "Adiciona informações detalhadas de visita após consentimento."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Enable advanced stats after consent"
+msgstr "Ativar estatísticas avançadas após consentimento"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Your CMP must block it until Statistics / Analytics consent is given."
+msgstr ""
+"A sua CMP deve bloqueá-lo até ser dado consentimento de Estatísticas / "
+"Analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced data"
+msgstr "Dados avançados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "CMP setup"
+msgstr "Configuração da CMP"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Block the advanced stats script until Statistics / Analytics consent is "
+"given."
+msgstr ""
+"Bloqueie o script de estatísticas avançadas até ser dado consentimento de "
+"Estatísticas / Analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script to block:"
+msgstr "Script a bloquear:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Alternative selectors:"
+msgstr "Seletores alternativos:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script ID:"
+msgstr "ID do script:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "WordPress handle:"
+msgstr "Handle do WordPress:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "What is a CMP?"
+msgstr "O que é uma CMP?"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"A CMP manages cookie consent on your website. It shows the cookie banner, "
+"stores visitor choices, and allows or blocks analytics scripts based on "
+"consent."
+msgstr ""
+"Uma CMP gere o consentimento de cookies no seu site. Mostra o banner de "
+"cookies, guarda as escolhas dos visitantes e permite ou bloqueia scripts de "
+"analytics com base no consentimento."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Examples:"
+msgstr "Exemplos:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"In your CMP, block the BimBeau Privacy Analytics advanced stats script until "
+"the Statistics or Analytics purpose is accepted."
+msgstr ""
+"Na sua CMP, bloqueie o script de estatísticas avançadas do BimBeau Privacy "
+"Analytics até que a finalidade Estatísticas ou Analytics seja aceite."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Advanced stats are disabled. BimBeau Privacy Analytics will only use "
+"essential stats."
+msgstr ""
+"As estatísticas avançadas estão desativadas. O BimBeau Privacy Analytics "
+"usará apenas estatísticas essenciais."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Respect DNT / GPC"
+msgstr "Respeitar DNT / GPC"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Stop measurement when the visitor’s browser sends a Do Not Track or Global "
+"Privacy Control signal."
+msgstr ""
+"Parar a medição quando o navegador do visitante enviar um sinal Do Not Track "
+"ou Global Privacy Control."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visit measurement"
+msgstr "Medição de visitas"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Defines how long visitor activity can remain grouped under the same visitor "
+"row before a new row is started after inactivity."
+msgstr ""
+"Define durante quanto tempo a atividade de um visitante pode permanecer "
+"agrupada na mesma linha de visitante antes de ser iniciada uma nova linha "
+"após inatividade."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visitor activity window"
+msgstr "Janela de atividade do visitante"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Defines how long activity from the same visitor can remain grouped into one "
+"visitor row. After this period of inactivity, BimBeau Privacy Analytics "
+"starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 "
+"hours)."
+msgstr ""
+"Define durante quanto tempo a atividade do mesmo visitante pode permanecer "
+"agrupada numa única linha de visitante. Após este período de inatividade, o "
+"BimBeau Privacy Analytics inicia uma nova linha de visitante. Intervalo: 300 "
+"a 86400 segundos (5 minutos a 24 horas)."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "URLs & campaigns"
+msgstr "URLs e campanhas"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Control URL cleanup behavior and keep only campaign query parameters that "
+"should remain available for attribution."
+msgstr ""
+"Controle o comportamento de limpeza de URLs e mantenha apenas os parâmetros "
+"de consulta de campanha que devem permanecer disponíveis para atribuição."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Clean URL query parameters"
+msgstr "Limpar parâmetros de consulta do URL"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Remove query parameters from tracked URLs."
+msgstr "Remover parâmetros de consulta dos URLs rastreados."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Allowed query parameters"
+msgstr "Parâmetros de consulta permitidos"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Comma-separated list of allowed query keys (used for URL tracking and UTM "
+"aggregation)."
+msgstr ""
+"Lista separada por vírgulas de chaves de consulta permitidas (usada para "
+"rastreio de URLs e agregação UTM)."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Data retention"
+msgstr "Retenção de dados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose how long to keep temporary detailed events, report details, and long-"
+"term totals, then how often cleanup runs."
+msgstr ""
+"Choose how long to keep temporary detailed events, report details, and long-"
+"term totals, then how often cleanup runs."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Temporary detailed events retention (days)"
+msgstr "Retenção de eventos detalhados temporários (dias)"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Used mainly for real-time and diagnostics. Not related to Debug mode."
+msgstr "Used mainly for real-time and diagnostics. Not related to Debug mode."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Report details retention"
+msgstr "Retenção dos detalhes dos relatórios"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Keeps detailed report dimensions such as pages, referrers, countries, "
+"devices, and visitor details."
+msgstr ""
+"Keeps detailed report dimensions such as pages, referrers, countries, "
+"devices, and visitor details."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Long-term totals retention"
+msgstr "Retenção dos totais a longo prazo"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
+"chart after report details expire."
+msgstr ""
+"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
+"chart after report details expire."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Cleanup permanently removes expired details, while long-term totals remain "
+"available until their own retention window ends."
+msgstr ""
+"Cleanup permanently removes expired details, while long-term totals remain "
+"available until their own retention window ends."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Automatic cleanup frequency"
+msgstr "Frequência da limpeza automática"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Defines how often WordPress checks for expired analytics data."
+msgstr "Defines how often WordPress checks for expired analytics data."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Exclusions"
+msgstr "Exclusões"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Select roles to exclude from tracking. Select all roles to ignore all logged-"
+"in users."
+msgstr ""
+"Selecione funções a excluir do rastreio. Selecione todas as funções para "
+"ignorar todos os utilizadores com sessão iniciada."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No roles available."
+msgstr "Nenhuma função disponível."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Debug"
+msgstr "Depuração"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Enable diagnostic output for troubleshooting tracking events, realtime "
+"visitor detection, and REST payloads in the browser console and wp-content/"
+"debug.log."
+msgstr ""
+"Ative a saída de diagnóstico para resolver eventos de rastreio, deteção de "
+"visitantes em tempo real e payloads REST na consola do navegador e em wp-"
+"content/debug.log."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Debug mode"
+msgstr "Modo de depuração"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Writes detailed diagnostic logs to the console and to wp-content/debug.log "
+"when WordPress debug logging is enabled."
+msgstr ""
+"Grava registos de diagnóstico detalhados na consola e em wp-content/debug."
+"log quando o registo de depuração do WordPress está ativado."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cleanup actions"
+msgstr "Ações de limpeza"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Run retention cleanup immediately to remove only data older than the "
+"configured retention window."
+msgstr ""
+"Execute a limpeza de retenção imediatamente para remover apenas dados mais "
+"antigos do que a janela de retenção configurada."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Run cleanup now"
+msgstr "Executar limpeza agora"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete plugin tables on uninstall"
+msgstr "Eliminar tabelas do plugin ao desinstalar"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
+"analytics tables from the WordPress database."
+msgstr ""
+"Quando ativado, a desinstalação do BimBeau Privacy Analytics elimina todas "
+"as tabelas de analytics do plugin da base de dados WordPress."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Sensitive actions"
+msgstr "Ações sensíveis"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
+"entries."
+msgstr ""
+"Remova todos os analytics agregados de KPI, analytics de detalhes de "
+"visitantes e entradas de registos brutos."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete all analytics data"
+msgstr "Eliminar todos os dados de analytics"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Save settings"
+msgstr "Guardar definições"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Save"
+msgstr "Guardar"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Confirm data purge"
+msgstr "Confirmar purga de dados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"This action permanently removes all stored analytics and raw logs. Settings "
+"remain unchanged."
+msgstr ""
+"Esta ação remove permanentemente todos os analytics armazenados e registos "
+"brutos. As definições permanecem inalteradas."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "I confirm that I want to permanently purge all analytics data."
+msgstr ""
+"Confirmo que pretendo purgar permanentemente todos os dados de analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Purge now"
+msgstr "Purgar agora"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Confirm aggregated data purge"
+msgstr "Confirmar purga de dados agregados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"This action runs retention cleanup immediately and removes only rows older "
+"than the configured window."
+msgstr ""
+"Esta ação executa imediatamente a limpeza de retenção e remove apenas linhas "
+"mais antigas do que a janela configurada."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"I confirm that I want to purge only data older than the configured retention "
+"window."
+msgstr ""
+"Confirmo que pretendo purgar apenas dados mais antigos do que a janela de "
+"retenção configurada."
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Smartphone"
+msgstr "Smartphone"
+
+#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
+#: src/admin/panels/TopPagesPanel.js
+msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Daily page detail line chart"
+msgstr "Gráfico de linhas dos detalhes diários da página"
+
+#. translators: 1: metric label, 2: metric value.
+#: src/admin/panels/TopPagesPanel.js
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Ascending"
+msgstr "Ascendente"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Descending"
+msgstr "Descendente"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Accueil"
+msgstr "Início"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "System"
+msgstr "Sistema"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Summary"
+msgstr "Resumo"
+
+#. translators: %s: Formatted average time spent on the page.
+#: src/admin/panels/TopPagesPanel.js
+msgid "Avg. time on page: %s"
+msgstr "Tempo médio na página: %s"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Back"
+msgstr "Voltar"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Open in WordPress"
+msgstr "Abrir no WordPress"
+
+#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views"
+msgstr "Visualizações diárias"
+
+#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. page views"
+msgstr "Visualiz. pág. ant."
+
+#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. visitors"
+msgstr "Visitantes ant."
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "No details available for this page."
+msgstr "Nenhum detalhe disponível para esta página."
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Hourly heatmap"
+msgstr "Mapa de calor horário"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Page views list"
+msgstr "Lista de visualizações"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Sort by"
+msgstr "Ordenar por"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Date"
+msgstr "Data"
+
+#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
+msgid "Display"
+msgstr "Mostrar"
+
+#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
+msgid "URL"
+msgstr "URL"
+
+#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
+msgid "Title"
+msgstr "Título"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Table: Page details by date"
+msgstr "Tabela: detalhes da página por data"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "Anterior"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Seguinte"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "of"
+msgstr "de"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "items"
+msgstr "itens"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "No country data available."
+msgstr "Nenhum dado de país disponível."
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Top cities"
+msgstr "Principais cidades"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "No city data available."
+msgstr "Nenhum dado de cidade disponível."
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Top pages"
+msgstr "Principais páginas"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Avg. time on page:"
+msgstr "Tempo médio na página:"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Top 404s"
+msgstr "Principais 404"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "No missing pages available."
+msgstr "Nenhuma página em falta disponível."
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Entry pages (approx.)"
+msgstr "Páginas de entrada (aprox.)"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "No entry pages available."
+msgstr "Nenhuma página de entrada disponível."
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Entries (approx.)"
+msgstr "Entradas (aprox.)"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Exit pages"
+msgstr "Páginas de saída"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "No exit pages available."
+msgstr "Nenhuma página de saída disponível."
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Exits (approx.)"
+msgstr "Saídas (aprox.)"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Entry pages"
+msgstr "Páginas de entrada"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "Pages not found"
+msgstr "Páginas não encontradas"
+
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No visitor data available."
+msgstr "Nenhum dado de visitante disponível."
+
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Loading visitors…"
+msgstr "A carregar visitantes…"
+
+#. translators: %s: page views count.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "%s page view"
+msgid_plural "%s page views"
+msgstr[0] "%s visualização de página"
+msgstr[1] "%s visualizações de página"
+
+#. translators: %s: percentage value.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "%1$s%% share"
+msgstr "%1$s%% de quota"
+
+#. translators: %s: total page views in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Based on %s tracked page views in the selected range."
+msgstr ""
+"Com base em %s visualizações de página registadas no intervalo selecionado."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No audience breakdowns available."
+msgstr "Nenhuma repartição de audiência disponível."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Loading audience breakdowns…"
+msgstr "A carregar repartições de audiência…"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Browser usage"
+msgstr "Uso de navegadores"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No browser usage available."
+msgstr "Nenhum dado de utilização de navegadores disponível."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Most used operating systems"
+msgstr "Sistemas operativos mais usados"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No operating system usage available."
+msgstr "Nenhum dado de utilização de sistemas operativos disponível."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Device usage breakdown"
+msgstr "Repartição da utilização por dispositivo"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No device usage available."
+msgstr "Nenhum dado de utilização por dispositivo disponível."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No resolution data available."
+msgstr "Nenhum dado de resolução disponível."
+
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "Operating systems"
+msgstr "Sistemas operativos"
+
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "Browsers"
+msgstr "Navegadores"
+
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "Screen resolutions"
+msgstr "Resoluções de ecrã"
+
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "Browser versions"
+msgstr "Versões de navegador"
+
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "Device details"
+msgstr "Detalhes do dispositivo"
+
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "No device details available."
+msgstr "Nenhum detalhe de dispositivo disponível."
+
+#: src/admin/widgets/DeviceDetailsCard/index.js
+msgid "Loading device details…"
+msgstr "A carregar detalhes do dispositivo…"
+
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Device page views"
+msgstr "Visualizações por dispositivo"
+
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "No device data available."
+msgstr "Nenhum dado de dispositivo disponível."
+
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Loading device breakdown…"
+msgstr "A carregar repartição por dispositivo…"
+
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "view"
+msgid_plural "views"
+msgstr[0] "visualização"
+msgstr[1] "visualizações"
+
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "No overview metrics available."
+msgstr "Nenhuma métrica de visão geral disponível."
+
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Loading KPIs…"
+msgstr "A carregar KPIs…"
+
+#: src/admin/widgets/OverviewKpis/index.js
+msgid ""
+"Visitors correspond to bounded visitor activity rows in the selected period."
+msgstr ""
+"Os visitantes correspondem a linhas delimitadas de atividade de visitante no "
+"período selecionado."
+
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Pages / visit"
+msgstr "Páginas / visita"
+
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Average number of page views per visit."
+msgstr "Número médio de visualizações de página por visita."
+
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Avg. duration"
+msgstr "Duração média"
+
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Average active time spent during a visit."
+msgstr "Tempo ativo médio durante uma visita."
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Custom"
+msgstr "Personalizado"
+
+#. translators: 1: start date, 2: end date.
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "%1$s – %2$s"
+msgstr "%1$s – %2$s"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Quick ranges"
+msgstr "Intervalos rápidos"
+
+#. translators: %s: current sort order label.
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Toggle sort order"
+msgstr "Alternar ordem de ordenação"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Table: Referring sites"
+msgstr "Tabela: sites de referência"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Referrer unavailable"
+msgstr "Nenhum referenciador disponível."
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "No referring site data available."
+msgstr "Nenhum dado de site de referência disponível."
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Loading referring sites…"
+msgstr "A carregar sites de referência…"
+
+#. translators: %s: active first-column label.
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "label"
+msgstr "rótulo"
+
+#. translators: %s: table title.
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Table"
+msgstr "Tabela"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Loading"
+msgstr "A carregar"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Open row"
+msgstr "Abrir linha"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Open details"
+msgstr "Abrir detalhes"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Open"
+msgstr "Abrir"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Previous page views"
+msgstr "Visualizações de página anteriores"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Previous visitors"
+msgstr "Visitantes anteriores"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views and visitors"
+msgstr "Visualizações de página e visitantes diários"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views and visitors line chart"
+msgstr "Gráfico de linhas de visualizações de página e visitantes diários"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views line chart"
+msgstr "Gráfico de linhas de visualizações de página diárias"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "page view"
+msgid_plural "page views"
+msgstr[0] "visualização de página"
+msgstr[1] "visualizações de página"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily visitors"
+msgstr "Visitantes diários"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily visitors line chart"
+msgstr "Gráfico de linhas de visitantes diários"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "visitor"
+msgid_plural "visitors"
+msgstr[0] "visitante"
+msgstr[1] "visitantes"
+
+#. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid ""
+"%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous "
+"visitors %5$s"
+msgstr ""
+"%1$s: Visualizações de página %2$s, visitantes %3$s, visualizações de página "
+"anteriores %4$s, visitantes anteriores %5$s"
+
+#. translators: 1: formatted date, 2: current metric count, 3: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "%1$s: Current %2$s, Previous %3$s"
+msgstr "%1$s: Atual %2$s, Anterior %3$s"
+
+#. translators: 1: formatted date, 2: page view count, 3: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "%1$s: %2$s, %3$s"
+msgstr "%1$s: %2$s, %3$s"
+
+#. translators: 1: page view count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Page views: %1$s"
+msgstr "Visualizações de página: %1$s"
+
+#. translators: 1: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Visitors: %1$s"
+msgstr "Visitantes: %1$s"
+
+#. translators: 1: previous page view count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Previous page views: %1$s"
+msgstr "Visualizações de página anteriores: %1$s"
+
+#. translators: 1: previous visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Previous visitors: %1$s"
+msgstr "Visitantes anteriores: %1$s"
+
+#. translators: 1: current metric count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Current: %1$s"
+msgstr "Atual: %1$s"
+
+#. translators: 1: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Previous: %1$s"
+msgstr "Anterior: %1$s"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "No data available for this period."
+msgstr "Nenhum dado disponível para este período."
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Loading chart…"
+msgstr "A carregar gráfico…"
+
+#. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Current %s"
+msgstr "%s atual"
+
+#. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Previous %s"
+msgstr "%s anterior"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "0s"
+msgstr "0s"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Active time"
+msgstr "Tempo ativo"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Entry channel"
+msgstr "Páginas de entrada"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Private"
+msgstr "Privado"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Table: Visitors"
+msgstr "Tabela: visitantes"
+
+#~ msgid "BimBeau Privacy Analytics front analytics app."
+#~ msgstr "Aplicação front-end de analytics do BimBeau Privacy Analytics."
+
+#~ msgid "BimBeau Privacy Analytics sign in"
+#~ msgstr "Início de sessão no BimBeau Privacy Analytics"
+
+#~ msgid ""
+#~ "Sign in with a WordPress account that can access BimBeau Privacy "
+#~ "Analytics analytics."
+#~ msgstr ""
+#~ "Inicie sessão com uma conta WordPress que possa aceder aos analytics do "
+#~ "BimBeau Privacy Analytics."
+
+#~ msgid "Username or email"
+#~ msgstr "Nome de utilizador ou email"
+
+#~ msgid "Password"
+#~ msgstr "Palavra-passe"
+
+#~ msgid "Remember me"
+#~ msgstr "Lembrar-me"
+
+#~ msgid "Sign in"
+#~ msgstr "Iniciar sessão"
+
+#~ msgid "Open WordPress login"
+#~ msgstr "Abrir início de sessão do WordPress"
+
+#~ msgid "Authentication failed. Verify credentials and access policy."
+#~ msgstr ""
+#~ "A autenticação falhou. Verifique as credenciais e a política de acesso."
+
+#~ msgid "Custom login flow is unavailable in this environment."
+#~ msgstr ""
+#~ "O fluxo de início de sessão personalizado não está disponível neste "
+#~ "ambiente."
+
+#~ msgid "BimBeau Privacy Analytics App is available in Pro only."
+#~ msgstr ""
+#~ "A aplicação BimBeau Privacy Analytics está disponível apenas na versão "
+#~ "Pro."
+
+#~ msgid "You are not allowed to access this page."
+#~ msgstr "Não tem permissão para aceder a esta página."
+
+#~ msgid "BimBeau Privacy Analytics icon"
+#~ msgstr "Ícone BimBeau Privacy Analytics"
+
+#~ msgid "Loading analytics workspace…"
+#~ msgstr "A carregar área de trabalho de analytics…"
+
+#~ msgid "Custom login flow is blocked by policy."
+#~ msgstr ""
+#~ "O fluxo de início de sessão personalizado está bloqueado pela política."
+
+#~ msgid "Invalid login request."
+#~ msgstr "Pedido de início de sessão inválido."
+
+#~ msgid "The authenticated account cannot access BimBeau Privacy Analytics."
+#~ msgstr "A conta autenticada não pode aceder ao BimBeau Privacy Analytics."
+
+#~ msgid "Authentication failed. Verify credentials and retry."
+#~ msgstr "A autenticação falhou. Verifique as credenciais e tente novamente."
+
+#~ msgid "View page details"
+#~ msgstr "Ver detalhes da página"
+
+#~ msgid "Visitor profile"
+#~ msgstr "Perfil do visitante"
+
+#~ msgid "No visitor profile data available for this period."
+#~ msgstr "Nenhum dado de perfil de visitante disponível para este período."
+
+#~ msgid "Plus de stats"
+#~ msgstr "Mais estatísticas"
+
+#, php-format
+#~ msgid "%ds"
+#~ msgstr "%ds"
+
+#, php-format
+#~ msgid "%1$dm %2$ds"
+#~ msgstr "%1$dm %2$ds"
+
+#, php-format
+#~ msgid "%1$dh %2$dm"
+#~ msgstr "%1$dh %2$dm"
+
+#, php-format
+#~ msgid "Views (%s)"
+#~ msgstr "Visualizações (%s)"
+
+#~ msgid "Views trend"
+#~ msgstr "Tendência das visualizações"
+
+#~ msgid "Page-level details are available in BimBeau Privacy Analytics Pro."
+#~ msgstr ""
+#~ "Os detalhes ao nível da página estão disponíveis no BimBeau Privacy "
+#~ "Analytics Pro."
+
+#~ msgid "Missing page path."
+#~ msgstr "Caminho da página em falta."
+
+#~ msgid "Authentication is required to export analytics data."
+#~ msgstr "É necessária autenticação para exportar dados de analytics."
+
+#~ msgid "Report exports are available in BimBeau Privacy Analytics Pro."
+#~ msgstr ""
+#~ "As exportações de relatórios estão disponíveis no BimBeau Privacy "
+#~ "Analytics Pro."
+
+#~ msgid "You do not have permission to export analytics data."
+#~ msgstr "Não tem permissão para exportar dados de analytics."
+
+#~ msgid "A valid request nonce is required to export analytics data."
+#~ msgstr ""
+#~ "É necessário um nonce de pedido válido para exportar dados de analytics."
+
+#~ msgid "The export format must be csv, json, or xlsx."
+#~ msgstr "O formato de exportação deve ser csv, json ou xlsx."
+
+#~ msgid "The selected report cannot be exported."
+#~ msgstr "O relatório selecionado não pode ser exportado."
+
+#, php-format
+#~ msgid ""
+#~ "The export is larger than the %d row synchronous threshold. Request async "
+#~ "mode and poll the job status endpoint."
+#~ msgstr ""
+#~ "A exportação excede o limite síncrono de %d linhas. Solicite o modo "
+#~ "assíncrono e consulte o endpoint de estado da tarefa."
+
+#~ msgid ""
+#~ "The export file is no longer available. Create a new export job and try "
+#~ "again."
+#~ msgstr ""
+#~ "O ficheiro de exportação já não está disponível. Crie uma nova tarefa de "
+#~ "exportação e tente novamente."
+
+#~ msgid ""
+#~ "The export file is not ready yet. Check the job status endpoint before "
+#~ "downloading."
+#~ msgstr ""
+#~ "O ficheiro de exportação ainda não está pronto. Verifique o endpoint de "
+#~ "estado da tarefa antes de transferir."
+
+#~ msgid "The selected report is not available for export."
+#~ msgstr "O relatório selecionado não está disponível para exportação."
+
+#~ msgid "The selected report does not expose file export rows."
+#~ msgstr ""
+#~ "O relatório selecionado não disponibiliza linhas para exportação de "
+#~ "ficheiro."
+
+#~ msgid "The selected report does not expose exportable columns."
+#~ msgstr "O relatório selecionado não disponibiliza colunas exportáveis."
+
+#~ msgid "The CSV export could not be generated."
+#~ msgstr "Não foi possível gerar a exportação CSV."
+
+#~ msgid "The Excel export could not be generated."
+#~ msgstr "Não foi possível gerar a exportação Excel."
+
+#~ msgid "The export job could not be created. Try again later."
+#~ msgstr ""
+#~ "Não foi possível criar a tarefa de exportação. Tente novamente mais tarde."
+
+#~ msgid "The export storage directory is unavailable."
+#~ msgstr "A pasta de armazenamento de exportações está indisponível."
+
+#~ msgid "The export storage path is invalid."
+#~ msgstr "O caminho de armazenamento de exportações é inválido."
+
+#~ msgid "The JSON export could not be generated."
+#~ msgstr "Não foi possível gerar a exportação JSON."
+
+#~ msgid "The export file could not be written."
+#~ msgstr "Não foi possível escrever o ficheiro de exportação."
+
+#~ msgid ""
+#~ "The export could not be generated. Try again later or narrow the export "
+#~ "filters."
+#~ msgstr ""
+#~ "Não foi possível gerar a exportação. Tente novamente mais tarde ou reduza "
+#~ "os filtros de exportação."
+
+#~ msgid "The export job was not found."
+#~ msgstr "A tarefa de exportação não foi encontrada."
+
+#~ msgid "The export job was not found or has expired."
+#~ msgstr "A tarefa de exportação não foi encontrada ou expirou."
+
+#~ msgid "KPI slot must be a numeric integer greater than or equal to 2."
+#~ msgstr "O espaço de KPI deve ser um número inteiro maior ou igual a 2."
+
+#~ msgid ""
+#~ "KPI slot format is invalid. Use only a numeric integer greater than or "
+#~ "equal to 2."
+#~ msgstr ""
+#~ "O formato do espaço de KPI é inválido. Use apenas um número inteiro maior "
+#~ "ou igual a 2."
+
+#~ msgid "The selected PWA icon must be at least 512x512 pixels."
+#~ msgstr "O ícone PWA selecionado deve ter pelo menos 512x512 píxeis."
+
+#~ msgid "The selected PWA icon file cannot be read."
+#~ msgstr "O ficheiro do ícone PWA selecionado não pode ser lido."
+
+#~ msgid ""
+#~ "WordPress image editor cannot generate PWA icons from the selected source."
+#~ msgstr ""
+#~ "O editor de imagens do WordPress não consegue gerar ícones PWA a partir "
+#~ "da origem selecionada."
+
+#~ msgid "WordPress image editor cannot resize the selected PWA icon source."
+#~ msgstr ""
+#~ "O editor de imagens do WordPress não consegue redimensionar a origem do "
+#~ "ícone PWA selecionado."
+
+#~ msgid "WordPress image editor cannot save generated PWA PNG icons."
+#~ msgstr ""
+#~ "O editor de imagens do WordPress não consegue guardar os ícones PWA PNG "
+#~ "gerados."
+
+#~ msgid "Select a media library image to generate PWA PNG icons."
+#~ msgstr ""
+#~ "Selecione uma imagem da biblioteca multimédia para gerar ícones PWA PNG."
+
+#~ msgid "BimBeau Privacy Analytics Pro feature preview"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#~ msgid "No city data available for the selected period."
+#~ msgstr "Nenhum dado de cidade disponível para o período selecionado."
+
+#~ msgid "City / Country"
+#~ msgstr "Cidade / País"
+
+#~ msgid "Hits"
+#~ msgstr "Acessos"
+
+#~ msgid "Cities"
+#~ msgstr "Cidades"
+
+#~ msgid "Captured events data purged."
+#~ msgstr "Dados de eventos capturados purgados."
+
+#~ msgid "Delete captured events list"
+#~ msgstr "Eliminar lista de eventos capturados"
+
+#~ msgid "Events configuration"
+#~ msgstr "Configuração de eventos"
+
+#~ msgid "Confirm captured events purge"
+#~ msgstr "Confirmar purga de eventos capturados"
+
+#~ msgid ""
+#~ "This action permanently removes the captured events list shown in Events "
+#~ "stats. Other analytics data remains unchanged."
+#~ msgstr ""
+#~ "Esta ação remove permanentemente a lista de eventos capturados mostrada "
+#~ "nas estatísticas de eventos. Os restantes dados de analytics permanecem "
+#~ "inalterados."
+
+#~ msgid "I confirm that I want to permanently purge the captured events list."
+#~ msgstr ""
+#~ "Confirmo que pretendo purgar permanentemente a lista de eventos "
+#~ "capturados."
+
+#~ msgid "Purge captured events"
+#~ msgstr "Purgar eventos capturados"
+
+#~ msgid "BimBeau Privacy Analytics events analytics feature preview"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#, fuzzy
+#~ msgid "Export reports with confidence"
+#~ msgstr "Exportar relatório"
+
+#~ msgid "BimBeau Privacy Analytics report export feature preview"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#~ msgid "BimBeau Privacy Analytics top pages feature preview"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#~ msgid "BimBeau Privacy Analytics quick stats feature preview"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#~ msgid "BimBeau Privacy Analytics geolocation feature preview"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#~ msgid "BimBeau Privacy Analytics app feature preview"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#~ msgid "BimBeau Privacy Analytics feature highlights"
+#~ msgstr "Pré-visualização de funcionalidade BimBeau Privacy Analytics Pro"
+
+#, fuzzy
+#~ msgid "Previous feature"
+#~ msgstr "Página anterior"
+
+#, fuzzy
+#~ msgid "Next feature"
+#~ msgstr "Página seguinte"
+
+#, fuzzy, php-format
+#~ msgid "Feature %1$s of %2$s"
+#~ msgstr "Período: de %1$s a %2$s"
+
+#~ msgid "GeoIP archive contains a suspicious file path."
+#~ msgstr "O arquivo GeoIP contém um caminho de ficheiro suspeito."
+
+#~ msgid "Unable to extract GeoIP MMDB file from archive."
+#~ msgstr "Não foi possível extrair o ficheiro MMDB GeoIP do arquivo."
+
+#~ msgid "GeoIP MMDB file is missing from the archive."
+#~ msgstr "O ficheiro MMDB GeoIP está em falta no arquivo."
+
+#, php-format
+#~ msgid "GeoIP extraction failed: %s"
+#~ msgstr "A extração GeoIP falhou: %s"
+
+#~ msgid "Source category"
+#~ msgstr "Categoria da origem"
+
+#~ msgid ""
+#~ "Set retention periods for raw logs and aggregated analytics data, and "
+#~ "choose how often automated cleanup runs."
+#~ msgstr ""
+#~ "Defina períodos de retenção para registos brutos e dados de analytics "
+#~ "agregados, e escolha a frequência de execução da limpeza automática."
+
+#~ msgid "Raw logs purge automatically after the configured window."
+#~ msgstr ""
+#~ "Os registos brutos são purgados automaticamente após a janela configurada."
+
+#~ msgid ""
+#~ "BimBeau Privacy Analytics permanently removes aggregated rows older than "
+#~ "the selected window; no long-term totals are kept beyond this retention "
+#~ "period."
+#~ msgstr ""
+#~ "O BimBeau Privacy Analytics remove permanentemente linhas agregadas mais "
+#~ "antigas do que a janela selecionada; não são mantidos totais de longo "
+#~ "prazo além deste período de retenção."
+
+#~ msgid ""
+#~ "Cleanup permanently removes aggregated and visitor-detail rows older than "
+#~ "the selected window."
+#~ msgstr ""
+#~ "A limpeza remove permanentemente linhas agregadas e de detalhes de "
+#~ "visitantes mais antigas do que a janela selecionada."
+
+#~ msgid ""
+#~ "Defines the WP-Cron interval used to run aggregated retention cleanup "
+#~ "automatically."
+#~ msgstr ""
+#~ "Define o intervalo WP-Cron usado para executar automaticamente a limpeza "
+#~ "da retenção agregada."
+
+#, fuzzy
+#~ msgid "White label"
+#~ msgstr "rótulo"
+
+#~ msgid "BimBeau Privacy Analytics overview"
+#~ msgstr "Visão geral do BimBeau Privacy Analytics"
+
+#~ msgid "BimBeau Privacy Analytics data is not available for this period."
+#~ msgstr ""
+#~ "Os dados do BimBeau Privacy Analytics não estão disponíveis para este "
+#~ "período."
+
+#~ msgid "View BimBeau Privacy Analytics dashboard"
+#~ msgstr "Ver o painel do BimBeau Privacy Analytics"
+
+#~ msgid "Plugin name (menu and dashboard)"
+#~ msgstr "Nome do plugin (menu e painel)"
+
+#~ msgid "Leave blank to use \"BimBeau Privacy Analytics\"."
+#~ msgstr "Deixe em branco para usar \"BimBeau Privacy Analytics\"."
+
+#~ msgid "This panel is available in BimBeau Privacy Analytics Pro."
+#~ msgstr "Este painel está disponível no BimBeau Privacy Analytics Pro."
+
+#~ msgid "City map markers are available in BimBeau Privacy Analytics Pro."
+#~ msgstr ""
+#~ "Os marcadores do mapa de cidades estão disponíveis no BimBeau Privacy "
+#~ "Analytics Pro."
+
+#~ msgid "City map"
+#~ msgstr "Mapa de cidades"
+
+#~ msgid "Top pages details"
+#~ msgstr "Detalhes das páginas principais"
+
+#~ msgid "Only the first %d row will be exported."
+#~ msgid_plural "Only the first %d rows will be exported."
+#~ msgstr[0] "Apenas a primeira %d linha será exportada."
+#~ msgstr[1] "Apenas as primeiras %d linhas serão exportadas."
+
+#~ msgid "%d row will be exported."
+#~ msgid_plural "%d rows will be exported."
+#~ msgstr[0] "%d linha será exportada."
+#~ msgstr[1] "%d linhas serão exportadas."
+
+#~ msgid "First activity"
+#~ msgstr "Primeira atividade"
+
+#~ msgid "Last activity"
+#~ msgstr "Última atividade"
+
+#~ msgid ""
+#~ "Define how long consecutive hits are grouped for one visitor visit "
+#~ "session."
+#~ msgstr ""
+#~ "Defina durante quanto tempo os acessos consecutivos são agrupados numa "
+#~ "sessão de visita de um visitante."
+
+#~ msgid ""
+#~ "Defines how long consecutive hits from the same visitor are grouped into "
+#~ "one visit identifier. Range: 300 to 86400 seconds (5 minutes to 24 "
+#~ "hours). A shorter window increases visit splits, while a longer window "
+#~ "merges more activity into one visit."
+#~ msgstr ""
+#~ "Define durante quanto tempo os acessos consecutivos do mesmo visitante "
+#~ "são agrupados num identificador de visita. Intervalo: 300 a 86400 "
+#~ "segundos (5 minutos a 24 horas). Uma janela mais curta aumenta a divisão "
+#~ "de visitas, enquanto uma janela mais longa agrupa mais atividade numa "
+#~ "visita."
+
+#~ msgid "First connection"
+#~ msgstr "Primeira ligação"
+
+#~ msgid "Date of connection"
+#~ msgstr "Data de ligação"
+
+#~ msgid ""
+#~ "Visits = distinct visitors for the selected location and period. Hits = "
+#~ "tracked page hits."
+#~ msgstr ""
+#~ "Visitas = visitantes distintos para a localização e o período "
+#~ "selecionados. Hits = acessos de página registados."
+
+#~ msgid "Upgrade"
+#~ msgstr "Atualizar"

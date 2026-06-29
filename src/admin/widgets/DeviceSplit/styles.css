@@ -1,0 +1,24 @@
+.bbpa-device-breakdown {
+    display: grid;
+    gap: var(--bbpa-gap-sm);
+}
+
+.bbpa-device-breakdown__row {
+    display: grid;
+    grid-template-columns: minmax(100px, 140px) 1fr auto;
+    gap: var(--bbpa-gap-sm);
+    align-items: center;
+}
+
+.bbpa-device-breakdown__bar {
+    background: var(--color-5);
+    border-radius: 6px;
+    height: 10px;
+    overflow: hidden;
+}
+
+.bbpa-device-breakdown__bar-fill {
+    background: var(--color-3);
+    height: 100%;
+    border-radius: 6px;
+}

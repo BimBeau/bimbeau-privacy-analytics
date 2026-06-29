@@ -1,0 +1,50 @@
+{
+  "name": "bimbeau-privacy-analytics",
+  "version": "8.43.22",
+  "private": true,
+  "license": "GPL-3.0-or-later",
+  "description": "BimBeau Privacy Analytics WordPress plugin assets.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run build:assets && npm run build:i18n",
+    "build:i18n": "bash scripts/build-i18n.sh",
+    "check:pre-pr:i18n": "composer install --no-interaction --prefer-dist --no-progress && npm ci --no-audit --fund=false && npm run build:i18n && composer test:i18n && git diff --exit-code -- languages ':(exclude)languages/*.mo' && npm run check:i18n-mo && npm run check:i18n-json",
+    "build:pricing": "node scripts/build-freemius-pricing-data.js",
+    "build:zip": "bash scripts/build-plugin-zip.sh",
+    "start": "wp-scripts start",
+    "lint:js": "wp-scripts lint-js",
+    "lint:php": "phpcs",
+    "test:js": "wp-scripts test-unit-js",
+    "test:php": "vendor/bin/phpunit -c phpunit.xml.dist",
+    "check:docs": "node scripts/check-docs-consistency.js",
+    "check:version-alignment": "node scripts/sync-version-sources.js --check",
+    "version:bump": "node scripts/bump-version.js",
+    "changelog:sync": "node scripts/sync-readme-changelog.js",
+    "changelog:verify-version": "node scripts/verify-version-changelog.js",
+    "release:verify-consistency": "node scripts/verify-release-consistency.js",
+    "check:i18n-mo": "node scripts/check-i18n-mo-files.js",
+    "check:i18n-json": "node scripts/check-i18n-json-files.js",
+    "build:assets": "wp-scripts build --stats-error-details",
+    "check:free-package": "node --test scripts/__tests__/free-package-compliance.test.js"
+  },
+  "dependencies": {
+    "@nivo/bar": "^0.99.0",
+    "@nivo/geo": "^0.99.0",
+    "@nivo/heatmap": "^0.99.0",
+    "@wordpress/i18n": "^4.16.0",
+    "@wordpress/icons": "^11.8.0",
+    "d3-scale": "^4.0.2",
+    "flag-icons": "^7.2.3",
+    "react": "^18.2.0",
+    "react-day-picker": "^8.10.2",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.6.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@wordpress/scripts": "^27.0.0"
+  }
+}

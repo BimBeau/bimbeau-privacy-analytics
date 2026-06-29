@@ -1,0 +1,104 @@
+.bbpa-admin-app .bbpa-audience-breakdown-grid {
+	display: grid;
+	grid-template-columns: repeat( 4, minmax( 0, 1fr ) );
+	gap: var(--bbpa-gap-lg);
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-grid > .bbpa-data-state {
+	grid-column: 1 / -1;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card .components-card__body {
+	display: grid;
+	gap: var(--bbpa-gap-md);
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__list {
+	display: grid;
+	gap: var(--bbpa-gap-md);
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__list-item {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	gap: 6px var(--bbpa-gap-sm);
+	align-items: center;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__label {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--bbpa-gap-sm);
+	min-width: 0;
+	font-weight: 500;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__label span:last-child {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__icon {
+	flex: 0 0 auto;
+	color: var(--color-2);
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__metric {
+	color: #50575e;
+	font-size: 12px;
+	text-align: right;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__share {
+	position: relative;
+	grid-column: 1 / -1;
+	overflow: hidden;
+	padding: 5px 10px;
+	border-radius: 8px;
+	background: #f0f6fc;
+	display: flex;
+	align-items: center;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__share-bar {
+	position: absolute;
+	inset: 0 auto 0 0;
+	border-radius: inherit;
+	background: #cfe8ff;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__share-value {
+	position: relative;
+	z-index: 1;
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.bbpa-admin-app .bbpa-audience-breakdown-card__summary {
+	margin: 0;
+	color: #50575e;
+	font-size: 12px;
+}
+
+@media (max-width: 600px) {
+	.bbpa-admin-app .bbpa-audience-breakdown-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.bbpa-admin-app .bbpa-audience-breakdown-card__list-item {
+		grid-template-columns: minmax( 0, 1fr );
+	}
+
+	.bbpa-admin-app .bbpa-audience-breakdown-card__metric {
+		text-align: left;
+	}
+}
+
+@media (min-width: 601px) and (max-width: 1280px) {
+	.bbpa-admin-app .bbpa-audience-breakdown-grid {
+		grid-template-columns: repeat( 2, minmax( 0, 1fr ) );
+	}
+}
