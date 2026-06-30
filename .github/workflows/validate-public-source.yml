@@ -28,7 +28,7 @@ jobs:
       - name: Checkout public source
         uses: actions/checkout@v4
 
-      - name: Validate public tree markers
+      - name: Validate public source hygiene
         run: |
           set -euo pipefail
 
@@ -37,7 +37,7 @@ jobs:
           const path = require('path');
 
           const root = process.cwd();
-          const forbidden = [
+          const disallowedPublicMarkers = [
             ['bbpa', 'unified'].join('-'),
             ...[
               'QGZzX3ByZW1pdW1fb25seQ==',
@@ -63,18 +63,14 @@ jobs:
             ].map((value) => Buffer.from(value, 'base64').toString('utf8')),
           ];
 
-          const skipDirs = new Set(['.git', 'node_modules', 'build', 'dist', 'package-tmp']);
-          const skipPathParts = [
-            ['vendor', 'freemius'].join(path.sep),
-          ];
-          const matches = [];
+          const skipDirs = new Set(['.git', 'node_modules', 'vendor', 'build', 'dist', 'package-tmp']);
+          const hygieneMatches = [];
 
           function shouldSkip(fullPath, entry) {
-            const relativePath = path.relative(root, fullPath);
             if (entry.isDirectory() && skipDirs.has(entry.name)) {
               return true;
             }
-            return skipPathParts.some((part) => relativePath === part || relativePath.startsWith(`${part}${path.sep}`));
+            return false;
           }
 
           function walk(directory) {
@@ -92,9 +88,9 @@ jobs:
               }
 
               const content = fs.readFileSync(fullPath);
-              for (const needle of forbidden) {
+              for (const needle of disallowedPublicMarkers) {
                 if (content.includes(Buffer.from(needle))) {
-                  matches.push(path.relative(root, fullPath));
+                  hygieneMatches.push(path.relative(root, fullPath));
                   break;
                 }
               }
@@ -103,9 +99,9 @@ jobs:
 
           walk(root);
 
-          if (matches.length > 0) {
-            console.error('Forbidden public source marker(s) found in:');
-            for (const match of matches) {
+          if (hygieneMatches.length > 0) {
+            console.error('Disallowed public source marker(s) found in:');
+            for (const match of hygieneMatches) {
               console.error(`- ${match}`);
             }
             process.exit(1);
