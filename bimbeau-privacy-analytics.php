@@ -518,14 +518,6 @@ if (function_exists('bbpa_register_freemius_uninstall_hook')) {
     bbpa_register_freemius_uninstall_hook();
 }
 
-if (bbpa_fs()->is__premium_only()) {
-    bbpa_safe_require_once(BBPA_PATH, 'includes/pro-auth-controller.php');
-    bbpa_safe_require_once(BBPA_PATH, 'includes/pro-events.php');
-    bbpa_safe_require_once(BBPA_PATH, 'includes/pro-post-views-column.php');
-    bbpa_safe_require_once(BBPA_PATH, 'includes/pro-post-key-stats-metabox.php');
-    bbpa_bootstrap_premium_runtime__premium_only();
-}
-
 bbpa_safe_require_once(BBPA_PATH, 'admin/bootstrap.php');
 bbpa_safe_require_once(BBPA_PATH, 'front/bootstrap.php');
 bbpa_safe_require_once(BBPA_PATH, 'rest/routes.php');

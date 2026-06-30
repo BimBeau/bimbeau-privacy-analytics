@@ -216,5 +216,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.43.23 =
-* Simplify public Free source README.
+= 8.43.24 =
+* Harden the public Free source export by excluding private repository documentation.

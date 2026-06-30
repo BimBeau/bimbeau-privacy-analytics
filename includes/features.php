@@ -30,7 +30,3 @@ function bbpa_features(): array
 /**
  * Register premium runtime hooks from shared modules.
  */
-function bbpa_bootstrap_premium_runtime__premium_only(): void
-{
-    do_action('bbpa_premium_loaded');
-}
