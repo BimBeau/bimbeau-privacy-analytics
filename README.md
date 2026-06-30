@@ -2,7 +2,9 @@
 
 BimBeau Privacy Analytics is a lightweight, privacy-oriented analytics plugin for WordPress.
 
-It stores analytics locally, avoids third-party analytics scripts, and separates essential aggregate measurement from optional advanced tracking for richer insights.
+This repository contains the public Free source code and build tools for BimBeau Privacy Analytics. It is intended to support public review of the Free plugin source and the process used to rebuild generated assets.
+
+The plugin stores analytics locally, avoids third-party analytics scripts, and separates essential aggregate measurement from optional advanced tracking for richer insights.
 
 ## Core ideas
 
@@ -11,17 +13,6 @@ It stores analytics locally, avoids third-party analytics scripts, and separates
 - No stored personal WordPress account identifiers in analytics records.
 - Essential and advanced tracker runtimes.
 - Consent-manager friendly advanced tracking.
-- Free and Pro builds generated from the same source through Freemius-aware build rules.
-
-## Free and Pro
-
-The Free plugin focuses on aggregate analytics: page views, visits, time series, top pages, referrers, devices, 404s, search terms, geolocation aggregates, realtime snapshots, and privacy settings.
-
-Pro adds deeper reporting and workflow features such as visitor-detail depth, page details, content analytics in WordPress content lists and the editor, dedicated app login, and events configuration.
-
-The Pro authentication controller supports WordPress environments running PHP 7.4.
-
-The authoritative feature split lives in [docs/FEATURE_TIER_MATRIX.md](docs/FEATURE_TIER_MATRIX.md).
 
 ## Tracking model
 
@@ -31,7 +22,7 @@ The advanced tracker can add enriched fields such as active time, viewport data,
 
 ## Public source and build instructions
 
-The public source repository for BimBeau Privacy Analytics Free is available at:
+The public Free source repository for BimBeau Privacy Analytics is available at:
 
 <https://github.com/BimBeau/bimbeau-privacy-analytics>
 
@@ -62,7 +53,6 @@ Detailed implementation notes live in `docs/`:
 - [Settings](docs/SETTINGS.md)
 - [Hooks](docs/HOOKS.md)
 - [I18N language reference](docs/I18N_LANGUAGE_REFERENCE.md)
-- [Freemius Stripping Guidelines](docs/FREEMIUS_STRIPPING_GUIDELINES.md)
 
 Every Markdown file should describe the current code, stay concise, and avoid historical or corrective commentary. Use `npm run check:docs` before release-facing documentation changes.
 
