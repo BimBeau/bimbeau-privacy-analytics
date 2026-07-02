@@ -78,7 +78,7 @@ function bbpa_safe_require_once(string $base_path, string $candidate): void
     $resolved = bbpa_safe_resolve($base_path, $candidate);
 
     if (!is_file($resolved) || is_link($resolved)) {
-        throw new RuntimeException('Unsafe or missing require target.');
+        throw new RuntimeException(sprintf('Unsafe or missing require target: %s', $candidate));
     }
 
     require_once $resolved;

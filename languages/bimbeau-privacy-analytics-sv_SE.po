@@ -37,7 +37,7 @@ msgstr "BimBeau"
 msgid "Update"
 msgstr "Uppdatera"
 
-#: admin/admin.php src/admin/components/ProBadge/index.js
+#: admin/admin.php
 msgid "Pro"
 msgstr "Pro"
 
@@ -126,9 +126,8 @@ msgid "Unknown generation status."
 msgstr "Okänd genereringsstatus."
 
 #: admin/admin.php includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/EventsPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/SearchTermsPanel.js src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -188,7 +187,6 @@ msgid "Devices"
 msgstr "Enheter"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr "Händelser"
 
@@ -342,7 +340,7 @@ msgid "This analytics panel is disabled for navigation."
 msgstr "Den här analyspanelen är inaktiverad för navigering."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-report-controller.php rest/pro-routes.php
 msgid "Authentication is required to access analytics data."
 msgstr "Autentisering krävs för att komma åt analysdata."
 
@@ -366,8 +364,8 @@ msgstr "GeoIP-databasen är inte tillgänglig än."
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/EventsPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Okänt land"
@@ -393,7 +391,7 @@ msgid "Invalid visit identifier."
 msgstr "Ogiltig besöksidentifierare."
 
 #: includes/rest/class-bbpa-report-controller.php
-msgid "Visitors details are available in BimBeau Privacy Analytics Pro."
+msgid "Visitors details are not included in this package."
 msgstr "Besökaruppgifter är tillgängliga i BimBeau Privacy Analytics Pro."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
@@ -531,6 +529,29 @@ msgstr "MaxMind API-fel (%s)."
 msgid "Invalid MaxMind API response."
 msgstr "Ogiltigt svar från MaxMind API."
 
+#: includes/settings.php
+msgid "The selected PWA icon must be at least 512x512 pixels."
+msgstr "Den valda PWA-ikonen måste vara minst 512x512 pixlar."
+
+#: includes/settings.php
+msgid "The selected PWA icon file cannot be read."
+msgstr "Den valda PWA-ikonfilen kan inte läsas."
+
+#: includes/settings.php
+msgid ""
+"WordPress image editor cannot generate PWA icons from the selected source."
+msgstr ""
+"WordPress bildredigerare kan inte generera PWA-ikoner från den valda källan."
+
+#: includes/settings.php
+msgid "WordPress image editor cannot resize the selected PWA icon source."
+msgstr ""
+"WordPress bildredigerare kan inte ändra storlek på den valda PWA-ikonkällan."
+
+#: includes/settings.php
+msgid "WordPress image editor cannot save generated PWA PNG icons."
+msgstr "WordPress bildredigerare kan inte spara genererade PWA PNG-ikoner."
+
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID is required."
 msgstr "MaxMind-konto-ID krävs."
@@ -550,6 +571,10 @@ msgstr "MaxMind-uppgifter krävs för att aktivera IP-geolokalisering."
 #: includes/settings.php src/admin/AdminApp.js
 msgid "Statistics"
 msgstr "Statistik"
+
+#: includes/settings.php
+msgid "Select a media library image to generate PWA PNG icons."
+msgstr "Välj en bild från mediabiblioteket för att generera PWA PNG-ikoner."
 
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
@@ -806,32 +831,6 @@ msgstr "Körningsgranularitet rapporteras från tillgängliga granulariteter."
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Technical state does not prove consent collection validity."
 msgstr "Teknisk status bevisar inte att samtyckesinsamlingen är giltig."
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "PWA Stats App"
-msgstr "PWA-statistikapp"
-
-#: src/admin/components/PwaStatsAppCard/index.js
-#: src/admin/panels/SettingsPanel.js
-msgid "This feature is available in BimBeau Privacy Analytics Pro."
-msgstr "Den här funktionen är tillgänglig i BimBeau Privacy Analytics Pro."
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "PWA URL"
-msgstr "PWA-URL"
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "Use this URL to open the standalone analytics app."
-msgstr "Använd denna URL för att öppna den fristående analysappen."
-
-#: src/admin/components/PwaStatsAppCard/index.js
-#: src/admin/panels/EventsPanel.js
-msgid "Copy URL"
-msgstr "Kopiera URL"
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "Open PWA"
-msgstr "Öppna PWA"
 
 #: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
@@ -1127,8 +1126,7 @@ msgstr "Ungefärlig stad"
 msgid "Approx. %d km"
 msgstr "Cirka %d km"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/EventsPanel.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "Inte tillgängligt"
@@ -1234,8 +1232,7 @@ msgstr "Ingen besökarprofildata är tillgänglig för den här perioden."
 msgid "Table: Acquisition channels"
 msgstr "Tabell: Besökare"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/EventsPanel.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Channel"
 msgstr ""
@@ -1249,348 +1246,6 @@ msgstr ""
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "%s av totala besök"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Skrivbord"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Mobile"
-msgstr "Mobil"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Surfplatta"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Bot"
-msgstr "Bot"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Slot"
-msgstr "Plats"
-
-#: src/admin/panels/EventsPanel.js
-msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
-msgstr ""
-"KPI-platsen är ogiltig och måste vara ett heltal större än eller lika med 2."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Snippet cannot be empty."
-msgstr "Kodsnutten får inte vara tom."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Snippet syntax looks valid."
-msgstr "Kodsnuttens syntax verkar giltig."
-
-#: src/admin/panels/EventsPanel.js
-msgid "All events"
-msgstr "Alla händelser"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Loading events configuration…"
-msgstr "Laddar händelsekonfiguration…"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
-"run actions."
-msgstr ""
-"Händelsekonfigurationen är låst i gratisnivån. Uppgradera till Pro för att "
-"spara och köra åtgärder."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Some saved KPI slot values are invalid. Use only numeric slots greater than "
-"or equal to 2."
-msgstr ""
-"Vissa sparade KPI-platsvärden är ogiltiga. Använd endast numeriska platser "
-"större än eller lika med 2."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"KPI slot conflicts detected. Each active KPI slot must be unique before "
-"saving."
-msgstr ""
-"Konflikter mellan KPI-platser upptäcktes. Varje aktiv KPI-plats måste vara "
-"unik innan du sparar."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Reorder KPI event"
-msgstr "Ändra ordning på KPI-händelse"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Include in KPI"
-msgstr "Inkludera i KPI"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Enable event"
-msgstr "Aktivera händelse"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Event ID"
-msgstr "Händelse-ID"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Label (max 25 characters)"
-msgstr "Etikett (max 25 tecken)"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Trigger type"
-msgstr "Utlösartyp"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Click"
-msgstr "Klick"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Page view"
-msgstr "Sidvisning"
-
-#: src/admin/panels/EventsPanel.js
-msgid "CSS selectors"
-msgstr "CSS-selektorer"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Add one or more CSS selectors as tags to target clickable elements, for "
-"example .cta-button or #signup."
-msgstr ""
-"Lägg till en eller flera CSS-selektorer som taggar för att rikta in "
-"klickbara element, till exempel .cta-button eller #signup."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Target page"
-msgstr "Målsida"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Search by title across published posts, pages, and public custom post types."
-msgstr ""
-"Sök efter titel bland publicerade inlägg, sidor och publika anpassade "
-"inläggstyper."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Webhook triggers are server-side. Browser JavaScript snippets are not "
-"executed for this trigger."
-msgstr ""
-"Webhook-utlösare är serversidiga. JavaScript-snippets i webbläsaren körs "
-"inte för den här utlösaren."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Webhook URL"
-msgstr "Webhook-URL"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Regenerate token"
-msgstr "Generera om token"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Generate token"
-msgstr "Generera token"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Allowed webhook params"
-msgstr "Tillåtna webhook-parametrar"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Comma-separated allowlist for incoming webhook payload keys. Only "
-"allowlisted variables are stored and shown in event context."
-msgstr ""
-"Kommaseparerad tillåtelselista för nycklar i inkommande webhook-payloads. "
-"Endast tillåtna variabler sparas och visas i händelsekontexten."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Action"
-msgstr "Åtgärd"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Server action template"
-msgstr "Mall för serveråtgärd"
-
-#: src/admin/panels/EventsPanel.js
-msgid "JavaScript snippet"
-msgstr "JavaScript-snippet"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Configure a server-side action payload template for incoming webhook events. "
-"Browser JavaScript APIs are not available for this trigger."
-msgstr ""
-"Konfigurera en serversidig payloadmall för inkommande webhook-händelser. "
-"Webbläsarens JavaScript-API:er är inte tillgängliga för den här utlösaren."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Paste JavaScript code (without <script> tags) to run when this event is "
-"triggered. Available placeholders depend on trigger type. Do not wrap "
-"placeholders such as {{page_url}} in quotes. They are injected as escaped "
-"JavaScript values."
-msgstr ""
-"Klistra in JavaScript-kod (utan <script>-taggar) som ska köras när den här "
-"händelsen utlöses. Tillgängliga placeholders beror på utlösartyp. Sätt inte "
-"placeholders som {{page_url}} inom citattecken. De injiceras som escapade "
-"JavaScript-värden."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Available variables for this trigger type:"
-msgstr "Tillgängliga variabler för den här utlösartypen:"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Check syntax"
-msgstr "Kontrollera syntax"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Syntax checks are available for browser JavaScript snippets only."
-msgstr ""
-"Syntaxkontroller är endast tillgängliga för JavaScript-snippets i "
-"webbläsaren."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Remove event"
-msgstr "Ta bort händelse"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Add event"
-msgstr "Lägg till händelse"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Triggered events"
-msgstr "Utlösta händelser"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Triggered events captured by the advanced tracker are listed."
-msgstr "Utlösta händelser som fångats av den avancerade spåraren listas."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Total events"
-msgstr "Totalt antal händelser"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr "Rader"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Event"
-msgstr "Händelse"
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Sök"
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Sök…"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Label"
-msgstr "Etikett"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Event time"
-msgstr "Händelsetid"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Type"
-msgstr "Typ"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Triggered page"
-msgstr "Utlöst sida"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "Land"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr "Stad"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "Operativsystem"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Webbläsare"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Enhet"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Details"
-msgstr "Detaljer"
-
-#: src/admin/panels/EventsPanel.js
-msgid "All pages"
-msgstr "Alla sidor"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-msgid "View"
-msgstr "Visa"
-
-#: src/admin/panels/EventsPanel.js
-msgid "No triggered events found."
-msgstr "Inga utlösta händelser hittades."
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Föregående sida"
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Nästa sida"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "Sida"
-
-#: src/admin/panels/EventsPanel.js
-msgid "results"
-msgstr "resultat"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Confirm event removal"
-msgstr "Bekräfta borttagning av händelse"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Do you want to remove this event?"
-msgstr "Vill du ta bort den här händelsen?"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "Avbryt"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
@@ -1623,6 +1278,12 @@ msgstr "Flagga för %s"
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "Toppländer"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr "Land"
 
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
@@ -1676,6 +1337,11 @@ msgstr "Globala timvisa heatmaps kräver timvis sidaggregeringsdata."
 msgid "Visitor ID hash"
 msgstr "Besökar-ID-hash"
 
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr "Stad"
+
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
@@ -1687,8 +1353,23 @@ msgstr "Aktuell sida"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Operating system"
+msgstr "Operativsystem"
+
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser"
+msgstr "Webbläsare"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Webbläsarversion"
+
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Device"
+msgstr "Enhet"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1857,10 +1538,6 @@ msgid "Tracking & privacy"
 msgstr "Spårning och integritet"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "App"
-msgstr "App"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
 msgstr "Underhåll"
 
@@ -1905,502 +1582,6 @@ msgid "Hidden"
 msgstr "Dold"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Interface branding"
-msgstr "Gränssnittsprofilering"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "White-label interface controls are available in Pro."
-msgstr "Kontroller för white-label-gränssnittet finns i Pro."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Use white-label interface"
-msgstr "Använd white-label-gränssnitt"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Hide the BimBeau Privacy Analytics logo in the admin header and display the "
-"localized analytics title instead."
-msgstr ""
-"Döljer BimBeau Privacy Analytics-logotypen i administrationssidhuvudet och "
-"visar den lokaliserade analystiteln i stället."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Enabled panels"
-msgstr "Aktiverade paneler"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Visible"
-msgstr "Synlig"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
-msgstr ""
-"Dold medan \"Aktivera avancerad statistik efter samtycke\" är inaktiverat."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Quick stats"
-msgstr "Snabbstatistik"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Enable Quick Stats on selected post types: add a Views (30d) column in the "
-"posts list and display a stats summary metabox while editing each post."
-msgstr ""
-"Aktivera Snabbstatistik för valda inläggstyper: lägg till en kolumn "
-"Visningar (30d) i inläggslistan och visa en metabox med statistiköversikt "
-"när varje inlägg redigeras."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No post types available."
-msgstr "Inga inläggstyper tillgängliga."
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
-"database or MaxMind API."
-msgstr ""
-"Välj hur BimBeau Privacy Analytics löser geolokalisering: lokal GeoLite-"
-"databas eller MaxMind API."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Geolocation source"
-msgstr "Geolokaliseringskälla"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Local GeoLite database (default)"
-msgstr "Lokal GeoLite-databas (standard)"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "MaxMind API credentials"
-msgstr "MaxMind API-uppgifter"
-
-#: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid ""
-"Local database mode downloads the GeoLite MMDB file through the official "
-"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-msgstr ""
-"Lokalt databasläge laddar ned GeoLite MMDB-filen från BimBeau Privacy "
-"Analytics-speglar. API-läge använder liveförfrågningar till MaxMind."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "MaxMind Account ID"
-msgstr "MaxMind-konto-ID"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Numeric Account ID used for MaxMind API requests."
-msgstr "Numeriskt konto-ID som används för MaxMind API-förfrågningar."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "MaxMind License Key"
-msgstr "MaxMind-licensnyckel"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "License Key used for MaxMind API requests."
-msgstr "Licensnyckel som används för MaxMind API-förfrågningar."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Test MaxMind connection"
-msgstr "Testa MaxMind-anslutning"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Automatic GeoIP database updates"
-msgstr "Automatiska uppdateringar av GeoIP-databasen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Controls the cron frequency for local GeoIP database updates."
-msgstr "Styr cron-frekvensen för lokala uppdateringar av GeoIP-databasen."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Update now"
-msgstr "Uppdatera nu"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Current state"
-msgstr "Aktuellt tillstånd"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last attempt"
-msgstr "Senaste försök"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Next scheduled retry"
-msgstr "Nästa schemalagda omförsök"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last successful update"
-msgstr "Senaste lyckade uppdatering"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Database size"
-msgstr "Databasstorlek"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last error code"
-msgstr "Senaste felkod"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Retry count"
-msgstr "Antal omförsök"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Behavior: plugin activation completes quickly, and temporary local database "
-"unavailability does not block the rest of BimBeau Privacy Analytics."
-msgstr ""
-"Beteende: tilläggsaktiveringen slutförs snabbt och tillfällig "
-"otillgänglighet för den lokala databasen blockerar inte resten av BimBeau "
-"Privacy Analytics."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Privacy"
-msgstr "Integritet"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Advanced stats require consent"
-msgstr "Avancerad statistik kräver samtycke"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Essential stats only"
-msgstr "Endast nödvändig statistik"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Essential stats run without consent. Advanced stats run only after "
-"Statistics / Analytics consent."
-msgstr ""
-"Nödvändig statistik körs utan samtycke. Avancerad statistik körs endast "
-"efter samtycke till statistik/analys."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Essential stats"
-msgstr "Nödvändig statistik"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No consent required"
-msgstr "Inget samtycke krävs"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Limited audience stats only. No ads, no cross-site tracking, no third-party "
-"reuse."
-msgstr ""
-"Endast begränsad målgruppsstatistik. Inga annonser, ingen spårning mellan "
-"webbplatser och ingen återanvändning av tredje part."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Essential data"
-msgstr "Nödvändig data"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Script:"
-msgstr "Skript:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Advanced stats"
-msgstr "Avancerad statistik"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Requires consent"
-msgstr "Kräver samtycke"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Adds detailed visit insights after consent."
-msgstr "Lägger till detaljerade besöksinsikter efter samtycke."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Enable advanced stats after consent"
-msgstr "Aktivera avancerad statistik efter samtycke"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Your CMP must block it until Statistics / Analytics consent is given."
-msgstr ""
-"Din CMP måste blockera den tills samtycke till statistik/analys har getts."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Advanced data"
-msgstr "Avancerad data"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "CMP setup"
-msgstr "CMP-konfiguration"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Block the advanced stats script until Statistics / Analytics consent is "
-"given."
-msgstr ""
-"Blockera skriptet för avancerad statistik tills samtycke till statistik/"
-"analys har getts."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Script to block:"
-msgstr "Skript att blockera:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Alternative selectors:"
-msgstr "Alternativa selektorer:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Script ID:"
-msgstr "Skript-ID:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "WordPress handle:"
-msgstr "WordPress-handle:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "What is a CMP?"
-msgstr "Vad är en CMP?"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"A CMP manages cookie consent on your website. It shows the cookie banner, "
-"stores visitor choices, and allows or blocks analytics scripts based on "
-"consent."
-msgstr ""
-"En CMP hanterar cookie-samtycke på din webbplats. Den visar cookie-bannern, "
-"lagrar besökarens val och tillåter eller blockerar analysskript baserat på "
-"samtycke."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Examples:"
-msgstr "Exempel:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"In your CMP, block the BimBeau Privacy Analytics advanced stats script until "
-"the Statistics or Analytics purpose is accepted."
-msgstr ""
-"Blockera BimBeau Privacy Analytics-skriptet för avancerad statistik i din "
-"CMP tills ändamålet Statistik eller Analys har accepterats."
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Advanced stats are disabled. BimBeau Privacy Analytics will only use "
-"essential stats."
-msgstr ""
-"Avancerad statistik är inaktiverad. BimBeau Privacy Analytics använder "
-"endast nödvändig statistik."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Respect DNT / GPC"
-msgstr "Respektera DNT / GPC"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Stop measurement when the visitor’s browser sends a Do Not Track or Global "
-"Privacy Control signal."
-msgstr ""
-"Stoppa mätning när besökarens webbläsare skickar en Do Not Track- eller "
-"Global Privacy Control-signal."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Visit measurement"
-msgstr "Besöksmätning"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Defines how long visitor activity can remain grouped under the same visitor "
-"row before a new row is started after inactivity."
-msgstr ""
-"Definierar hur länge besökaraktivitet kan förbli grupperad under samma "
-"besökarrad innan en ny rad startas efter inaktivitet."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Visitor activity window"
-msgstr "Aktivitetsfönster för besökare"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Defines how long activity from the same visitor can remain grouped into one "
-"visitor row. After this period of inactivity, BimBeau Privacy Analytics "
-"starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 "
-"hours)."
-msgstr ""
-"Definierar hur länge aktivitet från samma besökare kan förbli grupperad i en "
-"besökarrad. Efter denna period av inaktivitet startar BimBeau Privacy "
-"Analytics en ny besökarrad. Intervall: 300 till 86400 sekunder (5 minuter "
-"till 24 timmar)."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "URLs & campaigns"
-msgstr "URL:er och kampanjer"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Control URL cleanup behavior and keep only campaign query parameters that "
-"should remain available for attribution."
-msgstr ""
-"Styr beteendet för URL-rensning och behåll endast kampanjens frågeparametrar "
-"som ska vara tillgängliga för attribuering."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Clean URL query parameters"
-msgstr "Rensa URL-frågeparametrar"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Remove query parameters from tracked URLs."
-msgstr "Ta bort frågeparametrar från spårade URL:er."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Allowed query parameters"
-msgstr "Tillåtna frågeparametrar"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Comma-separated list of allowed query keys (used for URL tracking and UTM "
-"aggregation)."
-msgstr ""
-"Kommaseparerad lista över tillåtna frågenycklar (används för URL-spårning "
-"och UTM-aggregering)."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Data retention"
-msgstr "Datalagring"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
-msgstr ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Temporary detailed events retention (days)"
-msgstr "Lagring av tillfälliga detaljerade händelser (dagar)"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Used mainly for real-time and diagnostics. Not related to Debug mode."
-msgstr "Used mainly for real-time and diagnostics. Not related to Debug mode."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Report details retention"
-msgstr "Lagring av rapportdetaljer"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Keeps detailed report dimensions such as pages, referrers, countries, "
-"devices, and visitor details."
-msgstr ""
-"Keeps detailed report dimensions such as pages, referrers, countries, "
-"devices, and visitor details."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Long-term totals retention"
-msgstr "Lagring av långsiktiga totaler"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
-"chart after report details expire."
-msgstr ""
-"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
-"chart after report details expire."
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Cleanup permanently removes expired details, while long-term totals remain "
-"available until their own retention window ends."
-msgstr ""
-"Cleanup permanently removes expired details, while long-term totals remain "
-"available until their own retention window ends."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Automatic cleanup frequency"
-msgstr "Automatisk rensningsfrekvens"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Defines how often WordPress checks for expired analytics data."
-msgstr "Defines how often WordPress checks for expired analytics data."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Exclusions"
-msgstr "Exkluderingar"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Select roles to exclude from tracking. Select all roles to ignore all logged-"
-"in users."
-msgstr ""
-"Välj roller som ska exkluderas från spårning. Välj alla roller för att "
-"ignorera alla inloggade användare."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No roles available."
-msgstr "Inga roller tillgängliga."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Debug"
-msgstr "Felsökning"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Enable diagnostic output for troubleshooting tracking events, realtime "
-"visitor detection, and REST payloads in the browser console and wp-content/"
-"debug.log."
-msgstr ""
-"Aktivera diagnostikutdata för felsökning av spårningshändelser, "
-"realtidsdetektering av besökare och REST-payloads i webbläsarkonsolen och wp-"
-"content/debug.log."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Debug mode"
-msgstr "Felsökningsläge"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Writes detailed diagnostic logs to the console and to wp-content/debug.log "
-"when WordPress debug logging is enabled."
-msgstr ""
-"Skriver detaljerade diagnostikloggar till konsolen och till wp-content/debug."
-"log när WordPress-felsökningsloggning är aktiverad."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Cleanup actions"
-msgstr "Rensningsåtgärder"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Run retention cleanup immediately to remove only data older than the "
-"configured retention window."
-msgstr ""
-"Kör lagringsrensning omedelbart för att endast ta bort data som är äldre än "
-"det konfigurerade lagringsfönstret."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Run cleanup now"
-msgstr "Kör rensning nu"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Delete plugin tables on uninstall"
-msgstr "Ta bort plugintabeller vid avinstallation"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
-"analytics tables from the WordPress database."
-msgstr ""
-"När detta är aktiverat tar avinstallation av BimBeau Privacy Analytics bort "
-"alla pluginets analystabeller från WordPress-databasen."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Sensitive actions"
-msgstr "Känsliga åtgärder"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
-"entries."
-msgstr ""
-"Ta bort all aggregerad KPI-analys, besökardetaljanalys och råloggposter."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Delete all analytics data"
-msgstr "Ta bort all analysdata"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
 msgstr "Spara inställningar"
 
@@ -2423,6 +1604,10 @@ msgstr ""
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Jag bekräftar att jag vill rensa all analysdata permanent."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "Avbryt"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -2452,6 +1637,17 @@ msgstr ""
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "Smartphone"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "Skrivbord"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "Surfplatta"
 
 #. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
 #: src/admin/panels/TopPagesPanel.js
@@ -2499,6 +1695,10 @@ msgstr "Genomsnittlig tid på sidan: %s"
 #: src/admin/panels/TopPagesPanel.js
 msgid "Back"
 msgstr "Tillbaka"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "View"
+msgstr "Visa"
 
 #: src/admin/panels/TopPagesPanel.js
 msgid "Open in WordPress"
@@ -2552,6 +1752,13 @@ msgid "Title"
 msgstr "Titel"
 
 #: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr "Rader"
+
+#: src/admin/panels/TopPagesPanel.js
 msgid "Table: Page details by date"
 msgstr "Tabell: Sidinformation per datum"
 
@@ -2568,6 +1775,13 @@ msgstr "Föregående"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Nästa"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Page"
+msgstr "Sida"
 
 #: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -2812,12 +2026,34 @@ msgid "Referrer unavailable"
 msgstr "Inga hänvisare tillgängliga."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search"
+msgstr "Sök"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search…"
+msgstr "Sök…"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "Ingen data om hänvisande webbplatser tillgänglig."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "Laddar hänvisande webbplatser…"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "Föregående sida"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "Nästa sida"
 
 #. translators: %s: active first-column label.
 #: src/admin/widgets/ReportTableCard/index.js
@@ -3009,7 +2245,7 @@ msgstr "Tabell: Besökare"
 #~ msgid "Custom login flow is unavailable in this environment."
 #~ msgstr "Anpassat inloggningsflöde är inte tillgängligt i den här miljön."
 
-#~ msgid "BimBeau Privacy Analytics App is available in Pro only."
+#~ msgid "BimBeau Privacy Analytics App is available in not included."
 #~ msgstr "BimBeau Privacy Analytics-appen är endast tillgänglig i Pro."
 
 #~ msgid "You are not allowed to access this page."
@@ -3048,6 +2284,9 @@ msgstr "Tabell: Besökare"
 #~ msgid "Plus de stats"
 #~ msgstr "Mer statistik"
 
+#~ msgid "Mobile"
+#~ msgstr "Mobil"
+
 #, php-format
 #~ msgid "%ds"
 #~ msgstr "%ds"
@@ -3067,7 +2306,10 @@ msgstr "Tabell: Besökare"
 #~ msgid "Views trend"
 #~ msgstr "Visningstrend"
 
-#~ msgid "Page-level details are available in BimBeau Privacy Analytics Pro."
+#~ msgid "This feature is not included in this package."
+#~ msgstr "Den här funktionen är tillgänglig i BimBeau Privacy Analytics Pro."
+
+#~ msgid "Page-level details are not included in this package."
 #~ msgstr ""
 #~ "Detaljer på sidnivå är tillgängliga i BimBeau Privacy Analytics Pro."
 
@@ -3077,7 +2319,7 @@ msgstr "Tabell: Besökare"
 #~ msgid "Authentication is required to export analytics data."
 #~ msgstr "Autentisering krävs för att exportera analysdata."
 
-#~ msgid "Report exports are available in BimBeau Privacy Analytics Pro."
+#~ msgid "Report exports are not included in this package."
 #~ msgstr "Rapportexporter är tillgängliga i BimBeau Privacy Analytics Pro."
 
 #~ msgid "You do not have permission to export analytics data."
@@ -3168,31 +2410,224 @@ msgstr "Tabell: Besökare"
 #~ "Formatet för KPI-platsen är ogiltigt. Använd endast ett numeriskt heltal "
 #~ "större än eller lika med 2."
 
-#~ msgid "The selected PWA icon must be at least 512x512 pixels."
-#~ msgstr "Den valda PWA-ikonen måste vara minst 512x512 pixlar."
-
-#~ msgid "The selected PWA icon file cannot be read."
-#~ msgstr "Den valda PWA-ikonfilen kan inte läsas."
-
-#~ msgid ""
-#~ "WordPress image editor cannot generate PWA icons from the selected source."
-#~ msgstr ""
-#~ "WordPress bildredigerare kan inte generera PWA-ikoner från den valda "
-#~ "källan."
-
-#~ msgid "WordPress image editor cannot resize the selected PWA icon source."
-#~ msgstr ""
-#~ "WordPress bildredigerare kan inte ändra storlek på den valda PWA-"
-#~ "ikonkällan."
-
-#~ msgid "WordPress image editor cannot save generated PWA PNG icons."
-#~ msgstr "WordPress bildredigerare kan inte spara genererade PWA PNG-ikoner."
-
-#~ msgid "Select a media library image to generate PWA PNG icons."
-#~ msgstr "Välj en bild från mediabiblioteket för att generera PWA PNG-ikoner."
-
 #~ msgid "BimBeau Privacy Analytics Pro feature preview"
 #~ msgstr "Förhandsvisning av BimBeau Privacy Analytics Pro-funktion"
+
+#~ msgid "PWA Stats App"
+#~ msgstr "PWA-statistikapp"
+
+#~ msgid "PWA URL"
+#~ msgstr "PWA-URL"
+
+#~ msgid "Use this URL to open the standalone analytics app."
+#~ msgstr "Använd denna URL för att öppna den fristående analysappen."
+
+#~ msgid "Copy URL"
+#~ msgstr "Kopiera URL"
+
+#~ msgid "Open PWA"
+#~ msgstr "Öppna PWA"
+
+#~ msgid "Bot"
+#~ msgstr "Bot"
+
+#~ msgid "Slot"
+#~ msgstr "Plats"
+
+#~ msgid ""
+#~ "KPI slot is invalid and must be an integer greater than or equal to 2."
+#~ msgstr ""
+#~ "KPI-platsen är ogiltig och måste vara ett heltal större än eller lika med "
+#~ "2."
+
+#~ msgid "Snippet cannot be empty."
+#~ msgstr "Kodsnutten får inte vara tom."
+
+#~ msgid "Snippet syntax looks valid."
+#~ msgstr "Kodsnuttens syntax verkar giltig."
+
+#~ msgid "All events"
+#~ msgstr "Alla händelser"
+
+#~ msgid "Loading events configuration…"
+#~ msgstr "Laddar händelsekonfiguration…"
+
+#~ msgid ""
+#~ "Events configuration is locked in the Free tier. Upgrade to Pro to save "
+#~ "and run actions."
+#~ msgstr ""
+#~ "Händelsekonfigurationen är låst i gratisnivån. Uppgradera till Pro för "
+#~ "att spara och köra åtgärder."
+
+#~ msgid ""
+#~ "Some saved KPI slot values are invalid. Use only numeric slots greater "
+#~ "than or equal to 2."
+#~ msgstr ""
+#~ "Vissa sparade KPI-platsvärden är ogiltiga. Använd endast numeriska "
+#~ "platser större än eller lika med 2."
+
+#~ msgid ""
+#~ "KPI slot conflicts detected. Each active KPI slot must be unique before "
+#~ "saving."
+#~ msgstr ""
+#~ "Konflikter mellan KPI-platser upptäcktes. Varje aktiv KPI-plats måste "
+#~ "vara unik innan du sparar."
+
+#~ msgid "Reorder KPI event"
+#~ msgstr "Ändra ordning på KPI-händelse"
+
+#~ msgid "Include in KPI"
+#~ msgstr "Inkludera i KPI"
+
+#~ msgid "Enable event"
+#~ msgstr "Aktivera händelse"
+
+#~ msgid "Event ID"
+#~ msgstr "Händelse-ID"
+
+#~ msgid "Label (max 25 characters)"
+#~ msgstr "Etikett (max 25 tecken)"
+
+#~ msgid "Trigger type"
+#~ msgstr "Utlösartyp"
+
+#~ msgid "Click"
+#~ msgstr "Klick"
+
+#~ msgid "Page view"
+#~ msgstr "Sidvisning"
+
+#~ msgid "CSS selectors"
+#~ msgstr "CSS-selektorer"
+
+#~ msgid ""
+#~ "Add one or more CSS selectors as tags to target clickable elements, for "
+#~ "example .cta-button or #signup."
+#~ msgstr ""
+#~ "Lägg till en eller flera CSS-selektorer som taggar för att rikta in "
+#~ "klickbara element, till exempel .cta-button eller #signup."
+
+#~ msgid "Target page"
+#~ msgstr "Målsida"
+
+#~ msgid ""
+#~ "Search by title across published posts, pages, and public custom post "
+#~ "types."
+#~ msgstr ""
+#~ "Sök efter titel bland publicerade inlägg, sidor och publika anpassade "
+#~ "inläggstyper."
+
+#~ msgid ""
+#~ "Webhook triggers are server-side. Browser JavaScript snippets are not "
+#~ "executed for this trigger."
+#~ msgstr ""
+#~ "Webhook-utlösare är serversidiga. JavaScript-snippets i webbläsaren körs "
+#~ "inte för den här utlösaren."
+
+#~ msgid "Webhook URL"
+#~ msgstr "Webhook-URL"
+
+#~ msgid "Regenerate token"
+#~ msgstr "Generera om token"
+
+#~ msgid "Generate token"
+#~ msgstr "Generera token"
+
+#~ msgid "Allowed webhook params"
+#~ msgstr "Tillåtna webhook-parametrar"
+
+#~ msgid ""
+#~ "Comma-separated allowlist for incoming webhook payload keys. Only "
+#~ "allowlisted variables are stored and shown in event context."
+#~ msgstr ""
+#~ "Kommaseparerad tillåtelselista för nycklar i inkommande webhook-payloads. "
+#~ "Endast tillåtna variabler sparas och visas i händelsekontexten."
+
+#~ msgid "Action"
+#~ msgstr "Åtgärd"
+
+#~ msgid "Server action template"
+#~ msgstr "Mall för serveråtgärd"
+
+#~ msgid "JavaScript snippet"
+#~ msgstr "JavaScript-snippet"
+
+#~ msgid ""
+#~ "Configure a server-side action payload template for incoming webhook "
+#~ "events. Browser JavaScript APIs are not available for this trigger."
+#~ msgstr ""
+#~ "Konfigurera en serversidig payloadmall för inkommande webhook-händelser. "
+#~ "Webbläsarens JavaScript-API:er är inte tillgängliga för den här utlösaren."
+
+#~ msgid ""
+#~ "Paste JavaScript code (without <script> tags) to run when this event is "
+#~ "triggered. Available placeholders depend on trigger type. Do not wrap "
+#~ "placeholders such as {{page_url}} in quotes. They are injected as escaped "
+#~ "JavaScript values."
+#~ msgstr ""
+#~ "Klistra in JavaScript-kod (utan <script>-taggar) som ska köras när den "
+#~ "här händelsen utlöses. Tillgängliga placeholders beror på utlösartyp. "
+#~ "Sätt inte placeholders som {{page_url}} inom citattecken. De injiceras "
+#~ "som escapade JavaScript-värden."
+
+#~ msgid "Available variables for this trigger type:"
+#~ msgstr "Tillgängliga variabler för den här utlösartypen:"
+
+#~ msgid "Check syntax"
+#~ msgstr "Kontrollera syntax"
+
+#~ msgid "Syntax checks are available for browser JavaScript snippets only."
+#~ msgstr ""
+#~ "Syntaxkontroller är endast tillgängliga för JavaScript-snippets i "
+#~ "webbläsaren."
+
+#~ msgid "Remove event"
+#~ msgstr "Ta bort händelse"
+
+#~ msgid "Add event"
+#~ msgstr "Lägg till händelse"
+
+#~ msgid "Triggered events"
+#~ msgstr "Utlösta händelser"
+
+#~ msgid "Triggered events captured by the advanced tracker are listed."
+#~ msgstr "Utlösta händelser som fångats av den avancerade spåraren listas."
+
+#~ msgid "Total events"
+#~ msgstr "Totalt antal händelser"
+
+#~ msgid "Event"
+#~ msgstr "Händelse"
+
+#~ msgid "Label"
+#~ msgstr "Etikett"
+
+#~ msgid "Event time"
+#~ msgstr "Händelsetid"
+
+#~ msgid "Type"
+#~ msgstr "Typ"
+
+#~ msgid "Triggered page"
+#~ msgstr "Utlöst sida"
+
+#~ msgid "Details"
+#~ msgstr "Detaljer"
+
+#~ msgid "All pages"
+#~ msgstr "Alla sidor"
+
+#~ msgid "No triggered events found."
+#~ msgstr "Inga utlösta händelser hittades."
+
+#~ msgid "results"
+#~ msgstr "resultat"
+
+#~ msgid "Confirm event removal"
+#~ msgstr "Bekräfta borttagning av händelse"
+
+#~ msgid "Do you want to remove this event?"
+#~ msgstr "Vill du ta bort den här händelsen?"
 
 #~ msgid "No city data available for the selected period."
 #~ msgstr "Ingen stadsdata är tillgänglig för den valda perioden."
@@ -3209,11 +2644,11 @@ msgstr "Tabell: Besökare"
 #~ msgid "Captured events data purged."
 #~ msgstr "Data för insamlade händelser har rensats."
 
+#~ msgid "App"
+#~ msgstr "App"
+
 #~ msgid "Delete captured events list"
 #~ msgstr "Ta bort lista över insamlade händelser"
-
-#~ msgid "Events configuration"
-#~ msgstr "Händelsekonfiguration"
 
 #~ msgid "Confirm captured events purge"
 #~ msgstr "Bekräfta rensning av insamlade händelser"
@@ -3232,6 +2667,416 @@ msgstr "Tabell: Besökare"
 
 #~ msgid "Purge captured events"
 #~ msgstr "Rensa insamlade händelser"
+
+#~ msgid "Interface branding"
+#~ msgstr "Gränssnittsprofilering"
+
+#~ msgid "White-label interface controls are available in Pro."
+#~ msgstr "Kontroller för white-label-gränssnittet finns i Pro."
+
+#~ msgid "Use white-label interface"
+#~ msgstr "Använd white-label-gränssnitt"
+
+#~ msgid ""
+#~ "Hide the BimBeau Privacy Analytics logo in the admin header and display "
+#~ "the localized analytics title instead."
+#~ msgstr ""
+#~ "Döljer BimBeau Privacy Analytics-logotypen i administrationssidhuvudet "
+#~ "och visar den lokaliserade analystiteln i stället."
+
+#~ msgid "Enabled panels"
+#~ msgstr "Aktiverade paneler"
+
+#~ msgid "Visible"
+#~ msgstr "Synlig"
+
+#~ msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
+#~ msgstr ""
+#~ "Dold medan \"Aktivera avancerad statistik efter samtycke\" är inaktiverat."
+
+#~ msgid "Quick stats"
+#~ msgstr "Snabbstatistik"
+
+#~ msgid ""
+#~ "Enable Quick Stats on selected post types: add a Views (30d) column in "
+#~ "the posts list and display a stats summary metabox while editing each "
+#~ "post."
+#~ msgstr ""
+#~ "Aktivera Snabbstatistik för valda inläggstyper: lägg till en kolumn "
+#~ "Visningar (30d) i inläggslistan och visa en metabox med statistiköversikt "
+#~ "när varje inlägg redigeras."
+
+#~ msgid "No post types available."
+#~ msgstr "Inga inläggstyper tillgängliga."
+
+#~ msgid ""
+#~ "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
+#~ "database or MaxMind API."
+#~ msgstr ""
+#~ "Välj hur BimBeau Privacy Analytics löser geolokalisering: lokal GeoLite-"
+#~ "databas eller MaxMind API."
+
+#~ msgid "Geolocation source"
+#~ msgstr "Geolokaliseringskälla"
+
+#~ msgid "Local GeoLite database (default)"
+#~ msgstr "Lokal GeoLite-databas (standard)"
+
+#~ msgid "MaxMind API credentials"
+#~ msgstr "MaxMind API-uppgifter"
+
+#, fuzzy
+#~ msgid ""
+#~ "Local database mode downloads the GeoLite MMDB file through the official "
+#~ "BimBeau GeoIP Database Service manifest. API mode uses live MaxMind "
+#~ "requests."
+#~ msgstr ""
+#~ "Lokalt databasläge laddar ned GeoLite MMDB-filen från BimBeau Privacy "
+#~ "Analytics-speglar. API-läge använder liveförfrågningar till MaxMind."
+
+#~ msgid "MaxMind Account ID"
+#~ msgstr "MaxMind-konto-ID"
+
+#~ msgid "Numeric Account ID used for MaxMind API requests."
+#~ msgstr "Numeriskt konto-ID som används för MaxMind API-förfrågningar."
+
+#~ msgid "MaxMind License Key"
+#~ msgstr "MaxMind-licensnyckel"
+
+#~ msgid "License Key used for MaxMind API requests."
+#~ msgstr "Licensnyckel som används för MaxMind API-förfrågningar."
+
+#~ msgid "Test MaxMind connection"
+#~ msgstr "Testa MaxMind-anslutning"
+
+#~ msgid "Automatic GeoIP database updates"
+#~ msgstr "Automatiska uppdateringar av GeoIP-databasen"
+
+#~ msgid "Controls the cron frequency for local GeoIP database updates."
+#~ msgstr "Styr cron-frekvensen för lokala uppdateringar av GeoIP-databasen."
+
+#~ msgid "Update now"
+#~ msgstr "Uppdatera nu"
+
+#~ msgid "Current state"
+#~ msgstr "Aktuellt tillstånd"
+
+#~ msgid "Last attempt"
+#~ msgstr "Senaste försök"
+
+#~ msgid "Next scheduled retry"
+#~ msgstr "Nästa schemalagda omförsök"
+
+#~ msgid "Last successful update"
+#~ msgstr "Senaste lyckade uppdatering"
+
+#~ msgid "Database size"
+#~ msgstr "Databasstorlek"
+
+#~ msgid "Last error code"
+#~ msgstr "Senaste felkod"
+
+#~ msgid "Retry count"
+#~ msgstr "Antal omförsök"
+
+#~ msgid ""
+#~ "Behavior: plugin activation completes quickly, and temporary local "
+#~ "database unavailability does not block the rest of BimBeau Privacy "
+#~ "Analytics."
+#~ msgstr ""
+#~ "Beteende: tilläggsaktiveringen slutförs snabbt och tillfällig "
+#~ "otillgänglighet för den lokala databasen blockerar inte resten av BimBeau "
+#~ "Privacy Analytics."
+
+#~ msgid "Privacy"
+#~ msgstr "Integritet"
+
+#~ msgid "Advanced stats require consent"
+#~ msgstr "Avancerad statistik kräver samtycke"
+
+#~ msgid "Essential stats only"
+#~ msgstr "Endast nödvändig statistik"
+
+#~ msgid ""
+#~ "Essential stats run without consent. Advanced stats run only after "
+#~ "Statistics / Analytics consent."
+#~ msgstr ""
+#~ "Nödvändig statistik körs utan samtycke. Avancerad statistik körs endast "
+#~ "efter samtycke till statistik/analys."
+
+#~ msgid "Essential stats"
+#~ msgstr "Nödvändig statistik"
+
+#~ msgid "No consent required"
+#~ msgstr "Inget samtycke krävs"
+
+#~ msgid ""
+#~ "Limited audience stats only. No ads, no cross-site tracking, no third-"
+#~ "party reuse."
+#~ msgstr ""
+#~ "Endast begränsad målgruppsstatistik. Inga annonser, ingen spårning mellan "
+#~ "webbplatser och ingen återanvändning av tredje part."
+
+#~ msgid "Essential data"
+#~ msgstr "Nödvändig data"
+
+#~ msgid "Script:"
+#~ msgstr "Skript:"
+
+#~ msgid "Advanced stats"
+#~ msgstr "Avancerad statistik"
+
+#~ msgid "Requires consent"
+#~ msgstr "Kräver samtycke"
+
+#~ msgid "Adds detailed visit insights after consent."
+#~ msgstr "Lägger till detaljerade besöksinsikter efter samtycke."
+
+#~ msgid "Enable advanced stats after consent"
+#~ msgstr "Aktivera avancerad statistik efter samtycke"
+
+#~ msgid ""
+#~ "Your CMP must block it until Statistics / Analytics consent is given."
+#~ msgstr ""
+#~ "Din CMP måste blockera den tills samtycke till statistik/analys har getts."
+
+#~ msgid "Advanced data"
+#~ msgstr "Avancerad data"
+
+#~ msgid "CMP setup"
+#~ msgstr "CMP-konfiguration"
+
+#~ msgid ""
+#~ "Block the advanced stats script until Statistics / Analytics consent is "
+#~ "given."
+#~ msgstr ""
+#~ "Blockera skriptet för avancerad statistik tills samtycke till statistik/"
+#~ "analys har getts."
+
+#~ msgid "Script to block:"
+#~ msgstr "Skript att blockera:"
+
+#~ msgid "Alternative selectors:"
+#~ msgstr "Alternativa selektorer:"
+
+#~ msgid "Script ID:"
+#~ msgstr "Skript-ID:"
+
+#~ msgid "WordPress handle:"
+#~ msgstr "WordPress-handle:"
+
+#~ msgid "What is a CMP?"
+#~ msgstr "Vad är en CMP?"
+
+#~ msgid ""
+#~ "A CMP manages cookie consent on your website. It shows the cookie banner, "
+#~ "stores visitor choices, and allows or blocks analytics scripts based on "
+#~ "consent."
+#~ msgstr ""
+#~ "En CMP hanterar cookie-samtycke på din webbplats. Den visar cookie-"
+#~ "bannern, lagrar besökarens val och tillåter eller blockerar analysskript "
+#~ "baserat på samtycke."
+
+#~ msgid "Examples:"
+#~ msgstr "Exempel:"
+
+#~ msgid ""
+#~ "In your CMP, block the BimBeau Privacy Analytics advanced stats script "
+#~ "until the Statistics or Analytics purpose is accepted."
+#~ msgstr ""
+#~ "Blockera BimBeau Privacy Analytics-skriptet för avancerad statistik i din "
+#~ "CMP tills ändamålet Statistik eller Analys har accepterats."
+
+#~ msgid ""
+#~ "Advanced stats are disabled. BimBeau Privacy Analytics will only use "
+#~ "essential stats."
+#~ msgstr ""
+#~ "Avancerad statistik är inaktiverad. BimBeau Privacy Analytics använder "
+#~ "endast nödvändig statistik."
+
+#~ msgid "Respect DNT / GPC"
+#~ msgstr "Respektera DNT / GPC"
+
+#~ msgid ""
+#~ "Stop measurement when the visitor’s browser sends a Do Not Track or "
+#~ "Global Privacy Control signal."
+#~ msgstr ""
+#~ "Stoppa mätning när besökarens webbläsare skickar en Do Not Track- eller "
+#~ "Global Privacy Control-signal."
+
+#~ msgid "Visit measurement"
+#~ msgstr "Besöksmätning"
+
+#~ msgid ""
+#~ "Defines how long visitor activity can remain grouped under the same "
+#~ "visitor row before a new row is started after inactivity."
+#~ msgstr ""
+#~ "Definierar hur länge besökaraktivitet kan förbli grupperad under samma "
+#~ "besökarrad innan en ny rad startas efter inaktivitet."
+
+#~ msgid "Visitor activity window"
+#~ msgstr "Aktivitetsfönster för besökare"
+
+#~ msgid ""
+#~ "Defines how long activity from the same visitor can remain grouped into "
+#~ "one visitor row. After this period of inactivity, BimBeau Privacy "
+#~ "Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 "
+#~ "minutes to 24 hours)."
+#~ msgstr ""
+#~ "Definierar hur länge aktivitet från samma besökare kan förbli grupperad i "
+#~ "en besökarrad. Efter denna period av inaktivitet startar BimBeau Privacy "
+#~ "Analytics en ny besökarrad. Intervall: 300 till 86400 sekunder (5 minuter "
+#~ "till 24 timmar)."
+
+#~ msgid "URLs & campaigns"
+#~ msgstr "URL:er och kampanjer"
+
+#~ msgid ""
+#~ "Control URL cleanup behavior and keep only campaign query parameters that "
+#~ "should remain available for attribution."
+#~ msgstr ""
+#~ "Styr beteendet för URL-rensning och behåll endast kampanjens "
+#~ "frågeparametrar som ska vara tillgängliga för attribuering."
+
+#~ msgid "Clean URL query parameters"
+#~ msgstr "Rensa URL-frågeparametrar"
+
+#~ msgid "Remove query parameters from tracked URLs."
+#~ msgstr "Ta bort frågeparametrar från spårade URL:er."
+
+#~ msgid "Allowed query parameters"
+#~ msgstr "Tillåtna frågeparametrar"
+
+#~ msgid ""
+#~ "Comma-separated list of allowed query keys (used for URL tracking and UTM "
+#~ "aggregation)."
+#~ msgstr ""
+#~ "Kommaseparerad lista över tillåtna frågenycklar (används för URL-spårning "
+#~ "och UTM-aggregering)."
+
+#~ msgid "Data retention"
+#~ msgstr "Datalagring"
+
+#~ msgid ""
+#~ "Choose how long to keep temporary detailed events, report details, and "
+#~ "long-term totals, then how often cleanup runs."
+#~ msgstr ""
+#~ "Choose how long to keep temporary detailed events, report details, and "
+#~ "long-term totals, then how often cleanup runs."
+
+#~ msgid "Temporary detailed events retention (days)"
+#~ msgstr "Lagring av tillfälliga detaljerade händelser (dagar)"
+
+#~ msgid ""
+#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
+#~ msgstr ""
+#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
+
+#~ msgid "Report details retention"
+#~ msgstr "Lagring av rapportdetaljer"
+
+#~ msgid ""
+#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
+#~ "devices, and visitor details."
+#~ msgstr ""
+#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
+#~ "devices, and visitor details."
+
+#~ msgid "Long-term totals retention"
+#~ msgstr "Lagring av långsiktiga totaler"
+
+#~ msgid ""
+#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
+#~ "visitors chart after report details expire."
+#~ msgstr ""
+#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
+#~ "visitors chart after report details expire."
+
+#~ msgid ""
+#~ "Cleanup permanently removes expired details, while long-term totals "
+#~ "remain available until their own retention window ends."
+#~ msgstr ""
+#~ "Cleanup permanently removes expired details, while long-term totals "
+#~ "remain available until their own retention window ends."
+
+#~ msgid "Automatic cleanup frequency"
+#~ msgstr "Automatisk rensningsfrekvens"
+
+#~ msgid "Defines how often WordPress checks for expired analytics data."
+#~ msgstr "Defines how often WordPress checks for expired analytics data."
+
+#~ msgid "Exclusions"
+#~ msgstr "Exkluderingar"
+
+#~ msgid ""
+#~ "Select roles to exclude from tracking. Select all roles to ignore all "
+#~ "logged-in users."
+#~ msgstr ""
+#~ "Välj roller som ska exkluderas från spårning. Välj alla roller för att "
+#~ "ignorera alla inloggade användare."
+
+#~ msgid "No roles available."
+#~ msgstr "Inga roller tillgängliga."
+
+#~ msgid "Debug"
+#~ msgstr "Felsökning"
+
+#~ msgid ""
+#~ "Enable diagnostic output for troubleshooting tracking events, realtime "
+#~ "visitor detection, and REST payloads in the browser console and wp-"
+#~ "content/debug.log."
+#~ msgstr ""
+#~ "Aktivera diagnostikutdata för felsökning av spårningshändelser, "
+#~ "realtidsdetektering av besökare och REST-payloads i webbläsarkonsolen och "
+#~ "wp-content/debug.log."
+
+#~ msgid "Debug mode"
+#~ msgstr "Felsökningsläge"
+
+#~ msgid ""
+#~ "Writes detailed diagnostic logs to the console and to wp-content/debug."
+#~ "log when WordPress debug logging is enabled."
+#~ msgstr ""
+#~ "Skriver detaljerade diagnostikloggar till konsolen och till wp-content/"
+#~ "debug.log när WordPress-felsökningsloggning är aktiverad."
+
+#~ msgid "Cleanup actions"
+#~ msgstr "Rensningsåtgärder"
+
+#~ msgid ""
+#~ "Run retention cleanup immediately to remove only data older than the "
+#~ "configured retention window."
+#~ msgstr ""
+#~ "Kör lagringsrensning omedelbart för att endast ta bort data som är äldre "
+#~ "än det konfigurerade lagringsfönstret."
+
+#~ msgid "Run cleanup now"
+#~ msgstr "Kör rensning nu"
+
+#~ msgid "Delete plugin tables on uninstall"
+#~ msgstr "Ta bort plugintabeller vid avinstallation"
+
+#~ msgid ""
+#~ "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
+#~ "analytics tables from the WordPress database."
+#~ msgstr ""
+#~ "När detta är aktiverat tar avinstallation av BimBeau Privacy Analytics "
+#~ "bort alla pluginets analystabeller från WordPress-databasen."
+
+#~ msgid "Sensitive actions"
+#~ msgstr "Känsliga åtgärder"
+
+#~ msgid ""
+#~ "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
+#~ "entries."
+#~ msgstr ""
+#~ "Ta bort all aggregerad KPI-analys, besökardetaljanalys och råloggposter."
+
+#~ msgid "Delete all analytics data"
+#~ msgstr "Ta bort all analysdata"
+
+#~ msgid "Events configuration"
+#~ msgstr "Händelsekonfiguration"
 
 #~ msgid "BimBeau Privacy Analytics events analytics feature preview"
 #~ msgstr "Förhandsvisning av BimBeau Privacy Analytics Pro-funktion"
@@ -3339,10 +3184,10 @@ msgstr "Tabell: Besökare"
 #~ msgid "Leave blank to use \"BimBeau Privacy Analytics\"."
 #~ msgstr "Lämna tomt för att använda \"BimBeau Privacy Analytics\"."
 
-#~ msgid "This panel is available in BimBeau Privacy Analytics Pro."
+#~ msgid "This panel is not included in this package."
 #~ msgstr "Den här panelen är tillgänglig i BimBeau Privacy Analytics Pro."
 
-#~ msgid "City map markers are available in BimBeau Privacy Analytics Pro."
+#~ msgid "City map markers are not included in this package."
 #~ msgstr ""
 #~ "Stadsmarkörer på kartan är tillgängliga i BimBeau Privacy Analytics Pro."
 

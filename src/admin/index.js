@@ -107,7 +107,7 @@ const getRealtimeMapSnackbarLabel = ( labelKey ) => {
 };
 
 const resolveServiceWorkerScope = () => {
-	const fallbackScope = '/bbpa-app/';
+	const fallbackScope = '/bbpa/';
 
 	if ( ! pwaConfig?.serviceWorkerUrl || typeof window.URL !== 'function' ) {
 		return fallbackScope;

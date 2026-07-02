@@ -2,6 +2,9 @@ const path = require('path');
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
 const cssAssetPublicPath = process.env.BBPA_ADMIN_CSS_PUBLIC_PATH || '../';
+const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
+  ? path.resolve(process.env.BBPA_ADMIN_SOURCE_ROOT)
+  : path.resolve(__dirname, 'src/admin');
 const flagIconsFlagsPath = `${path.sep}node_modules${path.sep}flag-icons${path.sep}flags${path.sep}`;
 
 const getSvgAssetFilename = ({ filename = '' } = {}) => {
@@ -44,6 +47,10 @@ const defaultRules = defaultConfig.module.rules.filter((rule) => {
 
 module.exports = {
   ...defaultConfig,
+  resolve: {
+    ...(defaultConfig.resolve || {}),
+    modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
+  },
   module: {
     ...defaultConfig.module,
     rules: [
@@ -56,8 +63,8 @@ module.exports = {
     ],
   },
   entry: {
-    admin: path.resolve(__dirname, 'src/admin/index.js'),
-    'style-admin': path.resolve(__dirname, 'src/admin/style.scss'),
+    admin: path.resolve(adminSourceRoot, 'index.js'),
+    'style-admin': path.resolve(adminSourceRoot, 'style.scss'),
   },
   output: {
     ...defaultConfig.output,

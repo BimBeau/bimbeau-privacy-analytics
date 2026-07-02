@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.43.24
+Stable tag: 8.44.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -48,7 +48,7 @@ Reports and insights:
 
 Free plugin behavior:
 
-BimBeau Privacy Analytics on WordPress.org is the complete Free plugin. It runs without a license, payment, quota, remote validation, or Freemius runtime. A separate Pro edition is available from the author outside WordPress.org and replaces the Free plugin when installed.
+BimBeau Privacy Analytics on WordPress.org is the complete Free plugin. Its Free analytics features run without a license, payment, quota, time-limited evaluation, or remote validation. The package may load Freemius for account, pricing, upgrade, support, uninstall, and package identity flows. A separate Pro edition is available from the author outside WordPress.org and replaces the Free plugin when installed.
 
 Pro edition:
 
@@ -61,7 +61,7 @@ Depending on the active license, site configuration, consent setup, and availabl
 * City geolocation reports and map markers when usable city data is available.
 * Event tracking and event configuration.
 * Content analytics in WordPress content lists and the editor.
-* A dedicated PWA Stats App.
+* An installable stats app for site analytics.
 * White-label admin header controls.
 * Optional panel visibility controls for the analytics navigation.
 * Deeper reporting surfaces when licensed features are active and the required data is available.
@@ -71,7 +71,7 @@ Learn more about Pro:
 * Official plugin website: https://bimbeau.fr/bimbeau-privacy-analytics/en/
 * Pricing: https://bimbeau.fr/bimbeau-privacy-analytics/en/pricing/
 
-In the Free runtime, Pro-only report surfaces and controls are hidden instead of being exposed as disabled placeholders.
+The WordPress.org Free package does not embed Pro-only report surfaces as local feature locks or disabled placeholders. Upgrade links point to the separate Pro edition hosted outside WordPress.org.
 
 Consent and enriched tracking:
 
@@ -216,5 +216,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.43.24 =
-* Harden the public Free source export by excluding private repository documentation.
+= 8.44.2 =
+* Tighten WordPress.org Free package compliance validation for locked Pro features.

@@ -1717,7 +1717,7 @@ const PageDetailsPanel = ( { range, source, selectedPage, onBack } ) => {
 							title={ __( 'Top cities', 'bimbeau-privacy-analytics' ) }
 							labelHeader={ __( 'City', 'bimbeau-privacy-analytics' ) }
 							range={ range }
-							endpoint="/geo-cities"
+							endpoint="/geo-countries"
 							emptyLabel={ __(
 								'No city data available.',
 								'bimbeau-privacy-analytics'
@@ -1785,6 +1785,7 @@ const NotFoundPanel = ( { range } ) => (
 		endpoint="/404s"
 		emptyLabel={ __( 'No missing pages available.', 'bimbeau-privacy-analytics' ) }
 		labelFallback="/"
+		exportReportKey="404s"
 	/>
 );
 
@@ -1804,6 +1805,7 @@ const EntryPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		onRowClick={ onOpenDetails }
 		getRowHref={ getRowHref }
 		showOpenButton={ false }
+		exportReportKey="entry-pages"
 	/>
 );
 
@@ -1823,6 +1825,7 @@ const ExitPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		onRowClick={ onOpenDetails }
 		getRowHref={ getRowHref }
 		showOpenButton={ false }
+		exportReportKey="exit-pages"
 	/>
 );
 

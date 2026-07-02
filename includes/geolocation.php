@@ -570,14 +570,22 @@ function bbpa_get_visit_country_payload(): array
 {
     $country_code = '';
     $country_name = '';
-
+    $city_name = '';
+    $city_geoname_id = null;
+    $accuracy_radius = null;
+    $latitude = null;
+    $longitude = null;
 
     $payload = bbpa_get_geolocation_payload();
     if (!empty($payload['error'])) {
         return [
             'country_code' => $country_code,
             'country' => $country_name,
-
+            'city' => $city_name,
+            'city_geoname_id' => $city_geoname_id,
+            'accuracy_radius' => $accuracy_radius,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
         ];
     }
 
@@ -586,7 +594,19 @@ function bbpa_get_visit_country_payload(): array
         ? sanitize_text_field((string) $payload['country'])
         : '';
 
-
+    $city_name = isset($payload['city'])
+        ? sanitize_text_field((string) $payload['city'])
+        : '';
+    $city_geoname_id = bbpa_normalize_geoname_id($payload['city_geoname_id'] ?? null);
+    $accuracy_radius = isset($payload['accuracy_radius']) && is_numeric($payload['accuracy_radius'])
+        ? max(0, (int) $payload['accuracy_radius'])
+        : null;
+    $latitude = isset($payload['latitude']) && is_numeric($payload['latitude'])
+        ? (float) $payload['latitude']
+        : null;
+    $longitude = isset($payload['longitude']) && is_numeric($payload['longitude'])
+        ? (float) $payload['longitude']
+        : null;
 
     return [
         'country_code' => $country_code,
@@ -966,8 +986,33 @@ function bbpa_get_geolocation_payload(): array
         ];
     }
 
+    if (empty(trim((string) ($location['city'] ?? '')))) {
+        bbpa_log_geolocation_debug('Geolocation lookup resolved without city label.', [
+            'lookup_mode' => $lookup_mode,
+            'ip' => $ip,
+            'source' => $location['source'] ?? 'unknown',
+            'country_code' => (string) ($location['country_code'] ?? ''),
+            'region_code' => (string) ($location['region_code'] ?? ''),
+            'city_geoname_id' => bbpa_normalize_geoname_id($location['city_geoname_id'] ?? null),
+            'accuracy_radius_present' => isset($location['accuracy_radius']) && is_numeric($location['accuracy_radius']),
+            'accuracy_radius' => isset($location['accuracy_radius']) && is_numeric($location['accuracy_radius'])
+                ? max(0, (int) $location['accuracy_radius'])
+                : null,
+            'latitude_present' => is_numeric($location['latitude'] ?? null),
+            'longitude_present' => is_numeric($location['longitude'] ?? null),
+            'latitude' => is_numeric($location['latitude'] ?? null)
+                ? (float) $location['latitude']
+                : null,
+            'longitude' => is_numeric($location['longitude'] ?? null)
+                ? (float) $location['longitude']
+                : null,
+        ]);
+    }
 
-/* </fs_premium_only> */
+    $coordinates = bbpa_normalize_coordinate_pair(
+        $location['latitude'] ?? null,
+        $location['longitude'] ?? null
+    );
 
     return [
         'ip' => $ip,
@@ -975,7 +1020,13 @@ function bbpa_get_geolocation_payload(): array
         'country_code' => $location['country_code'] ?? '',
         'region' => $location['region'],
         'region_code' => $location['region_code'] ?? '',
-
+        'city' => $location['city'],
+        'city_geoname_id' => bbpa_normalize_geoname_id($location['city_geoname_id'] ?? null),
+        'accuracy_radius' => isset($location['accuracy_radius']) && is_numeric($location['accuracy_radius'])
+            ? max(0, (int) $location['accuracy_radius'])
+            : null,
+        'latitude' => $coordinates['latitude'],
+        'longitude' => $coordinates['longitude'],
         'source' => $location['source'],
     ];
 }
@@ -986,7 +1037,22 @@ function bbpa_get_geolocation_payload(): array
 function bbpa_get_geo_aggregate_payload(array $hit = []): array
 {
     $country_code = bbpa_normalize_country_code($hit['country_code'] ?? '');
+    $city_name = bbpa_normalize_city_name($hit['city_name'] ?? $hit['city'] ?? '');
+    if ($country_code !== '' && $city_name !== '') {
+        $coordinates = bbpa_normalize_coordinate_pair(
+            $hit['latitude'] ?? null,
+            $hit['longitude'] ?? null
+        );
 
+        return [
+            'country_code' => $country_code,
+            'region_code' => bbpa_normalize_region_code($hit['region_code'] ?? ''),
+            'city_name' => $city_name,
+            'city_geoname_id' => bbpa_normalize_geoname_id($hit['city_geoname_id'] ?? null),
+            'latitude' => $coordinates['latitude'],
+            'longitude' => $coordinates['longitude'],
+        ];
+    }
 
     if ($country_code !== '') {
         return [
@@ -1032,6 +1098,34 @@ function bbpa_get_geo_aggregate_payload(array $hit = []): array
         return [];
     }
 
+    if (bbpa_normalize_city_name($location['city'] ?? '') === 'unknown') {
+        bbpa_log_geolocation_debug('Geo aggregate city normalized to unknown.', [
+            'lookup_mode' => $lookup_mode,
+            'ip' => $ip,
+            'source' => $location['source'] ?? 'unknown',
+            'country_code' => (string) ($location['country_code'] ?? ''),
+            'region_code' => (string) ($location['region_code'] ?? ''),
+            'raw_city' => (string) ($location['city'] ?? ''),
+            'city_geoname_id' => bbpa_normalize_geoname_id($location['city_geoname_id'] ?? null),
+        ]);
+    }
 
+    $country_code = bbpa_normalize_country_code($location['country_code'] ?? '');
+    if ($country_code === '') {
+        return [];
+    }
+
+    $coordinates = bbpa_normalize_coordinate_pair(
+        $location['latitude'] ?? null,
+        $location['longitude'] ?? null
+    );
+
+    return [
+        'country_code' => $country_code,
+        'region_code' => bbpa_normalize_region_code($location['region_code'] ?? ''),
+        'city_name' => bbpa_normalize_city_name($location['city'] ?? ''),
+        'city_geoname_id' => bbpa_normalize_geoname_id($location['city_geoname_id'] ?? null),
+        'latitude' => $coordinates['latitude'],
+        'longitude' => $coordinates['longitude'],
     ];
 }

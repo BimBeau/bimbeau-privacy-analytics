@@ -238,7 +238,7 @@
 
     function isFrontAppShellPath(rawPath) {
         const normalizedPath = normalizeTrackerPath(rawPath);
-        const appBasePath = '/bbpa-app';
+        const appBasePath = '/bbpa';
 
         return normalizedPath === appBasePath || normalizedPath.indexOf(appBasePath + '/') === 0;
     }

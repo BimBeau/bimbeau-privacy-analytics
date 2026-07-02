@@ -54,8 +54,21 @@ build_front_assets() {
 
   rm -f "${admin_bundle_path}"
 
+  local admin_source_root="${repo_root}/src/admin"
+  local stripped_source_root=""
+  if [ "${BBPA_PACKAGE_TARGET:-free}" = "free" ]; then
+    stripped_source_root="$(mktemp -d)"
+    rsync -a --delete "${repo_root}/src/admin/" "${stripped_source_root}/admin/"
+    node "${repo_root}/scripts/strip-freemius-premium-blocks.js" "${stripped_source_root}/admin"
+    admin_source_root="${stripped_source_root}/admin"
+  fi
+
   run_phase "front-end asset compilation (npm run build:assets)" \
-    npm --prefix "${repo_root}" run build:assets
+    env BBPA_ADMIN_SOURCE_ROOT="${admin_source_root}" npm --prefix "${repo_root}" run build:assets
+
+  if [ -n "${stripped_source_root}" ]; then
+    rm -rf "${stripped_source_root}"
+  fi
 
   if [ ! -f "${admin_bundle_path}" ]; then
     echo "Missing expected front build artifact: ${admin_bundle_path}" >&2

@@ -1,8 +1,8 @@
 :root,
-body.bbpa-app-shell,
-body.bbpa-app-login-shell,
-body.bbpa-app-shell #bbpa-app,
-body.bbpa-app-login-shell #bbpa-front-login {
+body.bbpa-shell,
+body.bbpa-login-shell,
+body.bbpa-shell #bbpa,
+body.bbpa-login-shell #bbpa-front-login {
 	--wp-admin-theme-color: #3858e9;
 	--wp-admin-theme-color--rgb: 56, 88, 233;
 	--wp-admin-theme-color-darker-10: #2145e6;
@@ -14,7 +14,7 @@ body.bbpa-app-login-shell #bbpa-front-login {
 
 body.wp-admin,
 body.wp-admin #bbpa-admin .bbpa-admin-app,
-body.bbpa-app-shell #bbpa-app .bbpa-admin-app,
+body.bbpa-shell #bbpa .bbpa-admin-app,
 .bbpa-period-filter__popover {
 	--color-1: #1d2327;
 	--color-2: #2c3338;
@@ -40,7 +40,7 @@ body.bbpa-app-shell #bbpa-app .bbpa-admin-app,
 	--bbpa-skeleton-bg: var(--color-5);
 }
 
-body.bbpa-app-shell {
+body.bbpa-shell {
 	width: 100%;
 	max-width: none !important;
 	margin: 0;
@@ -48,8 +48,8 @@ body.bbpa-app-shell {
 	overflow-x: hidden;
 }
 
-body.bbpa-app-shell #bbpa-app,
-body.bbpa-app-shell #bbpa-app .bbpa-admin-app {
+body.bbpa-shell #bbpa,
+body.bbpa-shell #bbpa .bbpa-admin-app {
 	box-sizing: border-box;
 	width: 100%;
 	max-width: none !important;

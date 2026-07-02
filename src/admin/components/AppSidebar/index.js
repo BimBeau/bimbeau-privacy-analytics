@@ -22,28 +22,28 @@ const AppSidebar = ( {
 	}
 
 	return (
-		<Card className="bbpa-app-sidebar">
+		<Card className="bbpa-sidebar">
 			<CardBody>
 				<Button
 					variant="tertiary"
-					className="bbpa-app-sidebar__mobile-toggle"
+					className="bbpa-sidebar__mobile-toggle"
 					onClick={ () =>
 						setIsMobileExpanded( ( value ) => ! value )
 					}
 					icon={ isMobileExpanded ? chevronUp : chevronDown }
 					iconPosition="right"
 					aria-expanded={ isMobileExpanded }
-					aria-controls="bbpa-app-sidebar-nav-list"
+					aria-controls="bbpa-sidebar-nav-list"
 					text={ __( 'Navigation', 'bimbeau-privacy-analytics' ) }
 				/>
 				<nav
-					className="bbpa-app-sidebar__nav"
+					className="bbpa-sidebar__nav"
 					data-mobile-expanded={ isMobileExpanded ? 'true' : 'false' }
 					aria-label={ __( 'BimBeau Privacy Analytics navigation', 'bimbeau-privacy-analytics' ) }
 				>
 					<ul
-						id="bbpa-app-sidebar-nav-list"
-						className="bbpa-app-sidebar__list"
+						id="bbpa-sidebar-nav-list"
+						className="bbpa-sidebar__list"
 					>
 						{ safePanels.map( ( panel ) => {
 							const isActive = panel.name === currentPanel;
@@ -51,14 +51,14 @@ const AppSidebar = ( {
 							return (
 								<li
 									key={ panel.name }
-									className="bbpa-app-sidebar__item"
+									className="bbpa-sidebar__item"
 								>
 									<Button
 										variant={
 											isActive ? 'primary' : 'tertiary'
 										}
 										href={ getAdminPanelUrl( panel.name ) }
-										className="bbpa-app-sidebar__link"
+										className="bbpa-sidebar__link"
 										aria-current={
 											isActive ? 'page' : undefined
 										}

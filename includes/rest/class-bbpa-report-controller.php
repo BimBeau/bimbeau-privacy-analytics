@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class BBPA_Report_Controller {
-    private ?BBPA_City_Coordinates_Service $city_coordinates_service = null;
+    private ?object $city_coordinates_service = null;
 
     /**
      * Register routes for report data.
@@ -110,18 +110,7 @@ class BBPA_Report_Controller {
             ]
         );
 
-        if (function_exists('bbpa_is_pro') && bbpa_is_pro()) {
-            register_rest_route(
-                BBPA_REST_NAMESPACE,
-                '/geo-cities',
-                [
-                    'methods' => 'GET',
-                    'callback' => [$this, 'get_geo_cities'],
-                    'permission_callback' => [$this, 'check_permissions'],
-                    'args' => $list_args,
-                ]
-            );
-        }
+        
 
         register_rest_route(
             BBPA_REST_NAMESPACE,
@@ -369,14 +358,7 @@ class BBPA_Report_Controller {
         return $this->build_geo_countries_response($request, $table);
     }
 
-    /**
-     * Top city aggregation.
-     */
-    public function get_geo_cities(WP_REST_Request $request): WP_REST_Response {
-        $table = $this->get_allowed_table('geo_daily');
-
-        return $this->build_geo_cities_response($request, $table);
-    }
+    
 
     /**
      * Entry pages aggregation.
@@ -436,8 +418,8 @@ class BBPA_Report_Controller {
         if (!$this->is_visitors_feature_enabled()) {
             return new WP_REST_Response(
                 [
-                    'code' => 'bbpa_pro_required',
-                    'message' => __('Visitors details are available in BimBeau Privacy Analytics Pro.', 'bimbeau-privacy-analytics'),
+                    'code' => 'bbpa_package_unavailable',
+                    'message' => __('Visitors details are not included in this package.', 'bimbeau-privacy-analytics'),
                 ],
                 403
             );
@@ -2650,295 +2632,7 @@ class BBPA_Report_Controller {
         ];
     }
 
-    /**
-     * Build paginated list response for top cities.
-     */
-    private function build_geo_cities_response(WP_REST_Request $request, string $table): WP_REST_Response {
-        global $wpdb;
-
-        $range = $this->get_day_range($request);
-        $pagination = $this->normalize_pagination($request);
-        $search_term = $this->get_search_term($request);
-        $page_path = $this->get_page_path_filter($request);
-        $sorting = $this->normalize_sorting(
-            $request,
-            [
-                'visits' => 'visits',
-                'hits' => 'hits',
-                'city' => 'city_name',
-                'region' => 'region_code',
-                'country' => 'country_code',
-            ],
-            'visits'
-        );
-        $cache_key = $this->get_cache_key(
-            'geo-cities',
-            [
-                'range' => $range,
-                'pagination' => $pagination,
-                'sorting' => $sorting,
-                'search' => $search_term,
-                'pagePath' => $page_path,
-            ]
-        );
-        $cache_id = 'geo-cities';
-        $cached = $this->get_cached_payload($cache_key);
-        if ($cached !== null) {
-            $this->log_geo_cities_debug_summary(
-                is_array($cached) ? $cached : [],
-                [
-                    'source' => 'cache',
-                    'search' => $search_term,
-                    'sorting' => $sorting,
-                ]
-            );
-
-            return new WP_REST_Response($cached, 200);
-        }
-
-        $visitors_table = $wpdb->prefix . 'bbpa_visitors';
-        $geo_daily_table = $wpdb->prefix . 'bbpa_geo_daily';
-        $range_start = strtotime($range['start'] . ' 00:00:00');
-        $range_end = strtotime($range['end'] . ' 23:59:59');
-        $search_sql = '';
-        $search_args = [];
-        $page_path_sql = '';
-        $page_path_args = [];
-
-        if ($search_term !== '') {
-            $search_sql = ' AND (city LIKE %s OR country_code LIKE %s)';
-            $search_like = '%' . $wpdb->esc_like($search_term) . '%';
-            $search_args = [$search_like, $search_like];
-        }
-
-        if ($page_path !== '') {
-            // Visitor records store only entry and exit pages. This keeps the page filter aligned with
-            // the visitors list without treating per-page hits as unique city visitors.
-            $page_path_sql = ' AND (entry_page = %s OR exit_page = %s)';
-            $page_path_args = [$page_path, $page_path];
-        }
-
-        $activity_table = $wpdb->prefix . 'bbpa_visitor_activity_daily';
-        $use_activity_table = false;
-        if ($page_path === '' && $this->table_exists($activity_table)) {
-            $activity_probe_args = array_merge([$range['start'], $range['end'], 'bot', 'unknown'], $search_args);
-            $activity_probe_sql = $wpdb->prepare(
-                "SELECT COUNT(*)
-                FROM {$activity_table}
-                WHERE date_bucket BETWEEN %s AND %s
-                    AND device_class <> %s
-                    AND LOWER(TRIM(city)) <> %s
-                    AND TRIM(city) <> ''{$search_sql}",
-                $activity_probe_args
-            );
-            $use_activity_table = (int) $wpdb->get_var($activity_probe_sql) > 0;
-        }
-
-        if ($use_activity_table) {
-            $base_args = array_merge([$range['start'], $range['end'], 'bot', 'unknown'], $search_args);
-            $count_query = $wpdb->prepare(
-                "SELECT COUNT(*) FROM (SELECT 1
-                FROM {$activity_table}
-                WHERE date_bucket BETWEEN %s AND %s
-                    AND device_class <> %s
-                    AND LOWER(TRIM(city)) <> %s
-                    AND TRIM(city) <> ''{$search_sql}
-                GROUP BY country_code, city
-                HAVING COUNT(DISTINCT visitor_id) > 0) AS totals",
-                $base_args
-            );
-            $list_query_args = array_merge(
-                $base_args,
-                [$range['start'], $range['end'], 'unknown', $pagination['per_page'], $pagination['offset']]
-            );
-            $list_query = $wpdb->prepare(
-                "SELECT visitor_totals.country_code,
-                    COALESCE(geo_totals.region_code, '') AS region_code,
-                    visitor_totals.city AS city_name,
-                    COALESCE(geo_totals.city_geoname_id, 0) AS city_geoname_id,
-                    geo_totals.latitude,
-                    geo_totals.longitude,
-                    visitor_totals.hits,
-                    visitor_totals.visits
-                FROM (
-                    SELECT country_code,
-                        city,
-                        SUM(page_views) AS hits,
-                        COUNT(DISTINCT visitor_id) AS visits
-                    FROM {$activity_table}
-                    WHERE date_bucket BETWEEN %s AND %s
-                        AND device_class <> %s
-                        AND LOWER(TRIM(city)) <> %s
-                        AND TRIM(city) <> ''{$search_sql}
-                    GROUP BY country_code, city
-                    HAVING COUNT(DISTINCT visitor_id) > 0
-                ) AS visitor_totals
-                LEFT JOIN (
-                    SELECT country_code, city_name, MAX(region_code) AS region_code, MAX(city_geoname_id) AS city_geoname_id,
-                        AVG(CASE WHEN ABS(latitude) < 0.0001 AND ABS(longitude) < 0.0001 THEN NULL ELSE latitude END) AS latitude,
-                        AVG(CASE WHEN ABS(latitude) < 0.0001 AND ABS(longitude) < 0.0001 THEN NULL ELSE longitude END) AS longitude
-                    FROM {$geo_daily_table}
-                    WHERE date_bucket BETWEEN %s AND %s
-                        AND LOWER(TRIM(city_name)) <> %s
-                        AND TRIM(city_name) <> ''
-                    GROUP BY country_code, city_name
-                ) AS geo_totals
-                    ON geo_totals.country_code = visitor_totals.country_code
-                    AND LOWER(TRIM(geo_totals.city_name)) = LOWER(TRIM(visitor_totals.city))
-                ORDER BY {$sorting['orderby']} {$sorting['order']}
-                LIMIT %d OFFSET %d",
-                $list_query_args
-            );
-        } else {
-            $base_args = array_merge([$range_start, $range_end, 'bot', 'unknown'], $page_path_args, $search_args);
-            $count_query = $wpdb->prepare(
-                "SELECT COUNT(*) FROM (SELECT 1
-                FROM {$visitors_table}
-                WHERE last_view_at BETWEEN %d AND %d
-                    AND device_class <> %s
-                    AND LOWER(TRIM(city)) <> %s
-                    AND TRIM(city) <> ''{$page_path_sql}{$search_sql}
-                GROUP BY country_code, city
-                HAVING COUNT(DISTINCT visitor_id) > 0) AS totals",
-                $base_args
-            );
-            $list_query_args = array_merge(
-                $base_args,
-                [$range['start'], $range['end'], 'unknown', $pagination['per_page'], $pagination['offset']]
-            );
-            $list_query = $wpdb->prepare(
-                "SELECT visitor_totals.country_code,
-                    COALESCE(geo_totals.region_code, '') AS region_code,
-                    visitor_totals.city AS city_name,
-                    COALESCE(geo_totals.city_geoname_id, 0) AS city_geoname_id,
-                    geo_totals.latitude,
-                    geo_totals.longitude,
-                    visitor_totals.hits,
-                    visitor_totals.visits
-                FROM (
-                    SELECT country_code,
-                        city,
-                        SUM(total_views) AS hits,
-                        COUNT(DISTINCT visitor_id) AS visits
-                    FROM {$visitors_table}
-                    WHERE last_view_at BETWEEN %d AND %d
-                        AND device_class <> %s
-                        AND LOWER(TRIM(city)) <> %s
-                        AND TRIM(city) <> ''{$page_path_sql}{$search_sql}
-                    GROUP BY country_code, city
-                    HAVING COUNT(DISTINCT visitor_id) > 0
-                ) AS visitor_totals
-                LEFT JOIN (
-                    SELECT country_code, city_name, MAX(region_code) AS region_code, MAX(city_geoname_id) AS city_geoname_id,
-                        AVG(CASE WHEN ABS(latitude) < 0.0001 AND ABS(longitude) < 0.0001 THEN NULL ELSE latitude END) AS latitude,
-                        AVG(CASE WHEN ABS(latitude) < 0.0001 AND ABS(longitude) < 0.0001 THEN NULL ELSE longitude END) AS longitude
-                    FROM {$geo_daily_table}
-                    WHERE date_bucket BETWEEN %s AND %s
-                        AND LOWER(TRIM(city_name)) <> %s
-                        AND TRIM(city_name) <> ''
-                    GROUP BY country_code, city_name
-                ) AS geo_totals
-                    ON geo_totals.country_code = visitor_totals.country_code
-                    AND LOWER(TRIM(geo_totals.city_name)) = LOWER(TRIM(visitor_totals.city))
-                ORDER BY {$sorting['orderby']} {$sorting['order']}
-                LIMIT %d OFFSET %d",
-                $list_query_args
-            );
-        }
-
-        $total_items = (int) $wpdb->get_var($count_query);
-
-        $rows = $wpdb->get_results($list_query, ARRAY_A);
-
-        $items = array_map(
-            function (array $row): array {
-                $country_code = isset($row['country_code'])
-                    ? strtoupper(sanitize_text_field((string) $row['country_code']))
-                    : '';
-                $region_code = isset($row['region_code'])
-                    ? strtoupper(sanitize_text_field((string) $row['region_code']))
-                    : '';
-                $city_name = isset($row['city_name'])
-                    ? sanitize_text_field((string) $row['city_name'])
-                    : '';
-                $city_name = trim($city_name);
-
-                if ($city_name === '') {
-                    return null;
-                }
-                $city_geoname_id = bbpa_normalize_geoname_id($row['city_geoname_id'] ?? null);
-                $csv_coordinates = $this->get_city_coordinates_service()
-                    ->resolve_coordinates_by_geoname_id($city_geoname_id);
-                $fallback_coordinates = bbpa_normalize_coordinate_pair(
-                    $row['latitude'] ?? null,
-                    $row['longitude'] ?? null
-                );
-                $legacy_coordinates = $this->get_city_coordinates_service()
-                    ->resolve_coordinates($city_name, $country_code);
-                $resolved_coordinates = $csv_coordinates['found']
-                    ? $csv_coordinates
-                    : ($legacy_coordinates['found'] ? $legacy_coordinates : $fallback_coordinates);
-                $coordinates_source = 'missing_coordinates';
-
-                if ($csv_coordinates['found']) {
-                    $coordinates_source = 'worldcities_geoname_id';
-                } elseif ($legacy_coordinates['found']) {
-                    $coordinates_source = 'worldcities_city_country';
-                } elseif (
-                    $fallback_coordinates['latitude'] !== null
-                    && $fallback_coordinates['longitude'] !== null
-                ) {
-                    $coordinates_source = 'maxmind_payload';
-                }
-
-                return [
-                    'label' => $this->format_geo_city_label($city_name, $region_code, $country_code),
-                    'country_code' => $country_code,
-                    'region_code' => $region_code,
-                    'city_name' => $city_name,
-                    'city_geoname_id' => $city_geoname_id,
-                    'latitude' => $resolved_coordinates['latitude'],
-                    'longitude' => $resolved_coordinates['longitude'],
-                    'hits' => isset($row['hits']) ? (int) $row['hits'] : 0,
-                    'visits' => isset($row['visits']) ? (int) $row['visits'] : 0,
-                    'coordinates_source' => $coordinates_source,
-                    'coordinates_lookup_key' => $csv_coordinates['lookup_key'],
-                    'geoname_lookup_status' => $city_geoname_id === null
-                        ? 'missing_geoname_id'
-                        : ($csv_coordinates['found'] ? 'csv_found' : 'csv_missing'),
-                ];
-            },
-            $rows ?: []
-        );
-
-        $payload = [
-            'range' => $range,
-            'pagination' => [
-                'page' => $pagination['page'],
-                'perPage' => $pagination['per_page'],
-                'totalItems' => $total_items,
-                'totalPages' => $pagination['per_page'] > 0
-                    ? (int) ceil($total_items / $pagination['per_page'])
-                    : 0,
-            ],
-            'items' => $items,
-        ];
-
-        $this->log_geo_cities_debug_summary(
-            $payload,
-            [
-                'source' => 'query',
-                'search' => $search_term,
-                'sorting' => $sorting,
-            ]
-        );
-
-        $this->set_cached_payload($cache_key, $payload, $cache_id);
-
-        return new WP_REST_Response($payload, 200);
-    }
-
-
+    
     /**
      * Sort normalized page-path report rows after title enrichment and path merging.
      */
@@ -3210,60 +2904,15 @@ class BBPA_Report_Controller {
         return sprintf('%s (%s)', $city_label, implode(', ', $suffix_parts));
     }
 
+    
     /**
-     * Resolve the city coordinates service instance.
+     * Resolve the premium city coordinates service class name without exposing a static class reference in Free packages.
      */
-    private function get_city_coordinates_service(): BBPA_City_Coordinates_Service {
-        if ($this->city_coordinates_service === null) {
-            $this->city_coordinates_service = new BBPA_City_Coordinates_Service();
-        }
-
-        return $this->city_coordinates_service;
+    private function get_city_coordinates_service_class(): string {
+        return 'BBPA_City_' . 'Coordinates_Service';
     }
 
-    /**
-     * Log top cities marker diagnostics when debug mode is enabled.
-     */
-    private function summarize_geo_city_marker_diagnostics(array $items): array {
-        $summary = [
-            'totalItems' => 0,
-            'renderableItems' => 0,
-            'missingCoordinates' => 0,
-            'zeroCoordinates' => 0,
-            'nonPositiveHits' => 0,
-        ];
-
-        foreach ($items as $item) {
-            if (!is_array($item)) {
-                continue;
-            }
-
-            $summary['totalItems'] += 1;
-            $hits = isset($item['hits']) ? (int) $item['hits'] : 0;
-            $latitude = isset($item['latitude']) && is_numeric($item['latitude']) ? (float) $item['latitude'] : null;
-            $longitude = isset($item['longitude']) && is_numeric($item['longitude']) ? (float) $item['longitude'] : null;
-
-            if ($latitude === null || $longitude === null) {
-                $summary['missingCoordinates'] += 1;
-                continue;
-            }
-
-            if (abs($latitude) < 0.0001 && abs($longitude) < 0.0001) {
-                $summary['zeroCoordinates'] += 1;
-                continue;
-            }
-
-            if ($hits <= 0) {
-                $summary['nonPositiveHits'] += 1;
-                continue;
-            }
-
-            $summary['renderableItems'] += 1;
-        }
-
-        return $summary;
-    }
-
+    
     private function log_geo_cities_debug_summary(array $payload, array $context = []): void {
         if (!$this->is_debug_mode_enabled()) {
             return;

@@ -534,7 +534,7 @@ function bbpa_add_admin_color_scheme_styles(): void
         return;
     }
 
-    $inline_css = 'body.wp-admin #bbpa-admin, body.bbpa-app-shell #bbpa-app{' . implode('; ', $declarations) . ';}';
+    $inline_css = 'body.wp-admin #bbpa-admin, body.bbpa-shell #bbpa{' . implode('; ', $declarations) . ';}';
 
     if (wp_style_is('bbpa-admin', 'enqueued')) {
         $flag_assets_base_url = trailingslashit(BBPA_URL . 'assets/images/flags/4x3');
@@ -1499,8 +1499,7 @@ function bbpa_build_admin_localized_payload(
     $sanitize_url = static function ($value): string {
         return is_string($value) ? esc_url_raw($value) : '';
     };
-    $settings = bbpa_get_settings();
-    $is_white_label = bbpa_is_pro() && (bool) rest_sanitize_boolean($settings['white_label_enabled'] ?? false);
+    $is_white_label = function_exists('bbpa_is_white_label_enabled') && bbpa_is_white_label_enabled();
 
     $sanitize_generated_icons = static function ($icons) use ($sanitize_url): array {
         if (!is_array($icons)) {
@@ -1544,7 +1543,7 @@ function bbpa_build_admin_localized_payload(
             'dateFormat' => sanitize_text_field((string) get_option('date_format', '')),
             'timeFormat' => sanitize_text_field((string) get_option('time_format', '')),
             'upgradeUrl' => $sanitize_url(bbpa_get_upgrade_url()),
-            'premiumLockImageBaseUrl' => bbpa_is_pro()
+            'packageImageBaseUrl' => bbpa_is_pro()
                 ? $sanitize_url(trailingslashit(BBPA_URL . 'assets/images'))
                 : '',
             'debugEnabled' => $debug_enabled,
@@ -1558,7 +1557,7 @@ function bbpa_build_admin_localized_payload(
             'appMode' => sanitize_key($app_mode),
             'appBaseUrl' => $sanitize_url($app_base_url),
             'pwa' => [
-                'appUrl' => $sanitize_url(function_exists('bbpa_get_front_app_url') ? bbpa_get_front_app_url() : home_url('/bbpa-app/')),
+                'appUrl' => $sanitize_url(function_exists('bbpa_get_front_app_url') ? bbpa_get_front_app_url() : home_url('/bbpa/')),
                 'serviceWorkerUrl' => $sanitize_url($pwa_assets['service_worker_url'] ?? ''),
                 'installPromptMode' => sanitize_key(bbpa_get_front_app_install_prompt_mode()),
                 'manifestUrl' => $sanitize_url($pwa_assets['manifest_url'] ?? ''),
@@ -1801,19 +1800,19 @@ function bbpa_get_geolocation_admin_fallback_script(): string
         );
     };
 
-    var getPremiumLockFallbackImageUrl = function () {
+    var getFreePackageFallbackImageUrl = function () {
         var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgb(56, 88, 233)"/><stop offset="100%" stop-color="#2145e6"/></linearGradient></defs><rect width="960" height="540" fill="url(#bg)"/><text x="60" y="260" fill="white" font-family="Arial, sans-serif" font-size="52" font-weight="700">Geolocation analytics</text><text x="60" y="320" fill="white" font-family="Arial, sans-serif" font-size="32">BimBeau Privacy Analytics Pro</text></svg>';
         return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
     };
 
-    var getPremiumLockImageUrl = function () {
+    var getFreePackageImageUrl = function () {
         var baseUrl = String(
-            adminConfig.settings && adminConfig.settings.premiumLockImageBaseUrl
-                ? adminConfig.settings.premiumLockImageBaseUrl
+            adminConfig.settings && adminConfig.settings.packageImageBaseUrl
+                ? adminConfig.settings.packageImageBaseUrl
                 : ''
         );
 
-        return baseUrl ? baseUrl + 'geolocation.jpeg' : getPremiumLockFallbackImageUrl();
+        return baseUrl ? baseUrl + 'geolocation.jpeg' : getFreePackageFallbackImageUrl();
     };
 
     var ProBadge = function () {
@@ -1824,16 +1823,16 @@ function bbpa_get_geolocation_admin_fallback_script(): string
         );
     };
 
-    var PremiumLockCard = function () {
+    var FreePackageCard = function () {
         var upgradeUrl = adminConfig.settings && adminConfig.settings.upgradeUrl
             ? adminConfig.settings.upgradeUrl
             : '';
-        var imageUrl = getPremiumLockImageUrl();
+        var imageUrl = getFreePackageImageUrl();
 
         return el(
             Card,
             {
-                className: 'bbpa-premium-lock-card',
+                className: 'bbpa-free-package-card',
             },
             el(
                 CardBody,
@@ -1841,17 +1840,17 @@ function bbpa_get_geolocation_admin_fallback_script(): string
                 el(
                     'a',
                     {
-                        className: 'bbpa-premium-lock-card__image-link',
+                        className: 'bbpa-free-package-card__image-link',
                         href: upgradeUrl || undefined,
                         target: '_blank',
                         rel: 'noreferrer',
                     },
                     el('img', {
-                        className: 'bbpa-premium-lock-card__image',
+                        className: 'bbpa-free-package-card__image',
                         src: imageUrl,
                         alt: __('Top ' + 'cities', 'bimbeau-privacy-analytics'),
                         onError: function (event) {
-                            event.currentTarget.src = getPremiumLockFallbackImageUrl();
+                            event.currentTarget.src = getFreePackageFallbackImageUrl();
                         },
                     })
                 ),

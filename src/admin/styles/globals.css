@@ -29,25 +29,7 @@
 }
 
 
-#adminmenu .awaiting-mod,
-#adminmenu .menu-counter,
-.update-plugins,
-.bbpa-pro-badge {
-  display: inline-block;
-  vertical-align: top;
-  box-sizing: border-box;
-  margin: 1px 0 -1px 2px;
-  padding: 0 5px;
-  min-width: 18px;
-  height: 18px;
-  border-radius: 9px;
-  background-color: var(--color-3) !important;
-  color: #fff !important;
-  font-size: 11px;
-  line-height: 1.6;
-  text-align: center;
-  z-index: 26;
-}
+
 
 .bbpa-admin-app .components-button.is-primary {
   color: var(--wp-components-color-accent-inverted, #fff) !important;
@@ -346,38 +328,38 @@
   min-width: 0;
 }
 
-.bbpa-admin-app .bbpa-app-sidebar {
+.bbpa-admin-app .bbpa-sidebar {
   position: sticky;
   top: var(--bbpa-gap-lg);
 }
 
-.bbpa-admin-app .bbpa-app-sidebar .components-card__body {
+.bbpa-admin-app .bbpa-sidebar .components-card__body {
   padding: 8px;
 }
 
-.bbpa-admin-app .bbpa-app-sidebar__nav,
-.bbpa-admin-app .bbpa-app-sidebar__list {
+.bbpa-admin-app .bbpa-sidebar__nav,
+.bbpa-admin-app .bbpa-sidebar__list {
   display: grid;
   gap: 4px;
 }
 
-.bbpa-admin-app .bbpa-app-sidebar__list {
+.bbpa-admin-app .bbpa-sidebar__list {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.bbpa-admin-app .bbpa-app-sidebar__link.components-button {
+.bbpa-admin-app .bbpa-sidebar__link.components-button {
   width: 100%;
   justify-content: space-between;
   gap: var(--bbpa-gap-sm);
 }
 
-.bbpa-admin-app .bbpa-app-sidebar__badge {
+.bbpa-admin-app .bbpa-sidebar__badge {
   margin-left: auto;
 }
 
-.bbpa-admin-app .bbpa-app-sidebar__mobile-toggle.components-button {
+.bbpa-admin-app .bbpa-sidebar__mobile-toggle.components-button {
   display: none;
   width: 100%;
   justify-content: space-between;
@@ -424,16 +406,16 @@
     padding: var(--bbpa-gap-md);
   }
 
-  .bbpa-admin-app .bbpa-app-sidebar {
+  .bbpa-admin-app .bbpa-sidebar {
     position: static;
     top: auto;
   }
 
-  .bbpa-admin-app .bbpa-app-sidebar__mobile-toggle.components-button {
+  .bbpa-admin-app .bbpa-sidebar__mobile-toggle.components-button {
     display: inline-flex;
   }
 
-  .bbpa-admin-app .bbpa-app-sidebar__nav[data-mobile-expanded="false"] {
+  .bbpa-admin-app .bbpa-sidebar__nav[data-mobile-expanded="false"] {
     display: none;
   }
 }
@@ -526,45 +508,7 @@
   font-weight: 600;
 }
 
-.bbpa-admin-app .bbpa-pro-feature-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--bbpa-gap-sm);
-  min-inline-size: 0;
-}
 
-.bbpa-admin-app .bbpa-pro-feature-fieldset:disabled {
-  opacity: 0.72;
-}
-
-.bbpa-admin-app .bbpa-settings-pwa__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bbpa-gap-sm);
-}
-
-.bbpa-admin-app .bbpa-settings-pwa-card__header {
-  border-bottom: 1px solid #e2e4e7;
-}
-
-.bbpa-admin-app .bbpa-settings-pwa-card__title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--bbpa-gap-sm);
-  width: 100%;
-}
-
-.bbpa-admin-app .bbpa-settings-pwa-card__title {
-  margin: 0;
-}
-
-.bbpa-admin-app .bbpa-settings-pwa-card .components-notice {
-  margin: 12px 0 0;
-  background: var(--bbpa-color-accent-soft, #e7edff) #e7edff;
-}
 
 .bbpa-admin-app .bbpa-general-settings {
   display: grid;
@@ -2027,21 +1971,7 @@ ul.striped > :nth-child(odd) {
 }
 
 
-.bbpa-admin-app .bbpa-premium-lock-card {
-	max-width: 860px;
-}
 
-.bbpa-admin-app .bbpa-premium-lock-card__image-link {
-	display: block;
-	margin-bottom: 12px;
-}
-
-.bbpa-admin-app .bbpa-premium-lock-card__image {
-	display: block;
-	width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
 
 .bbpa-events-panel__drag-handle {
   display: inline-flex;

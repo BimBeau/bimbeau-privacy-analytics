@@ -44,7 +44,7 @@ export const getAdminPanelUrl = ( panelName, params = {}, baseUrl = null ) => {
 				url.searchParams.delete( 'bbpa_panel' );
 			}
 		} else {
-			const basePath = '/bbpa-app';
+			const basePath = '/bbpa';
 			const panelSegment = normalizedPanel ? `/${ normalizedPanel }` : '';
 			url.pathname = `${ basePath }${ panelSegment }/`;
 		}

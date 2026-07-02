@@ -16,10 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function bbpa_get_auth_cache_excluded_paths(): array
 {
     $paths = [
-        '/bbpa-app/login',
-        '/bbpa-app/auth/callback',
-        '/bbpa-app/logout',
-        '/bbpa-app/refresh-token',
+        '/bbpa/login',
+        '/bbpa/auth/callback',
+        '/bbpa/logout',
+        '/bbpa/refresh-token',
         '/wp-json/' . BBPA_REST_INTERNAL_NAMESPACE . '/auth/login',
     ];
 

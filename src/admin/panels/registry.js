@@ -10,7 +10,7 @@ import AcquisitionPanel from './AcquisitionPanel';
 import GeolocationPanel from './GeolocationPanel';
 import OverviewPanel from './OverviewPanel';
 import DevicesPanel from './DevicesPanel';
-import EventsPanel from './EventsPanel';
+
 import ReferrerSourcesPanel from './ReferrerSourcesPanel';
 import RealtimePanel from './RealtimePanel';
 import SearchTermsPanel from './SearchTermsPanel';
@@ -44,7 +44,7 @@ const normalizePanels = ( panels ) => {
 				title: panel?.title || panel?.name || '',
 				type: panel?.type || 'custom',
 				availability,
-				isPro: availability === 'pro',
+				
 			};
 		} )
 		.filter( ( panel ) => panel.name );
@@ -62,7 +62,7 @@ const getVisiblePanels = ( panels, isPro, appContext = 'admin' ) =>
 			ADVANCED_STATS_DEPENDENT_PANELS.includes( panel.name );
 
 		return (
-			( isPro || panel.availability !== 'pro' ) &&
+			
 			! isSettingsHiddenInApp &&
 			! isPanelHiddenBySettings &&
 			! isPanelHiddenByAdvancedConsent
@@ -85,7 +85,7 @@ const getPanelComponent = ( name ) => {
 		visitors: VisitorsPanel,
 		devices: DevicesPanel,
 		realtime: RealtimePanel,
-		events: EventsPanel,
+		
 		settings: SettingsPanel,
 	};
 

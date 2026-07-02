@@ -37,7 +37,7 @@ msgstr "BimBeau"
 msgid "Update"
 msgstr "Bijwerken"
 
-#: admin/admin.php src/admin/components/ProBadge/index.js
+#: admin/admin.php
 msgid "Pro"
 msgstr "Pro"
 
@@ -127,9 +127,8 @@ msgid "Unknown generation status."
 msgstr "Onbekende generatiestatus."
 
 #: admin/admin.php includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/EventsPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/SearchTermsPanel.js src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -189,7 +188,6 @@ msgid "Devices"
 msgstr "Apparaten"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr "Gebeurtenissen"
 
@@ -344,7 +342,7 @@ msgid "This analytics panel is disabled for navigation."
 msgstr "Dit analytics-paneel is uitgeschakeld voor navigatie."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-report-controller.php rest/pro-routes.php
 msgid "Authentication is required to access analytics data."
 msgstr "Authenticatie is vereist om toegang te krijgen tot analyticsgegevens."
 
@@ -368,8 +366,8 @@ msgstr "GeoIP-database is nog niet beschikbaar."
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/EventsPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Onbekend land"
@@ -395,7 +393,7 @@ msgid "Invalid visit identifier."
 msgstr "Ongeldige bezoek-ID."
 
 #: includes/rest/class-bbpa-report-controller.php
-msgid "Visitors details are available in BimBeau Privacy Analytics Pro."
+msgid "Visitors details are not included in this package."
 msgstr "Bezoekersdetails zijn beschikbaar in BimBeau Privacy Analytics Pro."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
@@ -532,6 +530,33 @@ msgstr "MaxMind API-fout (%s)."
 msgid "Invalid MaxMind API response."
 msgstr "Ongeldige MaxMind API-respons."
 
+#: includes/settings.php
+msgid "The selected PWA icon must be at least 512x512 pixels."
+msgstr "Het geselecteerde PWA-pictogram moet minimaal 512x512 pixels zijn."
+
+#: includes/settings.php
+msgid "The selected PWA icon file cannot be read."
+msgstr "Het geselecteerde PWA-pictogrambestand kan niet worden gelezen."
+
+#: includes/settings.php
+msgid ""
+"WordPress image editor cannot generate PWA icons from the selected source."
+msgstr ""
+"De WordPress-afbeeldingseditor kan geen PWA-pictogrammen genereren uit de "
+"geselecteerde bron."
+
+#: includes/settings.php
+msgid "WordPress image editor cannot resize the selected PWA icon source."
+msgstr ""
+"De WordPress-afbeeldingseditor kan de geselecteerde PWA-pictogrambron niet "
+"verkleinen."
+
+#: includes/settings.php
+msgid "WordPress image editor cannot save generated PWA PNG icons."
+msgstr ""
+"De WordPress-afbeeldingseditor kan gegenereerde PWA PNG-pictogrammen niet "
+"opslaan."
+
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID is required."
 msgstr "MaxMind-account-ID is vereist."
@@ -551,6 +576,12 @@ msgstr "MaxMind-inloggegevens zijn vereist om IP-geolocatie in te schakelen."
 #: includes/settings.php src/admin/AdminApp.js
 msgid "Statistics"
 msgstr "Statistieken"
+
+#: includes/settings.php
+msgid "Select a media library image to generate PWA PNG icons."
+msgstr ""
+"Selecteer een afbeelding uit de mediabibliotheek om PWA PNG-pictogrammen te "
+"genereren."
 
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
@@ -812,32 +843,6 @@ msgstr ""
 msgid "Technical state does not prove consent collection validity."
 msgstr ""
 "De technische status bewijst niet dat toestemmingsverzameling geldig is."
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "PWA Stats App"
-msgstr "PWA Stats-app"
-
-#: src/admin/components/PwaStatsAppCard/index.js
-#: src/admin/panels/SettingsPanel.js
-msgid "This feature is available in BimBeau Privacy Analytics Pro."
-msgstr "Deze functie is beschikbaar in BimBeau Privacy Analytics Pro."
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "PWA URL"
-msgstr "PWA-URL"
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "Use this URL to open the standalone analytics app."
-msgstr "Gebruik deze URL om de zelfstandige analytics-app te openen."
-
-#: src/admin/components/PwaStatsAppCard/index.js
-#: src/admin/panels/EventsPanel.js
-msgid "Copy URL"
-msgstr "URL kopiëren"
-
-#: src/admin/components/PwaStatsAppCard/index.js
-msgid "Open PWA"
-msgstr "PWA openen"
 
 #: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
@@ -1138,8 +1143,7 @@ msgstr "Geschatte stad"
 msgid "Approx. %d km"
 msgstr "Ongeveer %d km"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/EventsPanel.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "Niet beschikbaar"
@@ -1247,8 +1251,7 @@ msgstr "Geen bezoekersprofielgegevens beschikbaar voor deze periode."
 msgid "Table: Acquisition channels"
 msgstr "Tabel: bezoekers"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/EventsPanel.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Channel"
 msgstr ""
@@ -1262,352 +1265,6 @@ msgstr ""
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "%s van alle bezoeken"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Desktop"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Mobile"
-msgstr "Mobiel"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Tablet"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Bot"
-msgstr "Bot"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Slot"
-msgstr "Slot"
-
-#: src/admin/panels/EventsPanel.js
-msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
-msgstr ""
-"De KPI-slot is ongeldig en moet een geheel getal groter dan of gelijk aan 2 "
-"zijn."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Snippet cannot be empty."
-msgstr "Snippet mag niet leeg zijn."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Snippet syntax looks valid."
-msgstr "De syntaxis van de snippet lijkt geldig."
-
-#: src/admin/panels/EventsPanel.js
-msgid "All events"
-msgstr "Alle gebeurtenissen"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Loading events configuration…"
-msgstr "Gebeurtenisconfiguratie laden…"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
-"run actions."
-msgstr ""
-"Gebeurtenisconfiguratie is vergrendeld in de gratis versie. Upgrade naar Pro "
-"om acties op te slaan en uit te voeren."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Some saved KPI slot values are invalid. Use only numeric slots greater than "
-"or equal to 2."
-msgstr ""
-"Sommige opgeslagen KPI-slotwaarden zijn ongeldig. Gebruik alleen numerieke "
-"slots groter dan of gelijk aan 2."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"KPI slot conflicts detected. Each active KPI slot must be unique before "
-"saving."
-msgstr ""
-"Conflicten tussen KPI-slots gedetecteerd. Elke actieve KPI-slot moet uniek "
-"zijn vóór het opslaan."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Reorder KPI event"
-msgstr "KPI-gebeurtenis herschikken"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Include in KPI"
-msgstr "Opnemen in KPI"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Enable event"
-msgstr "Gebeurtenis inschakelen"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Event ID"
-msgstr "Gebeurtenis-ID"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Label (max 25 characters)"
-msgstr "Label (max. 25 tekens)"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Trigger type"
-msgstr "Triggertype"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Click"
-msgstr "Klik"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Page view"
-msgstr "Paginaweergave"
-
-#: src/admin/panels/EventsPanel.js
-msgid "CSS selectors"
-msgstr "CSS-selectors"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Add one or more CSS selectors as tags to target clickable elements, for "
-"example .cta-button or #signup."
-msgstr ""
-"Voeg een of meer CSS-selectors toe als tags om klikbare elementen te "
-"targeten, bijvoorbeeld .cta-button of #signup."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Target page"
-msgstr "Doelpagina"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Search by title across published posts, pages, and public custom post types."
-msgstr ""
-"Zoek op titel in gepubliceerde berichten, pagina's en openbare aangepaste "
-"berichttypen."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Webhook triggers are server-side. Browser JavaScript snippets are not "
-"executed for this trigger."
-msgstr ""
-"Webhook-triggers zijn server-side. Browser-JavaScript-snippets worden niet "
-"uitgevoerd voor deze trigger."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Webhook URL"
-msgstr "Webhook-URL"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Regenerate token"
-msgstr "Token opnieuw genereren"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Generate token"
-msgstr "Token genereren"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Allowed webhook params"
-msgstr "Toegestane webhookparameters"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Comma-separated allowlist for incoming webhook payload keys. Only "
-"allowlisted variables are stored and shown in event context."
-msgstr ""
-"Komma-gescheiden allowlist voor payloadsleutels van inkomende webhooks. "
-"Alleen toegestane variabelen worden opgeslagen en in de gebeurteniscontext "
-"getoond."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Action"
-msgstr "Actie"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Server action template"
-msgstr "Sjabloon voor serveractie"
-
-#: src/admin/panels/EventsPanel.js
-msgid "JavaScript snippet"
-msgstr "JavaScript-snippet"
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Configure a server-side action payload template for incoming webhook events. "
-"Browser JavaScript APIs are not available for this trigger."
-msgstr ""
-"Configureer een server-side actiepayloadsjabloon voor inkomende "
-"webhookgebeurtenissen. Browser-JavaScript-API’s zijn niet beschikbaar voor "
-"deze trigger."
-
-#: src/admin/panels/EventsPanel.js
-msgid ""
-"Paste JavaScript code (without <script> tags) to run when this event is "
-"triggered. Available placeholders depend on trigger type. Do not wrap "
-"placeholders such as {{page_url}} in quotes. They are injected as escaped "
-"JavaScript values."
-msgstr ""
-"Plak JavaScript-code (zonder <script>-tags) die wordt uitgevoerd wanneer "
-"deze gebeurtenis wordt geactiveerd. Beschikbare placeholders hangen af van "
-"het triggertype. Zet placeholders zoals {{page_url}} niet tussen "
-"aanhalingstekens. Ze worden ingevoegd als escaped JavaScript-waarden."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Available variables for this trigger type:"
-msgstr "Beschikbare variabelen voor dit triggertype:"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Check syntax"
-msgstr "Syntaxis controleren"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Syntax checks are available for browser JavaScript snippets only."
-msgstr ""
-"Syntaxcontroles zijn alleen beschikbaar voor browser-JavaScript-snippets."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Remove event"
-msgstr "Gebeurtenis verwijderen"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Add event"
-msgstr "Gebeurtenis toevoegen"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Triggered events"
-msgstr "Geactiveerde gebeurtenissen"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Triggered events captured by the advanced tracker are listed."
-msgstr ""
-"Geactiveerde gebeurtenissen die door de geavanceerde tracker zijn "
-"vastgelegd, worden weergegeven."
-
-#: src/admin/panels/EventsPanel.js
-msgid "Total events"
-msgstr "Totaal gebeurtenissen"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr "Rijen"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Event"
-msgstr "Gebeurtenis"
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Zoeken"
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Zoeken…"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Label"
-msgstr "Label"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Event time"
-msgstr "Gebeurtenistijd"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Type"
-msgstr "Type"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Triggered page"
-msgstr "Geactiveerde pagina"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "Land"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr "Stad"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "Besturingssysteem"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Browser"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Apparaat"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Details"
-msgstr "Details"
-
-#: src/admin/panels/EventsPanel.js
-msgid "All pages"
-msgstr "Alle pagina's"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-msgid "View"
-msgstr "Bekijken"
-
-#: src/admin/panels/EventsPanel.js
-msgid "No triggered events found."
-msgstr "Geen geactiveerde gebeurtenissen gevonden."
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Vorige pagina"
-
-#: src/admin/panels/EventsPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Volgende pagina"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "Pagina"
-
-#: src/admin/panels/EventsPanel.js
-msgid "results"
-msgstr "resultaten"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Confirm event removal"
-msgstr "Verwijderen van gebeurtenis bevestigen"
-
-#: src/admin/panels/EventsPanel.js
-msgid "Do you want to remove this event?"
-msgstr "Wilt u deze gebeurtenis verwijderen?"
-
-#: src/admin/panels/EventsPanel.js src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "Annuleren"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
@@ -1640,6 +1297,12 @@ msgstr "Vlag van %s"
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "Toplanden"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr "Land"
 
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
@@ -1694,6 +1357,11 @@ msgstr ""
 msgid "Visitor ID hash"
 msgstr "Hash van bezoekers-ID"
 
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr "Stad"
+
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
@@ -1705,8 +1373,23 @@ msgstr "Huidige pagina"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Operating system"
+msgstr "Besturingssysteem"
+
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser"
+msgstr "Browser"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Browserversie"
+
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Device"
+msgstr "Apparaat"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1875,10 +1558,6 @@ msgid "Tracking & privacy"
 msgstr "Tracking en privacy"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "App"
-msgstr "App"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
 msgstr "Onderhoud"
 
@@ -1923,504 +1602,6 @@ msgid "Hidden"
 msgstr "Verborgen"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Interface branding"
-msgstr "Interfacebranding"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "White-label interface controls are available in Pro."
-msgstr "Bediening voor de white-labelinterface is beschikbaar in Pro."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Use white-label interface"
-msgstr "White-labelinterface gebruiken"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Hide the BimBeau Privacy Analytics logo in the admin header and display the "
-"localized analytics title instead."
-msgstr ""
-"Verbergt het BimBeau Privacy Analytics-logo in de beheerheader en toont in "
-"plaats daarvan de gelokaliseerde analysetitel."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Enabled panels"
-msgstr "Ingeschakelde panelen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Visible"
-msgstr "Zichtbaar"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
-msgstr ""
-"Verborgen zolang \"Geavanceerde statistieken na toestemming inschakelen\" is "
-"uitgeschakeld."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Quick stats"
-msgstr "Snelle statistieken"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Enable Quick Stats on selected post types: add a Views (30d) column in the "
-"posts list and display a stats summary metabox while editing each post."
-msgstr ""
-"Schakel Snelle statistieken in voor geselecteerde berichttypen: voeg een "
-"kolom Weergaven (30d) toe aan de berichtenlijst en toon een metabox met "
-"statistieksamenvatting bij het bewerken van elk bericht."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No post types available."
-msgstr "Geen berichttypen beschikbaar."
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
-"database or MaxMind API."
-msgstr ""
-"Kies hoe BimBeau Privacy Analytics geolocatie bepaalt: lokale GeoLite-"
-"database of MaxMind API."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Geolocation source"
-msgstr "Geolocatiebron"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Local GeoLite database (default)"
-msgstr "Lokale GeoLite-database (standaard)"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "MaxMind API credentials"
-msgstr "MaxMind API-inloggegevens"
-
-#: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid ""
-"Local database mode downloads the GeoLite MMDB file through the official "
-"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-msgstr ""
-"Lokale databasemodus downloadt het GeoLite-MMDB-bestand van BimBeau Privacy "
-"Analytics-mirrors. API-modus gebruikt live MaxMind-verzoeken."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "MaxMind Account ID"
-msgstr "MaxMind-account-ID"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Numeric Account ID used for MaxMind API requests."
-msgstr "Numeriek account-ID dat wordt gebruikt voor MaxMind API-verzoeken."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "MaxMind License Key"
-msgstr "MaxMind-licentiesleutel"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "License Key used for MaxMind API requests."
-msgstr "Licentiesleutel die wordt gebruikt voor MaxMind API-verzoeken."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Test MaxMind connection"
-msgstr "MaxMind-verbinding testen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Automatic GeoIP database updates"
-msgstr "Automatische GeoIP-database-updates"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Controls the cron frequency for local GeoIP database updates."
-msgstr "Beheert de cronfrequentie voor lokale GeoIP-database-updates."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Update now"
-msgstr "Nu bijwerken"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Current state"
-msgstr "Huidige status"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last attempt"
-msgstr "Laatste poging"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Next scheduled retry"
-msgstr "Volgende geplande nieuwe poging"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last successful update"
-msgstr "Laatste succesvolle update"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Database size"
-msgstr "Databasegrootte"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last error code"
-msgstr "Laatste foutcode"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Retry count"
-msgstr "Aantal nieuwe pogingen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Behavior: plugin activation completes quickly, and temporary local database "
-"unavailability does not block the rest of BimBeau Privacy Analytics."
-msgstr ""
-"Gedrag: pluginactivatie wordt snel voltooid en tijdelijke onbeschikbaarheid "
-"van de lokale database blokkeert de rest van BimBeau Privacy Analytics niet."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Privacy"
-msgstr "Privacy"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Advanced stats require consent"
-msgstr "Geavanceerde statistieken vereisen toestemming"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Essential stats only"
-msgstr "Alleen essentiële statistieken"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Essential stats run without consent. Advanced stats run only after "
-"Statistics / Analytics consent."
-msgstr ""
-"Essentiële statistieken werken zonder toestemming. Geavanceerde statistieken "
-"werken alleen na toestemming voor Statistieken / Analytics."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Essential stats"
-msgstr "Essentiële statistieken"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No consent required"
-msgstr "Geen toestemming vereist"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Limited audience stats only. No ads, no cross-site tracking, no third-party "
-"reuse."
-msgstr ""
-"Alleen beperkte publieksstatistieken. Geen advertenties, geen cross-site "
-"tracking, geen hergebruik door derden."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Essential data"
-msgstr "Essentiële gegevens"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Script:"
-msgstr "Script:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Advanced stats"
-msgstr "Geavanceerde statistieken"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Requires consent"
-msgstr "Vereist toestemming"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Adds detailed visit insights after consent."
-msgstr "Voegt na toestemming gedetailleerde bezoekinzichten toe."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Enable advanced stats after consent"
-msgstr "Geavanceerde statistieken na toestemming inschakelen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Your CMP must block it until Statistics / Analytics consent is given."
-msgstr ""
-"Uw CMP moet dit blokkeren totdat toestemming voor Statistieken / Analytics "
-"is gegeven."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Advanced data"
-msgstr "Geavanceerde gegevens"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "CMP setup"
-msgstr "CMP-instelling"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Block the advanced stats script until Statistics / Analytics consent is "
-"given."
-msgstr ""
-"Blokkeer het script voor geavanceerde statistieken totdat toestemming voor "
-"Statistieken / Analytics is gegeven."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Script to block:"
-msgstr "Te blokkeren script:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Alternative selectors:"
-msgstr "Alternatieve selectors:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Script ID:"
-msgstr "Script-ID:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "WordPress handle:"
-msgstr "WordPress-handle:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "What is a CMP?"
-msgstr "Wat is een CMP?"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"A CMP manages cookie consent on your website. It shows the cookie banner, "
-"stores visitor choices, and allows or blocks analytics scripts based on "
-"consent."
-msgstr ""
-"Een CMP beheert cookietoestemming op uw website. Het toont de cookiebanner, "
-"bewaart bezoekerskeuzes en staat analytics-scripts toe of blokkeert ze op "
-"basis van toestemming."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Examples:"
-msgstr "Voorbeelden:"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"In your CMP, block the BimBeau Privacy Analytics advanced stats script until "
-"the Statistics or Analytics purpose is accepted."
-msgstr ""
-"Blokkeer in uw CMP het BimBeau Privacy Analytics-script voor geavanceerde "
-"statistieken totdat het doel Statistieken of Analytics is geaccepteerd."
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Advanced stats are disabled. BimBeau Privacy Analytics will only use "
-"essential stats."
-msgstr ""
-"Geavanceerde statistieken zijn uitgeschakeld. BimBeau Privacy Analytics "
-"gebruikt alleen essentiële statistieken."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Respect DNT / GPC"
-msgstr "DNT / GPC respecteren"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Stop measurement when the visitor’s browser sends a Do Not Track or Global "
-"Privacy Control signal."
-msgstr ""
-"Stop met meten wanneer de browser van de bezoeker een Do Not Track- of "
-"Global Privacy Control-signaal verzendt."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Visit measurement"
-msgstr "Bezoekmeting"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Defines how long visitor activity can remain grouped under the same visitor "
-"row before a new row is started after inactivity."
-msgstr ""
-"Bepaalt hoelang bezoekersactiviteit onder dezelfde bezoekersrij gegroepeerd "
-"kan blijven voordat na inactiviteit een nieuwe rij wordt gestart."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Visitor activity window"
-msgstr "Activiteitsvenster voor bezoekers"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Defines how long activity from the same visitor can remain grouped into one "
-"visitor row. After this period of inactivity, BimBeau Privacy Analytics "
-"starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 "
-"hours)."
-msgstr ""
-"Bepaalt hoelang activiteit van dezelfde bezoeker in één bezoekersrij "
-"gegroepeerd kan blijven. Na deze periode van inactiviteit start BimBeau "
-"Privacy Analytics een nieuwe bezoekersrij. Bereik: 300 tot 86400 seconden (5 "
-"minuten tot 24 uur)."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "URLs & campaigns"
-msgstr "URL's en campagnes"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Control URL cleanup behavior and keep only campaign query parameters that "
-"should remain available for attribution."
-msgstr ""
-"Beheer het gedrag voor URL-opschoning en bewaar alleen campagne-"
-"queryparameters die beschikbaar moeten blijven voor attributie."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Clean URL query parameters"
-msgstr "URL-queryparameters opschonen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Remove query parameters from tracked URLs."
-msgstr "Verwijder queryparameters uit gevolgde URL's."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Allowed query parameters"
-msgstr "Toegestane queryparameters"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Comma-separated list of allowed query keys (used for URL tracking and UTM "
-"aggregation)."
-msgstr ""
-"Door komma's gescheiden lijst met toegestane querysleutels (gebruikt voor "
-"URL-tracking en UTM-aggregatie)."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Data retention"
-msgstr "Gegevensbewaring"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
-msgstr ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Temporary detailed events retention (days)"
-msgstr "Bewaartermijn tijdelijke gedetailleerde gebeurtenissen (dagen)"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Used mainly for real-time and diagnostics. Not related to Debug mode."
-msgstr "Used mainly for real-time and diagnostics. Not related to Debug mode."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Report details retention"
-msgstr "Bewaartermijn rapportdetails"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Keeps detailed report dimensions such as pages, referrers, countries, "
-"devices, and visitor details."
-msgstr ""
-"Keeps detailed report dimensions such as pages, referrers, countries, "
-"devices, and visitor details."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Long-term totals retention"
-msgstr "Bewaartermijn langetermijntotalen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
-"chart after report details expire."
-msgstr ""
-"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
-"chart after report details expire."
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Cleanup permanently removes expired details, while long-term totals remain "
-"available until their own retention window ends."
-msgstr ""
-"Cleanup permanently removes expired details, while long-term totals remain "
-"available until their own retention window ends."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Automatic cleanup frequency"
-msgstr "Automatische opschoonfrequentie"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Defines how often WordPress checks for expired analytics data."
-msgstr "Defines how often WordPress checks for expired analytics data."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Exclusions"
-msgstr "Uitsluitingen"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Select roles to exclude from tracking. Select all roles to ignore all logged-"
-"in users."
-msgstr ""
-"Selecteer rollen om uit te sluiten van tracking. Selecteer alle rollen om "
-"alle ingelogde gebruikers te negeren."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No roles available."
-msgstr "Geen rollen beschikbaar."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Debug"
-msgstr "Debug"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Enable diagnostic output for troubleshooting tracking events, realtime "
-"visitor detection, and REST payloads in the browser console and wp-content/"
-"debug.log."
-msgstr ""
-"Schakel diagnostische uitvoer in voor het oplossen van problemen met "
-"trackinggebeurtenissen, realtime bezoekersdetectie en REST-payloads in de "
-"browserconsole en wp-content/debug.log."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Debug mode"
-msgstr "Debugmodus"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Writes detailed diagnostic logs to the console and to wp-content/debug.log "
-"when WordPress debug logging is enabled."
-msgstr ""
-"Schrijft gedetailleerde diagnostische logs naar de console en naar wp-"
-"content/debug.log wanneer WordPress debug-logging is ingeschakeld."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Cleanup actions"
-msgstr "Opschoningsacties"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Run retention cleanup immediately to remove only data older than the "
-"configured retention window."
-msgstr ""
-"Voer bewaartermijnopschoning direct uit om alleen gegevens te verwijderen "
-"die ouder zijn dan het geconfigureerde bewaartermijnvenster."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Run cleanup now"
-msgstr "Opschoning nu uitvoeren"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Delete plugin tables on uninstall"
-msgstr "Plugintabellen verwijderen bij de-installatie"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
-"analytics tables from the WordPress database."
-msgstr ""
-"Indien ingeschakeld verwijdert het de-installeren van BimBeau Privacy "
-"Analytics alle analytics-tabellen van de plugin uit de WordPress-database."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Sensitive actions"
-msgstr "Gevoelige acties"
-
-#: src/admin/panels/SettingsPanel.js
-msgid ""
-"Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
-"entries."
-msgstr ""
-"Verwijder alle geaggregeerde KPI-analytics, bezoekersdetail-analytics en "
-"ruwe logregels."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Delete all analytics data"
-msgstr "Alle analyticsgegevens verwijderen"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
 msgstr "Instellingen opslaan"
 
@@ -2443,6 +1624,10 @@ msgstr ""
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Ik bevestig dat ik alle analyticsgegevens permanent wil wissen."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "Annuleren"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -2472,6 +1657,17 @@ msgstr ""
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "Smartphone"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "Desktop"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "Tablet"
 
 #. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
 #: src/admin/panels/TopPagesPanel.js
@@ -2519,6 +1715,10 @@ msgstr "Gem. tijd op pagina: %s"
 #: src/admin/panels/TopPagesPanel.js
 msgid "Back"
 msgstr "Terug"
+
+#: src/admin/panels/TopPagesPanel.js
+msgid "View"
+msgstr "Bekijken"
 
 #: src/admin/panels/TopPagesPanel.js
 msgid "Open in WordPress"
@@ -2572,6 +1772,13 @@ msgid "Title"
 msgstr "Titel"
 
 #: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr "Rijen"
+
+#: src/admin/panels/TopPagesPanel.js
 msgid "Table: Page details by date"
 msgstr "Tabel: paginadetails per datum"
 
@@ -2588,6 +1795,13 @@ msgstr "Vorige"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Volgende"
+
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Page"
+msgstr "Pagina"
 
 #: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -2832,12 +2046,34 @@ msgid "Referrer unavailable"
 msgstr "Geen verwijzers beschikbaar."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search"
+msgstr "Zoeken"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search…"
+msgstr "Zoeken…"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "Geen gegevens over verwijzende sites beschikbaar."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "Verwijzende sites laden…"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "Vorige pagina"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "Volgende pagina"
 
 #. translators: %s: active first-column label.
 #: src/admin/widgets/ReportTableCard/index.js
@@ -3028,7 +2264,7 @@ msgstr "Tabel: bezoekers"
 #~ msgid "Custom login flow is unavailable in this environment."
 #~ msgstr "De aangepaste loginflow is niet beschikbaar in deze omgeving."
 
-#~ msgid "BimBeau Privacy Analytics App is available in Pro only."
+#~ msgid "BimBeau Privacy Analytics App is available in not included."
 #~ msgstr "De BimBeau Privacy Analytics-app is alleen beschikbaar in Pro."
 
 #~ msgid "You are not allowed to access this page."
@@ -3067,6 +2303,9 @@ msgstr "Tabel: bezoekers"
 #~ msgid "Plus de stats"
 #~ msgstr "Meer statistieken"
 
+#~ msgid "Mobile"
+#~ msgstr "Mobiel"
+
 #, php-format
 #~ msgid "%ds"
 #~ msgstr "%ds"
@@ -3086,7 +2325,10 @@ msgstr "Tabel: bezoekers"
 #~ msgid "Views trend"
 #~ msgstr "Trend van weergaven"
 
-#~ msgid "Page-level details are available in BimBeau Privacy Analytics Pro."
+#~ msgid "This feature is not included in this package."
+#~ msgstr "Deze functie is beschikbaar in BimBeau Privacy Analytics Pro."
+
+#~ msgid "Page-level details are not included in this package."
 #~ msgstr ""
 #~ "Details op paginaniveau zijn beschikbaar in BimBeau Privacy Analytics Pro."
 
@@ -3096,7 +2338,7 @@ msgstr "Tabel: bezoekers"
 #~ msgid "Authentication is required to export analytics data."
 #~ msgstr "Authenticatie is vereist om analyticsgegevens te exporteren."
 
-#~ msgid "Report exports are available in BimBeau Privacy Analytics Pro."
+#~ msgid "Report exports are not included in this package."
 #~ msgstr "Rapportexports zijn beschikbaar in BimBeau Privacy Analytics Pro."
 
 #~ msgid "You do not have permission to export analytics data."
@@ -3189,35 +2431,227 @@ msgstr "Tabel: bezoekers"
 #~ "Het formaat van de KPI-slot is ongeldig. Gebruik alleen een numeriek "
 #~ "geheel getal groter dan of gelijk aan 2."
 
-#~ msgid "The selected PWA icon must be at least 512x512 pixels."
-#~ msgstr "Het geselecteerde PWA-pictogram moet minimaal 512x512 pixels zijn."
-
-#~ msgid "The selected PWA icon file cannot be read."
-#~ msgstr "Het geselecteerde PWA-pictogrambestand kan niet worden gelezen."
-
-#~ msgid ""
-#~ "WordPress image editor cannot generate PWA icons from the selected source."
-#~ msgstr ""
-#~ "De WordPress-afbeeldingseditor kan geen PWA-pictogrammen genereren uit de "
-#~ "geselecteerde bron."
-
-#~ msgid "WordPress image editor cannot resize the selected PWA icon source."
-#~ msgstr ""
-#~ "De WordPress-afbeeldingseditor kan de geselecteerde PWA-pictogrambron "
-#~ "niet verkleinen."
-
-#~ msgid "WordPress image editor cannot save generated PWA PNG icons."
-#~ msgstr ""
-#~ "De WordPress-afbeeldingseditor kan gegenereerde PWA PNG-pictogrammen niet "
-#~ "opslaan."
-
-#~ msgid "Select a media library image to generate PWA PNG icons."
-#~ msgstr ""
-#~ "Selecteer een afbeelding uit de mediabibliotheek om PWA PNG-pictogrammen "
-#~ "te genereren."
-
 #~ msgid "BimBeau Privacy Analytics Pro feature preview"
 #~ msgstr "Voorvertoning van BimBeau Privacy Analytics Pro-functie"
+
+#~ msgid "PWA Stats App"
+#~ msgstr "PWA Stats-app"
+
+#~ msgid "PWA URL"
+#~ msgstr "PWA-URL"
+
+#~ msgid "Use this URL to open the standalone analytics app."
+#~ msgstr "Gebruik deze URL om de zelfstandige analytics-app te openen."
+
+#~ msgid "Copy URL"
+#~ msgstr "URL kopiëren"
+
+#~ msgid "Open PWA"
+#~ msgstr "PWA openen"
+
+#~ msgid "Bot"
+#~ msgstr "Bot"
+
+#~ msgid "Slot"
+#~ msgstr "Slot"
+
+#~ msgid ""
+#~ "KPI slot is invalid and must be an integer greater than or equal to 2."
+#~ msgstr ""
+#~ "De KPI-slot is ongeldig en moet een geheel getal groter dan of gelijk aan "
+#~ "2 zijn."
+
+#~ msgid "Snippet cannot be empty."
+#~ msgstr "Snippet mag niet leeg zijn."
+
+#~ msgid "Snippet syntax looks valid."
+#~ msgstr "De syntaxis van de snippet lijkt geldig."
+
+#~ msgid "All events"
+#~ msgstr "Alle gebeurtenissen"
+
+#~ msgid "Loading events configuration…"
+#~ msgstr "Gebeurtenisconfiguratie laden…"
+
+#~ msgid ""
+#~ "Events configuration is locked in the Free tier. Upgrade to Pro to save "
+#~ "and run actions."
+#~ msgstr ""
+#~ "Gebeurtenisconfiguratie is vergrendeld in de gratis versie. Upgrade naar "
+#~ "Pro om acties op te slaan en uit te voeren."
+
+#~ msgid ""
+#~ "Some saved KPI slot values are invalid. Use only numeric slots greater "
+#~ "than or equal to 2."
+#~ msgstr ""
+#~ "Sommige opgeslagen KPI-slotwaarden zijn ongeldig. Gebruik alleen "
+#~ "numerieke slots groter dan of gelijk aan 2."
+
+#~ msgid ""
+#~ "KPI slot conflicts detected. Each active KPI slot must be unique before "
+#~ "saving."
+#~ msgstr ""
+#~ "Conflicten tussen KPI-slots gedetecteerd. Elke actieve KPI-slot moet "
+#~ "uniek zijn vóór het opslaan."
+
+#~ msgid "Reorder KPI event"
+#~ msgstr "KPI-gebeurtenis herschikken"
+
+#~ msgid "Include in KPI"
+#~ msgstr "Opnemen in KPI"
+
+#~ msgid "Enable event"
+#~ msgstr "Gebeurtenis inschakelen"
+
+#~ msgid "Event ID"
+#~ msgstr "Gebeurtenis-ID"
+
+#~ msgid "Label (max 25 characters)"
+#~ msgstr "Label (max. 25 tekens)"
+
+#~ msgid "Trigger type"
+#~ msgstr "Triggertype"
+
+#~ msgid "Click"
+#~ msgstr "Klik"
+
+#~ msgid "Page view"
+#~ msgstr "Paginaweergave"
+
+#~ msgid "CSS selectors"
+#~ msgstr "CSS-selectors"
+
+#~ msgid ""
+#~ "Add one or more CSS selectors as tags to target clickable elements, for "
+#~ "example .cta-button or #signup."
+#~ msgstr ""
+#~ "Voeg een of meer CSS-selectors toe als tags om klikbare elementen te "
+#~ "targeten, bijvoorbeeld .cta-button of #signup."
+
+#~ msgid "Target page"
+#~ msgstr "Doelpagina"
+
+#~ msgid ""
+#~ "Search by title across published posts, pages, and public custom post "
+#~ "types."
+#~ msgstr ""
+#~ "Zoek op titel in gepubliceerde berichten, pagina's en openbare aangepaste "
+#~ "berichttypen."
+
+#~ msgid ""
+#~ "Webhook triggers are server-side. Browser JavaScript snippets are not "
+#~ "executed for this trigger."
+#~ msgstr ""
+#~ "Webhook-triggers zijn server-side. Browser-JavaScript-snippets worden "
+#~ "niet uitgevoerd voor deze trigger."
+
+#~ msgid "Webhook URL"
+#~ msgstr "Webhook-URL"
+
+#~ msgid "Regenerate token"
+#~ msgstr "Token opnieuw genereren"
+
+#~ msgid "Generate token"
+#~ msgstr "Token genereren"
+
+#~ msgid "Allowed webhook params"
+#~ msgstr "Toegestane webhookparameters"
+
+#~ msgid ""
+#~ "Comma-separated allowlist for incoming webhook payload keys. Only "
+#~ "allowlisted variables are stored and shown in event context."
+#~ msgstr ""
+#~ "Komma-gescheiden allowlist voor payloadsleutels van inkomende webhooks. "
+#~ "Alleen toegestane variabelen worden opgeslagen en in de "
+#~ "gebeurteniscontext getoond."
+
+#~ msgid "Action"
+#~ msgstr "Actie"
+
+#~ msgid "Server action template"
+#~ msgstr "Sjabloon voor serveractie"
+
+#~ msgid "JavaScript snippet"
+#~ msgstr "JavaScript-snippet"
+
+#~ msgid ""
+#~ "Configure a server-side action payload template for incoming webhook "
+#~ "events. Browser JavaScript APIs are not available for this trigger."
+#~ msgstr ""
+#~ "Configureer een server-side actiepayloadsjabloon voor inkomende "
+#~ "webhookgebeurtenissen. Browser-JavaScript-API’s zijn niet beschikbaar "
+#~ "voor deze trigger."
+
+#~ msgid ""
+#~ "Paste JavaScript code (without <script> tags) to run when this event is "
+#~ "triggered. Available placeholders depend on trigger type. Do not wrap "
+#~ "placeholders such as {{page_url}} in quotes. They are injected as escaped "
+#~ "JavaScript values."
+#~ msgstr ""
+#~ "Plak JavaScript-code (zonder <script>-tags) die wordt uitgevoerd wanneer "
+#~ "deze gebeurtenis wordt geactiveerd. Beschikbare placeholders hangen af "
+#~ "van het triggertype. Zet placeholders zoals {{page_url}} niet tussen "
+#~ "aanhalingstekens. Ze worden ingevoegd als escaped JavaScript-waarden."
+
+#~ msgid "Available variables for this trigger type:"
+#~ msgstr "Beschikbare variabelen voor dit triggertype:"
+
+#~ msgid "Check syntax"
+#~ msgstr "Syntaxis controleren"
+
+#~ msgid "Syntax checks are available for browser JavaScript snippets only."
+#~ msgstr ""
+#~ "Syntaxcontroles zijn alleen beschikbaar voor browser-JavaScript-snippets."
+
+#~ msgid "Remove event"
+#~ msgstr "Gebeurtenis verwijderen"
+
+#~ msgid "Add event"
+#~ msgstr "Gebeurtenis toevoegen"
+
+#~ msgid "Triggered events"
+#~ msgstr "Geactiveerde gebeurtenissen"
+
+#~ msgid "Triggered events captured by the advanced tracker are listed."
+#~ msgstr ""
+#~ "Geactiveerde gebeurtenissen die door de geavanceerde tracker zijn "
+#~ "vastgelegd, worden weergegeven."
+
+#~ msgid "Total events"
+#~ msgstr "Totaal gebeurtenissen"
+
+#~ msgid "Event"
+#~ msgstr "Gebeurtenis"
+
+#~ msgid "Label"
+#~ msgstr "Label"
+
+#~ msgid "Event time"
+#~ msgstr "Gebeurtenistijd"
+
+#~ msgid "Type"
+#~ msgstr "Type"
+
+#~ msgid "Triggered page"
+#~ msgstr "Geactiveerde pagina"
+
+#~ msgid "Details"
+#~ msgstr "Details"
+
+#~ msgid "All pages"
+#~ msgstr "Alle pagina's"
+
+#~ msgid "No triggered events found."
+#~ msgstr "Geen geactiveerde gebeurtenissen gevonden."
+
+#~ msgid "results"
+#~ msgstr "resultaten"
+
+#~ msgid "Confirm event removal"
+#~ msgstr "Verwijderen van gebeurtenis bevestigen"
+
+#~ msgid "Do you want to remove this event?"
+#~ msgstr "Wilt u deze gebeurtenis verwijderen?"
 
 #~ msgid "No city data available for the selected period."
 #~ msgstr "Geen stadsgegevens beschikbaar voor de geselecteerde periode."
@@ -3234,11 +2668,11 @@ msgstr "Tabel: bezoekers"
 #~ msgid "Captured events data purged."
 #~ msgstr "Gegevens van vastgelegde gebeurtenissen gewist."
 
+#~ msgid "App"
+#~ msgstr "App"
+
 #~ msgid "Delete captured events list"
 #~ msgstr "Lijst met vastgelegde gebeurtenissen verwijderen"
-
-#~ msgid "Events configuration"
-#~ msgstr "Gebeurtenisconfiguratie"
 
 #~ msgid "Confirm captured events purge"
 #~ msgstr "Wissen van vastgelegde gebeurtenissen bevestigen"
@@ -3258,6 +2692,420 @@ msgstr "Tabel: bezoekers"
 
 #~ msgid "Purge captured events"
 #~ msgstr "Vastgelegde gebeurtenissen wissen"
+
+#~ msgid "Interface branding"
+#~ msgstr "Interfacebranding"
+
+#~ msgid "White-label interface controls are available in Pro."
+#~ msgstr "Bediening voor de white-labelinterface is beschikbaar in Pro."
+
+#~ msgid "Use white-label interface"
+#~ msgstr "White-labelinterface gebruiken"
+
+#~ msgid ""
+#~ "Hide the BimBeau Privacy Analytics logo in the admin header and display "
+#~ "the localized analytics title instead."
+#~ msgstr ""
+#~ "Verbergt het BimBeau Privacy Analytics-logo in de beheerheader en toont "
+#~ "in plaats daarvan de gelokaliseerde analysetitel."
+
+#~ msgid "Enabled panels"
+#~ msgstr "Ingeschakelde panelen"
+
+#~ msgid "Visible"
+#~ msgstr "Zichtbaar"
+
+#~ msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
+#~ msgstr ""
+#~ "Verborgen zolang \"Geavanceerde statistieken na toestemming inschakelen\" "
+#~ "is uitgeschakeld."
+
+#~ msgid "Quick stats"
+#~ msgstr "Snelle statistieken"
+
+#~ msgid ""
+#~ "Enable Quick Stats on selected post types: add a Views (30d) column in "
+#~ "the posts list and display a stats summary metabox while editing each "
+#~ "post."
+#~ msgstr ""
+#~ "Schakel Snelle statistieken in voor geselecteerde berichttypen: voeg een "
+#~ "kolom Weergaven (30d) toe aan de berichtenlijst en toon een metabox met "
+#~ "statistieksamenvatting bij het bewerken van elk bericht."
+
+#~ msgid "No post types available."
+#~ msgstr "Geen berichttypen beschikbaar."
+
+#~ msgid ""
+#~ "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
+#~ "database or MaxMind API."
+#~ msgstr ""
+#~ "Kies hoe BimBeau Privacy Analytics geolocatie bepaalt: lokale GeoLite-"
+#~ "database of MaxMind API."
+
+#~ msgid "Geolocation source"
+#~ msgstr "Geolocatiebron"
+
+#~ msgid "Local GeoLite database (default)"
+#~ msgstr "Lokale GeoLite-database (standaard)"
+
+#~ msgid "MaxMind API credentials"
+#~ msgstr "MaxMind API-inloggegevens"
+
+#, fuzzy
+#~ msgid ""
+#~ "Local database mode downloads the GeoLite MMDB file through the official "
+#~ "BimBeau GeoIP Database Service manifest. API mode uses live MaxMind "
+#~ "requests."
+#~ msgstr ""
+#~ "Lokale databasemodus downloadt het GeoLite-MMDB-bestand van BimBeau "
+#~ "Privacy Analytics-mirrors. API-modus gebruikt live MaxMind-verzoeken."
+
+#~ msgid "MaxMind Account ID"
+#~ msgstr "MaxMind-account-ID"
+
+#~ msgid "Numeric Account ID used for MaxMind API requests."
+#~ msgstr "Numeriek account-ID dat wordt gebruikt voor MaxMind API-verzoeken."
+
+#~ msgid "MaxMind License Key"
+#~ msgstr "MaxMind-licentiesleutel"
+
+#~ msgid "License Key used for MaxMind API requests."
+#~ msgstr "Licentiesleutel die wordt gebruikt voor MaxMind API-verzoeken."
+
+#~ msgid "Test MaxMind connection"
+#~ msgstr "MaxMind-verbinding testen"
+
+#~ msgid "Automatic GeoIP database updates"
+#~ msgstr "Automatische GeoIP-database-updates"
+
+#~ msgid "Controls the cron frequency for local GeoIP database updates."
+#~ msgstr "Beheert de cronfrequentie voor lokale GeoIP-database-updates."
+
+#~ msgid "Update now"
+#~ msgstr "Nu bijwerken"
+
+#~ msgid "Current state"
+#~ msgstr "Huidige status"
+
+#~ msgid "Last attempt"
+#~ msgstr "Laatste poging"
+
+#~ msgid "Next scheduled retry"
+#~ msgstr "Volgende geplande nieuwe poging"
+
+#~ msgid "Last successful update"
+#~ msgstr "Laatste succesvolle update"
+
+#~ msgid "Database size"
+#~ msgstr "Databasegrootte"
+
+#~ msgid "Last error code"
+#~ msgstr "Laatste foutcode"
+
+#~ msgid "Retry count"
+#~ msgstr "Aantal nieuwe pogingen"
+
+#~ msgid ""
+#~ "Behavior: plugin activation completes quickly, and temporary local "
+#~ "database unavailability does not block the rest of BimBeau Privacy "
+#~ "Analytics."
+#~ msgstr ""
+#~ "Gedrag: pluginactivatie wordt snel voltooid en tijdelijke "
+#~ "onbeschikbaarheid van de lokale database blokkeert de rest van BimBeau "
+#~ "Privacy Analytics niet."
+
+#~ msgid "Privacy"
+#~ msgstr "Privacy"
+
+#~ msgid "Advanced stats require consent"
+#~ msgstr "Geavanceerde statistieken vereisen toestemming"
+
+#~ msgid "Essential stats only"
+#~ msgstr "Alleen essentiële statistieken"
+
+#~ msgid ""
+#~ "Essential stats run without consent. Advanced stats run only after "
+#~ "Statistics / Analytics consent."
+#~ msgstr ""
+#~ "Essentiële statistieken werken zonder toestemming. Geavanceerde "
+#~ "statistieken werken alleen na toestemming voor Statistieken / Analytics."
+
+#~ msgid "Essential stats"
+#~ msgstr "Essentiële statistieken"
+
+#~ msgid "No consent required"
+#~ msgstr "Geen toestemming vereist"
+
+#~ msgid ""
+#~ "Limited audience stats only. No ads, no cross-site tracking, no third-"
+#~ "party reuse."
+#~ msgstr ""
+#~ "Alleen beperkte publieksstatistieken. Geen advertenties, geen cross-site "
+#~ "tracking, geen hergebruik door derden."
+
+#~ msgid "Essential data"
+#~ msgstr "Essentiële gegevens"
+
+#~ msgid "Script:"
+#~ msgstr "Script:"
+
+#~ msgid "Advanced stats"
+#~ msgstr "Geavanceerde statistieken"
+
+#~ msgid "Requires consent"
+#~ msgstr "Vereist toestemming"
+
+#~ msgid "Adds detailed visit insights after consent."
+#~ msgstr "Voegt na toestemming gedetailleerde bezoekinzichten toe."
+
+#~ msgid "Enable advanced stats after consent"
+#~ msgstr "Geavanceerde statistieken na toestemming inschakelen"
+
+#~ msgid ""
+#~ "Your CMP must block it until Statistics / Analytics consent is given."
+#~ msgstr ""
+#~ "Uw CMP moet dit blokkeren totdat toestemming voor Statistieken / "
+#~ "Analytics is gegeven."
+
+#~ msgid "Advanced data"
+#~ msgstr "Geavanceerde gegevens"
+
+#~ msgid "CMP setup"
+#~ msgstr "CMP-instelling"
+
+#~ msgid ""
+#~ "Block the advanced stats script until Statistics / Analytics consent is "
+#~ "given."
+#~ msgstr ""
+#~ "Blokkeer het script voor geavanceerde statistieken totdat toestemming "
+#~ "voor Statistieken / Analytics is gegeven."
+
+#~ msgid "Script to block:"
+#~ msgstr "Te blokkeren script:"
+
+#~ msgid "Alternative selectors:"
+#~ msgstr "Alternatieve selectors:"
+
+#~ msgid "Script ID:"
+#~ msgstr "Script-ID:"
+
+#~ msgid "WordPress handle:"
+#~ msgstr "WordPress-handle:"
+
+#~ msgid "What is a CMP?"
+#~ msgstr "Wat is een CMP?"
+
+#~ msgid ""
+#~ "A CMP manages cookie consent on your website. It shows the cookie banner, "
+#~ "stores visitor choices, and allows or blocks analytics scripts based on "
+#~ "consent."
+#~ msgstr ""
+#~ "Een CMP beheert cookietoestemming op uw website. Het toont de "
+#~ "cookiebanner, bewaart bezoekerskeuzes en staat analytics-scripts toe of "
+#~ "blokkeert ze op basis van toestemming."
+
+#~ msgid "Examples:"
+#~ msgstr "Voorbeelden:"
+
+#~ msgid ""
+#~ "In your CMP, block the BimBeau Privacy Analytics advanced stats script "
+#~ "until the Statistics or Analytics purpose is accepted."
+#~ msgstr ""
+#~ "Blokkeer in uw CMP het BimBeau Privacy Analytics-script voor geavanceerde "
+#~ "statistieken totdat het doel Statistieken of Analytics is geaccepteerd."
+
+#~ msgid ""
+#~ "Advanced stats are disabled. BimBeau Privacy Analytics will only use "
+#~ "essential stats."
+#~ msgstr ""
+#~ "Geavanceerde statistieken zijn uitgeschakeld. BimBeau Privacy Analytics "
+#~ "gebruikt alleen essentiële statistieken."
+
+#~ msgid "Respect DNT / GPC"
+#~ msgstr "DNT / GPC respecteren"
+
+#~ msgid ""
+#~ "Stop measurement when the visitor’s browser sends a Do Not Track or "
+#~ "Global Privacy Control signal."
+#~ msgstr ""
+#~ "Stop met meten wanneer de browser van de bezoeker een Do Not Track- of "
+#~ "Global Privacy Control-signaal verzendt."
+
+#~ msgid "Visit measurement"
+#~ msgstr "Bezoekmeting"
+
+#~ msgid ""
+#~ "Defines how long visitor activity can remain grouped under the same "
+#~ "visitor row before a new row is started after inactivity."
+#~ msgstr ""
+#~ "Bepaalt hoelang bezoekersactiviteit onder dezelfde bezoekersrij "
+#~ "gegroepeerd kan blijven voordat na inactiviteit een nieuwe rij wordt "
+#~ "gestart."
+
+#~ msgid "Visitor activity window"
+#~ msgstr "Activiteitsvenster voor bezoekers"
+
+#~ msgid ""
+#~ "Defines how long activity from the same visitor can remain grouped into "
+#~ "one visitor row. After this period of inactivity, BimBeau Privacy "
+#~ "Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 "
+#~ "minutes to 24 hours)."
+#~ msgstr ""
+#~ "Bepaalt hoelang activiteit van dezelfde bezoeker in één bezoekersrij "
+#~ "gegroepeerd kan blijven. Na deze periode van inactiviteit start BimBeau "
+#~ "Privacy Analytics een nieuwe bezoekersrij. Bereik: 300 tot 86400 seconden "
+#~ "(5 minuten tot 24 uur)."
+
+#~ msgid "URLs & campaigns"
+#~ msgstr "URL's en campagnes"
+
+#~ msgid ""
+#~ "Control URL cleanup behavior and keep only campaign query parameters that "
+#~ "should remain available for attribution."
+#~ msgstr ""
+#~ "Beheer het gedrag voor URL-opschoning en bewaar alleen campagne-"
+#~ "queryparameters die beschikbaar moeten blijven voor attributie."
+
+#~ msgid "Clean URL query parameters"
+#~ msgstr "URL-queryparameters opschonen"
+
+#~ msgid "Remove query parameters from tracked URLs."
+#~ msgstr "Verwijder queryparameters uit gevolgde URL's."
+
+#~ msgid "Allowed query parameters"
+#~ msgstr "Toegestane queryparameters"
+
+#~ msgid ""
+#~ "Comma-separated list of allowed query keys (used for URL tracking and UTM "
+#~ "aggregation)."
+#~ msgstr ""
+#~ "Door komma's gescheiden lijst met toegestane querysleutels (gebruikt voor "
+#~ "URL-tracking en UTM-aggregatie)."
+
+#~ msgid "Data retention"
+#~ msgstr "Gegevensbewaring"
+
+#~ msgid ""
+#~ "Choose how long to keep temporary detailed events, report details, and "
+#~ "long-term totals, then how often cleanup runs."
+#~ msgstr ""
+#~ "Choose how long to keep temporary detailed events, report details, and "
+#~ "long-term totals, then how often cleanup runs."
+
+#~ msgid "Temporary detailed events retention (days)"
+#~ msgstr "Bewaartermijn tijdelijke gedetailleerde gebeurtenissen (dagen)"
+
+#~ msgid ""
+#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
+#~ msgstr ""
+#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
+
+#~ msgid "Report details retention"
+#~ msgstr "Bewaartermijn rapportdetails"
+
+#~ msgid ""
+#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
+#~ "devices, and visitor details."
+#~ msgstr ""
+#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
+#~ "devices, and visitor details."
+
+#~ msgid "Long-term totals retention"
+#~ msgstr "Bewaartermijn langetermijntotalen"
+
+#~ msgid ""
+#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
+#~ "visitors chart after report details expire."
+#~ msgstr ""
+#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
+#~ "visitors chart after report details expire."
+
+#~ msgid ""
+#~ "Cleanup permanently removes expired details, while long-term totals "
+#~ "remain available until their own retention window ends."
+#~ msgstr ""
+#~ "Cleanup permanently removes expired details, while long-term totals "
+#~ "remain available until their own retention window ends."
+
+#~ msgid "Automatic cleanup frequency"
+#~ msgstr "Automatische opschoonfrequentie"
+
+#~ msgid "Defines how often WordPress checks for expired analytics data."
+#~ msgstr "Defines how often WordPress checks for expired analytics data."
+
+#~ msgid "Exclusions"
+#~ msgstr "Uitsluitingen"
+
+#~ msgid ""
+#~ "Select roles to exclude from tracking. Select all roles to ignore all "
+#~ "logged-in users."
+#~ msgstr ""
+#~ "Selecteer rollen om uit te sluiten van tracking. Selecteer alle rollen om "
+#~ "alle ingelogde gebruikers te negeren."
+
+#~ msgid "No roles available."
+#~ msgstr "Geen rollen beschikbaar."
+
+#~ msgid "Debug"
+#~ msgstr "Debug"
+
+#~ msgid ""
+#~ "Enable diagnostic output for troubleshooting tracking events, realtime "
+#~ "visitor detection, and REST payloads in the browser console and wp-"
+#~ "content/debug.log."
+#~ msgstr ""
+#~ "Schakel diagnostische uitvoer in voor het oplossen van problemen met "
+#~ "trackinggebeurtenissen, realtime bezoekersdetectie en REST-payloads in de "
+#~ "browserconsole en wp-content/debug.log."
+
+#~ msgid "Debug mode"
+#~ msgstr "Debugmodus"
+
+#~ msgid ""
+#~ "Writes detailed diagnostic logs to the console and to wp-content/debug."
+#~ "log when WordPress debug logging is enabled."
+#~ msgstr ""
+#~ "Schrijft gedetailleerde diagnostische logs naar de console en naar wp-"
+#~ "content/debug.log wanneer WordPress debug-logging is ingeschakeld."
+
+#~ msgid "Cleanup actions"
+#~ msgstr "Opschoningsacties"
+
+#~ msgid ""
+#~ "Run retention cleanup immediately to remove only data older than the "
+#~ "configured retention window."
+#~ msgstr ""
+#~ "Voer bewaartermijnopschoning direct uit om alleen gegevens te verwijderen "
+#~ "die ouder zijn dan het geconfigureerde bewaartermijnvenster."
+
+#~ msgid "Run cleanup now"
+#~ msgstr "Opschoning nu uitvoeren"
+
+#~ msgid "Delete plugin tables on uninstall"
+#~ msgstr "Plugintabellen verwijderen bij de-installatie"
+
+#~ msgid ""
+#~ "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
+#~ "analytics tables from the WordPress database."
+#~ msgstr ""
+#~ "Indien ingeschakeld verwijdert het de-installeren van BimBeau Privacy "
+#~ "Analytics alle analytics-tabellen van de plugin uit de WordPress-database."
+
+#~ msgid "Sensitive actions"
+#~ msgstr "Gevoelige acties"
+
+#~ msgid ""
+#~ "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
+#~ "entries."
+#~ msgstr ""
+#~ "Verwijder alle geaggregeerde KPI-analytics, bezoekersdetail-analytics en "
+#~ "ruwe logregels."
+
+#~ msgid "Delete all analytics data"
+#~ msgstr "Alle analyticsgegevens verwijderen"
+
+#~ msgid "Events configuration"
+#~ msgstr "Gebeurtenisconfiguratie"
 
 #~ msgid "BimBeau Privacy Analytics events analytics feature preview"
 #~ msgstr "Voorvertoning van BimBeau Privacy Analytics Pro-functie"
@@ -3368,10 +3216,10 @@ msgstr "Tabel: bezoekers"
 #~ msgid "Leave blank to use \"BimBeau Privacy Analytics\"."
 #~ msgstr "Laat leeg om \"BimBeau Privacy Analytics\" te gebruiken."
 
-#~ msgid "This panel is available in BimBeau Privacy Analytics Pro."
+#~ msgid "This panel is not included in this package."
 #~ msgstr "Dit paneel is beschikbaar in BimBeau Privacy Analytics Pro."
 
-#~ msgid "City map markers are available in BimBeau Privacy Analytics Pro."
+#~ msgid "City map markers are not included in this package."
 #~ msgstr ""
 #~ "Stadskaartmarkeringen zijn beschikbaar in BimBeau Privacy Analytics Pro."
 

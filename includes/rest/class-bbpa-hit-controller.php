@@ -462,7 +462,11 @@ class BBPA_Hit_Controller {
             'operating_system' => '',
             'country_code' => '',
             'country' => '',
-
+            'city' => '',
+            'city_geoname_id' => null,
+            'latitude' => null,
+            'longitude' => null,
+            'accuracy_radius' => null,
         ];
 
         $hit['granularity'] = $this->resolve_hit_granularity($request, $hit);
@@ -484,7 +488,26 @@ class BBPA_Hit_Controller {
             $hit['operating_system'] = $this->detect_operating_system($request->get_header('User-Agent'));
             $hit['country_code'] = $country['country_code'] ?? '';
             $hit['country'] = $country['country'] ?? '';
-
+            $hit['city'] = $country['city'] ?? '';
+            $hit['city_geoname_id'] = bbpa_normalize_geoname_id($country['city_geoname_id'] ?? null);
+            $hit['latitude'] = isset($country['latitude']) && is_numeric($country['latitude'])
+                ? (float) $country['latitude']
+                : null;
+            $hit['longitude'] = isset($country['longitude']) && is_numeric($country['longitude'])
+                ? (float) $country['longitude']
+                : null;
+            $hit['accuracy_radius'] = isset($country['accuracy_radius']) && is_numeric($country['accuracy_radius'])
+                ? max(0, (int) $country['accuracy_radius'])
+                : null;
+            $this->log_debug('Geolocation payload merged into sanitized hit.', [
+                'event_name' => (string) ($hit['event_name'] ?? ''),
+                'granularity' => (string) ($hit['granularity'] ?? 'base'),
+                'country_code' => (string) ($hit['country_code'] ?? ''),
+                'city' => (string) ($hit['city'] ?? ''),
+                'accuracy_radius_present' => isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius']),
+                'accuracy_radius' => isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius']) ? (int) $hit['accuracy_radius'] : null,
+                'latitude_present' => isset($hit['latitude']) && is_numeric($hit['latitude']),
+                'longitude_present' => isset($hit['longitude']) && is_numeric($hit['longitude']),
             ]);
         }
 
@@ -509,8 +532,16 @@ class BBPA_Hit_Controller {
             'operating_system',
             'country_code',
             'country',
-
             'referrer_domain',
+        ] as $field) {
+            $hit[$field] = '';
+        }
+        foreach ([
+            'city',
+            'city_geoname_id',
+            'latitude',
+            'longitude',
+            'accuracy_radius',
         ] as $field) {
             $hit[$field] = in_array($field, ['city_geoname_id', 'latitude', 'longitude', 'accuracy_radius'], true)
                 ? null
