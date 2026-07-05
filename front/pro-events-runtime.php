@@ -78,10 +78,6 @@ function bbpa_enqueue_event_runtime_patch(): void
                 }
 
                 const eventId = typeof payload.event_id === 'string' ? payload.event_id : '';
-                if (isConfiguredEvent(eventId) && url.indexOf('/events-trigger-signal') !== -1) {
-                    return emptySignalResponse();
-                }
-
                 if (isConfiguredEvent(eventId) && url.indexOf('/events-action-signal') !== -1) {
                     if (!payload.status && payload.execution_status === 'matched') {
                         return emptySignalResponse();
@@ -103,9 +99,6 @@ function bbpa_enqueue_event_runtime_patch(): void
         root.__BPAAdvancedEventPatchBeaconBound = true;
         const originalSendBeacon = root.navigator.sendBeacon.bind(root.navigator);
         root.navigator.sendBeacon = function (url, data) {
-            if (typeof url === 'string' && url.indexOf('/events-trigger-signal') !== -1) {
-                return true;
-            }
             return originalSendBeacon(url, data);
         };
     }
@@ -130,9 +123,23 @@ JS;
         return root.BBPATracker && typeof root.BBPATracker === 'object' ? root.BBPATracker : {};
     }
 
+    function isDebugEnabled() {
+        const settings = getSettings();
+        return settings.debugEnabled === true || settings.debug_enabled === true;
+    }
+
+    function debugLog(message, context) {
+        if (!isDebugEnabled() || !root.console || typeof root.console.debug !== 'function') {
+            return;
+        }
+        root.console.debug('[BimBeau Privacy Analytics][Events] ' + message, context || {});
+    }
+
     function getEventsConfig() {
         const settings = getSettings();
-        return Array.isArray(settings.eventsConfig) ? settings.eventsConfig : [];
+        const config = Array.isArray(settings.eventsConfig) ? settings.eventsConfig : [];
+        debugLog('events config count', { count: config.length });
+        return config;
     }
 
     function getTrackerCore() {
@@ -242,12 +249,19 @@ JS;
             return;
         }
         const body = Object.assign({}, payload || {}, { bbpa_runtime_patch: true });
+        debugLog(kind + ' signal posted', body);
         root.fetch(endpoint, {
             method: 'POST',
             keepalive: true,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
-        }).catch(function () { return null; });
+        }).then(function (response) {
+            debugLog(kind + ' signal response status', { status: response && response.status ? response.status : 0 });
+            return response;
+        }).catch(function (error) {
+            debugLog(kind + ' signal failed', { error: error && error.message ? String(error.message) : 'unknown' });
+            return null;
+        });
     }
 
     function collectVariables(context) {
@@ -372,6 +386,43 @@ JS;
         return { dedupe_scope_id: '' };
     }
 
+    function normalizePathForEventMatch(value) {
+        let path = String(value || '').trim();
+        if (path === '') {
+            return '';
+        }
+        try {
+            path = new URL(path, root.location && root.location.origin ? root.location.origin : 'https://example.invalid').pathname || '/';
+        } catch (error) {
+            const queryIndex = path.indexOf('?');
+            const hashIndex = path.indexOf('#');
+            const cutIndexes = [queryIndex, hashIndex].filter(function (index) { return index >= 0; });
+            if (cutIndexes.length) {
+                path = path.slice(0, Math.min.apply(Math, cutIndexes));
+            }
+        }
+        try {
+            path = decodeURIComponent(path);
+        } catch (error) {
+            // Keep the original path when it contains malformed escapes.
+        }
+        path = '/' + path.replace(/^\/+/, '');
+        path = path.replace(/\/+/g, '/');
+        if (path.length > 1) {
+            path = path.replace(/\/+$/, '');
+        }
+        return path || '/';
+    }
+
+    function doesPagePathMatch(currentPath, configuredPath) {
+        const normalizedCurrentPath = normalizePathForEventMatch(currentPath);
+        const normalizedConfiguredPath = normalizePathForEventMatch(configuredPath);
+        if (!normalizedConfiguredPath) {
+            return true;
+        }
+        return normalizedCurrentPath === normalizedConfiguredPath;
+    }
+
     function buildBaseContext(eventId, triggerType, pagePath) {
         const path = typeof pagePath === 'string' && pagePath !== '' ? pagePath : (root.location && root.location.pathname ? root.location.pathname : '');
         return {
@@ -411,6 +462,7 @@ JS;
         const occurrenceId = [eventId, trigger.type, String(now), Math.random().toString(36).slice(2, 10)].join('::');
         const actions = resolveActions(eventItem).filter(function (action) { return action && action.key !== ''; });
         const runtimeContext = collectVariables(context);
+        debugLog('event dispatched', { event_id: eventId, trigger_type: trigger.type, action_count: actions.length });
         const actionResults = actions.map(function (action) {
             const result = executeAction(action, context, trigger.type);
             const actionStatus = result.status === 'error' ? 'error' : (result.status === 'executed' ? 'executed' : 'skipped');
@@ -506,8 +558,13 @@ JS;
             if (trigger.type === 'page_view') {
                 registry[bindingKey] = true;
                 const path = root.location && root.location.pathname ? root.location.pathname : '';
-                if (!trigger.url_pattern || path.indexOf(trigger.url_pattern) !== -1) {
-                    guardedDispatch(buildBaseContext(eventId, 'page_view', path));
+                const matched = doesPagePathMatch(path, trigger.url_pattern);
+                debugLog('page_view trigger evaluated', { event_id: eventId, current_path: normalizePathForEventMatch(path), target_path: normalizePathForEventMatch(trigger.url_pattern), matched: matched });
+                if (matched) {
+                    debugLog('page path match', { event_id: eventId, path: path });
+                    guardedDispatch(buildBaseContext(eventId, 'page_view', normalizePathForEventMatch(path)));
+                } else {
+                    debugLog('page path mismatch', { event_id: eventId, path: path, url_pattern: trigger.url_pattern });
                 }
                 return;
             }

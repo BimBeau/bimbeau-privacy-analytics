@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.44.2
+Stable tag: 8.44.39
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -88,9 +88,13 @@ Debug mode is the authoritative plugin switch for diagnostic logging. BimBeau Pr
 
 External services:
 
-Local GeoIP database updates use the official BimBeau GeoIP Database Service manifest to download GeoLite2 City data for local lookups. Updates run every 30 days by default and can be changed or disabled in settings. The plugin validates manifest metadata, verifies the downloaded archive checksum, and keeps an existing readable local database available when an update attempt fails. The service may receive standard HTTP request metadata from the WordPress server, but visitor IP addresses are not sent for local lookups.
+Country-level geolocation reports require a local GeoIP database in local database mode. Automatic GeoIP updates are disabled by default, and BimBeau Privacy Analytics does not call the BimBeau GeoIP Database Service during plugin activation. Local GeoIP lookups do not send visitor IP addresses to BimBeau.
+
+The BimBeau GeoIP Database Service is contacted only when an administrator clicks the install/update database action in Geolocation settings, or when an administrator explicitly chooses an automatic update frequency. The plugin sends a server-side HTTP request to fetch the manifest and database archive, validates manifest metadata, verifies the downloaded archive checksum, and keeps an existing readable local database available when an update attempt fails. The service receives the WordPress server IP address as seen by the service, the HTTP User-Agent header, and the site URL only if a site URL is included in the User-Agent header. The GeoIP updater User-Agent does not include `home_url('/')`.
 
 GeoIP service: https://github.com/BimBeau/bimbeau-geoip-database
+BimBeau Terms of Use: https://bimbeau.fr/bimbeau-privacy-analytics/en/legal/terms-of-use/
+BimBeau Privacy Policy: https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy-policy/
 MaxMind GeoLite EULA: https://www.maxmind.com/en/geolite/eula
 MaxMind privacy policy: https://www.maxmind.com/en/privacy-policy
 
@@ -216,5 +220,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.44.2 =
-* Tighten WordPress.org Free package compliance validation for locked Pro features.
+= 8.44.39 =
+* Verify public Free source synchronization before release packaging.

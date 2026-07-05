@@ -101,11 +101,10 @@ function bbpa_get_settings_defaults(): array
         'debug_enabled' => false,
         'geo_aggregation_enabled' => true,
         'geoip_lookup_mode' => 'local_database',
-        'geoip_update_frequency' => '30_days',
+        'geoip_update_frequency' => 'disabled',
         'maxmind_account_id' => '',
         'maxmind_license_key' => '',
         'visit_identifier_window_seconds' => BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_DEFAULT,
-        'pro_content_stats_post_types' => ['post', 'page'],
         'pwa_icon_url' => '',
         'pwa_icon_attachment_id' => 0,
         'pwa_icon_generated_icons' => [],
@@ -346,42 +345,8 @@ function bbpa_sanitize_settings($settings): array
     }
     $settings['excluded_paths'] = array_values(array_unique($normalized_paths));
 
-    $pro_content_stats_post_types = $settings['pro_content_stats_post_types'];
-    if (is_string($pro_content_stats_post_types)) {
-        $pro_content_stats_post_types = preg_split('/[\s,]+/', $pro_content_stats_post_types);
-    }
-    if (!is_array($pro_content_stats_post_types) || !$pro_content_stats_post_types) {
-        $legacy_post_views_post_types = $settings['post_views_column_post_types'] ?? [];
-        $legacy_metabox_post_types = $settings['post_stats_metabox_post_types'] ?? [];
-        if (is_string($legacy_post_views_post_types)) {
-            $legacy_post_views_post_types = preg_split('/[\s,]+/', $legacy_post_views_post_types);
-        }
-        if (is_string($legacy_metabox_post_types)) {
-            $legacy_metabox_post_types = preg_split('/[\s,]+/', $legacy_metabox_post_types);
-        }
-
-        $legacy_post_views_post_types = is_array($legacy_post_views_post_types) ? $legacy_post_views_post_types : [];
-        $legacy_metabox_post_types = is_array($legacy_metabox_post_types) ? $legacy_metabox_post_types : [];
-        $pro_content_stats_post_types = array_merge($legacy_post_views_post_types, $legacy_metabox_post_types);
-    }
-
-    $pro_content_stats_post_types = array_values(array_unique(array_filter(array_map('sanitize_key', $pro_content_stats_post_types))));
-    $allowed_post_types = get_post_types(
-        [
-            'show_ui' => true,
-        ],
-        'names'
-    );
-    if (is_array($allowed_post_types) && $allowed_post_types) {
-        $allowed_post_types = array_values(array_filter(array_map('sanitize_key', $allowed_post_types), static function (string $post_type): bool {
-            return $post_type !== 'attachment';
-        }));
-        $pro_content_stats_post_types = array_values(array_intersect($pro_content_stats_post_types, $allowed_post_types));
-    } else {
-        $pro_content_stats_post_types = [];
-    }
-    $settings['post_views_column_post_types'] = $pro_content_stats_post_types;
-    $settings['post_stats_metabox_post_types'] = $pro_content_stats_post_types;
+    $settings['post_views_column_post_types'] = [];
+    $settings['post_stats_metabox_post_types'] = [];
     $legacy_hidden_panels = $settings['hidden_panels'] ?? [];
     $disabled_panels = $settings['disabled_panels'] ?? $legacy_hidden_panels;
     $settings['disabled_panels'] = bbpa_normalize_disabled_panels(
@@ -435,84 +400,6 @@ function bbpa_normalize_disabled_panels($panel_ids, array $allowed_panel_ids = B
     return $normalized;
 }
 
-/**
- * Sanitize Pro events configuration payload.
- *
- * Free environment keeps sanitized payload inert by forcing disabled execution.
- *
- * @param mixed $config
- * @param bool $is_pro_environment
- * @return array<int, array<string, mixed>>
- */
-/**
- * Extract one event action list with legacy compatibility.
- *
- * Legacy event payloads can expose action definitions as direct keys.
- *
- * @param array<string, mixed> $event_item
- * @return array<int, mixed>
- */
-function bbpa_extract_event_actions_payload(array $event_item): array
-{
-    $raw_actions = $event_item['actions'] ?? [];
-    if (is_string($raw_actions)) {
-        $raw_actions = preg_split('/[\s,]+/', $raw_actions);
-    }
-    if (is_array($raw_actions) && !empty($raw_actions)) {
-        return $raw_actions;
-    }
-
-    $reserved_keys = ['event', 'id', 'label', 'short_label', 'trigger', 'enabled', 'actions', 'order', 'params', 'kpi_enabled', 'kpi_slot'];
-    $legacy_actions = [];
-    foreach ($event_item as $key => $value) {
-        if (!is_string($key) || in_array($key, $reserved_keys, true)) {
-            continue;
-        }
-
-        $type = sanitize_key($key);
-        if ($type === '') {
-            continue;
-        }
-
-        if (is_array($value)) {
-            $legacy_actions[] = array_merge($value, ['type' => $type]);
-            continue;
-        }
-
-        if (is_bool($value) || is_numeric($value) || is_string($value) || $value === null) {
-            $legacy_actions[] = [
-                'type' => $type,
-                'enabled' => (bool) rest_sanitize_boolean($value),
-            ];
-        }
-    }
-
-    return $legacy_actions;
-}
-
-/**
- * Sanitize one Pro event trigger definition.
- *
- * @param mixed $raw_trigger
- * @return array<string, mixed>
- */
-/**
- * Sanitize one Pro event action definition.
- *
- * Backward compatibility: legacy string actions are converted to object format.
- *
- * @param mixed $raw_action
- * @param int $action_index
- * @param bool $is_pro_environment
- * @return array<string, mixed>|null
- */
-/**
- * Resolve sanitized Pro events config from settings for REST and runtime consumers.
- *
- * @param array<string, mixed> $settings
- * @param bool $is_pro_environment
- * @return array<int, array<string, mixed>>
- */
 /**
  * Sanitize a role list setting value.
  *
@@ -833,7 +720,7 @@ function bbpa_get_debug_mode_request_override(): ?bool
         && function_exists('bbpa_is_plugin_admin_page')
         && bbpa_is_plugin_admin_page()
         && isset($_GET['bbpa_debug'])
-        && current_user_can(bbpa_get_settings_capability())
+        && current_user_can(bbpa_get_settings_access_capability())
         && isset($_GET['_wpnonce'])
         && is_string($_GET['_wpnonce'])
         && wp_verify_nonce(sanitize_text_field(wp_unslash((string) $_GET['_wpnonce'])), 'bbpa_toggle_debug_mode')
@@ -938,6 +825,10 @@ function bbpa_update_settings($settings): array
         bbpa_schedule_aggregated_retention_cleanup(true);
     } elseif (function_exists('bbpa_schedule_aggregated_retention_cleanup')) {
         bbpa_schedule_aggregated_retention_cleanup(false);
+    }
+
+    if (function_exists('bbpa_schedule_geoip_update')) {
+        bbpa_schedule_geoip_update($sanitized['geoip_update_frequency'] !== ($previous['geoip_update_frequency'] ?? null));
     }
 
     return $sanitized;

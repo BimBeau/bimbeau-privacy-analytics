@@ -49,14 +49,12 @@ function bbpa_build_tracker_localized_settings(?int $post_id, bool $auto_track, 
         : [];
 
     $is_user_excluded_by_role = !empty(array_intersect($excluded_roles, $current_user_roles));
-    $is_pro_environment = false;
-    $events_config = [];
+
     $visit_identifier_window_seconds = function_exists('bbpa_get_visit_identifier_window_seconds')
         ? bbpa_get_visit_identifier_window_seconds()
         : 1800;
-    $is_front_app_shell = function_exists('bbpa_is_front_app_request') && bbpa_is_front_app_request();
 
-    return [
+    $tracker_settings = [
         'restUrl' => esc_url_raw(rest_url()),
         'restNamespace' => BBPA_REST_NAMESPACE,
         'postId' => $post_id,
@@ -69,10 +67,13 @@ function bbpa_build_tracker_localized_settings(?int $post_id, bool $auto_track, 
         'runId' => (string) $run_id,
         'advanced_stats_enabled' => (bool) $advanced_stats_enabled,
         'visitIdentifierWindowSeconds' => (int) $visit_identifier_window_seconds,
-        'isFrontAppShell' => (bool) $is_front_app_shell,
-        'eventsEnabled' => (bool) $is_pro_environment,
-        'eventsConfig' => $events_config,
     ];
+
+    return apply_filters('bbpa_tracker_localized_settings', $tracker_settings, [
+        'post_id' => $post_id,
+        'auto_track' => $auto_track,
+        'page_path_override' => $page_path_override,
+    ]);
 }
 
 
@@ -149,10 +150,6 @@ function bbpa_enqueue_front_assets(): void
         return;
     }
 
-    if (function_exists('bbpa_is_front_app_request') && bbpa_is_front_app_request()) {
-        return;
-    }
-
     $did_enqueue = true;
 
     $essential_handle = 'bbpa-essential-tracker';
@@ -180,13 +177,6 @@ function bbpa_enqueue_front_assets(): void
         wp_script_add_data($essential_handle, 'bbpa_runtime_config', base64_encode($runtime_config_json));
     }
 
-    if (!is_admin()) {
-        bbpa_log_event_debug('Front tracker settings prepared.', [
-            'events_enabled' => !empty($settings['eventsEnabled']),
-            'events_config_count' => isset($settings['eventsConfig']) && is_array($settings['eventsConfig']) ? count($settings['eventsConfig']) : 0,
-            'debug_enabled' => !empty($settings['debugEnabled']),
-        ]);
-    }
 
     wp_enqueue_script($essential_handle);
 

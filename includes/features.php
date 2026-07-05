@@ -25,8 +25,3 @@ function bbpa_features(): array
 
     return wp_parse_args($features, $defaults);
 }
-
-
-/**
- * Register premium runtime hooks from shared modules.
- */

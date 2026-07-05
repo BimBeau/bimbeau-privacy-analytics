@@ -11,8 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class BBPA_Report_Controller {
-    private ?object $city_coordinates_service = null;
-
     /**
      * Register routes for report data.
      */
@@ -23,7 +21,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_overview'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'dashboard');
+                },
                 'args' => $this->get_date_range_args(),
             ]
         );
@@ -39,7 +39,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_top_pages'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'top-pages');
+                },
                 'args' => $list_args,
             ]
         );
@@ -50,7 +52,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_referrers'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'referrers');
+                },
                 'args' => $list_args,
             ]
         );
@@ -61,7 +65,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_referrer_sources'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'referrers');
+                },
                 'args' => $list_args,
             ]
         );
@@ -72,7 +78,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_acquisition_channels'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'referrers');
+                },
                 'args' => $this->get_date_range_args(),
             ]
         );
@@ -83,7 +91,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_not_found'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'top-pages');
+                },
                 'args' => $list_args,
             ]
         );
@@ -94,7 +104,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_search_terms'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'search-terms');
+                },
                 'args' => $list_args,
             ]
         );
@@ -105,12 +117,12 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_geo_countries'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'geolocation');
+                },
                 'args' => $list_args,
             ]
         );
-
-        
 
         register_rest_route(
             BBPA_REST_NAMESPACE,
@@ -118,7 +130,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_entry_pages'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'top-pages');
+                },
                 'args' => array_merge(
                     $this->get_date_range_args(),
                     $this->get_pagination_args('entries')
@@ -132,7 +146,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_exit_pages'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'top-pages');
+                },
                 'args' => array_merge(
                     $this->get_date_range_args(),
                     $this->get_pagination_args('exits')
@@ -147,7 +163,9 @@ class BBPA_Report_Controller {
                 [
                     'methods' => 'GET',
                     'callback' => [$this, 'get_visitors'],
-                    'permission_callback' => [$this, 'check_permissions'],
+                    'permission_callback' => function (WP_REST_Request $request) {
+                        return $this->check_permissions_for_panel($request, 'visitors');
+                    },
                     'args' => array_merge(
                         $list_args,
                         [
@@ -168,7 +186,9 @@ class BBPA_Report_Controller {
             [
                 'methods' => 'POST',
                 'callback' => [$this, 'purge_cache'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'settings');
+                },
             ]
         );
     }
@@ -177,6 +197,13 @@ class BBPA_Report_Controller {
      * Permission check for report endpoints.
      */
     public function check_permissions(WP_REST_Request $request) {
+        return $this->check_permissions_for_panel($request, 'dashboard');
+    }
+
+    /**
+     * Permission check for panel-scoped report endpoints.
+     */
+    private function check_permissions_for_panel(WP_REST_Request $request, string $panel) {
         if (!$this->has_valid_request_nonce($request)) {
             return $this->build_authentication_error();
         }
@@ -185,11 +212,45 @@ class BBPA_Report_Controller {
             return $this->build_authentication_error();
         }
 
-        if (!$this->current_user_can_access_dashboard_panel()) {
+        if ($this->is_panel_endpoint_blocked($panel)) {
+            return new WP_Error(
+                'bbpa_panel_disabled',
+                __('This analytics panel is disabled for navigation.', 'bimbeau-privacy-analytics'),
+                ['status' => 403]
+            );
+        }
+
+        if (!$this->current_user_can_access_panel($panel)) {
             return $this->build_authentication_error();
         }
 
         return true;
+    }
+
+    /**
+     * Determine whether requests should be blocked for disabled panel routes.
+     */
+    private function is_panel_endpoint_blocked(string $panel): bool {
+        if ($panel === '' || $panel === 'dashboard') {
+            return false;
+        }
+
+        $should_block = (bool) apply_filters(
+            'bbpa_block_disabled_panel_endpoints',
+            false,
+            $panel
+        );
+
+        if (!$should_block || !function_exists('bbpa_get_settings')) {
+            return false;
+        }
+
+        $settings = bbpa_get_settings();
+        $disabled_panels = isset($settings['disabled_panels']) && is_array($settings['disabled_panels'])
+            ? $settings['disabled_panels']
+            : [];
+
+        return in_array($panel, $disabled_panels, true);
     }
 
     /**
@@ -358,8 +419,6 @@ class BBPA_Report_Controller {
         return $this->build_geo_countries_response($request, $table);
     }
 
-    
-
     /**
      * Entry pages aggregation.
      */
@@ -419,7 +478,7 @@ class BBPA_Report_Controller {
             return new WP_REST_Response(
                 [
                     'code' => 'bbpa_package_unavailable',
-                    'message' => __('Visitors details are not included in this package.', 'bimbeau-privacy-analytics'),
+                    'message' => __('Visitor details are not available in this package.', 'bimbeau-privacy-analytics'),
                 ],
                 403
             );
@@ -625,28 +684,28 @@ class BBPA_Report_Controller {
     /**
      * Common date range args for day aggregation.
      */
-    private function get_date_range_args(): array {
+    protected function get_date_range_args(): array {
         return BBPA_REST_Query_Helpers::get_date_range_args();
     }
 
     /**
      * Pagination and sorting args.
      */
-    private function get_pagination_args(string $default_orderby = 'hits'): array {
+    protected function get_pagination_args(string $default_orderby = 'hits'): array {
         return BBPA_REST_Query_Helpers::get_pagination_args($default_orderby);
     }
 
     /**
      * Resolve a normalized optional page path filter.
      */
-    private function get_page_path_filter(WP_REST_Request $request): string {
+    protected function get_page_path_filter(WP_REST_Request $request): string {
         return BBPA_REST_Query_Helpers::normalize_page_path_filter($request);
     }
 
     /**
      * Resolve day range with defaults.
      */
-    private function get_day_range(WP_REST_Request $request): array {
+    protected function get_day_range(WP_REST_Request $request): array {
         return BBPA_REST_Query_Helpers::normalize_day_range($request);
     }
 
@@ -1092,21 +1151,21 @@ class BBPA_Report_Controller {
     /**
      * Normalize pagination values.
      */
-    private function normalize_pagination(WP_REST_Request $request): array {
+    protected function normalize_pagination(WP_REST_Request $request): array {
         return BBPA_REST_Query_Helpers::normalize_pagination($request);
     }
 
     /**
      * Normalize orderby and order values.
      */
-    private function normalize_sorting(WP_REST_Request $request, array $allowed_orderby, string $default): array {
+    protected function normalize_sorting(WP_REST_Request $request, array $allowed_orderby, string $default): array {
         return BBPA_REST_Query_Helpers::normalize_sorting($request, $allowed_orderby, $default);
     }
 
     /**
      * Resolve a normalized search term from request params.
      */
-    private function get_search_term(WP_REST_Request $request): string {
+    protected function get_search_term(WP_REST_Request $request): string {
         return BBPA_REST_Query_Helpers::normalize_search_term($request);
     }
 
@@ -1198,7 +1257,7 @@ class BBPA_Report_Controller {
     /**
      * Resolve an allowlisted report table.
      */
-    private function get_allowed_table(string $key): string {
+    protected function get_allowed_table(string $key): string {
         $table_suffixes = [
             'daily' => 'bbpa_daily',
             'visitors' => 'bbpa_visitors',
@@ -2599,7 +2658,7 @@ class BBPA_Report_Controller {
     /**
      * Check whether a table exists.
      */
-    private function table_exists(string $table): bool {
+    protected function table_exists(string $table): bool {
         global $wpdb;
 
         if ($table === '') {
@@ -2632,7 +2691,6 @@ class BBPA_Report_Controller {
         ];
     }
 
-    
     /**
      * Sort normalized page-path report rows after title enrichment and path merging.
      */
@@ -2878,140 +2936,6 @@ class BBPA_Report_Controller {
     }
 
     /**
-     * Format a label for city-level geolocation results.
-     */
-    private function format_geo_city_label(string $city, string $region, string $country): string {
-        $city_label = $city;
-        if ($city_label !== '' && function_exists('mb_convert_case')) {
-            $city_label = mb_convert_case($city_label, MB_CASE_TITLE, 'UTF-8');
-        } elseif ($city_label !== '') {
-            $city_label = ucwords($city_label);
-        }
-
-        $suffix_parts = array_values(
-            array_filter(
-                [$region, $country],
-                static function (string $part): bool {
-                    return $part !== '' && $part !== 'unknown';
-                }
-            )
-        );
-
-        if ($suffix_parts === []) {
-            return $city_label;
-        }
-
-        return sprintf('%s (%s)', $city_label, implode(', ', $suffix_parts));
-    }
-
-    
-    /**
-     * Resolve the premium city coordinates service class name without exposing a static class reference in Free packages.
-     */
-    private function get_city_coordinates_service_class(): string {
-        return 'BBPA_City_' . 'Coordinates_Service';
-    }
-
-    
-    private function log_geo_cities_debug_summary(array $payload, array $context = []): void {
-        if (!$this->is_debug_mode_enabled()) {
-            return;
-        }
-
-        $items = isset($payload['items']) && is_array($payload['items']) ? $payload['items'] : [];
-        $marker_diagnostics = $this->summarize_geo_city_marker_diagnostics($items);
-        $excluded_items = [];
-
-        foreach ($items as $index => $item) {
-            if (!is_array($item)) {
-                continue;
-            }
-
-            $hits = isset($item['hits']) ? (int) $item['hits'] : 0;
-            $latitude = isset($item['latitude']) && is_numeric($item['latitude'])
-                ? (float) $item['latitude']
-                : null;
-            $longitude = isset($item['longitude']) && is_numeric($item['longitude'])
-                ? (float) $item['longitude']
-                : null;
-            $coordinates_source = isset($item['coordinates_source'])
-                ? sanitize_text_field((string) $item['coordinates_source'])
-                : '';
-            $coordinates_lookup_key = isset($item['coordinates_lookup_key'])
-                ? sanitize_text_field((string) $item['coordinates_lookup_key'])
-                : '';
-            $city_geoname_id = bbpa_normalize_geoname_id($item['city_geoname_id'] ?? null);
-            $geoname_lookup_status = isset($item['geoname_lookup_status'])
-                ? sanitize_text_field((string) $item['geoname_lookup_status'])
-                : '';
-            $reason = '';
-
-            if ($latitude === null || $longitude === null) {
-                $reason = 'missing_coordinates';
-            } elseif (abs($latitude) < 0.0001 && abs($longitude) < 0.0001) {
-                $reason = 'zero_coordinates';
-            } elseif ($hits <= 0) {
-                $reason = 'non_positive_hits';
-            }
-
-            if ($reason === '') {
-                continue;
-            }
-
-            $excluded_items[] = [
-                'index' => $index,
-                'reason' => $reason,
-                'label' => isset($item['label']) ? sanitize_text_field((string) $item['label']) : '',
-                'city_name' => isset($item['city_name']) ? sanitize_text_field((string) $item['city_name']) : '',
-                'country_code' => isset($item['country_code']) ? sanitize_text_field((string) $item['country_code']) : '',
-                'region_code' => isset($item['region_code']) ? sanitize_text_field((string) $item['region_code']) : '',
-                'city_geoname_id' => $city_geoname_id,
-                'hits' => $hits,
-                'coordinates_source' => $coordinates_source,
-                'geoname_lookup_status' => $geoname_lookup_status,
-                'coordinates_lookup_key' => $coordinates_lookup_key,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-            ];
-        }
-
-        if ($items === []) {
-            return;
-        }
-
-        usort(
-            $excluded_items,
-            static function (array $left, array $right): int {
-                return ($right['hits'] ?? 0) <=> ($left['hits'] ?? 0);
-            }
-        );
-
-        $pagination = isset($payload['pagination']) && is_array($payload['pagination'])
-            ? $payload['pagination']
-            : [];
-        $total_items = isset($pagination['totalItems']) ? (int) $pagination['totalItems'] : count($items);
-        $per_page = isset($pagination['perPage']) ? (int) $pagination['perPage'] : count($items);
-
-        $message = [
-            'source' => isset($context['source']) ? sanitize_text_field((string) $context['source']) : 'query',
-            'search' => isset($context['search']) ? sanitize_text_field((string) $context['search']) : '',
-            'sorting' => isset($context['sorting']) && is_array($context['sorting']) ? $context['sorting'] : [],
-            'returned_items' => $marker_diagnostics['totalItems'],
-            'renderable_items' => $marker_diagnostics['renderableItems'],
-            'missing_coordinates' => $marker_diagnostics['missingCoordinates'],
-            'zero_coordinates' => $marker_diagnostics['zeroCoordinates'],
-            'non_positive_hits' => $marker_diagnostics['nonPositiveHits'],
-            'excluded_items' => count($excluded_items),
-            'pagination_total_items' => $total_items,
-            'per_page' => $per_page,
-            'truncated_by_pagination' => $total_items > $per_page,
-            'top_excluded_items' => array_slice($excluded_items, 0, 10),
-        ];
-
-        BBPA_Logger::channel('Geo')->info('Geo cities marker diagnostics', $message);
-    }
-
-    /**
      * Log report diagnostics when BimBeau Privacy Analytics debug mode is enabled.
      */
     private function log_report_debug(string $message, array $context = []): void {
@@ -3025,7 +2949,7 @@ class BBPA_Report_Controller {
     /**
      * Determine whether plugin debug mode is enabled.
      */
-    private function is_debug_mode_enabled(): bool {
+    protected function is_debug_mode_enabled(): bool {
         if (function_exists('bbpa_is_debug_mode_enabled')) {
             return bbpa_is_debug_mode_enabled();
         }
@@ -3038,9 +2962,9 @@ class BBPA_Report_Controller {
     /**
      * Resolve required capability.
      */
-    private function get_required_capability(): string {
+    private function get_required_capability(string $panel = 'dashboard'): string {
         if (function_exists('bbpa_get_panel_capability')) {
-            $capability = bbpa_get_panel_capability('dashboard');
+            $capability = bbpa_get_panel_capability($panel);
         } else {
             $capability = apply_filters('bbpa_admin_capability', 'manage_options');
         }
@@ -3051,12 +2975,12 @@ class BBPA_Report_Controller {
     /**
      * Check current user access against global + dashboard capability policy.
      */
-    private function current_user_can_access_dashboard_panel(): bool {
+    private function current_user_can_access_panel(string $panel): bool {
         if (function_exists('bbpa_current_user_can_access_panel')) {
-            return bbpa_current_user_can_access_panel('dashboard');
+            return bbpa_current_user_can_access_panel($panel);
         }
 
-        return current_user_can($this->get_required_capability());
+        return current_user_can($this->get_required_capability($panel));
     }
 
     /**
@@ -3072,7 +2996,6 @@ class BBPA_Report_Controller {
     private function get_cache_ttl(string $endpoint): int {
         $default_ttls = [
             'overview' => 45,
-            'geo-cities' => 120,
             'visitors' => 30,
         ];
 
@@ -3085,14 +3008,14 @@ class BBPA_Report_Controller {
     /**
      * Build a cache key for report analytics responses.
      */
-    private function get_cache_key(string $endpoint, array $params): string {
+    protected function get_cache_key(string $endpoint, array $params): string {
         return BBPA_REST_Query_Helpers::build_cache_key('report_', $endpoint, $params);
     }
 
     /**
      * Fetch cached response payload.
      */
-    private function get_cached_payload(string $cache_key): ?array {
+    protected function get_cached_payload(string $cache_key): ?array {
         $cached = wp_cache_get($cache_key, 'bbpa_report');
         if (is_array($cached)) {
             return $cached;
@@ -3106,7 +3029,7 @@ class BBPA_Report_Controller {
     /**
      * Store cached response payload.
      */
-    private function set_cached_payload(string $cache_key, array $payload, string $endpoint = ''): void {
+    protected function set_cached_payload(string $cache_key, array $payload, string $endpoint = ''): void {
         $ttl = $this->get_cache_ttl($endpoint);
         if ($ttl <= 0) {
             return;

@@ -3,7 +3,7 @@
 /**
  * Plugin Name: BimBeau Privacy Analytics
  * Description: Privacy-friendly, self-hosted analytics for WordPress.
- * Version: 8.44.2
+ * Version: 8.44.39
  * Author: BimBeau
  * Text Domain: bimbeau-privacy-analytics
  * Domain Path: /languages
@@ -161,81 +161,11 @@ if (!function_exists('bbpa_load_plugin_api')) {
 
 if (!function_exists('bbpa_get_package_activation_conflict_message')) {
     /**
-     * Returns the admin-facing message used when Free and Pro are activated together.
+     * Returns the admin-facing message used when activation is blocked by the other package.
      */
-    function bbpa_get_package_activation_conflict_message(string $current_basename, string $conflicting_basename): string
+    function bbpa_get_package_activation_conflict_message(): string
     {
-        return sprintf(
-            /* translators: 1: BimBeau Privacy Analytics package being activated, 2: BimBeau Privacy Analytics package already active. */
-            __('%1$s cannot be activated while %2$s is already active. Deactivate %2$s first, then activate %1$s.', 'bimbeau-privacy-analytics'),
-            bbpa_get_package_label($current_basename),
-            bbpa_get_package_label($conflicting_basename)
-        );
-    }
-}
-
-if (!function_exists('bbpa_request_value')) {
-    /**
-     * Returns an unslashed request value without requiring the full admin bootstrap helpers.
-     *
-     * @return mixed
-     */
-    function bbpa_request_value(string $key)
-    {
-        if (!isset($_REQUEST[$key])) {
-            return null;
-        }
-
-        $raw_value = $_REQUEST[$key];
-        $value = function_exists('wp_unslash') ? wp_unslash($raw_value) : $raw_value;
-
-        if (is_array($value)) {
-            return array_map(
-                static function ($item): string {
-                    return is_scalar($item) ? sanitize_text_field((string) $item) : '';
-                },
-                $value
-            );
-        }
-
-        return is_scalar($value) ? sanitize_text_field((string) $value) : null;
-    }
-}
-
-if (!function_exists('bbpa_is_current_package_activation_request')) {
-    /**
-     * Checks whether the current admin request is activating this package.
-     */
-    function bbpa_is_current_package_activation_request(string $plugin_file): bool
-    {
-        $action = bbpa_request_value('action');
-        if (!is_string($action) || !in_array($action, ['activate', 'activate-selected'], true)) {
-            return false;
-        }
-
-        $current_basename = bbpa_get_current_package_basename($plugin_file);
-
-        if ('activate' === $action) {
-            $plugin = bbpa_request_value('plugin');
-            return is_string($plugin) && $plugin === $current_basename;
-        }
-
-        $checked = bbpa_request_value('checked');
-        return is_array($checked) && in_array($current_basename, $checked, true);
-    }
-}
-
-if (!function_exists('bbpa_prevent_parallel_package_activation_for_request')) {
-    /**
-     * Runs the package conflict guard during the activation sandbox include.
-     */
-    function bbpa_prevent_parallel_package_activation_for_request(string $plugin_file): void
-    {
-        if (!bbpa_is_current_package_activation_request($plugin_file)) {
-            return;
-        }
-
-        bbpa_prevent_parallel_package_activation($plugin_file, false);
+        return __('Deactivate the other BimBeau Privacy Analytics package first.', 'bimbeau-privacy-analytics');
     }
 }
 
@@ -262,7 +192,7 @@ if (!function_exists('bbpa_prevent_parallel_package_activation')) {
             deactivate_plugins($current_basename, true, $network_wide);
         }
 
-        $message = bbpa_get_package_activation_conflict_message($current_basename, $conflicting_basename);
+        $message = bbpa_get_package_activation_conflict_message();
         bbpa_store_activation_notice($message, 'error');
 
         if (function_exists('wp_die')) {
@@ -280,7 +210,7 @@ if (!function_exists('bbpa_prevent_parallel_package_activation')) {
 
 if (!function_exists('bbpa_resolve_package_activation_conflict')) {
     /**
-     * Keeps BimBeau Privacy Analytics Free and Pro from remaining active together on normal admin loads.
+     * Shows an admin notice if BimBeau Privacy Analytics Free and Pro are active together.
      */
     function bbpa_resolve_package_activation_conflict(string $plugin_file): void
     {
@@ -289,10 +219,6 @@ if (!function_exists('bbpa_resolve_package_activation_conflict')) {
         }
 
         bbpa_load_plugin_api();
-
-        if (!function_exists('deactivate_plugins')) {
-            return;
-        }
 
         $current_basename = bbpa_get_current_package_basename($plugin_file);
         $conflicting_basename = bbpa_get_conflicting_package_basename($current_basename);
@@ -304,16 +230,8 @@ if (!function_exists('bbpa_resolve_package_activation_conflict')) {
             return;
         }
 
-        $network_wide = function_exists('is_plugin_active_for_network') && is_plugin_active_for_network($conflicting_basename);
-        deactivate_plugins($conflicting_basename, false, $network_wide);
-
         bbpa_store_activation_notice(
-            sprintf(
-                /* translators: 1: BimBeau Privacy Analytics package deactivated automatically, 2: BimBeau Privacy Analytics package left active. */
-                __('%1$s was deactivated because only one BimBeau Privacy Analytics package can be active at a time. %2$s remains active.', 'bimbeau-privacy-analytics'),
-                bbpa_get_package_label($conflicting_basename),
-                bbpa_get_package_label($current_basename)
-            ),
+            __('Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first.', 'bimbeau-privacy-analytics'),
             'warning'
         );
     }
@@ -326,7 +244,6 @@ register_activation_hook(
     }
 );
 
-bbpa_prevent_parallel_package_activation_for_request(__FILE__);
 
 add_action('admin_notices', 'bbpa_show_activation_conflict_notice');
 add_action('network_admin_notices', 'bbpa_show_activation_conflict_notice');
@@ -444,10 +361,7 @@ if (function_exists('bbpa_fs')) {
                     'is_premium'     => false,
                     'has_addons'     => false,
                     'has_paid_plans' => true,
-                    'trial'          => [
-                        'days'               => 14,
-                        'is_require_payment' => true,
-                    ],
+                    
                     'menu'           => [
                         'slug'       => 'bimbeau-privacy-analytics',
                         'contact'    => false,
@@ -515,6 +429,11 @@ add_action('init', 'bbpa_load_textdomain', 0);
 
 if (function_exists('bbpa_register_freemius_uninstall_hook')) {
     bbpa_register_freemius_uninstall_hook();
+}
+
+$bbpa_edition_runtime = BBPA_PATH . 'includes/edition-runtime.php';
+if (is_readable($bbpa_edition_runtime)) {
+    require_once $bbpa_edition_runtime;
 }
 
 bbpa_safe_require_once(BBPA_PATH, 'admin/bootstrap.php');

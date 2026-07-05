@@ -1,5 +1,6 @@
 import {
 	Button,
+	Notice,
 	Flex,
 	FlexItem,
 	SelectControl,
@@ -60,11 +61,31 @@ import AudienceBreakdownCards from '../widgets/AudienceBreakdownCards';
 import ReferrerSourcesTableCard from '../widgets/ReferrerSourcesTableCard';
 import VisitorsTableCard from '../widgets/VisitorsTableCard';
 import ReportTableCard from '../widgets/ReportTableCard';
+
 import TimeseriesChart from '../widgets/TimeseriesChart';
 import useSharedPageLabelDisplay from '../hooks/useSharedPageLabelDisplay';
+import { isVisitorOriginUnavailable } from '../lib/geoipStatus';
 
 const DEBUG_FLAG = () =>
 	Boolean( window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled );
+
+const VisitorOriginUnavailableNotice = () => {
+	if ( ! isVisitorOriginUnavailable() ) {
+		return null;
+	}
+
+	return (
+		<Notice status="info" isDismissible={ false }>
+			<strong>{ __( 'Visitor origin unavailable', 'bimbeau-privacy-analytics' ) }</strong>
+			<p>
+				{ __(
+					'Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.',
+					'bimbeau-privacy-analytics'
+				) }
+			</p>
+		</Notice>
+	);
+};
 
 const getAdminLocale = () => {
 	const configuredLocale = ADMIN_CONFIG?.settings?.locale;
@@ -1696,6 +1717,7 @@ const PageDetailsPanel = ( { range, source, selectedPage, onBack } ) => {
 						includeResolutions
 					/>
 					<div className="bbpa-page-details__geo-grid">
+						<VisitorOriginUnavailableNotice />
 						<ReportTableCard
 							title={ __( 'Top countries', 'bimbeau-privacy-analytics' ) }
 							labelHeader={ __( 'Country', 'bimbeau-privacy-analytics' ) }
@@ -1713,22 +1735,7 @@ const PageDetailsPanel = ( { range, source, selectedPage, onBack } ) => {
 							metricValueKey="visits"
 							showMetricTrend
 						/>
-						<ReportTableCard
-							title={ __( 'Top cities', 'bimbeau-privacy-analytics' ) }
-							labelHeader={ __( 'City', 'bimbeau-privacy-analytics' ) }
-							range={ range }
-							endpoint="/geo-countries"
-							emptyLabel={ __(
-								'No city data available.',
-								'bimbeau-privacy-analytics'
-							) }
-							labelFallback={ __( 'Unknown', 'bimbeau-privacy-analytics' ) }
-							requestParams={ detailsRequestParams }
-							formatLabel={ formatPageDetailsCityLabel }
-							metricLabel={ __( 'Visits', 'bimbeau-privacy-analytics' ) }
-							metricValueKey="visits"
-							showMetricTrend
-						/>
+						{}
 					</div>
 				</>
 			) }

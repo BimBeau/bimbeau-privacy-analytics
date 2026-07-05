@@ -18,7 +18,8 @@ msgstr ""
 "X-Generator: Poedit 2.4.3\n"
 
 #. Plugin Name of the plugin
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php front/pro-app-runtime.php
+#: src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics"
@@ -187,13 +188,29 @@ msgid "Devices"
 msgstr "Enheder"
 
 #: admin/admin.php src/admin/constants/index.js
-msgid "Events"
-msgstr "Hændelser"
-
-#: admin/admin.php src/admin/constants/index.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Indstillinger"
+
+#: admin/admin.php
+msgid "Enable country and city reports"
+msgstr ""
+
+#: admin/admin.php
+msgid ""
+"To display countries and cities in your analytics reports, install the local "
+"GeoIP database from the geolocation settings. No GeoIP database is "
+"downloaded automatically."
+msgstr ""
+
+#: admin/admin.php
+#, fuzzy
+msgid "Configure geolocation"
+msgstr "Geolokalisering"
+
+#: admin/admin.php
+msgid "Later"
+msgstr ""
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
@@ -246,6 +263,10 @@ msgstr "Sidevisninger"
 msgid "Referrers"
 msgstr "Henvisere"
 
+#: admin/edition-admin-runtime.php src/admin/constants/index.js
+msgid "Events"
+msgstr "Hændelser"
+
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics Pro"
 msgstr "BimBeau Privacy Analytics Pro"
@@ -254,29 +275,84 @@ msgstr "BimBeau Privacy Analytics Pro"
 msgid "BimBeau Privacy Analytics Free"
 msgstr "BimBeau Privacy Analytics Free"
 
-#. translators: 1: BimBeau Privacy Analytics package being activated, 2: BimBeau Privacy Analytics package already active.
 #: bimbeau-privacy-analytics.php
-#, php-format
-msgid ""
-"%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
-"first, then activate %1$s."
-msgstr ""
-"%1$s kan ikke aktiveres, mens %2$s allerede er aktiv. Deaktiver først %2$s, "
-"og aktiver derefter %1$s."
+#, fuzzy
+msgid "Deactivate the other BimBeau Privacy Analytics package first."
+msgstr "Lad stå tomt for at bruge \"BimBeau Privacy Analytics\"."
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics activation blocked"
 msgstr "BimBeau Privacy Analytics-aktivering blokeret"
 
-#. translators: 1: BimBeau Privacy Analytics package deactivated automatically, 2: BimBeau Privacy Analytics package left active.
 #: bimbeau-privacy-analytics.php
-#, php-format
+#, fuzzy
 msgid ""
-"%1$s was deactivated because only one BimBeau Privacy Analytics package can "
-"be active at a time. %2$s remains active."
+"Only one BimBeau Privacy Analytics package can be active at a time. "
+"Deactivate the other BimBeau Privacy Analytics package first."
 msgstr ""
 "%1$s blev deaktiveret, fordi kun én BimBeau Privacy Analytics-pakke kan være "
 "aktiv ad gangen. %2$s forbliver aktiv."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics front analytics app."
+msgstr "BimBeau Privacy Analytics front-analyseapp."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics sign in"
+msgstr "BimBeau Privacy Analytics-login"
+
+#: front/pro-app-runtime.php
+msgid ""
+"Sign in with a WordPress account that can access BimBeau Privacy Analytics "
+"analytics."
+msgstr ""
+"Log ind med en WordPress-konto, der har adgang til BimBeau Privacy Analytics-"
+"analyse."
+
+#: front/pro-app-runtime.php
+msgid "Username or email"
+msgstr "Brugernavn eller e-mail"
+
+#: front/pro-app-runtime.php
+msgid "Password"
+msgstr "Adgangskode"
+
+#: front/pro-app-runtime.php
+msgid "Remember me"
+msgstr "Husk mig"
+
+#: front/pro-app-runtime.php
+msgid "Sign in"
+msgstr "Log ind"
+
+#: front/pro-app-runtime.php
+msgid "Open WordPress login"
+msgstr "Åbn WordPress-login"
+
+#: front/pro-app-runtime.php
+msgid "Authentication failed. Verify credentials and access policy."
+msgstr ""
+"Godkendelse mislykkedes. Kontrollér loginoplysninger og adgangspolitik."
+
+#: front/pro-app-runtime.php
+msgid "Custom login flow is unavailable in this environment."
+msgstr "Brugerdefineret loginflow er ikke tilgængeligt i dette miljø."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics App is available in not included."
+msgstr "BimBeau Privacy Analytics-appen er kun tilgængelig i Pro."
+
+#: front/pro-app-runtime.php
+msgid "You are not allowed to access this page."
+msgstr "Du har ikke tilladelse til at tilgå denne side."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics icon"
+msgstr "BimBeau Privacy Analytics-ikon"
+
+#: front/pro-app-runtime.php
+msgid "Loading analytics workspace…"
+msgstr "Indlæser analysearbejdsområde…"
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -335,6 +411,7 @@ msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics-oprydning af rå logs"
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "Dette analysepanel er deaktiveret for navigation."
 
@@ -390,8 +467,9 @@ msgid "Invalid visit identifier."
 msgstr "Ugyldigt besøgs-id."
 
 #: includes/rest/class-bbpa-report-controller.php
-msgid "Visitors details are not included in this package."
-msgstr "Besøgsdetaljer er tilgængelige i BimBeau Privacy Analytics Pro."
+#, fuzzy
+msgid "Visitor details are not available in this package."
+msgstr "Ingen detaljer tilgængelige for denne side."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
@@ -1339,12 +1417,23 @@ msgstr "Ingen globale timedata tilgængelige for denne periode."
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Globalt time-heatmap kræver timeaggregerede sidedata."
 
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#, fuzzy
+msgid "Visitor origin unavailable"
+msgstr "Ingen besøgsdata tilgængelige."
+
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+msgid ""
+"Visitor origin will be available after the local GeoIP database is installed "
+"from the plugin geolocation settings."
+msgstr ""
+
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "Hash for besøgs-id"
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "City"
 msgstr "By"
@@ -1433,12 +1522,14 @@ msgid "No search terms available."
 msgstr "Ingen søgetermer tilgængelige."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Disabled"
-msgstr "Deaktiveret"
+#, fuzzy
+msgid "Manual updates only"
+msgstr "Kun essentiel statistik"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Every 30 days (default)"
-msgstr "Hver 30. dag (standard)"
+#, fuzzy
+msgid "Every 30 days"
+msgstr "Hver 60. dag"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for %(days)s days"
@@ -1493,6 +1584,10 @@ msgid "Unable to update the GeoIP database."
 msgstr "Kan ikke opdatere GeoIP-databasen."
 
 #: src/admin/panels/SettingsPanel.js
+msgid "No automatic update scheduled"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "Afventende tidsplan"
 
@@ -1507,6 +1602,40 @@ msgstr "fejl"
 #: src/admin/panels/SettingsPanel.js
 msgid "pending"
 msgstr "afventer"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Update GeoIP database"
+msgstr "Kan ikke opdatere GeoIP-databasen."
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Download GeoIP database"
+msgstr "Kan ikke opdatere GeoIP-databasen."
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Local GeoIP database unavailable"
+msgstr "Den lokale GeoLite-database er ikke tilgængelig."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"The local GeoIP database seems to be missing or unreadable. Country and city "
+"reports may be incomplete until it is reinstalled."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "GeoIP database not installed"
+msgstr "GeoIP-databasen er tilgængelig."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Visitor origin cannot be displayed until the local GeoIP database has been "
+"downloaded. To install it, click “Download GeoIP database”. This action will "
+"contact an external service and store the database in the WordPress uploads "
+"directory."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
@@ -1587,6 +1716,464 @@ msgstr "Tilladt"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "Skjult"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
+"database or MaxMind API."
+msgstr ""
+"Vælg, hvordan BimBeau Privacy Analytics finder geolokalisering: lokal "
+"GeoLite-database eller MaxMind API."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Geolocation source"
+msgstr "Geolokaliseringskilde"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Local GeoLite database (default)"
+msgstr "Lokal GeoLite-database (standard)"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind API credentials"
+msgstr "MaxMind API-loginoplysninger"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid ""
+"Local database mode downloads the GeoLite MMDB file through the official "
+"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
+msgstr ""
+"Lokal databasetilstand downloader GeoLite MMDB-filen fra BimBeau Privacy "
+"Analytics-mirrors. API-tilstand bruger live MaxMind-anmodninger."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind Account ID"
+msgstr "MaxMind-konto-id"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Numeric Account ID used for MaxMind API requests."
+msgstr "Numerisk konto-id brugt til MaxMind API-anmodninger."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind License Key"
+msgstr "MaxMind-licensnøgle"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "License Key used for MaxMind API requests."
+msgstr "Licensnøgle brugt til MaxMind API-anmodninger."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Test MaxMind connection"
+msgstr "Test MaxMind-forbindelse"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Automatic GeoIP database updates"
+msgstr "Automatiske GeoIP-databaseopdateringer"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose whether the local GeoIP database should be updated automatically. In "
+"“manual updates only” mode, no external server is contacted automatically. "
+"You can still download or update the database manually with the button below."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Manual GeoIP database download"
+msgstr "Download af GeoIP-databasen mislykkedes: %s"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"This manual download will contact an external service to download the local "
+"GeoIP database and store it in the WordPress uploads directory."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Current state"
+msgstr "Aktuel tilstand"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last attempt"
+msgstr "Seneste forsøg"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Next scheduled GeoIP update"
+msgstr "Næste planlagte forsøg"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last successful update"
+msgstr "Seneste vellykkede opdatering"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Database size"
+msgstr "Databasestørrelse"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last error code"
+msgstr "Seneste fejlkode"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Retry count"
+msgstr "Antal forsøg"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Behavior: plugin activation completes quickly, and temporary local database "
+"unavailability does not block the rest of BimBeau Privacy Analytics."
+msgstr ""
+"Adfærd: Pluginaktivering afsluttes hurtigt, og midlertidig utilgængelighed "
+"af den lokale database blokerer ikke resten af BimBeau Privacy Analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Privacy"
+msgstr "Privatliv"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced stats require consent"
+msgstr "Avanceret statistik kræver samtykke"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential stats only"
+msgstr "Kun essentiel statistik"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Essential stats run without consent. Advanced stats run only after "
+"Statistics / Analytics consent."
+msgstr ""
+"Essentiel statistik kører uden samtykke. Avanceret statistik kører kun efter "
+"samtykke til Statistik / Analyse."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential stats"
+msgstr "Essentiel statistik"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No consent required"
+msgstr "Intet samtykke kræves"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Limited audience stats only. No ads, no cross-site tracking, no third-party "
+"reuse."
+msgstr ""
+"Kun begrænset målgruppestatistik. Ingen annoncer, ingen sporing på tværs af "
+"websteder, ingen tredjepartsgenbrug."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential data"
+msgstr "Essentielle data"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script:"
+msgstr "Script:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced stats"
+msgstr "Avanceret statistik"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Requires consent"
+msgstr "Kræver samtykke"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Adds detailed visit insights after consent."
+msgstr "Tilføjer detaljeret besøgsindsigt efter samtykke."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Enable advanced stats after consent"
+msgstr "Aktivér avanceret statistik efter samtykke"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Your CMP must block it until Statistics / Analytics consent is given."
+msgstr ""
+"Din CMP skal blokere det, indtil der er givet samtykke til Statistik / "
+"Analyse."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced data"
+msgstr "Avancerede data"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "CMP setup"
+msgstr "CMP-opsætning"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Block the advanced stats script until Statistics / Analytics consent is "
+"given."
+msgstr ""
+"Bloker scriptet til avanceret statistik, indtil der er givet samtykke til "
+"Statistik / Analyse."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script to block:"
+msgstr "Script der skal blokeres:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Alternative selectors:"
+msgstr "Alternative selektorer:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script ID:"
+msgstr "Script-id:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "WordPress handle:"
+msgstr "WordPress-handle:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "What is a CMP?"
+msgstr "Hvad er en CMP?"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"A CMP manages cookie consent on your website. It shows the cookie banner, "
+"stores visitor choices, and allows or blocks analytics scripts based on "
+"consent."
+msgstr ""
+"En CMP håndterer cookiesamtykke på dit websted. Den viser cookiebanneret, "
+"gemmer besøgendes valg og tillader eller blokerer analysescripts baseret på "
+"samtykke."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Examples:"
+msgstr "Eksempler:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"In your CMP, block the BimBeau Privacy Analytics advanced stats script until "
+"the Statistics or Analytics purpose is accepted."
+msgstr ""
+"I din CMP skal du blokere BimBeau Privacy Analytics-scriptet til avanceret "
+"statistik, indtil formålet Statistik eller Analyse er accepteret."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Advanced stats are disabled. BimBeau Privacy Analytics will only use "
+"essential stats."
+msgstr ""
+"Avanceret statistik er deaktiveret. BimBeau Privacy Analytics bruger kun "
+"essentiel statistik."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Respect DNT / GPC"
+msgstr "Respektér DNT / GPC"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Stop measurement when the visitor’s browser sends a Do Not Track or Global "
+"Privacy Control signal."
+msgstr ""
+"Stop måling, når den besøgendes browser sender et Do Not Track- eller Global "
+"Privacy Control-signal."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visit measurement"
+msgstr "Besøgsmåling"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Defines how long visitor activity can remain grouped under the same visitor "
+"row before a new row is started after inactivity."
+msgstr ""
+"Definerer, hvor længe besøgsaktivitet kan forblive grupperet under den samme "
+"besøgsrække, før en ny række startes efter inaktivitet."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visitor activity window"
+msgstr "Aktivitetsvindue for besøgende"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Defines how long activity from the same visitor can remain grouped into one "
+"visitor row. After this period of inactivity, BimBeau Privacy Analytics "
+"starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 "
+"hours)."
+msgstr ""
+"Definerer, hvor længe aktivitet fra den samme besøgende kan forblive "
+"grupperet i én besøgsrække. Efter denne periode med inaktivitet starter "
+"BimBeau Privacy Analytics en ny besøgsrække. Interval: 300 til 86400 "
+"sekunder (5 minutter til 24 timer)."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "URLs & campaigns"
+msgstr "URL'er og kampagner"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Control URL cleanup behavior and keep only campaign query parameters that "
+"should remain available for attribution."
+msgstr ""
+"Styr URL-oprydning, og behold kun de kampagneparametre, der skal forblive "
+"tilgængelige til attribuering."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Clean URL query parameters"
+msgstr "Rens URL-forespørgselsparametre"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Remove query parameters from tracked URLs."
+msgstr "Fjern forespørgselsparametre fra sporede URL'er."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Allowed query parameters"
+msgstr "Tilladte forespørgselsparametre"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Comma-separated list of allowed query keys (used for URL tracking and UTM "
+"aggregation)."
+msgstr ""
+"Kommasepareret liste over tilladte forespørgselsnøgler (bruges til URL-"
+"sporing og UTM-aggregering)."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Data retention"
+msgstr "Dataopbevaring"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose how long to keep temporary detailed events, report details, and long-"
+"term totals, then how often cleanup runs."
+msgstr ""
+"Choose how long to keep temporary detailed events, report details, and long-"
+"term totals, then how often cleanup runs."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Temporary detailed events retention (days)"
+msgstr "Opbevaring af midlertidige detaljerede hændelser (dage)"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Used mainly for real-time and diagnostics. Not related to Debug mode."
+msgstr "Used mainly for real-time and diagnostics. Not related to Debug mode."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Report details retention"
+msgstr "Opbevaring af rapportdetaljer"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Keeps detailed report dimensions such as pages, referrers, countries, "
+"devices, and visitor details."
+msgstr ""
+"Keeps detailed report dimensions such as pages, referrers, countries, "
+"devices, and visitor details."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Long-term totals retention"
+msgstr "Opbevaring af langsigtede totaler"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
+"chart after report details expire."
+msgstr ""
+"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
+"chart after report details expire."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Cleanup permanently removes expired details, while long-term totals remain "
+"available until their own retention window ends."
+msgstr ""
+"Cleanup permanently removes expired details, while long-term totals remain "
+"available until their own retention window ends."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Automatic cleanup frequency"
+msgstr "Automatisk oprydningsfrekvens"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Defines how often WordPress checks for expired analytics data."
+msgstr "Defines how often WordPress checks for expired analytics data."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Exclusions"
+msgstr "Udelukkelser"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Select roles to exclude from tracking. Select all roles to ignore all logged-"
+"in users."
+msgstr ""
+"Vælg roller, der skal udelukkes fra sporing. Vælg alle roller for at "
+"ignorere alle indloggede brugere."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No roles available."
+msgstr "Ingen roller tilgængelige."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Debug"
+msgstr "Fejlfinding"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Enable diagnostic output for troubleshooting tracking events, realtime "
+"visitor detection, and REST payloads in the browser console and wp-content/"
+"debug.log."
+msgstr ""
+"Aktivér diagnostisk output til fejlfinding af sporingshændelser, "
+"realtidsregistrering af besøgende og REST-payloads i browserkonsollen og wp-"
+"content/debug.log."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Debug mode"
+msgstr "Fejlfindingstilstand"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Writes detailed diagnostic logs to the console and to wp-content/debug.log "
+"when WordPress debug logging is enabled."
+msgstr ""
+"Skriver detaljerede diagnosticeringslogs til konsollen og til wp-content/"
+"debug.log, når WordPress-fejllogning er aktiveret."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cleanup actions"
+msgstr "Oprydningshandlinger"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Run retention cleanup immediately to remove only data older than the "
+"configured retention window."
+msgstr ""
+"Kør opbevaringsoprydning med det samme for kun at fjerne data, der er ældre "
+"end det konfigurerede opbevaringsvindue."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Run cleanup now"
+msgstr "Kør oprydning nu"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete plugin tables on uninstall"
+msgstr "Slet plugintabeller ved afinstallation"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
+"analytics tables from the WordPress database."
+msgstr ""
+"Når dette er aktiveret, sletter afinstallation af BimBeau Privacy Analytics "
+"alle pluginnets analysetabeller fra WordPress-databasen."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Sensitive actions"
+msgstr "Følsomme handlinger"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
+"entries."
+msgstr ""
+"Fjern alle aggregerede KPI-analyser, analyser med besøgsdetaljer og rå "
+"logposter."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete all analytics data"
+msgstr "Slet alle analysedata"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
@@ -1807,14 +2394,6 @@ msgstr "elementer"
 #: src/admin/panels/TopPagesPanel.js
 msgid "No country data available."
 msgstr "Ingen landedata tilgængelige."
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Top cities"
-msgstr "Topbyer"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No city data available."
-msgstr "Ingen bydata tilgængelige."
 
 #: src/admin/panels/TopPagesPanel.js
 msgid "Top pages"
@@ -2216,53 +2795,6 @@ msgstr "Privat"
 msgid "Table: Visitors"
 msgstr "Tabel: Besøgende"
 
-#~ msgid "BimBeau Privacy Analytics front analytics app."
-#~ msgstr "BimBeau Privacy Analytics front-analyseapp."
-
-#~ msgid "BimBeau Privacy Analytics sign in"
-#~ msgstr "BimBeau Privacy Analytics-login"
-
-#~ msgid ""
-#~ "Sign in with a WordPress account that can access BimBeau Privacy "
-#~ "Analytics analytics."
-#~ msgstr ""
-#~ "Log ind med en WordPress-konto, der har adgang til BimBeau Privacy "
-#~ "Analytics-analyse."
-
-#~ msgid "Username or email"
-#~ msgstr "Brugernavn eller e-mail"
-
-#~ msgid "Password"
-#~ msgstr "Adgangskode"
-
-#~ msgid "Remember me"
-#~ msgstr "Husk mig"
-
-#~ msgid "Sign in"
-#~ msgstr "Log ind"
-
-#~ msgid "Open WordPress login"
-#~ msgstr "Åbn WordPress-login"
-
-#~ msgid "Authentication failed. Verify credentials and access policy."
-#~ msgstr ""
-#~ "Godkendelse mislykkedes. Kontrollér loginoplysninger og adgangspolitik."
-
-#~ msgid "Custom login flow is unavailable in this environment."
-#~ msgstr "Brugerdefineret loginflow er ikke tilgængeligt i dette miljø."
-
-#~ msgid "BimBeau Privacy Analytics App is available in not included."
-#~ msgstr "BimBeau Privacy Analytics-appen er kun tilgængelig i Pro."
-
-#~ msgid "You are not allowed to access this page."
-#~ msgstr "Du har ikke tilladelse til at tilgå denne side."
-
-#~ msgid "BimBeau Privacy Analytics icon"
-#~ msgstr "BimBeau Privacy Analytics-ikon"
-
-#~ msgid "Loading analytics workspace…"
-#~ msgstr "Indlæser analysearbejdsområde…"
-
 #~ msgid "Custom login flow is blocked by policy."
 #~ msgstr "Brugerdefineret loginflow er blokeret af politik."
 
@@ -2311,12 +2843,16 @@ msgstr "Tabel: Besøgende"
 #~ msgid "Views trend"
 #~ msgstr "Visningstendens"
 
-#~ msgid "This feature is not included in this package."
-#~ msgstr "Denne funktion er tilgængelig i BimBeau Privacy Analytics Pro."
-
-#~ msgid "Page-level details are not included in this package."
+#~ msgid "KPI slot must be a numeric integer greater than or equal to 2."
 #~ msgstr ""
-#~ "Detaljer på sideniveau er tilgængelige i BimBeau Privacy Analytics Pro."
+#~ "KPI-pladsen skal være et numerisk heltal større end eller lig med 2."
+
+#~ msgid ""
+#~ "KPI slot format is invalid. Use only a numeric integer greater than or "
+#~ "equal to 2."
+#~ msgstr ""
+#~ "KPI-pladsens format er ugyldigt. Brug kun et numerisk heltal større end "
+#~ "eller lig med 2."
 
 #~ msgid "Missing page path."
 #~ msgstr "Manglende sidesti."
@@ -2403,19 +2939,11 @@ msgstr "Tabel: Besøgende"
 #~ msgid "The export job was not found or has expired."
 #~ msgstr "Eksportjobbet blev ikke fundet eller er udløbet."
 
-#~ msgid "KPI slot must be a numeric integer greater than or equal to 2."
-#~ msgstr ""
-#~ "KPI-pladsen skal være et numerisk heltal større end eller lig med 2."
-
-#~ msgid ""
-#~ "KPI slot format is invalid. Use only a numeric integer greater than or "
-#~ "equal to 2."
-#~ msgstr ""
-#~ "KPI-pladsens format er ugyldigt. Brug kun et numerisk heltal større end "
-#~ "eller lig med 2."
-
 #~ msgid "BimBeau Privacy Analytics Pro feature preview"
 #~ msgstr "Forhåndsvisning af BimBeau Privacy Analytics Pro-funktion"
+
+#~ msgid "This feature is not included in this package."
+#~ msgstr "Denne funktion er tilgængelig i BimBeau Privacy Analytics Pro."
 
 #~ msgid "PWA Stats App"
 #~ msgstr "PWA Stats-app"
@@ -2631,8 +3159,13 @@ msgstr "Tabel: Besøgende"
 #~ msgid "Do you want to remove this event?"
 #~ msgstr "Vil du fjerne denne hændelse?"
 
+#, fuzzy
 #~ msgid "No city data available for the selected period."
-#~ msgstr "Ingen bydata tilgængelige for den valgte periode."
+#~ msgstr "Ingen landedata tilgængelige for den valgte periode."
+
+#, fuzzy
+#~ msgid "Top cities"
+#~ msgstr "Toplande"
 
 #~ msgid "City / Country"
 #~ msgstr "By / land"
@@ -2711,377 +3244,43 @@ msgstr "Tabel: Besøgende"
 #~ msgid "No post types available."
 #~ msgstr "Ingen indholdstyper tilgængelige."
 
+#~ msgid "Events configuration"
+#~ msgstr "Hændelseskonfiguration"
+
+#, php-format
 #~ msgid ""
-#~ "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
-#~ "database or MaxMind API."
+#~ "%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
+#~ "first, then activate %1$s."
 #~ msgstr ""
-#~ "Vælg, hvordan BimBeau Privacy Analytics finder geolokalisering: lokal "
-#~ "GeoLite-database eller MaxMind API."
-
-#~ msgid "Geolocation source"
-#~ msgstr "Geolokaliseringskilde"
-
-#~ msgid "Local GeoLite database (default)"
-#~ msgstr "Lokal GeoLite-database (standard)"
-
-#~ msgid "MaxMind API credentials"
-#~ msgstr "MaxMind API-loginoplysninger"
+#~ "%1$s kan ikke aktiveres, mens %2$s allerede er aktiv. Deaktiver først "
+#~ "%2$s, og aktiver derefter %1$s."
 
 #, fuzzy
-#~ msgid ""
-#~ "Local database mode downloads the GeoLite MMDB file through the official "
-#~ "BimBeau GeoIP Database Service manifest. API mode uses live MaxMind "
-#~ "requests."
-#~ msgstr ""
-#~ "Lokal databasetilstand downloader GeoLite MMDB-filen fra BimBeau Privacy "
-#~ "Analytics-mirrors. API-tilstand bruger live MaxMind-anmodninger."
+#~ msgid "Base GeoIP non installée"
+#~ msgstr "Den lokale GeoLite-database er ikke tilgængelig."
 
-#~ msgid "MaxMind Account ID"
-#~ msgstr "MaxMind-konto-id"
-
-#~ msgid "Numeric Account ID used for MaxMind API requests."
-#~ msgstr "Numerisk konto-id brugt til MaxMind API-anmodninger."
-
-#~ msgid "MaxMind License Key"
-#~ msgstr "MaxMind-licensnøgle"
-
-#~ msgid "License Key used for MaxMind API requests."
-#~ msgstr "Licensnøgle brugt til MaxMind API-anmodninger."
-
-#~ msgid "Test MaxMind connection"
-#~ msgstr "Test MaxMind-forbindelse"
-
-#~ msgid "Automatic GeoIP database updates"
-#~ msgstr "Automatiske GeoIP-databaseopdateringer"
-
-#~ msgid "Controls the cron frequency for local GeoIP database updates."
-#~ msgstr "Styrer cron-frekvensen for lokale GeoIP-databaseopdateringer."
+#~ msgid "Disabled"
+#~ msgstr "Deaktiveret"
 
 #~ msgid "Update now"
 #~ msgstr "Opdater nu"
 
-#~ msgid "Current state"
-#~ msgstr "Aktuel tilstand"
+#, fuzzy
+#~ msgid "Reinstall local GeoIP database"
+#~ msgstr "Kan ikke opdatere GeoIP-databasen."
 
-#~ msgid "Last attempt"
-#~ msgstr "Seneste forsøg"
+#~ msgid "Visitors details are not included in this package."
+#~ msgstr "Besøgsdetaljer er tilgængelige i BimBeau Privacy Analytics Pro."
 
-#~ msgid "Next scheduled retry"
-#~ msgstr "Næste planlagte forsøg"
-
-#~ msgid "Last successful update"
-#~ msgstr "Seneste vellykkede opdatering"
-
-#~ msgid "Database size"
-#~ msgstr "Databasestørrelse"
-
-#~ msgid "Last error code"
-#~ msgstr "Seneste fejlkode"
-
-#~ msgid "Retry count"
-#~ msgstr "Antal forsøg"
-
-#~ msgid ""
-#~ "Behavior: plugin activation completes quickly, and temporary local "
-#~ "database unavailability does not block the rest of BimBeau Privacy "
-#~ "Analytics."
+#~ msgid "Page-level details are not included in this package."
 #~ msgstr ""
-#~ "Adfærd: Pluginaktivering afsluttes hurtigt, og midlertidig "
-#~ "utilgængelighed af den lokale database blokerer ikke resten af BimBeau "
-#~ "Privacy Analytics."
+#~ "Detaljer på sideniveau er tilgængelige i BimBeau Privacy Analytics Pro."
 
-#~ msgid "Privacy"
-#~ msgstr "Privatliv"
+#~ msgid "Every 30 days (default)"
+#~ msgstr "Hver 30. dag (standard)"
 
-#~ msgid "Advanced stats require consent"
-#~ msgstr "Avanceret statistik kræver samtykke"
-
-#~ msgid "Essential stats only"
-#~ msgstr "Kun essentiel statistik"
-
-#~ msgid ""
-#~ "Essential stats run without consent. Advanced stats run only after "
-#~ "Statistics / Analytics consent."
-#~ msgstr ""
-#~ "Essentiel statistik kører uden samtykke. Avanceret statistik kører kun "
-#~ "efter samtykke til Statistik / Analyse."
-
-#~ msgid "Essential stats"
-#~ msgstr "Essentiel statistik"
-
-#~ msgid "No consent required"
-#~ msgstr "Intet samtykke kræves"
-
-#~ msgid ""
-#~ "Limited audience stats only. No ads, no cross-site tracking, no third-"
-#~ "party reuse."
-#~ msgstr ""
-#~ "Kun begrænset målgruppestatistik. Ingen annoncer, ingen sporing på tværs "
-#~ "af websteder, ingen tredjepartsgenbrug."
-
-#~ msgid "Essential data"
-#~ msgstr "Essentielle data"
-
-#~ msgid "Script:"
-#~ msgstr "Script:"
-
-#~ msgid "Advanced stats"
-#~ msgstr "Avanceret statistik"
-
-#~ msgid "Requires consent"
-#~ msgstr "Kræver samtykke"
-
-#~ msgid "Adds detailed visit insights after consent."
-#~ msgstr "Tilføjer detaljeret besøgsindsigt efter samtykke."
-
-#~ msgid "Enable advanced stats after consent"
-#~ msgstr "Aktivér avanceret statistik efter samtykke"
-
-#~ msgid ""
-#~ "Your CMP must block it until Statistics / Analytics consent is given."
-#~ msgstr ""
-#~ "Din CMP skal blokere det, indtil der er givet samtykke til Statistik / "
-#~ "Analyse."
-
-#~ msgid "Advanced data"
-#~ msgstr "Avancerede data"
-
-#~ msgid "CMP setup"
-#~ msgstr "CMP-opsætning"
-
-#~ msgid ""
-#~ "Block the advanced stats script until Statistics / Analytics consent is "
-#~ "given."
-#~ msgstr ""
-#~ "Bloker scriptet til avanceret statistik, indtil der er givet samtykke til "
-#~ "Statistik / Analyse."
-
-#~ msgid "Script to block:"
-#~ msgstr "Script der skal blokeres:"
-
-#~ msgid "Alternative selectors:"
-#~ msgstr "Alternative selektorer:"
-
-#~ msgid "Script ID:"
-#~ msgstr "Script-id:"
-
-#~ msgid "WordPress handle:"
-#~ msgstr "WordPress-handle:"
-
-#~ msgid "What is a CMP?"
-#~ msgstr "Hvad er en CMP?"
-
-#~ msgid ""
-#~ "A CMP manages cookie consent on your website. It shows the cookie banner, "
-#~ "stores visitor choices, and allows or blocks analytics scripts based on "
-#~ "consent."
-#~ msgstr ""
-#~ "En CMP håndterer cookiesamtykke på dit websted. Den viser cookiebanneret, "
-#~ "gemmer besøgendes valg og tillader eller blokerer analysescripts baseret "
-#~ "på samtykke."
-
-#~ msgid "Examples:"
-#~ msgstr "Eksempler:"
-
-#~ msgid ""
-#~ "In your CMP, block the BimBeau Privacy Analytics advanced stats script "
-#~ "until the Statistics or Analytics purpose is accepted."
-#~ msgstr ""
-#~ "I din CMP skal du blokere BimBeau Privacy Analytics-scriptet til "
-#~ "avanceret statistik, indtil formålet Statistik eller Analyse er "
-#~ "accepteret."
-
-#~ msgid ""
-#~ "Advanced stats are disabled. BimBeau Privacy Analytics will only use "
-#~ "essential stats."
-#~ msgstr ""
-#~ "Avanceret statistik er deaktiveret. BimBeau Privacy Analytics bruger kun "
-#~ "essentiel statistik."
-
-#~ msgid "Respect DNT / GPC"
-#~ msgstr "Respektér DNT / GPC"
-
-#~ msgid ""
-#~ "Stop measurement when the visitor’s browser sends a Do Not Track or "
-#~ "Global Privacy Control signal."
-#~ msgstr ""
-#~ "Stop måling, når den besøgendes browser sender et Do Not Track- eller "
-#~ "Global Privacy Control-signal."
-
-#~ msgid "Visit measurement"
-#~ msgstr "Besøgsmåling"
-
-#~ msgid ""
-#~ "Defines how long visitor activity can remain grouped under the same "
-#~ "visitor row before a new row is started after inactivity."
-#~ msgstr ""
-#~ "Definerer, hvor længe besøgsaktivitet kan forblive grupperet under den "
-#~ "samme besøgsrække, før en ny række startes efter inaktivitet."
-
-#~ msgid "Visitor activity window"
-#~ msgstr "Aktivitetsvindue for besøgende"
-
-#~ msgid ""
-#~ "Defines how long activity from the same visitor can remain grouped into "
-#~ "one visitor row. After this period of inactivity, BimBeau Privacy "
-#~ "Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 "
-#~ "minutes to 24 hours)."
-#~ msgstr ""
-#~ "Definerer, hvor længe aktivitet fra den samme besøgende kan forblive "
-#~ "grupperet i én besøgsrække. Efter denne periode med inaktivitet starter "
-#~ "BimBeau Privacy Analytics en ny besøgsrække. Interval: 300 til 86400 "
-#~ "sekunder (5 minutter til 24 timer)."
-
-#~ msgid "URLs & campaigns"
-#~ msgstr "URL'er og kampagner"
-
-#~ msgid ""
-#~ "Control URL cleanup behavior and keep only campaign query parameters that "
-#~ "should remain available for attribution."
-#~ msgstr ""
-#~ "Styr URL-oprydning, og behold kun de kampagneparametre, der skal forblive "
-#~ "tilgængelige til attribuering."
-
-#~ msgid "Clean URL query parameters"
-#~ msgstr "Rens URL-forespørgselsparametre"
-
-#~ msgid "Remove query parameters from tracked URLs."
-#~ msgstr "Fjern forespørgselsparametre fra sporede URL'er."
-
-#~ msgid "Allowed query parameters"
-#~ msgstr "Tilladte forespørgselsparametre"
-
-#~ msgid ""
-#~ "Comma-separated list of allowed query keys (used for URL tracking and UTM "
-#~ "aggregation)."
-#~ msgstr ""
-#~ "Kommasepareret liste over tilladte forespørgselsnøgler (bruges til URL-"
-#~ "sporing og UTM-aggregering)."
-
-#~ msgid "Data retention"
-#~ msgstr "Dataopbevaring"
-
-#~ msgid ""
-#~ "Choose how long to keep temporary detailed events, report details, and "
-#~ "long-term totals, then how often cleanup runs."
-#~ msgstr ""
-#~ "Choose how long to keep temporary detailed events, report details, and "
-#~ "long-term totals, then how often cleanup runs."
-
-#~ msgid "Temporary detailed events retention (days)"
-#~ msgstr "Opbevaring af midlertidige detaljerede hændelser (dage)"
-
-#~ msgid ""
-#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
-#~ msgstr ""
-#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
-
-#~ msgid "Report details retention"
-#~ msgstr "Opbevaring af rapportdetaljer"
-
-#~ msgid ""
-#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
-#~ "devices, and visitor details."
-#~ msgstr ""
-#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
-#~ "devices, and visitor details."
-
-#~ msgid "Long-term totals retention"
-#~ msgstr "Opbevaring af langsigtede totaler"
-
-#~ msgid ""
-#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
-#~ "visitors chart after report details expire."
-#~ msgstr ""
-#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
-#~ "visitors chart after report details expire."
-
-#~ msgid ""
-#~ "Cleanup permanently removes expired details, while long-term totals "
-#~ "remain available until their own retention window ends."
-#~ msgstr ""
-#~ "Cleanup permanently removes expired details, while long-term totals "
-#~ "remain available until their own retention window ends."
-
-#~ msgid "Automatic cleanup frequency"
-#~ msgstr "Automatisk oprydningsfrekvens"
-
-#~ msgid "Defines how often WordPress checks for expired analytics data."
-#~ msgstr "Defines how often WordPress checks for expired analytics data."
-
-#~ msgid "Exclusions"
-#~ msgstr "Udelukkelser"
-
-#~ msgid ""
-#~ "Select roles to exclude from tracking. Select all roles to ignore all "
-#~ "logged-in users."
-#~ msgstr ""
-#~ "Vælg roller, der skal udelukkes fra sporing. Vælg alle roller for at "
-#~ "ignorere alle indloggede brugere."
-
-#~ msgid "No roles available."
-#~ msgstr "Ingen roller tilgængelige."
-
-#~ msgid "Debug"
-#~ msgstr "Fejlfinding"
-
-#~ msgid ""
-#~ "Enable diagnostic output for troubleshooting tracking events, realtime "
-#~ "visitor detection, and REST payloads in the browser console and wp-"
-#~ "content/debug.log."
-#~ msgstr ""
-#~ "Aktivér diagnostisk output til fejlfinding af sporingshændelser, "
-#~ "realtidsregistrering af besøgende og REST-payloads i browserkonsollen og "
-#~ "wp-content/debug.log."
-
-#~ msgid "Debug mode"
-#~ msgstr "Fejlfindingstilstand"
-
-#~ msgid ""
-#~ "Writes detailed diagnostic logs to the console and to wp-content/debug."
-#~ "log when WordPress debug logging is enabled."
-#~ msgstr ""
-#~ "Skriver detaljerede diagnosticeringslogs til konsollen og til wp-content/"
-#~ "debug.log, når WordPress-fejllogning er aktiveret."
-
-#~ msgid "Cleanup actions"
-#~ msgstr "Oprydningshandlinger"
-
-#~ msgid ""
-#~ "Run retention cleanup immediately to remove only data older than the "
-#~ "configured retention window."
-#~ msgstr ""
-#~ "Kør opbevaringsoprydning med det samme for kun at fjerne data, der er "
-#~ "ældre end det konfigurerede opbevaringsvindue."
-
-#~ msgid "Run cleanup now"
-#~ msgstr "Kør oprydning nu"
-
-#~ msgid "Delete plugin tables on uninstall"
-#~ msgstr "Slet plugintabeller ved afinstallation"
-
-#~ msgid ""
-#~ "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
-#~ "analytics tables from the WordPress database."
-#~ msgstr ""
-#~ "Når dette er aktiveret, sletter afinstallation af BimBeau Privacy "
-#~ "Analytics alle pluginnets analysetabeller fra WordPress-databasen."
-
-#~ msgid "Sensitive actions"
-#~ msgstr "Følsomme handlinger"
-
-#~ msgid ""
-#~ "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
-#~ "entries."
-#~ msgstr ""
-#~ "Fjern alle aggregerede KPI-analyser, analyser med besøgsdetaljer og rå "
-#~ "logposter."
-
-#~ msgid "Delete all analytics data"
-#~ msgstr "Slet alle analysedata"
-
-#~ msgid "Events configuration"
-#~ msgstr "Hændelseskonfiguration"
+#~ msgid "Controls the cron frequency for local GeoIP database updates."
+#~ msgstr "Styrer cron-frekvensen for lokale GeoIP-databaseopdateringer."
 
 #~ msgid "BimBeau Privacy Analytics events analytics feature preview"
 #~ msgstr "Forhåndsvisning af BimBeau Privacy Analytics Pro-funktion"
@@ -3185,9 +3384,6 @@ msgstr "Tabel: Besøgende"
 
 #~ msgid "Plugin name (menu and dashboard)"
 #~ msgstr "Plugin-navn (menu og kontrolpanel)"
-
-#~ msgid "Leave blank to use \"BimBeau Privacy Analytics\"."
-#~ msgstr "Lad stå tomt for at bruge \"BimBeau Privacy Analytics\"."
 
 #~ msgid "This panel is not included in this package."
 #~ msgstr "Dette panel er tilgængeligt i BimBeau Privacy Analytics Pro."

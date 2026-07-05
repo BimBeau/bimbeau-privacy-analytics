@@ -40,7 +40,7 @@ export const DEFAULT_SETTINGS = {
 	debug_enabled: false,
 	geo_aggregation_enabled: true,
 	geoip_lookup_mode: 'local_database',
-	geoip_update_frequency: '30_days',
+	geoip_update_frequency: 'disabled',
 	maxmind_account_id: '',
 	maxmind_license_key: '',
 	pwa_icon_url: '',

@@ -104,6 +104,9 @@
       "90d": [
         "90d"
       ],
+      "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent.": [
+        "En CMP håndterer cookiesamtykke på dit websted. Den viser cookiebanneret, gemmer besøgendes valg og tillader eller blokerer analysescripts baseret på samtykke."
+      ],
       "AI Assistants": [
         "AI-assistenter"
       ],
@@ -131,14 +134,35 @@
       "Active time": [
         "Aktiv tid"
       ],
+      "Adds detailed visit insights after consent.": [
+        "Tilføjer detaljeret besøgsindsigt efter samtykke."
+      ],
       "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page.": [
         "Administratorer beholder fuld adgang. Vælg yderligere roller, der kan åbne analysesider, pluginindstillinger eller kontaktsiden."
+      ],
+      "Advanced data": [
+        "Avancerede data"
+      ],
+      "Advanced stats": [
+        "Avanceret statistik"
+      ],
+      "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
+        "Avanceret statistik er deaktiveret. BimBeau Privacy Analytics bruger kun essentiel statistik."
+      ],
+      "Advanced stats require consent": [
+        "Avanceret statistik kræver samtykke"
       ],
       "Aggregated analytics data purged.": [
         "Aggregerede analysedata blev slettet."
       ],
       "Allowed": [
         "Tilladt"
+      ],
+      "Allowed query parameters": [
+        "Tilladte forespørgselsparametre"
+      ],
+      "Alternative selectors:": [
+        "Alternative selektorer:"
       ],
       "Analytics data purged.": [
         "Analysedata blev slettet."
@@ -154,6 +178,12 @@
       ],
       "Ascending": [
         "Stigende"
+      ],
+      "Automatic GeoIP database updates": [
+        "Automatiske GeoIP-databaseopdateringer"
+      ],
+      "Automatic cleanup frequency": [
+        "Automatisk oprydningsfrekvens"
       ],
       "Available granularities": [
         "Tilgængelige granulariteter"
@@ -179,6 +209,9 @@
       "Based on %s tracked page views in the selected range.": [
         "Baseret på %s sporede sidevisninger i det valgte interval."
       ],
+      "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics.": [
+        "Adfærd: Pluginaktivering afsluttes hurtigt, og midlertidig utilgængelighed af den lokale database blokerer ikke resten af BimBeau Privacy Analytics."
+      ],
       "BimBeau Privacy Analytics": [
         "BimBeau Privacy Analytics"
       ],
@@ -193,6 +226,9 @@
       ],
       "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP remains the source of truth for consent workflows.": [
         "BimBeau Privacy Analytics leverer kun tekniske diagnosticeringer. Din CMP forbliver sandhedskilden for samtykkeflows."
+      ],
+      "Block the advanced stats script until Statistics / Analytics consent is given.": [
+        "Bloker scriptet til avanceret statistik, indtil der er givet samtykke til Statistik / Analyse."
       ],
       "Browser": [
         "Browser"
@@ -212,6 +248,9 @@
       "CMP markers": [
         "CMP-markører"
       ],
+      "CMP setup": [
+        "CMP-opsætning"
+      ],
       "Cancel": [
         "Annuller"
       ],
@@ -221,14 +260,35 @@
       "Channel": [
         ""
       ],
+      "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API.": [
+        "Vælg, hvordan BimBeau Privacy Analytics finder geolokalisering: lokal GeoLite-database eller MaxMind API."
+      ],
+      "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
+        "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "Choose whether the local GeoIP database should be updated automatically. In “manual updates only” mode, no external server is contacted automatically. You can still download or update the database manually with the button below.": [
+        ""
+      ],
       "City": [
         "By"
       ],
       "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
         "Bydata er tilgængelige for den valgte periode, men ingen byer har brugbare koordinater endnu."
       ],
+      "Clean URL query parameters": [
+        "Rens URL-forespørgselsparametre"
+      ],
+      "Cleanup actions": [
+        "Oprydningshandlinger"
+      ],
+      "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends.": [
+        "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
+      ],
       "Close": [
         "Luk"
+      ],
+      "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
+        "Kommasepareret liste over tilladte forespørgselsnøgler (bruges til URL-sporing og UTM-aggregering)."
       ],
       "Component undefined: %s": [
         "Komponent ikke defineret: %s"
@@ -248,6 +308,9 @@
       "Contact": [
         "Kontakt"
       ],
+      "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution.": [
+        "Styr URL-oprydning, og behold kun de kampagneparametre, der skal forblive tilgængelige til attribuering."
+      ],
       "Copy": [
         "Kopiér"
       ],
@@ -262,6 +325,9 @@
       ],
       "Current page": [
         "Aktuel side"
+      ],
+      "Current state": [
+        "Aktuel tilstand"
       ],
       "Current: %1$s": [
         "Aktuel: %1$s"
@@ -293,11 +359,38 @@
       "Dashboard": [
         "Kontrolpanel"
       ],
+      "Data retention": [
+        "Dataopbevaring"
+      ],
       "Data scope list": [
         "Liste over dataomfang"
       ],
+      "Database size": [
+        "Databasestørrelse"
+      ],
       "Date": [
         "Dato"
+      ],
+      "Debug": [
+        "Fejlfinding"
+      ],
+      "Debug mode": [
+        "Fejlfindingstilstand"
+      ],
+      "Defines how long activity from the same visitor can remain grouped into one visitor row. After this period of inactivity, BimBeau Privacy Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 hours).": [
+        "Definerer, hvor længe aktivitet fra den samme besøgende kan forblive grupperet i én besøgsrække. Efter denne periode med inaktivitet starter BimBeau Privacy Analytics en ny besøgsrække. Interval: 300 til 86400 sekunder (5 minutter til 24 timer)."
+      ],
+      "Defines how long visitor activity can remain grouped under the same visitor row before a new row is started after inactivity.": [
+        "Definerer, hvor længe besøgsaktivitet kan forblive grupperet under den samme besøgsrække, før en ny række startes efter inaktivitet."
+      ],
+      "Defines how often WordPress checks for expired analytics data.": [
+        "Defines how often WordPress checks for expired analytics data."
+      ],
+      "Delete all analytics data": [
+        "Slet alle analysedata"
+      ],
+      "Delete plugin tables on uninstall": [
+        "Slet plugintabeller ved afinstallation"
       ],
       "Descending": [
         "Faldende"
@@ -326,20 +419,26 @@
       "Direct": [
         "Direkte besøg"
       ],
-      "Disabled": [
-        "Deaktiveret"
-      ],
       "Dismiss notification": [
         "Luk notifikation"
       ],
       "Display": [
         "Vis"
       ],
+      "Download GeoIP database": [
+        "Kan ikke opdatere GeoIP-databasen."
+      ],
       "Email": [
         "E-mail"
       ],
       "Empty response body.": [
         "Tom svartekst."
+      ],
+      "Enable advanced stats after consent": [
+        "Aktivér avanceret statistik efter samtykke"
+      ],
+      "Enable diagnostic output for troubleshooting tracking events, realtime visitor detection, and REST payloads in the browser console and wp-content/debug.log.": [
+        "Aktivér diagnostisk output til fejlfinding af sporingshændelser, realtidsregistrering af besøgende og REST-payloads i browserkonsollen og wp-content/debug.log."
       ],
       "Enable geolocation aggregation": [
         "Aktivér geografisk aggregering"
@@ -371,6 +470,18 @@
       "Error while saving.": [
         "Fejl under lagring."
       ],
+      "Essential data": [
+        "Essentielle data"
+      ],
+      "Essential stats": [
+        "Essentiel statistik"
+      ],
+      "Essential stats only": [
+        "Kun essentiel statistik"
+      ],
+      "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
+        "Essentiel statistik kører uden samtykke. Avanceret statistik kører kun efter samtykke til Statistik / Analyse."
+      ],
       "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Kun essentielt omfang: berigede besøgsdetaljer og præcise kortmarkører er ikke tilgængelige."
       ],
@@ -392,8 +503,8 @@
       "Every 3 months": [
         "Hver 3. måned"
       ],
-      "Every 30 days (default)": [
-        "Hver 30. dag (standard)"
+      "Every 30 days": [
+        "Hver 60. dag"
       ],
       "Every 45 days": [
         "Hver 45. dag"
@@ -407,8 +518,14 @@
       "Every year": [
         "Hvert år"
       ],
+      "Examples:": [
+        "Eksempler:"
+      ],
       "Excel export requires the PHP Zip extension to be installed on this server.": [
         "Excel-eksport kræver, at PHP Zip-udvidelsen er installeret på denne server."
+      ],
+      "Exclusions": [
+        "Udelukkelser"
       ],
       "Exit fullscreen": [
         "Afslut fuld skærm"
@@ -461,11 +578,17 @@
       "General": [
         "Generelt"
       ],
+      "GeoIP database not installed": [
+        "GeoIP-databasen er tilgængelig."
+      ],
       "GeoIP database updated successfully.": [
         "GeoIP-databasen blev opdateret."
       ],
       "Geolocation": [
         "Geolokalisering"
+      ],
+      "Geolocation source": [
+        "Geolokaliseringskilde"
       ],
       "Get faster access from your home screen with an app-like experience.": [
         "Få hurtigere adgang fra din startskærm med en app-lignende oplevelse."
@@ -506,6 +629,9 @@
       "I confirm that I want to purge only data older than the configured retention window.": [
         "Jeg bekræfter, at jeg kun vil slette data, der er ældre end det konfigurerede opbevaringsvindue."
       ],
+      "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
+        "I din CMP skal du blokere BimBeau Privacy Analytics-scriptet til avanceret statistik, indtil formålet Statistik eller Analyse er accepteret."
+      ],
       "Install BimBeau Privacy Analytics app": [
         "Installer BimBeau Privacy Analytics-appen"
       ],
@@ -530,11 +656,32 @@
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
       ],
+      "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire.": [
+        "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire."
+      ],
+      "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details.": [
+        "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
+      ],
+      "Last attempt": [
+        "Seneste forsøg"
+      ],
+      "Last error code": [
+        "Seneste fejlkode"
+      ],
+      "Last successful update": [
+        "Seneste vellykkede opdatering"
+      ],
       "Legacy visits": [
         "Daglige besøgende"
       ],
       "Legal caution: technical diagnostics do not establish legal consent.": [
         "Juridisk advarsel: tekniske diagnosticeringer dokumenterer ikke juridisk samtykke."
+      ],
+      "License Key used for MaxMind API requests.": [
+        "Licensnøgle brugt til MaxMind API-anmodninger."
+      ],
+      "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
+        "Kun begrænset målgruppestatistik. Ingen annoncer, ingen sporing på tværs af websteder, ingen tredjepartsgenbrug."
       ],
       "Loading": [
         "Indlæser"
@@ -578,8 +725,26 @@
       "Loading…": [
         "Indlæser…"
       ],
+      "Local GeoIP database unavailable": [
+        "Den lokale GeoLite-database er ikke tilgængelig."
+      ],
+      "Local GeoLite database (default)": [
+        "Lokal GeoLite-database (standard)"
+      ],
+      "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests.": [
+        "Lokal databasetilstand downloader GeoLite MMDB-filen fra BimBeau Privacy Analytics-mirrors. API-tilstand bruger live MaxMind-anmodninger."
+      ],
+      "Long-term totals retention": [
+        "Opbevaring af langsigtede totaler"
+      ],
       "Maintenance": [
         "Vedligeholdelse"
+      ],
+      "Manual GeoIP database download": [
+        "Download af GeoIP-databasen mislykkedes: %s"
+      ],
+      "Manual updates only": [
+        "Kun essentiel statistik"
       ],
       "Map legend": [
         "Kortforklaring"
@@ -587,11 +752,20 @@
       "Map zoom controls": [
         "Kontroller til kortzoom"
       ],
+      "MaxMind API credentials": [
+        "MaxMind API-loginoplysninger"
+      ],
+      "MaxMind Account ID": [
+        "MaxMind-konto-id"
+      ],
       "MaxMind Account ID is required.": [
         "MaxMind-konto-id er påkrævet."
       ],
       "MaxMind Account ID must be numeric.": [
         "MaxMind-konto-id skal være numerisk."
+      ],
+      "MaxMind License Key": [
+        "MaxMind-licensnøgle"
       ],
       "MaxMind License Key is required.": [
         "MaxMind-licensnøgle er påkrævet."
@@ -626,6 +800,9 @@
       "Next page": [
         "Næste side"
       ],
+      "Next scheduled GeoIP update": [
+        "Næste planlagte forsøg"
+      ],
       "No acquisition channel data is available for this period.": [
         "Ingen besøgsprofildata tilgængelige for denne periode."
       ],
@@ -635,14 +812,17 @@
       "No audience breakdowns available.": [
         "Ingen målgruppefordelinger tilgængelige."
       ],
+      "No automatic update scheduled": [
+        ""
+      ],
       "No available": [
         "Ikke tilgængelig"
       ],
       "No browser usage available.": [
         "Ingen browserbrug tilgængelig."
       ],
-      "No city data available.": [
-        "Ingen bydata tilgængelige."
+      "No consent required": [
+        "Intet samtykke kræves"
       ],
       "No country data available for the selected period.": [
         "Ingen landedata tilgængelige for den valgte periode."
@@ -713,6 +893,9 @@
       "No results match the current filters.": [
         "Ingen resultater matcher de aktuelle filtre."
       ],
+      "No roles available.": [
+        "Ingen roller tilgængelige."
+      ],
       "No search terms available.": [
         "Ingen søgetermer tilgængelige."
       ],
@@ -721,6 +904,9 @@
       ],
       "No visits in the current activity window.": [
         "Ingen besøg i det aktuelle aktivitetsvindue."
+      ],
+      "Numeric Account ID used for MaxMind API requests.": [
+        "Numerisk konto-id brugt til MaxMind API-anmodninger."
       ],
       "Open": [
         "Åbn"
@@ -833,6 +1019,9 @@
       "Previous: %1$s": [
         "Tidligere: %1$s"
       ],
+      "Privacy": [
+        "Privatliv"
+      ],
       "Privacy runtime diagnostics": [
         "Diagnosticering af privatlivsruntime"
       ],
@@ -866,6 +1055,18 @@
       "Reload application": [
         "Geolokalisering"
       ],
+      "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
+        "Fjern alle aggregerede KPI-analyser, analyser med besøgsdetaljer og rå logposter."
+      ],
+      "Remove query parameters from tracked URLs.": [
+        "Fjern forespørgselsparametre fra sporede URL'er."
+      ],
+      "Report details retention": [
+        "Opbevaring af rapportdetaljer"
+      ],
+      "Requires consent": [
+        "Kræver samtykke"
+      ],
       "Reset": [
         "Nulstil"
       ],
@@ -875,14 +1076,23 @@
       "Resolution": [
         "Opløsning"
       ],
+      "Respect DNT / GPC": [
+        "Respektér DNT / GPC"
+      ],
       "Response preview:": [
         "Forhåndsvisning af svar:"
+      ],
+      "Retry count": [
+        "Antal forsøg"
       ],
       "Role access": [
         "Rolleadgang"
       ],
       "Rows": [
         "Rækker"
+      ],
+      "Run cleanup now": [
+        "Kør oprydning nu"
       ],
       "Run diagnostic": [
         "Kør diagnosticering"
@@ -892,6 +1102,9 @@
       ],
       "Run every day": [
         "Kør hver dag"
+      ],
+      "Run retention cleanup immediately to remove only data older than the configured retention window.": [
+        "Kør opbevaringsoprydning med det samme for kun at fjerne data, der er ældre end det konfigurerede opbevaringsvindue."
       ],
       "Runtime granularity is reported from available granularities.": [
         "Runtime-granularitet rapporteres ud fra de tilgængelige granulariteter."
@@ -911,8 +1124,17 @@
       "Screen resolutions": [
         "Skærmopløsninger"
       ],
+      "Script ID:": [
+        "Script-id:"
+      ],
       "Script handles checked: %s": [
         "Kontrollerede script-handles: %s"
+      ],
+      "Script to block:": [
+        "Script der skal blokeres:"
+      ],
+      "Script:": [
+        "Script:"
       ],
       "Search": [
         "Søg"
@@ -925,6 +1147,12 @@
       ],
       "Search…": [
         "Søg…"
+      ],
+      "Select roles to exclude from tracking. Select all roles to ignore all logged-in users.": [
+        "Vælg roller, der skal udelukkes fra sporing. Vælg alle roller for at ignorere alle indloggede brugere."
+      ],
+      "Sensitive actions": [
+        "Følsomme handlinger"
       ],
       "Session expired, reload the application.": [
         ""
@@ -949,6 +1177,9 @@
       ],
       "Status": [
         "Status"
+      ],
+      "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
+        "Stop måling, når den besøgendes browser sender et Do Not Track- eller Global Privacy Control-signal."
       ],
       "Summary": [
         "Oversigt"
@@ -986,6 +1217,12 @@
       "Technical state does not prove consent collection validity.": [
         "Den tekniske tilstand beviser ikke gyldigheden af samtykkeindsamlingen."
       ],
+      "Temporary detailed events retention (days)": [
+        "Opbevaring af midlertidige detaljerede hændelser (dage)"
+      ],
+      "Test MaxMind connection": [
+        "Test MaxMind-forbindelse"
+      ],
       "The completed export is missing a download URL.": [
         "Den færdige eksport mangler en download-URL."
       ],
@@ -1004,6 +1241,9 @@
       "The export job is missing a status URL.": [
         "Eksportjobbet mangler en status-URL."
       ],
+      "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled.": [
+        ""
+      ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "Serveren returnerede et uventet svar. Se forhåndsvisningen af endpoint-svaret for detaljer."
       ],
@@ -1018,6 +1258,9 @@
       ],
       "This diagnostic separates script DOM presence, runtime execution, and enriched payload activity. It never proves user consent.": [
         "Denne diagnosticering adskiller scriptets DOM-tilstedeværelse, runtime-udførelse og beriget payload-aktivitet. Den beviser aldrig brugerens samtykke."
+      ],
+      "This manual download will contact an external service to download the local GeoIP database and store it in the WordPress uploads directory.": [
+        ""
       ],
       "Thu": [
         "Tor"
@@ -1039,9 +1282,6 @@
       ],
       "Top 404s": [
         "Top 404'er"
-      ],
-      "Top cities": [
-        "Topbyer"
       ],
       "Top countries": [
         "Toplande"
@@ -1073,6 +1313,9 @@
       "URL": [
         "URL"
       ],
+      "URLs & campaigns": [
+        "URL'er og kampagner"
+      ],
       "Unable to connect to MaxMind.": [
         "Kan ikke oprette forbindelse til MaxMind."
       ],
@@ -1100,11 +1343,20 @@
       "Unknown visitor": [
         "Ukendt besøgende"
       ],
+      "Update GeoIP database": [
+        "Kan ikke opdatere GeoIP-databasen."
+      ],
       "Url": [
         "URL"
       ],
+      "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
+        "Used mainly for real-time and diagnostics. Not related to Debug mode."
+      ],
       "View": [
         "Vis"
+      ],
+      "Visit measurement": [
+        "Besøgsmåling"
       ],
       "Visitor": [
         "Besøgende"
@@ -1112,8 +1364,20 @@
       "Visitor ID hash": [
         "Hash for besøgs-id"
       ],
+      "Visitor activity window": [
+        "Aktivitetsvindue for besøgende"
+      ],
       "Visitor inactive": [
         "Besøgende inaktiv"
+      ],
+      "Visitor origin cannot be displayed until the local GeoIP database has been downloaded. To install it, click “Download GeoIP database”. This action will contact an external service and store the database in the WordPress uploads directory.": [
+        ""
+      ],
+      "Visitor origin unavailable": [
+        "Ingen besøgsdata tilgængelige."
+      ],
+      "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
+        ""
       ],
       "Visitors": [
         "Besøgende"
@@ -1133,11 +1397,26 @@
       "Wednesday": [
         "Onsdag"
       ],
+      "What is a CMP?": [
+        "Hvad er en CMP?"
+      ],
+      "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin analytics tables from the WordPress database.": [
+        "Når dette er aktiveret, sletter afinstallation af BimBeau Privacy Analytics alle pluginnets analysetabeller fra WordPress-databasen."
+      ],
+      "WordPress handle:": [
+        "WordPress-handle:"
+      ],
       "World map": [
         "Verdenskort"
       ],
+      "Writes detailed diagnostic logs to the console and to wp-content/debug.log when WordPress debug logging is enabled.": [
+        "Skriver detaljerede diagnosticeringslogs til konsollen og til wp-content/debug.log, når WordPress-fejllogning er aktiveret."
+      ],
       "Yesterday": [
         "I går"
+      ],
+      "Your CMP must block it until Statistics / Analytics consent is given.": [
+        "Din CMP skal blokere det, indtil der er givet samtykke til Statistik / Analyse."
       ],
       "Zoom in map": [
         "Zoom ind på kort"

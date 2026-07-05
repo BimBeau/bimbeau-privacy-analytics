@@ -26,6 +26,27 @@ function bbpa_get_freemius_instance(): ?object
     return $freemius;
 }
 
+
+/**
+ * Returns the upgrade URL for Freemius pricing and upgrade flows.
+ */
+function bbpa_get_upgrade_url(): string
+{
+    $fallback = admin_url('admin.php?page=' . BBPA_SLUG . '-pricing');
+    $freemius = bbpa_get_freemius_instance();
+
+    if (null === $freemius || !method_exists($freemius, 'get_upgrade_url')) {
+        return (string) apply_filters('bbpa_upgrade_url', $fallback);
+    }
+
+    $upgrade_url = (string) $freemius->get_upgrade_url();
+    if ($upgrade_url === '') {
+        $upgrade_url = $fallback;
+    }
+
+    return (string) apply_filters('bbpa_upgrade_url', $upgrade_url);
+}
+
 /**
  * Return the Freemius checkout language matching the current WordPress user locale.
  */
@@ -73,9 +94,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Mettre à niveau',
             'Downgrade' => 'Revenir à une formule inférieure',
             'Your Plan' => 'Votre formule',
-            'Start Free Trial' => 'Démarrer l’essai gratuit',
             'Cancel' => 'Annuler',
-            'Approve & Start Trial' => 'Approuver et démarrer l’essai',
             'Learn More' => 'En savoir plus',
             'Refund Policy' => 'Politique de remboursement',
             'Frequently Asked Questions' => 'Questions fréquentes',
@@ -96,9 +115,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Upgraden',
             'Downgrade' => 'Downgraden',
             'Your Plan' => 'Ihr Tarif',
-            'Start Free Trial' => 'Kostenlose Testversion starten',
             'Cancel' => 'Abbrechen',
-            'Approve & Start Trial' => 'Bestätigen und Testversion starten',
             'Learn More' => 'Mehr erfahren',
             'Refund Policy' => 'Rückerstattungsrichtlinie',
             'Frequently Asked Questions' => 'Häufig gestellte Fragen',
@@ -119,9 +136,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Mejorar',
             'Downgrade' => 'Cambiar a un plan inferior',
             'Your Plan' => 'Tu plan',
-            'Start Free Trial' => 'Iniciar prueba gratis',
             'Cancel' => 'Cancelar',
-            'Approve & Start Trial' => 'Aprobar e iniciar prueba',
             'Learn More' => 'Más información',
             'Refund Policy' => 'Política de reembolso',
             'Frequently Asked Questions' => 'Preguntas frecuentes',
@@ -142,9 +157,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Upgrade',
             'Downgrade' => 'Downgrade',
             'Your Plan' => 'Il tuo piano',
-            'Start Free Trial' => 'Avvia prova gratuita',
             'Cancel' => 'Annulla',
-            'Approve & Start Trial' => 'Approva e avvia la prova',
             'Learn More' => 'Scopri di più',
             'Refund Policy' => 'Politica di rimborso',
             'Frequently Asked Questions' => 'Domande frequenti',
@@ -165,9 +178,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Atualizar',
             'Downgrade' => 'Mudar para plano inferior',
             'Your Plan' => 'O seu plano',
-            'Start Free Trial' => 'Iniciar teste gratuito',
             'Cancel' => 'Cancelar',
-            'Approve & Start Trial' => 'Aprovar e iniciar teste',
             'Learn More' => 'Saber mais',
             'Refund Policy' => 'Política de reembolso',
             'Frequently Asked Questions' => 'Perguntas frequentes',
@@ -188,9 +199,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Yükselt',
             'Downgrade' => 'Alt plana geç',
             'Your Plan' => 'Planınız',
-            'Start Free Trial' => 'Ücretsiz denemeyi başlat',
             'Cancel' => 'İptal',
-            'Approve & Start Trial' => 'Onayla ve denemeyi başlat',
             'Learn More' => 'Daha fazla bilgi',
             'Refund Policy' => 'Geri ödeme politikası',
             'Frequently Asked Questions' => 'Sık sorulan sorular',
@@ -211,9 +220,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Upgraden',
             'Downgrade' => 'Downgraden',
             'Your Plan' => 'Je pakket',
-            'Start Free Trial' => 'Gratis proefperiode starten',
             'Cancel' => 'Annuleren',
-            'Approve & Start Trial' => 'Goedkeuren en proefperiode starten',
             'Learn More' => 'Meer informatie',
             'Refund Policy' => 'Restitutiebeleid',
             'Frequently Asked Questions' => 'Veelgestelde vragen',
@@ -234,9 +241,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Uppgradera',
             'Downgrade' => 'Nedgradera',
             'Your Plan' => 'Din plan',
-            'Start Free Trial' => 'Starta gratis provperiod',
             'Cancel' => 'Avbryt',
-            'Approve & Start Trial' => 'Godkänn och starta provperiod',
             'Learn More' => 'Läs mer',
             'Refund Policy' => 'Återbetalningspolicy',
             'Frequently Asked Questions' => 'Vanliga frågor',
@@ -257,9 +262,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Opgrader',
             'Downgrade' => 'Nedgrader',
             'Your Plan' => 'Din plan',
-            'Start Free Trial' => 'Start gratis prøveperiode',
             'Cancel' => 'Annuller',
-            'Approve & Start Trial' => 'Godkend og start prøveperiode',
             'Learn More' => 'Læs mere',
             'Refund Policy' => 'Refusionspolitik',
             'Frequently Asked Questions' => 'Ofte stillede spørgsmål',
@@ -280,9 +283,7 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'Upgrade' => 'Αναβάθμιση',
             'Downgrade' => 'Υποβάθμιση',
             'Your Plan' => 'Το πλάνο σας',
-            'Start Free Trial' => 'Έναρξη δωρεάν δοκιμής',
             'Cancel' => 'Ακύρωση',
-            'Approve & Start Trial' => 'Έγκριση και έναρξη δοκιμής',
             'Learn More' => 'Μάθετε περισσότερα',
             'Refund Policy' => 'Πολιτική επιστροφών',
             'Frequently Asked Questions' => 'Συχνές ερωτήσεις',
@@ -302,18 +303,6 @@ function bbpa_get_freemius_pricing_i18n_config(): array
             'sv' => 'Spara upp till $1 % på årsbetalning!',
             'da' => 'Spar op til $1 % på årlig betaling!',
             'el' => 'Εξοικονομήστε έως $1 % στην ετήσια τιμολόγηση!',
-        ]],
-        ['pattern' => '^Start your ([0-9]+)-day free trial$', 'replacement' => [
-            'fr' => 'Démarrez votre essai gratuit de $1 jours',
-            'de' => 'Starten Sie Ihre kostenlose $1-Tage-Testversion',
-            'es' => 'Inicia tu prueba gratis de $1 días',
-            'it' => 'Avvia la tua prova gratuita di $1 giorni',
-            'pt' => 'Inicie o seu teste gratuito de $1 dias',
-            'tr' => '$1 günlük ücretsiz denemenizi başlatın',
-            'nl' => 'Start je gratis proefperiode van $1 dagen',
-            'sv' => 'Starta din kostnadsfria provperiod på $1 dagar',
-            'da' => 'Start din gratis prøveperiode på $1 dage',
-            'el' => 'Ξεκινήστε τη δωρεάν δοκιμή $1 ημερών',
         ]],
         ['pattern' => '^Selected Plan: (.+)$', 'replacement' => [
             'fr' => 'Formule sélectionnée : $1',
@@ -401,109 +390,3 @@ function bbpa_register_freemius_i18n_hooks(): void
 }
 
 bbpa_register_freemius_i18n_hooks();
-
-/**
- * Returns configured Pro plan identifiers.
- *
- * @return array{ids: array<int>, slugs: array<string>, names: array<string>}
- */
-function bbpa_get_pro_plan_identifiers(): array
-{
-    $default_identifiers = [
-        'ids' => [],
-        'slugs' => [],
-        'names' => [],
-    ];
-
-    $identifiers = apply_filters('bbpa_pro_plan_identifiers', $default_identifiers);
-    if (!is_array($identifiers)) {
-        return $default_identifiers;
-    }
-
-    $normalized_identifiers = wp_parse_args($identifiers, $default_identifiers);
-
-    return [
-        'ids' => array_values(array_filter(array_map('intval', (array) $normalized_identifiers['ids']))),
-        'slugs' => array_values(array_filter(array_map('strval', (array) $normalized_identifiers['slugs']))),
-        'names' => array_values(array_filter(array_map('strval', (array) $normalized_identifiers['names']))),
-    ];
-}
-
-/**
- * Check whether a Freemius plan matches configured Pro identifiers.
- */
-function bbpa_plan_matches_pro_identifiers($plan, array $identifiers): bool
-{
-    $plan_id = 0;
-    $plan_slug = '';
-    $plan_name = '';
-
-    if (is_object($plan)) {
-        $plan_id = isset($plan->id) ? (int) $plan->id : 0;
-        $plan_slug = isset($plan->name) ? (string) $plan->name : '';
-        $plan_name = isset($plan->title) ? (string) $plan->title : '';
-    } elseif (is_array($plan)) {
-        $plan_id = isset($plan['id']) ? (int) $plan['id'] : 0;
-        $plan_slug = isset($plan['name']) ? (string) $plan['name'] : '';
-        $plan_name = isset($plan['title']) ? (string) $plan['title'] : '';
-    }
-
-    $has_restrictions = !empty($identifiers['ids']) || !empty($identifiers['slugs']) || !empty($identifiers['names']);
-    if (!$has_restrictions) {
-        return true;
-    }
-
-    return in_array($plan_id, $identifiers['ids'], true)
-        || in_array($plan_slug, $identifiers['slugs'], true)
-        || in_array($plan_name, $identifiers['names'], true);
-}
-
-/**
- * Returns true when the current runtime has an active paid or trial Pro plan.
- */
-function bbpa_is_pro_trial_or_paid(): bool
-{
-    $freemius = bbpa_get_freemius_instance();
-    if (null === $freemius || !method_exists($freemius, 'is_paying_or_trial__premium_only')) {
-        return (bool) apply_filters('bbpa_is_pro_trial_or_paid', false, $freemius);
-    }
-
-    $is_pro_trial_or_paid = (bool) $freemius->is_paying_or_trial__premium_only();
-
-    return (bool) apply_filters('bbpa_is_pro_trial_or_paid', $is_pro_trial_or_paid, $freemius);
-}
-
-/**
- * Returns true when premium code can be loaded.
- */
-function bbpa_is_pro(): bool
-{
-    $freemius = bbpa_get_freemius_instance();
-    if (null === $freemius || !method_exists($freemius, 'is__premium_only')) {
-        return (bool) apply_filters('bbpa_is_pro', false, $freemius);
-    }
-
-    $is_pro = (bool) $freemius->is__premium_only();
-
-    return (bool) apply_filters('bbpa_is_pro', $is_pro, $freemius);
-}
-
-/**
- * Returns the upgrade URL for compatibility with external integrations.
- */
-function bbpa_get_upgrade_url(): string
-{
-    $fallback = admin_url('admin.php?page=' . BBPA_SLUG . '-pricing');
-    $freemius = bbpa_get_freemius_instance();
-
-    if (null === $freemius || !method_exists($freemius, 'get_upgrade_url')) {
-        return (string) apply_filters('bbpa_upgrade_url', $fallback);
-    }
-
-    $upgrade_url = (string) $freemius->get_upgrade_url();
-    if ($upgrade_url === '') {
-        $upgrade_url = $fallback;
-    }
-
-    return (string) apply_filters('bbpa_upgrade_url', $upgrade_url);
-}

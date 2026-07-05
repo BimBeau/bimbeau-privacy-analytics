@@ -132,7 +132,7 @@ class BBPA_Export_Policy {
      * Report exports are Pro-only and use mode-specific column allowlists.
      */
     private static function get_default_columns_by_report(): array {
-        return [
+        $columns = [
             'top-pages' => [
                 'label' => 'Page path',
                 'page_title' => 'Page title',
@@ -173,17 +173,6 @@ class BBPA_Export_Policy {
                 'hits' => 'Page views',
                 'visitors' => 'Visitors',
                 'visits' => 'Legacy visits',
-            ],
-            'geo-cities' => [
-                'label' => 'City',
-                'country_code' => 'Country code',
-                'region_code' => 'Region code',
-                'city_name' => 'City name',
-                'city_geoname_id' => 'GeoName ID',
-                'latitude' => 'Latitude',
-                'longitude' => 'Longitude',
-                'hits' => 'Page views',
-                'visits' => 'Visits',
             ],
             'entry-pages' => [
                 'label' => 'Page path',
@@ -233,5 +222,7 @@ class BBPA_Export_Policy {
                 'last_view_at' => 'Last activity timestamp',
             ],
         ];
+
+        return apply_filters('bbpa_export_default_columns_by_report', $columns);
     }
 }

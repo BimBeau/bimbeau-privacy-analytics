@@ -46,7 +46,8 @@ build_front_assets() {
       node "${repo_root}/scripts/verify-admin-bundle-sync.js" \
       --source "src/admin/panels/TopPagesPanel.js" \
       --bundle "build/admin.js" \
-      --label "build/admin.js"
+      --label "build/admin.js" \
+      --tier "${BBPA_PACKAGE_TARGET:-free}"
 
     echo "Skipping npm build because cached front bundle passed integrity checks."
     return 0
@@ -63,8 +64,34 @@ build_front_assets() {
     admin_source_root="${stripped_source_root}/admin"
   fi
 
-  run_phase "front-end asset compilation (npm run build:assets)" \
-    env BBPA_ADMIN_SOURCE_ROOT="${admin_source_root}" npm --prefix "${repo_root}" run build:assets
+  local npm_build_log="${dist_dir}/build-assets-${BBPA_PACKAGE_TARGET:-free}.log"
+  log_phase "Starting front-end asset compilation (npm run build:assets)"
+  mkdir -p "$(dirname "${npm_build_log}")"
+
+  set +e
+  env \
+    BBPA_ADMIN_SOURCE_ROOT="${admin_source_root}" \
+    BBPA_PACKAGE_TARGET="${BBPA_PACKAGE_TARGET:-free}" \
+    NODE_OPTIONS="${NODE_OPTIONS:-} --trace-uncaught --trace-warnings" \
+    npm --prefix "${repo_root}" run build:assets 2>&1 | tee "${npm_build_log}"
+  local build_exit_code="${PIPESTATUS[0]}"
+  set -e
+
+  if [ "${build_exit_code}" -eq 0 ]; then
+    log_phase "Completed front-end asset compilation (npm run build:assets)"
+  else
+    log_phase "Failed front-end asset compilation (npm run build:assets) (exit code ${build_exit_code})"
+    echo "npm build log: ${npm_build_log}" >&2
+    echo "build/admin.js exists: $([ -f "${admin_bundle_path}" ] && echo yes || echo no)" >&2
+    echo "Last 200 lines from npm build log:" >&2
+    tail -n 200 "${npm_build_log}" >&2 || true
+
+    if [ -n "${stripped_source_root}" ]; then
+      rm -rf "${stripped_source_root}"
+    fi
+
+    return "${build_exit_code}"
+  fi
 
   if [ -n "${stripped_source_root}" ]; then
     rm -rf "${stripped_source_root}"
@@ -79,7 +106,8 @@ build_front_assets() {
     node "${repo_root}/scripts/verify-admin-bundle-sync.js" \
     --source "src/admin/panels/TopPagesPanel.js" \
     --bundle "build/admin.js" \
-    --label "build/admin.js"
+    --label "build/admin.js" \
+    --tier "${BBPA_PACKAGE_TARGET:-free}"
 }
 
 build_zip() {

@@ -104,6 +104,9 @@
       "90d": [
         "90T"
       ],
+      "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent.": [
+        "Eine CMP verwaltet die Cookie-Einwilligung auf Ihrer Website. Sie zeigt das Cookie-Banner an, speichert Besucherentscheidungen und erlaubt oder blockiert Analyseskripte basierend auf der Einwilligung."
+      ],
       "AI Assistants": [
         "KI-Assistenten"
       ],
@@ -131,14 +134,35 @@
       "Active time": [
         "Aktive Zeit"
       ],
+      "Adds detailed visit insights after consent.": [
+        "Fügt nach Einwilligung detaillierte Besuchseinblicke hinzu."
+      ],
       "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page.": [
         "Administratoren behalten vollen Zugriff. Wählen Sie zusätzliche Rollen aus, die Analyseseiten, Plugin-Einstellungen oder die Kontaktseite öffnen können."
+      ],
+      "Advanced data": [
+        "Erweiterte Daten"
+      ],
+      "Advanced stats": [
+        "Erweiterte Statistiken"
+      ],
+      "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
+        "Erweiterte Statistiken sind deaktiviert. BimBeau Privacy Analytics verwendet nur essenzielle Statistiken."
+      ],
+      "Advanced stats require consent": [
+        "Erweiterte Statistiken erfordern Einwilligung"
       ],
       "Aggregated analytics data purged.": [
         "Aggregierte Analysedaten wurden gelöscht."
       ],
       "Allowed": [
         "Erlaubt"
+      ],
+      "Allowed query parameters": [
+        "Erlaubte Abfrageparameter"
+      ],
+      "Alternative selectors:": [
+        "Alternative Selektoren:"
       ],
       "Analytics data purged.": [
         "Analysedaten wurden gelöscht."
@@ -154,6 +178,12 @@
       ],
       "Ascending": [
         "Aufsteigend"
+      ],
+      "Automatic GeoIP database updates": [
+        "Automatische GeoIP-Datenbankaktualisierungen"
+      ],
+      "Automatic cleanup frequency": [
+        "Automatische Bereinigungshäufigkeit"
       ],
       "Available granularities": [
         "Verfügbare Granularitäten"
@@ -179,6 +209,9 @@
       "Based on %s tracked page views in the selected range.": [
         "Basierend auf %s erfassten Seitenaufrufen im ausgewählten Bereich."
       ],
+      "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics.": [
+        "Verhalten: Die Plugin-Aktivierung wird schnell abgeschlossen, und eine vorübergehende Nichtverfügbarkeit der lokalen Datenbank blockiert den Rest von BimBeau Privacy Analytics nicht."
+      ],
       "BimBeau Privacy Analytics": [
         "BimBeau Privacy Analytics"
       ],
@@ -193,6 +226,9 @@
       ],
       "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP remains the source of truth for consent workflows.": [
         "BimBeau Privacy Analytics stellt nur technische Diagnosen bereit. Ihre CMP bleibt die maßgebliche Quelle für Einwilligungsabläufe."
+      ],
+      "Block the advanced stats script until Statistics / Analytics consent is given.": [
+        "Blockieren Sie das Skript für erweiterte Statistiken, bis die Einwilligung für Statistik/Analytics erteilt wurde."
       ],
       "Browser": [
         "Browser"
@@ -212,6 +248,9 @@
       "CMP markers": [
         "CMP-Marker"
       ],
+      "CMP setup": [
+        "CMP-Einrichtung"
+      ],
       "Cancel": [
         "Abbrechen"
       ],
@@ -221,14 +260,35 @@
       "Channel": [
         ""
       ],
+      "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API.": [
+        "Wählen Sie, wie BimBeau Privacy Analytics Geolokalisierung auflöst: lokale GeoLite-Datenbank oder MaxMind-API."
+      ],
+      "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
+        "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "Choose whether the local GeoIP database should be updated automatically. In “manual updates only” mode, no external server is contacted automatically. You can still download or update the database manually with the button below.": [
+        ""
+      ],
       "City": [
         "Stadt"
       ],
       "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
         "Stadtdaten sind für den ausgewählten Zeitraum verfügbar, aber noch keine Stadt hat nutzbare Koordinaten."
       ],
+      "Clean URL query parameters": [
+        "URL-Abfrageparameter bereinigen"
+      ],
+      "Cleanup actions": [
+        "Bereinigungsaktionen"
+      ],
+      "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends.": [
+        "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
+      ],
       "Close": [
         "Schließen"
+      ],
+      "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
+        "Kommagetrennte Liste erlaubter Abfrageschlüssel (für URL-Tracking und UTM-Aggregation)."
       ],
       "Component undefined: %s": [
         "Komponente nicht definiert: %s"
@@ -248,6 +308,9 @@
       "Contact": [
         "Kontakt"
       ],
+      "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution.": [
+        "Steuern Sie das Verhalten der URL-Bereinigung und behalten Sie nur Kampagnen-Abfrageparameter bei, die für die Zuordnung verfügbar bleiben sollen."
+      ],
       "Copy": [
         "Kopieren"
       ],
@@ -262,6 +325,9 @@
       ],
       "Current page": [
         "Aktuelle Seite"
+      ],
+      "Current state": [
+        "Aktueller Status"
       ],
       "Current: %1$s": [
         "Aktuell: %1$s"
@@ -293,11 +359,38 @@
       "Dashboard": [
         "Dashboard"
       ],
+      "Data retention": [
+        "Datenaufbewahrung"
+      ],
       "Data scope list": [
         "Liste des Datenumfangs"
       ],
+      "Database size": [
+        "Datenbankgröße"
+      ],
       "Date": [
         "Datum"
+      ],
+      "Debug": [
+        "Debug"
+      ],
+      "Debug mode": [
+        "Debug-Modus"
+      ],
+      "Defines how long activity from the same visitor can remain grouped into one visitor row. After this period of inactivity, BimBeau Privacy Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 hours).": [
+        "Legt fest, wie lange Aktivität desselben Besuchers in einer Besucherzeile gruppiert bleiben kann. Nach dieser Inaktivitätsdauer beginnt BimBeau Privacy Analytics eine neue Besucherzeile. Bereich: 300 bis 86400 Sekunden (5 Minuten bis 24 Stunden)."
+      ],
+      "Defines how long visitor activity can remain grouped under the same visitor row before a new row is started after inactivity.": [
+        "Legt fest, wie lange Besucheraktivität in derselben Besucherzeile gruppiert bleiben kann, bevor nach Inaktivität eine neue Zeile begonnen wird."
+      ],
+      "Defines how often WordPress checks for expired analytics data.": [
+        "Defines how often WordPress checks for expired analytics data."
+      ],
+      "Delete all analytics data": [
+        "Alle Analysedaten löschen"
+      ],
+      "Delete plugin tables on uninstall": [
+        "Plugin-Tabellen bei Deinstallation löschen"
       ],
       "Descending": [
         "Absteigend"
@@ -326,20 +419,26 @@
       "Direct": [
         "Direkt"
       ],
-      "Disabled": [
-        "Deaktiviert"
-      ],
       "Dismiss notification": [
         "Benachrichtigung schließen"
       ],
       "Display": [
         "Anzeigen"
       ],
+      "Download GeoIP database": [
+        "Die GeoIP-Datenbank kann nicht aktualisiert werden."
+      ],
       "Email": [
         "E-Mail"
       ],
       "Empty response body.": [
         "Leerer Antworttext."
+      ],
+      "Enable advanced stats after consent": [
+        "Erweiterte Statistiken nach Einwilligung aktivieren"
+      ],
+      "Enable diagnostic output for troubleshooting tracking events, realtime visitor detection, and REST payloads in the browser console and wp-content/debug.log.": [
+        "Aktivieren Sie Diagnoseausgaben zur Fehlerbehebung bei Tracking-Ereignissen, Echtzeit-Besuchererkennung und REST-Payloads in der Browserkonsole und in wp-content/debug.log."
       ],
       "Enable geolocation aggregation": [
         "Geolocation-Aggregation aktivieren"
@@ -371,6 +470,18 @@
       "Error while saving.": [
         "Fehler beim Speichern."
       ],
+      "Essential data": [
+        "Essenzielle Daten"
+      ],
+      "Essential stats": [
+        "Essenzielle Statistiken"
+      ],
+      "Essential stats only": [
+        "Nur essenzielle Statistiken"
+      ],
+      "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
+        "Essenzielle Statistiken laufen ohne Einwilligung. Erweiterte Statistiken laufen erst nach Einwilligung für Statistik/Analytics."
+      ],
       "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Nur essenzieller Umfang: Erweiterte Besuchsdetails und präzise Kartenmarker sind nicht verfügbar."
       ],
@@ -392,8 +503,8 @@
       "Every 3 months": [
         "Alle 3 Monate"
       ],
-      "Every 30 days (default)": [
-        "Alle 30 Tage (Standard)"
+      "Every 30 days": [
+        "Alle 60 Tage"
       ],
       "Every 45 days": [
         "Alle 45 Tage"
@@ -407,8 +518,14 @@
       "Every year": [
         "Jedes Jahr"
       ],
+      "Examples:": [
+        "Beispiele:"
+      ],
       "Excel export requires the PHP Zip extension to be installed on this server.": [
         "Der Excel-Export erfordert die PHP-Zip-Erweiterung auf diesem Server."
+      ],
+      "Exclusions": [
+        "Ausschlüsse"
       ],
       "Exit fullscreen": [
         "Vollbild beenden"
@@ -461,11 +578,17 @@
       "General": [
         "Allgemein"
       ],
+      "GeoIP database not installed": [
+        "Die GeoIP-Datenbank ist verfügbar."
+      ],
       "GeoIP database updated successfully.": [
         "Die GeoIP-Datenbank wurde erfolgreich aktualisiert."
       ],
       "Geolocation": [
         "Geolokalisierung"
+      ],
+      "Geolocation source": [
+        "Geolokalisierungsquelle"
       ],
       "Get faster access from your home screen with an app-like experience.": [
         "Erhalten Sie schnelleren Zugriff vom Startbildschirm aus mit einem appähnlichen Erlebnis."
@@ -506,6 +629,9 @@
       "I confirm that I want to purge only data older than the configured retention window.": [
         "Ich bestätige, dass ich nur Daten löschen möchte, die älter als das konfigurierte Aufbewahrungsfenster sind."
       ],
+      "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
+        "Blockieren Sie in Ihrer CMP das Skript für erweiterte Lean-Stats-Statistiken, bis der Zweck Statistik oder Analytics akzeptiert wurde."
+      ],
       "Install BimBeau Privacy Analytics app": [
         "Lean-Stats-App installieren"
       ],
@@ -530,11 +656,32 @@
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
       ],
+      "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire.": [
+        "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire."
+      ],
+      "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details.": [
+        "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
+      ],
+      "Last attempt": [
+        "Letzter Versuch"
+      ],
+      "Last error code": [
+        "Letzter Fehlercode"
+      ],
+      "Last successful update": [
+        "Letzte erfolgreiche Aktualisierung"
+      ],
       "Legacy visits": [
         "Tägliche Besucher"
       ],
       "Legal caution: technical diagnostics do not establish legal consent.": [
         "Rechtlicher Hinweis: Technische Diagnosen belegen keine rechtliche Einwilligung."
+      ],
+      "License Key used for MaxMind API requests.": [
+        "Lizenzschlüssel für MaxMind-API-Anfragen."
+      ],
+      "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
+        "Nur begrenzte Zielgruppenstatistiken. Keine Werbung, kein Cross-Site-Tracking, keine Wiederverwendung durch Dritte."
       ],
       "Loading": [
         "Wird geladen"
@@ -578,8 +725,26 @@
       "Loading…": [
         "Wird geladen…"
       ],
+      "Local GeoIP database unavailable": [
+        "Die lokale GeoLite-Datenbank ist nicht verfügbar."
+      ],
+      "Local GeoLite database (default)": [
+        "Lokale GeoLite-Datenbank (Standard)"
+      ],
+      "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests.": [
+        "Der lokale Datenbankmodus lädt die GeoLite-MMDB-Datei von Lean-Stats-Spiegelservern herunter. Der API-Modus verwendet Live-Anfragen an MaxMind."
+      ],
+      "Long-term totals retention": [
+        "Aufbewahrung langfristiger Summen"
+      ],
       "Maintenance": [
         "Wartung"
+      ],
+      "Manual GeoIP database download": [
+        "Download der GeoIP-Datenbank fehlgeschlagen: %s"
+      ],
+      "Manual updates only": [
+        "Nur essenzielle Statistiken"
       ],
       "Map legend": [
         "Kartenlegende"
@@ -587,11 +752,20 @@
       "Map zoom controls": [
         "Zoom-Steuerung der Karte"
       ],
+      "MaxMind API credentials": [
+        "MaxMind-API-Zugangsdaten"
+      ],
+      "MaxMind Account ID": [
+        "MaxMind-Konto-ID"
+      ],
       "MaxMind Account ID is required.": [
         "Die MaxMind-Konto-ID ist erforderlich."
       ],
       "MaxMind Account ID must be numeric.": [
         "Die MaxMind-Konto-ID muss numerisch sein."
+      ],
+      "MaxMind License Key": [
+        "MaxMind-Lizenzschlüssel"
       ],
       "MaxMind License Key is required.": [
         "Der MaxMind-Lizenzschlüssel ist erforderlich."
@@ -626,6 +800,9 @@
       "Next page": [
         "Nächste Seite"
       ],
+      "Next scheduled GeoIP update": [
+        "Nächster geplanter Versuch"
+      ],
       "No acquisition channel data is available for this period.": [
         "Für diesen Zeitraum sind keine Besucherprofildaten verfügbar."
       ],
@@ -635,14 +812,17 @@
       "No audience breakdowns available.": [
         "Keine Zielgruppenaufschlüsselungen verfügbar."
       ],
+      "No automatic update scheduled": [
+        ""
+      ],
       "No available": [
         "Nicht verfügbar"
       ],
       "No browser usage available.": [
         "Keine Browsernutzung verfügbar."
       ],
-      "No city data available.": [
-        "Keine Stadtdaten verfügbar."
+      "No consent required": [
+        "Keine Einwilligung erforderlich"
       ],
       "No country data available for the selected period.": [
         "Für den ausgewählten Zeitraum sind keine Länderdaten verfügbar."
@@ -713,6 +893,9 @@
       "No results match the current filters.": [
         "Keine Ergebnisse entsprechen den aktuellen Filtern."
       ],
+      "No roles available.": [
+        "Keine Rollen verfügbar."
+      ],
       "No search terms available.": [
         "Keine Suchbegriffe verfügbar."
       ],
@@ -721,6 +904,9 @@
       ],
       "No visits in the current activity window.": [
         "Keine Besuche im aktuellen Aktivitätsfenster."
+      ],
+      "Numeric Account ID used for MaxMind API requests.": [
+        "Numerische Konto-ID für MaxMind-API-Anfragen."
       ],
       "Open": [
         "Öffnen"
@@ -833,6 +1019,9 @@
       "Previous: %1$s": [
         "Vorherig: %1$s"
       ],
+      "Privacy": [
+        "Datenschutz"
+      ],
       "Privacy runtime diagnostics": [
         "Datenschutz-Laufzeitdiagnose"
       ],
@@ -866,6 +1055,18 @@
       "Reload application": [
         "Geolokalisierung"
       ],
+      "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
+        "Alle aggregierten KPI-Analysen, Besucherdetailanalysen und Rohprotokolleinträge entfernen."
+      ],
+      "Remove query parameters from tracked URLs.": [
+        "Abfrageparameter aus erfassten URLs entfernen."
+      ],
+      "Report details retention": [
+        "Aufbewahrung von Berichtdetails"
+      ],
+      "Requires consent": [
+        "Erfordert Einwilligung"
+      ],
       "Reset": [
         "Zurücksetzen"
       ],
@@ -875,14 +1076,23 @@
       "Resolution": [
         "Auflösung"
       ],
+      "Respect DNT / GPC": [
+        "DNT / GPC beachten"
+      ],
       "Response preview:": [
         "Antwortvorschau:"
+      ],
+      "Retry count": [
+        "Wiederholungen"
       ],
       "Role access": [
         "Rollenzugriff"
       ],
       "Rows": [
         "Zeilen"
+      ],
+      "Run cleanup now": [
+        "Bereinigung jetzt ausführen"
       ],
       "Run diagnostic": [
         "Diagnose ausführen"
@@ -892,6 +1102,9 @@
       ],
       "Run every day": [
         "Jeden Tag ausführen"
+      ],
+      "Run retention cleanup immediately to remove only data older than the configured retention window.": [
+        "Aufbewahrungsbereinigung sofort ausführen, um nur Daten zu entfernen, die älter als das konfigurierte Aufbewahrungsfenster sind."
       ],
       "Runtime granularity is reported from available granularities.": [
         "Die Laufzeit-Granularität wird aus den verfügbaren Granularitäten gemeldet."
@@ -911,8 +1124,17 @@
       "Screen resolutions": [
         "Bildschirmauflösungen"
       ],
+      "Script ID:": [
+        "Skript-ID:"
+      ],
       "Script handles checked: %s": [
         "Geprüfte Skript-Handles: %s"
+      ],
+      "Script to block:": [
+        "Zu blockierendes Skript:"
+      ],
+      "Script:": [
+        "Skript:"
       ],
       "Search": [
         "Suchen"
@@ -925,6 +1147,12 @@
       ],
       "Search…": [
         "Suchen…"
+      ],
+      "Select roles to exclude from tracking. Select all roles to ignore all logged-in users.": [
+        "Wählen Sie Rollen aus, die vom Tracking ausgeschlossen werden sollen. Wählen Sie alle Rollen aus, um alle angemeldeten Benutzer zu ignorieren."
+      ],
+      "Sensitive actions": [
+        "Sensible Aktionen"
       ],
       "Session expired, reload the application.": [
         ""
@@ -949,6 +1177,9 @@
       ],
       "Status": [
         "Status"
+      ],
+      "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
+        "Messung stoppen, wenn der Browser des Besuchers ein Do-Not-Track- oder Global-Privacy-Control-Signal sendet."
       ],
       "Summary": [
         "Zusammenfassung"
@@ -986,6 +1217,12 @@
       "Technical state does not prove consent collection validity.": [
         "Der technische Status belegt nicht die Gültigkeit der Einwilligungserfassung."
       ],
+      "Temporary detailed events retention (days)": [
+        "Aufbewahrung temporärer Detailereignisse (Tage)"
+      ],
+      "Test MaxMind connection": [
+        "MaxMind-Verbindung testen"
+      ],
       "The completed export is missing a download URL.": [
         "Dem abgeschlossenen Export fehlt eine Download-URL."
       ],
@@ -1004,6 +1241,9 @@
       "The export job is missing a status URL.": [
         "Dem Exportauftrag fehlt eine Status-URL."
       ],
+      "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled.": [
+        ""
+      ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "Der Server hat eine unerwartete Antwort zurückgegeben. Prüfen Sie die Vorschau der Endpunktantwort für Details."
       ],
@@ -1018,6 +1258,9 @@
       ],
       "This diagnostic separates script DOM presence, runtime execution, and enriched payload activity. It never proves user consent.": [
         "Diese Diagnose trennt DOM-Präsenz des Skripts, Laufzeitausführung und Aktivität der erweiterten Payload. Sie belegt niemals die Einwilligung des Benutzers."
+      ],
+      "This manual download will contact an external service to download the local GeoIP database and store it in the WordPress uploads directory.": [
+        ""
       ],
       "Thu": [
         "Do"
@@ -1039,9 +1282,6 @@
       ],
       "Top 404s": [
         "Top-404er"
-      ],
-      "Top cities": [
-        "Top-Städte"
       ],
       "Top countries": [
         "Top-Länder"
@@ -1073,6 +1313,9 @@
       "URL": [
         "URL"
       ],
+      "URLs & campaigns": [
+        "URLs & Kampagnen"
+      ],
       "Unable to connect to MaxMind.": [
         "Verbindung zu MaxMind kann nicht hergestellt werden."
       ],
@@ -1100,11 +1343,20 @@
       "Unknown visitor": [
         "Unbekannter Besucher"
       ],
+      "Update GeoIP database": [
+        "Die GeoIP-Datenbank kann nicht aktualisiert werden."
+      ],
       "Url": [
         "URL"
       ],
+      "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
+        "Used mainly for real-time and diagnostics. Not related to Debug mode."
+      ],
       "View": [
         "Anzeigen"
+      ],
+      "Visit measurement": [
+        "Besuchsmessung"
       ],
       "Visitor": [
         "Besucher"
@@ -1112,8 +1364,20 @@
       "Visitor ID hash": [
         "Hash der Besucher-ID"
       ],
+      "Visitor activity window": [
+        "Aktivitätsfenster für Besucher"
+      ],
       "Visitor inactive": [
         "Besucher inaktiv"
+      ],
+      "Visitor origin cannot be displayed until the local GeoIP database has been downloaded. To install it, click “Download GeoIP database”. This action will contact an external service and store the database in the WordPress uploads directory.": [
+        ""
+      ],
+      "Visitor origin unavailable": [
+        "Keine Besucherdaten verfügbar."
+      ],
+      "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
+        ""
       ],
       "Visitors": [
         "Besucher"
@@ -1133,11 +1397,26 @@
       "Wednesday": [
         "Mittwoch"
       ],
+      "What is a CMP?": [
+        "Was ist eine CMP?"
+      ],
+      "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin analytics tables from the WordPress database.": [
+        "Wenn aktiviert, entfernt die Deinstallation von BimBeau Privacy Analytics alle Analytics-Tabellen des Plugins aus der WordPress-Datenbank."
+      ],
+      "WordPress handle:": [
+        "WordPress-Handle:"
+      ],
       "World map": [
         "Weltkarte"
       ],
+      "Writes detailed diagnostic logs to the console and to wp-content/debug.log when WordPress debug logging is enabled.": [
+        "Schreibt detaillierte Diagnoselogs in die Konsole und in wp-content/debug.log, wenn das WordPress-Debug-Logging aktiviert ist."
+      ],
       "Yesterday": [
         "Gestern"
+      ],
+      "Your CMP must block it until Statistics / Analytics consent is given.": [
+        "Ihre CMP muss dies blockieren, bis die Einwilligung für Statistik/Analytics erteilt wurde."
       ],
       "Zoom in map": [
         "Karte vergrößern"

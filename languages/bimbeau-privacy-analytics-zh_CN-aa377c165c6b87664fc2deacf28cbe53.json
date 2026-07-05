@@ -103,6 +103,9 @@
       "90d": [
         "90天"
       ],
+      "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent.": [
+        "CMP 管理网站上的 Cookie 同意。它显示 Cookie 横幅、存储访客选择，并根据同意状态允许或阻止分析脚本。"
+      ],
       "AI Assistants": [
         "AI 助手"
       ],
@@ -130,14 +133,35 @@
       "Active time": [
         "活跃时间"
       ],
+      "Adds detailed visit insights after consent.": [
+        "在同意后添加详细访问洞察。"
+      ],
       "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page.": [
         "管理员保留完整访问权限。请选择其他可打开分析页面、插件设置或联系页面的角色。"
+      ],
+      "Advanced data": [
+        "高级数据"
+      ],
+      "Advanced stats": [
+        "高级统计"
+      ],
+      "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
+        "高级统计已禁用。BimBeau Privacy Analytics 将仅使用基础统计。"
+      ],
+      "Advanced stats require consent": [
+        "高级统计需要同意"
       ],
       "Aggregated analytics data purged.": [
         "聚合分析数据已清除。"
       ],
       "Allowed": [
         "允许"
+      ],
+      "Allowed query parameters": [
+        "允许的查询参数"
+      ],
+      "Alternative selectors:": [
+        "备选选择器："
       ],
       "Analytics data purged.": [
         "分析数据已清除。"
@@ -153,6 +177,12 @@
       ],
       "Ascending": [
         "升序"
+      ],
+      "Automatic GeoIP database updates": [
+        "GeoIP 数据库自动更新"
+      ],
+      "Automatic cleanup frequency": [
+        "自动清理频率"
       ],
       "Available granularities": [
         "可用粒度"
@@ -178,6 +208,9 @@
       "Based on %s tracked page views in the selected range.": [
         "基于所选范围内 %s 次已跟踪页面浏览。"
       ],
+      "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics.": [
+        "行为：插件启用会快速完成，临时的本地数据库不可用不会阻止 BimBeau Privacy Analytics 的其他部分。"
+      ],
       "BimBeau Privacy Analytics": [
         "BimBeau Privacy Analytics 分析"
       ],
@@ -192,6 +225,9 @@
       ],
       "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP remains the source of truth for consent workflows.": [
         "BimBeau Privacy Analytics 仅提供技术诊断。你的 CMP 仍是同意流程的可信来源。"
+      ],
+      "Block the advanced stats script until Statistics / Analytics consent is given.": [
+        "在获得统计/分析同意之前阻止高级统计脚本。"
       ],
       "Browser": [
         "浏览器"
@@ -211,6 +247,9 @@
       "CMP markers": [
         "CMP 标记"
       ],
+      "CMP setup": [
+        "CMP 设置"
+      ],
       "Cancel": [
         "取消"
       ],
@@ -220,14 +259,35 @@
       "Channel": [
         ""
       ],
+      "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API.": [
+        "选择 BimBeau Privacy Analytics 解析地理定位的方式：本地 GeoLite 数据库或 MaxMind API。"
+      ],
+      "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
+        "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "Choose whether the local GeoIP database should be updated automatically. In “manual updates only” mode, no external server is contacted automatically. You can still download or update the database manually with the button below.": [
+        ""
+      ],
       "City": [
         "城市"
       ],
       "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
         "所选时间段已有城市数据，但尚无城市具备可用坐标。"
       ],
+      "Clean URL query parameters": [
+        "清理 URL 查询参数"
+      ],
+      "Cleanup actions": [
+        "清理操作"
+      ],
+      "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends.": [
+        "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
+      ],
       "Close": [
         "关闭"
+      ],
+      "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
+        "逗号分隔的允许查询键列表（用于 URL 跟踪和 UTM 聚合）。"
       ],
       "Component undefined: %s": [
         "组件未定义：%s"
@@ -247,6 +307,9 @@
       "Contact": [
         "联系"
       ],
+      "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution.": [
+        "控制 URL 清理行为，并仅保留需要用于归因的营销活动查询参数。"
+      ],
       "Copy": [
         "复制"
       ],
@@ -261,6 +324,9 @@
       ],
       "Current page": [
         "当前页面"
+      ],
+      "Current state": [
+        "当前状态"
       ],
       "Current: %1$s": [
         "当前：%1$s"
@@ -292,11 +358,38 @@
       "Dashboard": [
         "仪表盘"
       ],
+      "Data retention": [
+        "数据保留"
+      ],
       "Data scope list": [
         "数据范围列表"
       ],
+      "Database size": [
+        "数据库大小"
+      ],
       "Date": [
         "日期"
+      ],
+      "Debug": [
+        "调试"
+      ],
+      "Debug mode": [
+        "调试模式"
+      ],
+      "Defines how long activity from the same visitor can remain grouped into one visitor row. After this period of inactivity, BimBeau Privacy Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 hours).": [
+        "定义同一访客的活动可在一个访客行中保持分组的时长。在此不活动时段之后，BimBeau Privacy Analytics 会开始新的访客行。范围：300 到 86400 秒（5 分钟到 24 小时）。"
+      ],
+      "Defines how long visitor activity can remain grouped under the same visitor row before a new row is started after inactivity.": [
+        "定义访客活动在因不活动而开始新访客行之前，可在同一访客行下保持分组的时长。"
+      ],
+      "Defines how often WordPress checks for expired analytics data.": [
+        "Defines how often WordPress checks for expired analytics data."
+      ],
+      "Delete all analytics data": [
+        "删除所有分析数据"
+      ],
+      "Delete plugin tables on uninstall": [
+        "卸载时删除插件表"
       ],
       "Descending": [
         "降序"
@@ -325,20 +418,26 @@
       "Direct": [
         "直接访问"
       ],
-      "Disabled": [
-        "已禁用"
-      ],
       "Dismiss notification": [
         "关闭通知"
       ],
       "Display": [
         "显示"
       ],
+      "Download GeoIP database": [
+        "无法更新 GeoIP 数据库。"
+      ],
       "Email": [
         "电子邮件"
       ],
       "Empty response body.": [
         "响应正文为空。"
+      ],
+      "Enable advanced stats after consent": [
+        "同意后启用高级统计"
+      ],
+      "Enable diagnostic output for troubleshooting tracking events, realtime visitor detection, and REST payloads in the browser console and wp-content/debug.log.": [
+        "启用诊断输出，用于在浏览器控制台和 wp-content/debug.log 中排查跟踪事件、实时访客检测和 REST 载荷。"
       ],
       "Enable geolocation aggregation": [
         "启用地理定位聚合"
@@ -370,6 +469,18 @@
       "Error while saving.": [
         "保存时出错。"
       ],
+      "Essential data": [
+        "基础数据"
+      ],
+      "Essential stats": [
+        "基础统计"
+      ],
+      "Essential stats only": [
+        "仅基础统计"
+      ],
+      "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
+        "基础统计无需同意即可运行。高级统计仅在统计/分析同意后运行。"
+      ],
       "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "仅基础范围：增强访问详情和精确地图标记不可用。"
       ],
@@ -391,8 +502,8 @@
       "Every 3 months": [
         "每 3 个月"
       ],
-      "Every 30 days (default)": [
-        "每 30 天（默认）"
+      "Every 30 days": [
+        "每 60 天"
       ],
       "Every 45 days": [
         "每 45 天"
@@ -406,8 +517,14 @@
       "Every year": [
         "每年"
       ],
+      "Examples:": [
+        "示例："
+      ],
       "Excel export requires the PHP Zip extension to be installed on this server.": [
         "Excel 导出需要此服务器安装 PHP Zip 扩展。"
+      ],
+      "Exclusions": [
+        "排除项"
       ],
       "Exit fullscreen": [
         "退出全屏"
@@ -460,11 +577,17 @@
       "General": [
         "常规"
       ],
+      "GeoIP database not installed": [
+        "GeoIP 数据库可用。"
+      ],
       "GeoIP database updated successfully.": [
         "GeoIP 数据库已成功更新。"
       ],
       "Geolocation": [
         "地理定位"
+      ],
+      "Geolocation source": [
+        "地理定位来源"
       ],
       "Get faster access from your home screen with an app-like experience.": [
         "通过类似应用的体验，从主屏幕更快访问。"
@@ -505,6 +628,9 @@
       "I confirm that I want to purge only data older than the configured retention window.": [
         "我确认只清除早于配置保留窗口的数据。"
       ],
+      "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
+        "在你的 CMP 中，在统计或分析目的被接受之前阻止 BimBeau Privacy Analytics 高级统计脚本。"
+      ],
       "Install BimBeau Privacy Analytics app": [
         "安装 BimBeau Privacy Analytics 应用"
       ],
@@ -529,11 +655,32 @@
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
       ],
+      "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire.": [
+        "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire."
+      ],
+      "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details.": [
+        "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
+      ],
+      "Last attempt": [
+        "上次尝试"
+      ],
+      "Last error code": [
+        "上次错误代码"
+      ],
+      "Last successful update": [
+        "上次成功更新"
+      ],
       "Legacy visits": [
         "每日访客"
       ],
       "Legal caution: technical diagnostics do not establish legal consent.": [
         "法律提示：技术诊断不能证明合法同意。"
+      ],
+      "License Key used for MaxMind API requests.": [
+        "用于 MaxMind API 请求的许可证密钥。"
+      ],
+      "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
+        "仅限有限的受众统计。无广告、无跨站跟踪、无第三方复用。"
       ],
       "Loading": [
         "正在加载"
@@ -577,8 +724,26 @@
       "Loading…": [
         "正在加载…"
       ],
+      "Local GeoIP database unavailable": [
+        "本地 GeoLite 数据库不可用。"
+      ],
+      "Local GeoLite database (default)": [
+        "本地 GeoLite 数据库（默认）"
+      ],
+      "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests.": [
+        "本地数据库模式会从 BimBeau Privacy Analytics 镜像下载 GeoLite MMDB 文件。API 模式使用实时 MaxMind 请求。"
+      ],
+      "Long-term totals retention": [
+        "长期总计保留期"
+      ],
       "Maintenance": [
         "维护"
+      ],
+      "Manual GeoIP database download": [
+        "GeoIP 数据库下载失败：%s"
+      ],
+      "Manual updates only": [
+        "仅基础统计"
       ],
       "Map legend": [
         "地图图例"
@@ -586,11 +751,20 @@
       "Map zoom controls": [
         "地图缩放控件"
       ],
+      "MaxMind API credentials": [
+        "MaxMind API 凭据"
+      ],
+      "MaxMind Account ID": [
+        "MaxMind 账户 ID"
+      ],
       "MaxMind Account ID is required.": [
         "必须填写 MaxMind 账户 ID。"
       ],
       "MaxMind Account ID must be numeric.": [
         "MaxMind 账户 ID 必须为数字。"
+      ],
+      "MaxMind License Key": [
+        "MaxMind 许可证密钥"
       ],
       "MaxMind License Key is required.": [
         "必须填写 MaxMind 许可证密钥。"
@@ -625,6 +799,9 @@
       "Next page": [
         "下一页"
       ],
+      "Next scheduled GeoIP update": [
+        "下次计划重试"
+      ],
       "No acquisition channel data is available for this period.": [
         "此时间段没有可用的访客画像数据。"
       ],
@@ -634,14 +811,17 @@
       "No audience breakdowns available.": [
         "没有可用的受众细分。"
       ],
+      "No automatic update scheduled": [
+        ""
+      ],
       "No available": [
         "不可用"
       ],
       "No browser usage available.": [
         "没有可用的浏览器使用数据。"
       ],
-      "No city data available.": [
-        "没有可用的城市数据。"
+      "No consent required": [
+        "无需同意"
       ],
       "No country data available for the selected period.": [
         "所选时间段没有可用的国家/地区数据。"
@@ -712,6 +892,9 @@
       "No results match the current filters.": [
         "没有结果匹配当前过滤条件。"
       ],
+      "No roles available.": [
+        "没有可用角色。"
+      ],
       "No search terms available.": [
         "没有可用的搜索词。"
       ],
@@ -720,6 +903,9 @@
       ],
       "No visits in the current activity window.": [
         "当前活动窗口内没有访问。"
+      ],
+      "Numeric Account ID used for MaxMind API requests.": [
+        "用于 MaxMind API 请求的数字账户 ID。"
       ],
       "Open": [
         "打开"
@@ -832,6 +1018,9 @@
       "Previous: %1$s": [
         "上一周期：%1$s"
       ],
+      "Privacy": [
+        "隐私"
+      ],
       "Privacy runtime diagnostics": [
         "隐私运行时诊断"
       ],
@@ -865,6 +1054,18 @@
       "Reload application": [
         "地理定位"
       ],
+      "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
+        "移除所有聚合 KPI 分析、访客详情分析和原始日志条目。"
+      ],
+      "Remove query parameters from tracked URLs.": [
+        "从跟踪的 URL 中移除查询参数。"
+      ],
+      "Report details retention": [
+        "报告详细信息保留期"
+      ],
+      "Requires consent": [
+        "需要同意"
+      ],
       "Reset": [
         "重置"
       ],
@@ -874,14 +1075,23 @@
       "Resolution": [
         "分辨率"
       ],
+      "Respect DNT / GPC": [
+        "尊重 DNT / GPC"
+      ],
       "Response preview:": [
         "响应预览："
+      ],
+      "Retry count": [
+        "重试次数"
       ],
       "Role access": [
         "角色访问"
       ],
       "Rows": [
         "行"
+      ],
+      "Run cleanup now": [
+        "立即运行清理"
       ],
       "Run diagnostic": [
         "运行诊断"
@@ -891,6 +1101,9 @@
       ],
       "Run every day": [
         "每天运行"
+      ],
+      "Run retention cleanup immediately to remove only data older than the configured retention window.": [
+        "立即运行保留清理，仅删除早于配置保留窗口的数据。"
       ],
       "Runtime granularity is reported from available granularities.": [
         "运行时粒度根据可用粒度报告。"
@@ -910,8 +1123,17 @@
       "Screen resolutions": [
         "屏幕分辨率"
       ],
+      "Script ID:": [
+        "脚本 ID："
+      ],
       "Script handles checked: %s": [
         "已检查脚本句柄：%s"
+      ],
+      "Script to block:": [
+        "要阻止的脚本："
+      ],
+      "Script:": [
+        "脚本："
       ],
       "Search": [
         "搜索"
@@ -924,6 +1146,12 @@
       ],
       "Search…": [
         "搜索…"
+      ],
+      "Select roles to exclude from tracking. Select all roles to ignore all logged-in users.": [
+        "选择要从跟踪中排除的角色。选择所有角色以忽略所有已登录用户。"
+      ],
+      "Sensitive actions": [
+        "敏感操作"
       ],
       "Session expired, reload the application.": [
         ""
@@ -948,6 +1176,9 @@
       ],
       "Status": [
         "状态"
+      ],
+      "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
+        "当访客浏览器发送“请勿跟踪”或“全局隐私控制”信号时停止测量。"
       ],
       "Summary": [
         "摘要"
@@ -985,6 +1216,12 @@
       "Technical state does not prove consent collection validity.": [
         "技术状态不能证明同意收集的有效性。"
       ],
+      "Temporary detailed events retention (days)": [
+        "临时详细事件保留期（天）"
+      ],
+      "Test MaxMind connection": [
+        "测试 MaxMind 连接"
+      ],
       "The completed export is missing a download URL.": [
         "已完成的导出缺少下载 URL。"
       ],
@@ -1003,6 +1240,9 @@
       "The export job is missing a status URL.": [
         "导出任务缺少状态 URL。"
       ],
+      "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled.": [
+        ""
+      ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "服务器返回了意外响应。请查看端点响应预览了解详情。"
       ],
@@ -1017,6 +1257,9 @@
       ],
       "This diagnostic separates script DOM presence, runtime execution, and enriched payload activity. It never proves user consent.": [
         "此诊断区分脚本 DOM 存在、运行时执行和增强载荷活动。它绝不能证明用户已同意。"
+      ],
+      "This manual download will contact an external service to download the local GeoIP database and store it in the WordPress uploads directory.": [
+        ""
       ],
       "Thu": [
         "周四"
@@ -1038,9 +1281,6 @@
       ],
       "Top 404s": [
         "热门 404"
-      ],
-      "Top cities": [
-        "热门城市"
       ],
       "Top countries": [
         "热门国家/地区"
@@ -1072,6 +1312,9 @@
       "URL": [
         "URL"
       ],
+      "URLs & campaigns": [
+        "URL 与营销活动"
+      ],
       "Unable to connect to MaxMind.": [
         "无法连接 MaxMind。"
       ],
@@ -1099,11 +1342,20 @@
       "Unknown visitor": [
         "未知访客"
       ],
+      "Update GeoIP database": [
+        "无法更新 GeoIP 数据库。"
+      ],
       "Url": [
         "网址"
       ],
+      "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
+        "Used mainly for real-time and diagnostics. Not related to Debug mode."
+      ],
       "View": [
         "查看"
+      ],
+      "Visit measurement": [
+        "访问测量"
       ],
       "Visitor": [
         "访客"
@@ -1111,8 +1363,20 @@
       "Visitor ID hash": [
         "访客 ID 哈希"
       ],
+      "Visitor activity window": [
+        "访客活动窗口"
+      ],
       "Visitor inactive": [
         "访客不活跃"
+      ],
+      "Visitor origin cannot be displayed until the local GeoIP database has been downloaded. To install it, click “Download GeoIP database”. This action will contact an external service and store the database in the WordPress uploads directory.": [
+        ""
+      ],
+      "Visitor origin unavailable": [
+        "没有可用的访客数据。"
+      ],
+      "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
+        ""
       ],
       "Visitors": [
         "访客"
@@ -1132,11 +1396,26 @@
       "Wednesday": [
         "星期三"
       ],
+      "What is a CMP?": [
+        "什么是 CMP？"
+      ],
+      "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin analytics tables from the WordPress database.": [
+        "启用后，卸载 BimBeau Privacy Analytics 会从 WordPress 数据库中删除所有插件分析表。"
+      ],
+      "WordPress handle:": [
+        "WordPress 句柄："
+      ],
       "World map": [
         "世界地图"
       ],
+      "Writes detailed diagnostic logs to the console and to wp-content/debug.log when WordPress debug logging is enabled.": [
+        "启用 WordPress 调试日志时，将详细诊断日志写入控制台和 wp-content/debug.log。"
+      ],
       "Yesterday": [
         "昨天"
+      ],
+      "Your CMP must block it until Statistics / Analytics consent is given.": [
+        "你的 CMP 必须在获得统计/分析同意之前阻止它。"
       ],
       "Zoom in map": [
         "放大地图"

@@ -18,7 +18,8 @@ msgstr ""
 "X-Generator: Poedit 2.4.3\n"
 
 #. Plugin Name of the plugin
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php front/pro-app-runtime.php
+#: src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "Αναλυτικά BimBeau Privacy Analytics"
@@ -189,13 +190,29 @@ msgid "Devices"
 msgstr "Συσκευές"
 
 #: admin/admin.php src/admin/constants/index.js
-msgid "Events"
-msgstr "Συμβάντα"
-
-#: admin/admin.php src/admin/constants/index.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Ρυθμίσεις"
+
+#: admin/admin.php
+msgid "Enable country and city reports"
+msgstr ""
+
+#: admin/admin.php
+msgid ""
+"To display countries and cities in your analytics reports, install the local "
+"GeoIP database from the geolocation settings. No GeoIP database is "
+"downloaded automatically."
+msgstr ""
+
+#: admin/admin.php
+#, fuzzy
+msgid "Configure geolocation"
+msgstr "Γεωεντοπισμός"
+
+#: admin/admin.php
+msgid "Later"
+msgstr ""
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
@@ -250,6 +267,10 @@ msgstr "Προβολές σελίδας"
 msgid "Referrers"
 msgstr "Παραπέμπτες"
 
+#: admin/edition-admin-runtime.php src/admin/constants/index.js
+msgid "Events"
+msgstr "Συμβάντα"
+
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics Pro"
 msgstr "BimBeau Privacy Analytics Pro"
@@ -258,29 +279,87 @@ msgstr "BimBeau Privacy Analytics Pro"
 msgid "BimBeau Privacy Analytics Free"
 msgstr "BimBeau Privacy Analytics Free"
 
-#. translators: 1: BimBeau Privacy Analytics package being activated, 2: BimBeau Privacy Analytics package already active.
 #: bimbeau-privacy-analytics.php
-#, php-format
-msgid ""
-"%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
-"first, then activate %1$s."
-msgstr ""
-"Το %1$s δεν μπορεί να ενεργοποιηθεί όσο το %2$s είναι ήδη ενεργό. "
-"Απενεργοποιήστε πρώτα το %2$s και μετά ενεργοποιήστε το %1$s."
+#, fuzzy
+msgid "Deactivate the other BimBeau Privacy Analytics package first."
+msgstr "Αφήστε κενό για χρήση του \"BimBeau Privacy Analytics\"."
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics activation blocked"
 msgstr "Η ενεργοποίηση του BimBeau Privacy Analytics αποκλείστηκε"
 
-#. translators: 1: BimBeau Privacy Analytics package deactivated automatically, 2: BimBeau Privacy Analytics package left active.
 #: bimbeau-privacy-analytics.php
-#, php-format
+#, fuzzy
 msgid ""
-"%1$s was deactivated because only one BimBeau Privacy Analytics package can "
-"be active at a time. %2$s remains active."
+"Only one BimBeau Privacy Analytics package can be active at a time. "
+"Deactivate the other BimBeau Privacy Analytics package first."
 msgstr ""
 "Το %1$s απενεργοποιήθηκε επειδή μόνο ένα πακέτο BimBeau Privacy Analytics "
 "μπορεί να είναι ενεργό κάθε φορά. Το %2$s παραμένει ενεργό."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics front analytics app."
+msgstr "Εφαρμογή αναλυτικών front-end του BimBeau Privacy Analytics."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics sign in"
+msgstr "Σύνδεση BimBeau Privacy Analytics"
+
+#: front/pro-app-runtime.php
+msgid ""
+"Sign in with a WordPress account that can access BimBeau Privacy Analytics "
+"analytics."
+msgstr ""
+"Συνδεθείτε με έναν λογαριασμό WordPress που έχει πρόσβαση στα αναλυτικά "
+"BimBeau Privacy Analytics."
+
+#: front/pro-app-runtime.php
+msgid "Username or email"
+msgstr "Όνομα χρήστη ή email"
+
+#: front/pro-app-runtime.php
+msgid "Password"
+msgstr "Κωδικός πρόσβασης"
+
+#: front/pro-app-runtime.php
+msgid "Remember me"
+msgstr "Να με θυμάσαι"
+
+#: front/pro-app-runtime.php
+msgid "Sign in"
+msgstr "Σύνδεση"
+
+#: front/pro-app-runtime.php
+msgid "Open WordPress login"
+msgstr "Άνοιγμα σύνδεσης WordPress"
+
+#: front/pro-app-runtime.php
+msgid "Authentication failed. Verify credentials and access policy."
+msgstr ""
+"Ο έλεγχος ταυτότητας απέτυχε. Επαληθεύστε τα διαπιστευτήρια και την πολιτική "
+"πρόσβασης."
+
+#: front/pro-app-runtime.php
+msgid "Custom login flow is unavailable in this environment."
+msgstr ""
+"Η προσαρμοσμένη ροή σύνδεσης δεν είναι διαθέσιμη σε αυτό το περιβάλλον."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics App is available in not included."
+msgstr ""
+"Η εφαρμογή BimBeau Privacy Analytics είναι διαθέσιμη μόνο στην έκδοση Pro."
+
+#: front/pro-app-runtime.php
+msgid "You are not allowed to access this page."
+msgstr "Δεν επιτρέπεται η πρόσβασή σας σε αυτήν τη σελίδα."
+
+#: front/pro-app-runtime.php
+msgid "BimBeau Privacy Analytics icon"
+msgstr "Εικονίδιο BimBeau Privacy Analytics"
+
+#: front/pro-app-runtime.php
+msgid "Loading analytics workspace…"
+msgstr "Φόρτωση χώρου εργασίας αναλυτικών…"
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -339,6 +418,7 @@ msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "Εκκαθάριση ακατέργαστων αρχείων καταγραφής BimBeau Privacy Analytics"
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "Αυτός ο πίνακας αναλυτικών είναι απενεργοποιημένος για την πλοήγηση."
 
@@ -394,10 +474,9 @@ msgid "Invalid visit identifier."
 msgstr "Μη έγκυρο αναγνωριστικό επίσκεψης."
 
 #: includes/rest/class-bbpa-report-controller.php
-msgid "Visitors details are not included in this package."
-msgstr ""
-"Οι λεπτομέρειες επισκεπτών είναι διαθέσιμες στο BimBeau Privacy Analytics "
-"Pro."
+#, fuzzy
+msgid "Visitor details are not available in this package."
+msgstr "Δεν υπάρχουν διαθέσιμες λεπτομέρειες για αυτήν τη σελίδα."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
@@ -1364,12 +1443,23 @@ msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr ""
 "Οι καθολικοί ωριαίοι heatmaps απαιτούν δεδομένα ωριαίας συγκέντρωσης σελίδων."
 
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#, fuzzy
+msgid "Visitor origin unavailable"
+msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
+
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+msgid ""
+"Visitor origin will be available after the local GeoIP database is installed "
+"from the plugin geolocation settings."
+msgstr ""
+
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "Hash ID επισκέπτη"
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "City"
 msgstr "Πόλη"
@@ -1458,12 +1548,14 @@ msgid "No search terms available."
 msgstr "Δεν υπάρχουν διαθέσιμοι όροι αναζήτησης."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Disabled"
-msgstr "Απενεργοποιημένο"
+#, fuzzy
+msgid "Manual updates only"
+msgstr "Μόνο βασικά στατιστικά"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Every 30 days (default)"
-msgstr "Κάθε 30 ημέρες (προεπιλογή)"
+#, fuzzy
+msgid "Every 30 days"
+msgstr "Κάθε 60 ημέρες"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for %(days)s days"
@@ -1518,6 +1610,10 @@ msgid "Unable to update the GeoIP database."
 msgstr "Δεν είναι δυνατή η ενημέρωση της βάσης GeoIP."
 
 #: src/admin/panels/SettingsPanel.js
+msgid "No automatic update scheduled"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "Εκκρεμές πρόγραμμα"
 
@@ -1532,6 +1628,40 @@ msgstr "σφάλμα"
 #: src/admin/panels/SettingsPanel.js
 msgid "pending"
 msgstr "σε εκκρεμότητα"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Update GeoIP database"
+msgstr "Δεν είναι δυνατή η ενημέρωση της βάσης GeoIP."
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Download GeoIP database"
+msgstr "Δεν είναι δυνατή η ενημέρωση της βάσης GeoIP."
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Local GeoIP database unavailable"
+msgstr "Η τοπική βάση δεδομένων GeoLite δεν είναι διαθέσιμη."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"The local GeoIP database seems to be missing or unreadable. Country and city "
+"reports may be incomplete until it is reinstalled."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "GeoIP database not installed"
+msgstr "Η βάση δεδομένων GeoIP είναι διαθέσιμη."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Visitor origin cannot be displayed until the local GeoIP database has been "
+"downloaded. To install it, click “Download GeoIP database”. This action will "
+"contact an external service and store the database in the WordPress uploads "
+"directory."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
@@ -1613,6 +1743,468 @@ msgstr "Επιτρέπεται"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "Κρυφό"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
+"database or MaxMind API."
+msgstr ""
+"Επιλέξτε πώς το BimBeau Privacy Analytics επιλύει τον γεωεντοπισμό: τοπική "
+"βάση GeoLite ή API MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Geolocation source"
+msgstr "Πηγή γεωεντοπισμού"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Local GeoLite database (default)"
+msgstr "Τοπική βάση GeoLite (προεπιλογή)"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind API credentials"
+msgstr "Διαπιστευτήρια API MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid ""
+"Local database mode downloads the GeoLite MMDB file through the official "
+"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
+msgstr ""
+"Η λειτουργία τοπικής βάσης κατεβάζει το αρχείο GeoLite MMDB από mirrors του "
+"BimBeau Privacy Analytics. Η λειτουργία API χρησιμοποιεί ζωντανά αιτήματα "
+"MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind Account ID"
+msgstr "ID λογαριασμού MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Numeric Account ID used for MaxMind API requests."
+msgstr ""
+"Αριθμητικό ID λογαριασμού που χρησιμοποιείται για αιτήματα API MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "MaxMind License Key"
+msgstr "Κλειδί άδειας MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "License Key used for MaxMind API requests."
+msgstr "Κλειδί άδειας που χρησιμοποιείται για αιτήματα API MaxMind."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Test MaxMind connection"
+msgstr "Δοκιμή σύνδεσης MaxMind"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Automatic GeoIP database updates"
+msgstr "Αυτόματες ενημερώσεις βάσης GeoIP"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose whether the local GeoIP database should be updated automatically. In "
+"“manual updates only” mode, no external server is contacted automatically. "
+"You can still download or update the database manually with the button below."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Manual GeoIP database download"
+msgstr "Η λήψη της βάσης GeoIP απέτυχε: %s"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"This manual download will contact an external service to download the local "
+"GeoIP database and store it in the WordPress uploads directory."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Current state"
+msgstr "Τρέχουσα κατάσταση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last attempt"
+msgstr "Τελευταία προσπάθεια"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Next scheduled GeoIP update"
+msgstr "Επόμενη προγραμματισμένη επανάληψη"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last successful update"
+msgstr "Τελευταία επιτυχής ενημέρωση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Database size"
+msgstr "Μέγεθος βάσης δεδομένων"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Last error code"
+msgstr "Τελευταίος κωδικός σφάλματος"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Retry count"
+msgstr "Πλήθος επαναλήψεων"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Behavior: plugin activation completes quickly, and temporary local database "
+"unavailability does not block the rest of BimBeau Privacy Analytics."
+msgstr ""
+"Συμπεριφορά: η ενεργοποίηση του πρόσθετου ολοκληρώνεται γρήγορα και η "
+"προσωρινή μη διαθεσιμότητα της τοπικής βάσης δεν αποκλείει το υπόλοιπο "
+"BimBeau Privacy Analytics."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Privacy"
+msgstr "Απόρρητο"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced stats require consent"
+msgstr "Τα προηγμένα στατιστικά απαιτούν συναίνεση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential stats only"
+msgstr "Μόνο βασικά στατιστικά"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Essential stats run without consent. Advanced stats run only after "
+"Statistics / Analytics consent."
+msgstr ""
+"Τα βασικά στατιστικά λειτουργούν χωρίς συναίνεση. Τα προηγμένα στατιστικά "
+"λειτουργούν μόνο μετά από συναίνεση για Στατιστικά / Αναλυτικά."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential stats"
+msgstr "Βασικά στατιστικά"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No consent required"
+msgstr "Δεν απαιτείται συναίνεση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Limited audience stats only. No ads, no cross-site tracking, no third-party "
+"reuse."
+msgstr ""
+"Μόνο περιορισμένα στατιστικά κοινού. Χωρίς διαφημίσεις, χωρίς παρακολούθηση "
+"μεταξύ ιστότοπων, χωρίς επαναχρησιμοποίηση από τρίτους."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Essential data"
+msgstr "Βασικά δεδομένα"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script:"
+msgstr "Script:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced stats"
+msgstr "Προηγμένα στατιστικά"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Requires consent"
+msgstr "Απαιτεί συναίνεση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Adds detailed visit insights after consent."
+msgstr "Προσθέτει λεπτομερείς πληροφορίες επισκέψεων μετά τη συναίνεση."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Enable advanced stats after consent"
+msgstr "Ενεργοποίηση προηγμένων στατιστικών μετά τη συναίνεση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Your CMP must block it until Statistics / Analytics consent is given."
+msgstr ""
+"Το CMP σας πρέπει να το αποκλείει μέχρι να δοθεί συναίνεση για Στατιστικά / "
+"Αναλυτικά."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Advanced data"
+msgstr "Προηγμένα δεδομένα"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "CMP setup"
+msgstr "Ρύθμιση CMP"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Block the advanced stats script until Statistics / Analytics consent is "
+"given."
+msgstr ""
+"Αποκλείστε το script προηγμένων στατιστικών μέχρι να δοθεί συναίνεση για "
+"Στατιστικά / Αναλυτικά."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script to block:"
+msgstr "Script προς αποκλεισμό:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Alternative selectors:"
+msgstr "Εναλλακτικοί επιλογείς:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Script ID:"
+msgstr "ID script:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "WordPress handle:"
+msgstr "Handle WordPress:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "What is a CMP?"
+msgstr "Τι είναι ένα CMP;"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"A CMP manages cookie consent on your website. It shows the cookie banner, "
+"stores visitor choices, and allows or blocks analytics scripts based on "
+"consent."
+msgstr ""
+"Ένα CMP διαχειρίζεται τη συναίνεση cookies στον ιστότοπό σας. Εμφανίζει το "
+"banner cookies, αποθηκεύει τις επιλογές των επισκεπτών και επιτρέπει ή "
+"αποκλείει scripts αναλυτικών βάσει συναίνεσης."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Examples:"
+msgstr "Παραδείγματα:"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"In your CMP, block the BimBeau Privacy Analytics advanced stats script until "
+"the Statistics or Analytics purpose is accepted."
+msgstr ""
+"Στο CMP σας, αποκλείστε το script προηγμένων στατιστικών του BimBeau Privacy "
+"Analytics μέχρι να γίνει αποδεκτός ο σκοπός Στατιστικά ή Αναλυτικά."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Advanced stats are disabled. BimBeau Privacy Analytics will only use "
+"essential stats."
+msgstr ""
+"Τα προηγμένα στατιστικά είναι απενεργοποιημένα. Το BimBeau Privacy Analytics "
+"θα χρησιμοποιεί μόνο βασικά στατιστικά."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Respect DNT / GPC"
+msgstr "Σεβασμός DNT / GPC"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Stop measurement when the visitor’s browser sends a Do Not Track or Global "
+"Privacy Control signal."
+msgstr ""
+"Διακόψτε τη μέτρηση όταν ο περιηγητής του επισκέπτη στέλνει σήμα Do Not "
+"Track ή Global Privacy Control."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visit measurement"
+msgstr "Μέτρηση επισκέψεων"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Defines how long visitor activity can remain grouped under the same visitor "
+"row before a new row is started after inactivity."
+msgstr ""
+"Ορίζει για πόσο χρόνο η δραστηριότητα ενός επισκέπτη μπορεί να παραμείνει "
+"ομαδοποιημένη στην ίδια γραμμή επισκέπτη πριν ξεκινήσει νέα γραμμή μετά από "
+"αδράνεια."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visitor activity window"
+msgstr "Παράθυρο δραστηριότητας επισκέπτη"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Defines how long activity from the same visitor can remain grouped into one "
+"visitor row. After this period of inactivity, BimBeau Privacy Analytics "
+"starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 "
+"hours)."
+msgstr ""
+"Ορίζει για πόσο χρόνο η δραστηριότητα από τον ίδιο επισκέπτη μπορεί να "
+"παραμείνει ομαδοποιημένη σε μία γραμμή επισκέπτη. Μετά από αυτή την περίοδο "
+"αδράνειας, το BimBeau Privacy Analytics ξεκινά νέα γραμμή επισκέπτη. Εύρος: "
+"300 έως 86400 δευτερόλεπτα (5 λεπτά έως 24 ώρες)."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "URLs & campaigns"
+msgstr "URL και καμπάνιες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Control URL cleanup behavior and keep only campaign query parameters that "
+"should remain available for attribution."
+msgstr ""
+"Ελέγξτε τη συμπεριφορά καθαρισμού URL και κρατήστε μόνο τις παραμέτρους "
+"καμπάνιας που πρέπει να παραμένουν διαθέσιμες για απόδοση."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Clean URL query parameters"
+msgstr "Καθαρισμός παραμέτρων query URL"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Remove query parameters from tracked URLs."
+msgstr "Αφαίρεση παραμέτρων query από τα παρακολουθούμενα URL."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Allowed query parameters"
+msgstr "Επιτρεπόμενες παράμετροι query"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Comma-separated list of allowed query keys (used for URL tracking and UTM "
+"aggregation)."
+msgstr ""
+"Λίστα επιτρεπόμενων κλειδιών query χωρισμένη με κόμματα (χρησιμοποιείται για "
+"παρακολούθηση URL και συγκέντρωση UTM)."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Data retention"
+msgstr "Διατήρηση δεδομένων"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Choose how long to keep temporary detailed events, report details, and long-"
+"term totals, then how often cleanup runs."
+msgstr ""
+"Choose how long to keep temporary detailed events, report details, and long-"
+"term totals, then how often cleanup runs."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Temporary detailed events retention (days)"
+msgstr "Διατήρηση προσωρινών λεπτομερών συμβάντων (ημέρες)"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Used mainly for real-time and diagnostics. Not related to Debug mode."
+msgstr "Used mainly for real-time and diagnostics. Not related to Debug mode."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Report details retention"
+msgstr "Διατήρηση λεπτομερειών αναφορών"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Keeps detailed report dimensions such as pages, referrers, countries, "
+"devices, and visitor details."
+msgstr ""
+"Keeps detailed report dimensions such as pages, referrers, countries, "
+"devices, and visitor details."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Long-term totals retention"
+msgstr "Διατήρηση μακροπρόθεσμων συνόλων"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
+"chart after report details expire."
+msgstr ""
+"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
+"chart after report details expire."
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Cleanup permanently removes expired details, while long-term totals remain "
+"available until their own retention window ends."
+msgstr ""
+"Cleanup permanently removes expired details, while long-term totals remain "
+"available until their own retention window ends."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Automatic cleanup frequency"
+msgstr "Συχνότητα αυτόματου καθαρισμού"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Defines how often WordPress checks for expired analytics data."
+msgstr "Defines how often WordPress checks for expired analytics data."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Exclusions"
+msgstr "Εξαιρέσεις"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Select roles to exclude from tracking. Select all roles to ignore all logged-"
+"in users."
+msgstr ""
+"Επιλέξτε ρόλους για εξαίρεση από την παρακολούθηση. Επιλέξτε όλους τους "
+"ρόλους για να αγνοηθούν όλοι οι συνδεδεμένοι χρήστες."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No roles available."
+msgstr "Δεν υπάρχουν διαθέσιμοι ρόλοι."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Debug"
+msgstr "Αποσφαλμάτωση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Enable diagnostic output for troubleshooting tracking events, realtime "
+"visitor detection, and REST payloads in the browser console and wp-content/"
+"debug.log."
+msgstr ""
+"Ενεργοποιήστε διαγνωστική έξοδο για αντιμετώπιση προβλημάτων συμβάντων "
+"παρακολούθησης, ανίχνευσης επισκεπτών σε πραγματικό χρόνο και payloads REST "
+"στην κονσόλα του περιηγητή και στο wp-content/debug.log."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Debug mode"
+msgstr "Λειτουργία debug"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Writes detailed diagnostic logs to the console and to wp-content/debug.log "
+"when WordPress debug logging is enabled."
+msgstr ""
+"Γράφει λεπτομερή διαγνωστικά logs στην κονσόλα και στο wp-content/debug.log "
+"όταν είναι ενεργοποιημένο το debug logging του WordPress."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cleanup actions"
+msgstr "Ενέργειες εκκαθάρισης"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Run retention cleanup immediately to remove only data older than the "
+"configured retention window."
+msgstr ""
+"Εκτελέστε άμεσα την εκκαθάριση διατήρησης για να αφαιρεθούν μόνο δεδομένα "
+"παλαιότερα από το ρυθμισμένο παράθυρο διατήρησης."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Run cleanup now"
+msgstr "Εκτέλεση εκκαθάρισης τώρα"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete plugin tables on uninstall"
+msgstr "Διαγραφή πινάκων του plugin κατά την απεγκατάσταση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
+"analytics tables from the WordPress database."
+msgstr ""
+"Όταν είναι ενεργό, η απεγκατάσταση του BimBeau Privacy Analytics διαγράφει "
+"όλους τους πίνακες αναλυτικών του plugin από τη βάση δεδομένων WordPress."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Sensitive actions"
+msgstr "Ευαίσθητες ενέργειες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
+"entries."
+msgstr ""
+"Αφαίρεση όλων των συγκεντρωτικών αναλυτικών KPI, των λεπτομερειών επισκεπτών "
+"και των εγγραφών ακατέργαστων logs."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete all analytics data"
+msgstr "Διαγραφή όλων των δεδομένων αναλυτικών"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
@@ -1833,14 +2425,6 @@ msgstr "στοιχεία"
 #: src/admin/panels/TopPagesPanel.js
 msgid "No country data available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας."
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Top cities"
-msgstr "Κορυφαίες πόλεις"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No city data available."
-msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα πόλης."
 
 #: src/admin/panels/TopPagesPanel.js
 msgid "Top pages"
@@ -2242,56 +2826,6 @@ msgstr "Ιδιωτικό"
 msgid "Table: Visitors"
 msgstr "Πίνακας: Επισκέπτες"
 
-#~ msgid "BimBeau Privacy Analytics front analytics app."
-#~ msgstr "Εφαρμογή αναλυτικών front-end του BimBeau Privacy Analytics."
-
-#~ msgid "BimBeau Privacy Analytics sign in"
-#~ msgstr "Σύνδεση BimBeau Privacy Analytics"
-
-#~ msgid ""
-#~ "Sign in with a WordPress account that can access BimBeau Privacy "
-#~ "Analytics analytics."
-#~ msgstr ""
-#~ "Συνδεθείτε με έναν λογαριασμό WordPress που έχει πρόσβαση στα αναλυτικά "
-#~ "BimBeau Privacy Analytics."
-
-#~ msgid "Username or email"
-#~ msgstr "Όνομα χρήστη ή email"
-
-#~ msgid "Password"
-#~ msgstr "Κωδικός πρόσβασης"
-
-#~ msgid "Remember me"
-#~ msgstr "Να με θυμάσαι"
-
-#~ msgid "Sign in"
-#~ msgstr "Σύνδεση"
-
-#~ msgid "Open WordPress login"
-#~ msgstr "Άνοιγμα σύνδεσης WordPress"
-
-#~ msgid "Authentication failed. Verify credentials and access policy."
-#~ msgstr ""
-#~ "Ο έλεγχος ταυτότητας απέτυχε. Επαληθεύστε τα διαπιστευτήρια και την "
-#~ "πολιτική πρόσβασης."
-
-#~ msgid "Custom login flow is unavailable in this environment."
-#~ msgstr ""
-#~ "Η προσαρμοσμένη ροή σύνδεσης δεν είναι διαθέσιμη σε αυτό το περιβάλλον."
-
-#~ msgid "BimBeau Privacy Analytics App is available in not included."
-#~ msgstr ""
-#~ "Η εφαρμογή BimBeau Privacy Analytics είναι διαθέσιμη μόνο στην έκδοση Pro."
-
-#~ msgid "You are not allowed to access this page."
-#~ msgstr "Δεν επιτρέπεται η πρόσβασή σας σε αυτήν τη σελίδα."
-
-#~ msgid "BimBeau Privacy Analytics icon"
-#~ msgstr "Εικονίδιο BimBeau Privacy Analytics"
-
-#~ msgid "Loading analytics workspace…"
-#~ msgstr "Φόρτωση χώρου εργασίας αναλυτικών…"
-
 #~ msgid "Custom login flow is blocked by policy."
 #~ msgstr "Η προσαρμοσμένη ροή σύνδεσης έχει αποκλειστεί από την πολιτική."
 
@@ -2343,14 +2877,16 @@ msgstr "Πίνακας: Επισκέπτες"
 #~ msgid "Views trend"
 #~ msgstr "Τάση προβολών"
 
-#~ msgid "This feature is not included in this package."
+#~ msgid "KPI slot must be a numeric integer greater than or equal to 2."
 #~ msgstr ""
-#~ "Αυτή η λειτουργία είναι διαθέσιμη στο BimBeau Privacy Analytics Pro."
+#~ "Η θέση KPI πρέπει να είναι αριθμητικός ακέραιος μεγαλύτερος ή ίσος με 2."
 
-#~ msgid "Page-level details are not included in this package."
+#~ msgid ""
+#~ "KPI slot format is invalid. Use only a numeric integer greater than or "
+#~ "equal to 2."
 #~ msgstr ""
-#~ "Οι λεπτομέρειες σε επίπεδο σελίδας είναι διαθέσιμες στο BimBeau Privacy "
-#~ "Analytics Pro."
+#~ "Η μορφή της θέσης KPI δεν είναι έγκυρη. Χρησιμοποιήστε μόνο αριθμητικό "
+#~ "ακέραιο μεγαλύτερο ή ίσο με 2."
 
 #~ msgid "Missing page path."
 #~ msgstr "Λείπει η διαδρομή σελίδας."
@@ -2443,19 +2979,12 @@ msgstr "Πίνακας: Επισκέπτες"
 #~ msgid "The export job was not found or has expired."
 #~ msgstr "Η εργασία εξαγωγής δεν βρέθηκε ή έχει λήξει."
 
-#~ msgid "KPI slot must be a numeric integer greater than or equal to 2."
-#~ msgstr ""
-#~ "Η θέση KPI πρέπει να είναι αριθμητικός ακέραιος μεγαλύτερος ή ίσος με 2."
-
-#~ msgid ""
-#~ "KPI slot format is invalid. Use only a numeric integer greater than or "
-#~ "equal to 2."
-#~ msgstr ""
-#~ "Η μορφή της θέσης KPI δεν είναι έγκυρη. Χρησιμοποιήστε μόνο αριθμητικό "
-#~ "ακέραιο μεγαλύτερο ή ίσο με 2."
-
 #~ msgid "BimBeau Privacy Analytics Pro feature preview"
 #~ msgstr "Προεπισκόπηση λειτουργίας BimBeau Privacy Analytics Pro"
+
+#~ msgid "This feature is not included in this package."
+#~ msgstr ""
+#~ "Αυτή η λειτουργία είναι διαθέσιμη στο BimBeau Privacy Analytics Pro."
 
 #~ msgid "PWA Stats App"
 #~ msgstr "Εφαρμογή στατιστικών PWA"
@@ -2679,8 +3208,13 @@ msgstr "Πίνακας: Επισκέπτες"
 #~ msgid "Do you want to remove this event?"
 #~ msgstr "Θέλετε να αφαιρέσετε αυτό το συμβάν;"
 
+#, fuzzy
 #~ msgid "No city data available for the selected period."
-#~ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα πόλης για την επιλεγμένη περίοδο."
+#~ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας για την επιλεγμένη περίοδο."
+
+#, fuzzy
+#~ msgid "Top cities"
+#~ msgstr "Κορυφαίες χώρες"
 
 #~ msgid "City / Country"
 #~ msgstr "Πόλη / Χώρα"
@@ -2763,381 +3297,46 @@ msgstr "Πίνακας: Επισκέπτες"
 #~ msgid "No post types available."
 #~ msgstr "Δεν υπάρχουν διαθέσιμοι τύποι δημοσιεύσεων."
 
+#~ msgid "Events configuration"
+#~ msgstr "Ρύθμιση συμβάντων"
+
+#, php-format
 #~ msgid ""
-#~ "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
-#~ "database or MaxMind API."
+#~ "%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
+#~ "first, then activate %1$s."
 #~ msgstr ""
-#~ "Επιλέξτε πώς το BimBeau Privacy Analytics επιλύει τον γεωεντοπισμό: "
-#~ "τοπική βάση GeoLite ή API MaxMind."
-
-#~ msgid "Geolocation source"
-#~ msgstr "Πηγή γεωεντοπισμού"
-
-#~ msgid "Local GeoLite database (default)"
-#~ msgstr "Τοπική βάση GeoLite (προεπιλογή)"
-
-#~ msgid "MaxMind API credentials"
-#~ msgstr "Διαπιστευτήρια API MaxMind"
+#~ "Το %1$s δεν μπορεί να ενεργοποιηθεί όσο το %2$s είναι ήδη ενεργό. "
+#~ "Απενεργοποιήστε πρώτα το %2$s και μετά ενεργοποιήστε το %1$s."
 
 #, fuzzy
-#~ msgid ""
-#~ "Local database mode downloads the GeoLite MMDB file through the official "
-#~ "BimBeau GeoIP Database Service manifest. API mode uses live MaxMind "
-#~ "requests."
-#~ msgstr ""
-#~ "Η λειτουργία τοπικής βάσης κατεβάζει το αρχείο GeoLite MMDB από mirrors "
-#~ "του BimBeau Privacy Analytics. Η λειτουργία API χρησιμοποιεί ζωντανά "
-#~ "αιτήματα MaxMind."
+#~ msgid "Base GeoIP non installée"
+#~ msgstr "Η τοπική βάση δεδομένων GeoLite δεν είναι διαθέσιμη."
 
-#~ msgid "MaxMind Account ID"
-#~ msgstr "ID λογαριασμού MaxMind"
-
-#~ msgid "Numeric Account ID used for MaxMind API requests."
-#~ msgstr ""
-#~ "Αριθμητικό ID λογαριασμού που χρησιμοποιείται για αιτήματα API MaxMind."
-
-#~ msgid "MaxMind License Key"
-#~ msgstr "Κλειδί άδειας MaxMind"
-
-#~ msgid "License Key used for MaxMind API requests."
-#~ msgstr "Κλειδί άδειας που χρησιμοποιείται για αιτήματα API MaxMind."
-
-#~ msgid "Test MaxMind connection"
-#~ msgstr "Δοκιμή σύνδεσης MaxMind"
-
-#~ msgid "Automatic GeoIP database updates"
-#~ msgstr "Αυτόματες ενημερώσεις βάσης GeoIP"
-
-#~ msgid "Controls the cron frequency for local GeoIP database updates."
-#~ msgstr "Ελέγχει τη συχνότητα cron για ενημερώσεις της τοπικής βάσης GeoIP."
+#~ msgid "Disabled"
+#~ msgstr "Απενεργοποιημένο"
 
 #~ msgid "Update now"
 #~ msgstr "Ενημέρωση τώρα"
 
-#~ msgid "Current state"
-#~ msgstr "Τρέχουσα κατάσταση"
+#, fuzzy
+#~ msgid "Reinstall local GeoIP database"
+#~ msgstr "Δεν είναι δυνατή η ενημέρωση της βάσης GeoIP."
 
-#~ msgid "Last attempt"
-#~ msgstr "Τελευταία προσπάθεια"
-
-#~ msgid "Next scheduled retry"
-#~ msgstr "Επόμενη προγραμματισμένη επανάληψη"
-
-#~ msgid "Last successful update"
-#~ msgstr "Τελευταία επιτυχής ενημέρωση"
-
-#~ msgid "Database size"
-#~ msgstr "Μέγεθος βάσης δεδομένων"
-
-#~ msgid "Last error code"
-#~ msgstr "Τελευταίος κωδικός σφάλματος"
-
-#~ msgid "Retry count"
-#~ msgstr "Πλήθος επαναλήψεων"
-
-#~ msgid ""
-#~ "Behavior: plugin activation completes quickly, and temporary local "
-#~ "database unavailability does not block the rest of BimBeau Privacy "
-#~ "Analytics."
+#~ msgid "Visitors details are not included in this package."
 #~ msgstr ""
-#~ "Συμπεριφορά: η ενεργοποίηση του πρόσθετου ολοκληρώνεται γρήγορα και η "
-#~ "προσωρινή μη διαθεσιμότητα της τοπικής βάσης δεν αποκλείει το υπόλοιπο "
-#~ "BimBeau Privacy Analytics."
+#~ "Οι λεπτομέρειες επισκεπτών είναι διαθέσιμες στο BimBeau Privacy Analytics "
+#~ "Pro."
 
-#~ msgid "Privacy"
-#~ msgstr "Απόρρητο"
-
-#~ msgid "Advanced stats require consent"
-#~ msgstr "Τα προηγμένα στατιστικά απαιτούν συναίνεση"
-
-#~ msgid "Essential stats only"
-#~ msgstr "Μόνο βασικά στατιστικά"
-
-#~ msgid ""
-#~ "Essential stats run without consent. Advanced stats run only after "
-#~ "Statistics / Analytics consent."
+#~ msgid "Page-level details are not included in this package."
 #~ msgstr ""
-#~ "Τα βασικά στατιστικά λειτουργούν χωρίς συναίνεση. Τα προηγμένα στατιστικά "
-#~ "λειτουργούν μόνο μετά από συναίνεση για Στατιστικά / Αναλυτικά."
+#~ "Οι λεπτομέρειες σε επίπεδο σελίδας είναι διαθέσιμες στο BimBeau Privacy "
+#~ "Analytics Pro."
 
-#~ msgid "Essential stats"
-#~ msgstr "Βασικά στατιστικά"
+#~ msgid "Every 30 days (default)"
+#~ msgstr "Κάθε 30 ημέρες (προεπιλογή)"
 
-#~ msgid "No consent required"
-#~ msgstr "Δεν απαιτείται συναίνεση"
-
-#~ msgid ""
-#~ "Limited audience stats only. No ads, no cross-site tracking, no third-"
-#~ "party reuse."
-#~ msgstr ""
-#~ "Μόνο περιορισμένα στατιστικά κοινού. Χωρίς διαφημίσεις, χωρίς "
-#~ "παρακολούθηση μεταξύ ιστότοπων, χωρίς επαναχρησιμοποίηση από τρίτους."
-
-#~ msgid "Essential data"
-#~ msgstr "Βασικά δεδομένα"
-
-#~ msgid "Script:"
-#~ msgstr "Script:"
-
-#~ msgid "Advanced stats"
-#~ msgstr "Προηγμένα στατιστικά"
-
-#~ msgid "Requires consent"
-#~ msgstr "Απαιτεί συναίνεση"
-
-#~ msgid "Adds detailed visit insights after consent."
-#~ msgstr "Προσθέτει λεπτομερείς πληροφορίες επισκέψεων μετά τη συναίνεση."
-
-#~ msgid "Enable advanced stats after consent"
-#~ msgstr "Ενεργοποίηση προηγμένων στατιστικών μετά τη συναίνεση"
-
-#~ msgid ""
-#~ "Your CMP must block it until Statistics / Analytics consent is given."
-#~ msgstr ""
-#~ "Το CMP σας πρέπει να το αποκλείει μέχρι να δοθεί συναίνεση για "
-#~ "Στατιστικά / Αναλυτικά."
-
-#~ msgid "Advanced data"
-#~ msgstr "Προηγμένα δεδομένα"
-
-#~ msgid "CMP setup"
-#~ msgstr "Ρύθμιση CMP"
-
-#~ msgid ""
-#~ "Block the advanced stats script until Statistics / Analytics consent is "
-#~ "given."
-#~ msgstr ""
-#~ "Αποκλείστε το script προηγμένων στατιστικών μέχρι να δοθεί συναίνεση για "
-#~ "Στατιστικά / Αναλυτικά."
-
-#~ msgid "Script to block:"
-#~ msgstr "Script προς αποκλεισμό:"
-
-#~ msgid "Alternative selectors:"
-#~ msgstr "Εναλλακτικοί επιλογείς:"
-
-#~ msgid "Script ID:"
-#~ msgstr "ID script:"
-
-#~ msgid "WordPress handle:"
-#~ msgstr "Handle WordPress:"
-
-#~ msgid "What is a CMP?"
-#~ msgstr "Τι είναι ένα CMP;"
-
-#~ msgid ""
-#~ "A CMP manages cookie consent on your website. It shows the cookie banner, "
-#~ "stores visitor choices, and allows or blocks analytics scripts based on "
-#~ "consent."
-#~ msgstr ""
-#~ "Ένα CMP διαχειρίζεται τη συναίνεση cookies στον ιστότοπό σας. Εμφανίζει "
-#~ "το banner cookies, αποθηκεύει τις επιλογές των επισκεπτών και επιτρέπει ή "
-#~ "αποκλείει scripts αναλυτικών βάσει συναίνεσης."
-
-#~ msgid "Examples:"
-#~ msgstr "Παραδείγματα:"
-
-#~ msgid ""
-#~ "In your CMP, block the BimBeau Privacy Analytics advanced stats script "
-#~ "until the Statistics or Analytics purpose is accepted."
-#~ msgstr ""
-#~ "Στο CMP σας, αποκλείστε το script προηγμένων στατιστικών του BimBeau "
-#~ "Privacy Analytics μέχρι να γίνει αποδεκτός ο σκοπός Στατιστικά ή "
-#~ "Αναλυτικά."
-
-#~ msgid ""
-#~ "Advanced stats are disabled. BimBeau Privacy Analytics will only use "
-#~ "essential stats."
-#~ msgstr ""
-#~ "Τα προηγμένα στατιστικά είναι απενεργοποιημένα. Το BimBeau Privacy "
-#~ "Analytics θα χρησιμοποιεί μόνο βασικά στατιστικά."
-
-#~ msgid "Respect DNT / GPC"
-#~ msgstr "Σεβασμός DNT / GPC"
-
-#~ msgid ""
-#~ "Stop measurement when the visitor’s browser sends a Do Not Track or "
-#~ "Global Privacy Control signal."
-#~ msgstr ""
-#~ "Διακόψτε τη μέτρηση όταν ο περιηγητής του επισκέπτη στέλνει σήμα Do Not "
-#~ "Track ή Global Privacy Control."
-
-#~ msgid "Visit measurement"
-#~ msgstr "Μέτρηση επισκέψεων"
-
-#~ msgid ""
-#~ "Defines how long visitor activity can remain grouped under the same "
-#~ "visitor row before a new row is started after inactivity."
-#~ msgstr ""
-#~ "Ορίζει για πόσο χρόνο η δραστηριότητα ενός επισκέπτη μπορεί να παραμείνει "
-#~ "ομαδοποιημένη στην ίδια γραμμή επισκέπτη πριν ξεκινήσει νέα γραμμή μετά "
-#~ "από αδράνεια."
-
-#~ msgid "Visitor activity window"
-#~ msgstr "Παράθυρο δραστηριότητας επισκέπτη"
-
-#~ msgid ""
-#~ "Defines how long activity from the same visitor can remain grouped into "
-#~ "one visitor row. After this period of inactivity, BimBeau Privacy "
-#~ "Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 "
-#~ "minutes to 24 hours)."
-#~ msgstr ""
-#~ "Ορίζει για πόσο χρόνο η δραστηριότητα από τον ίδιο επισκέπτη μπορεί να "
-#~ "παραμείνει ομαδοποιημένη σε μία γραμμή επισκέπτη. Μετά από αυτή την "
-#~ "περίοδο αδράνειας, το BimBeau Privacy Analytics ξεκινά νέα γραμμή "
-#~ "επισκέπτη. Εύρος: 300 έως 86400 δευτερόλεπτα (5 λεπτά έως 24 ώρες)."
-
-#~ msgid "URLs & campaigns"
-#~ msgstr "URL και καμπάνιες"
-
-#~ msgid ""
-#~ "Control URL cleanup behavior and keep only campaign query parameters that "
-#~ "should remain available for attribution."
-#~ msgstr ""
-#~ "Ελέγξτε τη συμπεριφορά καθαρισμού URL και κρατήστε μόνο τις παραμέτρους "
-#~ "καμπάνιας που πρέπει να παραμένουν διαθέσιμες για απόδοση."
-
-#~ msgid "Clean URL query parameters"
-#~ msgstr "Καθαρισμός παραμέτρων query URL"
-
-#~ msgid "Remove query parameters from tracked URLs."
-#~ msgstr "Αφαίρεση παραμέτρων query από τα παρακολουθούμενα URL."
-
-#~ msgid "Allowed query parameters"
-#~ msgstr "Επιτρεπόμενες παράμετροι query"
-
-#~ msgid ""
-#~ "Comma-separated list of allowed query keys (used for URL tracking and UTM "
-#~ "aggregation)."
-#~ msgstr ""
-#~ "Λίστα επιτρεπόμενων κλειδιών query χωρισμένη με κόμματα (χρησιμοποιείται "
-#~ "για παρακολούθηση URL και συγκέντρωση UTM)."
-
-#~ msgid "Data retention"
-#~ msgstr "Διατήρηση δεδομένων"
-
-#~ msgid ""
-#~ "Choose how long to keep temporary detailed events, report details, and "
-#~ "long-term totals, then how often cleanup runs."
-#~ msgstr ""
-#~ "Choose how long to keep temporary detailed events, report details, and "
-#~ "long-term totals, then how often cleanup runs."
-
-#~ msgid "Temporary detailed events retention (days)"
-#~ msgstr "Διατήρηση προσωρινών λεπτομερών συμβάντων (ημέρες)"
-
-#~ msgid ""
-#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
-#~ msgstr ""
-#~ "Used mainly for real-time and diagnostics. Not related to Debug mode."
-
-#~ msgid "Report details retention"
-#~ msgstr "Διατήρηση λεπτομερειών αναφορών"
-
-#~ msgid ""
-#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
-#~ "devices, and visitor details."
-#~ msgstr ""
-#~ "Keeps detailed report dimensions such as pages, referrers, countries, "
-#~ "devices, and visitor details."
-
-#~ msgid "Long-term totals retention"
-#~ msgstr "Διατήρηση μακροπρόθεσμων συνόλων"
-
-#~ msgid ""
-#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
-#~ "visitors chart after report details expire."
-#~ msgstr ""
-#~ "Keeps anonymous daily totals for dashboard KPIs and the page views/"
-#~ "visitors chart after report details expire."
-
-#~ msgid ""
-#~ "Cleanup permanently removes expired details, while long-term totals "
-#~ "remain available until their own retention window ends."
-#~ msgstr ""
-#~ "Cleanup permanently removes expired details, while long-term totals "
-#~ "remain available until their own retention window ends."
-
-#~ msgid "Automatic cleanup frequency"
-#~ msgstr "Συχνότητα αυτόματου καθαρισμού"
-
-#~ msgid "Defines how often WordPress checks for expired analytics data."
-#~ msgstr "Defines how often WordPress checks for expired analytics data."
-
-#~ msgid "Exclusions"
-#~ msgstr "Εξαιρέσεις"
-
-#~ msgid ""
-#~ "Select roles to exclude from tracking. Select all roles to ignore all "
-#~ "logged-in users."
-#~ msgstr ""
-#~ "Επιλέξτε ρόλους για εξαίρεση από την παρακολούθηση. Επιλέξτε όλους τους "
-#~ "ρόλους για να αγνοηθούν όλοι οι συνδεδεμένοι χρήστες."
-
-#~ msgid "No roles available."
-#~ msgstr "Δεν υπάρχουν διαθέσιμοι ρόλοι."
-
-#~ msgid "Debug"
-#~ msgstr "Αποσφαλμάτωση"
-
-#~ msgid ""
-#~ "Enable diagnostic output for troubleshooting tracking events, realtime "
-#~ "visitor detection, and REST payloads in the browser console and wp-"
-#~ "content/debug.log."
-#~ msgstr ""
-#~ "Ενεργοποιήστε διαγνωστική έξοδο για αντιμετώπιση προβλημάτων συμβάντων "
-#~ "παρακολούθησης, ανίχνευσης επισκεπτών σε πραγματικό χρόνο και payloads "
-#~ "REST στην κονσόλα του περιηγητή και στο wp-content/debug.log."
-
-#~ msgid "Debug mode"
-#~ msgstr "Λειτουργία debug"
-
-#~ msgid ""
-#~ "Writes detailed diagnostic logs to the console and to wp-content/debug."
-#~ "log when WordPress debug logging is enabled."
-#~ msgstr ""
-#~ "Γράφει λεπτομερή διαγνωστικά logs στην κονσόλα και στο wp-content/debug."
-#~ "log όταν είναι ενεργοποιημένο το debug logging του WordPress."
-
-#~ msgid "Cleanup actions"
-#~ msgstr "Ενέργειες εκκαθάρισης"
-
-#~ msgid ""
-#~ "Run retention cleanup immediately to remove only data older than the "
-#~ "configured retention window."
-#~ msgstr ""
-#~ "Εκτελέστε άμεσα την εκκαθάριση διατήρησης για να αφαιρεθούν μόνο δεδομένα "
-#~ "παλαιότερα από το ρυθμισμένο παράθυρο διατήρησης."
-
-#~ msgid "Run cleanup now"
-#~ msgstr "Εκτέλεση εκκαθάρισης τώρα"
-
-#~ msgid "Delete plugin tables on uninstall"
-#~ msgstr "Διαγραφή πινάκων του plugin κατά την απεγκατάσταση"
-
-#~ msgid ""
-#~ "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
-#~ "analytics tables from the WordPress database."
-#~ msgstr ""
-#~ "Όταν είναι ενεργό, η απεγκατάσταση του BimBeau Privacy Analytics "
-#~ "διαγράφει όλους τους πίνακες αναλυτικών του plugin από τη βάση δεδομένων "
-#~ "WordPress."
-
-#~ msgid "Sensitive actions"
-#~ msgstr "Ευαίσθητες ενέργειες"
-
-#~ msgid ""
-#~ "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
-#~ "entries."
-#~ msgstr ""
-#~ "Αφαίρεση όλων των συγκεντρωτικών αναλυτικών KPI, των λεπτομερειών "
-#~ "επισκεπτών και των εγγραφών ακατέργαστων logs."
-
-#~ msgid "Delete all analytics data"
-#~ msgstr "Διαγραφή όλων των δεδομένων αναλυτικών"
-
-#~ msgid "Events configuration"
-#~ msgstr "Ρύθμιση συμβάντων"
+#~ msgid "Controls the cron frequency for local GeoIP database updates."
+#~ msgstr "Ελέγχει τη συχνότητα cron για ενημερώσεις της τοπικής βάσης GeoIP."
 
 #~ msgid "BimBeau Privacy Analytics events analytics feature preview"
 #~ msgstr "Προεπισκόπηση λειτουργίας BimBeau Privacy Analytics Pro"
@@ -3244,9 +3443,6 @@ msgstr "Πίνακας: Επισκέπτες"
 
 #~ msgid "Plugin name (menu and dashboard)"
 #~ msgstr "Όνομα πρόσθετου (μενού και πίνακας ελέγχου)"
-
-#~ msgid "Leave blank to use \"BimBeau Privacy Analytics\"."
-#~ msgstr "Αφήστε κενό για χρήση του \"BimBeau Privacy Analytics\"."
 
 #~ msgid "This panel is not included in this package."
 #~ msgstr "Αυτός ο πίνακας είναι διαθέσιμος στο BimBeau Privacy Analytics Pro."

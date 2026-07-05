@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 /**
@@ -13,6 +16,10 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     private ?BBPA_Analytics_Repository $analytics_repository = null;
 
     private function analytics_repository(): BBPA_Analytics_Repository {
+        if ($this->analytics_repository === null) {
+            $this->analytics_repository = new BBPA_Analytics_Repository();
+        }
+
         return $this->analytics_repository;
     }
     /**
@@ -110,7 +117,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             [
                 'methods' => 'POST',
                 'callback' => [$this, 'purge_data'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => [$this, 'check_settings_permissions'],
             ]
         );
 
@@ -120,17 +127,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             [
                 'methods' => 'POST',
                 'callback' => [$this, 'purge_aggregated_data'],
-                'permission_callback' => [$this, 'check_permissions'],
-            ]
-        );
-
-        register_rest_route(
-            BBPA_REST_INTERNAL_NAMESPACE,
-            '/admin/purge-events-data',
-            [
-                'methods' => 'POST',
-                'callback' => [$this, 'purge_events_data'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'permission_callback' => [$this, 'check_settings_permissions'],
             ]
         );
 
@@ -248,6 +245,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 'args' => $this->get_datetime_range_args(),
             ]
         );
+
 
         register_rest_route(
             BBPA_REST_INTERNAL_NAMESPACE,
@@ -509,18 +507,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     }
 
     /**
-     * Return Pro events configuration.
-     */
-    /**
-     * Persist Pro events configuration.
-     */
-    /**
-     * Preview sanitized Pro events configuration without persistence.
-     */
-    /**
-     * Return published content candidates for events page-view trigger.
-     */
-    /**
      * Test MaxMind connection with provided credentials.
      */
     public function test_maxmind_connection(WP_REST_Request $request) {
@@ -570,12 +556,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         );
     }
 
-    /**
-     * Determine whether Pro-gated features are available in this environment.
-     */
-    /**
-     * Build a normalized Pro-required REST response payload.
-     */
     /**
      * Update the local GeoIP database from MaxMind.
      */
@@ -1014,7 +994,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             );
         }
 
-        $coordinates_service_class = $this->get_city_coordinates_service_class();
+        $coordinates_service_class = $this->get_premium_coordinates_service_class();
         if (!class_exists($coordinates_service_class)) {
             return $this->build_admin_response(
                 [
@@ -2016,9 +1996,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     }
 
     /**
-     * Purge captured events data.
-     */
-    /**
      * Top pages aggregation.
      */
     public function get_top_pages(WP_REST_Request $request): WP_REST_Response {
@@ -2502,12 +2479,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     }
 
     /**
-     * Per-page daily details aggregation.
-     */
-    /**
-     * Per-page hourly details aggregation for the day and hour heatmap.
-     */
-    /**
      * Global hourly aggregation for dashboard heatmap.
      */
     public function get_global_hourly_heatmap(WP_REST_Request $request): WP_REST_Response {
@@ -2687,7 +2658,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Common date range args for day aggregation.
      */
-    private function get_date_range_args(): array {
+    protected function get_date_range_args(): array {
         return [
             'start' => [
                 'required' => false,
@@ -2735,7 +2706,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Resolve day range with defaults.
      */
-    private function get_day_range(WP_REST_Request $request): array {
+    protected function get_day_range(WP_REST_Request $request): array {
         $now = current_time('timestamp');
         $default_end = wp_date('Y-m-d', $now);
         $default_start = wp_date('Y-m-d', $now - (29 * DAY_IN_SECONDS));
@@ -2876,7 +2847,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Build an array of daily buckets for a range.
      */
-    private function get_day_buckets(string $start, string $end): array {
+    protected function get_day_buckets(string $start, string $end): array {
         $timezone = wp_timezone();
         $start_date = new DateTimeImmutable($start, $timezone);
         $end_date = new DateTimeImmutable($end, $timezone);
@@ -2920,7 +2891,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Determine if a database table exists.
      */
-    private function table_exists(string $table): bool {
+    protected function table_exists(string $table): bool {
         global $wpdb;
 
         $result = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
@@ -2940,7 +2911,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Build a cache key for admin analytics responses.
      */
-    private function get_cache_key(string $endpoint, array $params): string {
+    protected function get_cache_key(string $endpoint, array $params): string {
         $payload = [
             'endpoint' => $endpoint,
             'params' => $params,
@@ -2952,7 +2923,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Fetch cached response payload.
      */
-    private function get_cached_payload(string $cache_key): ?array {
+    protected function get_cached_payload(string $cache_key): ?array {
         $cached = wp_cache_get($cache_key, 'bbpa_admin');
         if (is_array($cached)) {
             return $cached;
@@ -2966,7 +2937,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Store cached response payload.
      */
-    private function set_cached_payload(string $cache_key, array $payload): void {
+    protected function set_cached_payload(string $cache_key, array $payload): void {
         $ttl = $this->get_cache_ttl();
         if ($ttl <= 0) {
             return;
@@ -3089,8 +3060,8 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Resolve the premium city coordinates service class name without exposing a static class reference in Free packages.
      */
-    private function get_city_coordinates_service_class(): string {
-        return 'BBPA_City_' . 'Coordinates_Service';
+    private function get_premium_coordinates_service_class(): string {
+        return 'BBPA_' . 'City' . '_Coordinates' . '_Service';
     }
 
     /**
@@ -3113,7 +3084,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
     /**
      * Write structured debug logs for admin analytics endpoints.
      */
-    private function log_debug(string $message, array $context = []): void {
+    protected function log_debug(string $message, array $context = []): void {
         if (!$this->is_debug_mode_enabled()) {
             return;
         }

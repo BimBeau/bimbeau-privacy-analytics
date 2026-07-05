@@ -222,14 +222,9 @@ function bbpa_activate(): void
         wp_schedule_event(time(), 'monthly', BBPA_AGGREGATED_RETENTION_CRON_HOOK);
     }
 
-    if (function_exists('bbpa_schedule_geoip_update')) {
-        bbpa_schedule_geoip_update(true);
-    } elseif (!wp_next_scheduled(BBPA_GEOIP_UPDATE_CRON_HOOK)) {
-        wp_schedule_event(time() + (30 * DAY_IN_SECONDS), 'monthly', BBPA_GEOIP_UPDATE_CRON_HOOK);
-    }
 
-    if (!wp_next_scheduled('bbpa_geoip_initial_update')) {
-        wp_schedule_single_event(time() + 60, 'bbpa_geoip_initial_update');
+    if (function_exists('bbpa_get_geoip_update_frequency') && bbpa_get_geoip_update_frequency() === 'disabled' && function_exists('bbpa_clear_geoip_update_schedule')) {
+        bbpa_clear_geoip_update_schedule();
     }
 
     if (function_exists('bbpa_register_front_app_rewrite_rules')) {
@@ -252,6 +247,10 @@ function bbpa_maybe_run_upgrades(): void
     bbpa_with_suppressed_db_errors(static function (): void {
         bbpa_run_db_migrations();
     });
+
+    if (function_exists('bbpa_get_geoip_update_frequency') && bbpa_get_geoip_update_frequency() === 'disabled' && function_exists('bbpa_clear_geoip_update_schedule')) {
+        bbpa_clear_geoip_update_schedule();
+    }
 }
 
 
@@ -328,8 +327,13 @@ function bbpa_deactivate(): void
     wp_clear_scheduled_hook(BBPA_RAW_LOGS_CRON_HOOK);
     wp_clear_scheduled_hook(BBPA_AGGREGATION_CRON_HOOK);
     wp_clear_scheduled_hook(BBPA_AGGREGATED_RETENTION_CRON_HOOK);
-    wp_clear_scheduled_hook(BBPA_GEOIP_UPDATE_CRON_HOOK);
-    wp_clear_scheduled_hook(BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK);
+    if (function_exists('bbpa_clear_geoip_update_schedule')) {
+        bbpa_clear_geoip_update_schedule();
+    } else {
+        wp_clear_scheduled_hook(BBPA_GEOIP_UPDATE_CRON_HOOK);
+        wp_clear_scheduled_hook(BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK);
+        wp_clear_scheduled_hook('bbpa_geoip_initial_update');
+    }
     delete_option(BBPA_AGGREGATION_INTERVAL_OPTION);
     delete_option(BBPA_GEOIP_RETRY_STATE_OPTION);
     delete_transient(BBPA_GEOIP_RETRY_LOCK_TRANSIENT);

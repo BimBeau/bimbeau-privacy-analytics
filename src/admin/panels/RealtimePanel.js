@@ -5,7 +5,7 @@ import {
 	useRef,
 	useState,
 } from '@wordpress/element';
-import { Button, Tooltip } from '@wordpress/components';
+import { Button, Notice, Tooltip } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
@@ -21,6 +21,25 @@ import { getLocationLabel } from '../lib/locationLabel';
 import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../lib/date';
 import { formatDeviceClassLabel } from '../lib/deviceClassLabel';
 import { getChannelLabel } from '../lib/channelLabels';
+import { isVisitorOriginUnavailable } from '../lib/geoipStatus';
+
+const VisitorOriginUnavailableNotice = () => {
+	if (!isVisitorOriginUnavailable()) {
+		return null;
+	}
+
+	return (
+		<Notice status="info" isDismissible={false}>
+			<strong>{__('Visitor origin unavailable', 'bimbeau-privacy-analytics')}</strong>
+			<p>
+				{__(
+					'Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.',
+					'bimbeau-privacy-analytics'
+				)}
+			</p>
+		</Notice>
+	);
+};
 
 const formatConnectionTime = (timestamp) => {
 	const parsedTimestamp = Number(timestamp);
@@ -613,6 +632,7 @@ const RealtimePanel = () => {
 						)}
 					</p>
 				) : null}
+				<VisitorOriginUnavailableNotice />
 				<DataState
 					isLoading={isLoading}
 					error={error}

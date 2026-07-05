@@ -66,10 +66,10 @@ function bbpa_get_geoip_update_frequency(): string
     $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
     $frequency = isset($settings['geoip_update_frequency'])
         ? sanitize_key((string) $settings['geoip_update_frequency'])
-        : '30_days';
+        : 'disabled';
     $options = bbpa_get_geoip_update_frequency_options();
 
-    return isset($options[$frequency]) ? $frequency : '30_days';
+    return isset($options[$frequency]) ? $frequency : 'disabled';
 }
 
 /**
@@ -113,6 +113,29 @@ function bbpa_register_geoip_update_cron_schedule(array $schedules): array
     return $schedules;
 }
 
+
+/**
+ * Clear every GeoIP database update hook, including legacy one-time hooks.
+ */
+function bbpa_clear_geoip_update_schedule(): void
+{
+    $hooks = [
+        BBPA_GEOIP_UPDATE_CRON_HOOK,
+        BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK,
+        'bbpa_geoip_initial_update',
+        'bpa_monthly_geoip_update',
+        'bpa_geoip_retry_update',
+        'bpa_geoip_initial_update',
+    ];
+
+    foreach ($hooks as $hook) {
+        wp_clear_scheduled_hook($hook);
+    }
+
+    bbpa_geoip_reset_retry_state();
+    delete_transient(BBPA_GEOIP_RETRY_LOCK_TRANSIENT);
+}
+
 /**
  * Ensure the GeoIP update schedule matches current settings.
  */
@@ -128,13 +151,12 @@ function bbpa_schedule_geoip_update(bool $force = false): void
 {
     $options = bbpa_get_geoip_update_frequency_options();
     $frequency = bbpa_get_geoip_update_frequency();
-    $selected = $options[$frequency] ?? $options['30_days'];
+    $selected = $options[$frequency] ?? $options['disabled'];
     $interval = (int) ($selected['interval'] ?? 0);
     $schedule = isset($selected['schedule']) ? (string) $selected['schedule'] : '';
 
     if ($schedule === '' || $interval <= 0) {
-        wp_clear_scheduled_hook(BBPA_GEOIP_UPDATE_CRON_HOOK);
-        bbpa_geoip_reset_retry_state();
+        bbpa_clear_geoip_update_schedule();
 
         return;
     }
@@ -153,6 +175,12 @@ function bbpa_schedule_geoip_update(bool $force = false): void
  */
 function bbpa_run_monthly_geoip_update(): void
 {
+    if (bbpa_get_geoip_update_frequency() === 'disabled') {
+        bbpa_clear_geoip_update_schedule();
+
+        return;
+    }
+
     if (!bbpa_geoip_acquire_update_lock()) {
         return;
     }
@@ -178,8 +206,6 @@ function bbpa_run_monthly_geoip_update(): void
  */
 function bbpa_get_geoip_next_scheduled_run(): int
 {
-    bbpa_schedule_geoip_update(false);
-
     $next_monthly = wp_next_scheduled(BBPA_GEOIP_UPDATE_CRON_HOOK);
     $next_retry = wp_next_scheduled(BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK);
 
@@ -205,6 +231,12 @@ function bbpa_get_geoip_next_scheduled_run(): int
  */
 function bbpa_geoip_schedule_retry(): void
 {
+    if (bbpa_get_geoip_update_frequency() === 'disabled') {
+        bbpa_clear_geoip_update_schedule();
+
+        return;
+    }
+
     $state = get_option(BBPA_GEOIP_RETRY_STATE_OPTION, []);
     if (!is_array($state)) {
         $state = [];

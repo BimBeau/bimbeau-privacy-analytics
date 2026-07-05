@@ -222,11 +222,11 @@ function bbpa_normalize_realtime_row_timestamp(array $row): int
 
 
 /**
- * Add the Freemius Upgrade to Pro submenu item under BimBeau Privacy Analytics in Free environments.
+ * Add the Freemius pricing submenu item under BimBeau Privacy Analytics in Free environments.
  */
 function bbpa_register_free_upgrade_submenu(): void
 {
-    if (!function_exists('bbpa_is_pro') || bbpa_is_pro() || !function_exists('bbpa_fs')) {
+    if (!function_exists('bbpa_fs')) {
         return;
     }
 
@@ -272,10 +272,6 @@ function bbpa_get_upgrade_menu_title(): string
  */
 function bbpa_normalize_free_upgrade_submenu(): void
 {
-    if (!function_exists('bbpa_is_pro') || bbpa_is_pro()) {
-        return;
-    }
-
     $submenu_root = BBPA_SLUG;
     $upgrade_slug = BBPA_SLUG . '-pricing';
 
@@ -355,7 +351,7 @@ function bbpa_normalize_free_upgrade_submenu(): void
 }
 
 /**
- * Delegate rendering of the Upgrade to Pro page to Freemius.
+ * Delegate rendering of the pricing page to Freemius.
  */
 function bbpa_render_freemius_pricing_page(): void
 {
@@ -534,7 +530,7 @@ function bbpa_add_admin_color_scheme_styles(): void
         return;
     }
 
-    $inline_css = 'body.wp-admin #bbpa-admin, body.bbpa-shell #bbpa{' . implode('; ', $declarations) . ';}';
+    $inline_css = 'body.wp-admin #bbpa-admin, body.bbpa-admin-app-shell #bbpa-admin-app{' . implode('; ', $declarations) . ';}';
 
     if (wp_style_is('bbpa-admin', 'enqueued')) {
         $flag_assets_base_url = trailingslashit(BBPA_URL . 'assets/images/flags/4x3');
@@ -963,6 +959,18 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         }
     }
 
+    $admin_js_relative_path = apply_filters(
+        'bbpa_admin_app_script_relative_path',
+        $admin_js_relative_path,
+        [
+            'app_mode' => $app_mode,
+            'current_panel' => $current_panel,
+        ]
+    );
+    if (!is_string($admin_js_relative_path) || $admin_js_relative_path === '') {
+        $admin_js_relative_path = 'assets/js/admin.js';
+    }
+
     $asset_data['dependencies'] = isset($asset_data['dependencies']) && is_array($asset_data['dependencies'])
         ? $asset_data['dependencies']
         : [];
@@ -972,7 +980,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
     $asset_data['version'] = bbpa_normalize_asset_version($asset_data['version'] ?? '');
     $admin_js_url = BBPA_URL . $admin_js_relative_path;
     if ($is_app_mode && function_exists('bbpa_get_pwa_asset_url')) {
-        $admin_js_url = bbpa_get_pwa_asset_url('assets/js/admin.js');
+        $admin_js_url = bbpa_get_pwa_asset_url($admin_js_relative_path);
     }
 
     wp_register_script(
@@ -983,6 +991,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         true
     );
     wp_enqueue_script('bbpa-admin');
+
 
     wp_register_style('bbpa-admin-boot-fallback', false, [], BBPA_VERSION);
     wp_enqueue_style('bbpa-admin-boot-fallback');
@@ -998,9 +1007,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         wp_add_inline_style('bbpa-front-app-shell', bbpa_get_front_app_shell_inline_css($front_app_background_color));
     }
 
-    if (bbpa_is_pro()) {
-        wp_enqueue_media();
-    }
+    wp_enqueue_media();
 
     if (function_exists('wp_set_script_translations')) {
         wp_set_script_translations(
@@ -1478,6 +1485,37 @@ function bbpa_normalize_asset_version($version): string
     return $normalized !== '' ? $normalized : BBPA_VERSION;
 }
 
+function bbpa_get_admin_geoip_database_status_for_payload(): array
+{
+    if (!class_exists('BBPA_GeoIP_Database_Updater')) {
+        return [
+            'known' => false,
+            'operational' => false,
+        ];
+    }
+
+    $updater = new BBPA_GeoIP_Database_Updater();
+    $status = $updater->get_database_status();
+
+    if (!is_array($status)) {
+        return [
+            'known' => false,
+            'operational' => false,
+        ];
+    }
+
+    return [
+        'known' => true,
+        'exists' => !empty($status['exists']),
+        'readable' => !empty($status['readable']),
+        'operational' => !empty($status['operational']),
+        'local_available' => !empty($status['local_available']),
+        'last_updated' => isset($status['last_updated']) ? absint($status['last_updated']) : 0,
+        'last_success_at' => isset($status['last_success_at']) ? absint($status['last_success_at']) : 0,
+        'last_error_code' => isset($status['last_error_code']) ? sanitize_key((string) $status['last_error_code']) : '',
+    ];
+}
+
 /**
  * Build a sanitized payload injected in the admin runtime.
  *
@@ -1500,6 +1538,7 @@ function bbpa_build_admin_localized_payload(
         return is_string($value) ? esc_url_raw($value) : '';
     };
     $is_white_label = function_exists('bbpa_is_white_label_enabled') && bbpa_is_white_label_enabled();
+    $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
 
     $sanitize_generated_icons = static function ($icons) use ($sanitize_url): array {
         if (!is_array($icons)) {
@@ -1514,7 +1553,7 @@ function bbpa_build_admin_localized_payload(
         return $normalized;
     };
 
-    return [
+    $payload = [
         'rootId' => sanitize_key($root_id),
         'currentUserId' => get_current_user_id(),
         'restNonce' => wp_create_nonce('wp_rest'),
@@ -1529,6 +1568,8 @@ function bbpa_build_admin_localized_payload(
             'restNamespace' => sanitize_text_field((string) ($rest_config['rest_namespace'] ?? '')),
             'restInternalNamespace' => sanitize_text_field((string) ($rest_config['rest_internal_namespace'] ?? '')),
             'pluginVersion' => BBPA_VERSION,
+            'geoipLookupMode' => sanitize_key((string) ($settings['geoip_lookup_mode'] ?? 'local_database')),
+            'geoipDbStatus' => bbpa_get_admin_geoip_database_status_for_payload(),
             'privacyMode' => function_exists('bbpa_get_privacy_mode')
                 ? sanitize_key(bbpa_get_privacy_mode())
                 : 'essential',
@@ -1542,12 +1583,12 @@ function bbpa_build_admin_localized_payload(
             'locale' => sanitize_text_field((string) get_locale()),
             'dateFormat' => sanitize_text_field((string) get_option('date_format', '')),
             'timeFormat' => sanitize_text_field((string) get_option('time_format', '')),
-            'upgradeUrl' => $sanitize_url(bbpa_get_upgrade_url()),
-            'packageImageBaseUrl' => bbpa_is_pro()
-                ? $sanitize_url(trailingslashit(BBPA_URL . 'assets/images'))
-                : '',
+            'upgradeUrl' => $sanitize_url(
+                function_exists('bbpa_get_upgrade_url')
+                    ? bbpa_get_upgrade_url()
+                    : admin_url('admin.php?page=' . BBPA_SLUG . '-pricing')
+            ),
             'debugEnabled' => $debug_enabled,
-            'isPro' => bbpa_is_pro(),
             'supportsXlsxExport' => class_exists('ZipArchive'),
             'exportMaxRows' => max(1, (int) apply_filters('bbpa_export_max_rows', 10000)),
             'fieldVisibilityMatrix' => function_exists('bbpa_get_ui_field_visibility_matrix') ? bbpa_get_ui_field_visibility_matrix() : [],
@@ -1557,9 +1598,13 @@ function bbpa_build_admin_localized_payload(
             'appMode' => sanitize_key($app_mode),
             'appBaseUrl' => $sanitize_url($app_base_url),
             'pwa' => [
-                'appUrl' => $sanitize_url(function_exists('bbpa_get_front_app_url') ? bbpa_get_front_app_url() : home_url('/bbpa/')),
+                'appUrl' => $sanitize_url(function_exists('bbpa_get_front_app_url') ? bbpa_get_front_app_url() : home_url('/')),
                 'serviceWorkerUrl' => $sanitize_url($pwa_assets['service_worker_url'] ?? ''),
-                'installPromptMode' => sanitize_key(bbpa_get_front_app_install_prompt_mode()),
+                'installPromptMode' => sanitize_key(
+                    function_exists('bbpa_get_front_app_install_prompt_mode')
+                        ? bbpa_get_front_app_install_prompt_mode()
+                        : 'disabled'
+                ),
                 'manifestUrl' => $sanitize_url($pwa_assets['manifest_url'] ?? ''),
                 'previewIconUrl' => $sanitize_url($pwa_assets['preview_icon_url'] ?? ''),
                 'appleTouchIconUrl' => $sanitize_url($pwa_assets['apple_touch_icon'] ?? ''),
@@ -1589,6 +1634,10 @@ function bbpa_build_admin_localized_payload(
             ],
         ],
     ];
+
+    $filtered_payload = apply_filters('bbpa_admin_localized_payload', $payload);
+
+    return is_array($filtered_payload) ? $filtered_payload : $payload;
 }
 
 /**
@@ -1800,77 +1849,6 @@ function bbpa_get_geolocation_admin_fallback_script(): string
         );
     };
 
-    var getFreePackageFallbackImageUrl = function () {
-        var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgb(56, 88, 233)"/><stop offset="100%" stop-color="#2145e6"/></linearGradient></defs><rect width="960" height="540" fill="url(#bg)"/><text x="60" y="260" fill="white" font-family="Arial, sans-serif" font-size="52" font-weight="700">Geolocation analytics</text><text x="60" y="320" fill="white" font-family="Arial, sans-serif" font-size="32">BimBeau Privacy Analytics Pro</text></svg>';
-        return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
-    };
-
-    var getFreePackageImageUrl = function () {
-        var baseUrl = String(
-            adminConfig.settings && adminConfig.settings.packageImageBaseUrl
-                ? adminConfig.settings.packageImageBaseUrl
-                : ''
-        );
-
-        return baseUrl ? baseUrl + 'geolocation.jpeg' : getFreePackageFallbackImageUrl();
-    };
-
-    var ProBadge = function () {
-        return el(
-            'span',
-            { className: 'bbpa-pro-badge' },
-            __('Pro', 'bimbeau-privacy-analytics')
-        );
-    };
-
-    var FreePackageCard = function () {
-        var upgradeUrl = adminConfig.settings && adminConfig.settings.upgradeUrl
-            ? adminConfig.settings.upgradeUrl
-            : '';
-        var imageUrl = getFreePackageImageUrl();
-
-        return el(
-            Card,
-            {
-                className: 'bbpa-free-package-card',
-            },
-            el(
-                CardBody,
-                null,
-                el(
-                    'a',
-                    {
-                        className: 'bbpa-free-package-card__image-link',
-                        href: upgradeUrl || undefined,
-                        target: '_blank',
-                        rel: 'noreferrer',
-                    },
-                    el('img', {
-                        className: 'bbpa-free-package-card__image',
-                        src: imageUrl,
-                        alt: __('Top ' + 'cities', 'bimbeau-privacy-analytics'),
-                        onError: function (event) {
-                            event.currentTarget.src = getFreePackageFallbackImageUrl();
-                        },
-                    })
-                ),
-                el('p', null, __('City map markers are available in BimBeau Privacy Analytics ', 'bimbeau-privacy-analytics'), el(ProBadge, null)),
-                upgradeUrl && Button
-                    ? el(
-                            Button,
-                            {
-                                variant: 'primary',
-                                href: upgradeUrl,
-                                target: '_blank',
-                                rel: 'noreferrer',
-                            },
-                            __('Upgrade to Pro', 'bimbeau-privacy-analytics')
-                      )
-                    : null
-            )
-        );
-    };
-
     var useGeolocationEndpoint = function (path) {
         var initialState = {
             isLoading: true,
@@ -1962,31 +1940,6 @@ function bbpa_get_geolocation_admin_fallback_script(): string
         });
     };
 
-    var CityBreakdownPanel = function () {
-        var isPro = Boolean(adminConfig.settings && adminConfig.settings.isPro);
-        if (!isPro) {
-            return null;
-        }
-        var state = useGeolocationEndpoint('/geo-' + 'cities');
-
-        return el(
-            'div',
-            { className: 'bbpa-geo-countries-panel__split' },
-            el(GeolocationTableCard, {
-                title: __('Top ' + 'cities', 'bimbeau-privacy-analytics'),
-                labelHeader: __('City', 'bimbeau-privacy-analytics'),
-                metricLabel: __('Visits', 'bimbeau-privacy-analytics'),
-                emptyLabel: __('No city data available for the selected period.', 'bimbeau-privacy-analytics'),
-                labelFormatter: formatCityLabel,
-                valueKey: 'visits',
-                items: state.items,
-                isLoading: state.isLoading,
-                error: state.error,
-                notice: null,
-            })
-        );
-    };
-
     var GeolocationFallbackApp = function () {
         var pluginLabel = adminConfig.settings && adminConfig.settings.pluginLabel
             ? adminConfig.settings.pluginLabel
@@ -2054,18 +2007,11 @@ function bbpa_get_geolocation_admin_fallback_script(): string
                     TabPanel,
                     {
                         className: 'bbpa-geolocation-tabs',
-                        tabs: Boolean(adminConfig.settings && adminConfig.settings.isPro) ? [
-                            { name: 'countries', title: __('Top countries', 'bimbeau-privacy-analytics') },
-                            { name: 'cities', title: __('Top ' + 'cities', 'bimbeau-privacy-analytics') },
-                        ] : [
+                        tabs: [
                             { name: 'countries', title: __('Top countries', 'bimbeau-privacy-analytics') },
                         ],
                     },
-                    function (tab) {
-                        if (tab && tab.name === 'cities') {
-                            return el(CityBreakdownPanel, null);
-                        }
-
+                    function () {
                         return el(CountriesPanel, null);
                     }
                 )
@@ -2446,12 +2392,6 @@ function bbpa_get_admin_panels(): array
             'type' => 'core',
         ],
         [
-            'name' => 'events',
-            'title' => __('Events', 'bimbeau-privacy-analytics'),
-            'type' => 'core',
-            'availability' => 'pro',
-        ],
-        [
             'name' => 'settings',
             'title' => __('Settings', 'bimbeau-privacy-analytics'),
             'type' => 'core',
@@ -2479,21 +2419,7 @@ function bbpa_get_admin_panels(): array
             'name' => $name,
             'title' => isset($panel['title']) ? wp_strip_all_tags((string) $panel['title']) : $name,
             'type' => isset($panel['type']) ? sanitize_key($panel['type']) : 'custom',
-            'availability' => isset($panel['availability'])
-                ? sanitize_key((string) $panel['availability'])
-                : 'free',
         ];
-    }
-
-    if (!bbpa_is_pro()) {
-        $normalized = array_values(
-            array_filter(
-                $normalized,
-                static function (array $panel): bool {
-                    return ($panel['availability'] ?? 'free') !== 'pro';
-                }
-            )
-        );
     }
 
     if (empty($disabled_panels)) {
@@ -2587,18 +2513,6 @@ function bbpa_get_rest_sources(): array
             'path' => '/admin/device-split',
         ],
         [
-            'key' => 'events-config',
-            'method' => 'GET',
-            'namespace' => BBPA_REST_INTERNAL_NAMESPACE,
-            'path' => '/admin/events-config',
-        ],
-        [
-            'key' => 'events-preview',
-            'method' => 'POST',
-            'namespace' => BBPA_REST_INTERNAL_NAMESPACE,
-            'path' => '/admin/events-preview',
-        ],
-        [
             'key' => 'overview',
             'method' => 'GET',
             'namespace' => BBPA_REST_NAMESPACE,
@@ -2653,18 +2567,6 @@ function bbpa_get_rest_sources(): array
         $filtered = $sources;
     }
 
-    if (!bbpa_is_pro()) {
-        $filtered = array_values(
-            array_filter(
-                $filtered,
-                static function (array $source): bool {
-                    $key = isset($source['key']) ? sanitize_key((string) $source['key']) : '';
-                    return !in_array($key, ['events-config', 'events-preview'], true);
-                }
-            )
-        );
-    }
-
     $normalized = [];
     foreach ($filtered as $source) {
         if (!is_array($source)) {
@@ -2685,9 +2587,6 @@ function bbpa_get_rest_sources(): array
             'method' => $method,
             'namespace' => $namespace,
             'path' => $path,
-            'availability' => isset($source['availability'])
-                ? sanitize_key((string) $source['availability'])
-                : 'free',
         ];
     }
 
@@ -2748,4 +2647,80 @@ function bbpa_get_post_types_for_admin(): array
     }
 
     return $formatted;
+}
+
+/**
+ * Dismiss the plugin-admin GeoIP setup notice for the current user.
+ */
+function bbpa_handle_geoip_notice_dismissal(): void
+{
+    if (!bbpa_is_plugin_admin_page()) {
+        return;
+    }
+
+    $action = sanitize_key(bbpa_get_admin_request_scalar(INPUT_GET, 'bbpa_action'));
+    if ($action !== 'dismiss_geoip_notice') {
+        return;
+    }
+
+    if (!current_user_can(bbpa_get_settings_access_capability()) || !bbpa_validate_admin_action_nonce_from_request()) {
+        return;
+    }
+
+    update_user_meta(get_current_user_id(), 'bbpa_geoip_notice_dismissed', '1');
+    bbpa_safe_redirect_to_panel_slug(bbpa_get_requested_admin_page_slug() === BBPA_SLUG . '-settings' ? 'settings' : bbpa_get_first_accessible_admin_panel_slug());
+}
+
+/**
+ * Render a BBPA admin-only GeoIP setup notice when the local database is unavailable.
+ */
+function bbpa_render_geoip_database_admin_notice(): void
+{
+    if (!function_exists('bbpa_is_plugin_admin_page') || !bbpa_is_plugin_admin_page()) {
+        return;
+    }
+
+    if (!current_user_can(bbpa_get_settings_access_capability())) {
+        return;
+    }
+
+    if ((string) get_user_meta(get_current_user_id(), 'bbpa_geoip_notice_dismissed', true) === '1') {
+        return;
+    }
+
+    if (!class_exists('BBPA_GeoIP_Database_Updater')) {
+        return;
+    }
+
+    $updater = new BBPA_GeoIP_Database_Updater();
+    $status = $updater->get_database_status();
+    if (!empty($status['operational'])) {
+        return;
+    }
+
+    $settings_url = add_query_arg(
+        [
+            'page' => BBPA_SLUG . '-settings',
+            'bbpa_settings_tab' => 'geolocation',
+        ],
+        admin_url('admin.php')
+    );
+    $dismiss_url = wp_nonce_url(
+        add_query_arg(
+            [
+                'page' => bbpa_get_requested_admin_page_slug(),
+                'bbpa_action' => 'dismiss_geoip_notice',
+            ],
+            admin_url('admin.php')
+        ),
+        'bbpa_admin_action',
+        'bbpa_nonce'
+    );
+
+    echo '<div class="notice notice-info bbpa-geoip-admin-notice">';
+    echo '<p><strong>' . esc_html__('Enable country and city reports', 'bimbeau-privacy-analytics') . '</strong></p>';
+    echo '<p>' . esc_html__('To display countries and cities in your analytics reports, install the local GeoIP database from the geolocation settings. No GeoIP database is downloaded automatically.', 'bimbeau-privacy-analytics') . '</p>';
+    echo '<p><a class="button button-primary" href="' . esc_url($settings_url) . '">' . esc_html__('Configure geolocation', 'bimbeau-privacy-analytics') . '</a> ';
+    echo '<a class="button" href="' . esc_url($dismiss_url) . '">' . esc_html__('Later', 'bimbeau-privacy-analytics') . '</a></p>';
+    echo '</div>';
 }

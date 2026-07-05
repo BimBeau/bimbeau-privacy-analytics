@@ -1,10 +1,53 @@
 const path = require('path');
+const webpack = require('webpack');
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
 const cssAssetPublicPath = process.env.BBPA_ADMIN_CSS_PUBLIC_PATH || '../';
 const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
   ? path.resolve(process.env.BBPA_ADMIN_SOURCE_ROOT)
   : path.resolve(__dirname, 'src/admin');
+const packageTarget = process.env.BBPA_PACKAGE_TARGET || 'premium';
+const isFreePackageBuild = packageTarget === 'free';
+const freeAdminStubRoot = path.resolve(adminSourceRoot, 'free-stubs');
+const proOnlyAdminStubModules = new Map(
+  [
+    ['GeoCitiesPanel', 'GeoCitiesPanel.js'],
+    ['PageDetailsGeoCitiesCard', 'PageDetailsGeoCitiesCard.js'],
+  ].map(([moduleName, stubFilename]) => [
+    moduleName,
+    path.resolve(freeAdminStubRoot, stubFilename),
+  ])
+);
+const proOnlyAdminAliases = isFreePackageBuild
+  ? Object.fromEntries(
+      [...proOnlyAdminStubModules].flatMap(([moduleName, stubPath]) => [
+        [path.resolve(adminSourceRoot, `panels/${moduleName}`), stubPath],
+        [path.resolve(adminSourceRoot, `panels/${moduleName}.js`), stubPath],
+      ])
+    )
+  : {};
+const freePackageProOnlyModuleReplacements = isFreePackageBuild
+  ? [
+      new webpack.NormalModuleReplacementPlugin(
+        /^\.\/(?:GeoCitiesPanel|PageDetailsGeoCitiesCard)(?:\.js)?$/,
+        (resource) => {
+          const context = path.resolve(resource.context || '');
+          if (context !== path.resolve(adminSourceRoot, 'panels')) {
+            return;
+          }
+
+          const moduleName = resource.request
+            .replace(/^\.\//, '')
+            .replace(/\.js$/, '');
+          const stubPath = proOnlyAdminStubModules.get(moduleName);
+
+          if (stubPath) {
+            resource.request = stubPath;
+          }
+        }
+      ),
+    ]
+  : [];
 const flagIconsFlagsPath = `${path.sep}node_modules${path.sep}flag-icons${path.sep}flags${path.sep}`;
 
 const getSvgAssetFilename = ({ filename = '' } = {}) => {
@@ -49,8 +92,16 @@ module.exports = {
   ...defaultConfig,
   resolve: {
     ...(defaultConfig.resolve || {}),
+    alias: {
+      ...((defaultConfig.resolve || {}).alias || {}),
+      ...proOnlyAdminAliases,
+    },
     modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
   },
+  plugins: [
+    ...(defaultConfig.plugins || []),
+    ...freePackageProOnlyModuleReplacements,
+  ],
   module: {
     ...defaultConfig.module,
     rules: [

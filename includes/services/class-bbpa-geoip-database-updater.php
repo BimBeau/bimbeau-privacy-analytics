@@ -140,7 +140,7 @@ class BBPA_GeoIP_Database_Updater {
                 'stream' => true,
                 'filename' => $temp_file,
                 'headers' => [
-                    'User-Agent' => sprintf('BimBeau Privacy Analytics/%s; %s', $version, home_url('/')),
+                    'User-Agent' => sprintf('BimBeau Privacy Analytics/%s; GeoIP updater', $version),
                     'Accept' => 'application/octet-stream',
                 ],
             ]
@@ -216,7 +216,7 @@ class BBPA_GeoIP_Database_Updater {
                 'timeout' => 20,
                 'redirection' => 3,
                 'headers' => [
-                    'User-Agent' => sprintf('BimBeau Privacy Analytics/%s; %s', $version, home_url('/')),
+                    'User-Agent' => sprintf('BimBeau Privacy Analytics/%s; GeoIP updater', $version),
                     'Accept' => 'application/json',
                 ],
             ]
