@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.44.39
+Stable tag: 8.44.40
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -220,5 +220,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.44.39 =
-* Verify public Free source synchronization before release packaging.
+= 8.44.40 =
+* Fix public Free source export checkout exclusion.
