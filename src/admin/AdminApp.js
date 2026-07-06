@@ -9,6 +9,7 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG, isPanelEnabled } from './constants';
 import {
+	fetchAdminJson,
 	reloadForAuthRequired,
 	useAuthRequiredState,
 } from './api/useAdminEndpoint';
@@ -75,6 +76,8 @@ const AdminApp = () => {
 	const [ isInstallBannerVisible, setIsInstallBannerVisible ] =
 		useState( false );
 	const [ isInstallAccepted, setIsInstallAccepted ] = useState( false );
+	const [ geoIpDatabaseStatus, setGeoIpDatabaseStatus ] = useState( null );
+	const [ isGeoIpStatusLoading, setIsGeoIpStatusLoading ] = useState( true );
 	const installPromptMode =
 		ADMIN_CONFIG?.settings?.pwa?.installPromptMode === 'custom'
 			? 'custom'
@@ -105,6 +108,53 @@ const AdminApp = () => {
 			? __( 'Visitors', 'bimbeau-privacy-analytics' )
 			: sprintf( realtimeVisitorLabel, formattedRealtimeVisitors );
 	const isRealtimeSkeletonVisible = isRealtimeLoading && ! realtimeData;
+	const lookupMode =
+		ADMIN_CONFIG?.settings?.geoip_lookup_mode || 'local_database';
+	const geolocationSettingsUrl = useMemo(
+		() =>
+			getAdminPanelUrl( 'settings', {
+				bbpa_settings_tab: 'geolocation',
+			} ),
+		[]
+	);
+	const shouldShowMissingGeoIpDatabaseNotice =
+		lookupMode === 'local_database' &&
+		! isAuthRequired &&
+		! isGeoIpStatusLoading &&
+		Number( geoIpDatabaseStatus?.last_success_at || 0 ) <= 0 &&
+		geoIpDatabaseStatus?.local_available !== true &&
+		geoIpDatabaseStatus?.operational !== true;
+
+	useEffect( () => {
+		if ( isAuthRequired ) {
+			setIsGeoIpStatusLoading( false );
+			return undefined;
+		}
+
+		let isCurrent = true;
+		setIsGeoIpStatusLoading( true );
+
+		fetchAdminJson( '/admin/geoip-database/status' )
+			.then( ( payload ) => {
+				if ( isCurrent ) {
+					setGeoIpDatabaseStatus( payload?.database || null );
+				}
+			} )
+			.catch( () => {
+				if ( isCurrent ) {
+					setGeoIpDatabaseStatus( null );
+				}
+			} )
+			.finally( () => {
+				if ( isCurrent ) {
+					setIsGeoIpStatusLoading( false );
+				}
+			} );
+
+		return () => {
+			isCurrent = false;
+		};
+	}, [ isAuthRequired ] );
 
 	useEffect( () => {
 		if ( hasRequestedPanel || requestedPanel === currentPanel ) {
@@ -410,6 +460,35 @@ const AdminApp = () => {
 						'BimBeau Privacy Analytics app installation was accepted.',
 						'bimbeau-privacy-analytics'
 					) }
+				</Notice>
+			) : null }
+			{ shouldShowMissingGeoIpDatabaseNotice ? (
+				<Notice status="warning" isDismissible={ false }>
+					<div className="bbpa-admin-app__geoip-notice">
+						<div className="bbpa-admin-app__geoip-notice-copy">
+							<strong>
+								{ __(
+									'GeoIP database not installed',
+									'bimbeau-privacy-analytics'
+								) }
+							</strong>
+							<p>
+								{ __(
+									'Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.',
+									'bimbeau-privacy-analytics'
+								) }
+							</p>
+						</div>
+						<Button
+							variant="secondary"
+							href={ geolocationSettingsUrl }
+						>
+							{ __(
+								'Open geolocation settings',
+								'bimbeau-privacy-analytics'
+							) }
+						</Button>
+					</div>
 				</Notice>
 			) : null }
 			<div className="bbpa-admin-app__body">

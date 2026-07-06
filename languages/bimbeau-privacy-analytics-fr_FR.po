@@ -717,6 +717,24 @@ msgid "BimBeau Privacy Analytics app installation was accepted."
 msgstr ""
 "L’installation de l’application BimBeau Privacy Analytics a été acceptée."
 
+#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
+msgid "GeoIP database not installed"
+msgstr "Base GeoIP non installée"
+
+#: src/admin/AdminApp.js
+#, fuzzy
+msgid ""
+"Location reports are unavailable until the local GeoIP database has been "
+"downloaded. Download it from the Geolocation settings page."
+msgstr ""
+"La provenance des visiteurs sera disponible après installation de la base "
+"GeoIP locale depuis les réglages de géolocalisation du plugin."
+
+#: src/admin/AdminApp.js
+#, fuzzy
+msgid "Open geolocation settings"
+msgstr "Activer l’agrégation géographique"
+
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
 msgstr "Erreur API"
@@ -1644,10 +1662,6 @@ msgid ""
 msgstr ""
 "La base GeoIP locale semble absente ou illisible. Les rapports de pays et de "
 "villes peuvent être incomplets jusqu’à sa réinstallation."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "GeoIP database not installed"
-msgstr "Base GeoIP non installée"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""

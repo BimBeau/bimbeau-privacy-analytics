@@ -684,6 +684,22 @@ msgstr "安装应用"
 msgid "BimBeau Privacy Analytics app installation was accepted."
 msgstr "BimBeau Privacy Analytics 应用安装已接受。"
 
+#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "GeoIP database not installed"
+msgstr "GeoIP 数据库可用。"
+
+#: src/admin/AdminApp.js
+msgid ""
+"Location reports are unavailable until the local GeoIP database has been "
+"downloaded. Download it from the Geolocation settings page."
+msgstr ""
+
+#: src/admin/AdminApp.js
+#, fuzzy
+msgid "Open geolocation settings"
+msgstr "启用地理定位聚合"
+
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
 msgstr "API 错误"
@@ -1579,11 +1595,6 @@ msgid ""
 "The local GeoIP database seems to be missing or unreadable. Country and city "
 "reports may be incomplete until it is reinstalled."
 msgstr ""
-
-#: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid "GeoIP database not installed"
-msgstr "GeoIP 数据库可用。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
