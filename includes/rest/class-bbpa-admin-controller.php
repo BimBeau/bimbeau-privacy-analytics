@@ -3011,7 +3011,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             return false;
         }
 
-        $debug_header = sanitize_text_field((string) $request->get_header('X-Lean-Stats-Debug'));
+        $debug_header = sanitize_text_field((string) $request->get_header('X-BBPA-Debug'));
         return $debug_header === '1';
     }
 

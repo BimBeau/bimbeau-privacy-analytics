@@ -1683,7 +1683,7 @@ function bbpa_get_geolocation_admin_fallback_script(): string
     var rootContainsRuntimeError = function () {
         var text = (root.textContent || '').toLowerCase();
         return (
-            text.indexOf('lean stats cannot load the admin interface') !== -1 ||
+            text.indexOf('bimbeau privacy analytics cannot load the admin interface') !== -1 ||
             text.indexOf('is not a function') !== -1
         );
     };

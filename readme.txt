@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.44.42
+Stable tag: 8.44.43
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -220,5 +220,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.44.42 =
-* Prevent Pro city-level translation strings from leaking into shared Free source packages.
+= 8.44.43 =
+* Finalize BimBeau Privacy Analytics slug and translation packaging checks.

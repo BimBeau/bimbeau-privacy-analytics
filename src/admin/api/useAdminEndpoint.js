@@ -280,7 +280,7 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 	const restNonce = ADMIN_CONFIG?.restNonce;
 	const authHeaders = isAppMode
 		? {
-				...( appNonce ? { 'X-Lean-Stats-App-Nonce': appNonce } : {} ),
+				...( appNonce ? { 'X-BBPA-App-Nonce': appNonce } : {} ),
 		  }
 		: {
 				...( restNonce ? { 'X-WP-Nonce': restNonce } : {} ),
@@ -303,7 +303,7 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 		credentials: 'same-origin',
 		headers: {
 			...authHeaders,
-			...( DEBUG_FLAG() ? { 'X-Lean-Stats-Debug': '1' } : {} ),
+			...( DEBUG_FLAG() ? { 'X-BBPA-Debug': '1' } : {} ),
 			...headers,
 		},
 		method,

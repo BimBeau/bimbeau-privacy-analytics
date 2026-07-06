@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  *
  * Accepts the standard WordPress REST nonce from the X-WP-Nonce header or
  * _wpnonce request parameter. App-mode requests may also use the app-session
- * nonce from X-Lean-Stats-App-Nonce or app_nonce when allowed.
+ * nonce from X-BBPA-App-Nonce or app_nonce when allowed.
  */
 function bbpa_rest_request_has_valid_nonce(WP_REST_Request $request, bool $allow_app_nonce = true): bool
 {
@@ -40,7 +40,7 @@ function bbpa_rest_request_has_valid_nonce(WP_REST_Request $request, bool $allow
  */
 function bbpa_rest_request_has_valid_authenticated_app_session(WP_REST_Request $request): bool
 {
-    $app_nonce = bbpa_rest_request_get_nonce_value($request, 'X-Lean-Stats-App-Nonce', 'app_nonce');
+    $app_nonce = bbpa_rest_request_get_nonce_value($request, 'X-BBPA-App-Nonce', 'app_nonce');
     if ($app_nonce === '') {
         return false;
     }
