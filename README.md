@@ -43,10 +43,6 @@ The build configuration is maintained in `webpack.config.js`. WordPress.org revi
 
 `npm run build` is the documented rebuild command for generated admin assets. The tracker files listed above are readable JavaScript source files maintained directly in `assets/js/`.
 
-## Scope
-
-This public repository documents the Free plugin source code and the build process for generated assets. End-user documentation is maintained separately.
-
 ## Requirements
 
 - WordPress 6.4+
