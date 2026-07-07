@@ -1005,10 +1005,10 @@
                 'other_notes'  => fs_text_x_inline( 'Other Notes', 'Plugin installer section title', 'other-notes', $api->slug ),
             );
 
-            // Sanitize HTML.
-            foreach ( (array) $api->sections as $section_name => $content ) {
-                $api->sections[ $section_name ] = wp_kses( $content, $plugins_allowedtags );
-            }
+            // Sanitize HTML
+//		foreach ( (array) $api->sections as $section_name => $content ) {
+//			$api->sections[$section_name] = wp_kses( $content, $plugins_allowedtags );
+//		}
 
             foreach ( array( 'version', 'author', 'requires', 'tested', 'homepage', 'downloaded', 'slug' ) as $key ) {
                 if ( isset( $api->$key ) ) {
@@ -1055,7 +1055,7 @@
             }
 
             echo '<div id="plugin-information-scrollable">';
-            echo "<div id='{$_tab}-title' class='{$_with_banner}'><div class='vignette'></div><h2>" . esc_html( $api->name ) . "</h2></div>";
+            echo "<div id='{$_tab}-title' class='{$_with_banner}'><div class='vignette'></div><h2>{$api->name}</h2></div>";
             echo "<div id='{$_tab}-tabs' class='{$_with_banner}'>\n";
 
             foreach ( (array) $api->sections as $section_name => $content ) {

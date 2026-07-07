@@ -1,5 +1,14 @@
 import { formatScreenResolution } from './formatScreenResolution';
 
+const UNKNOWN_LABELS = new Set( [
+	'unknown',
+	'null',
+	'non déterminé',
+	'non determine',
+	'non déterminée',
+	'non determinee',
+] );
+
 const normalizeLabel = ( value, fallback = 'Unknown' ) => {
 	if ( typeof value !== 'string' ) {
 		return fallback;
@@ -9,14 +18,47 @@ const normalizeLabel = ( value, fallback = 'Unknown' ) => {
 	return trimmed === '' ? fallback : trimmed;
 };
 
-const toPercentItems = ( map, total ) => {
-	return Array.from( map.entries() )
-		.map( ( [ label, hits ] ) => ( {
-			label,
-			hits,
-			share: total > 0 ? Math.round( ( hits / total ) * 100 ) : 0,
-		} ) )
-		.sort( ( left, right ) => right.hits - left.hits || left.label.localeCompare( right.label ) );
+export const isUnidentifiedDeviceDetailLabel = ( value ) => {
+	if ( value === null || typeof value === 'undefined' ) {
+		return true;
+	}
+
+	const normalized = String( value ).trim().toLocaleLowerCase();
+
+	return normalized === '' || UNKNOWN_LABELS.has( normalized );
+};
+
+const addIdentifiedHits = ( map, label, hits ) => {
+	if ( isUnidentifiedDeviceDetailLabel( label ) ) {
+		return;
+	}
+
+	map.set( label, ( map.get( label ) || 0 ) + hits );
+};
+
+const toPercentItems = ( map ) => {
+	const identifiedTotal = Array.from( map.values() ).reduce(
+		( total, hits ) => total + hits,
+		0
+	);
+
+	return {
+		identifiedTotal,
+		items: Array.from( map.entries() )
+			.map( ( [ label, hits ] ) => ( {
+				label,
+				hits,
+				share:
+					identifiedTotal > 0
+						? Math.round( ( hits / identifiedTotal ) * 100 )
+						: 0,
+			} ) )
+			.sort(
+				( left, right ) =>
+					right.hits - left.hits ||
+					left.label.localeCompare( right.label )
+			),
+	};
 };
 
 export const buildDeviceDetailsBreakdowns = ( visitors = [] ) => {
@@ -28,7 +70,9 @@ export const buildDeviceDetailsBreakdowns = ( visitors = [] ) => {
 	let totalHits = 0;
 
 	visitors.forEach( ( item ) => {
-		const hits = Number.isFinite( item?.page_views ) ? item.page_views : Number( item?.page_views || 0 );
+		const hits = Number.isFinite( item?.page_views )
+			? item.page_views
+			: Number( item?.page_views || 0 );
 		if ( hits <= 0 ) {
 			return;
 		}
@@ -42,15 +86,16 @@ export const buildDeviceDetailsBreakdowns = ( visitors = [] ) => {
 		);
 		const browserVersion = normalizeLabel( item?.browser_version, '' );
 
-		deviceMap.set( deviceLabel, ( deviceMap.get( deviceLabel ) || 0 ) + hits );
-		osMap.set( osLabel, ( osMap.get( osLabel ) || 0 ) + hits );
-		browserMap.set( browserLabel, ( browserMap.get( browserLabel ) || 0 ) + hits );
-		resolutionMap.set(
-			resolutionLabel,
-			( resolutionMap.get( resolutionLabel ) || 0 ) + hits
-		);
+		addIdentifiedHits( deviceMap, deviceLabel, hits );
+		addIdentifiedHits( osMap, osLabel, hits );
+		addIdentifiedHits( browserMap, browserLabel, hits );
+		addIdentifiedHits( resolutionMap, resolutionLabel, hits );
 
-		if ( browserVersion ) {
+		if (
+			browserVersion &&
+			! isUnidentifiedDeviceDetailLabel( browserLabel ) &&
+			! isUnidentifiedDeviceDetailLabel( browserVersion )
+		) {
 			const browserKey = `${ browserLabel } ${ browserVersion }`;
 			browserVersionMap.set(
 				browserKey,
@@ -59,12 +104,23 @@ export const buildDeviceDetailsBreakdowns = ( visitors = [] ) => {
 		}
 	} );
 
+	const devices = toPercentItems( deviceMap );
+	const operatingSystems = toPercentItems( osMap );
+	const browsers = toPercentItems( browserMap );
+	const resolutions = toPercentItems( resolutionMap );
+	const browserVersions = toPercentItems( browserVersionMap );
+
 	return {
 		totalHits,
-		devices: toPercentItems( deviceMap, totalHits ),
-		operatingSystems: toPercentItems( osMap, totalHits ),
-		browsers: toPercentItems( browserMap, totalHits ),
-		resolutions: toPercentItems( resolutionMap, totalHits ),
-		browserVersions: toPercentItems( browserVersionMap, totalHits ),
+		devices: devices.items,
+		devicesIdentifiedTotal: devices.identifiedTotal,
+		operatingSystems: operatingSystems.items,
+		operatingSystemsIdentifiedTotal: operatingSystems.identifiedTotal,
+		browsers: browsers.items,
+		browsersIdentifiedTotal: browsers.identifiedTotal,
+		resolutions: resolutions.items,
+		resolutionsIdentifiedTotal: resolutions.identifiedTotal,
+		browserVersions: browserVersions.items,
+		browserVersionsIdentifiedTotal: browserVersions.identifiedTotal,
 	};
 };
