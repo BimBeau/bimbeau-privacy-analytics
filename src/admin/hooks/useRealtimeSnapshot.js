@@ -194,7 +194,8 @@ const isRealtimePanelFromLocation = () => {
 
 	const params = new URLSearchParams( window.location.search || '' );
 	const page = params.get( 'page' ) || '';
-	return page === 'bbpa-realtime';
+	const pluginSlug = ADMIN_CONFIG?.settings?.slug || 'bimbeau-privacy-analytics';
+	return page === `${ pluginSlug }-realtime`;
 };
 
 const isRealtimePanelActive = ( currentPanel ) => {
