@@ -39,10 +39,12 @@ msgid "Update"
 msgstr ""
 
 #: admin/admin.php
+#: src/admin/components/ProBadge/index.js
 msgid "Pro"
 msgstr ""
 
 #: admin/admin.php
+#: src/admin/components/FreePackageState/index.js
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -121,6 +123,11 @@ msgstr ""
 #: includes/rest/class-bbpa-admin-controller.php
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/lib/deviceClassLabel.js
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
@@ -203,6 +210,7 @@ msgstr ""
 #: src/admin/AdminApp.js
 #: src/admin/constants/index.js
 #: src/admin/constants/index.js
+#: src/admin/panels/GeoCitiesPanel.js
 #: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/TopPagesPanel.js
@@ -280,6 +288,7 @@ msgstr ""
 #: admin/dashboard-widget.php
 #: src/admin/panels/AcquisitionPanel.js
 #: src/admin/panels/OverviewPanel.js
+#: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -287,6 +296,7 @@ msgid "Visits"
 msgstr ""
 
 #: admin/dashboard-widget.php
+#: includes/pro-post-key-stats-metabox.php
 #: src/admin/panels/OverviewPanel.js
 #: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
@@ -304,6 +314,7 @@ msgstr ""
 
 #: admin/edition-admin-runtime.php
 #: src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr ""
 
@@ -443,6 +454,155 @@ msgstr ""
 msgid "Unable to determine the visitor IP."
 msgstr ""
 
+#: includes/pro-auth-controller.php
+msgid "Custom login flow is blocked by policy."
+msgstr ""
+
+#: includes/pro-auth-controller.php
+msgid "Invalid login request."
+msgstr ""
+
+#: includes/pro-auth-controller.php
+msgid "The authenticated account cannot access BimBeau Privacy Analytics."
+msgstr ""
+
+#: includes/pro-auth-controller.php
+msgid "Authentication failed. Verify credentials and retry."
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Stats"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/TopPagesPanel.js
+msgid "Summary"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/constants/index.js
+msgid "30 days"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: includes/pro-post-views-column.php
+msgid "View page details"
+msgstr ""
+
+#. translators: %s: Formatted average time spent on the page.
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/TopPagesPanel.js
+#, php-format,js-format
+msgid "Avg. time on page: %s"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "Visitor profile"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "No visitor profile data available for this period."
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "Plus de stats"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/TopPagesPanel.js
+msgid "System"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Device"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/FreePackagePanel.js
+msgid "Mobile"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr ""
+
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/lib/channelLabels.js
+msgid "Other"
+msgstr ""
+
+#. translators: %d: Number of seconds.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%ds"
+msgstr ""
+
+#. translators: 1: Number of minutes, 2: Number of seconds.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%1$dm %2$ds"
+msgstr ""
+
+#. translators: 1: Number of hours, 2: Number of minutes.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%1$dh %2$dm"
+msgstr ""
+
+#. translators: %s: Selected reporting period label.
+#: includes/pro-post-views-column.php
+#, php-format
+msgid "Views (%s)"
+msgstr ""
+
+#: includes/pro-post-views-column.php
+msgid "Views trend"
+msgstr ""
+
+#: includes/pro-settings.php
+msgid "KPI slot must be a numeric integer greater than or equal to 2."
+msgstr ""
+
+#: includes/pro-settings.php
+#: includes/pro-settings.php
+msgid "KPI slot format is invalid. Use only a numeric integer greater than or equal to 2."
+msgstr ""
+
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr ""
@@ -480,6 +640,7 @@ msgstr ""
 #: src/admin/components/WorldMap/index.js
 #: src/admin/lib/countryNames.js
 #: src/admin/lib/countryNames.js
+#: src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
@@ -488,6 +649,123 @@ msgstr ""
 #: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
+msgstr ""
+
+#: includes/rest/class-bbpa-admin-pro-controller.php
+#: includes/rest/class-bbpa-admin-pro-controller.php
+msgid "Missing page path."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "Authentication is required to export analytics data."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "Report exports are not included in this package."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "You do not have permission to export analytics data."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "A valid request nonce is required to export analytics data."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The export format must be csv, json, or xlsx."
+msgstr ""
+
+#. translators: %d: maximum export row count.
+#: includes/rest/removed-export-controller.php
+#: src/admin/components/ReportExportAction/index.js
+#, php-format,js-format
+msgid "The export exceeds the %d row limit. Narrow the date range or search filter, then try again."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+msgid "The selected report cannot be exported."
+msgstr ""
+
+#. translators: %d: synchronous export threshold row count.
+#: includes/rest/removed-export-controller.php
+#, php-format
+msgid "The export is larger than the %d row synchronous threshold. Request async mode and poll the job status endpoint."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+msgid "The export file is no longer available. Create a new export job and try again."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The export file is not ready yet. Check the job status endpoint before downloading."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report is not available for export."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+msgid "The selected report does not expose file export rows."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+msgid "The selected report does not expose exportable columns."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The CSV export could not be generated."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+msgid "The Excel export could not be generated."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: src/admin/components/ReportExportAction/index.js
+msgid "Excel export requires the PHP Zip extension to be installed on this server."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job could not be created. Try again later."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The export storage directory is unavailable."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The export storage path is invalid."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The JSON export could not be generated."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+msgid "The export file could not be written."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The export could not be generated. Try again later or narrow the export filters."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+#: includes/rest/removed-export-controller.php
+msgid "The export job was not found."
+msgstr ""
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job was not found or has expired."
 msgstr ""
 
 #: includes/rest/class-bbpa-hit-controller.php
@@ -755,6 +1033,7 @@ msgstr ""
 #: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
 msgid "API error"
 msgstr ""
 
@@ -783,6 +1062,7 @@ msgid "Empty response body."
 msgstr ""
 
 #: src/admin/api/useAdminEndpoint.js
+#: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
@@ -950,6 +1230,16 @@ msgstr ""
 msgid "Page details heatmap by day and hour"
 msgstr ""
 
+#: src/admin/components/FreePackageState/index.js
+msgid "BimBeau Privacy Analytics Pro feature preview"
+msgstr ""
+
+#: src/admin/components/FreePackageState/index.js
+#: src/admin/components/FreePackageCard/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "This feature is not included in this package."
+msgstr ""
+
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr ""
@@ -962,6 +1252,27 @@ msgstr ""
 msgid "Technical state does not prove consent collection validity."
 msgstr ""
 
+#: src/admin/components/FreePackageCard/index.js
+msgid "PWA Stats App"
+msgstr ""
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "PWA URL"
+msgstr ""
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "Use this URL to open the standalone analytics app."
+msgstr ""
+
+#: src/admin/components/FreePackageCard/index.js
+#: src/admin/panels/FreePackagePanel.js
+msgid "Copy URL"
+msgstr ""
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "Open PWA"
+msgstr ""
+
 #: src/admin/components/ReferrerLabel/index.js
 #: src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
@@ -971,18 +1282,8 @@ msgid "Direct"
 msgstr ""
 
 #: src/admin/components/ReportExportAction/index.js
-msgid "Excel export requires the PHP Zip extension to be installed on this server."
-msgstr ""
-
-#: src/admin/components/ReportExportAction/index.js
 #: src/admin/components/ReportExportAction/index.js
 msgid "No results match the current filters."
-msgstr ""
-
-#. translators: %d: maximum export row count.
-#: src/admin/components/ReportExportAction/index.js
-#, js-format
-msgid "The export exceeds the %d row limit. Narrow the date range or search filter, then try again."
 msgstr ""
 
 #: src/admin/components/ReportExportAction/index.js
@@ -1138,10 +1439,6 @@ msgid "30d"
 msgstr ""
 
 #: src/admin/constants/index.js
-msgid "30 days"
-msgstr ""
-
-#: src/admin/constants/index.js
 msgid "90d"
 msgstr ""
 
@@ -1232,10 +1529,6 @@ msgstr ""
 msgid "AI Assistants"
 msgstr ""
 
-#: src/admin/lib/channelLabels.js
-msgid "Other"
-msgstr ""
-
 #: src/admin/lib/locationLabel.js
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
@@ -1252,6 +1545,9 @@ msgid "Approx. %d km"
 msgstr ""
 
 #: src/admin/lib/locationLabel.js
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/GeoCitiesPanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
@@ -1348,6 +1644,7 @@ msgid "Table: Acquisition channels"
 msgstr ""
 
 #: src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -1362,6 +1659,295 @@ msgstr ""
 #: src/admin/panels/AcquisitionPanel.js
 #, js-format
 msgid "Total visits: %s"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Bot"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Slot"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Snippet cannot be empty."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Snippet syntax looks valid."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "All events"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Loading events configuration…"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Events configuration is locked in the Free tier. Upgrade to Pro to save and run actions."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Some saved KPI slot values are invalid. Use only numeric slots greater than or equal to 2."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "KPI slot conflicts detected. Each active KPI slot must be unique before saving."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Reorder KPI event"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/FreePackagePanel.js
+msgid "Include in KPI"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/FreePackagePanel.js
+msgid "Enable event"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event ID"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Label (max 25 characters)"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Trigger type"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Click"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Page view"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "CSS selectors"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Add one or more CSS selectors as tags to target clickable elements, for example .cta-button or #signup."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Target page"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Search by title across published posts, pages, and public custom post types."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Webhook triggers are server-side. Browser JavaScript snippets are not executed for this trigger."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Webhook URL"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Regenerate token"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Generate token"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Allowed webhook params"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Comma-separated allowlist for incoming webhook payload keys. Only allowlisted variables are stored and shown in event context."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Action"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Server action template"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "JavaScript snippet"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Configure a server-side action payload template for incoming webhook events. Browser JavaScript APIs are not available for this trigger."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Paste JavaScript code (without <script> tags) to run when this event is triggered. Available placeholders depend on trigger type. Do not wrap placeholders such as {{page_url}} in quotes. They are injected as escaped JavaScript values."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Available variables for this trigger type:"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Check syntax"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Syntax checks are available for browser JavaScript snippets only."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/FreePackagePanel.js
+msgid "Remove event"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Add event"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered events"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered events captured by the advanced tracker are listed."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Total events"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search…"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Label"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event time"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Type"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered page"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Operating system"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Details"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "All pages"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+msgid "View"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "No triggered events found."
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Page"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "results"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Confirm event removal"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Do you want to remove this event?"
+msgstr ""
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr ""
+
+#: src/admin/panels/GeoCitiesPanel.js
+#: src/admin/panels/GeoCitiesPanel.js
+#: src/admin/panels/GeoCitiesPanel.js
+msgid "City / Country"
+msgstr ""
+
+#: src/admin/panels/GeoCitiesPanel.js
+msgid "Hits"
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
@@ -1403,20 +1989,15 @@ msgid "Top countries"
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr ""
-
-#: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
 msgstr ""
 
 #: src/admin/panels/GeolocationPanel.js
 msgid "Countries"
+msgstr ""
+
+#: src/admin/panels/GeolocationPanel.js
+msgid "Cities"
 msgstr ""
 
 #: src/admin/panels/OverviewPanel.js
@@ -1482,12 +2063,6 @@ msgstr ""
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr ""
 
@@ -1497,24 +2072,7 @@ msgstr ""
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
 msgstr ""
 
 #: src/admin/panels/RealtimePanel.js
@@ -1676,6 +2234,7 @@ msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Error while purging."
 msgstr ""
 
@@ -1684,7 +2243,7 @@ msgid "Aggregated analytics data purged."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Stats"
+msgid "Captured events data purged."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1708,8 +2267,32 @@ msgid "Tracking & privacy"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
+msgid "App"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete captured events list"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Confirm captured events purge"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "I confirm that I want to permanently purge the captured events list."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Purge captured events"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1751,6 +2334,22 @@ msgid "Hidden"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Interface branding"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "White-label interface controls are available in Pro."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Use white-label interface"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
 msgstr ""
 
@@ -1760,6 +2359,18 @@ msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Quick stats"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No post types available."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -2107,6 +2718,10 @@ msgid "Delete all analytics data"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Events configuration"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
 msgstr ""
 
@@ -2124,11 +2739,6 @@ msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
-msgstr ""
-
-#: src/admin/panels/SettingsPanel.js
-#: src/admin/panels/SettingsPanel.js
-msgid "Cancel"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -2151,17 +2761,6 @@ msgstr ""
 #: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
-msgstr ""
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr ""
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
 msgstr ""
 
 #. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
@@ -2201,25 +2800,7 @@ msgid "Accueil"
 msgstr ""
 
 #: src/admin/panels/TopPagesPanel.js
-msgid "System"
-msgstr ""
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Summary"
-msgstr ""
-
-#. translators: %s: Formatted average time spent on the page.
-#: src/admin/panels/TopPagesPanel.js
-#, js-format
-msgid "Avg. time on page: %s"
-msgstr ""
-
-#: src/admin/panels/TopPagesPanel.js
 msgid "Back"
-msgstr ""
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "View"
 msgstr ""
 
 #: src/admin/panels/TopPagesPanel.js
@@ -2284,13 +2865,6 @@ msgid "Title"
 msgstr ""
 
 #: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr ""
-
-#: src/admin/panels/TopPagesPanel.js
 msgid "Table: Page details by date"
 msgstr ""
 
@@ -2306,13 +2880,6 @@ msgstr ""
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
-msgstr ""
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
 msgstr ""
 
 #: src/admin/panels/TopPagesPanel.js
@@ -2563,33 +3130,11 @@ msgid "Referrer unavailable"
 msgstr ""
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr ""
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr ""
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr ""
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
-msgstr ""
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr ""
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
 msgstr ""
 
 #. translators: %s: active first-column label.

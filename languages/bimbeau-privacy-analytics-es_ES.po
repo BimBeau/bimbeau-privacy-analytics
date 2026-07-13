@@ -39,11 +39,11 @@ msgstr "BimBeau"
 msgid "Update"
 msgstr "Actualizar"
 
-#: admin/admin.php
+#: admin/admin.php src/admin/components/ProBadge/index.js
 msgid "Pro"
 msgstr "Pro"
 
-#: admin/admin.php
+#: admin/admin.php src/admin/components/FreePackageState/index.js
 msgid "Upgrade to Pro"
 msgstr "Actualizar a Pro"
 
@@ -129,8 +129,10 @@ msgid "Unknown generation status."
 msgstr "Estado de generación desconocido."
 
 #: admin/admin.php includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/SearchTermsPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -176,9 +178,9 @@ msgid "Geolocation"
 msgstr "Geolocalización"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -250,13 +252,16 @@ msgstr ""
 "widget."
 
 #: admin/dashboard-widget.php src/admin/panels/AcquisitionPanel.js
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/OverviewPanel.js
+#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Visitas"
 
-#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -268,6 +273,7 @@ msgid "Referrers"
 msgstr "Referentes"
 
 #: admin/edition-admin-runtime.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr "Eventos"
 
@@ -413,6 +419,142 @@ msgstr "No se ha encontrado ningún registro de geolocalización para esta IP."
 msgid "Unable to determine the visitor IP."
 msgstr "No se puede determinar la IP del visitante."
 
+#: includes/pro-auth-controller.php
+msgid "Custom login flow is blocked by policy."
+msgstr ""
+"El flujo de inicio de sesión personalizado está bloqueado por la política."
+
+#: includes/pro-auth-controller.php
+msgid "Invalid login request."
+msgstr "Solicitud de inicio de sesión no válida."
+
+#: includes/pro-auth-controller.php
+msgid "The authenticated account cannot access BimBeau Privacy Analytics."
+msgstr "La cuenta autenticada no puede acceder a BimBeau Privacy Analytics."
+
+#: includes/pro-auth-controller.php
+msgid "Authentication failed. Verify credentials and retry."
+msgstr ""
+"La autenticación ha fallado. Verifica las credenciales y vuelve a intentarlo."
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/SettingsPanel.js
+msgid "Stats"
+msgstr "Estadísticas"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+msgid "Summary"
+msgstr "Resumen"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/constants/index.js
+msgid "30 days"
+msgstr "30 días"
+
+#: includes/pro-post-key-stats-metabox.php includes/pro-post-views-column.php
+msgid "View page details"
+msgstr "Ver detalles de la página"
+
+#. translators: %s: Formatted average time spent on the page.
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#, php-format
+msgid "Avg. time on page: %s"
+msgstr "Tiempo medio en la página: %s"
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "Visitor profile"
+msgstr "Perfil del visitante"
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "No visitor profile data available for this period."
+msgstr "No hay datos de perfil de visitantes disponibles para este período."
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "Plus de stats"
+msgstr "Más estadísticas"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr "País"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser"
+msgstr "Navegador"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+msgid "System"
+msgstr "Sistema"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Device"
+msgstr "Dispositivo"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "Escritorio"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+msgid "Mobile"
+msgstr "Móvil"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "Tableta"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/lib/channelLabels.js
+msgid "Other"
+msgstr "Otro"
+
+#. translators: %d: Number of seconds.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%ds"
+msgstr "%ds"
+
+#. translators: 1: Number of minutes, 2: Number of seconds.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%1$dm %2$ds"
+msgstr "%1$dm %2$ds"
+
+#. translators: 1: Number of hours, 2: Number of minutes.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%1$dh %2$dm"
+msgstr "%1$dh %2$dm"
+
+#. translators: %s: Selected reporting period label.
+#: includes/pro-post-views-column.php
+#, php-format
+msgid "Views (%s)"
+msgstr "Vistas (%s)"
+
+#: includes/pro-post-views-column.php
+msgid "Views trend"
+msgstr "Tendencia de vistas"
+
+#: includes/pro-settings.php
+msgid "KPI slot must be a numeric integer greater than or equal to 2."
+msgstr "El espacio KPI debe ser un entero numérico mayor o igual que 2."
+
+#: includes/pro-settings.php
+msgid ""
+"KPI slot format is invalid. Use only a numeric integer greater than or equal "
+"to 2."
+msgstr ""
+"El formato del espacio KPI no es válido. Usa solo un entero numérico mayor o "
+"igual que 2."
+
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "Limpieza de registros sin procesar de BimBeau Privacy Analytics"
@@ -447,11 +589,145 @@ msgstr "La base de datos GeoIP aún no está disponible."
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "País desconocido"
+
+#: includes/rest/class-bbpa-admin-pro-controller.php
+msgid "Missing page path."
+msgstr "Falta la ruta de la página."
+
+#: includes/rest/removed-export-controller.php
+msgid "Authentication is required to export analytics data."
+msgstr "Se requiere autenticación para exportar datos de analítica."
+
+#: includes/rest/removed-export-controller.php
+msgid "Report exports are not included in this package."
+msgstr ""
+"Las exportaciones de informes están disponibles en BimBeau Privacy Analytics "
+"Pro."
+
+#: includes/rest/removed-export-controller.php
+msgid "You do not have permission to export analytics data."
+msgstr "No tienes permiso para exportar datos de analítica."
+
+#: includes/rest/removed-export-controller.php
+msgid "A valid request nonce is required to export analytics data."
+msgstr ""
+"Se requiere un nonce de solicitud válido para exportar datos de analítica."
+
+#: includes/rest/removed-export-controller.php
+msgid "The export format must be csv, json, or xlsx."
+msgstr "El formato de exportación debe ser csv, json o xlsx."
+
+#. translators: %d: maximum export row count.
+#: includes/rest/removed-export-controller.php
+#: src/admin/components/ReportExportAction/index.js
+#, php-format
+msgid ""
+"The export exceeds the %d row limit. Narrow the date range or search filter, "
+"then try again."
+msgstr ""
+"La exportación supera el límite de %d filas. Reduce el intervalo de fechas o "
+"el filtro de búsqueda y vuelve a intentarlo."
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report cannot be exported."
+msgstr "El informe seleccionado no se puede exportar."
+
+#. translators: %d: synchronous export threshold row count.
+#: includes/rest/removed-export-controller.php
+#, php-format
+msgid ""
+"The export is larger than the %d row synchronous threshold. Request async "
+"mode and poll the job status endpoint."
+msgstr ""
+"La exportación supera el umbral síncrono de %d filas. Solicita el modo "
+"asíncrono y consulta el endpoint de estado de la tarea."
+
+#: includes/rest/removed-export-controller.php
+msgid ""
+"The export file is no longer available. Create a new export job and try "
+"again."
+msgstr ""
+"El archivo de exportación ya no está disponible. Crea una nueva tarea de "
+"exportación y vuelve a intentarlo."
+
+#: includes/rest/removed-export-controller.php
+msgid ""
+"The export file is not ready yet. Check the job status endpoint before "
+"downloading."
+msgstr ""
+"El archivo de exportación aún no está listo. Consulta el endpoint de estado "
+"de la tarea antes de descargarlo."
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report is not available for export."
+msgstr "El informe seleccionado no está disponible para exportación."
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report does not expose file export rows."
+msgstr ""
+"El informe seleccionado no proporciona filas para la exportación de archivos."
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report does not expose exportable columns."
+msgstr "El informe seleccionado no proporciona columnas exportables."
+
+#: includes/rest/removed-export-controller.php
+msgid "The CSV export could not be generated."
+msgstr "No se pudo generar la exportación CSV."
+
+#: includes/rest/removed-export-controller.php
+msgid "The Excel export could not be generated."
+msgstr "No se pudo generar la exportación Excel."
+
+#: includes/rest/removed-export-controller.php
+#: src/admin/components/ReportExportAction/index.js
+msgid ""
+"Excel export requires the PHP Zip extension to be installed on this server."
+msgstr ""
+"La exportación Excel requiere que la extensión PHP Zip esté instalada en "
+"este servidor."
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job could not be created. Try again later."
+msgstr ""
+"No se pudo crear la tarea de exportación. Vuelve a intentarlo más tarde."
+
+#: includes/rest/removed-export-controller.php
+msgid "The export storage directory is unavailable."
+msgstr "El directorio de almacenamiento de exportaciones no está disponible."
+
+#: includes/rest/removed-export-controller.php
+msgid "The export storage path is invalid."
+msgstr "La ruta de almacenamiento de exportaciones no es válida."
+
+#: includes/rest/removed-export-controller.php
+msgid "The JSON export could not be generated."
+msgstr "No se pudo generar la exportación JSON."
+
+#: includes/rest/removed-export-controller.php
+msgid "The export file could not be written."
+msgstr "No se pudo escribir el archivo de exportación."
+
+#: includes/rest/removed-export-controller.php
+msgid ""
+"The export could not be generated. Try again later or narrow the export "
+"filters."
+msgstr ""
+"No se pudo generar la exportación. Vuelve a intentarlo más tarde o reduce "
+"los filtros de exportación."
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job was not found."
+msgstr "No se encontró la tarea de exportación."
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job was not found or has expired."
+msgstr "La tarea de exportación no se encontró o ha caducado."
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -938,6 +1214,16 @@ msgstr "No hay detalles por hora disponibles para esta página."
 msgid "Page details heatmap by day and hour"
 msgstr "Mapa de calor de detalles de página por día y hora"
 
+#: src/admin/components/FreePackageState/index.js
+msgid "BimBeau Privacy Analytics Pro feature preview"
+msgstr "Vista previa de función de BimBeau Privacy Analytics Pro"
+
+#: src/admin/components/FreePackageState/index.js
+#: src/admin/components/FreePackageCard/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "This feature is not included in this package."
+msgstr "Esta función está disponible en BimBeau Privacy Analytics Pro."
+
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "Diagnósticos de privacidad en ejecución"
@@ -953,6 +1239,27 @@ msgid "Technical state does not prove consent collection validity."
 msgstr ""
 "El estado técnico no prueba la validez de la recogida de consentimiento."
 
+#: src/admin/components/FreePackageCard/index.js
+msgid "PWA Stats App"
+msgstr "Aplicación PWA Stats"
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "PWA URL"
+msgstr "URL de la PWA"
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "Use this URL to open the standalone analytics app."
+msgstr "Usa esta URL para abrir la aplicación de analítica independiente."
+
+#: src/admin/components/FreePackageCard/index.js
+#: src/admin/panels/FreePackagePanel.js
+msgid "Copy URL"
+msgstr "Copiar URL"
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "Open PWA"
+msgstr "Abrir PWA"
+
 #: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -961,24 +1268,8 @@ msgid "Direct"
 msgstr "Directo"
 
 #: src/admin/components/ReportExportAction/index.js
-msgid ""
-"Excel export requires the PHP Zip extension to be installed on this server."
-msgstr ""
-"La exportación Excel requiere que la extensión PHP Zip esté instalada en "
-"este servidor."
-
-#: src/admin/components/ReportExportAction/index.js
 msgid "No results match the current filters."
 msgstr "Ningún resultado coincide con los filtros actuales."
-
-#. translators: %d: maximum export row count.
-#: src/admin/components/ReportExportAction/index.js
-msgid ""
-"The export exceeds the %d row limit. Narrow the date range or search filter, "
-"then try again."
-msgstr ""
-"La exportación supera el límite de %d filas. Reduce el intervalo de fechas o "
-"el filtro de búsqueda y vuelve a intentarlo."
 
 #: src/admin/components/ReportExportAction/index.js
 msgid "Export access is refused for the current account or license."
@@ -1145,10 +1436,6 @@ msgid "30d"
 msgstr "30d"
 
 #: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 días"
-
-#: src/admin/constants/index.js
 msgid "90d"
 msgstr "90d"
 
@@ -1236,10 +1523,6 @@ msgstr "Otras campañas"
 msgid "AI Assistants"
 msgstr "Asistentes de IA"
 
-#: src/admin/lib/channelLabels.js
-msgid "Other"
-msgstr "Otro"
-
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Posición aproximada"
@@ -1253,7 +1536,8 @@ msgstr "Ciudad aproximada"
 msgid "Approx. %d km"
 msgstr "Aprox. %d km"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "No disponible"
@@ -1362,7 +1646,8 @@ msgstr "No hay datos de perfil de visitantes disponibles para este período."
 msgid "Table: Acquisition channels"
 msgstr "Tabla: visitantes"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Channel"
 msgstr ""
@@ -1376,6 +1661,329 @@ msgstr ""
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "%s del total de visitas"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Bot"
+msgstr "Bot"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Slot"
+msgstr "Espacio"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
+msgstr "El espacio KPI no es válido y debe ser un entero mayor o igual que 2."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Snippet cannot be empty."
+msgstr "El fragmento no puede estar vacío."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Snippet syntax looks valid."
+msgstr "La sintaxis del fragmento parece válida."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "All events"
+msgstr "Todos los eventos"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Loading events configuration…"
+msgstr "Cargando configuración de eventos…"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
+"run actions."
+msgstr ""
+"La configuración de eventos está bloqueada en el plan gratuito. Actualiza a "
+"Pro para guardar y ejecutar acciones."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Some saved KPI slot values are invalid. Use only numeric slots greater than "
+"or equal to 2."
+msgstr ""
+"Algunos valores guardados de espacios KPI no son válidos. Usa solo espacios "
+"numéricos mayores o iguales que 2."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"KPI slot conflicts detected. Each active KPI slot must be unique before "
+"saving."
+msgstr ""
+"Se han detectado conflictos de espacios KPI. Cada espacio KPI activo debe "
+"ser único antes de guardar."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Reorder KPI event"
+msgstr "Reordenar evento KPI"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Include in KPI"
+msgstr "Incluir en KPI"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Enable event"
+msgstr "Activar evento"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event ID"
+msgstr "ID del evento"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Label (max 25 characters)"
+msgstr "Etiqueta (máx. 25 caracteres)"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Trigger type"
+msgstr "Tipo de disparador"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Click"
+msgstr "Clic"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Page view"
+msgstr "Vista de página"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "CSS selectors"
+msgstr "Selectores CSS"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Add one or more CSS selectors as tags to target clickable elements, for "
+"example .cta-button or #signup."
+msgstr ""
+"Añade uno o varios selectores CSS como etiquetas para apuntar a elementos "
+"clicables, por ejemplo .cta-button o #signup."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Target page"
+msgstr "Página de destino"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Search by title across published posts, pages, and public custom post types."
+msgstr ""
+"Busca por título entre entradas, páginas y tipos de contenido personalizados "
+"públicos publicados."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Webhook triggers are server-side. Browser JavaScript snippets are not "
+"executed for this trigger."
+msgstr ""
+"Los disparadores webhook son del lado del servidor. Los snippets JavaScript "
+"del navegador no se ejecutan para este disparador."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Webhook URL"
+msgstr "URL del webhook"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Regenerate token"
+msgstr "Regenerar token"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Generate token"
+msgstr "Generar token"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Allowed webhook params"
+msgstr "Parámetros webhook permitidos"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Comma-separated allowlist for incoming webhook payload keys. Only "
+"allowlisted variables are stored and shown in event context."
+msgstr ""
+"Lista permitida separada por comas para claves de payload de webhooks "
+"entrantes. Solo las variables permitidas se guardan y se muestran en el "
+"contexto del evento."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Action"
+msgstr "Acción"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Server action template"
+msgstr "Plantilla de acción de servidor"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "JavaScript snippet"
+msgstr "Snippet JavaScript"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Configure a server-side action payload template for incoming webhook events. "
+"Browser JavaScript APIs are not available for this trigger."
+msgstr ""
+"Configura una plantilla de payload de acción del servidor para eventos "
+"webhook entrantes. Las API JavaScript del navegador no están disponibles "
+"para este disparador."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Paste JavaScript code (without <script> tags) to run when this event is "
+"triggered. Available placeholders depend on trigger type. Do not wrap "
+"placeholders such as {{page_url}} in quotes. They are injected as escaped "
+"JavaScript values."
+msgstr ""
+"Pega código JavaScript (sin etiquetas <script>) para ejecutarlo cuando se "
+"active este evento. Los placeholders disponibles dependen del tipo de "
+"disparador. No pongas placeholders como {{page_url}} entre comillas. Se "
+"insertan como valores JavaScript escapados."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Available variables for this trigger type:"
+msgstr "Variables disponibles para este tipo de disparador:"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Check syntax"
+msgstr "Comprobar sintaxis"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Syntax checks are available for browser JavaScript snippets only."
+msgstr ""
+"Las comprobaciones de sintaxis solo están disponibles para snippets "
+"JavaScript del navegador."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Remove event"
+msgstr "Eliminar evento"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Add event"
+msgstr "Añadir evento"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered events"
+msgstr "Eventos activados"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered events captured by the advanced tracker are listed."
+msgstr ""
+"Se muestran los eventos activados capturados por el rastreador avanzado."
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Total events"
+msgstr "Total de eventos"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr "Filas"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event"
+msgstr "Evento"
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search"
+msgstr "Buscar"
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search…"
+msgstr "Buscar…"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Label"
+msgstr "Etiqueta"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event time"
+msgstr "Hora del evento"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Type"
+msgstr "Tipo"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered page"
+msgstr "Página activada"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr "Ciudad"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Operating system"
+msgstr "Sistema operativo"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Details"
+msgstr "Detalles"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "All pages"
+msgstr "Todas las páginas"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+msgid "View"
+msgstr "Ver"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "No triggered events found."
+msgstr "No se han encontrado eventos activados."
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "Página anterior"
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "Página siguiente"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Page"
+msgstr "Página"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "results"
+msgstr "resultados"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Confirm event removal"
+msgstr "Confirmar eliminación del evento"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Do you want to remove this event?"
+msgstr "¿Quieres eliminar este evento?"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/admin/panels/GeoCitiesPanel.js
+#, fuzzy
+#: src/admin/panels/GeoCitiesPanel.js
+#, fuzzy
+#: src/admin/panels/GeoCitiesPanel.js
+msgid "City / Country"
+msgstr "Ciudad / País"
+
+#: src/admin/panels/GeoCitiesPanel.js
+msgid "Hits"
+msgstr "Hits"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
@@ -1409,12 +2017,6 @@ msgstr "Bandera de %s"
 msgid "Top countries"
 msgstr "Países principales"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "País"
-
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "Legacy visits"
@@ -1423,6 +2025,10 @@ msgstr "Visitantes diarios"
 #: src/admin/panels/GeolocationPanel.js
 msgid "Countries"
 msgstr "Países"
+
+#: src/admin/panels/GeolocationPanel.js
+msgid "Cities"
+msgstr "Ciudades"
 
 #: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
 msgid "Url"
@@ -1482,11 +2088,6 @@ msgstr "Hash del ID de visitante"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr "Ciudad"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Hora de conexión"
 
@@ -1496,23 +2097,8 @@ msgstr "Página actual"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "Sistema operativo"
-
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Navegador"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Versión del navegador"
-
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Dispositivo"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1693,8 +2279,8 @@ msgid "Aggregated analytics data purged."
 msgstr "Datos de analítica agregada purgados."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Stats"
-msgstr "Estadísticas"
+msgid "Captured events data purged."
+msgstr "Datos de eventos capturados purgados."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to dashboards, KPI cards, and analytics reports."
@@ -1718,8 +2304,38 @@ msgid "Tracking & privacy"
 msgstr "Seguimiento y privacidad"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "App"
+msgstr "Aplicación"
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
 msgstr "Mantenimiento"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete captured events list"
+msgstr "Eliminar lista de eventos capturados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Confirm captured events purge"
+msgstr "Confirmar purga de eventos capturados"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"This action permanently removes the captured events list shown in Events "
+"stats. Other analytics data remains unchanged."
+msgstr ""
+"Esta acción elimina permanentemente la lista de eventos capturados que se "
+"muestra en las estadísticas de eventos. Los demás datos de analítica no "
+"cambian."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "I confirm that I want to permanently purge the captured events list."
+msgstr ""
+"Confirmo que quiero purgar permanentemente la lista de eventos capturados."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Purge captured events"
+msgstr "Purgar eventos capturados"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "PWA URL is unavailable."
@@ -1763,6 +2379,26 @@ msgid "Hidden"
 msgstr "Oculto"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Interface branding"
+msgstr "Identidad de la interfaz"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "White-label interface controls are available in Pro."
+msgstr "Los controles de interfaz de marca blanca están disponibles en Pro."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Use white-label interface"
+msgstr "Usar la interfaz de marca blanca"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Hide the BimBeau Privacy Analytics logo in the admin header and display the "
+"localized analytics title instead."
+msgstr ""
+"Oculta el logotipo de BimBeau Privacy Analytics en la cabecera de "
+"administración y muestra en su lugar el título de analíticas localizado."
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
 msgstr "Paneles activados"
 
@@ -1775,6 +2411,23 @@ msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
 msgstr ""
 "Oculto mientras \"Activar estadísticas avanzadas tras el consentimiento\" "
 "esté desactivado."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Quick stats"
+msgstr "Estadísticas rápidas"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Enable Quick Stats on selected post types: add a Views (30d) column in the "
+"posts list and display a stats summary metabox while editing each post."
+msgstr ""
+"Activa Estadísticas rápidas en los tipos de contenido seleccionados: añade "
+"una columna Vistas (30d) en la lista de entradas y muestra una metabox de "
+"resumen de estadísticas al editar cada entrada."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No post types available."
+msgstr "No hay tipos de contenido disponibles."
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
@@ -2239,6 +2892,10 @@ msgid "Delete all analytics data"
 msgstr "Eliminar todos los datos de analítica"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Events configuration"
+msgstr "Configuración de eventos"
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
 msgstr "Guardar ajustes"
 
@@ -2262,10 +2919,6 @@ msgstr ""
 msgid "I confirm that I want to permanently purge all analytics data."
 msgstr ""
 "Confirmo que quiero purgar permanentemente todos los datos de analítica."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "Cancelar"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -2295,17 +2948,6 @@ msgstr ""
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "Smartphone"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Escritorio"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Tableta"
 
 #. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
 #: src/admin/panels/TopPagesPanel.js
@@ -2338,25 +2980,8 @@ msgid "Accueil"
 msgstr "Inicio"
 
 #: src/admin/panels/TopPagesPanel.js
-msgid "System"
-msgstr "Sistema"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Summary"
-msgstr "Resumen"
-
-#. translators: %s: Formatted average time spent on the page.
-#: src/admin/panels/TopPagesPanel.js
-msgid "Avg. time on page: %s"
-msgstr "Tiempo medio en la página: %s"
-
-#: src/admin/panels/TopPagesPanel.js
 msgid "Back"
 msgstr "Volver"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "View"
-msgstr "Ver"
 
 #: src/admin/panels/TopPagesPanel.js
 msgid "Open in WordPress"
@@ -2410,13 +3035,6 @@ msgid "Title"
 msgstr "Título"
 
 #: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr "Filas"
-
-#: src/admin/panels/TopPagesPanel.js
 msgid "Table: Page details by date"
 msgstr "Tabla: detalles de página por fecha"
 
@@ -2433,13 +3051,6 @@ msgstr "Anterior"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Siguiente"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "Página"
 
 #: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -2687,34 +3298,12 @@ msgid "Referrer unavailable"
 msgstr "No hay referentes disponibles."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Buscar"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Buscar…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "No hay datos de sitios de referencia disponibles."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "Cargando sitios de referencia…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Página anterior"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Página siguiente"
 
 #. translators: %s: active first-column label.
 #: src/admin/widgets/ReportTableCard/index.js
@@ -2869,453 +3458,6 @@ msgstr "Privado"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabla: visitantes"
-
-#~ msgid "Custom login flow is blocked by policy."
-#~ msgstr ""
-#~ "El flujo de inicio de sesión personalizado está bloqueado por la política."
-
-#~ msgid "Invalid login request."
-#~ msgstr "Solicitud de inicio de sesión no válida."
-
-#~ msgid "The authenticated account cannot access BimBeau Privacy Analytics."
-#~ msgstr "La cuenta autenticada no puede acceder a BimBeau Privacy Analytics."
-
-#~ msgid "Authentication failed. Verify credentials and retry."
-#~ msgstr ""
-#~ "La autenticación ha fallado. Verifica las credenciales y vuelve a "
-#~ "intentarlo."
-
-#~ msgid "View page details"
-#~ msgstr "Ver detalles de la página"
-
-#~ msgid "Visitor profile"
-#~ msgstr "Perfil del visitante"
-
-#~ msgid "No visitor profile data available for this period."
-#~ msgstr "No hay datos de perfil de visitantes disponibles para este período."
-
-#~ msgid "Plus de stats"
-#~ msgstr "Más estadísticas"
-
-#~ msgid "Mobile"
-#~ msgstr "Móvil"
-
-#, php-format
-#~ msgid "%ds"
-#~ msgstr "%ds"
-
-#, php-format
-#~ msgid "%1$dm %2$ds"
-#~ msgstr "%1$dm %2$ds"
-
-#, php-format
-#~ msgid "%1$dh %2$dm"
-#~ msgstr "%1$dh %2$dm"
-
-#, php-format
-#~ msgid "Views (%s)"
-#~ msgstr "Vistas (%s)"
-
-#~ msgid "Views trend"
-#~ msgstr "Tendencia de vistas"
-
-#~ msgid "KPI slot must be a numeric integer greater than or equal to 2."
-#~ msgstr "El espacio KPI debe ser un entero numérico mayor o igual que 2."
-
-#~ msgid ""
-#~ "KPI slot format is invalid. Use only a numeric integer greater than or "
-#~ "equal to 2."
-#~ msgstr ""
-#~ "El formato del espacio KPI no es válido. Usa solo un entero numérico "
-#~ "mayor o igual que 2."
-
-#~ msgid "Missing page path."
-#~ msgstr "Falta la ruta de la página."
-
-#~ msgid "Authentication is required to export analytics data."
-#~ msgstr "Se requiere autenticación para exportar datos de analítica."
-
-#~ msgid "Report exports are not included in this package."
-#~ msgstr ""
-#~ "Las exportaciones de informes están disponibles en BimBeau Privacy "
-#~ "Analytics Pro."
-
-#~ msgid "You do not have permission to export analytics data."
-#~ msgstr "No tienes permiso para exportar datos de analítica."
-
-#~ msgid "A valid request nonce is required to export analytics data."
-#~ msgstr ""
-#~ "Se requiere un nonce de solicitud válido para exportar datos de analítica."
-
-#~ msgid "The export format must be csv, json, or xlsx."
-#~ msgstr "El formato de exportación debe ser csv, json o xlsx."
-
-#~ msgid "The selected report cannot be exported."
-#~ msgstr "El informe seleccionado no se puede exportar."
-
-#, php-format
-#~ msgid ""
-#~ "The export is larger than the %d row synchronous threshold. Request async "
-#~ "mode and poll the job status endpoint."
-#~ msgstr ""
-#~ "La exportación supera el umbral síncrono de %d filas. Solicita el modo "
-#~ "asíncrono y consulta el endpoint de estado de la tarea."
-
-#~ msgid ""
-#~ "The export file is no longer available. Create a new export job and try "
-#~ "again."
-#~ msgstr ""
-#~ "El archivo de exportación ya no está disponible. Crea una nueva tarea de "
-#~ "exportación y vuelve a intentarlo."
-
-#~ msgid ""
-#~ "The export file is not ready yet. Check the job status endpoint before "
-#~ "downloading."
-#~ msgstr ""
-#~ "El archivo de exportación aún no está listo. Consulta el endpoint de "
-#~ "estado de la tarea antes de descargarlo."
-
-#~ msgid "The selected report is not available for export."
-#~ msgstr "El informe seleccionado no está disponible para exportación."
-
-#~ msgid "The selected report does not expose file export rows."
-#~ msgstr ""
-#~ "El informe seleccionado no proporciona filas para la exportación de "
-#~ "archivos."
-
-#~ msgid "The selected report does not expose exportable columns."
-#~ msgstr "El informe seleccionado no proporciona columnas exportables."
-
-#~ msgid "The CSV export could not be generated."
-#~ msgstr "No se pudo generar la exportación CSV."
-
-#~ msgid "The Excel export could not be generated."
-#~ msgstr "No se pudo generar la exportación Excel."
-
-#~ msgid "The export job could not be created. Try again later."
-#~ msgstr ""
-#~ "No se pudo crear la tarea de exportación. Vuelve a intentarlo más tarde."
-
-#~ msgid "The export storage directory is unavailable."
-#~ msgstr ""
-#~ "El directorio de almacenamiento de exportaciones no está disponible."
-
-#~ msgid "The export storage path is invalid."
-#~ msgstr "La ruta de almacenamiento de exportaciones no es válida."
-
-#~ msgid "The JSON export could not be generated."
-#~ msgstr "No se pudo generar la exportación JSON."
-
-#~ msgid "The export file could not be written."
-#~ msgstr "No se pudo escribir el archivo de exportación."
-
-#~ msgid ""
-#~ "The export could not be generated. Try again later or narrow the export "
-#~ "filters."
-#~ msgstr ""
-#~ "No se pudo generar la exportación. Vuelve a intentarlo más tarde o reduce "
-#~ "los filtros de exportación."
-
-#~ msgid "The export job was not found."
-#~ msgstr "No se encontró la tarea de exportación."
-
-#~ msgid "The export job was not found or has expired."
-#~ msgstr "La tarea de exportación no se encontró o ha caducado."
-
-#~ msgid "BimBeau Privacy Analytics Pro feature preview"
-#~ msgstr "Vista previa de función de BimBeau Privacy Analytics Pro"
-
-#~ msgid "This feature is not included in this package."
-#~ msgstr "Esta función está disponible en BimBeau Privacy Analytics Pro."
-
-#~ msgid "PWA Stats App"
-#~ msgstr "Aplicación PWA Stats"
-
-#~ msgid "PWA URL"
-#~ msgstr "URL de la PWA"
-
-#~ msgid "Use this URL to open the standalone analytics app."
-#~ msgstr "Usa esta URL para abrir la aplicación de analítica independiente."
-
-#~ msgid "Copy URL"
-#~ msgstr "Copiar URL"
-
-#~ msgid "Open PWA"
-#~ msgstr "Abrir PWA"
-
-#~ msgid "Bot"
-#~ msgstr "Bot"
-
-#~ msgid "Slot"
-#~ msgstr "Espacio"
-
-#~ msgid ""
-#~ "KPI slot is invalid and must be an integer greater than or equal to 2."
-#~ msgstr ""
-#~ "El espacio KPI no es válido y debe ser un entero mayor o igual que 2."
-
-#~ msgid "Snippet cannot be empty."
-#~ msgstr "El fragmento no puede estar vacío."
-
-#~ msgid "Snippet syntax looks valid."
-#~ msgstr "La sintaxis del fragmento parece válida."
-
-#~ msgid "All events"
-#~ msgstr "Todos los eventos"
-
-#~ msgid "Loading events configuration…"
-#~ msgstr "Cargando configuración de eventos…"
-
-#~ msgid ""
-#~ "Events configuration is locked in the Free tier. Upgrade to Pro to save "
-#~ "and run actions."
-#~ msgstr ""
-#~ "La configuración de eventos está bloqueada en el plan gratuito. Actualiza "
-#~ "a Pro para guardar y ejecutar acciones."
-
-#~ msgid ""
-#~ "Some saved KPI slot values are invalid. Use only numeric slots greater "
-#~ "than or equal to 2."
-#~ msgstr ""
-#~ "Algunos valores guardados de espacios KPI no son válidos. Usa solo "
-#~ "espacios numéricos mayores o iguales que 2."
-
-#~ msgid ""
-#~ "KPI slot conflicts detected. Each active KPI slot must be unique before "
-#~ "saving."
-#~ msgstr ""
-#~ "Se han detectado conflictos de espacios KPI. Cada espacio KPI activo debe "
-#~ "ser único antes de guardar."
-
-#~ msgid "Reorder KPI event"
-#~ msgstr "Reordenar evento KPI"
-
-#~ msgid "Include in KPI"
-#~ msgstr "Incluir en KPI"
-
-#~ msgid "Enable event"
-#~ msgstr "Activar evento"
-
-#~ msgid "Event ID"
-#~ msgstr "ID del evento"
-
-#~ msgid "Label (max 25 characters)"
-#~ msgstr "Etiqueta (máx. 25 caracteres)"
-
-#~ msgid "Trigger type"
-#~ msgstr "Tipo de disparador"
-
-#~ msgid "Click"
-#~ msgstr "Clic"
-
-#~ msgid "Page view"
-#~ msgstr "Vista de página"
-
-#~ msgid "CSS selectors"
-#~ msgstr "Selectores CSS"
-
-#~ msgid ""
-#~ "Add one or more CSS selectors as tags to target clickable elements, for "
-#~ "example .cta-button or #signup."
-#~ msgstr ""
-#~ "Añade uno o varios selectores CSS como etiquetas para apuntar a elementos "
-#~ "clicables, por ejemplo .cta-button o #signup."
-
-#~ msgid "Target page"
-#~ msgstr "Página de destino"
-
-#~ msgid ""
-#~ "Search by title across published posts, pages, and public custom post "
-#~ "types."
-#~ msgstr ""
-#~ "Busca por título entre entradas, páginas y tipos de contenido "
-#~ "personalizados públicos publicados."
-
-#~ msgid ""
-#~ "Webhook triggers are server-side. Browser JavaScript snippets are not "
-#~ "executed for this trigger."
-#~ msgstr ""
-#~ "Los disparadores webhook son del lado del servidor. Los snippets "
-#~ "JavaScript del navegador no se ejecutan para este disparador."
-
-#~ msgid "Webhook URL"
-#~ msgstr "URL del webhook"
-
-#~ msgid "Regenerate token"
-#~ msgstr "Regenerar token"
-
-#~ msgid "Generate token"
-#~ msgstr "Generar token"
-
-#~ msgid "Allowed webhook params"
-#~ msgstr "Parámetros webhook permitidos"
-
-#~ msgid ""
-#~ "Comma-separated allowlist for incoming webhook payload keys. Only "
-#~ "allowlisted variables are stored and shown in event context."
-#~ msgstr ""
-#~ "Lista permitida separada por comas para claves de payload de webhooks "
-#~ "entrantes. Solo las variables permitidas se guardan y se muestran en el "
-#~ "contexto del evento."
-
-#~ msgid "Action"
-#~ msgstr "Acción"
-
-#~ msgid "Server action template"
-#~ msgstr "Plantilla de acción de servidor"
-
-#~ msgid "JavaScript snippet"
-#~ msgstr "Snippet JavaScript"
-
-#~ msgid ""
-#~ "Configure a server-side action payload template for incoming webhook "
-#~ "events. Browser JavaScript APIs are not available for this trigger."
-#~ msgstr ""
-#~ "Configura una plantilla de payload de acción del servidor para eventos "
-#~ "webhook entrantes. Las API JavaScript del navegador no están disponibles "
-#~ "para este disparador."
-
-#~ msgid ""
-#~ "Paste JavaScript code (without <script> tags) to run when this event is "
-#~ "triggered. Available placeholders depend on trigger type. Do not wrap "
-#~ "placeholders such as {{page_url}} in quotes. They are injected as escaped "
-#~ "JavaScript values."
-#~ msgstr ""
-#~ "Pega código JavaScript (sin etiquetas <script>) para ejecutarlo cuando se "
-#~ "active este evento. Los placeholders disponibles dependen del tipo de "
-#~ "disparador. No pongas placeholders como {{page_url}} entre comillas. Se "
-#~ "insertan como valores JavaScript escapados."
-
-#~ msgid "Available variables for this trigger type:"
-#~ msgstr "Variables disponibles para este tipo de disparador:"
-
-#~ msgid "Check syntax"
-#~ msgstr "Comprobar sintaxis"
-
-#~ msgid "Syntax checks are available for browser JavaScript snippets only."
-#~ msgstr ""
-#~ "Las comprobaciones de sintaxis solo están disponibles para snippets "
-#~ "JavaScript del navegador."
-
-#~ msgid "Remove event"
-#~ msgstr "Eliminar evento"
-
-#~ msgid "Add event"
-#~ msgstr "Añadir evento"
-
-#~ msgid "Triggered events"
-#~ msgstr "Eventos activados"
-
-#~ msgid "Triggered events captured by the advanced tracker are listed."
-#~ msgstr ""
-#~ "Se muestran los eventos activados capturados por el rastreador avanzado."
-
-#~ msgid "Total events"
-#~ msgstr "Total de eventos"
-
-#~ msgid "Event"
-#~ msgstr "Evento"
-
-#~ msgid "Label"
-#~ msgstr "Etiqueta"
-
-#~ msgid "Event time"
-#~ msgstr "Hora del evento"
-
-#~ msgid "Type"
-#~ msgstr "Tipo"
-
-#~ msgid "Triggered page"
-#~ msgstr "Página activada"
-
-#~ msgid "Details"
-#~ msgstr "Detalles"
-
-#~ msgid "All pages"
-#~ msgstr "Todas las páginas"
-
-#~ msgid "No triggered events found."
-#~ msgstr "No se han encontrado eventos activados."
-
-#~ msgid "results"
-#~ msgstr "resultados"
-
-#~ msgid "Confirm event removal"
-#~ msgstr "Confirmar eliminación del evento"
-
-#~ msgid "Do you want to remove this event?"
-#~ msgstr "¿Quieres eliminar este evento?"
-
-#, fuzzy
-#~ msgid "City / Country"
-#~ msgstr "Ciudad / País"
-
-#~ msgid "Hits"
-#~ msgstr "Hits"
-
-#~ msgid "Cities"
-#~ msgstr "Ciudades"
-
-#~ msgid "Captured events data purged."
-#~ msgstr "Datos de eventos capturados purgados."
-
-#~ msgid "App"
-#~ msgstr "Aplicación"
-
-#~ msgid "Delete captured events list"
-#~ msgstr "Eliminar lista de eventos capturados"
-
-#~ msgid "Confirm captured events purge"
-#~ msgstr "Confirmar purga de eventos capturados"
-
-#~ msgid ""
-#~ "This action permanently removes the captured events list shown in Events "
-#~ "stats. Other analytics data remains unchanged."
-#~ msgstr ""
-#~ "Esta acción elimina permanentemente la lista de eventos capturados que se "
-#~ "muestra en las estadísticas de eventos. Los demás datos de analítica no "
-#~ "cambian."
-
-#~ msgid "I confirm that I want to permanently purge the captured events list."
-#~ msgstr ""
-#~ "Confirmo que quiero purgar permanentemente la lista de eventos capturados."
-
-#~ msgid "Purge captured events"
-#~ msgstr "Purgar eventos capturados"
-
-#~ msgid "Interface branding"
-#~ msgstr "Identidad de la interfaz"
-
-#~ msgid "White-label interface controls are available in Pro."
-#~ msgstr "Los controles de interfaz de marca blanca están disponibles en Pro."
-
-#~ msgid "Use white-label interface"
-#~ msgstr "Usar la interfaz de marca blanca"
-
-#~ msgid ""
-#~ "Hide the BimBeau Privacy Analytics logo in the admin header and display "
-#~ "the localized analytics title instead."
-#~ msgstr ""
-#~ "Oculta el logotipo de BimBeau Privacy Analytics en la cabecera de "
-#~ "administración y muestra en su lugar el título de analíticas localizado."
-
-#~ msgid "Quick stats"
-#~ msgstr "Estadísticas rápidas"
-
-#~ msgid ""
-#~ "Enable Quick Stats on selected post types: add a Views (30d) column in "
-#~ "the posts list and display a stats summary metabox while editing each "
-#~ "post."
-#~ msgstr ""
-#~ "Activa Estadísticas rápidas en los tipos de contenido seleccionados: "
-#~ "añade una columna Vistas (30d) en la lista de entradas y muestra una "
-#~ "metabox de resumen de estadísticas al editar cada entrada."
-
-#~ msgid "No post types available."
-#~ msgstr "No hay tipos de contenido disponibles."
-
-#~ msgid "Events configuration"
-#~ msgstr "Configuración de eventos"
 
 #, php-format
 #~ msgid ""

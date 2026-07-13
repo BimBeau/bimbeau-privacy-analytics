@@ -38,11 +38,11 @@ msgstr "BimBeau"
 msgid "Update"
 msgstr "更新"
 
-#: admin/admin.php
+#: admin/admin.php src/admin/components/ProBadge/index.js
 msgid "Pro"
 msgstr "Pro"
 
-#: admin/admin.php
+#: admin/admin.php src/admin/components/FreePackageState/index.js
 msgid "Upgrade to Pro"
 msgstr "升级到 Pro"
 
@@ -122,8 +122,10 @@ msgid "Unknown generation status."
 msgstr "未知生成状态。"
 
 #: admin/admin.php includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/SearchTermsPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -169,9 +171,9 @@ msgid "Geolocation"
 msgstr "地理定位"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -241,13 +243,16 @@ msgid ""
 msgstr "请至少启用一个分析面板，以便在此小工具中显示 KPI 值。"
 
 #: admin/dashboard-widget.php src/admin/panels/AcquisitionPanel.js
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/OverviewPanel.js
+#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "访问"
 
-#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
+#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -259,6 +264,7 @@ msgid "Referrers"
 msgstr "引荐来源"
 
 #: admin/edition-admin-runtime.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr "事件"
 
@@ -398,6 +404,138 @@ msgstr "未找到此 IP 的地理定位记录。"
 msgid "Unable to determine the visitor IP."
 msgstr "无法确定访客 IP。"
 
+#: includes/pro-auth-controller.php
+msgid "Custom login flow is blocked by policy."
+msgstr "自定义登录流程已被策略阻止。"
+
+#: includes/pro-auth-controller.php
+msgid "Invalid login request."
+msgstr "登录请求无效。"
+
+#: includes/pro-auth-controller.php
+msgid "The authenticated account cannot access BimBeau Privacy Analytics."
+msgstr "已验证的账户无法访问 BimBeau Privacy Analytics。"
+
+#: includes/pro-auth-controller.php
+msgid "Authentication failed. Verify credentials and retry."
+msgstr "身份验证失败。请检查凭据后重试。"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/SettingsPanel.js
+msgid "Stats"
+msgstr "统计"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+msgid "Summary"
+msgstr "摘要"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/constants/index.js
+msgid "30 days"
+msgstr "30 天"
+
+#: includes/pro-post-key-stats-metabox.php includes/pro-post-views-column.php
+msgid "View page details"
+msgstr "查看页面详情"
+
+#. translators: %s: Formatted average time spent on the page.
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#, php-format
+msgid "Avg. time on page: %s"
+msgstr "页面平均停留时间：%s"
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "Visitor profile"
+msgstr "访客画像"
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "No visitor profile data available for this period."
+msgstr "此时间段没有可用的访客画像数据。"
+
+#: includes/pro-post-key-stats-metabox.php
+msgid "Plus de stats"
+msgstr "更多统计数据"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr "国家/地区"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser"
+msgstr "浏览器"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+msgid "System"
+msgstr "系统"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Device"
+msgstr "设备"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "桌面设备"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+msgid "Mobile"
+msgstr "移动设备"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "平板设备"
+
+#: includes/pro-post-key-stats-metabox.php src/admin/lib/channelLabels.js
+msgid "Other"
+msgstr "其他"
+
+#. translators: %d: Number of seconds.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%ds"
+msgstr "%d秒"
+
+#. translators: 1: Number of minutes, 2: Number of seconds.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%1$dm %2$ds"
+msgstr "%1$d分 %2$d秒"
+
+#. translators: 1: Number of hours, 2: Number of minutes.
+#: includes/pro-post-key-stats-metabox.php
+#, php-format
+msgid "%1$dh %2$dm"
+msgstr "%1$d小时 %2$d分"
+
+#. translators: %s: Selected reporting period label.
+#: includes/pro-post-views-column.php
+#, php-format
+msgid "Views (%s)"
+msgstr "浏览量（%s）"
+
+#: includes/pro-post-views-column.php
+msgid "Views trend"
+msgstr "浏览量趋势"
+
+#: includes/pro-settings.php
+msgid "KPI slot must be a numeric integer greater than or equal to 2."
+msgstr "KPI 槽位必须是大于或等于 2 的数字整数。"
+
+#: includes/pro-settings.php
+msgid ""
+"KPI slot format is invalid. Use only a numeric integer greater than or equal "
+"to 2."
+msgstr "KPI 槽位格式无效。请只使用大于或等于 2 的数字整数。"
+
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics 原始日志清理"
@@ -432,11 +570,128 @@ msgstr "GeoIP 数据库尚不可用。"
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "未知国家/地区"
+
+#: includes/rest/class-bbpa-admin-pro-controller.php
+msgid "Missing page path."
+msgstr "缺少页面路径。"
+
+#: includes/rest/removed-export-controller.php
+msgid "Authentication is required to export analytics data."
+msgstr "导出分析数据需要身份验证。"
+
+#: includes/rest/removed-export-controller.php
+msgid "Report exports are not included in this package."
+msgstr "报表导出在 BimBeau Privacy Analytics Pro 中可用。"
+
+#: includes/rest/removed-export-controller.php
+msgid "You do not have permission to export analytics data."
+msgstr "你没有导出分析数据的权限。"
+
+#: includes/rest/removed-export-controller.php
+msgid "A valid request nonce is required to export analytics data."
+msgstr "导出分析数据需要有效的请求 nonce。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The export format must be csv, json, or xlsx."
+msgstr "导出格式必须是 csv、json 或 xlsx。"
+
+#. translators: %d: maximum export row count.
+#: includes/rest/removed-export-controller.php
+#: src/admin/components/ReportExportAction/index.js
+#, php-format
+msgid ""
+"The export exceeds the %d row limit. Narrow the date range or search filter, "
+"then try again."
+msgstr "导出超过 %d 行限制。请缩小日期范围或搜索过滤条件后重试。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report cannot be exported."
+msgstr "无法导出所选报表。"
+
+#. translators: %d: synchronous export threshold row count.
+#: includes/rest/removed-export-controller.php
+#, php-format
+msgid ""
+"The export is larger than the %d row synchronous threshold. Request async "
+"mode and poll the job status endpoint."
+msgstr "导出数据超过 %d 行的同步阈值。请请求异步模式并轮询任务状态端点。"
+
+#: includes/rest/removed-export-controller.php
+msgid ""
+"The export file is no longer available. Create a new export job and try "
+"again."
+msgstr "导出文件已不再可用。请创建新的导出任务并重试。"
+
+#: includes/rest/removed-export-controller.php
+msgid ""
+"The export file is not ready yet. Check the job status endpoint before "
+"downloading."
+msgstr "导出文件尚未准备好。下载前请检查任务状态端点。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report is not available for export."
+msgstr "所选报表不可导出。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report does not expose file export rows."
+msgstr "所选报表未提供文件导出行。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The selected report does not expose exportable columns."
+msgstr "所选报表未提供可导出的列。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The CSV export could not be generated."
+msgstr "无法生成 CSV 导出。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The Excel export could not be generated."
+msgstr "无法生成 Excel 导出。"
+
+#: includes/rest/removed-export-controller.php
+#: src/admin/components/ReportExportAction/index.js
+msgid ""
+"Excel export requires the PHP Zip extension to be installed on this server."
+msgstr "Excel 导出需要此服务器安装 PHP Zip 扩展。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job could not be created. Try again later."
+msgstr "无法创建导出任务。请稍后重试。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The export storage directory is unavailable."
+msgstr "导出存储目录不可用。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The export storage path is invalid."
+msgstr "导出存储路径无效。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The JSON export could not be generated."
+msgstr "无法生成 JSON 导出。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The export file could not be written."
+msgstr "无法写入导出文件。"
+
+#: includes/rest/removed-export-controller.php
+msgid ""
+"The export could not be generated. Try again later or narrow the export "
+"filters."
+msgstr "无法生成导出。请稍后重试或缩小导出过滤条件。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job was not found."
+msgstr "未找到导出任务。"
+
+#: includes/rest/removed-export-controller.php
+msgid "The export job was not found or has expired."
+msgstr "未找到导出任务，或任务已过期。"
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -893,6 +1148,16 @@ msgstr "此页面没有可用的小时详情。"
 msgid "Page details heatmap by day and hour"
 msgstr "按日期和小时显示的页面详情热力图"
 
+#: src/admin/components/FreePackageState/index.js
+msgid "BimBeau Privacy Analytics Pro feature preview"
+msgstr "BimBeau Privacy Analytics Pro 功能预览"
+
+#: src/admin/components/FreePackageState/index.js
+#: src/admin/components/FreePackageCard/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "This feature is not included in this package."
+msgstr "此功能在 BimBeau Privacy Analytics Pro 中可用。"
+
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "隐私运行时诊断"
@@ -905,6 +1170,27 @@ msgstr "运行时粒度根据可用粒度报告。"
 msgid "Technical state does not prove consent collection validity."
 msgstr "技术状态不能证明同意收集的有效性。"
 
+#: src/admin/components/FreePackageCard/index.js
+msgid "PWA Stats App"
+msgstr "PWA 统计应用"
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "PWA URL"
+msgstr "PWA URL"
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "Use this URL to open the standalone analytics app."
+msgstr "使用此 URL 打开独立分析应用。"
+
+#: src/admin/components/FreePackageCard/index.js
+#: src/admin/panels/FreePackagePanel.js
+msgid "Copy URL"
+msgstr "复制 URL"
+
+#: src/admin/components/FreePackageCard/index.js
+msgid "Open PWA"
+msgstr "打开 PWA"
+
 #: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -913,20 +1199,8 @@ msgid "Direct"
 msgstr "直接访问"
 
 #: src/admin/components/ReportExportAction/index.js
-msgid ""
-"Excel export requires the PHP Zip extension to be installed on this server."
-msgstr "Excel 导出需要此服务器安装 PHP Zip 扩展。"
-
-#: src/admin/components/ReportExportAction/index.js
 msgid "No results match the current filters."
 msgstr "没有结果匹配当前过滤条件。"
-
-#. translators: %d: maximum export row count.
-#: src/admin/components/ReportExportAction/index.js
-msgid ""
-"The export exceeds the %d row limit. Narrow the date range or search filter, "
-"then try again."
-msgstr "导出超过 %d 行限制。请缩小日期范围或搜索过滤条件后重试。"
 
 #: src/admin/components/ReportExportAction/index.js
 msgid "Export access is refused for the current account or license."
@@ -1082,10 +1356,6 @@ msgid "30d"
 msgstr "30天"
 
 #: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 天"
-
-#: src/admin/constants/index.js
 msgid "90d"
 msgstr "90天"
 
@@ -1173,10 +1443,6 @@ msgstr "其他营销活动"
 msgid "AI Assistants"
 msgstr "AI 助手"
 
-#: src/admin/lib/channelLabels.js
-msgid "Other"
-msgstr "其他"
-
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "大致位置"
@@ -1190,7 +1456,8 @@ msgstr "大致城市"
 msgid "Approx. %d km"
 msgstr "约 %d 公里"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "不可用"
@@ -1291,7 +1558,8 @@ msgstr "此时间段没有可用的访客画像数据。"
 msgid "Table: Acquisition channels"
 msgstr "表格：访客"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/FreePackagePanel.js
+#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Channel"
 msgstr ""
@@ -1305,6 +1573,313 @@ msgstr ""
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "占总访问量的 %s"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Bot"
+msgstr "机器人"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Slot"
+msgstr "槽位"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
+msgstr "KPI 槽位无效，必须是大于或等于 2 的整数。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Snippet cannot be empty."
+msgstr "代码片段不能为空。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Snippet syntax looks valid."
+msgstr "代码片段语法看起来有效。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "All events"
+msgstr "所有事件"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Loading events configuration…"
+msgstr "正在加载事件配置…"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
+"run actions."
+msgstr "事件配置在免费版中已锁定。请升级到 Pro 以保存并运行操作。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Some saved KPI slot values are invalid. Use only numeric slots greater than "
+"or equal to 2."
+msgstr "部分已保存的 KPI 槽位值无效。请只使用大于或等于 2 的数字槽位。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"KPI slot conflicts detected. Each active KPI slot must be unique before "
+"saving."
+msgstr "检测到 KPI 槽位冲突。保存前每个启用的 KPI 槽位都必须唯一。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Reorder KPI event"
+msgstr "重新排序 KPI 事件"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Include in KPI"
+msgstr "纳入 KPI"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Enable event"
+msgstr "启用事件"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event ID"
+msgstr "事件 ID"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Label (max 25 characters)"
+msgstr "标签（最多 25 个字符）"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Trigger type"
+msgstr "触发类型"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Click"
+msgstr "点击"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Page view"
+msgstr "页面浏览"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "CSS selectors"
+msgstr "CSS 选择器"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Add one or more CSS selectors as tags to target clickable elements, for "
+"example .cta-button or #signup."
+msgstr ""
+"添加一个或多个 CSS 选择器作为标签来定位可点击元素，例如 .cta-button 或 "
+"#signup。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Target page"
+msgstr "目标页面"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Search by title across published posts, pages, and public custom post types."
+msgstr "按标题搜索已发布的文章、页面和公开自定义文章类型。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Webhook triggers are server-side. Browser JavaScript snippets are not "
+"executed for this trigger."
+msgstr ""
+"Webhook 触发器在服务器端运行。此触发器不会执行浏览器 JavaScript 代码片段。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Webhook URL"
+msgstr "Webhook URL"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Regenerate token"
+msgstr "重新生成令牌"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Generate token"
+msgstr "生成令牌"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Allowed webhook params"
+msgstr "允许的 Webhook 参数"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Comma-separated allowlist for incoming webhook payload keys. Only "
+"allowlisted variables are stored and shown in event context."
+msgstr ""
+"传入 Webhook 载荷键的逗号分隔允许列表。仅存储并在事件上下文中显示允许的变量。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Action"
+msgstr "操作"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Server action template"
+msgstr "服务器操作模板"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "JavaScript snippet"
+msgstr "JavaScript 代码片段"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Configure a server-side action payload template for incoming webhook events. "
+"Browser JavaScript APIs are not available for this trigger."
+msgstr ""
+"为传入的 Webhook 事件配置服务器端操作载荷模板。此触发器不能使用浏览器 "
+"JavaScript API。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid ""
+"Paste JavaScript code (without <script> tags) to run when this event is "
+"triggered. Available placeholders depend on trigger type. Do not wrap "
+"placeholders such as {{page_url}} in quotes. They are injected as escaped "
+"JavaScript values."
+msgstr ""
+"粘贴在触发此事件时运行的 JavaScript 代码（不含 <script> 标签）。可用占位符取"
+"决于触发类型。不要将{{page_url}} 等占位符放入引号中；它们会作为已转义的 "
+"JavaScript 值注入。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Available variables for this trigger type:"
+msgstr "此触发类型的可用变量："
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Check syntax"
+msgstr "检查语法"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Syntax checks are available for browser JavaScript snippets only."
+msgstr "语法检查仅适用于浏览器 JavaScript 代码片段。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Remove event"
+msgstr "移除事件"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Add event"
+msgstr "添加事件"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered events"
+msgstr "已触发事件"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered events captured by the advanced tracker are listed."
+msgstr "此处列出高级跟踪器捕获的已触发事件。"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Total events"
+msgstr "事件总数"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr "行"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event"
+msgstr "事件"
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search"
+msgstr "搜索"
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Search…"
+msgstr "搜索…"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Label"
+msgstr "标签"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Event time"
+msgstr "事件时间"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Type"
+msgstr "类型"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Triggered page"
+msgstr "触发页面"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr "城市"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Operating system"
+msgstr "操作系统"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Details"
+msgstr "详情"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "All pages"
+msgstr "所有页面"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+msgid "View"
+msgstr "查看"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "No triggered events found."
+msgstr "未找到已触发事件。"
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "上一页"
+
+#: src/admin/panels/FreePackagePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "下一页"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Page"
+msgstr "页面"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "results"
+msgstr "结果"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Confirm event removal"
+msgstr "确认移除事件"
+
+#: src/admin/panels/FreePackagePanel.js
+msgid "Do you want to remove this event?"
+msgstr "是否要移除此事件？"
+
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "取消"
+
+#: src/admin/panels/GeoCitiesPanel.js
+#, fuzzy
+#: src/admin/panels/GeoCitiesPanel.js
+#, fuzzy
+#: src/admin/panels/GeoCitiesPanel.js
+msgid "City / Country"
+msgstr "城市 / 国家或地区"
+
+#: src/admin/panels/GeoCitiesPanel.js
+msgid "Hits"
+msgstr "命中"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
@@ -1338,12 +1913,6 @@ msgstr "%s 的旗帜"
 msgid "Top countries"
 msgstr "热门国家/地区"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "国家/地区"
-
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "Legacy visits"
@@ -1352,6 +1921,10 @@ msgstr "每日访客"
 #: src/admin/panels/GeolocationPanel.js
 msgid "Countries"
 msgstr "国家/地区"
+
+#: src/admin/panels/GeolocationPanel.js
+msgid "Cities"
+msgstr "城市"
 
 #: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
 msgid "Url"
@@ -1409,11 +1982,6 @@ msgstr "访客 ID 哈希"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr "城市"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "连接时间"
 
@@ -1423,23 +1991,8 @@ msgstr "当前页面"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "操作系统"
-
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "浏览器"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "浏览器版本"
-
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "设备"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1617,8 +2170,8 @@ msgid "Aggregated analytics data purged."
 msgstr "聚合分析数据已清除。"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Stats"
-msgstr "统计"
+msgid "Captured events data purged."
+msgstr "已捕获事件数据已清除。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to dashboards, KPI cards, and analytics reports."
@@ -1641,8 +2194,35 @@ msgid "Tracking & privacy"
 msgstr "跟踪与隐私"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "App"
+msgstr "应用"
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
 msgstr "维护"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Delete captured events list"
+msgstr "删除已捕获事件列表"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Confirm captured events purge"
+msgstr "确认清除已捕获事件"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"This action permanently removes the captured events list shown in Events "
+"stats. Other analytics data remains unchanged."
+msgstr ""
+"此操作会永久移除“事件统计”中显示的已捕获事件列表。其他分析数据保持不变。"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "I confirm that I want to permanently purge the captured events list."
+msgstr "我确认要永久清除已捕获事件列表。"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Purge captured events"
+msgstr "清除已捕获事件"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "PWA URL is unavailable."
@@ -1684,6 +2264,25 @@ msgid "Hidden"
 msgstr "隐藏"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Interface branding"
+msgstr "界面品牌标识"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "White-label interface controls are available in Pro."
+msgstr "白标界面控件在 Pro 版中可用。"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Use white-label interface"
+msgstr "使用白标界面"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Hide the BimBeau Privacy Analytics logo in the admin header and display the "
+"localized analytics title instead."
+msgstr ""
+"隐藏管理页眉中的 BimBeau Privacy Analytics 徽标，并改为显示本地化的分析标题。"
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
 msgstr "已启用面板"
 
@@ -1694,6 +2293,22 @@ msgstr "可见"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
 msgstr "当“同意后启用高级统计”被禁用时隐藏。"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Quick stats"
+msgstr "快速统计"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Enable Quick Stats on selected post types: add a Views (30d) column in the "
+"posts list and display a stats summary metabox while editing each post."
+msgstr ""
+"在所选文章类型上启用快速统计：在文章列表中添加浏览量（30天）列，并在编辑每篇"
+"文章时显示统计摘要元框。"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No post types available."
+msgstr "没有可用的文章类型。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
@@ -2127,6 +2742,10 @@ msgid "Delete all analytics data"
 msgstr "删除所有分析数据"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Events configuration"
+msgstr "事件配置"
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
 msgstr "保存设置"
 
@@ -2147,10 +2766,6 @@ msgstr "此操作会永久移除所有已存储的分析数据和原始日志。
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "我确认要永久清除所有分析数据。"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "取消"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -2176,17 +2791,6 @@ msgstr "我确认只清除早于配置保留窗口的数据。"
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "智能手机"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "桌面设备"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "平板设备"
 
 #. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
 #: src/admin/panels/TopPagesPanel.js
@@ -2219,25 +2823,8 @@ msgid "Accueil"
 msgstr "首页"
 
 #: src/admin/panels/TopPagesPanel.js
-msgid "System"
-msgstr "系统"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Summary"
-msgstr "摘要"
-
-#. translators: %s: Formatted average time spent on the page.
-#: src/admin/panels/TopPagesPanel.js
-msgid "Avg. time on page: %s"
-msgstr "页面平均停留时间：%s"
-
-#: src/admin/panels/TopPagesPanel.js
 msgid "Back"
 msgstr "返回"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "View"
-msgstr "查看"
 
 #: src/admin/panels/TopPagesPanel.js
 msgid "Open in WordPress"
@@ -2291,13 +2878,6 @@ msgid "Title"
 msgstr "标题"
 
 #: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr "行"
-
-#: src/admin/panels/TopPagesPanel.js
 msgid "Table: Page details by date"
 msgstr "表格：按日期显示页面详情"
 
@@ -2314,13 +2894,6 @@ msgstr "上一项"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "下一项"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "页面"
 
 #: src/admin/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -2564,34 +3137,12 @@ msgid "Referrer unavailable"
 msgstr "没有可用的引荐来源。"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "搜索"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "搜索…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "没有可用的引荐站点数据。"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "正在加载引荐站点…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "上一页"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "下一页"
 
 #. translators: %s: active first-column label.
 #: src/admin/widgets/ReportTableCard/index.js
@@ -2743,413 +3294,6 @@ msgstr "私密"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
-
-#~ msgid "Custom login flow is blocked by policy."
-#~ msgstr "自定义登录流程已被策略阻止。"
-
-#~ msgid "Invalid login request."
-#~ msgstr "登录请求无效。"
-
-#~ msgid "The authenticated account cannot access BimBeau Privacy Analytics."
-#~ msgstr "已验证的账户无法访问 BimBeau Privacy Analytics。"
-
-#~ msgid "Authentication failed. Verify credentials and retry."
-#~ msgstr "身份验证失败。请检查凭据后重试。"
-
-#~ msgid "View page details"
-#~ msgstr "查看页面详情"
-
-#~ msgid "Visitor profile"
-#~ msgstr "访客画像"
-
-#~ msgid "No visitor profile data available for this period."
-#~ msgstr "此时间段没有可用的访客画像数据。"
-
-#~ msgid "Plus de stats"
-#~ msgstr "更多统计数据"
-
-#~ msgid "Mobile"
-#~ msgstr "移动设备"
-
-#, php-format
-#~ msgid "%ds"
-#~ msgstr "%d秒"
-
-#, php-format
-#~ msgid "%1$dm %2$ds"
-#~ msgstr "%1$d分 %2$d秒"
-
-#, php-format
-#~ msgid "%1$dh %2$dm"
-#~ msgstr "%1$d小时 %2$d分"
-
-#, php-format
-#~ msgid "Views (%s)"
-#~ msgstr "浏览量（%s）"
-
-#~ msgid "Views trend"
-#~ msgstr "浏览量趋势"
-
-#~ msgid "KPI slot must be a numeric integer greater than or equal to 2."
-#~ msgstr "KPI 槽位必须是大于或等于 2 的数字整数。"
-
-#~ msgid ""
-#~ "KPI slot format is invalid. Use only a numeric integer greater than or "
-#~ "equal to 2."
-#~ msgstr "KPI 槽位格式无效。请只使用大于或等于 2 的数字整数。"
-
-#~ msgid "Missing page path."
-#~ msgstr "缺少页面路径。"
-
-#~ msgid "Authentication is required to export analytics data."
-#~ msgstr "导出分析数据需要身份验证。"
-
-#~ msgid "Report exports are not included in this package."
-#~ msgstr "报表导出在 BimBeau Privacy Analytics Pro 中可用。"
-
-#~ msgid "You do not have permission to export analytics data."
-#~ msgstr "你没有导出分析数据的权限。"
-
-#~ msgid "A valid request nonce is required to export analytics data."
-#~ msgstr "导出分析数据需要有效的请求 nonce。"
-
-#~ msgid "The export format must be csv, json, or xlsx."
-#~ msgstr "导出格式必须是 csv、json 或 xlsx。"
-
-#~ msgid "The selected report cannot be exported."
-#~ msgstr "无法导出所选报表。"
-
-#, php-format
-#~ msgid ""
-#~ "The export is larger than the %d row synchronous threshold. Request async "
-#~ "mode and poll the job status endpoint."
-#~ msgstr "导出数据超过 %d 行的同步阈值。请请求异步模式并轮询任务状态端点。"
-
-#~ msgid ""
-#~ "The export file is no longer available. Create a new export job and try "
-#~ "again."
-#~ msgstr "导出文件已不再可用。请创建新的导出任务并重试。"
-
-#~ msgid ""
-#~ "The export file is not ready yet. Check the job status endpoint before "
-#~ "downloading."
-#~ msgstr "导出文件尚未准备好。下载前请检查任务状态端点。"
-
-#~ msgid "The selected report is not available for export."
-#~ msgstr "所选报表不可导出。"
-
-#~ msgid "The selected report does not expose file export rows."
-#~ msgstr "所选报表未提供文件导出行。"
-
-#~ msgid "The selected report does not expose exportable columns."
-#~ msgstr "所选报表未提供可导出的列。"
-
-#~ msgid "The CSV export could not be generated."
-#~ msgstr "无法生成 CSV 导出。"
-
-#~ msgid "The Excel export could not be generated."
-#~ msgstr "无法生成 Excel 导出。"
-
-#~ msgid "The export job could not be created. Try again later."
-#~ msgstr "无法创建导出任务。请稍后重试。"
-
-#~ msgid "The export storage directory is unavailable."
-#~ msgstr "导出存储目录不可用。"
-
-#~ msgid "The export storage path is invalid."
-#~ msgstr "导出存储路径无效。"
-
-#~ msgid "The JSON export could not be generated."
-#~ msgstr "无法生成 JSON 导出。"
-
-#~ msgid "The export file could not be written."
-#~ msgstr "无法写入导出文件。"
-
-#~ msgid ""
-#~ "The export could not be generated. Try again later or narrow the export "
-#~ "filters."
-#~ msgstr "无法生成导出。请稍后重试或缩小导出过滤条件。"
-
-#~ msgid "The export job was not found."
-#~ msgstr "未找到导出任务。"
-
-#~ msgid "The export job was not found or has expired."
-#~ msgstr "未找到导出任务，或任务已过期。"
-
-#~ msgid "BimBeau Privacy Analytics Pro feature preview"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#~ msgid "This feature is not included in this package."
-#~ msgstr "此功能在 BimBeau Privacy Analytics Pro 中可用。"
-
-#~ msgid "PWA Stats App"
-#~ msgstr "PWA 统计应用"
-
-#~ msgid "PWA URL"
-#~ msgstr "PWA URL"
-
-#~ msgid "Use this URL to open the standalone analytics app."
-#~ msgstr "使用此 URL 打开独立分析应用。"
-
-#~ msgid "Copy URL"
-#~ msgstr "复制 URL"
-
-#~ msgid "Open PWA"
-#~ msgstr "打开 PWA"
-
-#~ msgid "Bot"
-#~ msgstr "机器人"
-
-#~ msgid "Slot"
-#~ msgstr "槽位"
-
-#~ msgid ""
-#~ "KPI slot is invalid and must be an integer greater than or equal to 2."
-#~ msgstr "KPI 槽位无效，必须是大于或等于 2 的整数。"
-
-#~ msgid "Snippet cannot be empty."
-#~ msgstr "代码片段不能为空。"
-
-#~ msgid "Snippet syntax looks valid."
-#~ msgstr "代码片段语法看起来有效。"
-
-#~ msgid "All events"
-#~ msgstr "所有事件"
-
-#~ msgid "Loading events configuration…"
-#~ msgstr "正在加载事件配置…"
-
-#~ msgid ""
-#~ "Events configuration is locked in the Free tier. Upgrade to Pro to save "
-#~ "and run actions."
-#~ msgstr "事件配置在免费版中已锁定。请升级到 Pro 以保存并运行操作。"
-
-#~ msgid ""
-#~ "Some saved KPI slot values are invalid. Use only numeric slots greater "
-#~ "than or equal to 2."
-#~ msgstr "部分已保存的 KPI 槽位值无效。请只使用大于或等于 2 的数字槽位。"
-
-#~ msgid ""
-#~ "KPI slot conflicts detected. Each active KPI slot must be unique before "
-#~ "saving."
-#~ msgstr "检测到 KPI 槽位冲突。保存前每个启用的 KPI 槽位都必须唯一。"
-
-#~ msgid "Reorder KPI event"
-#~ msgstr "重新排序 KPI 事件"
-
-#~ msgid "Include in KPI"
-#~ msgstr "纳入 KPI"
-
-#~ msgid "Enable event"
-#~ msgstr "启用事件"
-
-#~ msgid "Event ID"
-#~ msgstr "事件 ID"
-
-#~ msgid "Label (max 25 characters)"
-#~ msgstr "标签（最多 25 个字符）"
-
-#~ msgid "Trigger type"
-#~ msgstr "触发类型"
-
-#~ msgid "Click"
-#~ msgstr "点击"
-
-#~ msgid "Page view"
-#~ msgstr "页面浏览"
-
-#~ msgid "CSS selectors"
-#~ msgstr "CSS 选择器"
-
-#~ msgid ""
-#~ "Add one or more CSS selectors as tags to target clickable elements, for "
-#~ "example .cta-button or #signup."
-#~ msgstr ""
-#~ "添加一个或多个 CSS 选择器作为标签来定位可点击元素，例如 .cta-button 或 "
-#~ "#signup。"
-
-#~ msgid "Target page"
-#~ msgstr "目标页面"
-
-#~ msgid ""
-#~ "Search by title across published posts, pages, and public custom post "
-#~ "types."
-#~ msgstr "按标题搜索已发布的文章、页面和公开自定义文章类型。"
-
-#~ msgid ""
-#~ "Webhook triggers are server-side. Browser JavaScript snippets are not "
-#~ "executed for this trigger."
-#~ msgstr ""
-#~ "Webhook 触发器在服务器端运行。此触发器不会执行浏览器 JavaScript 代码片段。"
-
-#~ msgid "Webhook URL"
-#~ msgstr "Webhook URL"
-
-#~ msgid "Regenerate token"
-#~ msgstr "重新生成令牌"
-
-#~ msgid "Generate token"
-#~ msgstr "生成令牌"
-
-#~ msgid "Allowed webhook params"
-#~ msgstr "允许的 Webhook 参数"
-
-#~ msgid ""
-#~ "Comma-separated allowlist for incoming webhook payload keys. Only "
-#~ "allowlisted variables are stored and shown in event context."
-#~ msgstr ""
-#~ "传入 Webhook 载荷键的逗号分隔允许列表。仅存储并在事件上下文中显示允许的变"
-#~ "量。"
-
-#~ msgid "Action"
-#~ msgstr "操作"
-
-#~ msgid "Server action template"
-#~ msgstr "服务器操作模板"
-
-#~ msgid "JavaScript snippet"
-#~ msgstr "JavaScript 代码片段"
-
-#~ msgid ""
-#~ "Configure a server-side action payload template for incoming webhook "
-#~ "events. Browser JavaScript APIs are not available for this trigger."
-#~ msgstr ""
-#~ "为传入的 Webhook 事件配置服务器端操作载荷模板。此触发器不能使用浏览器 "
-#~ "JavaScript API。"
-
-#~ msgid ""
-#~ "Paste JavaScript code (without <script> tags) to run when this event is "
-#~ "triggered. Available placeholders depend on trigger type. Do not wrap "
-#~ "placeholders such as {{page_url}} in quotes. They are injected as escaped "
-#~ "JavaScript values."
-#~ msgstr ""
-#~ "粘贴在触发此事件时运行的 JavaScript 代码（不含 <script> 标签）。可用占位符"
-#~ "取决于触发类型。不要将{{page_url}} 等占位符放入引号中；它们会作为已转义的 "
-#~ "JavaScript 值注入。"
-
-#~ msgid "Available variables for this trigger type:"
-#~ msgstr "此触发类型的可用变量："
-
-#~ msgid "Check syntax"
-#~ msgstr "检查语法"
-
-#~ msgid "Syntax checks are available for browser JavaScript snippets only."
-#~ msgstr "语法检查仅适用于浏览器 JavaScript 代码片段。"
-
-#~ msgid "Remove event"
-#~ msgstr "移除事件"
-
-#~ msgid "Add event"
-#~ msgstr "添加事件"
-
-#~ msgid "Triggered events"
-#~ msgstr "已触发事件"
-
-#~ msgid "Triggered events captured by the advanced tracker are listed."
-#~ msgstr "此处列出高级跟踪器捕获的已触发事件。"
-
-#~ msgid "Total events"
-#~ msgstr "事件总数"
-
-#~ msgid "Event"
-#~ msgstr "事件"
-
-#~ msgid "Label"
-#~ msgstr "标签"
-
-#~ msgid "Event time"
-#~ msgstr "事件时间"
-
-#~ msgid "Type"
-#~ msgstr "类型"
-
-#~ msgid "Triggered page"
-#~ msgstr "触发页面"
-
-#~ msgid "Details"
-#~ msgstr "详情"
-
-#~ msgid "All pages"
-#~ msgstr "所有页面"
-
-#~ msgid "No triggered events found."
-#~ msgstr "未找到已触发事件。"
-
-#~ msgid "results"
-#~ msgstr "结果"
-
-#~ msgid "Confirm event removal"
-#~ msgstr "确认移除事件"
-
-#~ msgid "Do you want to remove this event?"
-#~ msgstr "是否要移除此事件？"
-
-#, fuzzy
-#~ msgid "City / Country"
-#~ msgstr "城市 / 国家或地区"
-
-#~ msgid "Hits"
-#~ msgstr "命中"
-
-#~ msgid "Cities"
-#~ msgstr "城市"
-
-#~ msgid "Captured events data purged."
-#~ msgstr "已捕获事件数据已清除。"
-
-#~ msgid "App"
-#~ msgstr "应用"
-
-#~ msgid "Delete captured events list"
-#~ msgstr "删除已捕获事件列表"
-
-#~ msgid "Confirm captured events purge"
-#~ msgstr "确认清除已捕获事件"
-
-#~ msgid ""
-#~ "This action permanently removes the captured events list shown in Events "
-#~ "stats. Other analytics data remains unchanged."
-#~ msgstr ""
-#~ "此操作会永久移除“事件统计”中显示的已捕获事件列表。其他分析数据保持不变。"
-
-#~ msgid "I confirm that I want to permanently purge the captured events list."
-#~ msgstr "我确认要永久清除已捕获事件列表。"
-
-#~ msgid "Purge captured events"
-#~ msgstr "清除已捕获事件"
-
-#~ msgid "Interface branding"
-#~ msgstr "界面品牌标识"
-
-#~ msgid "White-label interface controls are available in Pro."
-#~ msgstr "白标界面控件在 Pro 版中可用。"
-
-#~ msgid "Use white-label interface"
-#~ msgstr "使用白标界面"
-
-#~ msgid ""
-#~ "Hide the BimBeau Privacy Analytics logo in the admin header and display "
-#~ "the localized analytics title instead."
-#~ msgstr ""
-#~ "隐藏管理页眉中的 BimBeau Privacy Analytics 徽标，并改为显示本地化的分析标"
-#~ "题。"
-
-#~ msgid "Quick stats"
-#~ msgstr "快速统计"
-
-#~ msgid ""
-#~ "Enable Quick Stats on selected post types: add a Views (30d) column in "
-#~ "the posts list and display a stats summary metabox while editing each "
-#~ "post."
-#~ msgstr ""
-#~ "在所选文章类型上启用快速统计：在文章列表中添加浏览量（30天）列，并在编辑每"
-#~ "篇文章时显示统计摘要元框。"
-
-#~ msgid "No post types available."
-#~ msgstr "没有可用的文章类型。"
-
-#~ msgid "Events configuration"
-#~ msgstr "事件配置"
 
 #, php-format
 #~ msgid ""

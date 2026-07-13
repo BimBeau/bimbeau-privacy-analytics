@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.10
+Stable tag: 8.45.11
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -219,5 +219,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.10 =
-* Remove REST error-display suppression and audit Free packages for PHP error configuration changes.
+= 8.45.11 =
+* Harden runtime filesystem confinement.

@@ -30,6 +30,19 @@ run_phase() {
   return "${exit_code}"
 }
 
+node_options_with_diagnostics() {
+  local options=" ${NODE_OPTIONS:-} "
+  case "${options}" in
+    *" --trace-uncaught "*) ;;
+    *) options="${options}--trace-uncaught " ;;
+  esac
+  case "${options}" in
+    *" --trace-warnings "*) ;;
+    *) options="${options}--trace-warnings " ;;
+  esac
+  printf '%s' "${options# }" | sed 's/[[:space:]]*$//'
+}
+
 build_front_assets() {
   local admin_bundle_path="${repo_root}/build/admin.js"
   local skip_front_build="${SKIP_FRONT_BUILD:-false}"
@@ -41,6 +54,15 @@ build_front_assets() {
       echo "Front build cache requested but missing artifact: ${admin_bundle_path}" >&2
       return 1
     fi
+
+    for css_variant in "" "-rtl"; do
+      if [ -f "${repo_root}/build/style-style-admin${css_variant}.css" ] && [ ! -f "${repo_root}/build/style-admin${css_variant}.css" ]; then
+        cp "${repo_root}/build/style-style-admin${css_variant}.css" "${repo_root}/build/style-admin${css_variant}.css"
+      fi
+      if [ "${BBPA_PACKAGE_TARGET:-free}" = "free" ]; then
+        : > "${repo_root}/build/style-style-admin${css_variant}.css"
+      fi
+    done
 
     run_phase "cached admin bundle synchronization verification" \
       node "${repo_root}/scripts/verify-admin-bundle-sync.js" \
@@ -60,6 +82,7 @@ build_front_assets() {
   if [ "${BBPA_PACKAGE_TARGET:-free}" = "free" ]; then
     stripped_source_root="$(mktemp -d)"
     rsync -a --delete "${repo_root}/src/admin/" "${stripped_source_root}/admin/"
+    ln -s "${repo_root}/node_modules" "${stripped_source_root}/node_modules"
     node "${repo_root}/scripts/strip-freemius-premium-blocks.js" "${stripped_source_root}/admin"
     admin_source_root="${stripped_source_root}/admin"
   fi
@@ -72,7 +95,7 @@ build_front_assets() {
   env \
     BBPA_ADMIN_SOURCE_ROOT="${admin_source_root}" \
     BBPA_PACKAGE_TARGET="${BBPA_PACKAGE_TARGET:-free}" \
-    NODE_OPTIONS="${NODE_OPTIONS:-} --trace-uncaught --trace-warnings" \
+    NODE_OPTIONS="$(node_options_with_diagnostics)" \
     npm --prefix "${repo_root}" run build:assets 2>&1 | tee "${npm_build_log}"
   local build_exit_code="${PIPESTATUS[0]}"
   set -e
@@ -96,6 +119,15 @@ build_front_assets() {
   if [ -n "${stripped_source_root}" ]; then
     rm -rf "${stripped_source_root}"
   fi
+
+  for css_variant in "" "-rtl"; do
+    if [ -f "${repo_root}/build/style-style-admin${css_variant}.css" ] && [ ! -f "${repo_root}/build/style-admin${css_variant}.css" ]; then
+      cp "${repo_root}/build/style-style-admin${css_variant}.css" "${repo_root}/build/style-admin${css_variant}.css"
+    fi
+    if [ "${BBPA_PACKAGE_TARGET:-free}" = "free" ]; then
+      : > "${repo_root}/build/style-style-admin${css_variant}.css"
+    fi
+  done
 
   if [ ! -f "${admin_bundle_path}" ]; then
     echo "Missing expected front build artifact: ${admin_bundle_path}" >&2
