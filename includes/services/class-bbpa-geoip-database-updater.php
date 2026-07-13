@@ -13,6 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class BBPA_GeoIP_Database_Updater {
     private BBPA_Filesystem_Service $filesystem_service;
 
+    /**
+     * Canonical temporary workspaces created by this updater instance.
+     *
+     * @var array<string, true>
+     */
+    private array $owned_temp_workspaces = [];
+
     public function __construct(?BBPA_Filesystem_Service $filesystem_service = null) {
         $this->filesystem_service = $filesystem_service ?? new BBPA_Filesystem_Service();
     }
@@ -465,9 +472,7 @@ class BBPA_GeoIP_Database_Updater {
         }
 
         $this->delete_file_if_exists($mmdb_path);
-        if ($this->is_owned_temp_workspace(dirname($mmdb_path))) {
-            $this->filesystem_service->delete_directory(dirname($mmdb_path));
-        }
+        $this->delete_owned_temp_workspace(dirname($mmdb_path));
 
         if (!$this->move_file($temp_target, $target_path, true)) {
             $this->delete_file_if_exists($temp_target);
@@ -660,7 +665,36 @@ class BBPA_GeoIP_Database_Updater {
             );
         }
 
+        $safe_workspace = $this->filesystem_service->resolve_safe_directory_path($workspace, true);
+        if (!is_string($safe_workspace)) {
+            $this->filesystem_service->delete_directory($workspace);
+            return new WP_Error(
+                'bbpa_geoip_temp_file_unavailable',
+                __('Unable to create temporary workspace for GeoIP extraction.', 'bimbeau-privacy-analytics')
+            );
+        }
+
+        $this->owned_temp_workspaces[wp_normalize_path(rtrim($safe_workspace, '/'))] = true;
+
         return $workspace;
+    }
+
+    /**
+     * Delete an owned temporary workspace and unregister it from this updater instance.
+     */
+    private function delete_owned_temp_workspace(string $directory): void {
+        if (!$this->is_owned_temp_workspace($directory)) {
+            return;
+        }
+
+        $safe_directory = $this->filesystem_service->resolve_safe_directory_path($directory, true);
+        if (!is_string($safe_directory)) {
+            return;
+        }
+
+        $canonical = wp_normalize_path(rtrim($safe_directory, '/'));
+        $this->filesystem_service->delete_directory($canonical);
+        unset($this->owned_temp_workspaces[$canonical]);
     }
 
     /**
@@ -675,7 +709,7 @@ class BBPA_GeoIP_Database_Updater {
         }
 
         $safe_directory = wp_normalize_path(rtrim($safe_directory, '/'));
-        if (!str_starts_with(basename($safe_directory), self::TEMP_WORKSPACE_PREFIX)) {
+        if (!isset($this->owned_temp_workspaces[$safe_directory])) {
             return false;
         }
 
@@ -683,8 +717,17 @@ class BBPA_GeoIP_Database_Updater {
             return false;
         }
 
+        if (!str_starts_with(basename($safe_directory), self::TEMP_WORKSPACE_PREFIX)) {
+            return false;
+        }
+
         $marker = trailingslashit($safe_directory) . self::TEMP_WORKSPACE_MARKER;
-        return is_file($marker) && $this->filesystem_service->is_readable($marker);
+        if (is_link($marker) || !is_file($marker)) {
+            return false;
+        }
+
+        $contents = $this->filesystem_service->read_contents($marker);
+        return $contents === 'bbpa-geoip';
     }
 
     /**
