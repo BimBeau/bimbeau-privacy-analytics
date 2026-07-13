@@ -434,6 +434,8 @@ class BBPA_GeoIP_Database_Updater {
 
         $target_path = $this->get_local_database_path();
         if ($target_path === '') {
+            $this->cleanup_owned_workspace_for_mmdb($mmdb_path);
+
             return new WP_Error(
                 'bbpa_geoip_store_failed',
                 __('Unable to resolve GeoIP destination path.', 'bimbeau-privacy-analytics')
@@ -443,6 +445,8 @@ class BBPA_GeoIP_Database_Updater {
         $target_dir = dirname($target_path);
 
         if ($this->filesystem_service->resolve_safe_directory_path($target_dir, false) === null || !$this->filesystem_service->ensure_directory($target_dir)) {
+            $this->cleanup_owned_workspace_for_mmdb($mmdb_path);
+
             return new WP_Error(
                 'bbpa_geoip_store_failed',
                 __('Unable to create GeoIP destination directory.', 'bimbeau-privacy-analytics')
@@ -452,7 +456,7 @@ class BBPA_GeoIP_Database_Updater {
         $temp_target = $target_path . '.tmp-' . wp_generate_password(12, false, false);
         $mmdb_contents = $this->filesystem_service->read_contents($mmdb_path);
         if (!is_string($mmdb_contents) || $mmdb_contents === '') {
-            $this->delete_file_if_exists($mmdb_path);
+            $this->cleanup_owned_workspace_for_mmdb($mmdb_path);
             $this->delete_file_if_exists($temp_target);
 
             return new WP_Error(
@@ -462,7 +466,7 @@ class BBPA_GeoIP_Database_Updater {
         }
 
         if (!$this->write_file($temp_target, $mmdb_contents)) {
-            $this->delete_file_if_exists($mmdb_path);
+            $this->cleanup_owned_workspace_for_mmdb($mmdb_path);
             $this->delete_file_if_exists($temp_target);
 
             return new WP_Error(
@@ -476,6 +480,7 @@ class BBPA_GeoIP_Database_Updater {
 
         if (!$this->move_file($temp_target, $target_path, true)) {
             $this->delete_file_if_exists($temp_target);
+            $this->cleanup_owned_workspace_for_mmdb($mmdb_path);
 
             return new WP_Error(
                 'bbpa_geoip_store_failed',
@@ -680,6 +685,17 @@ class BBPA_GeoIP_Database_Updater {
     }
 
     /**
+     * Remove a temporary MMDB and its owned workspace when it belongs to this updater instance.
+     */
+    private function cleanup_owned_workspace_for_mmdb(string $mmdb_path): void {
+        $workspace = dirname($mmdb_path);
+        if ($this->is_owned_temp_workspace($workspace)) {
+            $this->delete_file_if_exists($mmdb_path);
+            $this->delete_owned_temp_workspace($workspace);
+        }
+    }
+
+    /**
      * Delete an owned temporary workspace and unregister it from this updater instance.
      */
     private function delete_owned_temp_workspace(string $directory): void {
@@ -693,8 +709,10 @@ class BBPA_GeoIP_Database_Updater {
         }
 
         $canonical = wp_normalize_path(rtrim($safe_directory, '/'));
-        $this->filesystem_service->delete_directory($canonical);
-        unset($this->owned_temp_workspaces[$canonical]);
+        $deleted = $this->filesystem_service->delete_directory($canonical);
+        if ($deleted || !$this->filesystem_service->exists($canonical)) {
+            unset($this->owned_temp_workspaces[$canonical]);
+        }
     }
 
     /**
