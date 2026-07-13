@@ -480,7 +480,6 @@ class BBPA_GeoIP_Database_Updater {
 
         if (!$this->move_file($temp_target, $target_path, true)) {
             $this->delete_file_if_exists($temp_target);
-            $this->cleanup_owned_workspace_for_mmdb($mmdb_path);
 
             return new WP_Error(
                 'bbpa_geoip_store_failed',
