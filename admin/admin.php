@@ -417,28 +417,25 @@ function bbpa_render_freemius_contact_page(): void
 
 
 /**
- * Get admin boot fallback CSS.
+ * Normalize an admin app root id for DOM lookup.
  */
-function bbpa_get_admin_boot_fallback_css(): string
+function bbpa_normalize_admin_root_id(string $root_id): string
 {
-    return '.bbpa-admin-boot-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:220px;margin:20px 0;color:#50575e}'
-        . '.bbpa-admin-boot-fallback__spinner{width:24px;height:24px;border:2px solid #dcdcde;border-top-color:#2271b1;border-radius:50%;animation:bpaAdminBootSpin .8s linear infinite}'
-        . '.bbpa-admin-boot-fallback__label{margin:0;font-size:13px;line-height:1.5;color:inherit}'
-        . '.bbpa-admin-boot-fallback.is-hidden{display:none!important}'
-        . '@keyframes bpaAdminBootSpin{to{transform:rotate(360deg)}}';
+    $root_id = sanitize_key($root_id);
+
+    return preg_match('/^bbpa-[a-z0-9-]+$/', $root_id) === 1 ? $root_id : 'bbpa-admin';
 }
 
 /**
- * Get admin boot fallback script.
+ * Normalize the front app shell background color for a CSS custom property.
  */
-function bbpa_get_admin_boot_fallback_script(string $root_id = 'bbpa-admin'): string
+function bbpa_normalize_front_app_background_color(string $background_color): string
 {
-    $root_id_json = wp_json_encode($root_id !== '' ? $root_id : 'bbpa-admin');
-    if (!is_string($root_id_json) || $root_id_json === '') {
-        $root_id_json = '"bbpa-admin"';
-    }
+    $safe_background_color = sanitize_hex_color($background_color);
 
-    return '(function(){var root=document.getElementById(' . $root_id_json . ');if(!root){return;}var fallback=root.querySelector(".bbpa-admin-boot-fallback");if(!fallback){return;}var hideFallback=function(){if(!root.contains(fallback)){return;}var hasRealContent=root.childElementCount>1||!root.contains(fallback);if(hasRealContent){fallback.classList.add("is-hidden");}};if(document.readyState==="complete"){setTimeout(hideFallback,1200);}else{window.addEventListener("load",function(){setTimeout(hideFallback,1200);});}})();';
+    return is_string($safe_background_color) && preg_match('/^#[0-9a-fA-F]{6}$/', $safe_background_color) === 1
+        ? strtolower($safe_background_color)
+        : '#ffffff';
 }
 
 /**
@@ -881,9 +878,11 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         : !empty($settings['debug_enabled']);
     $flag_assets = bbpa_get_flag_assets();
 
-    $root_id = isset($overrides['root_id']) && is_string($overrides['root_id']) && $overrides['root_id'] !== ''
-        ? $overrides['root_id']
-        : 'bbpa-admin';
+    $root_id = bbpa_normalize_admin_root_id(
+        isset($overrides['root_id']) && is_string($overrides['root_id']) && $overrides['root_id'] !== ''
+            ? $overrides['root_id']
+            : 'bbpa-admin'
+    );
     $app_mode = isset($overrides['app_mode']) && is_string($overrides['app_mode']) && $overrides['app_mode'] !== ''
         ? $overrides['app_mode']
         : 'admin';
@@ -993,19 +992,37 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
     );
     wp_enqueue_script('bbpa-admin');
 
-
-    wp_register_style('bbpa-admin-boot-fallback', false, [], BBPA_VERSION);
+    wp_register_style(
+        'bbpa-admin-boot-fallback',
+        BBPA_URL . 'admin/css/boot-fallback.css',
+        [],
+        BBPA_VERSION
+    );
     wp_enqueue_style('bbpa-admin-boot-fallback');
-    wp_add_inline_style('bbpa-admin-boot-fallback', bbpa_get_admin_boot_fallback_css());
-    wp_add_inline_script('bbpa-admin', bbpa_get_admin_boot_fallback_script($root_id), 'after');
+    wp_register_script(
+        'bbpa-admin-boot-fallback',
+        BBPA_URL . 'admin/js/boot-fallback.js',
+        ['bbpa-admin'],
+        BBPA_VERSION,
+        true
+    );
+    wp_localize_script(
+        'bbpa-admin-boot-fallback',
+        'BBPAAdminBootFallback',
+        [
+            'rootId' => $root_id,
+        ]
+    );
+    wp_enqueue_script('bbpa-admin-boot-fallback');
 
-    if ($is_app_mode && function_exists('bbpa_get_front_app_shell_inline_css')) {
-        $front_app_background_color = isset($pwa_assets['background_color']) && is_string($pwa_assets['background_color'])
-            ? $pwa_assets['background_color']
-            : '';
-        wp_register_style('bbpa-front-app-shell', false, [], BBPA_VERSION);
+    if ($is_app_mode) {
+        wp_register_style(
+            'bbpa-front-app-shell',
+            BBPA_URL . 'front/css/app-shell.css',
+            [],
+            BBPA_VERSION
+        );
         wp_enqueue_style('bbpa-front-app-shell');
-        wp_add_inline_style('bbpa-front-app-shell', bbpa_get_front_app_shell_inline_css($front_app_background_color));
     }
 
     wp_enqueue_media();

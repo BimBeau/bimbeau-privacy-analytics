@@ -1143,31 +1143,6 @@ JS
 }
 
 
-/**
- * Build front app shell inline CSS.
- */
-function bbpa_get_front_app_shell_inline_css(string $background_color): string
-{
-    $safe_background_color = sanitize_hex_color($background_color);
-    if (!is_string($safe_background_color) || $safe_background_color === '') {
-        $safe_background_color = '#ffffff';
-    }
-
-    return ':root{color-scheme:light;--bbpa-front-app-bg:' . $safe_background_color . ';--bbpa-front-app-fg:#1e1e1e}'
-        . 'html,body{margin:0!important;padding:0!important;width:100vw;min-width:100vw;min-height:100dvh;background:#ffffff;color:var(--bbpa-front-app-fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.4;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}'
-        . 'body.bbpa-shell{width:100vw;min-width:100vw;min-height:100dvh;overflow-x:hidden}body{font-size:13px;padding-top:env(safe-area-inset-top,0);padding-right:env(safe-area-inset-right,0);padding-bottom:env(safe-area-inset-bottom,0);padding-left:env(safe-area-inset-left,0)}'
-        . 'a{color:inherit;text-decoration:none}'
-        . '.bbpa-front-app-loading button,.bbpa-front-app-loading select,.bbpa-front-app-loading input,.bbpa-front-app-loading textarea{margin:0;font:inherit;color:inherit}'
-        . '#bbpa.bbpa-front-app-loading,.bbpa-front-app-loading{width:100vw;min-width:100vw;height:100dvh;min-height:100dvh;display:flex!important;align-items:center!important;justify-content:flex-start!important;background:var(--bbpa-front-app-bg);color:var(--bbpa-front-app-fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}'
-        . '#bbpa{width:100vw;min-width:100vw;min-height:100dvh;background:#ffffff}'
-        . '#bbpa[data-bbpa-loading="1"]{background:var(--bbpa-front-app-bg)}'
-        . '.bbpa-front-app-loading__panel{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:24px}'
-        . '.bbpa-front-app-loading__icon{width:72px;height:72px;border-radius:18px}'
-        . '.bbpa-front-app-loading__label{margin:0;font-size:0.95rem;color:#50575e}'
-        . '.bbpa-front-app-loading .components-spinner{float:none;margin:0}'
-        . '.bbpa-admin-app.bbpa-admin-app--app .bbpa-report-table td{padding:8px 10px}';
-}
-
 
 /**
  * Return script/style handles allowed in the isolated front app shell.
@@ -1349,6 +1324,9 @@ function bbpa_maybe_render_front_app_shell(): void
     }
 
     $pwa_assets = bbpa_get_front_app_pwa_assets();
+    $front_app_background_color = function_exists('bbpa_normalize_front_app_background_color')
+        ? bbpa_normalize_front_app_background_color((string) ($pwa_assets['background_color'] ?? ''))
+        : '#ffffff';
 
     bbpa_enqueue_admin_app_assets(
         $current_panel,
@@ -1369,7 +1347,12 @@ function bbpa_maybe_render_front_app_shell(): void
         <?php bbpa_render_front_app_isolated_head(); ?>
     </head>
     <body <?php body_class('bbpa-shell'); ?>>
-        <div id="bbpa" class="bbpa-front-app-loading" data-bbpa-loading="1">
+        <div
+            id="bbpa"
+            class="bbpa-front-app-loading"
+            data-bbpa-loading="1"
+            style="<?php echo esc_attr('--bbpa-front-app-bg:' . $front_app_background_color); ?>"
+        >
             <div class="bbpa-front-app-loading__panel">
                 <img class="bbpa-front-app-loading__icon" src="<?php echo esc_url($pwa_assets['loading_icon']); ?>" alt="<?php esc_attr_e('BimBeau Privacy Analytics icon', 'bimbeau-privacy-analytics'); ?>">
                 <span class="components-spinner" aria-hidden="true"></span>
