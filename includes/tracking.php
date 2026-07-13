@@ -736,12 +736,12 @@ function bbpa_claim_acquisition_visit_increment(array $hit, string $date_bucket)
     $identity = $visit_id !== '' ? 'visit:' . $visit_id : 'visitor-day:' . $date_bucket . ':' . $visitor_id;
     $marker_key = 'bbpa_acquisition_visit_' . md5($identity);
 
-    if (wp_cache_get($marker_key, 'bpa') || get_transient($marker_key)) {
-        wp_cache_set($marker_key, true, 'bpa', 2 * DAY_IN_SECONDS);
+    if (wp_cache_get($marker_key, BBPA_CACHE_GROUP) || get_transient($marker_key)) {
+        wp_cache_set($marker_key, true, BBPA_CACHE_GROUP, 2 * DAY_IN_SECONDS);
         return 0;
     }
 
-    wp_cache_set($marker_key, true, 'bpa', 2 * DAY_IN_SECONDS);
+    wp_cache_set($marker_key, true, BBPA_CACHE_GROUP, 2 * DAY_IN_SECONDS);
     set_transient($marker_key, true, 2 * DAY_IN_SECONDS);
 
     return 1;

@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 
+const BBPA_CACHE_GROUP = 'bbpa';
 const BBPA_METRICS_CACHE_GROUP = 'bbpa_metrics';
 
 /**

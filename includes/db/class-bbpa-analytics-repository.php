@@ -81,7 +81,7 @@ class BBPA_Analytics_Repository {
             'start_date' => $start_date,
             'end_date' => $end_date,
         ]);
-        $cached_rows = wp_cache_get($cache_key, 'bpa');
+        $cached_rows = wp_cache_get($cache_key, BBPA_CACHE_GROUP);
         if (is_array($cached_rows)) {
             return $cached_rows;
         }
@@ -107,7 +107,7 @@ class BBPA_Analytics_Repository {
             'source' => ($canonical_visits > 0 || $canonical_page_views > 0 || $canonical_visitors > 0) ? 'canonical' : 'fallback',
         ];
 
-        wp_cache_set($cache_key, $rows, 'bpa', 60);
+        wp_cache_set($cache_key, $rows, BBPA_CACHE_GROUP, 60);
 
         return $rows;
     }
@@ -126,7 +126,7 @@ class BBPA_Analytics_Repository {
             'version' => bbpa_get_admin_cache_version(),
             'table' => $daily_table,
         ]);
-        $cached = wp_cache_get($cache_key, 'bpa');
+        $cached = wp_cache_get($cache_key, BBPA_CACHE_GROUP);
         if (is_bool($cached)) {
             return $cached;
         }
@@ -134,7 +134,7 @@ class BBPA_Analytics_Repository {
         $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$daily_table}"); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Internal table name only.
         $has_daily_data = $count > 0;
 
-        wp_cache_set($cache_key, $has_daily_data, 'bpa', 60);
+        wp_cache_set($cache_key, $has_daily_data, BBPA_CACHE_GROUP, 60);
 
         return $has_daily_data;
     }

@@ -145,7 +145,7 @@ function bbpa_aggregation_table_exists(string $table): bool
     $cache_key = bbpa_cache_key('aggregation_table_exists', [
         'table' => $table,
     ]);
-    $cached = wp_cache_get($cache_key, 'bpa');
+    $cached = wp_cache_get($cache_key, BBPA_CACHE_GROUP);
     if (is_bool($cached)) {
         return $cached;
     }
@@ -153,7 +153,7 @@ function bbpa_aggregation_table_exists(string $table): bool
     $result = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
     $exists = $result === $table;
 
-    wp_cache_set($cache_key, $exists, 'bpa', HOUR_IN_SECONDS);
+    wp_cache_set($cache_key, $exists, BBPA_CACHE_GROUP, HOUR_IN_SECONDS);
 
     return $exists;
 }
@@ -826,7 +826,7 @@ function bbpa_apply_session_exit_tracking_for_hit(string $visitor_id, string $pa
     }
 
     $cache_key = bbpa_get_session_exit_state_cache_key($visitor_id);
-    $state = wp_cache_get($cache_key, 'bpa');
+    $state = wp_cache_get($cache_key, BBPA_CACHE_GROUP);
     if (!is_array($state)) {
         $state = get_transient($cache_key);
     }
@@ -882,7 +882,7 @@ function bbpa_apply_session_exit_tracking_for_hit(string $visitor_id, string $pa
         'page_path' => $page_path,
         'timestamp' => $timestamp,
     ];
-    wp_cache_set($cache_key, $new_state, 'bpa', 2 * DAY_IN_SECONDS);
+    wp_cache_set($cache_key, $new_state, BBPA_CACHE_GROUP, 2 * DAY_IN_SECONDS);
     set_transient($cache_key, $new_state, 2 * DAY_IN_SECONDS);
 }
 
@@ -922,16 +922,16 @@ function bbpa_claim_time_denominator_increment(array $hit, string $date_bucket, 
 {
     $marker_key = 'bbpa_time_denominator_' . md5(bbpa_get_time_denominator_key($hit, $date_bucket, $page_path, $timestamp));
 
-    if (wp_cache_get($marker_key, 'bpa')) {
+    if (wp_cache_get($marker_key, BBPA_CACHE_GROUP)) {
         return 0;
     }
 
     if (get_transient($marker_key)) {
-        wp_cache_set($marker_key, true, 'bpa', 2 * DAY_IN_SECONDS);
+        wp_cache_set($marker_key, true, BBPA_CACHE_GROUP, 2 * DAY_IN_SECONDS);
         return 0;
     }
 
-    wp_cache_set($marker_key, true, 'bpa', 2 * DAY_IN_SECONDS);
+    wp_cache_set($marker_key, true, BBPA_CACHE_GROUP, 2 * DAY_IN_SECONDS);
     set_transient($marker_key, true, 2 * DAY_IN_SECONDS);
 
     return 1;
