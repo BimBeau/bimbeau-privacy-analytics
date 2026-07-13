@@ -92,17 +92,43 @@ export const ADVANCED_STATS_DEPENDENT_PANELS = [
 export const isAdvancedStatsEnabled = ( settings = ADMIN_CONFIG?.settings ) =>
 	settings?.advanced_stats_enabled !== false;
 
-export const DISABLABLE_PANEL_OPTIONS = [
-	{ key: 'realtime', label: __( 'Real-time', 'bimbeau-privacy-analytics' ) },
-	{ key: 'top-pages', label: __( 'Pages', 'bimbeau-privacy-analytics' ) },
-	{ key: 'acquisition', label: __( 'Acquisition', 'bimbeau-privacy-analytics' ) },
-	{ key: 'referrers', label: __( 'Referring sites', 'bimbeau-privacy-analytics' ) },
-	{ key: 'search-terms', label: __( 'Internal searches', 'bimbeau-privacy-analytics' ) },
-	{ key: 'geolocation', label: __( 'Geolocation', 'bimbeau-privacy-analytics' ) },
-	{ key: 'visitors', label: __( 'Visitors', 'bimbeau-privacy-analytics' ) },
-	{ key: 'devices', label: __( 'Devices', 'bimbeau-privacy-analytics' ) },
-	{ key: 'events', label: __( 'Events', 'bimbeau-privacy-analytics' ) },
-];
+const NON_DISABLABLE_PANEL_NAMES = new Set( [ 'dashboard', 'settings' ] );
+
+const PANEL_OPTION_LABELS = {
+	realtime: __( 'Real-time', 'bimbeau-privacy-analytics' ),
+	'top-pages': __( 'Pages', 'bimbeau-privacy-analytics' ),
+	acquisition: __( 'Acquisition', 'bimbeau-privacy-analytics' ),
+	referrers: __( 'Referring sites', 'bimbeau-privacy-analytics' ),
+	'search-terms': __( 'Internal searches', 'bimbeau-privacy-analytics' ),
+	geolocation: __( 'Geolocation', 'bimbeau-privacy-analytics' ),
+	visitors: __( 'Visitors', 'bimbeau-privacy-analytics' ),
+	devices: __( 'Devices', 'bimbeau-privacy-analytics' ),
+	events: __( 'Events', 'bimbeau-privacy-analytics' ),
+};
+
+export const getDisablablePanelOptions = (
+	panels = ADMIN_CONFIG?.availablePanels || ADMIN_CONFIG?.panels
+) => {
+	const registeredPanels = Array.isArray( panels ) && panels.length > 0 ? panels : DEFAULT_PANELS;
+	const seen = new Set();
+
+	return registeredPanels.reduce( ( options, panel ) => {
+		const key = typeof panel?.name === 'string' ? panel.name : '';
+		if ( ! key || seen.has( key ) || NON_DISABLABLE_PANEL_NAMES.has( key ) ) {
+			return options;
+		}
+
+		seen.add( key );
+		options.push( {
+			key,
+			label: PANEL_OPTION_LABELS[ key ] || panel.title || key,
+		} );
+
+		return options;
+	}, [] );
+};
+
+export const DISABLABLE_PANEL_OPTIONS = getDisablablePanelOptions();
 
 export const DEFAULT_RANGE_PRESET = '30d';
 export const RANGE_PRESET_OPTIONS = [

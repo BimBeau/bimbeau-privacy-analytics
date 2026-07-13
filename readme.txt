@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.7
+Stable tag: 8.45.8
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -48,7 +48,7 @@ Reports and insights:
 
 Free plugin behavior:
 
-BimBeau Privacy Analytics on WordPress.org is the complete Free plugin. Its Free analytics features run without a license, payment, quota, time-limited evaluation, or remote validation. The package may load Freemius for account, pricing, upgrade, support, uninstall, and package identity flows. A separate Pro edition is available from the author outside WordPress.org and replaces the Free plugin when installed.
+BimBeau Privacy Analytics on WordPress.org is the complete Free plugin. Its Free analytics features run without a license, payment, quota, time-limited evaluation, or remote validation. Optional panel visibility controls for the analytics navigation are included in the Free plugin. The package may load Freemius for account, pricing, upgrade, support, uninstall, and package identity flows. A separate Pro edition is available from the author outside WordPress.org and replaces the Free plugin when installed.
 
 Pro edition:
 
@@ -63,7 +63,6 @@ Depending on the active license, site configuration, consent setup, and availabl
 * Content analytics in WordPress content lists and the editor.
 * An installable stats app for site analytics.
 * White-label admin header controls.
-* Optional panel visibility controls for the analytics navigation.
 * Deeper reporting surfaces when licensed features are active and the required data is available.
 
 Learn more about Pro:
@@ -220,5 +219,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.7 =
-* Regenerate i18n text files.
+= 8.45.8 =
+* Fix Free enabled panels classification and derive Enabled panels from registered runtime.

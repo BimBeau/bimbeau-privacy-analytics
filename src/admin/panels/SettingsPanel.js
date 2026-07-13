@@ -55,7 +55,7 @@ import BpaCard from "../components/BpaCard";
 
 import {
   ADMIN_CONFIG,
-  DISABLABLE_PANEL_OPTIONS,
+  getDisablablePanelOptions,
   DEFAULT_SETTINGS,
   ADVANCED_STATS_DEPENDENT_PANELS,
 } from "../constants";
@@ -898,6 +898,10 @@ const SettingsPanel = () => {
   ];
   const isApiLookupMode = formState.geoip_lookup_mode === "maxmind_api";
   const isAdvancedStatsDisabled = !formState.advanced_stats_enabled;
+  const disablablePanelOptions = useMemo(
+    () => getDisablablePanelOptions(ADMIN_CONFIG?.availablePanels || ADMIN_CONFIG?.panels),
+    [],
+  );
   const pwaConfig = ADMIN_CONFIG?.settings?.pwa || {};
   const pwaAppUrl = pwaConfig.appUrl || "";
   let eventsPurgeButton = null;
@@ -1087,7 +1091,7 @@ const SettingsPanel = () => {
                       <CardBody>
                         <fieldset className="bbpa-general-settings__fieldset">
                           <div className="bbpa-general-settings__panel-grid">
-                            {DISABLABLE_PANEL_OPTIONS.map((panel) => {
+                            {disablablePanelOptions.map((panel) => {
                               const isForcedHidden =
                                 isAdvancedStatsDisabled &&
                                 ADVANCED_STATS_DEPENDENT_PANELS.includes(panel.key);

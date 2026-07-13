@@ -892,6 +892,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         ? $overrides['app_base_url']
         : '';
     $panels = bbpa_get_admin_panels();
+    $available_panels = bbpa_get_admin_panels(true);
     if ($is_app_mode) {
         $panels = array_values(
             array_filter(
@@ -1145,7 +1146,8 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         $flag_assets,
         $app_mode,
         $app_base_url,
-        $pwa_assets
+        $pwa_assets,
+        $available_panels
     );
 
     $localized_admin_json = wp_json_encode($localized_admin_payload);
@@ -1532,7 +1534,8 @@ function bbpa_build_admin_localized_payload(
     array $flag_assets,
     string $app_mode,
     string $app_base_url,
-    array $pwa_assets
+    array $pwa_assets,
+    array $available_panels = []
 ): array {
     $sanitize_url = static function ($value): string {
         return is_string($value) ? esc_url_raw($value) : '';
@@ -1561,6 +1564,7 @@ function bbpa_build_admin_localized_payload(
         'restUrl' => $sanitize_url($rest_config['rest_url'] ?? ''),
         'roles' => bbpa_get_roles_for_admin(),
         'panels' => $panels,
+        'availablePanels' => $available_panels ?: $panels,
         'restSources' => bbpa_get_rest_sources(),
         'features' => bbpa_features(),
         'currentPanel' => sanitize_key($current_panel),
@@ -2340,7 +2344,7 @@ function bbpa_get_flag_assets(): array
 /**
  * Get admin panels configuration.
  */
-function bbpa_get_admin_panels(): array
+function bbpa_get_admin_panels(bool $include_disabled = false): array
 {
     $settings = bbpa_get_settings();
     $disabled_panels = bbpa_get_effective_hidden_panels($settings);
@@ -2422,7 +2426,7 @@ function bbpa_get_admin_panels(): array
         ];
     }
 
-    if (empty($disabled_panels)) {
+    if ($include_disabled || empty($disabled_panels)) {
         return $normalized;
     }
 
