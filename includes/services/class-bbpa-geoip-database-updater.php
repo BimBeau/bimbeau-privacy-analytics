@@ -359,7 +359,7 @@ class BBPA_GeoIP_Database_Updater {
         }
 
         $this->delete_file_if_exists($temp_dir);
-        if (!wp_mkdir_p($temp_dir)) {
+        if (!$this->filesystem_service->ensure_directory($temp_dir)) {
             $this->delete_file_if_exists($archive_path);
 
             return new WP_Error(
@@ -405,11 +405,7 @@ class BBPA_GeoIP_Database_Updater {
                 if ($this->filesystem_service->exists($temp_mmdb_path)) {
                     $this->delete_file_if_exists($temp_mmdb_path);
                 }
-                $this->delete_directory_if_exists(
-                    $temp_dir,
-                    [$this->get_temp_directory_root($temp_dir)],
-                    'geoip_extract_temp_dir_cleanup_failed'
-                );
+                $this->filesystem_service->delete_directory($temp_dir);
             }
         }
     }
@@ -418,12 +414,24 @@ class BBPA_GeoIP_Database_Updater {
      * Store the MMDB file in uploads with atomic replacement.
      */
     public function store_database(string $mmdb_path) {
-        if (!$this->filesystem_service->is_readable($mmdb_path)) {
+        $safe_mmdb_path = $this->filesystem_service->resolve_safe_runtime_path($mmdb_path, true);
+        $temp_root = function_exists('get_temp_dir') ? realpath(get_temp_dir()) : realpath(sys_get_temp_dir());
+        $safe_temp_root = is_string($temp_root) ? wp_normalize_path(rtrim($temp_root, '/')) : '';
+        $safe_mmdb_parent = is_string($safe_mmdb_path) ? wp_normalize_path(dirname($safe_mmdb_path)) : '';
+        if (
+            $safe_mmdb_path === null
+            || !is_file($safe_mmdb_path)
+            || $safe_temp_root === ''
+            || ($safe_mmdb_parent !== $safe_temp_root && !str_starts_with($safe_mmdb_parent . '/', trailingslashit($safe_temp_root)))
+            || !$this->filesystem_service->is_readable($safe_mmdb_path)
+        ) {
             return new WP_Error(
                 'bbpa_geoip_store_failed',
-                __('GeoIP MMDB file is not readable.', 'bimbeau-privacy-analytics')
+                __('GeoIP MMDB file is not readable from an allowed temporary directory.', 'bimbeau-privacy-analytics')
             );
         }
+
+        $mmdb_path = $safe_mmdb_path;
 
         $target_path = $this->get_local_database_path();
         if ($target_path === '') {
@@ -435,7 +443,7 @@ class BBPA_GeoIP_Database_Updater {
 
         $target_dir = dirname($target_path);
 
-        if (!wp_mkdir_p($target_dir)) {
+        if ($this->filesystem_service->resolve_safe_directory_path($target_dir, false) === null || !$this->filesystem_service->ensure_directory($target_dir)) {
             return new WP_Error(
                 'bbpa_geoip_store_failed',
                 __('Unable to create GeoIP destination directory.', 'bimbeau-privacy-analytics')
@@ -465,11 +473,7 @@ class BBPA_GeoIP_Database_Updater {
         }
 
         $this->delete_file_if_exists($mmdb_path);
-        $this->delete_directory_if_exists(
-            dirname($mmdb_path),
-            [$this->get_temp_directory_root($mmdb_path)],
-            'geoip_store_temp_dir_cleanup_failed'
-        );
+        $this->filesystem_service->delete_directory(dirname($mmdb_path));
 
         if (!$this->move_file($temp_target, $target_path, true)) {
             $this->delete_file_if_exists($temp_target);
@@ -659,110 +663,6 @@ class BBPA_GeoIP_Database_Updater {
      */
     private function write_file(string $path, string $contents): bool {
         return $this->filesystem_service->put_contents($path, $contents);
-    }
-
-    /**
-     * Delete a directory through WP_Filesystem with path confinement.
-     */
-    private function delete_directory_if_exists(string $path, array $allowed_roots, string $error_code): bool {
-        $normalized_path = $this->normalize_path($path);
-        if ($normalized_path === '' || !is_dir($normalized_path)) {
-            return true;
-        }
-
-        $normalized_roots = [];
-        foreach ($allowed_roots as $allowed_root) {
-            $normalized_root = $this->normalize_path((string) $allowed_root);
-            if ($normalized_root !== '') {
-                $normalized_roots[] = $normalized_root;
-            }
-        }
-
-        if (!$this->is_path_confined_to_roots($normalized_path, $normalized_roots)) {
-            $this->log_debug(
-                sprintf(
-                    'Skipped directory deletion outside allowed roots (%s): %s',
-                    $error_code,
-                    $normalized_path
-                )
-            );
-
-            return false;
-        }
-
-        $filesystem = $this->get_wp_filesystem();
-        if (!($filesystem instanceof WP_Filesystem_Base)) {
-            $this->log_debug(
-                sprintf('WP_Filesystem unavailable for directory deletion (%s): %s', $error_code, $normalized_path)
-            );
-
-            return false;
-        }
-
-        $deleted = (bool) $filesystem->delete($normalized_path, true);
-        if (!$deleted && is_dir($normalized_path)) {
-            $this->log_debug(
-                sprintf('Directory deletion failed via WP_Filesystem (%s): %s', $error_code, $normalized_path)
-            );
-
-            return false;
-        }
-
-        return true;
-    }
-
-    private function get_wp_filesystem(): ?WP_Filesystem_Base {
-        global $wp_filesystem;
-
-        if ($wp_filesystem instanceof WP_Filesystem_Base) {
-            return $wp_filesystem;
-        }
-
-        if (!function_exists('WP_Filesystem') && defined('ABSPATH')) {
-            require_once ABSPATH . 'wp-admin/includes/file.php';
-        }
-
-        if (function_exists('get_filesystem_method') && get_filesystem_method() !== 'direct') {
-            return null;
-        }
-
-        if (function_exists('WP_Filesystem') && WP_Filesystem()) {
-            return $wp_filesystem instanceof WP_Filesystem_Base ? $wp_filesystem : null;
-        }
-
-        return null;
-    }
-
-    private function normalize_path(string $path): string {
-        if ($path === '') {
-            return '';
-        }
-
-        $normalized = wp_normalize_path($path);
-        return rtrim($normalized, '/');
-    }
-
-    private function is_path_confined_to_roots(string $path, array $allowed_roots): bool {
-        foreach ($allowed_roots as $allowed_root) {
-            if ($allowed_root === '') {
-                continue;
-            }
-
-            if ($path === $allowed_root || str_starts_with($path . '/', trailingslashit($allowed_root))) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function get_temp_directory_root(string $path): string {
-        $normalized_path = $this->normalize_path($path);
-        if ($normalized_path === '') {
-            return '';
-        }
-
-        return $this->normalize_path(dirname($normalized_path));
     }
 
     /**

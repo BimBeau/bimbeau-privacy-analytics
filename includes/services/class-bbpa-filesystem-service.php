@@ -97,20 +97,21 @@ class BBPA_Filesystem_Service {
 	 */
 	public function put_contents( string $path, string $contents ): bool {
 		$safe_path = $this->resolve_safe_runtime_path( $path, false );
-		if ( $safe_path === null ) {
+		if ( $safe_path === null || is_link( $safe_path ) ) {
 			return false;
 		}
 
 		$filesystem = $this->get_wp_filesystem();
-		if ( $filesystem instanceof WP_Filesystem_Base ) {
-			return (bool) $filesystem->put_contents( $safe_path, $contents, defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644 );
-		}
-
-		if ( function_exists( 'get_filesystem_method' ) && get_filesystem_method() !== 'direct' ) {
+		if ( ! $filesystem instanceof WP_Filesystem_Base ) {
 			return false;
 		}
 
-		return false;
+		$safe_path = $this->resolve_safe_runtime_path( $safe_path, false );
+		if ( $safe_path === null || is_link( $safe_path ) ) {
+			return false;
+		}
+
+		return (bool) $filesystem->put_contents( $safe_path, $contents, defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644 );
 	}
 
 	/**
@@ -119,7 +120,7 @@ class BBPA_Filesystem_Service {
 	public function move( string $source, string $destination, bool $overwrite = false ): bool {
 		$safe_source      = $this->resolve_safe_runtime_path( $source, true );
 		$safe_destination = $this->resolve_safe_runtime_path( $destination, false );
-		if ( $safe_source === null || $safe_destination === null ) {
+		if ( $safe_source === null || $safe_destination === null || is_link( $safe_destination ) ) {
 			return false;
 		}
 
@@ -132,7 +133,56 @@ class BBPA_Filesystem_Service {
 			return false;
 		}
 
+		$safe_destination = $this->resolve_safe_runtime_path( $safe_destination, false );
+		if ( $safe_destination === null || is_link( $safe_destination ) ) {
+			return false;
+		}
+
 		return (bool) $filesystem->move( $safe_source, $safe_destination, $overwrite );
+	}
+
+	/**
+	 * Ensure a directory exists inside an allowed runtime root.
+	 */
+	public function ensure_directory( string $path ): bool {
+		$safe_path = $this->resolve_safe_directory_path( $path, false );
+		if ( $safe_path === null ) {
+			return false;
+		}
+
+		if ( is_dir( $safe_path ) ) {
+			return true;
+		}
+
+		$filesystem = $this->get_wp_filesystem();
+		if ( ! $filesystem instanceof WP_Filesystem_Base ) {
+			return false;
+		}
+
+		return function_exists( 'wp_mkdir_p' ) ? wp_mkdir_p( $safe_path ) : (bool) $filesystem->mkdir( $safe_path, defined( 'FS_CHMOD_DIR' ) ? FS_CHMOD_DIR : 0755 );
+	}
+
+	/**
+	 * Delete a directory recursively inside an allowed runtime root.
+	 */
+	public function delete_directory( string $path ): bool {
+		$safe_path = $this->resolve_safe_directory_path( $path, true );
+		if ( $safe_path === null || ! is_dir( $safe_path ) || is_link( $safe_path ) ) {
+			return false;
+		}
+
+		foreach ( $this->get_allowed_runtime_roots() as $root ) {
+			if ( $safe_path === $root ) {
+				return false;
+			}
+		}
+
+		$filesystem = $this->get_wp_filesystem();
+		if ( ! $filesystem instanceof WP_Filesystem_Base ) {
+			return false;
+		}
+
+		return (bool) $filesystem->delete( $safe_path, true );
 	}
 
 	/**
@@ -140,19 +190,16 @@ class BBPA_Filesystem_Service {
 	 */
 	public function delete_file( string $path ): void {
 		$safe_path = $this->resolve_safe_runtime_path( $path, true );
-		if ( $safe_path === null || ! $this->exists( $safe_path ) || ! is_file( $safe_path ) ) {
-			return;
-		}
-
-		if ( function_exists( 'wp_delete_file' ) ) {
-			wp_delete_file( $safe_path );
+		if ( $safe_path === null || ! $this->exists( $safe_path ) || ! is_file( $safe_path ) || is_link( $safe_path ) ) {
 			return;
 		}
 
 		$filesystem = $this->get_wp_filesystem();
-		if ( $filesystem instanceof WP_Filesystem_Base ) {
-			$filesystem->delete( $safe_path, false );
+		if ( ! $filesystem instanceof WP_Filesystem_Base ) {
+			return;
 		}
+
+		$filesystem->delete( $safe_path, false );
 	}
 
 	/**
@@ -162,7 +209,7 @@ class BBPA_Filesystem_Service {
 		global $wp_filesystem;
 
 		if ( $wp_filesystem instanceof WP_Filesystem_Base ) {
-			return $wp_filesystem;
+			return $this->is_direct_filesystem( $wp_filesystem ) ? $wp_filesystem : null;
 		}
 
 		if ( ! function_exists( 'WP_Filesystem' ) && defined( 'ABSPATH' ) ) {
@@ -174,10 +221,22 @@ class BBPA_Filesystem_Service {
 		}
 
 		if ( function_exists( 'WP_Filesystem' ) && WP_Filesystem() ) {
-			return $wp_filesystem instanceof WP_Filesystem_Base ? $wp_filesystem : null;
+			return $wp_filesystem instanceof WP_Filesystem_Base && $this->is_direct_filesystem( $wp_filesystem ) ? $wp_filesystem : null;
 		}
 
 		return null;
+	}
+
+
+	/**
+	 * Return whether the WP_Filesystem instance can operate on validated local paths.
+	 */
+	private function is_direct_filesystem( WP_Filesystem_Base $filesystem ): bool {
+		if ( function_exists( 'get_filesystem_method' ) && get_filesystem_method() !== 'direct' ) {
+			return false;
+		}
+
+		return $filesystem instanceof WP_Filesystem_Direct || strtolower( (string) ( $filesystem->method ?? '' ) ) === 'direct';
 	}
 
 	/**
@@ -191,7 +250,21 @@ class BBPA_Filesystem_Service {
 	/**
 	 * Resolve a local path and prove that it stays inside an allowed runtime root.
 	 */
-	private function resolve_safe_runtime_path( string $path, bool $must_exist ): ?string {
+	public function resolve_safe_runtime_path( string $path, bool $must_exist ): ?string {
+		return $this->resolve_safe_path( $path, $must_exist, false );
+	}
+
+	/**
+	 * Resolve a local directory path and prove that it stays inside an allowed runtime root.
+	 */
+	public function resolve_safe_directory_path( string $path, bool $must_exist ): ?string {
+		return $this->resolve_safe_path( $path, $must_exist, true );
+	}
+
+	/**
+	 * Resolve a path while rejecting wrappers, traversal, and symlink leaf targets.
+	 */
+	private function resolve_safe_path( string $path, bool $must_exist, bool $directory ): ?string {
 		if ( $path === '' || str_contains( $path, "\0" ) ) {
 			return null;
 		}
@@ -202,16 +275,47 @@ class BBPA_Filesystem_Service {
 		}
 
 		$normalized = $this->normalize_path( $decoded_path );
-		if ( $normalized === '' || $this->has_parent_traversal( $normalized ) ) {
+		if ( $normalized === '' || $this->has_parent_traversal( $normalized ) || is_link( $normalized ) ) {
 			return null;
 		}
 
-		$existing = $must_exist ? realpath( $normalized ) : false;
-		if ( $must_exist && ! is_string( $existing ) ) {
+		if ( file_exists( $normalized ) ) {
+			$existing = realpath( $normalized );
+			if ( ! is_string( $existing ) ) {
+				return null;
+			}
+			$safe_existing = $this->normalize_path( $existing );
+			if ( ! $this->is_confined_to_allowed_roots( $safe_existing ) ) {
+				return null;
+			}
+			if ( $directory && ! is_dir( $safe_existing ) ) {
+				return null;
+			}
+			if ( ! $directory && is_dir( $safe_existing ) ) {
+				return null;
+			}
+			return $safe_existing;
+		}
+
+		if ( $must_exist ) {
 			return null;
 		}
 
-		$parent = $must_exist ? dirname( (string) $existing ) : dirname( $normalized );
+		$parent = dirname( $normalized );
+		$tail = [ basename( $normalized ) ];
+		while ( $parent !== '' && $parent !== '.' && ! file_exists( $parent ) ) {
+			array_unshift( $tail, basename( $parent ) );
+			$next_parent = dirname( $parent );
+			if ( $next_parent === $parent ) {
+				return null;
+			}
+			$parent = $next_parent;
+		}
+
+		if ( $parent === '' || $parent === '.' || is_link( $parent ) ) {
+			return null;
+		}
+
 		$real_parent = realpath( $parent );
 		if ( ! is_string( $real_parent ) ) {
 			return null;
@@ -222,12 +326,14 @@ class BBPA_Filesystem_Service {
 			return null;
 		}
 
-		if ( $must_exist ) {
-			$safe_existing = $this->normalize_path( (string) $existing );
-			return $this->is_confined_to_allowed_roots( $safe_existing ) ? $safe_existing : null;
+		foreach ( $tail as $segment ) {
+			if ( $segment === '' || $segment === '.' || $segment === '..' ) {
+				return null;
+			}
+			$safe_parent .= '/' . $segment;
 		}
 
-		return $safe_parent . '/' . basename( $normalized );
+		return $safe_parent;
 	}
 
 	/**
