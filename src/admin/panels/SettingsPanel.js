@@ -1076,7 +1076,75 @@ const SettingsPanel = () => {
                     </Card>
                     {}
 
-                    {}
+                    <Card className="bbpa-general-settings__card">
+                      <CardHeader>
+                        <Flex gap={2} align="center">
+                          <SettingsSectionTitle icon={LuPanelLeft}>
+                            {__("Enabled panels", "bimbeau-privacy-analytics")}
+                          </SettingsSectionTitle>
+                        </Flex>
+                      </CardHeader>
+                      <CardBody>
+                        <fieldset className="bbpa-general-settings__fieldset">
+                          <div className="bbpa-general-settings__panel-grid">
+                            {DISABLABLE_PANEL_OPTIONS.map((panel) => {
+                              const isForcedHidden =
+                                isAdvancedStatsDisabled &&
+                                ADVANCED_STATS_DEPENDENT_PANELS.includes(panel.key);
+                              const isVisibleByUserChoice = !formState.disabled_panels.includes(panel.key);
+                              const isVisible = isVisibleByUserChoice && !isForcedHidden;
+                              return (
+                                <Card
+                                  key={`disabled-panel-${panel.key}`}
+                                  className="bbpa-general-settings__panel-card"
+                                >
+                                  <CardBody>
+                                    <CheckboxControl
+                                      label={panel.label}
+                                      checked={isVisibleByUserChoice}
+                                      disabled={isForcedHidden}
+                                      onChange={(isChecked) => {
+                                        setFormState((prev) => {
+                                          const nextDisabled = new Set(prev.disabled_panels);
+                                          if (isChecked) {
+                                            nextDisabled.delete(panel.key);
+                                          } else {
+                                            nextDisabled.add(panel.key);
+                                          }
+
+                                          return {
+                                            ...prev,
+                                            disabled_panels: Array.from(nextDisabled),
+                                          };
+                                        });
+                                      }}
+                                    />
+                                    <span
+                                      className={`bbpa-general-settings__status-pill ${isVisible
+                                        ? "bbpa-general-settings__status-pill--visible"
+                                        : "bbpa-general-settings__status-pill--hidden"
+                                        }`}
+                                    >
+                                      {isVisible
+                                        ? __("Visible", "bimbeau-privacy-analytics")
+                                        : __("Hidden", "bimbeau-privacy-analytics")}
+                                    </span>
+                                    {isForcedHidden && (
+                                      <p className="bbpa-general-settings__helper">
+                                        {__(
+                                          'Hidden while "Enable advanced stats after consent" is disabled.',
+                                          "bimbeau-privacy-analytics",
+                                        )}
+                                      </p>
+                                    )}
+                                  </CardBody>
+                                </Card>
+                              );
+                            })}
+                          </div>
+                        </fieldset>
+                      </CardBody>
+                    </Card>
 
                   </div>
                 )}
