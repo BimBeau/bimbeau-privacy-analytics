@@ -20,6 +20,8 @@ class BBPA_GeoIP_Database_Updater {
     private const STATUS_OPTION = 'bbpa_geoip_database_update_status';
     private const LOCAL_DATABASE_AVAILABLE_OPTION = 'bbpa_geoip_database_local_available';
     private const DATABASE_RELATIVE_PATH = 'bpa/geoip/GeoLite2-City.mmdb';
+    private const TEMP_WORKSPACE_PREFIX = 'bbpa-geoip-workspace-';
+    private const TEMP_WORKSPACE_MARKER = '.bbpa-geoip-workspace';
 
     /**
      * Run the full GeoIP database update workflow.
@@ -348,23 +350,13 @@ class BBPA_GeoIP_Database_Updater {
             );
         }
 
-        $temp_dir = $this->create_temp_path('bbpa-geoip-dir');
+        $temp_dir = $this->create_temp_workspace();
         if (is_wp_error($temp_dir)) {
             $this->delete_file_if_exists($archive_path);
 
             return new WP_Error(
                 'bbpa_geoip_extract_failed',
                 __('Unable to allocate temporary workspace for GeoIP extraction.', 'bimbeau-privacy-analytics')
-            );
-        }
-
-        $this->delete_file_if_exists($temp_dir);
-        if (!$this->filesystem_service->ensure_directory($temp_dir)) {
-            $this->delete_file_if_exists($archive_path);
-
-            return new WP_Error(
-                'bbpa_geoip_extract_failed',
-                __('Unable to create temporary workspace for GeoIP extraction.', 'bimbeau-privacy-analytics')
             );
         }
 
@@ -473,7 +465,9 @@ class BBPA_GeoIP_Database_Updater {
         }
 
         $this->delete_file_if_exists($mmdb_path);
-        $this->filesystem_service->delete_directory(dirname($mmdb_path));
+        if ($this->is_owned_temp_workspace(dirname($mmdb_path))) {
+            $this->filesystem_service->delete_directory(dirname($mmdb_path));
+        }
 
         if (!$this->move_file($temp_target, $target_path, true)) {
             $this->delete_file_if_exists($temp_target);
@@ -635,6 +629,63 @@ class BBPA_GeoIP_Database_Updater {
         return $this->create_temp_path($filename);
     }
 
+
+
+    /**
+     * Create an owned temporary workspace for GeoIP extraction.
+     *
+     * @return string|WP_Error
+     */
+    private function create_temp_workspace() {
+        $workspace_file = $this->create_temp_path(self::TEMP_WORKSPACE_PREFIX);
+        if (is_wp_error($workspace_file)) {
+            return $workspace_file;
+        }
+
+        $this->delete_file_if_exists($workspace_file);
+        $workspace = $workspace_file . '-' . wp_generate_password(12, false, false);
+        if (!$this->filesystem_service->ensure_directory($workspace)) {
+            return new WP_Error(
+                'bbpa_geoip_temp_file_unavailable',
+                __('Unable to create temporary workspace for GeoIP extraction.', 'bimbeau-privacy-analytics')
+            );
+        }
+
+        $marker = trailingslashit($workspace) . self::TEMP_WORKSPACE_MARKER;
+        if (!$this->filesystem_service->put_contents($marker, 'bbpa-geoip')) {
+            $this->filesystem_service->delete_directory($workspace);
+            return new WP_Error(
+                'bbpa_geoip_temp_file_unavailable',
+                __('Unable to create temporary workspace for GeoIP extraction.', 'bimbeau-privacy-analytics')
+            );
+        }
+
+        return $workspace;
+    }
+
+    /**
+     * Verify that a directory is an owned BBPA GeoIP temporary workspace.
+     */
+    private function is_owned_temp_workspace(string $directory): bool {
+        $safe_directory = $this->filesystem_service->resolve_safe_directory_path($directory, true);
+        $temp_root = function_exists('get_temp_dir') ? realpath(get_temp_dir()) : realpath(sys_get_temp_dir());
+        $safe_temp_root = is_string($temp_root) ? wp_normalize_path(rtrim($temp_root, '/')) : '';
+        if ($safe_directory === null || $safe_temp_root === '') {
+            return false;
+        }
+
+        $safe_directory = wp_normalize_path(rtrim($safe_directory, '/'));
+        if (!str_starts_with(basename($safe_directory), self::TEMP_WORKSPACE_PREFIX)) {
+            return false;
+        }
+
+        if (!str_starts_with($safe_directory . '/', trailingslashit($safe_temp_root))) {
+            return false;
+        }
+
+        $marker = trailingslashit($safe_directory) . self::TEMP_WORKSPACE_MARKER;
+        return is_file($marker) && $this->filesystem_service->is_readable($marker);
+    }
 
     /**
      * Delete a file path using WordPress file helpers when possible.
