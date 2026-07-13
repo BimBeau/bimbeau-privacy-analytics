@@ -349,10 +349,7 @@ function bbpa_sanitize_settings($settings): array
     $settings['post_stats_metabox_post_types'] = [];
     $legacy_hidden_panels = $settings['hidden_panels'] ?? [];
     $disabled_panels = $settings['disabled_panels'] ?? $legacy_hidden_panels;
-    $settings['disabled_panels'] = bbpa_normalize_disabled_panels(
-        $disabled_panels,
-        BBPA_ALLOWED_DISABLED_PANEL_IDS
-    );
+    $settings['disabled_panels'] = bbpa_normalize_disabled_panels($disabled_panels);
     unset($settings['hidden_panels'], $settings['hidden_dashboard_cards']);
 
     if (isset($settings['maxmind_api_key'])) {
@@ -362,6 +359,43 @@ function bbpa_sanitize_settings($settings): array
     return $settings;
 }
 
+
+/**
+ * Return the server-side source of truth for panel identifiers that may be disabled.
+ *
+ * Extensions that register custom admin panels with the `bbpa_admin_panels` filter may
+ * add their own panel identifiers here. Dashboard and settings are always excluded.
+ *
+ * @return array<int, string>
+ */
+function bbpa_get_allowed_disabled_panel_ids(): array
+{
+    /**
+     * Filter the admin panel identifiers that may be disabled by administrators.
+     *
+     * The filter receives the default BBPA panel identifiers. Return panel names as
+     * registered through `bbpa_admin_panels`; values are sanitized, deduplicated, and
+     * dashboard/settings are removed after filtering.
+     *
+     * @param array<int, string> $panel_ids Allowed disabled panel identifiers.
+     */
+    $filtered = apply_filters('bbpa_allowed_disabled_panel_ids', BBPA_ALLOWED_DISABLED_PANEL_IDS);
+    if (!is_array($filtered)) {
+        $filtered = BBPA_ALLOWED_DISABLED_PANEL_IDS;
+    }
+
+    $non_disablable_ids = array_values(array_unique(array_map('sanitize_key', BBPA_NON_DISABLABLE_PANEL_IDS)));
+
+    return array_values(
+        array_filter(
+            array_unique(array_filter(array_map('sanitize_key', $filtered))),
+            static function (string $panel_id) use ($non_disablable_ids): bool {
+                return !in_array($panel_id, $non_disablable_ids, true);
+            }
+        )
+    );
+}
+
 /**
  * Normalize disabled panel identifiers from modern and legacy settings payloads.
  *
@@ -369,8 +403,9 @@ function bbpa_sanitize_settings($settings): array
  * @param array<int, string> $allowed_panel_ids
  * @return array<int, string>
  */
-function bbpa_normalize_disabled_panels($panel_ids, array $allowed_panel_ids = BBPA_ALLOWED_DISABLED_PANEL_IDS): array
+function bbpa_normalize_disabled_panels($panel_ids, ?array $allowed_panel_ids = null): array
 {
+    $allowed_panel_ids = $allowed_panel_ids ?? bbpa_get_allowed_disabled_panel_ids();
     $normalized = bbpa_sanitize_settings_identifier_list($panel_ids, $allowed_panel_ids);
     if (empty($normalized)) {
         return [];

@@ -899,7 +899,7 @@ const SettingsPanel = () => {
   const isApiLookupMode = formState.geoip_lookup_mode === "maxmind_api";
   const isAdvancedStatsDisabled = !formState.advanced_stats_enabled;
   const disablablePanelOptions = useMemo(
-    () => getDisablablePanelOptions(ADMIN_CONFIG?.availablePanels || ADMIN_CONFIG?.panels),
+    () => getDisablablePanelOptions(ADMIN_CONFIG?.disablablePanels),
     [],
   );
   const pwaConfig = ADMIN_CONFIG?.settings?.pwa || {};

@@ -3,7 +3,7 @@
 /**
  * Plugin Name: BimBeau Privacy Analytics
  * Description: Privacy-friendly, self-hosted analytics for WordPress.
- * Version: 8.45.8
+ * Version: 8.45.10
  * Author: BimBeau
  * Text Domain: bimbeau-privacy-analytics
  * Domain Path: /languages
@@ -250,33 +250,6 @@ add_action('network_admin_notices', 'bbpa_show_activation_conflict_notice');
 
 bbpa_resolve_package_activation_conflict(__FILE__);
 
-if (!function_exists('bbpa_maybe_disable_rest_notice_output')) {
-    /**
-     * Disables PHP notice display for BimBeau Privacy Analytics REST requests so JSON responses stay parseable.
-     */
-    function bbpa_maybe_disable_rest_notice_output()
-    {
-        if (!isset($_SERVER['REQUEST_URI']) || !is_string($_SERVER['REQUEST_URI'])) {
-            return;
-        }
-
-        $request_uri = sanitize_text_field(wp_unslash((string) $_SERVER['REQUEST_URI']));
-
-        if (
-            strpos($request_uri, '/wp-json/bpa/') === false
-            && strpos($request_uri, '/?rest_route=/bpa/') === false
-            && strpos($request_uri, 'rest_route=%2Fbpa%2F') === false
-        ) {
-            return;
-        }
-
-        if (function_exists('ini_set')) {
-            ini_set('display_errors', '0');
-        }
-    }
-}
-
-bbpa_maybe_disable_rest_notice_output();
 
 if (defined('BBPA_VERSION')) {
     return;

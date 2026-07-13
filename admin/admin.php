@@ -917,7 +917,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         $current_panel = 'dashboard';
     }
     $disabled_panels = isset($settings['disabled_panels']) && is_array($settings['disabled_panels'])
-        ? $settings['disabled_panels']
+        ? bbpa_normalize_disabled_panels($settings['disabled_panels'])
         : [];
     $pwa_assets = function_exists('bbpa_get_front_app_pwa_assets')
         ? bbpa_get_front_app_pwa_assets()
@@ -1565,6 +1565,7 @@ function bbpa_build_admin_localized_payload(
         'roles' => bbpa_get_roles_for_admin(),
         'panels' => $panels,
         'availablePanels' => $available_panels ?: $panels,
+        'disablablePanels' => bbpa_get_disablable_admin_panels($available_panels ?: $panels),
         'restSources' => bbpa_get_rest_sources(),
         'features' => bbpa_features(),
         'currentPanel' => sanitize_key($current_panel),
@@ -2344,6 +2345,21 @@ function bbpa_get_flag_assets(): array
 /**
  * Get admin panels configuration.
  */
+function bbpa_get_disablable_admin_panels(array $panels): array
+{
+    $allowed_panel_ids = bbpa_get_allowed_disabled_panel_ids();
+
+    return array_values(
+        array_filter(
+            $panels,
+            static function (array $panel) use ($allowed_panel_ids): bool {
+                $name = isset($panel['name']) ? sanitize_key($panel['name']) : '';
+                return $name !== '' && in_array($name, $allowed_panel_ids, true);
+            }
+        )
+    );
+}
+
 function bbpa_get_admin_panels(bool $include_disabled = false): array
 {
     $settings = bbpa_get_settings();

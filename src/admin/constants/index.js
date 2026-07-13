@@ -107,9 +107,9 @@ const PANEL_OPTION_LABELS = {
 };
 
 export const getDisablablePanelOptions = (
-	panels = ADMIN_CONFIG?.availablePanels || ADMIN_CONFIG?.panels
+	panels = ADMIN_CONFIG?.disablablePanels
 ) => {
-	const registeredPanels = Array.isArray( panels ) && panels.length > 0 ? panels : DEFAULT_PANELS;
+	const registeredPanels = Array.isArray( panels ) ? panels : [];
 	const seen = new Set();
 
 	return registeredPanels.reduce( ( options, panel ) => {
