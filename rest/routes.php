@@ -92,7 +92,6 @@ function bbpa_load_rest_controllers(): array
     return $loaded;
 }
 
-bbpa_safe_require_once(BBPA_PATH, 'includes/export-policy.php');
 bbpa_safe_require_once(BBPA_PATH, 'includes/rest/security.php');
 bbpa_load_rest_controllers();
 

@@ -617,7 +617,7 @@ msgstr "Il formato di esportazione deve essere csv, json o xlsx."
 
 #. translators: %d: maximum export row count.
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 #, php-format
 msgid ""
 "The export exceeds the %d row limit. Narrow the date range or search filter, "
@@ -677,7 +677,7 @@ msgid "The Excel export could not be generated."
 msgstr "Non è stato possibile generare l’esportazione Excel."
 
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 msgid ""
 "Excel export requires the PHP Zip extension to be installed on this server."
 msgstr ""
@@ -1273,63 +1273,6 @@ msgstr "Apri PWA"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Accesso diretto"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "No results match the current filters."
-msgstr "Nessun risultato corrisponde ai filtri attuali."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export access is refused for the current account or license."
-msgstr ""
-"L’accesso all’esportazione è negato per l’account o la licenza corrente."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export file could not be generated."
-msgstr "Non è stato possibile generare il file di esportazione."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is running. The file downloads when ready."
-msgstr "L’esportazione è in corso. Il file verrà scaricato quando è pronto."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is queued. The file downloads when ready."
-msgstr "L’esportazione è in coda. Il file verrà scaricato quando è pronto."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The completed export is missing a download URL."
-msgstr "All’esportazione completata manca un URL di download."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job could not be completed."
-msgstr "Non è stato possibile completare il processo di esportazione."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job is missing a status URL."
-msgstr "Al processo di esportazione manca un URL di stato."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export is still running. Try again in a few moments."
-msgstr "L’esportazione è ancora in corso. Riprova tra poco."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export report"
-msgstr "Esporta report"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export ready. Download started."
-msgstr "Esportazione pronta. Download avviato."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export Excel"
-msgstr "Esporta Excel"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export CSV"
-msgstr "Esporta CSV"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export JSON"
-msgstr "Esporta JSON"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -3106,6 +3049,63 @@ msgstr "Nessun dato visitatore disponibile."
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Caricamento visitatori…"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "No results match the current filters."
+msgstr "Nessun risultato corrisponde ai filtri attuali."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export access is refused for the current account or license."
+msgstr ""
+"L’accesso all’esportazione è negato per l’account o la licenza corrente."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export file could not be generated."
+msgstr "Non è stato possibile generare il file di esportazione."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is running. The file downloads when ready."
+msgstr "L’esportazione è in corso. Il file verrà scaricato quando è pronto."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is queued. The file downloads when ready."
+msgstr "L’esportazione è in coda. Il file verrà scaricato quando è pronto."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The completed export is missing a download URL."
+msgstr "All’esportazione completata manca un URL di download."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job could not be completed."
+msgstr "Non è stato possibile completare il processo di esportazione."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job is missing a status URL."
+msgstr "Al processo di esportazione manca un URL di stato."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export is still running. Try again in a few moments."
+msgstr "L’esportazione è ancora in corso. Riprova tra poco."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export report"
+msgstr "Esporta report"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export ready. Download started."
+msgstr "Esportazione pronta. Download avviato."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export Excel"
+msgstr "Esporta Excel"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export CSV"
+msgstr "Esporta CSV"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export JSON"
+msgstr "Esporta JSON"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

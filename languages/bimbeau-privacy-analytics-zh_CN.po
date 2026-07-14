@@ -602,7 +602,7 @@ msgstr "导出格式必须是 csv、json 或 xlsx。"
 
 #. translators: %d: maximum export row count.
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 #, php-format
 msgid ""
 "The export exceeds the %d row limit. Narrow the date range or search filter, "
@@ -654,7 +654,7 @@ msgid "The Excel export could not be generated."
 msgstr "无法生成 Excel 导出。"
 
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 msgid ""
 "Excel export requires the PHP Zip extension to be installed on this server."
 msgstr "Excel 导出需要此服务器安装 PHP Zip 扩展。"
@@ -1222,62 +1222,6 @@ msgstr "打开 PWA"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "直接访问"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "No results match the current filters."
-msgstr "没有结果匹配当前过滤条件。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export access is refused for the current account or license."
-msgstr "当前账户或许可证的导出访问被拒绝。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export file could not be generated."
-msgstr "无法生成导出文件。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is running. The file downloads when ready."
-msgstr "导出正在运行。文件准备好后会下载。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is queued. The file downloads when ready."
-msgstr "导出已排队。文件准备好后会下载。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The completed export is missing a download URL."
-msgstr "已完成的导出缺少下载 URL。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job could not be completed."
-msgstr "导出任务无法完成。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job is missing a status URL."
-msgstr "导出任务缺少状态 URL。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export is still running. Try again in a few moments."
-msgstr "导出仍在运行。请稍后重试。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export report"
-msgstr "导出报表"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export ready. Download started."
-msgstr "导出已准备好。下载已开始。"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export Excel"
-msgstr "导出 Excel"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export CSV"
-msgstr "导出 CSV"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export JSON"
-msgstr "导出 JSON"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -2971,6 +2915,62 @@ msgstr "没有可用的访客数据。"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "正在加载访客…"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "No results match the current filters."
+msgstr "没有结果匹配当前过滤条件。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export access is refused for the current account or license."
+msgstr "当前账户或许可证的导出访问被拒绝。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export file could not be generated."
+msgstr "无法生成导出文件。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is running. The file downloads when ready."
+msgstr "导出正在运行。文件准备好后会下载。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is queued. The file downloads when ready."
+msgstr "导出已排队。文件准备好后会下载。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The completed export is missing a download URL."
+msgstr "已完成的导出缺少下载 URL。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job could not be completed."
+msgstr "导出任务无法完成。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job is missing a status URL."
+msgstr "导出任务缺少状态 URL。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export is still running. Try again in a few moments."
+msgstr "导出仍在运行。请稍后重试。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export report"
+msgstr "导出报表"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export ready. Download started."
+msgstr "导出已准备好。下载已开始。"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export Excel"
+msgstr "导出 Excel"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export CSV"
+msgstr "导出 CSV"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export JSON"
+msgstr "导出 JSON"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

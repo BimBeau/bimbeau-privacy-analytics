@@ -10,6 +10,14 @@ const packageTarget = process.env.BBPA_PACKAGE_TARGET || 'premium';
 const isFreePackageBuild = packageTarget === 'free';
 const adminEntryPoint = isFreePackageBuild ? 'index.free.js' : 'index.premium.js';
 const freeAdminStubRoot = path.resolve(adminSourceRoot, 'free-stubs');
+const premiumReportExportActionPath = path.resolve(
+  adminSourceRoot,
+  'premium/components/ReportExportAction'
+);
+const sharedReportExportActionPath = path.resolve(
+  adminSourceRoot,
+  'components/ReportExportAction'
+);
 const proOnlyAdminStubModules = new Map(
   [
     ['GeoCitiesPanel', 'GeoCitiesPanel.js'],
@@ -26,7 +34,10 @@ const proOnlyAdminAliases = isFreePackageBuild
         [path.resolve(adminSourceRoot, `panels/${moduleName}.js`), stubPath],
       ])
     )
-  : {};
+  : {
+      [sharedReportExportActionPath]: premiumReportExportActionPath,
+      [`${sharedReportExportActionPath}/index.js`]: `${premiumReportExportActionPath}/index.js`,
+    };
 const freePackageProOnlyModuleReplacements = isFreePackageBuild
   ? [
       new webpack.NormalModuleReplacementPlugin(

@@ -627,7 +627,7 @@ msgstr "Η μορφή εξαγωγής πρέπει να είναι csv, json ή
 
 #. translators: %d: maximum export row count.
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 #, php-format
 msgid ""
 "The export exceeds the %d row limit. Narrow the date range or search filter, "
@@ -687,7 +687,7 @@ msgid "The Excel export could not be generated."
 msgstr "Δεν ήταν δυνατή η δημιουργία της εξαγωγής Excel."
 
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 msgid ""
 "Excel export requires the PHP Zip extension to be installed on this server."
 msgstr "Η εξαγωγή Excel απαιτεί την επέκταση PHP Zip σε αυτόν τον διακομιστή."
@@ -1294,63 +1294,6 @@ msgstr "Άνοιγμα PWA"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Άμεση πρόσβαση"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "No results match the current filters."
-msgstr "Κανένα αποτέλεσμα δεν ταιριάζει με τα τρέχοντα φίλτρα."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export access is refused for the current account or license."
-msgstr ""
-"Η πρόσβαση εξαγωγής απορρίπτεται για τον τρέχοντα λογαριασμό ή την άδεια."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export file could not be generated."
-msgstr "Δεν ήταν δυνατή η δημιουργία του αρχείου εξαγωγής."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is running. The file downloads when ready."
-msgstr "Η εξαγωγή εκτελείται. Το αρχείο θα ληφθεί όταν είναι έτοιμο."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is queued. The file downloads when ready."
-msgstr "Η εξαγωγή βρίσκεται στην ουρά. Το αρχείο θα ληφθεί όταν είναι έτοιμο."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The completed export is missing a download URL."
-msgstr "Από την ολοκληρωμένη εξαγωγή λείπει URL λήψης."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job could not be completed."
-msgstr "Δεν ήταν δυνατή η ολοκλήρωση της εργασίας εξαγωγής."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job is missing a status URL."
-msgstr "Από την εργασία εξαγωγής λείπει URL κατάστασης."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export is still running. Try again in a few moments."
-msgstr "Η εξαγωγή εκτελείται ακόμη. Δοκιμάστε ξανά σε λίγο."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export report"
-msgstr "Εξαγωγή αναφοράς"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export ready. Download started."
-msgstr "Η εξαγωγή είναι έτοιμη. Η λήψη ξεκίνησε."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export Excel"
-msgstr "Εξαγωγή Excel"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export CSV"
-msgstr "Εξαγωγή CSV"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export JSON"
-msgstr "Εξαγωγή JSON"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -3127,6 +3070,63 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκε
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Φόρτωση επισκεπτών…"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "No results match the current filters."
+msgstr "Κανένα αποτέλεσμα δεν ταιριάζει με τα τρέχοντα φίλτρα."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export access is refused for the current account or license."
+msgstr ""
+"Η πρόσβαση εξαγωγής απορρίπτεται για τον τρέχοντα λογαριασμό ή την άδεια."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export file could not be generated."
+msgstr "Δεν ήταν δυνατή η δημιουργία του αρχείου εξαγωγής."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is running. The file downloads when ready."
+msgstr "Η εξαγωγή εκτελείται. Το αρχείο θα ληφθεί όταν είναι έτοιμο."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is queued. The file downloads when ready."
+msgstr "Η εξαγωγή βρίσκεται στην ουρά. Το αρχείο θα ληφθεί όταν είναι έτοιμο."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The completed export is missing a download URL."
+msgstr "Από την ολοκληρωμένη εξαγωγή λείπει URL λήψης."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job could not be completed."
+msgstr "Δεν ήταν δυνατή η ολοκλήρωση της εργασίας εξαγωγής."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job is missing a status URL."
+msgstr "Από την εργασία εξαγωγής λείπει URL κατάστασης."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export is still running. Try again in a few moments."
+msgstr "Η εξαγωγή εκτελείται ακόμη. Δοκιμάστε ξανά σε λίγο."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export report"
+msgstr "Εξαγωγή αναφοράς"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export ready. Download started."
+msgstr "Η εξαγωγή είναι έτοιμη. Η λήψη ξεκίνησε."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export Excel"
+msgstr "Εξαγωγή Excel"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export CSV"
+msgstr "Εξαγωγή CSV"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export JSON"
+msgstr "Εξαγωγή JSON"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

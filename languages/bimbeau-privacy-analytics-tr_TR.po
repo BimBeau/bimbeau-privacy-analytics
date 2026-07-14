@@ -619,7 +619,7 @@ msgstr "Dışa aktarma biçimi csv, json veya xlsx olmalıdır."
 
 #. translators: %d: maximum export row count.
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 #, php-format
 msgid ""
 "The export exceeds the %d row limit. Narrow the date range or search filter, "
@@ -679,7 +679,7 @@ msgid "The Excel export could not be generated."
 msgstr "Excel dışa aktarımı oluşturulamadı."
 
 #: includes/rest/removed-export-controller.php
-#: src/admin/components/ReportExportAction/index.js
+#: src/admin/premium/components/ReportExportAction/index.js
 msgid ""
 "Excel export requires the PHP Zip extension to be installed on this server."
 msgstr "Excel dışa aktarımı için bu sunucuda PHP Zip uzantısı yüklü olmalıdır."
@@ -1266,62 +1266,6 @@ msgstr "PWA’yı aç"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Doğrudan"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "No results match the current filters."
-msgstr "Geçerli filtrelerle eşleşen sonuç yok."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export access is refused for the current account or license."
-msgstr "Geçerli hesap veya lisans için dışa aktarma erişimi reddedildi."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export file could not be generated."
-msgstr "Dışa aktarma dosyası oluşturulamadı."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is running. The file downloads when ready."
-msgstr "Dışa aktarma çalışıyor. Dosya hazır olduğunda indirilecek."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export is queued. The file downloads when ready."
-msgstr "Dışa aktarma sırada. Dosya hazır olduğunda indirilecek."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The completed export is missing a download URL."
-msgstr "Tamamlanan dışa aktarımda indirme URL’si eksik."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job could not be completed."
-msgstr "Dışa aktarma işi tamamlanamadı."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export job is missing a status URL."
-msgstr "Dışa aktarma işinde durum URL’si eksik."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "The export is still running. Try again in a few moments."
-msgstr "Dışa aktarma hâlâ çalışıyor. Birkaç dakika sonra tekrar deneyin."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export report"
-msgstr "Raporu dışa aktar"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export ready. Download started."
-msgstr "Dışa aktarma hazır. İndirme başladı."
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export Excel"
-msgstr "Excel’i dışa aktar"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export CSV"
-msgstr "CSV’yi dışa aktar"
-
-#: src/admin/components/ReportExportAction/index.js
-msgid "Export JSON"
-msgstr "JSON’u dışa aktar"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -3085,6 +3029,62 @@ msgstr "Ziyaretçi verisi mevcut değil."
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Ziyaretçiler yükleniyor…"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "No results match the current filters."
+msgstr "Geçerli filtrelerle eşleşen sonuç yok."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export access is refused for the current account or license."
+msgstr "Geçerli hesap veya lisans için dışa aktarma erişimi reddedildi."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export file could not be generated."
+msgstr "Dışa aktarma dosyası oluşturulamadı."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is running. The file downloads when ready."
+msgstr "Dışa aktarma çalışıyor. Dosya hazır olduğunda indirilecek."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export is queued. The file downloads when ready."
+msgstr "Dışa aktarma sırada. Dosya hazır olduğunda indirilecek."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The completed export is missing a download URL."
+msgstr "Tamamlanan dışa aktarımda indirme URL’si eksik."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job could not be completed."
+msgstr "Dışa aktarma işi tamamlanamadı."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export job is missing a status URL."
+msgstr "Dışa aktarma işinde durum URL’si eksik."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "The export is still running. Try again in a few moments."
+msgstr "Dışa aktarma hâlâ çalışıyor. Birkaç dakika sonra tekrar deneyin."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export report"
+msgstr "Raporu dışa aktar"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export ready. Download started."
+msgstr "Dışa aktarma hazır. İndirme başladı."
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export Excel"
+msgstr "Excel’i dışa aktar"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export CSV"
+msgstr "CSV’yi dışa aktar"
+
+#: src/admin/premium/components/ReportExportAction/index.js
+msgid "Export JSON"
+msgstr "JSON’u dışa aktar"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
