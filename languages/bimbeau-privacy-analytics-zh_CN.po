@@ -123,8 +123,8 @@ msgstr "未知生成状态。"
 
 #: admin/admin.php includes/rest/class-bbpa-admin-controller.php
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -167,13 +167,14 @@ msgid "Internal searches"
 msgstr "站内搜索"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/GeolocationPanel.js src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
+#: src/admin/premium/panels/GeolocationPanel.js
 msgid "Geolocation"
 msgstr "地理定位"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -246,7 +247,7 @@ msgstr "请至少启用一个分析面板，以便在此小工具中显示 KPI �
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
@@ -1436,7 +1437,7 @@ msgid "Approx. %d km"
 msgstr "约 %d 公里"
 
 #: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "不可用"
@@ -1786,8 +1787,8 @@ msgstr "类型"
 msgid "Triggered page"
 msgstr "触发页面"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "City"
 msgstr "城市"
@@ -1848,18 +1849,6 @@ msgstr "是否要移除此事件？"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/admin/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "City / Country"
-msgstr "城市 / 国家或地区"
-
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "Hits"
-msgstr "命中"
-
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
 msgstr "所选时间段没有可用的国家/地区数据。"
@@ -1900,14 +1889,6 @@ msgstr "热门国家/地区"
 #, fuzzy
 msgid "Legacy visits"
 msgstr "每日访客"
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Countries"
-msgstr "国家/地区"
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Cities"
-msgstr "城市"
 
 #: src/admin/panels/OverviewPanel.js
 msgid "Global hourly heatmap by day and hour"
@@ -2858,6 +2839,29 @@ msgstr "导出 CSV"
 msgid "Export JSON"
 msgstr "导出 JSON"
 
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#, fuzzy
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
+#, fuzzy
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "City / Country"
+msgstr "城市 / 国家或地区"
+
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "Hits"
+msgstr "命中"
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Countries"
+msgstr "国家/地区"
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Cities"
+msgstr "城市"
+
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
+#, fuzzy
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"

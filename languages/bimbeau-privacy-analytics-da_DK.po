@@ -128,8 +128,8 @@ msgstr "Ukendt genereringsstatus."
 
 #: admin/admin.php includes/rest/class-bbpa-admin-controller.php
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -172,13 +172,14 @@ msgid "Internal searches"
 msgstr "Interne søgninger"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/GeolocationPanel.js src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
+#: src/admin/premium/panels/GeolocationPanel.js
 msgid "Geolocation"
 msgstr "Geolokalisering"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -251,7 +252,7 @@ msgstr "Aktivér mindst ét analysepanel for at vise KPI-værdier i denne widget
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
@@ -1480,7 +1481,7 @@ msgid "Approx. %d km"
 msgstr "Ca. %d km"
 
 #: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "Ikke tilgængelig"
@@ -1849,8 +1850,8 @@ msgstr "Type"
 msgid "Triggered page"
 msgstr "Udløst side"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "City"
 msgstr "By"
@@ -1911,18 +1912,6 @@ msgstr "Vil du fjerne denne hændelse?"
 msgid "Cancel"
 msgstr "Annuller"
 
-#: src/admin/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "City / Country"
-msgstr "By / land"
-
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "Hits"
-msgstr "Hits"
-
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
 msgstr "Ingen landedata tilgængelige for den valgte periode."
@@ -1963,14 +1952,6 @@ msgstr "Toplande"
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Daglige besøgende"
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Countries"
-msgstr "Lande"
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Cities"
-msgstr "Byer"
 
 #: src/admin/panels/OverviewPanel.js
 msgid "Global hourly heatmap by day and hour"
@@ -2962,6 +2943,29 @@ msgstr "Eksportér CSV"
 msgid "Export JSON"
 msgstr "Eksportér JSON"
 
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#, fuzzy
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
+#, fuzzy
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "City / Country"
+msgstr "By / land"
+
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "Hits"
+msgstr "Hits"
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Countries"
+msgstr "Lande"
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Cities"
+msgstr "Byer"
+
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
+#, fuzzy
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"

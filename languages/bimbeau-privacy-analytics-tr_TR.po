@@ -129,8 +129,8 @@ msgstr "Bilinmeyen oluşturma durumu."
 
 #: admin/admin.php includes/rest/class-bbpa-admin-controller.php
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -173,13 +173,14 @@ msgid "Internal searches"
 msgstr "Dahili aramalar"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/GeolocationPanel.js src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
+#: src/admin/premium/panels/GeolocationPanel.js
 msgid "Geolocation"
 msgstr "Coğrafi konum"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -254,7 +255,7 @@ msgstr ""
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
@@ -1486,7 +1487,7 @@ msgid "Approx. %d km"
 msgstr "Yaklaşık %d km"
 
 #: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/GeoCitiesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "Kullanılabilir değil"
@@ -1858,8 +1859,8 @@ msgstr "Tür"
 msgid "Triggered page"
 msgstr "Tetiklenen sayfa"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "City"
 msgstr "Şehir"
@@ -1920,18 +1921,6 @@ msgstr "Bu etkinliği kaldırmak istiyor musunuz?"
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/admin/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "City / Country"
-msgstr "Şehir / Ülke"
-
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "Hits"
-msgstr "İstekler"
-
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
 msgstr "Seçilen dönem için ülke verisi mevcut değil."
@@ -1972,14 +1961,6 @@ msgstr "Popüler ülkeler"
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Günlük ziyaretçiler"
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Countries"
-msgstr "Ülkeler"
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Cities"
-msgstr "Şehirler"
 
 #: src/admin/panels/OverviewPanel.js
 msgid "Global hourly heatmap by day and hour"
@@ -2972,6 +2953,29 @@ msgstr "CSV’yi dışa aktar"
 msgid "Export JSON"
 msgstr "JSON’u dışa aktar"
 
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#, fuzzy
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
+#, fuzzy
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "City / Country"
+msgstr "Şehir / Ülke"
+
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "Hits"
+msgstr "İstekler"
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Countries"
+msgstr "Ülkeler"
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Cities"
+msgstr "Şehirler"
+
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
+#, fuzzy
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"

@@ -1,15 +1,13 @@
 const path = require('path');
-const webpack = require('webpack');
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
 const cssAssetPublicPath = process.env.BBPA_ADMIN_CSS_PUBLIC_PATH || '../';
 const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
   ? path.resolve(process.env.BBPA_ADMIN_SOURCE_ROOT)
   : path.resolve(__dirname, 'src/admin');
-const packageTarget = process.env.BBPA_PACKAGE_TARGET || 'premium';
+const packageTarget = process.env.BBPA_PACKAGE_TARGET || 'free';
 const isFreePackageBuild = packageTarget === 'free';
 const adminEntryPoint = isFreePackageBuild ? 'index.free.js' : 'index.premium.js';
-const freeAdminStubRoot = path.resolve(adminSourceRoot, 'free-stubs');
 const premiumReportExportActionPath = path.resolve(
   adminSourceRoot,
   'premium/components/ReportExportAction'
@@ -26,51 +24,31 @@ const sharedTopPagesPanelPath = path.resolve(
   adminSourceRoot,
   'panels/TopPagesPanel'
 );
-const proOnlyAdminStubModules = new Map(
-  [
-    ['GeoCitiesPanel', 'GeoCitiesPanel.js'],
-    ['PageDetailsGeoCitiesCard', 'PageDetailsGeoCitiesCard.js'],
-    ['OverviewPanel', 'OverviewPanel.js'],
-  ].map(([moduleName, stubFilename]) => [
-    moduleName,
-    path.resolve(freeAdminStubRoot, stubFilename),
-  ])
+const premiumGeolocationPanelPath = path.resolve(
+  adminSourceRoot,
+  'premium/panels/GeolocationPanel'
+);
+const sharedGeolocationPanelPath = path.resolve(
+  adminSourceRoot,
+  'panels/GeolocationPanel'
+);
+const freeOverviewPanelStubPath = path.resolve(
+  adminSourceRoot,
+  'free-stubs/OverviewPanel.js'
 );
 const proOnlyAdminAliases = isFreePackageBuild
-  ? Object.fromEntries(
-      [...proOnlyAdminStubModules].flatMap(([moduleName, stubPath]) => [
-        [path.resolve(adminSourceRoot, `panels/${moduleName}`), stubPath],
-        [path.resolve(adminSourceRoot, `panels/${moduleName}.js`), stubPath],
-      ])
-    )
+  ? {
+      [path.resolve(adminSourceRoot, 'panels/OverviewPanel')]: freeOverviewPanelStubPath,
+      [path.resolve(adminSourceRoot, 'panels/OverviewPanel.js')]: freeOverviewPanelStubPath,
+    }
   : {
       [sharedReportExportActionPath]: premiumReportExportActionPath,
       [`${sharedReportExportActionPath}/index.js`]: `${premiumReportExportActionPath}/index.js`,
       [sharedTopPagesPanelPath]: premiumTopPagesPanelPath,
       [`${sharedTopPagesPanelPath}.js`]: `${premiumTopPagesPanelPath}.js`,
+      [sharedGeolocationPanelPath]: premiumGeolocationPanelPath,
+      [`${sharedGeolocationPanelPath}.js`]: `${premiumGeolocationPanelPath}.js`,
     };
-const freePackageProOnlyModuleReplacements = isFreePackageBuild
-  ? [
-      new webpack.NormalModuleReplacementPlugin(
-        /^\.\/(?:GeoCitiesPanel|PageDetailsGeoCitiesCard)(?:\.js)?$/,
-        (resource) => {
-          const context = path.resolve(resource.context || '');
-          if (context !== path.resolve(adminSourceRoot, 'panels')) {
-            return;
-          }
-
-          const moduleName = resource.request
-            .replace(/^\.\//, '')
-            .replace(/\.js$/, '');
-          const stubPath = proOnlyAdminStubModules.get(moduleName);
-
-          if (stubPath) {
-            resource.request = stubPath;
-          }
-        }
-      ),
-    ]
-  : [];
 const flagIconsFlagsPath = `${path.sep}node_modules${path.sep}flag-icons${path.sep}flags${path.sep}`;
 
 const getSvgAssetFilename = ({ filename = '' } = {}) => {
@@ -123,7 +101,6 @@ module.exports = {
   },
   plugins: [
     ...(defaultConfig.plugins || []),
-    ...freePackageProOnlyModuleReplacements,
   ],
   module: {
     ...defaultConfig.module,

@@ -127,7 +127,6 @@ msgstr ""
 #: src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
@@ -138,6 +137,7 @@ msgstr ""
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/SearchTermsPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/premium/panels/TopPagesPanel.js
@@ -201,9 +201,9 @@ msgstr ""
 #: admin/admin.php
 #: src/admin/constants/index.js
 #: src/admin/constants/index.js
-#: src/admin/panels/GeolocationPanel.js
 #: src/admin/panels/SettingsPanel.js
 #: src/admin/panels/SettingsPanel.js
+#: src/admin/premium/panels/GeolocationPanel.js
 msgid "Geolocation"
 msgstr ""
 
@@ -211,10 +211,10 @@ msgstr ""
 #: src/admin/AdminApp.js
 #: src/admin/constants/index.js
 #: src/admin/constants/index.js
-#: src/admin/panels/GeoCitiesPanel.js
 #: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/VisitorsPanel.js
+#: src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -290,7 +290,7 @@ msgstr ""
 #: src/admin/free-stubs/OverviewPanel.js
 #: src/admin/panels/AcquisitionPanel.js
 #: src/admin/panels/OverviewPanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -1534,8 +1534,8 @@ msgstr ""
 #: src/admin/lib/locationLabel.js
 #: src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/GeoCitiesPanel.js
 #: src/admin/panels/RealtimePanel.js
+#: src/admin/premium/panels/GeoCitiesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr ""
@@ -1858,8 +1858,8 @@ msgid "Triggered page"
 msgstr ""
 
 #: src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "City"
@@ -1927,16 +1927,6 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/admin/panels/GeoCitiesPanel.js
-#: src/admin/panels/GeoCitiesPanel.js
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "City / Country"
-msgstr ""
-
-#: src/admin/panels/GeoCitiesPanel.js
-msgid "Hits"
-msgstr ""
-
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
 msgstr ""
@@ -1977,14 +1967,6 @@ msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
-msgstr ""
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Countries"
-msgstr ""
-
-#: src/admin/panels/GeolocationPanel.js
-msgid "Cities"
 msgstr ""
 
 #: src/admin/panels/OverviewPanel.js
@@ -2829,6 +2811,26 @@ msgstr ""
 msgid "Export JSON"
 msgstr ""
 
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#: src/admin/premium/panels/GeoCitiesPanel.js
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "City / Country"
+msgstr ""
+
+#: src/admin/premium/panels/GeoCitiesPanel.js
+msgid "Hits"
+msgstr ""
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Countries"
+msgstr ""
+
+#: src/admin/premium/panels/GeolocationPanel.js
+msgid "Cities"
+msgstr ""
+
+#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
