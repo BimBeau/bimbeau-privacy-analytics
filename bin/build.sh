@@ -66,7 +66,6 @@ build_front_assets() {
 
     run_phase "cached admin bundle synchronization verification" \
       node "${repo_root}/scripts/verify-admin-bundle-sync.js" \
-      --source "src/admin/panels/TopPagesPanel.js" \
       --bundle "build/admin.js" \
       --label "build/admin.js" \
       --tier "${BBPA_PACKAGE_TARGET:-free}"
@@ -136,7 +135,6 @@ build_front_assets() {
 
   run_phase "admin bundle synchronization verification" \
     node "${repo_root}/scripts/verify-admin-bundle-sync.js" \
-    --source "src/admin/panels/TopPagesPanel.js" \
     --bundle "build/admin.js" \
     --label "build/admin.js" \
     --tier "${BBPA_PACKAGE_TARGET:-free}"
