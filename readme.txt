@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.29
+Stable tag: 8.45.30
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -219,5 +219,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.29 =
-* Exclude development tests from plugin source packages.
+= 8.45.30 =
+* Fix Free package validation for JSX source files.
