@@ -8,6 +8,7 @@ const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
   : path.resolve(__dirname, 'src/admin');
 const packageTarget = process.env.BBPA_PACKAGE_TARGET || 'premium';
 const isFreePackageBuild = packageTarget === 'free';
+const adminEntryPoint = isFreePackageBuild ? 'index.free.js' : 'index.premium.js';
 const freeAdminStubRoot = path.resolve(adminSourceRoot, 'free-stubs');
 const proOnlyAdminStubModules = new Map(
   [
@@ -114,7 +115,7 @@ module.exports = {
     ],
   },
   entry: {
-    admin: path.resolve(adminSourceRoot, 'index.js'),
+    admin: path.resolve(adminSourceRoot, adminEntryPoint),
     'style-admin': path.resolve(adminSourceRoot, 'style.scss'),
   },
   output: {
