@@ -132,7 +132,7 @@ msgstr "Άγνωστη κατάσταση δημιουργίας."
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -153,7 +153,8 @@ msgid "Real-time"
 msgstr "Πραγματικός χρόνος"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Σελίδες"
 
@@ -179,8 +180,9 @@ msgstr "Γεωεντοπισμός"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
 #: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -251,16 +253,16 @@ msgstr ""
 "Ενεργοποιήστε τουλάχιστον έναν πίνακα αναλυτικών για να εμφανιστούν τιμές "
 "KPI σε αυτό το widget."
 
-#: admin/dashboard-widget.php src/admin/panels/AcquisitionPanel.js
-#: src/admin/panels/OverviewPanel.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
 #: src/admin/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Επισκέψεις"
 
 #: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/OverviewPanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -443,7 +445,8 @@ msgstr ""
 msgid "Stats"
 msgstr "Στατιστικά"
 
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Summary"
 msgstr "Σύνοψη"
 
@@ -456,7 +459,8 @@ msgid "View page details"
 msgstr "Προβολή λεπτομερειών σελίδας"
 
 #. translators: %s: Formatted average time spent on the page.
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 #, php-format
 msgid "Avg. time on page: %s"
 msgstr "Μέσος χρόνος στη σελίδα: %s"
@@ -476,29 +480,30 @@ msgstr "Περισσότερα στατιστικά"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
 msgstr "Χώρα"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser"
 msgstr "Περιηγητής"
 
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "System"
 msgstr "Σύστημα"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Device"
 msgstr "Συσκευή"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Desktop"
@@ -509,7 +514,7 @@ msgid "Mobile"
 msgstr "Κινητό"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Tablet"
 msgstr "Tablet"
@@ -594,7 +599,7 @@ msgstr "Η βάση δεδομένων GeoIP δεν είναι ακόμη δια
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
 #: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Άγνωστη χώρα"
@@ -1288,7 +1293,8 @@ msgstr "Αντιγραφή URL"
 msgid "Open PWA"
 msgstr "Άνοιγμα PWA"
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
+#: src/admin/components/ReferrerLabel/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1433,6 +1439,34 @@ msgstr "24μ"
 #: src/admin/constants/index.js
 msgid "24 months"
 msgstr "24 μήνες"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Url"
+msgstr "URL"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
+msgid "No popular pages available."
+msgstr "Δεν υπάρχουν διαθέσιμες δημοφιλείς σελίδες."
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "Top referrers"
+msgstr "Κορυφαίοι παραπέμπτες"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Referrer"
+msgstr "Παραπέμπτης"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "No referrers available."
+msgstr "Δεν υπάρχουν διαθέσιμοι παραπέμπτες."
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "Hourly heatmap global"
+msgstr "Καθολικός ωριαίος heatmap"
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1816,7 +1850,7 @@ msgstr ""
 msgid "Total events"
 msgstr "Σύνολο συμβάντων"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1876,7 +1910,7 @@ msgstr "Λεπτομέρειες"
 msgid "All pages"
 msgstr "Όλες οι σελίδες"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 msgid "View"
 msgstr "Προβολή"
 
@@ -1896,7 +1930,7 @@ msgstr "Προηγούμενη σελίδα"
 msgid "Next page"
 msgstr "Επόμενη σελίδα"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1946,20 +1980,24 @@ msgstr "%1$s — %2$s επισκέψεις"
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "No data"
 msgstr "Δεν υπάρχουν δεδομένα"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Unknown country flag"
 msgstr "Σημαία άγνωστης χώρας"
 
 #. translators: %s: country name.
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Flag of %s"
 msgstr "Σημαία του/της %s"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "Κορυφαίες χώρες"
 
@@ -1976,32 +2014,6 @@ msgstr "Χώρες"
 msgid "Cities"
 msgstr "Πόλεις"
 
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
-msgid "Url"
-msgstr "URL"
-
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
-msgid "No popular pages available."
-msgstr "Δεν υπάρχουν διαθέσιμες δημοφιλείς σελίδες."
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Top referrers"
-msgstr "Κορυφαίοι παραπέμπτες"
-
-#: src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Referrer"
-msgstr "Παραπέμπτης"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "No referrers available."
-msgstr "Δεν υπάρχουν διαθέσιμοι παραπέμπτες."
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Hourly heatmap global"
-msgstr "Καθολικός ωριαίος heatmap"
-
 #: src/admin/panels/OverviewPanel.js
 msgid "Global hourly heatmap by day and hour"
 msgstr "Καθολικός ωριαίος heatmap ανά ημέρα και ώρα"
@@ -2015,12 +2027,12 @@ msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr ""
 "Οι καθολικοί ωριαίοι heatmaps απαιτούν δεδομένα ωριαίας συγκέντρωσης σελίδων."
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 msgid ""
 "Visitor origin will be available after the local GeoIP database is installed "
 "from the plugin geolocation settings."
@@ -2887,177 +2899,51 @@ msgstr ""
 "Επιβεβαιώνω ότι θέλω να εκκαθαρίσω μόνο δεδομένα παλαιότερα από το "
 "ρυθμισμένο παράθυρο διατήρησης."
 
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Smartphone"
-msgstr "Smartphone"
-
-#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
-#: src/admin/panels/TopPagesPanel.js
-msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Daily page detail line chart"
-msgstr "Γραμμικό γράφημα ημερήσιων λεπτομερειών σελίδας"
-
-#. translators: 1: metric label, 2: metric value.
-#: src/admin/panels/TopPagesPanel.js
-msgid "%1$s: %2$s"
-msgstr "%1$s: %2$s"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "Αύξουσα"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "Φθίνουσα"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Accueil"
-msgstr "Αρχική"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Back"
-msgstr "Πίσω"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Open in WordPress"
-msgstr "Άνοιγμα στο WordPress"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Daily page views"
-msgstr "Ημερήσιες προβολές σελίδας"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. page views"
-msgstr "Προηγ. προβολές σελίδας"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. visitors"
-msgstr "Προηγ. επισκέπτες"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No details available for this page."
-msgstr "Δεν υπάρχουν διαθέσιμες λεπτομέρειες για αυτήν τη σελίδα."
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Hourly heatmap"
-msgstr "Ωριαίος heatmap"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Page views list"
-msgstr "Λίστα προβολών σελίδας"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Ταξινόμηση κατά"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Date"
-msgstr "Ημερομηνία"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "Εμφάνιση"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "Τίτλος"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Table: Page details by date"
-msgstr "Πίνακας: Λεπτομέρειες σελίδας ανά ημερομηνία"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Previous"
-msgstr "Προηγούμενο"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Next"
-msgstr "Επόμενο"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "από"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "στοιχεία"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No country data available."
-msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας."
-
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Top pages"
 msgstr "Κορυφαίες σελίδες"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Avg. time on page:"
 msgstr "Μέσος χρόνος στη σελίδα:"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Top 404s"
 msgstr "Κορυφαία 404"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No missing pages available."
 msgstr "Δεν υπάρχουν διαθέσιμες σελίδες που λείπουν."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entry pages (approx.)"
 msgstr "Σελίδες εισόδου (περ.)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No entry pages available."
 msgstr "Δεν υπάρχουν διαθέσιμες σελίδες εισόδου."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entries (approx.)"
 msgstr "Είσοδοι (περ.)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Exit pages"
 msgstr "Σελίδες εξόδου"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No exit pages available."
 msgstr "Δεν υπάρχουν διαθέσιμες σελίδες εξόδου."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Exits (approx.)"
 msgstr "Έξοδοι (περ.)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entry pages"
 msgstr "Σελίδες εισόδου"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Pages not found"
 msgstr "Σελίδες που δεν βρέθηκαν"
 
@@ -3127,6 +3013,138 @@ msgstr "Εξαγωγή CSV"
 #: src/admin/premium/components/ReportExportAction/index.js
 msgid "Export JSON"
 msgstr "Εξαγωγή JSON"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Smartphone"
+msgstr "Smartphone"
+
+#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Daily page detail line chart"
+msgstr "Γραμμικό γράφημα ημερήσιων λεπτομερειών σελίδας"
+
+#. translators: 1: metric label, 2: metric value.
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Ascending"
+msgstr "Αύξουσα"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Descending"
+msgstr "Φθίνουσα"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Accueil"
+msgstr "Αρχική"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Back"
+msgstr "Πίσω"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Open in WordPress"
+msgstr "Άνοιγμα στο WordPress"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views"
+msgstr "Ημερήσιες προβολές σελίδας"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. page views"
+msgstr "Προηγ. προβολές σελίδας"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. visitors"
+msgstr "Προηγ. επισκέπτες"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "No details available for this page."
+msgstr "Δεν υπάρχουν διαθέσιμες λεπτομέρειες για αυτήν τη σελίδα."
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Hourly heatmap"
+msgstr "Ωριαίος heatmap"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Page views list"
+msgstr "Λίστα προβολών σελίδας"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Sort by"
+msgstr "Ταξινόμηση κατά"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Display"
+msgstr "Εμφάνιση"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "URL"
+msgstr "URL"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Title"
+msgstr "Τίτλος"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Table: Page details by date"
+msgstr "Πίνακας: Λεπτομέρειες σελίδας ανά ημερομηνία"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Επόμενο"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "of"
+msgstr "από"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "items"
+msgstr "στοιχεία"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "No country data available."
+msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας."
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

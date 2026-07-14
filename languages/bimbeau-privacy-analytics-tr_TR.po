@@ -131,7 +131,7 @@ msgstr "Bilinmeyen oluşturma durumu."
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -152,7 +152,8 @@ msgid "Real-time"
 msgstr "Gerçek zamanlı"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Sayfalar"
 
@@ -178,8 +179,9 @@ msgstr "Coğrafi konum"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
 #: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -250,16 +252,16 @@ msgstr ""
 "Bu bileşende KPI değerlerini göstermek için en az bir analiz panelini "
 "etkinleştirin."
 
-#: admin/dashboard-widget.php src/admin/panels/AcquisitionPanel.js
-#: src/admin/panels/OverviewPanel.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
 #: src/admin/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Ziyaretler"
 
 #: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/OverviewPanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -437,7 +439,8 @@ msgstr ""
 msgid "Stats"
 msgstr "İstatistikler"
 
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Summary"
 msgstr "Özet"
 
@@ -450,7 +453,8 @@ msgid "View page details"
 msgstr "Sayfa ayrıntılarını görüntüle"
 
 #. translators: %s: Formatted average time spent on the page.
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 #, php-format
 msgid "Avg. time on page: %s"
 msgstr "Sayfada ort. süre: %s"
@@ -469,29 +473,30 @@ msgstr "Daha fazla istatistik"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
 msgstr "Ülke"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser"
 msgstr "Tarayıcı"
 
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "System"
 msgstr "Sistem"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Device"
 msgstr "Cihaz"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Desktop"
@@ -502,7 +507,7 @@ msgid "Mobile"
 msgstr "Mobil"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Tablet"
 msgstr "Tablet"
@@ -586,7 +591,7 @@ msgstr "GeoIP veritabanı henüz mevcut değil."
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
 #: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Bilinmeyen ülke"
@@ -1260,7 +1265,8 @@ msgstr "URL’yi kopyala"
 msgid "Open PWA"
 msgstr "PWA’yı aç"
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
+#: src/admin/components/ReferrerLabel/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1405,6 +1411,34 @@ msgstr "24a"
 #: src/admin/constants/index.js
 msgid "24 months"
 msgstr "24 ay"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Url"
+msgstr "Url"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
+msgid "No popular pages available."
+msgstr "Popüler sayfa mevcut değil."
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "Top referrers"
+msgstr "En çok yönlendirenler"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Referrer"
+msgstr "Yönlendiren"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "No referrers available."
+msgstr "Yönlendiren mevcut değil."
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "Hourly heatmap global"
+msgstr "Genel saatlik ısı haritası"
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1783,7 +1817,7 @@ msgstr ""
 msgid "Total events"
 msgstr "Toplam etkinlikler"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1843,7 +1877,7 @@ msgstr "Ayrıntılar"
 msgid "All pages"
 msgstr "Tüm sayfalar"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 msgid "View"
 msgstr "Görüntüle"
 
@@ -1863,7 +1897,7 @@ msgstr "Önceki sayfa"
 msgid "Next page"
 msgstr "Sonraki sayfa"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1913,20 +1947,24 @@ msgstr "%1$s — %2$s ziyaret"
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "No data"
 msgstr "Veri yok"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Unknown country flag"
 msgstr "Bilinmeyen ülke bayrağı"
 
 #. translators: %s: country name.
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Flag of %s"
 msgstr "%s bayrağı"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "Popüler ülkeler"
 
@@ -1943,32 +1981,6 @@ msgstr "Ülkeler"
 msgid "Cities"
 msgstr "Şehirler"
 
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
-msgid "Url"
-msgstr "Url"
-
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
-msgid "No popular pages available."
-msgstr "Popüler sayfa mevcut değil."
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Top referrers"
-msgstr "En çok yönlendirenler"
-
-#: src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Referrer"
-msgstr "Yönlendiren"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "No referrers available."
-msgstr "Yönlendiren mevcut değil."
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Hourly heatmap global"
-msgstr "Genel saatlik ısı haritası"
-
 #: src/admin/panels/OverviewPanel.js
 msgid "Global hourly heatmap by day and hour"
 msgstr "Gün ve saate göre genel saatlik ısı haritası"
@@ -1981,12 +1993,12 @@ msgstr "Bu dönem için genel saatlik veri mevcut değil."
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Genel saatlik ısı haritaları saatlik sayfa toplama verisi gerektirir."
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "Ziyaretçi verisi mevcut değil."
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 msgid ""
 "Visitor origin will be available after the local GeoIP database is installed "
 "from the plugin geolocation settings."
@@ -2846,177 +2858,51 @@ msgstr ""
 "Yalnızca yapılandırılmış saklama penceresinden daha eski verileri temizlemek "
 "istediğimi onaylıyorum."
 
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Smartphone"
-msgstr "Akıllı telefon"
-
-#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
-#: src/admin/panels/TopPagesPanel.js
-msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Daily page detail line chart"
-msgstr "Günlük sayfa ayrıntısı çizgi grafiği"
-
-#. translators: 1: metric label, 2: metric value.
-#: src/admin/panels/TopPagesPanel.js
-msgid "%1$s: %2$s"
-msgstr "%1$s: %2$s"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "Artan"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "Azalan"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Accueil"
-msgstr "Ana sayfa"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Back"
-msgstr "Geri"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Open in WordPress"
-msgstr "WordPress’te aç"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Daily page views"
-msgstr "Günlük sayfa görüntülemeleri"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. page views"
-msgstr "Önceki sayfa görünt"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. visitors"
-msgstr "Önceki ziyaretçiler"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No details available for this page."
-msgstr "Bu sayfa için ayrıntı mevcut değil."
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Hourly heatmap"
-msgstr "Saatlik ısı haritası"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Page views list"
-msgstr "Sayfa görüntülemeleri listesi"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Sıralama ölçütü"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Date"
-msgstr "Tarih"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "Göster"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "Başlık"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Table: Page details by date"
-msgstr "Tablo: Tarihe göre sayfa ayrıntıları"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Previous"
-msgstr "Önceki"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Next"
-msgstr "Sonraki"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "/"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "öğe"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No country data available."
-msgstr "Ülke verisi mevcut değil."
-
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Top pages"
 msgstr "Popüler sayfalar"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Avg. time on page:"
 msgstr "Sayfada ort. süre:"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Top 404s"
 msgstr "En çok 404"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No missing pages available."
 msgstr "Eksik sayfa mevcut değil."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entry pages (approx.)"
 msgstr "Giriş sayfaları (yaklaşık)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No entry pages available."
 msgstr "Giriş sayfası mevcut değil."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entries (approx.)"
 msgstr "Girişler (yaklaşık)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Exit pages"
 msgstr "Çıkış sayfaları"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No exit pages available."
 msgstr "Çıkış sayfası mevcut değil."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Exits (approx.)"
 msgstr "Çıkışlar (yaklaşık)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entry pages"
 msgstr "Giriş sayfaları"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Pages not found"
 msgstr "Bulunamayan sayfalar"
 
@@ -3085,6 +2971,138 @@ msgstr "CSV’yi dışa aktar"
 #: src/admin/premium/components/ReportExportAction/index.js
 msgid "Export JSON"
 msgstr "JSON’u dışa aktar"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Smartphone"
+msgstr "Akıllı telefon"
+
+#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Daily page detail line chart"
+msgstr "Günlük sayfa ayrıntısı çizgi grafiği"
+
+#. translators: 1: metric label, 2: metric value.
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Ascending"
+msgstr "Artan"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Descending"
+msgstr "Azalan"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Accueil"
+msgstr "Ana sayfa"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Back"
+msgstr "Geri"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Open in WordPress"
+msgstr "WordPress’te aç"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views"
+msgstr "Günlük sayfa görüntülemeleri"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. page views"
+msgstr "Önceki sayfa görünt"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. visitors"
+msgstr "Önceki ziyaretçiler"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "No details available for this page."
+msgstr "Bu sayfa için ayrıntı mevcut değil."
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Hourly heatmap"
+msgstr "Saatlik ısı haritası"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Page views list"
+msgstr "Sayfa görüntülemeleri listesi"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Sort by"
+msgstr "Sıralama ölçütü"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Date"
+msgstr "Tarih"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Display"
+msgstr "Göster"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "URL"
+msgstr "URL"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Title"
+msgstr "Başlık"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Table: Page details by date"
+msgstr "Tablo: Tarihe göre sayfa ayrıntıları"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "Önceki"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Sonraki"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "of"
+msgstr "/"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "items"
+msgstr "öğe"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "No country data available."
+msgstr "Ülke verisi mevcut değil."
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

@@ -130,7 +130,7 @@ msgstr "Stato di generazione sconosciuto."
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/PageDetailsGeoCitiesCard.js
 #: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -151,7 +151,8 @@ msgid "Real-time"
 msgstr "Tempo reale"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Pagine"
 
@@ -177,8 +178,9 @@ msgstr "Geolocalizzazione"
 
 #: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
 #: src/admin/panels/GeoCitiesPanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -249,16 +251,16 @@ msgstr ""
 "Abilita almeno un pannello di analisi per mostrare i valori KPI in questo "
 "widget."
 
-#: admin/dashboard-widget.php src/admin/panels/AcquisitionPanel.js
-#: src/admin/panels/OverviewPanel.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
 #: src/admin/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Visite"
 
 #: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/OverviewPanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -435,7 +437,8 @@ msgstr "Autenticazione non riuscita. Verifica le credenziali e riprova."
 msgid "Stats"
 msgstr "Statistiche"
 
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Summary"
 msgstr "Riepilogo"
 
@@ -448,7 +451,8 @@ msgid "View page details"
 msgstr "Visualizza dettagli pagina"
 
 #. translators: %s: Formatted average time spent on the page.
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 #, php-format
 msgid "Avg. time on page: %s"
 msgstr "Tempo medio sulla pagina: %s"
@@ -467,29 +471,30 @@ msgstr "Altre statistiche"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
 msgstr "Paese"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser"
 msgstr "Browser"
 
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/TopPagesPanel.js
+#: includes/pro-post-key-stats-metabox.php
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "System"
 msgstr "Sistema"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Device"
 msgstr "Dispositivo"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Desktop"
@@ -500,7 +505,7 @@ msgid "Mobile"
 msgstr "Mobile"
 
 #: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Tablet"
 msgstr "Tablet"
@@ -584,7 +589,7 @@ msgstr "Il database GeoIP non è ancora disponibile."
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
 #: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Paese sconosciuto"
@@ -1267,7 +1272,8 @@ msgstr "Copia URL"
 msgid "Open PWA"
 msgstr "Apri PWA"
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/lib/channelLabels.js
+#: src/admin/components/ReferrerLabel/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
 #: src/admin/panels/OverviewPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1412,6 +1418,34 @@ msgstr "24m"
 #: src/admin/constants/index.js
 msgid "24 months"
 msgstr "24 mesi"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Url"
+msgstr "Url"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/panels/TopPagesListPanel.js
+msgid "No popular pages available."
+msgstr "Nessuna pagina popolare disponibile."
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "Top referrers"
+msgstr "Referrer principali"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Referrer"
+msgstr "Referrer"
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "No referrers available."
+msgstr "Nessun referrer disponibile."
+
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+msgid "Hourly heatmap global"
+msgstr "Mappa termica oraria globale"
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1793,7 +1827,7 @@ msgstr "Sono elencati gli eventi attivati acquisiti dal tracker avanzato."
 msgid "Total events"
 msgstr "Eventi totali"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1853,7 +1887,7 @@ msgstr "Dettagli"
 msgid "All pages"
 msgstr "Tutte le pagine"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 msgid "View"
 msgstr "Visualizza"
 
@@ -1873,7 +1907,7 @@ msgstr "Pagina precedente"
 msgid "Next page"
 msgstr "Pagina successiva"
 
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1923,20 +1957,24 @@ msgstr "%1$s — %2$s visite"
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "No data"
 msgstr "Nessun dato"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Unknown country flag"
 msgstr "Bandiera paese sconosciuto"
 
 #. translators: %s: country name.
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Flag of %s"
 msgstr "Bandiera di %s"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "Paesi principali"
 
@@ -1953,32 +1991,6 @@ msgstr "Paesi"
 msgid "Cities"
 msgstr "Città"
 
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
-msgid "Url"
-msgstr "Url"
-
-#: src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesPanel.js
-msgid "No popular pages available."
-msgstr "Nessuna pagina popolare disponibile."
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Top referrers"
-msgstr "Referrer principali"
-
-#: src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Referrer"
-msgstr "Referrer"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "No referrers available."
-msgstr "Nessun referrer disponibile."
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Hourly heatmap global"
-msgstr "Mappa termica oraria globale"
-
 #: src/admin/panels/OverviewPanel.js
 msgid "Global hourly heatmap by day and hour"
 msgstr "Mappa termica oraria globale per giorno e ora"
@@ -1993,12 +2005,12 @@ msgstr ""
 "Le mappe termiche orarie globali richiedono dati di aggregazione oraria "
 "delle pagine."
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 #, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "Nessun dato visitatore disponibile."
 
-#: src/admin/panels/RealtimePanel.js src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
 msgid ""
 "Visitor origin will be available after the local GeoIP database is installed "
 "from the plugin geolocation settings."
@@ -2866,177 +2878,51 @@ msgstr ""
 "Confermo di voler eliminare solo i dati più vecchi della finestra di "
 "conservazione configurata."
 
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Smartphone"
-msgstr "Smartphone"
-
-#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
-#: src/admin/panels/TopPagesPanel.js
-msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Daily page detail line chart"
-msgstr "Grafico lineare giornaliero dei dettagli pagina"
-
-#. translators: 1: metric label, 2: metric value.
-#: src/admin/panels/TopPagesPanel.js
-msgid "%1$s: %2$s"
-msgstr "%1$s: %2$s"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "Crescente"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "Decrescente"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Accueil"
-msgstr "Home"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Back"
-msgstr "Indietro"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Open in WordPress"
-msgstr "Apri in WordPress"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Daily page views"
-msgstr "Visualizzazioni giornaliere"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. page views"
-msgstr "Vis. pagina prec."
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. visitors"
-msgstr "Visitatori prec."
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No details available for this page."
-msgstr "Nessun dettaglio disponibile per questa pagina."
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Hourly heatmap"
-msgstr "Mappa termica oraria"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Page views list"
-msgstr "Elenco visualizzazioni"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Ordina per"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Date"
-msgstr "Data"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "Mostra"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/panels/TopPagesPanel.js src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "Titolo"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "Table: Page details by date"
-msgstr "Tabella: dettagli pagina per data"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Previous"
-msgstr "Precedente"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Next"
-msgstr "Successivo"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "di"
-
-#: src/admin/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "elementi"
-
-#: src/admin/panels/TopPagesPanel.js
-msgid "No country data available."
-msgstr "Nessun dato paese disponibile."
-
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Top pages"
 msgstr "Pagine principali"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Avg. time on page:"
 msgstr "Tempo medio sulla pagina:"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Top 404s"
 msgstr "404 principali"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No missing pages available."
 msgstr "Nessuna pagina mancante disponibile."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entry pages (approx.)"
 msgstr "Pagine di ingresso (circa)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No entry pages available."
 msgstr "Nessuna pagina di ingresso disponibile."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entries (approx.)"
 msgstr "Ingressi (circa)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Exit pages"
 msgstr "Pagine di uscita"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "No exit pages available."
 msgstr "Nessuna pagina di uscita disponibile."
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Exits (approx.)"
 msgstr "Uscite (circa)"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Entry pages"
 msgstr "Pagine di ingresso"
 
-#: src/admin/panels/TopPagesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
 msgid "Pages not found"
 msgstr "Pagine non trovate"
 
@@ -3106,6 +2992,138 @@ msgstr "Esporta CSV"
 #: src/admin/premium/components/ReportExportAction/index.js
 msgid "Export JSON"
 msgstr "Esporta JSON"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Smartphone"
+msgstr "Smartphone"
+
+#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Daily page detail line chart"
+msgstr "Grafico lineare giornaliero dei dettagli pagina"
+
+#. translators: 1: metric label, 2: metric value.
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Ascending"
+msgstr "Crescente"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Descending"
+msgstr "Decrescente"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Accueil"
+msgstr "Home"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Back"
+msgstr "Indietro"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Open in WordPress"
+msgstr "Apri in WordPress"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views"
+msgstr "Visualizzazioni giornaliere"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. page views"
+msgstr "Vis. pagina prec."
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. visitors"
+msgstr "Visitatori prec."
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "No details available for this page."
+msgstr "Nessun dettaglio disponibile per questa pagina."
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Hourly heatmap"
+msgstr "Mappa termica oraria"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Page views list"
+msgstr "Elenco visualizzazioni"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Sort by"
+msgstr "Ordina per"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Date"
+msgstr "Data"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Display"
+msgstr "Mostra"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "URL"
+msgstr "URL"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Title"
+msgstr "Titolo"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "Table: Page details by date"
+msgstr "Tabella: dettagli pagina per data"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "Precedente"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Successivo"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "of"
+msgstr "di"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "items"
+msgstr "elementi"
+
+#: src/admin/premium/panels/TopPagesPanel.js
+msgid "No country data available."
+msgstr "Nessun dato paese disponibile."
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

@@ -18,10 +18,19 @@ const sharedReportExportActionPath = path.resolve(
   adminSourceRoot,
   'components/ReportExportAction'
 );
+const premiumTopPagesPanelPath = path.resolve(
+  adminSourceRoot,
+  'premium/panels/TopPagesPanel'
+);
+const sharedTopPagesPanelPath = path.resolve(
+  adminSourceRoot,
+  'panels/TopPagesPanel'
+);
 const proOnlyAdminStubModules = new Map(
   [
     ['GeoCitiesPanel', 'GeoCitiesPanel.js'],
     ['PageDetailsGeoCitiesCard', 'PageDetailsGeoCitiesCard.js'],
+    ['OverviewPanel', 'OverviewPanel.js'],
   ].map(([moduleName, stubFilename]) => [
     moduleName,
     path.resolve(freeAdminStubRoot, stubFilename),
@@ -37,6 +46,8 @@ const proOnlyAdminAliases = isFreePackageBuild
   : {
       [sharedReportExportActionPath]: premiumReportExportActionPath,
       [`${sharedReportExportActionPath}/index.js`]: `${premiumReportExportActionPath}/index.js`,
+      [sharedTopPagesPanelPath]: premiumTopPagesPanelPath,
+      [`${sharedTopPagesPanelPath}.js`]: `${premiumTopPagesPanelPath}.js`,
     };
 const freePackageProOnlyModuleReplacements = isFreePackageBuild
   ? [
