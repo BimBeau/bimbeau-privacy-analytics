@@ -177,6 +177,15 @@ validate_zip_root() {
   fi
 }
 
+validate_no_development_test_artifacts() {
+  local zip_path="$1"
+
+  if zipinfo -1 "${zip_path}" | grep -Eq '(^|/)(__tests__/|[^/]+\.(test|spec)\.(js|jsx|mjs|cjs|ts|tsx)$|[^/]+\.snap$)'; then
+    echo "Development test artifacts remain in ${BBPA_PACKAGE_TARGET:-free} ZIP." >&2
+    return 1
+  fi
+}
+
 validate_zip_main_file() {
   local zip_path="$1"
   local expected_file="$2"
@@ -219,6 +228,8 @@ run_phase "plugin ZIP main file validation" \
   validate_zip_main_file "${plugin_zip}" "${plugin_slug}/bimbeau-privacy-analytics.php"
 run_phase "plugin ZIP entrypoint validation" \
   node "${repo_root}/scripts/verify-plugin-zip-entrypoint.js" "${plugin_zip}"
+run_phase "plugin ZIP development test artifact validation" \
+  validate_no_development_test_artifacts "${plugin_zip}"
 run_phase "plugin ZIP static include validation" \
   node "${repo_root}/scripts/verify-zip-static-includes.js" "${plugin_zip}"
 if [ "${BBPA_PACKAGE_TARGET:-free}" = "free" ]; then
