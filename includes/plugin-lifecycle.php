@@ -227,6 +227,11 @@ function bbpa_activate(): void
         bbpa_clear_geoip_update_schedule();
     }
 
+    /**
+     * Fires after core plugin activation tasks complete so edition-specific runtime can attach lifecycle work.
+     */
+    do_action('bbpa_after_plugin_activation');
+
     if (function_exists('bbpa_register_front_app_rewrite_rules')) {
         bbpa_register_front_app_rewrite_rules();
     }
@@ -251,6 +256,11 @@ function bbpa_maybe_run_upgrades(): void
     if (function_exists('bbpa_get_geoip_update_frequency') && bbpa_get_geoip_update_frequency() === 'disabled' && function_exists('bbpa_clear_geoip_update_schedule')) {
         bbpa_clear_geoip_update_schedule();
     }
+
+    /**
+     * Fires after core plugin upgrade tasks complete so edition-specific runtime can attach lifecycle work.
+     */
+    do_action('bbpa_after_plugin_upgrade');
 }
 
 
@@ -334,6 +344,10 @@ function bbpa_deactivate(): void
         wp_clear_scheduled_hook(BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK);
         wp_clear_scheduled_hook('bbpa_geoip_initial_update');
     }
+    /**
+     * Fires before core plugin deactivation cleanup finishes so edition-specific runtime can clear lifecycle work.
+     */
+    do_action('bbpa_before_plugin_deactivation');
     delete_option(BBPA_AGGREGATION_INTERVAL_OPTION);
     delete_option(BBPA_GEOIP_RETRY_STATE_OPTION);
     delete_transient(BBPA_GEOIP_RETRY_LOCK_TRANSIENT);
