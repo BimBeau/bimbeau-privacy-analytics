@@ -333,7 +333,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         if ($this->is_panel_endpoint_blocked($panel)) {
             return new WP_Error(
-                'bbpa_panel_disabled',
+                'bbpa_admin_panel_disabled',
                 __('This analytics panel is disabled for navigation.', 'bimbeau-privacy-analytics'),
                 ['status' => 403]
             );

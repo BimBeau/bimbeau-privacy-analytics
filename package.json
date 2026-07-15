@@ -1,6 +1,6 @@
 {
   "name": "bimbeau-privacy-analytics",
-  "version": "8.45.41",
+  "version": "8.45.43",
   "private": true,
   "license": "GPL-3.0-or-later",
   "description": "BimBeau Privacy Analytics WordPress plugin assets.",
@@ -32,7 +32,7 @@
     "check:freemius-source-package": "node scripts/audit-freemius-source-package.js",
     "check:shared-source-boundary": "node scripts/validate-shared-source-boundary.js",
     "check:public-source-export": "node scripts/check-public-source-export.js",
-    "check:free-package:unit": "BBPA_FREE_PACKAGE_TEST_SUITE=unit node --test scripts/__tests__/free-package-unit.test.js scripts/__tests__/free-package-compliance.test.js",
+    "check:free-package:unit": "BBPA_FREE_PACKAGE_TEST_SUITE=unit node --test scripts/__tests__/free-package-unit.test.js scripts/__tests__/free-package-compliance.test.js scripts/__tests__/release-gates.test.js",
     "check:free-package:integration": "BBPA_FREE_PACKAGE_TEST_SUITE=integration node --test scripts/__tests__/free-package-compliance.test.js"
   },
   "dependencies": {

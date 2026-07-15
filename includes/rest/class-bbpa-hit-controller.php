@@ -463,7 +463,6 @@ class BBPA_Hit_Controller {
             'country_code' => '',
             'country' => '',
             'city' => '',
-            'city_geoname_id' => null,
             'latitude' => null,
             'longitude' => null,
             'accuracy_radius' => null,
@@ -489,7 +488,6 @@ class BBPA_Hit_Controller {
             $hit['country_code'] = $country['country_code'] ?? '';
             $hit['country'] = $country['country'] ?? '';
             $hit['city'] = $country['city'] ?? '';
-            $hit['city_geoname_id'] = bbpa_normalize_geoname_id($country['city_geoname_id'] ?? null);
             $hit['latitude'] = isset($country['latitude']) && is_numeric($country['latitude'])
                 ? (float) $country['latitude']
                 : null;
@@ -538,12 +536,11 @@ class BBPA_Hit_Controller {
         }
         foreach ([
             'city',
-            'city_geoname_id',
             'latitude',
             'longitude',
             'accuracy_radius',
         ] as $field) {
-            $hit[$field] = in_array($field, ['city_geoname_id', 'latitude', 'longitude', 'accuracy_radius'], true)
+            $hit[$field] = in_array($field, ['latitude', 'longitude', 'accuracy_radius'], true)
                 ? null
                 : '';
         }
@@ -1298,7 +1295,6 @@ class BBPA_Hit_Controller {
                     'resolved_city_name' => (string) ($hit['city_name'] ?? $hit['city'] ?? ''),
                     'latitude_present' => isset($hit['latitude']) && is_numeric($hit['latitude']),
                     'longitude_present' => isset($hit['longitude']) && is_numeric($hit['longitude']),
-                    'city_geoname_id' => bbpa_normalize_geoname_id($hit['city_geoname_id'] ?? null),
                 ]);
             }
         } elseif ($is_enriched_event_upgrade) {
@@ -1539,12 +1535,6 @@ class BBPA_Hit_Controller {
                 $row['longitude'] = (float) $coordinates['longitude'];
             }
 
-            if (function_exists('bbpa_normalize_geoname_id')) {
-                $city_geoname_id = bbpa_normalize_geoname_id($hit['city_geoname_id'] ?? null);
-                if ($city_geoname_id !== null) {
-                    $row['city_geoname_id'] = $city_geoname_id;
-                }
-            }
 
             $accuracy_radius = isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius'])
                 ? max(0, (int) $hit['accuracy_radius'])

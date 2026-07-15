@@ -42,18 +42,24 @@ const freeOverviewPanelStubPath = path.resolve(
   'free-stubs/OverviewPanel.js'
 );
 const freeAdminAppPath = path.resolve(adminSourceRoot, 'free-stubs/AdminApp.js');
+const freeAppSidebarPath = path.resolve(adminSourceRoot, 'free-stubs/AppSidebar.js');
 const freeSettingsPanelStubPath = path.resolve(adminSourceRoot, 'free-stubs/SettingsPanel.js');
 const freePanelRegistryPath = path.resolve(adminSourceRoot, 'free-stubs/registry.js');
+const freeUseAdminEndpointPath = path.resolve(adminSourceRoot, 'free-stubs/useAdminEndpoint.js');
 const proOnlyAdminAliases = isFreePackageBuild
   ? {
       [path.resolve(adminSourceRoot, 'panels/OverviewPanel')]: freeOverviewPanelStubPath,
       [path.resolve(adminSourceRoot, 'panels/OverviewPanel.js')]: freeOverviewPanelStubPath,
       [path.resolve(adminSourceRoot, 'AdminApp')]: freeAdminAppPath,
       [path.resolve(adminSourceRoot, 'AdminApp.js')]: freeAdminAppPath,
+      [path.resolve(adminSourceRoot, 'components/AppSidebar')]: freeAppSidebarPath,
+      [path.resolve(adminSourceRoot, 'components/AppSidebar/index.js')]: freeAppSidebarPath,
       [path.resolve(adminSourceRoot, 'panels/SettingsPanel')]: freeSettingsPanelStubPath,
       [path.resolve(adminSourceRoot, 'panels/SettingsPanel.js')]: freeSettingsPanelStubPath,
       [path.resolve(adminSourceRoot, 'panels/registry')]: freePanelRegistryPath,
       [path.resolve(adminSourceRoot, 'panels/registry.js')]: freePanelRegistryPath,
+      [path.resolve(adminSourceRoot, 'api/useAdminEndpoint')]: freeUseAdminEndpointPath,
+      [path.resolve(adminSourceRoot, 'api/useAdminEndpoint.js')]: freeUseAdminEndpointPath,
     }
   : {
       [sharedReportExportActionPath]: premiumReportExportActionPath,
