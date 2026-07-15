@@ -474,15 +474,6 @@ class BBPA_Report_Controller {
     public function get_visitors(WP_REST_Request $request): WP_REST_Response {
         global $wpdb;
 
-        if (!$this->is_visitors_feature_enabled()) {
-            return new WP_REST_Response(
-                [
-                    'code' => 'bbpa_package_unavailable',
-                    'message' => __('Visitor details are not available in this package.', 'bimbeau-privacy-analytics'),
-                ],
-                403
-            );
-        }
 
         $range = $this->get_day_range($request);
         $pagination = $this->normalize_pagination($request);

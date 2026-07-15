@@ -168,7 +168,6 @@ function bbpa_enqueue_front_assets(): void
     );
     $runtime_config_payload = [
         'BBPATracker' => $settings,
-        'BPAEventRegistryConfig' => bbpa_get_advanced_tracker_runtime_config(),
     ];
     $runtime_config_json = wp_json_encode($runtime_config_payload);
     if (is_string($runtime_config_json) && $runtime_config_json !== '') {

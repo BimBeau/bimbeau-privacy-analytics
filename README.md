@@ -39,7 +39,6 @@ The build configuration is maintained in `webpack.config.js`. WordPress.org revi
 - `assets/js/style-admin.js` and generated admin CSS are built from `src/admin/style.scss`.
 - `assets/js/bbpa-essential-tracker.js` is maintained as readable source in `assets/js/bbpa-essential-tracker.js`.
 - `assets/js/bbpa-advanced-tracker.js` is maintained as readable source in `assets/js/bbpa-advanced-tracker.js`.
-- `assets/js/bbpa-event-registry.js` is maintained as readable source in `assets/js/bbpa-event-registry.js`.
 
 `npm run build` is the documented rebuild command for generated admin assets. The tracker files listed above are readable JavaScript source files maintained directly in `assets/js/`.
 

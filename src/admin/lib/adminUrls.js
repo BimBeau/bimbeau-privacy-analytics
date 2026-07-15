@@ -11,15 +11,14 @@ const DETAIL_SOURCE_TO_TAB = {
 export const normalizePageDetailsSource = ( source ) =>
 	DETAIL_SOURCE_TO_TAB[ source ] ? source : 'top-pages';
 
+const getResolvedBaseUrl = ( baseUrl = null ) =>
+	baseUrl ||
+	( typeof window !== 'undefined' && window.location
+		? window.location.href
+		: '' );
+
 export const getAdminPanelUrl = ( panelName, params = {}, baseUrl = null ) => {
-	const appMode = ADMIN_CONFIG?.settings?.appMode || 'admin';
-	const appBaseUrl = ADMIN_CONFIG?.settings?.appBaseUrl || '';
-	const resolvedBaseUrl =
-		baseUrl ||
-		appBaseUrl ||
-		( typeof window !== 'undefined' && window.location
-			? window.location.href
-			: '' );
+	const resolvedBaseUrl = getResolvedBaseUrl( baseUrl );
 
 	if ( ! resolvedBaseUrl ) {
 		return '';
@@ -32,25 +31,7 @@ export const getAdminPanelUrl = ( panelName, params = {}, baseUrl = null ) => {
 			: `${ pluginSlug }-${ panelName }`;
 	const url = new URL( resolvedBaseUrl );
 
-	if ( appMode === 'app' ) {
-		const normalizedPanel =
-			panelName && panelName !== 'dashboard' ? panelName : '';
-		const hasQueryFallback = url.searchParams.get( 'bbpa_app' ) === '1';
-
-		if ( hasQueryFallback ) {
-			if ( normalizedPanel ) {
-				url.searchParams.set( 'bbpa_panel', normalizedPanel );
-			} else {
-				url.searchParams.delete( 'bbpa_panel' );
-			}
-		} else {
-			const basePath = '/bbpa';
-			const panelSegment = normalizedPanel ? `/${ normalizedPanel }` : '';
-			url.pathname = `${ basePath }${ panelSegment }/`;
-		}
-	} else {
-		url.searchParams.set( 'page', page );
-	}
+	url.searchParams.set( 'page', page );
 
 	Object.entries( params ).forEach( ( [ key, value ] ) => {
 		if ( value === undefined || value === null || value === '' ) {
@@ -90,11 +71,7 @@ export const getPageDetailsAdminUrl = (
 };
 
 export const getInitialPageDetailsSelection = ( baseUrl = null ) => {
-	const resolvedBaseUrl =
-		baseUrl ||
-		( typeof window !== 'undefined' && window.location
-			? window.location.href
-			: '' );
+	const resolvedBaseUrl = getResolvedBaseUrl( baseUrl );
 
 	if ( ! resolvedBaseUrl ) {
 		return {

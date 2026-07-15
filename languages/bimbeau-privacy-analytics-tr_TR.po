@@ -17,21 +17,20 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
+#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #. Plugin Name of the plugin
-#: bimbeau-privacy-analytics.php front/pro-app-runtime.php
-#: src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics Analitik"
 
-#. Description of the plugin
 #: bimbeau-privacy-analytics.php
+#. Description of the plugin
 msgid "Privacy-friendly, self-hosted analytics for WordPress."
 msgstr ""
 "WordPress için gizlilik dostu, kendi sunucunuzda barındırılan analizler."
 
-#. Author of the plugin
 #: bimbeau-privacy-analytics.php
+#. Author of the plugin
 msgid "BimBeau"
 msgstr "BimBeau"
 
@@ -42,10 +41,6 @@ msgstr "Güncelle"
 #: admin/admin.php src/admin/components/ProBadge/index.js
 msgid "Pro"
 msgstr "Pro"
-
-#: admin/admin.php src/admin/components/FreePackageState/index.js
-msgid "Upgrade to Pro"
-msgstr "Pro’ya yükselt"
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -127,17 +122,6 @@ msgstr "Bu sunucuda simge oluşturma başarısız oldu."
 msgid "Unknown generation status."
 msgstr "Bilinmeyen oluşturma durumu."
 
-#: admin/admin.php includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Unknown"
-msgstr "Bilinmiyor"
-
 #: admin/admin.php
 msgid "No preview icon URL is available."
 msgstr "Önizleme simgesi URL’si mevcut değil."
@@ -146,14 +130,11 @@ msgstr "Önizleme simgesi URL’si mevcut değil."
 msgid "Dashboard"
 msgstr "Gösterge paneli"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Gerçek zamanlı"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Sayfalar"
 
@@ -162,9 +143,7 @@ msgstr "Sayfalar"
 msgid "Acquisition"
 msgstr "Edinme"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Yönlendiren siteler"
 
@@ -172,29 +151,19 @@ msgstr "Yönlendiren siteler"
 msgid "Internal searches"
 msgstr "Dahili aramalar"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
-#: src/admin/premium/panels/GeolocationPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Coğrafi konum"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Ziyaretçiler"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/DeviceDetailsCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "Cihazlar"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Ayarlar"
 
@@ -218,26 +187,26 @@ msgstr "Coğrafi konum"
 msgid "Later"
 msgstr ""
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "%s overview"
 msgstr "%s sayfa görüntüleme"
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "%s data is not available for this period."
 msgstr "Bu dönem için veri mevcut değil."
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "View %s dashboard"
 msgstr "Gösterge paneli"
 
-#. translators: 1: Start date, 2: End date for the selected reporting period.
 #: admin/dashboard-widget.php
+#. translators: 1: Start date, 2: End date for the selected reporting period.
 #, php-format
 msgid "Period: %1$s to %2$s"
 msgstr "Dönem: %1$s - %2$s"
@@ -253,20 +222,11 @@ msgstr ""
 "Bu bileşende KPI değerlerini göstermek için en az bir analiz panelini "
 "etkinleştirin."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Ziyaretler"
 
-#: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
-#: src/admin/panels/OverviewPanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Sayfa görüntülemeleri"
 
@@ -274,8 +234,7 @@ msgstr "Sayfa görüntülemeleri"
 msgid "Referrers"
 msgstr "Yönlendirenler"
 
-#: admin/edition-admin-runtime.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
+#: admin/edition-admin-runtime.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr "Etkinlikler"
 
@@ -304,68 +263,6 @@ msgid ""
 msgstr ""
 "Aynı anda yalnızca bir BimBeau Privacy Analytics paketi etkin olabileceği "
 "için %1$s devre dışı bırakıldı. %2$s etkin kalır."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics front analytics app."
-msgstr "BimBeau Privacy Analytics ön yüz analiz uygulaması."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics sign in"
-msgstr "BimBeau Privacy Analytics oturum açma"
-
-#: front/pro-app-runtime.php
-msgid ""
-"Sign in with a WordPress account that can access BimBeau Privacy Analytics "
-"analytics."
-msgstr ""
-"BimBeau Privacy Analytics analizlerine erişebilen bir WordPress hesabıyla "
-"oturum açın."
-
-#: front/pro-app-runtime.php
-msgid "Username or email"
-msgstr "Kullanıcı adı veya e-posta"
-
-#: front/pro-app-runtime.php
-msgid "Password"
-msgstr "Şifre"
-
-#: front/pro-app-runtime.php
-msgid "Remember me"
-msgstr "Beni hatırla"
-
-#: front/pro-app-runtime.php
-msgid "Sign in"
-msgstr "Oturum aç"
-
-#: front/pro-app-runtime.php
-msgid "Open WordPress login"
-msgstr "WordPress girişini aç"
-
-#: front/pro-app-runtime.php
-msgid "Authentication failed. Verify credentials and access policy."
-msgstr ""
-"Kimlik doğrulama başarısız. Kimlik bilgilerini ve erişim politikasını "
-"doğrulayın."
-
-#: front/pro-app-runtime.php
-msgid "Custom login flow is unavailable in this environment."
-msgstr "Özel oturum açma akışı bu ortamda kullanılamıyor."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics App is available in not included."
-msgstr "BimBeau Privacy Analytics App yalnızca Pro sürümünde kullanılabilir."
-
-#: front/pro-app-runtime.php
-msgid "You are not allowed to access this page."
-msgstr "Bu sayfaya erişme izniniz yok."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics icon"
-msgstr "BimBeau Privacy Analytics simgesi"
-
-#: front/pro-app-runtime.php
-msgid "Loading analytics workspace…"
-msgstr "Analiz çalışma alanı yükleniyor…"
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -419,165 +316,35 @@ msgstr "Bu IP için coğrafi konum kaydı bulunamadı."
 msgid "Unable to determine the visitor IP."
 msgstr "Ziyaretçi IP’si belirlenemiyor."
 
-#: includes/pro-auth-controller.php
-msgid "Custom login flow is blocked by policy."
-msgstr "Özel oturum açma akışı politika tarafından engellendi."
-
-#: includes/pro-auth-controller.php
-msgid "Invalid login request."
-msgstr "Geçersiz oturum açma isteği."
-
-#: includes/pro-auth-controller.php
-msgid "The authenticated account cannot access BimBeau Privacy Analytics."
-msgstr "Kimliği doğrulanmış hesap BimBeau Privacy Analytics’e erişemez."
-
-#: includes/pro-auth-controller.php
-msgid "Authentication failed. Verify credentials and retry."
-msgstr ""
-"Kimlik doğrulama başarısız. Kimlik bilgilerini doğrulayıp tekrar deneyin."
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Stats"
 msgstr "İstatistikler"
 
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Summary"
-msgstr "Özet"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/constants/index.js
+#: src/admin/constants/index.js
 msgid "30 days"
 msgstr "30 gün"
 
-#: includes/pro-post-key-stats-metabox.php includes/pro-post-views-column.php
-msgid "View page details"
-msgstr "Sayfa ayrıntılarını görüntüle"
-
-#. translators: %s: Formatted average time spent on the page.
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-#, php-format
-msgid "Avg. time on page: %s"
-msgstr "Sayfada ort. süre: %s"
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "Visitor profile"
-msgstr "Ziyaretçi profili"
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "No visitor profile data available for this period."
-msgstr "Bu dönem için ziyaretçi profili verisi mevcut değil."
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "Plus de stats"
-msgstr "Daha fazla istatistik"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "Ülke"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Tarayıcı"
-
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "System"
-msgstr "Sistem"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Cihaz"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Masaüstü"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-msgid "Mobile"
-msgstr "Mobil"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Tablet"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/lib/channelLabels.js
+#: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Diğer"
-
-#. translators: %d: Number of seconds.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%ds"
-msgstr "%dsn"
-
-#. translators: 1: Number of minutes, 2: Number of seconds.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%1$dm %2$ds"
-msgstr "%1$ddk %2$dsn"
-
-#. translators: 1: Number of hours, 2: Number of minutes.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%1$dh %2$dm"
-msgstr "%1$dsa %2$ddk"
-
-#. translators: %s: Selected reporting period label.
-#: includes/pro-post-views-column.php
-#, php-format
-msgid "Views (%s)"
-msgstr "Görüntülemeler (%s)"
-
-#: includes/pro-post-views-column.php
-msgid "Views trend"
-msgstr "Görüntüleme trendi"
-
-#: includes/pro-settings.php
-msgid "KPI slot must be a numeric integer greater than or equal to 2."
-msgstr "KPI yuvası 2’ye eşit veya daha büyük sayısal bir tam sayı olmalıdır."
-
-#: includes/pro-settings.php
-msgid ""
-"KPI slot format is invalid. Use only a numeric integer greater than or equal "
-"to 2."
-msgstr ""
-"KPI yuvası biçimi geçersiz. Yalnızca 2’ye eşit veya daha büyük sayısal bir "
-"tam sayı kullanın."
 
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics ham günlük temizliği"
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "Bu analiz paneli gezinme için devre dışı."
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php rest/pro-routes.php
+#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
 msgid "Authentication is required to access analytics data."
 msgstr "Analiz verilerine erişmek için kimlik doğrulama gereklidir."
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "MaxMind bağlantısı başarılı."
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
 msgid "GeoIP database updated successfully."
 msgstr "GeoIP veritabanı başarıyla güncellendi."
 
@@ -588,143 +355,6 @@ msgstr "GeoIP veritabanı mevcut."
 #: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is not available yet."
 msgstr "GeoIP veritabanı henüz mevcut değil."
-
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Unknown country"
-msgstr "Bilinmeyen ülke"
-
-#: includes/rest/class-bbpa-admin-pro-controller.php
-msgid "Missing page path."
-msgstr "Sayfa yolu eksik."
-
-#: includes/rest/removed-export-controller.php
-msgid "Authentication is required to export analytics data."
-msgstr "Analiz verilerini dışa aktarmak için kimlik doğrulama gerekir."
-
-#: includes/rest/removed-export-controller.php
-msgid "Report exports are not included in this package."
-msgstr ""
-"Rapor dışa aktarımları BimBeau Privacy Analytics Pro’da kullanılabilir."
-
-#: includes/rest/removed-export-controller.php
-msgid "You do not have permission to export analytics data."
-msgstr "Analiz verilerini dışa aktarma izniniz yok."
-
-#: includes/rest/removed-export-controller.php
-msgid "A valid request nonce is required to export analytics data."
-msgstr ""
-"Analiz verilerini dışa aktarmak için geçerli bir istek nonce’u gerekir."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export format must be csv, json, or xlsx."
-msgstr "Dışa aktarma biçimi csv, json veya xlsx olmalıdır."
-
-#. translators: %d: maximum export row count.
-#: includes/rest/removed-export-controller.php
-#: src/admin/premium/components/ReportExportAction/index.js
-#, php-format
-msgid ""
-"The export exceeds the %d row limit. Narrow the date range or search filter, "
-"then try again."
-msgstr ""
-"Dışa aktarma %d satır sınırını aşıyor. Tarih aralığını veya arama filtresini "
-"daraltıp tekrar deneyin."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report cannot be exported."
-msgstr "Seçilen rapor dışa aktarılamıyor."
-
-#. translators: %d: synchronous export threshold row count.
-#: includes/rest/removed-export-controller.php
-#, php-format
-msgid ""
-"The export is larger than the %d row synchronous threshold. Request async "
-"mode and poll the job status endpoint."
-msgstr ""
-"Dışa aktarma %d satırlık senkron eşiği aşıyor. Asenkron modu isteyin ve iş "
-"durumu endpoint’ini yoklayın."
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export file is no longer available. Create a new export job and try "
-"again."
-msgstr ""
-"Dışa aktarma dosyası artık kullanılamıyor. Yeni bir dışa aktarma işi "
-"oluşturup tekrar deneyin."
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export file is not ready yet. Check the job status endpoint before "
-"downloading."
-msgstr ""
-"Dışa aktarma dosyası henüz hazır değil. İndirmeden önce iş durumu "
-"endpoint’ini kontrol edin."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report is not available for export."
-msgstr "Seçilen rapor dışa aktarma için kullanılamıyor."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report does not expose file export rows."
-msgstr "Seçilen rapor dosya dışa aktarımı için satır sağlamıyor."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report does not expose exportable columns."
-msgstr "Seçilen rapor dışa aktarılabilir sütun sağlamıyor."
-
-#: includes/rest/removed-export-controller.php
-msgid "The CSV export could not be generated."
-msgstr "CSV dışa aktarımı oluşturulamadı."
-
-#: includes/rest/removed-export-controller.php
-msgid "The Excel export could not be generated."
-msgstr "Excel dışa aktarımı oluşturulamadı."
-
-#: includes/rest/removed-export-controller.php
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid ""
-"Excel export requires the PHP Zip extension to be installed on this server."
-msgstr "Excel dışa aktarımı için bu sunucuda PHP Zip uzantısı yüklü olmalıdır."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job could not be created. Try again later."
-msgstr "Dışa aktarma işi oluşturulamadı. Daha sonra tekrar deneyin."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export storage directory is unavailable."
-msgstr "Dışa aktarma depolama dizini kullanılamıyor."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export storage path is invalid."
-msgstr "Dışa aktarma depolama yolu geçersiz."
-
-#: includes/rest/removed-export-controller.php
-msgid "The JSON export could not be generated."
-msgstr "JSON dışa aktarımı oluşturulamadı."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export file could not be written."
-msgstr "Dışa aktarma dosyası yazılamadı."
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export could not be generated. Try again later or narrow the export "
-"filters."
-msgstr ""
-"Dışa aktarım oluşturulamadı. Daha sonra tekrar deneyin veya dışa aktarma "
-"filtrelerini daraltın."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job was not found."
-msgstr "Dışa aktarma işi bulunamadı."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job was not found or has expired."
-msgstr "Dışa aktarma işi bulunamadı veya süresi doldu."
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -746,11 +376,6 @@ msgstr "Geçersiz zaman damgası aralığı."
 msgid "Invalid visit identifier."
 msgstr "Geçersiz ziyaret tanımlayıcısı."
 
-#: includes/rest/class-bbpa-report-controller.php
-#, fuzzy
-msgid "Visitor details are not available in this package."
-msgstr "Bu sayfa için ayrıntı mevcut değil."
-
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
 msgstr "GeoIP veritabanını güncellemek için yerel veritabanı modu gereklidir."
@@ -759,14 +384,14 @@ msgstr "GeoIP veritabanını güncellemek için yerel veritabanı modu gereklidi
 msgid "Unable to create a temporary file for the GeoIP database download."
 msgstr "GeoIP veritabanı indirmesi için geçici dosya oluşturulamıyor."
 
-#. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %s: HTTP error message returned by wp_remote_get.
 #, php-format
 msgid "GeoIP database download failed: %s"
 msgstr "GeoIP veritabanı indirmesi başarısız: %s"
 
-#. translators: %d: HTTP status code returned by the GeoIP download request.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %d: HTTP status code returned by the GeoIP download request.
 #, php-format
 msgid "GeoIP database download failed with HTTP status %d."
 msgstr "GeoIP veritabanı indirmesi HTTP durumu %d ile başarısız oldu."
@@ -784,14 +409,14 @@ msgstr ""
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "GeoIP veritabanı henüz mevcut değil."
 
-#. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %s: HTTP error message returned by wp_remote_get.
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "GeoIP veritabanı indirmesi başarısız: %s"
 
-#. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "GeoIP veritabanı indirmesi HTTP durumu %d ile başarısız oldu."
@@ -869,14 +494,14 @@ msgstr "GeoIP işlemleri için geçici dosya oluşturulamıyor."
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "GeoIP çıkarma için geçici çalışma alanı oluşturulamıyor."
 
-#. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #: includes/services/class-bbpa-maxmind-service.php
+#. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "MaxMind API hatası (%1$s): %2$s."
 
-#. translators: %s: MaxMind API response code.
 #: includes/services/class-bbpa-maxmind-service.php
+#. translators: %s: MaxMind API response code.
 #, php-format
 msgid "MaxMind API error (%s)."
 msgstr "MaxMind API hatası (%s)."
@@ -884,31 +509,6 @@ msgstr "MaxMind API hatası (%s)."
 #: includes/services/class-bbpa-maxmind-service.php
 msgid "Invalid MaxMind API response."
 msgstr "Geçersiz MaxMind API yanıtı."
-
-#: includes/settings.php
-msgid "The selected PWA icon must be at least 512x512 pixels."
-msgstr "Seçilen PWA simgesi en az 512x512 piksel olmalıdır."
-
-#: includes/settings.php
-msgid "The selected PWA icon file cannot be read."
-msgstr "Seçilen PWA simge dosyası okunamıyor."
-
-#: includes/settings.php
-msgid ""
-"WordPress image editor cannot generate PWA icons from the selected source."
-msgstr ""
-"WordPress görsel düzenleyici seçilen kaynaktan PWA simgeleri oluşturamıyor."
-
-#: includes/settings.php
-msgid "WordPress image editor cannot resize the selected PWA icon source."
-msgstr ""
-"WordPress görsel düzenleyici seçilen PWA simge kaynağını yeniden "
-"boyutlandıramıyor."
-
-#: includes/settings.php
-msgid "WordPress image editor cannot save generated PWA PNG icons."
-msgstr ""
-"WordPress görsel düzenleyici oluşturulan PWA PNG simgelerini kaydedemiyor."
 
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID is required."
@@ -932,18 +532,13 @@ msgstr ""
 msgid "Statistics"
 msgstr "İstatistikler"
 
-#: includes/settings.php
-msgid "Select a media library image to generate PWA PNG icons."
-msgstr ""
-"PWA PNG simgeleri oluşturmak için medya kütüphanesinden bir görsel seçin."
-
-#. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
 msgid "%s Visitor"
 msgstr "%s ziyaretçi"
 
-#. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
 msgid "%s Visitors"
 msgstr "%s ziyaretçi"
 
@@ -1069,28 +664,28 @@ msgstr "Bildirimi kapat"
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
 msgstr "BimBeau Privacy Analytics yönetici arayüzünü yükleyemiyor."
 
-#. translators: %s: current admin panel and page label.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: current admin panel and page label.
 msgid "Panel/page: %s"
 msgstr "Panel/sayfa: %s"
 
-#. translators: %s: React component name detected as undefined.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: React component name detected as undefined.
 msgid "Component undefined: %s"
 msgstr "Bileşen tanımsız: %s"
 
-#. translators: %s: React component name detected as undefined.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: React component name detected as undefined.
 msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
 msgstr "Olası Gutenberg/@wordpress/components uyumsuzluğu: %s tanımsız"
 
-#. translators: %s: comma-separated WordPress script handles checked while debugging.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: comma-separated WordPress script handles checked while debugging.
 msgid "Script handles checked: %s"
 msgstr "Kontrol edilen betik tanıtıcıları: %s"
 
-#. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
 msgid "Global namespaces checked: %s"
 msgstr "Kontrol edilen global ad alanları: %s"
 
@@ -1155,8 +750,7 @@ msgstr ""
 "BimBeau Privacy Analytics yalnızca teknik tanılar sağlar. Onay iş akışları "
 "için doğru kaynak CMP’nizdir."
 
-#: src/admin/components/DataState/index.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
@@ -1168,8 +762,8 @@ msgstr "Uç nokta:"
 msgid "Response preview:"
 msgstr "Yanıt önizlemesi:"
 
-#. translators: %s: card title.
 #: src/admin/components/DataTableCard/index.js
+#. translators: %s: card title.
 msgid "Loading: %s"
 msgstr "Yükleniyor: %s"
 
@@ -1213,24 +807,6 @@ msgstr "MaxMind kimlik bilgilerini girin"
 msgid "Traffic data is pending"
 msgstr "Trafik verileri beklemede"
 
-#: src/admin/components/PageDetailsHeatMap/index.js
-msgid "No hourly details available for this page."
-msgstr "Bu sayfa için saatlik ayrıntı mevcut değil."
-
-#: src/admin/components/PageDetailsHeatMap/index.js
-msgid "Page details heatmap by day and hour"
-msgstr "Gün ve saate göre sayfa ayrıntıları ısı haritası"
-
-#: src/admin/components/FreePackageState/index.js
-msgid "BimBeau Privacy Analytics Pro feature preview"
-msgstr "BimBeau Privacy Analytics Pro özellik önizlemesi"
-
-#: src/admin/components/FreePackageState/index.js
-#: src/admin/components/FreePackageCard/index.js
-#: src/admin/panels/SettingsPanel.js
-msgid "This feature is not included in this package."
-msgstr "Bu özellik BimBeau Privacy Analytics Pro’da kullanılabilir."
-
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "Gizlilik çalışma zamanı tanıları"
@@ -1245,32 +821,7 @@ msgstr ""
 msgid "Technical state does not prove consent collection validity."
 msgstr "Teknik durum, onay toplamanın geçerliliğini kanıtlamaz."
 
-#: src/admin/components/FreePackageCard/index.js
-msgid "PWA Stats App"
-msgstr "PWA İstatistik Uygulaması"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "PWA URL"
-msgstr "PWA URL’si"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "Use this URL to open the standalone analytics app."
-msgstr "Bağımsız analiz uygulamasını açmak için bu URL’yi kullanın."
-
-#: src/admin/components/FreePackageCard/index.js
-#: src/admin/panels/FreePackagePanel.js
-msgid "Copy URL"
-msgstr "URL’yi kopyala"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "Open PWA"
-msgstr "PWA’yı aç"
-
-#: src/admin/components/ReferrerLabel/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
-#: src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Doğrudan"
 
@@ -1286,13 +837,13 @@ msgstr "Haritada uzaklaştır"
 msgid "Reset map zoom"
 msgstr "Yakınlaştırmayı sıfırla"
 
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
 #: src/admin/components/WorldMap/index.js
+#. translators: 1: location label, 2: visit count, 3: approximation suffix.
 msgid "%1$s: %2$s visits%3$s"
 msgstr "%1$s: %2$s ziyaret%3$s"
 
-#. translators: %s: approximation scope label.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: approximation scope label.
 msgid " (%s)"
 msgstr " (%s)"
 
@@ -1324,20 +875,20 @@ msgstr ""
 "Coğrafi konumlu ziyaret yok. Ülke verisi toplamaya başlamak için coğrafi "
 "konum ayarlarınızı kontrol edin."
 
-#. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: visitor count.
 #, fuzzy
 msgid "%s visitors"
 msgstr "%s ziyaretçi"
 
-#. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: share of total visitors.
 #, fuzzy
 msgid "%s of total visitors"
 msgstr "toplam ziyaretlerin %s kadarı"
 
-#. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: visit count.
 msgid "%s visits"
 msgstr "%s ziyaret"
 
@@ -1413,13 +964,11 @@ msgstr "24a"
 msgid "24 months"
 msgstr "24 ay"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "Url"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "No popular pages available."
 msgstr "Popüler sayfa mevcut değil."
 
@@ -1427,9 +976,7 @@ msgstr "Popüler sayfa mevcut değil."
 msgid "Top referrers"
 msgstr "En çok yönlendirenler"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "Yönlendiren"
 
@@ -1481,104 +1028,10 @@ msgstr "Yaklaşık konum"
 msgid "Approximate city"
 msgstr "Yaklaşık şehir"
 
-#. translators: %d: geolocation accuracy radius in kilometers.
 #: src/admin/lib/locationLabel.js
+#. translators: %d: geolocation accuracy radius in kilometers.
 msgid "Approx. %d km"
 msgstr "Yaklaşık %d km"
-
-#: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No available"
-msgstr "Kullanılabilir değil"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Monday"
-msgstr "Pazartesi"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Mon"
-msgstr "Pzt"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Tuesday"
-msgstr "Salı"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Tue"
-msgstr "Sal"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Wednesday"
-msgstr "Çarşamba"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Wed"
-msgstr "Çar"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Thursday"
-msgstr "Perşembe"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Thu"
-msgstr "Per"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Friday"
-msgstr "Cuma"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Fri"
-msgstr "Cum"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Saturday"
-msgstr "Cumartesi"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sat"
-msgstr "Cmt"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sunday"
-msgstr "Pazar"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sun"
-msgstr "Paz"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Hourly heatmaps are unavailable for pages not found (404)."
-msgstr "Saatlik ısı haritaları bulunamayan sayfalar (404) için kullanılamaz."
-
-#: src/admin/lib/pageDetailsHeatmap.js
-#, fuzzy
-msgid ""
-"Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
-msgstr ""
-"Saatlik ısı haritaları bpa_hourly_aggregation_enabled filtresi tarafından "
-"devre dışı bırakılmış."
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid ""
-"Hourly heatmaps are unavailable because the hourly aggregation table is "
-"missing."
-msgstr ""
-"Saatlik toplama tablosu eksik olduğu için saatlik ısı haritaları "
-"kullanılamaz."
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid ""
-"Hourly heatmaps require hourly page aggregation data for the selected source."
-msgstr ""
-"Saatlik ısı haritaları seçilen kaynak için saatlik sayfa toplama verisi "
-"gerektirir."
-
-#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "%1$s at %2$s — %3$s: %4$s"
-msgstr "%1$s, %2$s — %3$s: %4$s"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1594,366 +1047,45 @@ msgstr "Bu dönem için ziyaretçi profili verisi mevcut değil."
 msgid "Table: Acquisition channels"
 msgstr "Tablo: Ziyaretçiler"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr ""
-
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr ""
 
-#. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
+#. translators: %s: Total visits in the selected range.
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "toplam ziyaretlerin %s kadarı"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Bot"
-msgstr "Bot"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Slot"
-msgstr "Yuva"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
-msgstr ""
-"KPI yuvası geçersiz ve 2’ye eşit veya daha büyük bir tam sayı olmalıdır."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Snippet cannot be empty."
-msgstr "Kod parçacığı boş olamaz."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Snippet syntax looks valid."
-msgstr "Kod parçacığı sözdizimi geçerli görünüyor."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "All events"
-msgstr "Tüm etkinlikler"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Loading events configuration…"
-msgstr "Etkinlik yapılandırması yükleniyor…"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
-"run actions."
-msgstr ""
-"Etkinlik yapılandırması Ücretsiz pakette kilitli. Eylemleri kaydetmek ve "
-"çalıştırmak için Pro’ya yükseltin."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Some saved KPI slot values are invalid. Use only numeric slots greater than "
-"or equal to 2."
-msgstr ""
-"Kaydedilmiş bazı KPI yuvası değerleri geçersiz. Yalnızca 2’ye eşit veya daha "
-"büyük sayısal yuvalar kullanın."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"KPI slot conflicts detected. Each active KPI slot must be unique before "
-"saving."
-msgstr ""
-"KPI yuvası çakışmaları algılandı. Kaydetmeden önce her etkin KPI yuvası "
-"benzersiz olmalıdır."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Reorder KPI event"
-msgstr "KPI etkinliğini yeniden sırala"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Include in KPI"
-msgstr "KPI’ya dahil et"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Enable event"
-msgstr "Etkinliği etkinleştir"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event ID"
-msgstr "Etkinlik kimliği"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Label (max 25 characters)"
-msgstr "Etiket (en fazla 25 karakter)"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Trigger type"
-msgstr "Tetikleyici türü"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Click"
-msgstr "Tıklama"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Page view"
-msgstr "Sayfa görüntüleme"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "CSS selectors"
-msgstr "CSS seçicileri"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Add one or more CSS selectors as tags to target clickable elements, for "
-"example .cta-button or #signup."
-msgstr ""
-"Tıklanabilir öğeleri hedeflemek için bir veya daha fazla CSS seçiciyi etiket "
-"olarak ekleyin; örneğin .cta-button veya #signup."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Target page"
-msgstr "Hedef sayfa"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Search by title across published posts, pages, and public custom post types."
-msgstr ""
-"Yayınlanmış yazılar, sayfalar ve herkese açık özel yazı türleri arasında "
-"başlığa göre arayın."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Webhook triggers are server-side. Browser JavaScript snippets are not "
-"executed for this trigger."
-msgstr ""
-"Webhook tetikleyicileri sunucu tarafındadır. Tarayıcı JavaScript "
-"snippet’leri bu tetikleyici için çalıştırılmaz."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Webhook URL"
-msgstr "Webhook URL’si"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Regenerate token"
-msgstr "Token’ı yeniden oluştur"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Generate token"
-msgstr "Token oluştur"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Allowed webhook params"
-msgstr "İzin verilen webhook parametreleri"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Comma-separated allowlist for incoming webhook payload keys. Only "
-"allowlisted variables are stored and shown in event context."
-msgstr ""
-"Gelen webhook payload anahtarları için virgülle ayrılmış izin listesi. "
-"Yalnızca izin verilen değişkenler kaydedilir ve etkinlik bağlamında "
-"gösterilir."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Action"
-msgstr "Eylem"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Server action template"
-msgstr "Sunucu eylem şablonu"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "JavaScript snippet"
-msgstr "JavaScript snippet’i"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Configure a server-side action payload template for incoming webhook events. "
-"Browser JavaScript APIs are not available for this trigger."
-msgstr ""
-"Gelen webhook etkinlikleri için sunucu taraflı bir eylem payload şablonu "
-"yapılandırın. Tarayıcı JavaScript API’leri bu tetikleyici için kullanılamaz."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Paste JavaScript code (without <script> tags) to run when this event is "
-"triggered. Available placeholders depend on trigger type. Do not wrap "
-"placeholders such as {{page_url}} in quotes. They are injected as escaped "
-"JavaScript values."
-msgstr ""
-"Bu etkinlik tetiklendiğinde çalışacak JavaScript kodunu (<script> etiketleri "
-"olmadan) yapıştırın. Kullanılabilir placeholder’lar tetikleyici türüne "
-"bağlıdır. {{page_url}} gibi placeholder’ları tırnak içine almayın. Bunlar "
-"escaped JavaScript değerleri olarak enjekte edilir."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Available variables for this trigger type:"
-msgstr "Bu tetikleyici türü için kullanılabilir değişkenler:"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Check syntax"
-msgstr "Sözdizimini kontrol et"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Syntax checks are available for browser JavaScript snippets only."
-msgstr ""
-"Söz dizimi kontrolleri yalnızca tarayıcı JavaScript snippet’leri için "
-"kullanılabilir."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Remove event"
-msgstr "Etkinliği kaldır"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Add event"
-msgstr "Etkinlik ekle"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered events"
-msgstr "Tetiklenen etkinlikler"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered events captured by the advanced tracker are listed."
-msgstr ""
-"Gelişmiş izleyici tarafından yakalanan tetiklenen etkinlikler listelenir."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Total events"
-msgstr "Toplam etkinlikler"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr "Satırlar"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event"
-msgstr "Etkinlik"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Ara"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Ara…"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Label"
-msgstr "Etiket"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event time"
-msgstr "Etkinlik zamanı"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Type"
-msgstr "Tür"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered page"
-msgstr "Tetiklenen sayfa"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr "Şehir"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "İşletim sistemi"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Details"
-msgstr "Ayrıntılar"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "All pages"
-msgstr "Tüm sayfalar"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-msgid "View"
-msgstr "Görüntüle"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "No triggered events found."
-msgstr "Tetiklenen etkinlik bulunamadı."
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Önceki sayfa"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Sonraki sayfa"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "Sayfa"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "results"
-msgstr "sonuç"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Confirm event removal"
-msgstr "Etkinlik kaldırmayı onayla"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Do you want to remove this event?"
-msgstr "Bu etkinliği kaldırmak istiyor musunuz?"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "İptal"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
 msgstr "Seçilen dönem için ülke verisi mevcut değil."
 
-#. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
+#. translators: 1: country name, 2: visitor count.
 #, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s ziyaret"
 
-#. translators: 1: country name, 2: no data label.
 #: src/admin/panels/GeoCountriesPanel.js
+#. translators: 1: country name, 2: no data label.
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "No data"
 msgstr "Veri yok"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Unknown country flag"
 msgstr "Bilinmeyen ülke bayrağı"
 
-#. translators: %s: country name.
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
+#. translators: %s: country name.
 msgid "Flag of %s"
 msgstr "%s bayrağı"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "Popüler ülkeler"
 
@@ -1974,24 +1106,22 @@ msgstr "Bu dönem için genel saatlik veri mevcut değil."
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Genel saatlik ısı haritaları saatlik sayfa toplama verisi gerektirir."
 
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 #, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "Ziyaretçi verisi mevcut değil."
 
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 msgid ""
 "Visitor origin will be available after the local GeoIP database is installed "
 "from the plugin geolocation settings."
 msgstr ""
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "Ziyaretçi kimliği karması"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Bağlantı zamanı"
 
@@ -1999,14 +1129,11 @@ msgstr "Bağlantı zamanı"
 msgid "Current page"
 msgstr "Geçerli sayfa"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Tarayıcı sürümü"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/AudienceBreakdownCards/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Resolution"
 msgstr "Çözünürlük"
 
@@ -2887,240 +2014,84 @@ msgstr "Giriş sayfaları"
 msgid "Pages not found"
 msgstr "Bulunamayan sayfalar"
 
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Ziyaretçi verisi mevcut değil."
 
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Ziyaretçiler yükleniyor…"
 
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "No results match the current filters."
-msgstr "Geçerli filtrelerle eşleşen sonuç yok."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export access is refused for the current account or license."
-msgstr "Geçerli hesap veya lisans için dışa aktarma erişimi reddedildi."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export file could not be generated."
-msgstr "Dışa aktarma dosyası oluşturulamadı."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export is running. The file downloads when ready."
-msgstr "Dışa aktarma çalışıyor. Dosya hazır olduğunda indirilecek."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export is queued. The file downloads when ready."
-msgstr "Dışa aktarma sırada. Dosya hazır olduğunda indirilecek."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The completed export is missing a download URL."
-msgstr "Tamamlanan dışa aktarımda indirme URL’si eksik."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export job could not be completed."
-msgstr "Dışa aktarma işi tamamlanamadı."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export job is missing a status URL."
-msgstr "Dışa aktarma işinde durum URL’si eksik."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export is still running. Try again in a few moments."
-msgstr "Dışa aktarma hâlâ çalışıyor. Birkaç dakika sonra tekrar deneyin."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export report"
-msgstr "Raporu dışa aktar"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export ready. Download started."
-msgstr "Dışa aktarma hazır. İndirme başladı."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export Excel"
-msgstr "Excel’i dışa aktar"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export CSV"
-msgstr "CSV’yi dışa aktar"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export JSON"
-msgstr "JSON’u dışa aktar"
-
-#: src/admin/premium/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#, fuzzy
-#: src/admin/premium/panels/GeoCitiesPanel.js
-msgid "City / Country"
-msgstr "Şehir / Ülke"
-
-#: src/admin/premium/panels/GeoCitiesPanel.js
-msgid "Hits"
-msgstr "İstekler"
-
-#: src/admin/premium/panels/GeolocationPanel.js
-msgid "Countries"
-msgstr "Ülkeler"
-
-#: src/admin/premium/panels/GeolocationPanel.js
-msgid "Cities"
-msgstr "Şehirler"
-
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#, fuzzy
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
 msgid "Smartphone"
 msgstr "Akıllı telefon"
 
-#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Daily page detail line chart"
-msgstr "Günlük sayfa ayrıntısı çizgi grafiği"
-
-#. translators: 1: metric label, 2: metric value.
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "%1$s: %2$s"
-msgstr "%1$s: %2$s"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 msgid "Ascending"
 msgstr "Artan"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 msgid "Descending"
 msgstr "Azalan"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Accueil"
-msgstr "Ana sayfa"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Back"
-msgstr "Geri"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Open in WordPress"
-msgstr "WordPress’te aç"
-
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views"
 msgstr "Günlük sayfa görüntülemeleri"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. page views"
 msgstr "Önceki sayfa görünt"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. visitors"
 msgstr "Önceki ziyaretçiler"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "No details available for this page."
-msgstr "Bu sayfa için ayrıntı mevcut değil."
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Hourly heatmap"
-msgstr "Saatlik ısı haritası"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Page views list"
-msgstr "Sayfa görüntülemeleri listesi"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Sort by"
 msgstr "Sıralama ölçütü"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Date"
-msgstr "Tarih"
-
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Display"
 msgstr "Göster"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "URL"
 msgstr "URL"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "Başlık"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Table: Page details by date"
-msgstr "Tablo: Tarihe göre sayfa ayrıntıları"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Önceki"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Sonraki"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "of"
 msgstr "/"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "items"
 msgstr "öğe"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "No country data available."
-msgstr "Ülke verisi mevcut değil."
-
-#. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: page views count.
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s sayfa görüntüleme"
 
-#. translators: %s: percentage value.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: percentage value.
 msgid "%1$s%% share"
 msgstr "%1$s%% pay"
 
-#. translators: %s: total page views in the selected range.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: total page views in the selected range.
 msgid "Based on %s tracked page views in the selected range."
 msgstr "Seçilen aralıkta izlenen %s sayfa görüntülemesine göre."
 
@@ -3180,8 +2151,8 @@ msgstr "Tarayıcı sürümleri"
 msgid "Aucune donnée identifiée disponible pour cette période."
 msgstr ""
 
-#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 #: src/admin/widgets/DeviceDetailsCard/index.js
+#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 msgid ""
 "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues "
 "suivies."
@@ -3251,8 +2222,8 @@ msgstr "Bir ziyaret sırasındaki ortalama aktif süre."
 msgid "Custom"
 msgstr "Özel"
 
-#. translators: 1: start date, 2: end date.
 #: src/admin/widgets/PeriodFilter/index.js
+#. translators: 1: start date, 2: end date.
 msgid "%1$s – %2$s"
 msgstr "%1$s – %2$s"
 
@@ -3260,9 +2231,8 @@ msgstr "%1$s – %2$s"
 msgid "Quick ranges"
 msgstr "Hızlı aralıklar"
 
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 #. translators: %s: current sort order label.
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Toggle sort order"
 msgstr "Sıralama yönünü değiştir"
 
@@ -3283,13 +2253,13 @@ msgstr "Yönlendiren site verisi mevcut değil."
 msgid "Loading referring sites…"
 msgstr "Yönlendiren siteler yükleniyor…"
 
-#. translators: %s: active first-column label.
 #: src/admin/widgets/ReportTableCard/index.js
+#. translators: %s: active first-column label.
 msgid "label"
 msgstr "etiket"
 
-#. translators: %s: table title.
 #: src/admin/widgets/ReportTableCard/index.js
+#. translators: %s: table title.
 msgid "Table"
 msgstr "Tablo"
 
@@ -3347,8 +2317,8 @@ msgid "visitor"
 msgid_plural "visitors"
 msgstr[0] "ziyaretçi"
 
-#. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 msgid ""
 "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous "
 "visitors %5$s"
@@ -3356,43 +2326,43 @@ msgstr ""
 "%1$s: Sayfa görüntülemeleri %2$s, ziyaretçiler %3$s, önceki sayfa "
 "görüntülemeleri %4$s, önceki ziyaretçiler %5$s"
 
-#. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 msgid "%1$s: Current %2$s, Previous %3$s"
 msgstr "%1$s: Geçerli %2$s, Önceki %3$s"
 
-#. translators: 1: formatted date, 2: page view count, 3: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: page view count, 3: visitor count
 msgid "%1$s: %2$s, %3$s"
 msgstr "%1$s: %2$s, %3$s"
 
-#. translators: 1: page view count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: page view count
 msgid "Page views: %1$s"
 msgstr "Sayfa görüntülemeleri: %1$s"
 
-#. translators: 1: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: visitor count
 msgid "Visitors: %1$s"
 msgstr "Ziyaretçiler: %1$s"
 
-#. translators: 1: previous page view count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous page view count
 msgid "Previous page views: %1$s"
 msgstr "Önceki sayfa görüntülemeleri: %1$s"
 
-#. translators: 1: previous visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous visitor count
 msgid "Previous visitors: %1$s"
 msgstr "Önceki ziyaretçiler: %1$s"
 
-#. translators: 1: current metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: current metric count
 msgid "Current: %1$s"
 msgstr "Geçerli: %1$s"
 
-#. translators: 1: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous metric count
 msgid "Previous: %1$s"
 msgstr "Önceki: %1$s"
 
@@ -3404,13 +2374,13 @@ msgstr "Bu dönem için veri mevcut değil."
 msgid "Loading chart…"
 msgstr "Grafik yükleniyor…"
 
-#. translators: 1: metric label
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: metric label
 msgid "Current %s"
 msgstr "Geçerli %s"
 
-#. translators: 1: metric label
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: metric label
 msgid "Previous %s"
 msgstr "Önceki %s"
 
@@ -3435,6 +2405,10 @@ msgstr "Özel"
 msgid "Table: Visitors"
 msgstr "Tablo: Ziyaretçiler"
 
+#, fuzzy
+#~ msgid "Visitor details are not available in this package."
+#~ msgstr "Bu sayfa için ayrıntı mevcut değil."
+
 #, php-format
 #~ msgid ""
 #~ "%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
@@ -3456,14 +2430,6 @@ msgstr "Tablo: Ziyaretçiler"
 #, fuzzy
 #~ msgid "Reinstall local GeoIP database"
 #~ msgstr "GeoIP veritabanı güncellenemiyor."
-
-#~ msgid "Visitors details are not included in this package."
-#~ msgstr ""
-#~ "Ziyaretçi ayrıntıları BimBeau Privacy Analytics Pro’da kullanılabilir."
-
-#~ msgid "Page-level details are not included in this package."
-#~ msgstr ""
-#~ "Sayfa düzeyi ayrıntılar BimBeau Privacy Analytics Pro’da kullanılabilir."
 
 #~ msgid "Every 30 days (default)"
 #~ msgstr "Her 30 günde bir (varsayılan)"
@@ -3575,14 +2541,6 @@ msgstr "Tablo: Ziyaretçiler"
 #~ msgid "Plugin name (menu and dashboard)"
 #~ msgstr "Eklenti adı (menü ve gösterge paneli)"
 
-#~ msgid "This panel is not included in this package."
-#~ msgstr "Bu panel BimBeau Privacy Analytics Pro’da kullanılabilir."
-
-#~ msgid "City map markers are not included in this package."
-#~ msgstr ""
-#~ "Şehir haritası işaretçileri BimBeau Privacy Analytics Pro’da "
-#~ "kullanılabilir."
-
 #~ msgid "City map"
 #~ msgstr "Şehir haritası"
 
@@ -3637,3 +2595,4 @@ msgstr "Tablo: Ziyaretçiler"
 
 #~ msgid "Upgrade"
 #~ msgstr "Yükselt"
+

@@ -17,20 +17,19 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
+#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #. Plugin Name of the plugin
-#: bimbeau-privacy-analytics.php front/pro-app-runtime.php
-#: src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics 分析"
 
-#. Description of the plugin
 #: bimbeau-privacy-analytics.php
+#. Description of the plugin
 msgid "Privacy-friendly, self-hosted analytics for WordPress."
 msgstr "适用于 WordPress 的隐私友好型自托管统计分析。"
 
-#. Author of the plugin
 #: bimbeau-privacy-analytics.php
+#. Author of the plugin
 msgid "BimBeau"
 msgstr "BimBeau"
 
@@ -41,10 +40,6 @@ msgstr "更新"
 #: admin/admin.php src/admin/components/ProBadge/index.js
 msgid "Pro"
 msgstr "Pro"
-
-#: admin/admin.php src/admin/components/FreePackageState/index.js
-msgid "Upgrade to Pro"
-msgstr "升级到 Pro"
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -121,17 +116,6 @@ msgstr "此服务器上的图标生成失败。"
 msgid "Unknown generation status."
 msgstr "未知生成状态。"
 
-#: admin/admin.php includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Unknown"
-msgstr "未知"
-
 #: admin/admin.php
 msgid "No preview icon URL is available."
 msgstr "没有可用的预览图标 URL。"
@@ -140,14 +124,11 @@ msgstr "没有可用的预览图标 URL。"
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "实时"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "页面"
 
@@ -156,9 +137,7 @@ msgstr "页面"
 msgid "Acquisition"
 msgstr "获取"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "引荐站点"
 
@@ -166,29 +145,19 @@ msgstr "引荐站点"
 msgid "Internal searches"
 msgstr "站内搜索"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
-#: src/admin/premium/panels/GeolocationPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "地理定位"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "访客"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/DeviceDetailsCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "设备"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "设置"
 
@@ -212,26 +181,26 @@ msgstr "地理定位"
 msgid "Later"
 msgstr ""
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "%s overview"
 msgstr "%s 次页面浏览"
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "%s data is not available for this period."
 msgstr "此时间段没有可用数据。"
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "View %s dashboard"
 msgstr "仪表盘"
 
-#. translators: 1: Start date, 2: End date for the selected reporting period.
 #: admin/dashboard-widget.php
+#. translators: 1: Start date, 2: End date for the selected reporting period.
 #, php-format
 msgid "Period: %1$s to %2$s"
 msgstr "时间段：%1$s 至 %2$s"
@@ -245,20 +214,11 @@ msgid ""
 "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "请至少启用一个分析面板，以便在此小工具中显示 KPI 值。"
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "访问"
 
-#: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
-#: src/admin/panels/OverviewPanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "页面浏览量"
 
@@ -266,8 +226,7 @@ msgstr "页面浏览量"
 msgid "Referrers"
 msgstr "引荐来源"
 
-#: admin/edition-admin-runtime.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
+#: admin/edition-admin-runtime.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr "事件"
 
@@ -296,64 +255,6 @@ msgid ""
 msgstr ""
 "%1$s 已被停用，因为同一时间只能启用一个 BimBeau Privacy Analytics 包。%2$s 保"
 "持启用。"
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics front analytics app."
-msgstr "BimBeau Privacy Analytics 前端分析应用。"
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics sign in"
-msgstr "BimBeau Privacy Analytics 登录"
-
-#: front/pro-app-runtime.php
-msgid ""
-"Sign in with a WordPress account that can access BimBeau Privacy Analytics "
-"analytics."
-msgstr "使用可访问 BimBeau Privacy Analytics 分析的 WordPress 账户登录。"
-
-#: front/pro-app-runtime.php
-msgid "Username or email"
-msgstr "用户名或电子邮箱"
-
-#: front/pro-app-runtime.php
-msgid "Password"
-msgstr "密码"
-
-#: front/pro-app-runtime.php
-msgid "Remember me"
-msgstr "记住我"
-
-#: front/pro-app-runtime.php
-msgid "Sign in"
-msgstr "登录"
-
-#: front/pro-app-runtime.php
-msgid "Open WordPress login"
-msgstr "打开 WordPress 登录"
-
-#: front/pro-app-runtime.php
-msgid "Authentication failed. Verify credentials and access policy."
-msgstr "身份验证失败。请检查凭据和访问策略。"
-
-#: front/pro-app-runtime.php
-msgid "Custom login flow is unavailable in this environment."
-msgstr "当前环境无法使用自定义登录流程。"
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics App is available in not included."
-msgstr "BimBeau Privacy Analytics 应用仅在 Pro 中可用。"
-
-#: front/pro-app-runtime.php
-msgid "You are not allowed to access this page."
-msgstr "你无权访问此页面。"
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics icon"
-msgstr "BimBeau Privacy Analytics 图标"
-
-#: front/pro-app-runtime.php
-msgid "Loading analytics workspace…"
-msgstr "正在加载分析工作区…"
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -407,162 +308,35 @@ msgstr "未找到此 IP 的地理定位记录。"
 msgid "Unable to determine the visitor IP."
 msgstr "无法确定访客 IP。"
 
-#: includes/pro-auth-controller.php
-msgid "Custom login flow is blocked by policy."
-msgstr "自定义登录流程已被策略阻止。"
-
-#: includes/pro-auth-controller.php
-msgid "Invalid login request."
-msgstr "登录请求无效。"
-
-#: includes/pro-auth-controller.php
-msgid "The authenticated account cannot access BimBeau Privacy Analytics."
-msgstr "已验证的账户无法访问 BimBeau Privacy Analytics。"
-
-#: includes/pro-auth-controller.php
-msgid "Authentication failed. Verify credentials and retry."
-msgstr "身份验证失败。请检查凭据后重试。"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Stats"
 msgstr "统计"
 
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Summary"
-msgstr "摘要"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/constants/index.js
+#: src/admin/constants/index.js
 msgid "30 days"
 msgstr "30 天"
 
-#: includes/pro-post-key-stats-metabox.php includes/pro-post-views-column.php
-msgid "View page details"
-msgstr "查看页面详情"
-
-#. translators: %s: Formatted average time spent on the page.
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-#, php-format
-msgid "Avg. time on page: %s"
-msgstr "页面平均停留时间：%s"
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "Visitor profile"
-msgstr "访客画像"
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "No visitor profile data available for this period."
-msgstr "此时间段没有可用的访客画像数据。"
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "Plus de stats"
-msgstr "更多统计数据"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "国家/地区"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "浏览器"
-
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "System"
-msgstr "系统"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "设备"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "桌面设备"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-msgid "Mobile"
-msgstr "移动设备"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "平板设备"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/lib/channelLabels.js
+#: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "其他"
-
-#. translators: %d: Number of seconds.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%ds"
-msgstr "%d秒"
-
-#. translators: 1: Number of minutes, 2: Number of seconds.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%1$dm %2$ds"
-msgstr "%1$d分 %2$d秒"
-
-#. translators: 1: Number of hours, 2: Number of minutes.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%1$dh %2$dm"
-msgstr "%1$d小时 %2$d分"
-
-#. translators: %s: Selected reporting period label.
-#: includes/pro-post-views-column.php
-#, php-format
-msgid "Views (%s)"
-msgstr "浏览量（%s）"
-
-#: includes/pro-post-views-column.php
-msgid "Views trend"
-msgstr "浏览量趋势"
-
-#: includes/pro-settings.php
-msgid "KPI slot must be a numeric integer greater than or equal to 2."
-msgstr "KPI 槽位必须是大于或等于 2 的数字整数。"
-
-#: includes/pro-settings.php
-msgid ""
-"KPI slot format is invalid. Use only a numeric integer greater than or equal "
-"to 2."
-msgstr "KPI 槽位格式无效。请只使用大于或等于 2 的数字整数。"
 
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics 原始日志清理"
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "此分析面板已从导航中禁用。"
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php rest/pro-routes.php
+#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
 msgid "Authentication is required to access analytics data."
 msgstr "访问分析数据需要身份验证。"
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "MaxMind 连接成功。"
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
 msgid "GeoIP database updated successfully."
 msgstr "GeoIP 数据库已成功更新。"
 
@@ -573,131 +347,6 @@ msgstr "GeoIP 数据库可用。"
 #: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is not available yet."
 msgstr "GeoIP 数据库尚不可用。"
-
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Unknown country"
-msgstr "未知国家/地区"
-
-#: includes/rest/class-bbpa-admin-pro-controller.php
-msgid "Missing page path."
-msgstr "缺少页面路径。"
-
-#: includes/rest/removed-export-controller.php
-msgid "Authentication is required to export analytics data."
-msgstr "导出分析数据需要身份验证。"
-
-#: includes/rest/removed-export-controller.php
-msgid "Report exports are not included in this package."
-msgstr "报表导出在 BimBeau Privacy Analytics Pro 中可用。"
-
-#: includes/rest/removed-export-controller.php
-msgid "You do not have permission to export analytics data."
-msgstr "你没有导出分析数据的权限。"
-
-#: includes/rest/removed-export-controller.php
-msgid "A valid request nonce is required to export analytics data."
-msgstr "导出分析数据需要有效的请求 nonce。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The export format must be csv, json, or xlsx."
-msgstr "导出格式必须是 csv、json 或 xlsx。"
-
-#. translators: %d: maximum export row count.
-#: includes/rest/removed-export-controller.php
-#: src/admin/premium/components/ReportExportAction/index.js
-#, php-format
-msgid ""
-"The export exceeds the %d row limit. Narrow the date range or search filter, "
-"then try again."
-msgstr "导出超过 %d 行限制。请缩小日期范围或搜索过滤条件后重试。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report cannot be exported."
-msgstr "无法导出所选报表。"
-
-#. translators: %d: synchronous export threshold row count.
-#: includes/rest/removed-export-controller.php
-#, php-format
-msgid ""
-"The export is larger than the %d row synchronous threshold. Request async "
-"mode and poll the job status endpoint."
-msgstr "导出数据超过 %d 行的同步阈值。请请求异步模式并轮询任务状态端点。"
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export file is no longer available. Create a new export job and try "
-"again."
-msgstr "导出文件已不再可用。请创建新的导出任务并重试。"
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export file is not ready yet. Check the job status endpoint before "
-"downloading."
-msgstr "导出文件尚未准备好。下载前请检查任务状态端点。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report is not available for export."
-msgstr "所选报表不可导出。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report does not expose file export rows."
-msgstr "所选报表未提供文件导出行。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report does not expose exportable columns."
-msgstr "所选报表未提供可导出的列。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The CSV export could not be generated."
-msgstr "无法生成 CSV 导出。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The Excel export could not be generated."
-msgstr "无法生成 Excel 导出。"
-
-#: includes/rest/removed-export-controller.php
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid ""
-"Excel export requires the PHP Zip extension to be installed on this server."
-msgstr "Excel 导出需要此服务器安装 PHP Zip 扩展。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job could not be created. Try again later."
-msgstr "无法创建导出任务。请稍后重试。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The export storage directory is unavailable."
-msgstr "导出存储目录不可用。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The export storage path is invalid."
-msgstr "导出存储路径无效。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The JSON export could not be generated."
-msgstr "无法生成 JSON 导出。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The export file could not be written."
-msgstr "无法写入导出文件。"
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export could not be generated. Try again later or narrow the export "
-"filters."
-msgstr "无法生成导出。请稍后重试或缩小导出过滤条件。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job was not found."
-msgstr "未找到导出任务。"
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job was not found or has expired."
-msgstr "未找到导出任务，或任务已过期。"
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -719,11 +368,6 @@ msgstr "时间戳分组无效。"
 msgid "Invalid visit identifier."
 msgstr "访问标识符无效。"
 
-#: includes/rest/class-bbpa-report-controller.php
-#, fuzzy
-msgid "Visitor details are not available in this package."
-msgstr "此页面没有可用详情。"
-
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
 msgstr "更新 GeoIP 数据库需要本地数据库模式。"
@@ -732,14 +376,14 @@ msgstr "更新 GeoIP 数据库需要本地数据库模式。"
 msgid "Unable to create a temporary file for the GeoIP database download."
 msgstr "无法为 GeoIP 数据库下载创建临时文件。"
 
-#. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %s: HTTP error message returned by wp_remote_get.
 #, php-format
 msgid "GeoIP database download failed: %s"
 msgstr "GeoIP 数据库下载失败：%s"
 
-#. translators: %d: HTTP status code returned by the GeoIP download request.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %d: HTTP status code returned by the GeoIP download request.
 #, php-format
 msgid "GeoIP database download failed with HTTP status %d."
 msgstr "GeoIP 数据库下载失败，HTTP 状态码 %d。"
@@ -757,14 +401,14 @@ msgstr ""
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "GeoIP 数据库尚不可用。"
 
-#. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %s: HTTP error message returned by wp_remote_get.
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "GeoIP 数据库下载失败：%s"
 
-#. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "GeoIP 数据库下载失败，HTTP 状态码 %d。"
@@ -842,14 +486,14 @@ msgstr "无法为 GeoIP 操作创建临时文件。"
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "无法为 GeoIP 解压创建临时工作区。"
 
-#. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #: includes/services/class-bbpa-maxmind-service.php
+#. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "MaxMind API 错误（%1$s）：%2$s。"
 
-#. translators: %s: MaxMind API response code.
 #: includes/services/class-bbpa-maxmind-service.php
+#. translators: %s: MaxMind API response code.
 #, php-format
 msgid "MaxMind API error (%s)."
 msgstr "MaxMind API 错误（%s）。"
@@ -857,27 +501,6 @@ msgstr "MaxMind API 错误（%s）。"
 #: includes/services/class-bbpa-maxmind-service.php
 msgid "Invalid MaxMind API response."
 msgstr "MaxMind API 响应无效。"
-
-#: includes/settings.php
-msgid "The selected PWA icon must be at least 512x512 pixels."
-msgstr "所选 PWA 图标必须至少为 512x512 像素。"
-
-#: includes/settings.php
-msgid "The selected PWA icon file cannot be read."
-msgstr "无法读取所选 PWA 图标文件。"
-
-#: includes/settings.php
-msgid ""
-"WordPress image editor cannot generate PWA icons from the selected source."
-msgstr "WordPress 图像编辑器无法从所选源生成 PWA 图标。"
-
-#: includes/settings.php
-msgid "WordPress image editor cannot resize the selected PWA icon source."
-msgstr "WordPress 图像编辑器无法调整所选 PWA 图标源的尺寸。"
-
-#: includes/settings.php
-msgid "WordPress image editor cannot save generated PWA PNG icons."
-msgstr "WordPress 图像编辑器无法保存生成的 PWA PNG 图标。"
 
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID is required."
@@ -899,17 +522,13 @@ msgstr "启用 IP 地理定位需要 MaxMind 凭据。"
 msgid "Statistics"
 msgstr "统计"
 
-#: includes/settings.php
-msgid "Select a media library image to generate PWA PNG icons."
-msgstr "请选择媒体库图片以生成 PWA PNG 图标。"
-
-#. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
 msgid "%s Visitor"
 msgstr "%s 位访客"
 
-#. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
 msgid "%s Visitors"
 msgstr "%s 位访客"
 
@@ -1030,28 +649,28 @@ msgstr "关闭通知"
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
 msgstr "BimBeau Privacy Analytics 无法加载管理界面。"
 
-#. translators: %s: current admin panel and page label.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: current admin panel and page label.
 msgid "Panel/page: %s"
 msgstr "面板/页面：%s"
 
-#. translators: %s: React component name detected as undefined.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: React component name detected as undefined.
 msgid "Component undefined: %s"
 msgstr "组件未定义：%s"
 
-#. translators: %s: React component name detected as undefined.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: React component name detected as undefined.
 msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
 msgstr "可能存在 Gutenberg/@wordpress/components 不匹配：%s 未定义"
 
-#. translators: %s: comma-separated WordPress script handles checked while debugging.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: comma-separated WordPress script handles checked while debugging.
 msgid "Script handles checked: %s"
 msgstr "已检查脚本句柄：%s"
 
-#. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
 msgid "Global namespaces checked: %s"
 msgstr "已检查全局命名空间：%s"
 
@@ -1113,8 +732,7 @@ msgid ""
 msgstr ""
 "BimBeau Privacy Analytics 仅提供技术诊断。你的 CMP 仍是同意流程的可信来源。"
 
-#: src/admin/components/DataState/index.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
 msgstr "正在加载…"
 
@@ -1126,8 +744,8 @@ msgstr "端点："
 msgid "Response preview:"
 msgstr "响应预览："
 
-#. translators: %s: card title.
 #: src/admin/components/DataTableCard/index.js
+#. translators: %s: card title.
 msgid "Loading: %s"
 msgstr "正在加载：%s"
 
@@ -1171,24 +789,6 @@ msgstr "输入 MaxMind 凭据"
 msgid "Traffic data is pending"
 msgstr "流量数据待处理"
 
-#: src/admin/components/PageDetailsHeatMap/index.js
-msgid "No hourly details available for this page."
-msgstr "此页面没有可用的小时详情。"
-
-#: src/admin/components/PageDetailsHeatMap/index.js
-msgid "Page details heatmap by day and hour"
-msgstr "按日期和小时显示的页面详情热力图"
-
-#: src/admin/components/FreePackageState/index.js
-msgid "BimBeau Privacy Analytics Pro feature preview"
-msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#: src/admin/components/FreePackageState/index.js
-#: src/admin/components/FreePackageCard/index.js
-#: src/admin/panels/SettingsPanel.js
-msgid "This feature is not included in this package."
-msgstr "此功能在 BimBeau Privacy Analytics Pro 中可用。"
-
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "隐私运行时诊断"
@@ -1201,32 +801,7 @@ msgstr "运行时粒度根据可用粒度报告。"
 msgid "Technical state does not prove consent collection validity."
 msgstr "技术状态不能证明同意收集的有效性。"
 
-#: src/admin/components/FreePackageCard/index.js
-msgid "PWA Stats App"
-msgstr "PWA 统计应用"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "PWA URL"
-msgstr "PWA URL"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "Use this URL to open the standalone analytics app."
-msgstr "使用此 URL 打开独立分析应用。"
-
-#: src/admin/components/FreePackageCard/index.js
-#: src/admin/panels/FreePackagePanel.js
-msgid "Copy URL"
-msgstr "复制 URL"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "Open PWA"
-msgstr "打开 PWA"
-
-#: src/admin/components/ReferrerLabel/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
-#: src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "直接访问"
 
@@ -1242,13 +817,13 @@ msgstr "缩小地图"
 msgid "Reset map zoom"
 msgstr "重置地图缩放"
 
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
 #: src/admin/components/WorldMap/index.js
+#. translators: 1: location label, 2: visit count, 3: approximation suffix.
 msgid "%1$s: %2$s visits%3$s"
 msgstr "%1$s：%2$s 次访问%3$s"
 
-#. translators: %s: approximation scope label.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: approximation scope label.
 msgid " (%s)"
 msgstr "（%s）"
 
@@ -1274,20 +849,20 @@ msgid ""
 "collecting country data."
 msgstr "没有可用的地理定位访问。请检查地理定位设置以开始收集国家/地区数据。"
 
-#. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: visitor count.
 #, fuzzy
 msgid "%s visitors"
 msgstr "%s 位访客"
 
-#. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: share of total visitors.
 #, fuzzy
 msgid "%s of total visitors"
 msgstr "占总访问量的 %s"
 
-#. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: visit count.
 msgid "%s visits"
 msgstr "%s 次访问"
 
@@ -1363,13 +938,11 @@ msgstr "24个月"
 msgid "24 months"
 msgstr "24 个月"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "网址"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "No popular pages available."
 msgstr "没有可用的热门页面。"
 
@@ -1377,9 +950,7 @@ msgstr "没有可用的热门页面。"
 msgid "Top referrers"
 msgstr "热门引荐来源"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "引荐来源"
 
@@ -1431,98 +1002,10 @@ msgstr "大致位置"
 msgid "Approximate city"
 msgstr "大致城市"
 
-#. translators: %d: geolocation accuracy radius in kilometers.
 #: src/admin/lib/locationLabel.js
+#. translators: %d: geolocation accuracy radius in kilometers.
 msgid "Approx. %d km"
 msgstr "约 %d 公里"
-
-#: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No available"
-msgstr "不可用"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Monday"
-msgstr "星期一"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Mon"
-msgstr "周一"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Tuesday"
-msgstr "星期二"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Tue"
-msgstr "周二"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Wednesday"
-msgstr "星期三"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Wed"
-msgstr "周三"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Thursday"
-msgstr "星期四"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Thu"
-msgstr "周四"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Friday"
-msgstr "星期五"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Fri"
-msgstr "周五"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Saturday"
-msgstr "星期六"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sat"
-msgstr "周六"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sunday"
-msgstr "星期日"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sun"
-msgstr "周日"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Hourly heatmaps are unavailable for pages not found (404)."
-msgstr "未找到的页面（404）无法使用小时热力图。"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-#, fuzzy
-msgid ""
-"Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
-msgstr "小时热力图已被 bpa_hourly_aggregation_enabled 过滤器禁用。"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid ""
-"Hourly heatmaps are unavailable because the hourly aggregation table is "
-"missing."
-msgstr "由于缺少小时聚合表，小时热力图不可用。"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid ""
-"Hourly heatmaps require hourly page aggregation data for the selected source."
-msgstr "小时热力图需要所选来源的页面小时聚合数据。"
-
-#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "%1$s at %2$s — %3$s: %4$s"
-msgstr "%1$s %2$s — %3$s：%4$s"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1538,350 +1021,45 @@ msgstr "此时间段没有可用的访客画像数据。"
 msgid "Table: Acquisition channels"
 msgstr "表格：访客"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr ""
-
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr ""
 
-#. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
+#. translators: %s: Total visits in the selected range.
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "占总访问量的 %s"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Bot"
-msgstr "机器人"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Slot"
-msgstr "槽位"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
-msgstr "KPI 槽位无效，必须是大于或等于 2 的整数。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Snippet cannot be empty."
-msgstr "代码片段不能为空。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Snippet syntax looks valid."
-msgstr "代码片段语法看起来有效。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "All events"
-msgstr "所有事件"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Loading events configuration…"
-msgstr "正在加载事件配置…"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
-"run actions."
-msgstr "事件配置在免费版中已锁定。请升级到 Pro 以保存并运行操作。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Some saved KPI slot values are invalid. Use only numeric slots greater than "
-"or equal to 2."
-msgstr "部分已保存的 KPI 槽位值无效。请只使用大于或等于 2 的数字槽位。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"KPI slot conflicts detected. Each active KPI slot must be unique before "
-"saving."
-msgstr "检测到 KPI 槽位冲突。保存前每个启用的 KPI 槽位都必须唯一。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Reorder KPI event"
-msgstr "重新排序 KPI 事件"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Include in KPI"
-msgstr "纳入 KPI"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Enable event"
-msgstr "启用事件"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event ID"
-msgstr "事件 ID"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Label (max 25 characters)"
-msgstr "标签（最多 25 个字符）"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Trigger type"
-msgstr "触发类型"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Click"
-msgstr "点击"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Page view"
-msgstr "页面浏览"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "CSS selectors"
-msgstr "CSS 选择器"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Add one or more CSS selectors as tags to target clickable elements, for "
-"example .cta-button or #signup."
-msgstr ""
-"添加一个或多个 CSS 选择器作为标签来定位可点击元素，例如 .cta-button 或 "
-"#signup。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Target page"
-msgstr "目标页面"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Search by title across published posts, pages, and public custom post types."
-msgstr "按标题搜索已发布的文章、页面和公开自定义文章类型。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Webhook triggers are server-side. Browser JavaScript snippets are not "
-"executed for this trigger."
-msgstr ""
-"Webhook 触发器在服务器端运行。此触发器不会执行浏览器 JavaScript 代码片段。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Webhook URL"
-msgstr "Webhook URL"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Regenerate token"
-msgstr "重新生成令牌"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Generate token"
-msgstr "生成令牌"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Allowed webhook params"
-msgstr "允许的 Webhook 参数"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Comma-separated allowlist for incoming webhook payload keys. Only "
-"allowlisted variables are stored and shown in event context."
-msgstr ""
-"传入 Webhook 载荷键的逗号分隔允许列表。仅存储并在事件上下文中显示允许的变量。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Action"
-msgstr "操作"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Server action template"
-msgstr "服务器操作模板"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "JavaScript snippet"
-msgstr "JavaScript 代码片段"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Configure a server-side action payload template for incoming webhook events. "
-"Browser JavaScript APIs are not available for this trigger."
-msgstr ""
-"为传入的 Webhook 事件配置服务器端操作载荷模板。此触发器不能使用浏览器 "
-"JavaScript API。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Paste JavaScript code (without <script> tags) to run when this event is "
-"triggered. Available placeholders depend on trigger type. Do not wrap "
-"placeholders such as {{page_url}} in quotes. They are injected as escaped "
-"JavaScript values."
-msgstr ""
-"粘贴在触发此事件时运行的 JavaScript 代码（不含 <script> 标签）。可用占位符取"
-"决于触发类型。不要将{{page_url}} 等占位符放入引号中；它们会作为已转义的 "
-"JavaScript 值注入。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Available variables for this trigger type:"
-msgstr "此触发类型的可用变量："
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Check syntax"
-msgstr "检查语法"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Syntax checks are available for browser JavaScript snippets only."
-msgstr "语法检查仅适用于浏览器 JavaScript 代码片段。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Remove event"
-msgstr "移除事件"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Add event"
-msgstr "添加事件"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered events"
-msgstr "已触发事件"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered events captured by the advanced tracker are listed."
-msgstr "此处列出高级跟踪器捕获的已触发事件。"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Total events"
-msgstr "事件总数"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr "行"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event"
-msgstr "事件"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "搜索"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "搜索…"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Label"
-msgstr "标签"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event time"
-msgstr "事件时间"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Type"
-msgstr "类型"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered page"
-msgstr "触发页面"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr "城市"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "操作系统"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Details"
-msgstr "详情"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "All pages"
-msgstr "所有页面"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-msgid "View"
-msgstr "查看"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "No triggered events found."
-msgstr "未找到已触发事件。"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "上一页"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "下一页"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "页面"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "results"
-msgstr "结果"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Confirm event removal"
-msgstr "确认移除事件"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Do you want to remove this event?"
-msgstr "是否要移除此事件？"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "取消"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
 msgstr "所选时间段没有可用的国家/地区数据。"
 
-#. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
+#. translators: 1: country name, 2: visitor count.
 #, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s 次访问"
 
-#. translators: 1: country name, 2: no data label.
 #: src/admin/panels/GeoCountriesPanel.js
+#. translators: 1: country name, 2: no data label.
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "No data"
 msgstr "无数据"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Unknown country flag"
 msgstr "未知国家/地区旗帜"
 
-#. translators: %s: country name.
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
+#. translators: %s: country name.
 msgid "Flag of %s"
 msgstr "%s 的旗帜"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "热门国家/地区"
 
@@ -1902,24 +1080,22 @@ msgstr "此时间段没有可用的全局小时数据。"
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "全局小时热力图需要页面小时聚合数据。"
 
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 #, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "没有可用的访客数据。"
 
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 msgid ""
 "Visitor origin will be available after the local GeoIP database is installed "
 "from the plugin geolocation settings."
 msgstr ""
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "访客 ID 哈希"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "连接时间"
 
@@ -1927,14 +1103,11 @@ msgstr "连接时间"
 msgid "Current page"
 msgstr "当前页面"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "浏览器版本"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/AudienceBreakdownCards/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Resolution"
 msgstr "分辨率"
 
@@ -2773,240 +1946,84 @@ msgstr "入口页面"
 msgid "Pages not found"
 msgstr "未找到的页面"
 
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "没有可用的访客数据。"
 
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "正在加载访客…"
 
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "No results match the current filters."
-msgstr "没有结果匹配当前过滤条件。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export access is refused for the current account or license."
-msgstr "当前账户或许可证的导出访问被拒绝。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export file could not be generated."
-msgstr "无法生成导出文件。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export is running. The file downloads when ready."
-msgstr "导出正在运行。文件准备好后会下载。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export is queued. The file downloads when ready."
-msgstr "导出已排队。文件准备好后会下载。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The completed export is missing a download URL."
-msgstr "已完成的导出缺少下载 URL。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export job could not be completed."
-msgstr "导出任务无法完成。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export job is missing a status URL."
-msgstr "导出任务缺少状态 URL。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export is still running. Try again in a few moments."
-msgstr "导出仍在运行。请稍后重试。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export report"
-msgstr "导出报表"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export ready. Download started."
-msgstr "导出已准备好。下载已开始。"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export Excel"
-msgstr "导出 Excel"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export CSV"
-msgstr "导出 CSV"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export JSON"
-msgstr "导出 JSON"
-
-#: src/admin/premium/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#, fuzzy
-#: src/admin/premium/panels/GeoCitiesPanel.js
-msgid "City / Country"
-msgstr "城市 / 国家或地区"
-
-#: src/admin/premium/panels/GeoCitiesPanel.js
-msgid "Hits"
-msgstr "命中"
-
-#: src/admin/premium/panels/GeolocationPanel.js
-msgid "Countries"
-msgstr "国家/地区"
-
-#: src/admin/premium/panels/GeolocationPanel.js
-msgid "Cities"
-msgstr "城市"
-
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#, fuzzy
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
 msgid "Smartphone"
 msgstr "智能手机"
 
-#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-msgstr "%1$s：%2$s %3$s，%4$s %5$s，%6$s %7$s，%8$s %9$s"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Daily page detail line chart"
-msgstr "每日页面详情折线图"
-
-#. translators: 1: metric label, 2: metric value.
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "%1$s: %2$s"
-msgstr "%1$s：%2$s"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 msgid "Ascending"
 msgstr "升序"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 msgid "Descending"
 msgstr "降序"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Accueil"
-msgstr "首页"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Back"
-msgstr "返回"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Open in WordPress"
-msgstr "在 WordPress 中打开"
-
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views"
 msgstr "每日页面浏览量"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. page views"
 msgstr "上一周期页面浏览量"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. visitors"
 msgstr "上一周期访客"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "No details available for this page."
-msgstr "此页面没有可用详情。"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Hourly heatmap"
-msgstr "小时热力图"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Page views list"
-msgstr "页面浏览量列表"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Sort by"
 msgstr "排序依据"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Date"
-msgstr "日期"
-
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Display"
 msgstr "显示"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "URL"
 msgstr "URL"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "标题"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Table: Page details by date"
-msgstr "表格：按日期显示页面详情"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "上一项"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "下一项"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "of"
 msgstr "共"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "items"
 msgstr "项"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "No country data available."
-msgstr "没有可用的国家/地区数据。"
-
-#. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: page views count.
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s 次页面浏览"
 
-#. translators: %s: percentage value.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: percentage value.
 msgid "%1$s%% share"
 msgstr "%1$s%% 占比"
 
-#. translators: %s: total page views in the selected range.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: total page views in the selected range.
 msgid "Based on %s tracked page views in the selected range."
 msgstr "基于所选范围内 %s 次已跟踪页面浏览。"
 
@@ -3066,8 +2083,8 @@ msgstr "浏览器版本"
 msgid "Aucune donnée identifiée disponible pour cette période."
 msgstr ""
 
-#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 #: src/admin/widgets/DeviceDetailsCard/index.js
+#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 msgid ""
 "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues "
 "suivies."
@@ -3135,8 +2152,8 @@ msgstr "每次访问期间的平均活跃时长。"
 msgid "Custom"
 msgstr "自定义"
 
-#. translators: 1: start date, 2: end date.
 #: src/admin/widgets/PeriodFilter/index.js
+#. translators: 1: start date, 2: end date.
 msgid "%1$s – %2$s"
 msgstr "%1$s – %2$s"
 
@@ -3144,9 +2161,8 @@ msgstr "%1$s – %2$s"
 msgid "Quick ranges"
 msgstr "快速范围"
 
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 #. translators: %s: current sort order label.
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Toggle sort order"
 msgstr "切换排序顺序"
 
@@ -3167,13 +2183,13 @@ msgstr "没有可用的引荐站点数据。"
 msgid "Loading referring sites…"
 msgstr "正在加载引荐站点…"
 
-#. translators: %s: active first-column label.
 #: src/admin/widgets/ReportTableCard/index.js
+#. translators: %s: active first-column label.
 msgid "label"
 msgstr "标签"
 
-#. translators: %s: table title.
 #: src/admin/widgets/ReportTableCard/index.js
+#. translators: %s: table title.
 msgid "Table"
 msgstr "表格"
 
@@ -3231,51 +2247,51 @@ msgid "visitor"
 msgid_plural "visitors"
 msgstr[0] "位访客"
 
-#. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 msgid ""
 "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous "
 "visitors %5$s"
 msgstr ""
 "%1$s：页面浏览量 %2$s，访客 %3$s，上一周期页面浏览量 %4$s，上一周期访客 %5$s"
 
-#. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 msgid "%1$s: Current %2$s, Previous %3$s"
 msgstr "%1$s：当前 %2$s，上一周期 %3$s"
 
-#. translators: 1: formatted date, 2: page view count, 3: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: page view count, 3: visitor count
 msgid "%1$s: %2$s, %3$s"
 msgstr "%1$s：%2$s，%3$s"
 
-#. translators: 1: page view count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: page view count
 msgid "Page views: %1$s"
 msgstr "页面浏览量：%1$s"
 
-#. translators: 1: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: visitor count
 msgid "Visitors: %1$s"
 msgstr "访客：%1$s"
 
-#. translators: 1: previous page view count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous page view count
 msgid "Previous page views: %1$s"
 msgstr "上一周期页面浏览量：%1$s"
 
-#. translators: 1: previous visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous visitor count
 msgid "Previous visitors: %1$s"
 msgstr "上一周期访客：%1$s"
 
-#. translators: 1: current metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: current metric count
 msgid "Current: %1$s"
 msgstr "当前：%1$s"
 
-#. translators: 1: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous metric count
 msgid "Previous: %1$s"
 msgstr "上一周期：%1$s"
 
@@ -3287,13 +2303,13 @@ msgstr "此时间段没有可用数据。"
 msgid "Loading chart…"
 msgstr "正在加载图表…"
 
-#. translators: 1: metric label
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: metric label
 msgid "Current %s"
 msgstr "当前 %s"
 
-#. translators: 1: metric label
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: metric label
 msgid "Previous %s"
 msgstr "上一周期 %s"
 
@@ -3318,6 +2334,10 @@ msgstr "私密"
 msgid "Table: Visitors"
 msgstr "表格：访客"
 
+#, fuzzy
+#~ msgid "Visitor details are not available in this package."
+#~ msgstr "此页面没有可用详情。"
+
 #, php-format
 #~ msgid ""
 #~ "%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
@@ -3337,12 +2357,6 @@ msgstr "表格：访客"
 #, fuzzy
 #~ msgid "Reinstall local GeoIP database"
 #~ msgstr "无法更新 GeoIP 数据库。"
-
-#~ msgid "Visitors details are not included in this package."
-#~ msgstr "访客详情在 BimBeau Privacy Analytics Pro 中可用。"
-
-#~ msgid "Page-level details are not included in this package."
-#~ msgstr "页面级详情在 BimBeau Privacy Analytics Pro 中可用。"
 
 #~ msgid "Every 30 days (default)"
 #~ msgstr "每 30 天（默认）"
@@ -3445,12 +2459,6 @@ msgstr "表格：访客"
 #~ msgid "Plugin name (menu and dashboard)"
 #~ msgstr "插件名称（菜单和仪表盘）"
 
-#~ msgid "This panel is not included in this package."
-#~ msgstr "此面板在 BimBeau Privacy Analytics Pro 中可用。"
-
-#~ msgid "City map markers are not included in this package."
-#~ msgstr "城市地图标记在 BimBeau Privacy Analytics Pro 中可用。"
-
 #~ msgid "City map"
 #~ msgstr "城市地图"
 
@@ -3496,3 +2504,4 @@ msgstr "表格：访客"
 #~ "Visits = distinct visitors for the selected location and period. Hits = "
 #~ "tracked page hits."
 #~ msgstr "访问 = 所选位置和时间段内的唯一访客。命中 = 已跟踪的页面命中。"
+

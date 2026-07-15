@@ -17,20 +17,19 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
+#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #. Plugin Name of the plugin
-#: bimbeau-privacy-analytics.php front/pro-app-runtime.php
-#: src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics-analys"
 
-#. Description of the plugin
 #: bimbeau-privacy-analytics.php
+#. Description of the plugin
 msgid "Privacy-friendly, self-hosted analytics for WordPress."
 msgstr "Integritetsvänlig, självhostad statistik för WordPress."
 
-#. Author of the plugin
 #: bimbeau-privacy-analytics.php
+#. Author of the plugin
 msgid "BimBeau"
 msgstr "BimBeau"
 
@@ -41,10 +40,6 @@ msgstr "Uppdatera"
 #: admin/admin.php src/admin/components/ProBadge/index.js
 msgid "Pro"
 msgstr "Pro"
-
-#: admin/admin.php src/admin/components/FreePackageState/index.js
-msgid "Upgrade to Pro"
-msgstr "Uppgradera till Pro"
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -126,17 +121,6 @@ msgstr "Ikongenereringen misslyckades på den här servern."
 msgid "Unknown generation status."
 msgstr "Okänd genereringsstatus."
 
-#: admin/admin.php includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/panels/SearchTermsPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Unknown"
-msgstr "Okänd"
-
 #: admin/admin.php
 msgid "No preview icon URL is available."
 msgstr "Ingen URL för förhandsvisningsikonen är tillgänglig."
@@ -145,14 +129,11 @@ msgstr "Ingen URL för förhandsvisningsikonen är tillgänglig."
 msgid "Dashboard"
 msgstr "Instrumentpanel"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Realtid"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Sidor"
 
@@ -161,9 +142,7 @@ msgstr "Sidor"
 msgid "Acquisition"
 msgstr "Förvärv"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Hänvisande webbplatser"
 
@@ -171,29 +150,19 @@ msgstr "Hänvisande webbplatser"
 msgid "Internal searches"
 msgstr "Interna sökningar"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
-#: src/admin/premium/panels/GeolocationPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Geolokalisering"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Besökare"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/DeviceDetailsCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "Enheter"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -217,26 +186,26 @@ msgstr "Geolokalisering"
 msgid "Later"
 msgstr ""
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "%s overview"
 msgstr "%s sidvisning"
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "%s data is not available for this period."
 msgstr "Ingen data är tillgänglig för den här perioden."
 
-#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
+#. translators: %s: Resolved plugin label shown in the WordPress admin.
 #, fuzzy, php-format
 msgid "View %s dashboard"
 msgstr "Instrumentpanel"
 
-#. translators: 1: Start date, 2: End date for the selected reporting period.
 #: admin/dashboard-widget.php
+#. translators: 1: Start date, 2: End date for the selected reporting period.
 #, php-format
 msgid "Period: %1$s to %2$s"
 msgstr "Period: %1$s till %2$s"
@@ -251,20 +220,11 @@ msgid ""
 msgstr ""
 "Aktivera minst en statistikpanel för att visa KPI-värden i den här widgeten."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Besök"
 
-#: admin/dashboard-widget.php includes/pro-post-key-stats-metabox.php
-#: src/admin/panels/OverviewPanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Sidvisningar"
 
@@ -272,8 +232,7 @@ msgstr "Sidvisningar"
 msgid "Referrers"
 msgstr "Hänvisare"
 
-#: admin/edition-admin-runtime.php src/admin/constants/index.js
-#: src/admin/panels/SettingsPanel.js
+#: admin/edition-admin-runtime.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
 msgid "Events"
 msgstr "Händelser"
 
@@ -302,68 +261,6 @@ msgid ""
 msgstr ""
 "%1$s inaktiverades eftersom endast ett BimBeau Privacy Analytics-paket kan "
 "vara aktivt åt gången. %2$s förblir aktivt."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics front analytics app."
-msgstr "BimBeau Privacy Analytics frontapp för analys."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics sign in"
-msgstr "BimBeau Privacy Analytics-inloggning"
-
-#: front/pro-app-runtime.php
-msgid ""
-"Sign in with a WordPress account that can access BimBeau Privacy Analytics "
-"analytics."
-msgstr ""
-"Logga in med ett WordPress-konto som har åtkomst till BimBeau Privacy "
-"Analytics-analys."
-
-#: front/pro-app-runtime.php
-msgid "Username or email"
-msgstr "Användarnamn eller e-post"
-
-#: front/pro-app-runtime.php
-msgid "Password"
-msgstr "Lösenord"
-
-#: front/pro-app-runtime.php
-msgid "Remember me"
-msgstr "Kom ihåg mig"
-
-#: front/pro-app-runtime.php
-msgid "Sign in"
-msgstr "Logga in"
-
-#: front/pro-app-runtime.php
-msgid "Open WordPress login"
-msgstr "Öppna WordPress-inloggning"
-
-#: front/pro-app-runtime.php
-msgid "Authentication failed. Verify credentials and access policy."
-msgstr ""
-"Autentisering misslyckades. Kontrollera inloggningsuppgifter och "
-"åtkomstpolicy."
-
-#: front/pro-app-runtime.php
-msgid "Custom login flow is unavailable in this environment."
-msgstr "Anpassat inloggningsflöde är inte tillgängligt i den här miljön."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics App is available in not included."
-msgstr "BimBeau Privacy Analytics-appen är endast tillgänglig i Pro."
-
-#: front/pro-app-runtime.php
-msgid "You are not allowed to access this page."
-msgstr "Du har inte behörighet att komma åt den här sidan."
-
-#: front/pro-app-runtime.php
-msgid "BimBeau Privacy Analytics icon"
-msgstr "BimBeau Privacy Analytics-ikon"
-
-#: front/pro-app-runtime.php
-msgid "Loading analytics workspace…"
-msgstr "Laddar analysarbetsyta…"
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -417,167 +314,35 @@ msgstr "Ingen geolokaliseringspost hittades för denna IP-adress."
 msgid "Unable to determine the visitor IP."
 msgstr "Det går inte att fastställa besökarens IP-adress."
 
-#: includes/pro-auth-controller.php
-msgid "Custom login flow is blocked by policy."
-msgstr "Anpassat inloggningsflöde blockeras av policyn."
-
-#: includes/pro-auth-controller.php
-msgid "Invalid login request."
-msgstr "Ogiltig inloggningsbegäran."
-
-#: includes/pro-auth-controller.php
-msgid "The authenticated account cannot access BimBeau Privacy Analytics."
-msgstr "Det autentiserade kontot kan inte komma åt BimBeau Privacy Analytics."
-
-#: includes/pro-auth-controller.php
-msgid "Authentication failed. Verify credentials and retry."
-msgstr ""
-"Autentisering misslyckades. Kontrollera inloggningsuppgifterna och försök "
-"igen."
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Stats"
 msgstr "Statistik"
 
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Summary"
-msgstr "Sammanfattning"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/constants/index.js
+#: src/admin/constants/index.js
 msgid "30 days"
 msgstr "30 dagar"
 
-#: includes/pro-post-key-stats-metabox.php includes/pro-post-views-column.php
-msgid "View page details"
-msgstr "Visa sidinformation"
-
-#. translators: %s: Formatted average time spent on the page.
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-#, php-format
-msgid "Avg. time on page: %s"
-msgstr "Genomsnittlig tid på sidan: %s"
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "Visitor profile"
-msgstr "Besökarprofil"
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "No visitor profile data available for this period."
-msgstr "Ingen besökarprofildata är tillgänglig för den här perioden."
-
-#: includes/pro-post-key-stats-metabox.php
-msgid "Plus de stats"
-msgstr "Mer statistik"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "Land"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Webbläsare"
-
-#: includes/pro-post-key-stats-metabox.php
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "System"
-msgstr "System"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Enhet"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Skrivbord"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-msgid "Mobile"
-msgstr "Mobil"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/panels/FreePackagePanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Surfplatta"
-
-#: includes/pro-post-key-stats-metabox.php src/admin/lib/channelLabels.js
+#: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Övrigt"
-
-#. translators: %d: Number of seconds.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%ds"
-msgstr "%ds"
-
-#. translators: 1: Number of minutes, 2: Number of seconds.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%1$dm %2$ds"
-msgstr "%1$dm %2$ds"
-
-#. translators: 1: Number of hours, 2: Number of minutes.
-#: includes/pro-post-key-stats-metabox.php
-#, php-format
-msgid "%1$dh %2$dm"
-msgstr "%1$dh %2$dm"
-
-#. translators: %s: Selected reporting period label.
-#: includes/pro-post-views-column.php
-#, php-format
-msgid "Views (%s)"
-msgstr "Visningar (%s)"
-
-#: includes/pro-post-views-column.php
-msgid "Views trend"
-msgstr "Visningstrend"
-
-#: includes/pro-settings.php
-msgid "KPI slot must be a numeric integer greater than or equal to 2."
-msgstr ""
-"KPI-platsen måste vara ett numeriskt heltal större än eller lika med 2."
-
-#: includes/pro-settings.php
-msgid ""
-"KPI slot format is invalid. Use only a numeric integer greater than or equal "
-"to 2."
-msgstr ""
-"Formatet för KPI-platsen är ogiltigt. Använd endast ett numeriskt heltal "
-"större än eller lika med 2."
 
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics-rensning av råloggar"
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "Den här analyspanelen är inaktiverad för navigering."
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php rest/pro-routes.php
+#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
 msgid "Authentication is required to access analytics data."
 msgstr "Autentisering krävs för att komma åt analysdata."
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "Anslutningen till MaxMind lyckades."
 
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
 msgid "GeoIP database updated successfully."
 msgstr "GeoIP-databasen uppdaterades."
 
@@ -588,142 +353,6 @@ msgstr "GeoIP-databasen är tillgänglig."
 #: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is not available yet."
 msgstr "GeoIP-databasen är inte tillgänglig än."
-
-#: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Unknown country"
-msgstr "Okänt land"
-
-#: includes/rest/class-bbpa-admin-pro-controller.php
-msgid "Missing page path."
-msgstr "Sidans sökväg saknas."
-
-#: includes/rest/removed-export-controller.php
-msgid "Authentication is required to export analytics data."
-msgstr "Autentisering krävs för att exportera analysdata."
-
-#: includes/rest/removed-export-controller.php
-msgid "Report exports are not included in this package."
-msgstr "Rapportexporter är tillgängliga i BimBeau Privacy Analytics Pro."
-
-#: includes/rest/removed-export-controller.php
-msgid "You do not have permission to export analytics data."
-msgstr "Du har inte behörighet att exportera analysdata."
-
-#: includes/rest/removed-export-controller.php
-msgid "A valid request nonce is required to export analytics data."
-msgstr "En giltig nonce för begäran krävs för att exportera analysdata."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export format must be csv, json, or xlsx."
-msgstr "Exportformatet måste vara csv, json eller xlsx."
-
-#. translators: %d: maximum export row count.
-#: includes/rest/removed-export-controller.php
-#: src/admin/premium/components/ReportExportAction/index.js
-#, php-format
-msgid ""
-"The export exceeds the %d row limit. Narrow the date range or search filter, "
-"then try again."
-msgstr ""
-"Exporten överskrider gränsen på %d rader. Begränsa datumintervallet eller "
-"sökfiltret och försök igen."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report cannot be exported."
-msgstr "Den valda rapporten kan inte exporteras."
-
-#. translators: %d: synchronous export threshold row count.
-#: includes/rest/removed-export-controller.php
-#, php-format
-msgid ""
-"The export is larger than the %d row synchronous threshold. Request async "
-"mode and poll the job status endpoint."
-msgstr ""
-"Exporten är större än den synkrona gränsen på %d rader. Begär asynkront läge "
-"och kontrollera jobbets statusendpoint."
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export file is no longer available. Create a new export job and try "
-"again."
-msgstr ""
-"Exportfilen är inte längre tillgänglig. Skapa ett nytt exportjobb och försök "
-"igen."
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export file is not ready yet. Check the job status endpoint before "
-"downloading."
-msgstr ""
-"Exportfilen är inte klar än. Kontrollera jobbets statusendpoint före "
-"nedladdning."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report is not available for export."
-msgstr "Den valda rapporten är inte tillgänglig för export."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report does not expose file export rows."
-msgstr "Den valda rapporten tillhandahåller inga rader för filexport."
-
-#: includes/rest/removed-export-controller.php
-msgid "The selected report does not expose exportable columns."
-msgstr "Den valda rapporten tillhandahåller inga exporterbara kolumner."
-
-#: includes/rest/removed-export-controller.php
-msgid "The CSV export could not be generated."
-msgstr "CSV-exporten kunde inte genereras."
-
-#: includes/rest/removed-export-controller.php
-msgid "The Excel export could not be generated."
-msgstr "Excel-exporten kunde inte genereras."
-
-#: includes/rest/removed-export-controller.php
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid ""
-"Excel export requires the PHP Zip extension to be installed on this server."
-msgstr ""
-"Excel-export kräver att PHP Zip-tillägget är installerat på den här servern."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job could not be created. Try again later."
-msgstr "Exportjobbet kunde inte skapas. Försök igen senare."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export storage directory is unavailable."
-msgstr "Lagringsmappen för export är inte tillgänglig."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export storage path is invalid."
-msgstr "Lagringssökvägen för export är ogiltig."
-
-#: includes/rest/removed-export-controller.php
-msgid "The JSON export could not be generated."
-msgstr "JSON-exporten kunde inte genereras."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export file could not be written."
-msgstr "Exportfilen kunde inte skrivas."
-
-#: includes/rest/removed-export-controller.php
-msgid ""
-"The export could not be generated. Try again later or narrow the export "
-"filters."
-msgstr ""
-"Exporten kunde inte genereras. Försök igen senare eller begränsa "
-"exportfiltren."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job was not found."
-msgstr "Exportjobbet hittades inte."
-
-#: includes/rest/removed-export-controller.php
-msgid "The export job was not found or has expired."
-msgstr "Exportjobbet hittades inte eller har löpt ut."
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -745,11 +374,6 @@ msgstr "Ogiltig tidsintervallgrupp."
 msgid "Invalid visit identifier."
 msgstr "Ogiltig besöksidentifierare."
 
-#: includes/rest/class-bbpa-report-controller.php
-#, fuzzy
-msgid "Visitor details are not available in this package."
-msgstr "Inga detaljer tillgängliga för den här sidan."
-
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
 msgstr "Lokalt databasläge krävs för att uppdatera GeoIP-databasen."
@@ -759,14 +383,14 @@ msgid "Unable to create a temporary file for the GeoIP database download."
 msgstr ""
 "Det går inte att skapa en tillfällig fil för nedladdning av GeoIP-databasen."
 
-#. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %s: HTTP error message returned by wp_remote_get.
 #, php-format
 msgid "GeoIP database download failed: %s"
 msgstr "Nedladdning av GeoIP-databasen misslyckades: %s"
 
-#. translators: %d: HTTP status code returned by the GeoIP download request.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %d: HTTP status code returned by the GeoIP download request.
 #, php-format
 msgid "GeoIP database download failed with HTTP status %d."
 msgstr "Nedladdning av GeoIP-databasen misslyckades med HTTP-status %d."
@@ -784,14 +408,14 @@ msgstr ""
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "GeoIP-databasen är inte tillgänglig än."
 
-#. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %s: HTTP error message returned by wp_remote_get.
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "Nedladdning av GeoIP-databasen misslyckades: %s"
 
-#. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #: includes/services/class-bbpa-geoip-database-updater.php
+#. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "Nedladdning av GeoIP-databasen misslyckades med HTTP-status %d."
@@ -870,14 +494,14 @@ msgstr "Det går inte att skapa en tillfällig fil för GeoIP-åtgärder."
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "Det går inte att skapa en tillfällig arbetsyta för GeoIP-extrahering."
 
-#. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #: includes/services/class-bbpa-maxmind-service.php
+#. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "MaxMind API-fel (%1$s): %2$s."
 
-#. translators: %s: MaxMind API response code.
 #: includes/services/class-bbpa-maxmind-service.php
+#. translators: %s: MaxMind API response code.
 #, php-format
 msgid "MaxMind API error (%s)."
 msgstr "MaxMind API-fel (%s)."
@@ -885,29 +509,6 @@ msgstr "MaxMind API-fel (%s)."
 #: includes/services/class-bbpa-maxmind-service.php
 msgid "Invalid MaxMind API response."
 msgstr "Ogiltigt svar från MaxMind API."
-
-#: includes/settings.php
-msgid "The selected PWA icon must be at least 512x512 pixels."
-msgstr "Den valda PWA-ikonen måste vara minst 512x512 pixlar."
-
-#: includes/settings.php
-msgid "The selected PWA icon file cannot be read."
-msgstr "Den valda PWA-ikonfilen kan inte läsas."
-
-#: includes/settings.php
-msgid ""
-"WordPress image editor cannot generate PWA icons from the selected source."
-msgstr ""
-"WordPress bildredigerare kan inte generera PWA-ikoner från den valda källan."
-
-#: includes/settings.php
-msgid "WordPress image editor cannot resize the selected PWA icon source."
-msgstr ""
-"WordPress bildredigerare kan inte ändra storlek på den valda PWA-ikonkällan."
-
-#: includes/settings.php
-msgid "WordPress image editor cannot save generated PWA PNG icons."
-msgstr "WordPress bildredigerare kan inte spara genererade PWA PNG-ikoner."
 
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID is required."
@@ -929,17 +530,13 @@ msgstr "MaxMind-uppgifter krävs för att aktivera IP-geolokalisering."
 msgid "Statistics"
 msgstr "Statistik"
 
-#: includes/settings.php
-msgid "Select a media library image to generate PWA PNG icons."
-msgstr "Välj en bild från mediabiblioteket för att generera PWA PNG-ikoner."
-
-#. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
 msgid "%s Visitor"
 msgstr "%s besökare"
 
-#. translators: %s: active real-time visitor count.
 #: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
 msgid "%s Visitors"
 msgstr "%s besökare"
 
@@ -1064,29 +661,29 @@ msgstr "Stäng avisering"
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
 msgstr "BimBeau Privacy Analytics kan inte ladda administratörsgränssnittet."
 
-#. translators: %s: current admin panel and page label.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: current admin panel and page label.
 msgid "Panel/page: %s"
 msgstr "Panel/sida: %s"
 
-#. translators: %s: React component name detected as undefined.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: React component name detected as undefined.
 msgid "Component undefined: %s"
 msgstr "Komponent odefinierad: %s"
 
-#. translators: %s: React component name detected as undefined.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: React component name detected as undefined.
 msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
 msgstr ""
 "Möjlig Gutenberg/@wordpress/components-inkompatibilitet: %s odefinierad"
 
-#. translators: %s: comma-separated WordPress script handles checked while debugging.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: comma-separated WordPress script handles checked while debugging.
 msgid "Script handles checked: %s"
 msgstr "Kontrollerade skripthandtag: %s"
 
-#. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
 #: src/admin/components/AdminErrorBoundary/index.js
+#. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
 msgid "Global namespaces checked: %s"
 msgstr "Kontrollerade globala namnrymder: %s"
 
@@ -1151,8 +748,7 @@ msgstr ""
 "BimBeau Privacy Analytics tillhandahåller endast teknisk diagnostik. Din CMP "
 "är fortsatt sanningskällan för samtyckesflöden."
 
-#: src/admin/components/DataState/index.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
 msgstr "Laddar…"
 
@@ -1164,8 +760,8 @@ msgstr "Endpoint:"
 msgid "Response preview:"
 msgstr "Förhandsvisning av svar:"
 
-#. translators: %s: card title.
 #: src/admin/components/DataTableCard/index.js
+#. translators: %s: card title.
 msgid "Loading: %s"
 msgstr "Laddar: %s"
 
@@ -1209,24 +805,6 @@ msgstr "Ange MaxMind-uppgifter"
 msgid "Traffic data is pending"
 msgstr "Trafikdata väntar"
 
-#: src/admin/components/PageDetailsHeatMap/index.js
-msgid "No hourly details available for this page."
-msgstr "Inga timvisa detaljer är tillgängliga för den här sidan."
-
-#: src/admin/components/PageDetailsHeatMap/index.js
-msgid "Page details heatmap by day and hour"
-msgstr "Heatmap för sidinformation per dag och timme"
-
-#: src/admin/components/FreePackageState/index.js
-msgid "BimBeau Privacy Analytics Pro feature preview"
-msgstr "Förhandsvisning av BimBeau Privacy Analytics Pro-funktion"
-
-#: src/admin/components/FreePackageState/index.js
-#: src/admin/components/FreePackageCard/index.js
-#: src/admin/panels/SettingsPanel.js
-msgid "This feature is not included in this package."
-msgstr "Den här funktionen är tillgänglig i BimBeau Privacy Analytics Pro."
-
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "Körningsdiagnostik för integritet"
@@ -1239,32 +817,7 @@ msgstr "Körningsgranularitet rapporteras från tillgängliga granulariteter."
 msgid "Technical state does not prove consent collection validity."
 msgstr "Teknisk status bevisar inte att samtyckesinsamlingen är giltig."
 
-#: src/admin/components/FreePackageCard/index.js
-msgid "PWA Stats App"
-msgstr "PWA-statistikapp"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "PWA URL"
-msgstr "PWA-URL"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "Use this URL to open the standalone analytics app."
-msgstr "Använd denna URL för att öppna den fristående analysappen."
-
-#: src/admin/components/FreePackageCard/index.js
-#: src/admin/panels/FreePackagePanel.js
-msgid "Copy URL"
-msgstr "Kopiera URL"
-
-#: src/admin/components/FreePackageCard/index.js
-msgid "Open PWA"
-msgstr "Öppna PWA"
-
-#: src/admin/components/ReferrerLabel/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
-#: src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Direkttrafik"
 
@@ -1280,13 +833,13 @@ msgstr "Zooma ut kartan"
 msgid "Reset map zoom"
 msgstr "Återställ kartzoom"
 
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
 #: src/admin/components/WorldMap/index.js
+#. translators: 1: location label, 2: visit count, 3: approximation suffix.
 msgid "%1$s: %2$s visits%3$s"
 msgstr "%1$s: %2$s besök%3$s"
 
-#. translators: %s: approximation scope label.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: approximation scope label.
 msgid " (%s)"
 msgstr " (%s)"
 
@@ -1318,20 +871,20 @@ msgstr ""
 "Inga geolokaliserade besök är tillgängliga. Kontrollera dina "
 "geolokaliseringsinställningar för att börja samla in landsdata."
 
-#. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: visitor count.
 #, fuzzy
 msgid "%s visitors"
 msgstr "%s besökare"
 
-#. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: share of total visitors.
 #, fuzzy
 msgid "%s of total visitors"
 msgstr "%s av totala besök"
 
-#. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
+#. translators: %s: visit count.
 msgid "%s visits"
 msgstr "%s besök"
 
@@ -1407,13 +960,11 @@ msgstr "24m"
 msgid "24 months"
 msgstr "24 månader"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "Url"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "No popular pages available."
 msgstr "Inga populära sidor tillgängliga."
 
@@ -1421,9 +972,7 @@ msgstr "Inga populära sidor tillgängliga."
 msgid "Top referrers"
 msgstr "Topp-hänvisare"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "Hänvisare"
 
@@ -1475,103 +1024,10 @@ msgstr "Ungefärlig position"
 msgid "Approximate city"
 msgstr "Ungefärlig stad"
 
-#. translators: %d: geolocation accuracy radius in kilometers.
 #: src/admin/lib/locationLabel.js
+#. translators: %d: geolocation accuracy radius in kilometers.
 msgid "Approx. %d km"
 msgstr "Cirka %d km"
-
-#: src/admin/lib/locationLabel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No available"
-msgstr "Inte tillgängligt"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Monday"
-msgstr "Måndag"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Mon"
-msgstr "Mån"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Tuesday"
-msgstr "Tisdag"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Tue"
-msgstr "Tis"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Wednesday"
-msgstr "Onsdag"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Wed"
-msgstr "Ons"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Thursday"
-msgstr "Torsdag"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Thu"
-msgstr "Tor"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Friday"
-msgstr "Fredag"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Fri"
-msgstr "Fre"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Saturday"
-msgstr "Lördag"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sat"
-msgstr "Lör"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sunday"
-msgstr "Söndag"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Sun"
-msgstr "Sön"
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "Hourly heatmaps are unavailable for pages not found (404)."
-msgstr ""
-"Timvisa heatmaps är inte tillgängliga för sidor som inte hittades (404)."
-
-#: src/admin/lib/pageDetailsHeatmap.js
-#, fuzzy
-msgid ""
-"Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
-msgstr ""
-"Timvisa heatmaps är inaktiverade av filtret bpa_hourly_aggregation_enabled."
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid ""
-"Hourly heatmaps are unavailable because the hourly aggregation table is "
-"missing."
-msgstr ""
-"Timvisa heatmaps är inte tillgängliga eftersom tabellen för timvis "
-"aggregering saknas."
-
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid ""
-"Hourly heatmaps require hourly page aggregation data for the selected source."
-msgstr ""
-"Timvisa heatmaps kräver timvis sidaggregeringsdata för den valda källan."
-
-#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
-#: src/admin/lib/pageDetailsHeatmap.js
-msgid "%1$s at %2$s — %3$s: %4$s"
-msgstr "%1$s kl. %2$s — %3$s: %4$s"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1587,364 +1043,45 @@ msgstr "Ingen besökarprofildata är tillgänglig för den här perioden."
 msgid "Table: Acquisition channels"
 msgstr "Tabell: Besökare"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/FreePackagePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr ""
-
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr ""
 
-#. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
+#. translators: %s: Total visits in the selected range.
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "%s av totala besök"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Bot"
-msgstr "Bot"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Slot"
-msgstr "Plats"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "KPI slot is invalid and must be an integer greater than or equal to 2."
-msgstr ""
-"KPI-platsen är ogiltig och måste vara ett heltal större än eller lika med 2."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Snippet cannot be empty."
-msgstr "Kodsnutten får inte vara tom."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Snippet syntax looks valid."
-msgstr "Kodsnuttens syntax verkar giltig."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "All events"
-msgstr "Alla händelser"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Loading events configuration…"
-msgstr "Laddar händelsekonfiguration…"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Events configuration is locked in the Free tier. Upgrade to Pro to save and "
-"run actions."
-msgstr ""
-"Händelsekonfigurationen är låst i gratisnivån. Uppgradera till Pro för att "
-"spara och köra åtgärder."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Some saved KPI slot values are invalid. Use only numeric slots greater than "
-"or equal to 2."
-msgstr ""
-"Vissa sparade KPI-platsvärden är ogiltiga. Använd endast numeriska platser "
-"större än eller lika med 2."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"KPI slot conflicts detected. Each active KPI slot must be unique before "
-"saving."
-msgstr ""
-"Konflikter mellan KPI-platser upptäcktes. Varje aktiv KPI-plats måste vara "
-"unik innan du sparar."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Reorder KPI event"
-msgstr "Ändra ordning på KPI-händelse"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Include in KPI"
-msgstr "Inkludera i KPI"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Enable event"
-msgstr "Aktivera händelse"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event ID"
-msgstr "Händelse-ID"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Label (max 25 characters)"
-msgstr "Etikett (max 25 tecken)"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Trigger type"
-msgstr "Utlösartyp"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Click"
-msgstr "Klick"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Page view"
-msgstr "Sidvisning"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "CSS selectors"
-msgstr "CSS-selektorer"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Add one or more CSS selectors as tags to target clickable elements, for "
-"example .cta-button or #signup."
-msgstr ""
-"Lägg till en eller flera CSS-selektorer som taggar för att rikta in "
-"klickbara element, till exempel .cta-button eller #signup."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Target page"
-msgstr "Målsida"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Search by title across published posts, pages, and public custom post types."
-msgstr ""
-"Sök efter titel bland publicerade inlägg, sidor och publika anpassade "
-"inläggstyper."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Webhook triggers are server-side. Browser JavaScript snippets are not "
-"executed for this trigger."
-msgstr ""
-"Webhook-utlösare är serversidiga. JavaScript-snippets i webbläsaren körs "
-"inte för den här utlösaren."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Webhook URL"
-msgstr "Webhook-URL"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Regenerate token"
-msgstr "Generera om token"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Generate token"
-msgstr "Generera token"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Allowed webhook params"
-msgstr "Tillåtna webhook-parametrar"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Comma-separated allowlist for incoming webhook payload keys. Only "
-"allowlisted variables are stored and shown in event context."
-msgstr ""
-"Kommaseparerad tillåtelselista för nycklar i inkommande webhook-payloads. "
-"Endast tillåtna variabler sparas och visas i händelsekontexten."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Action"
-msgstr "Åtgärd"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Server action template"
-msgstr "Mall för serveråtgärd"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "JavaScript snippet"
-msgstr "JavaScript-snippet"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Configure a server-side action payload template for incoming webhook events. "
-"Browser JavaScript APIs are not available for this trigger."
-msgstr ""
-"Konfigurera en serversidig payloadmall för inkommande webhook-händelser. "
-"Webbläsarens JavaScript-API:er är inte tillgängliga för den här utlösaren."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid ""
-"Paste JavaScript code (without <script> tags) to run when this event is "
-"triggered. Available placeholders depend on trigger type. Do not wrap "
-"placeholders such as {{page_url}} in quotes. They are injected as escaped "
-"JavaScript values."
-msgstr ""
-"Klistra in JavaScript-kod (utan <script>-taggar) som ska köras när den här "
-"händelsen utlöses. Tillgängliga placeholders beror på utlösartyp. Sätt inte "
-"placeholders som {{page_url}} inom citattecken. De injiceras som escapade "
-"JavaScript-värden."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Available variables for this trigger type:"
-msgstr "Tillgängliga variabler för den här utlösartypen:"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Check syntax"
-msgstr "Kontrollera syntax"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Syntax checks are available for browser JavaScript snippets only."
-msgstr ""
-"Syntaxkontroller är endast tillgängliga för JavaScript-snippets i "
-"webbläsaren."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Remove event"
-msgstr "Ta bort händelse"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Add event"
-msgstr "Lägg till händelse"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered events"
-msgstr "Utlösta händelser"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered events captured by the advanced tracker are listed."
-msgstr "Utlösta händelser som fångats av den avancerade spåraren listas."
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Total events"
-msgstr "Totalt antal händelser"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Rows"
-msgstr "Rader"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event"
-msgstr "Händelse"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Sök"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Sök…"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Label"
-msgstr "Etikett"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Event time"
-msgstr "Händelsetid"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Type"
-msgstr "Typ"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Triggered page"
-msgstr "Utlöst sida"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "City"
-msgstr "Stad"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "Operativsystem"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Details"
-msgstr "Detaljer"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "All pages"
-msgstr "Alla sidor"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-msgid "View"
-msgstr "Visa"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "No triggered events found."
-msgstr "Inga utlösta händelser hittades."
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Föregående sida"
-
-#: src/admin/panels/FreePackagePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Nästa sida"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "Sida"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "results"
-msgstr "resultat"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Confirm event removal"
-msgstr "Bekräfta borttagning av händelse"
-
-#: src/admin/panels/FreePackagePanel.js
-msgid "Do you want to remove this event?"
-msgstr "Vill du ta bort den här händelsen?"
-
-#: src/admin/panels/FreePackagePanel.js src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "Avbryt"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
 msgstr "Ingen landsdata är tillgänglig för den valda perioden."
 
-#. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
+#. translators: 1: country name, 2: visitor count.
 #, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s besök"
 
-#. translators: 1: country name, 2: no data label.
 #: src/admin/panels/GeoCountriesPanel.js
+#. translators: 1: country name, 2: no data label.
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "No data"
 msgstr "Ingen data"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Unknown country flag"
 msgstr "Okänd landsflagga"
 
-#. translators: %s: country name.
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
+#. translators: %s: country name.
 msgid "Flag of %s"
 msgstr "Flagga för %s"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/premium/panels/TopPagesPanel.js
 msgid "Top countries"
 msgstr "Toppländer"
 
@@ -1965,24 +1102,22 @@ msgstr "Ingen global timdata är tillgänglig för den här perioden."
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Globala timvisa heatmaps kräver timvis sidaggregeringsdata."
 
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 #, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "Ingen besökardata tillgänglig."
 
-#: src/admin/panels/RealtimePanel.js src/admin/premium/panels/TopPagesPanel.js
+#: src/admin/panels/RealtimePanel.js
 msgid ""
 "Visitor origin will be available after the local GeoIP database is installed "
 "from the plugin geolocation settings."
 msgstr ""
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "Besökar-ID-hash"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Anslutningstid"
 
@@ -1990,14 +1125,11 @@ msgstr "Anslutningstid"
 msgid "Current page"
 msgstr "Aktuell sida"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Webbläsarversion"
 
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/AudienceBreakdownCards/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Resolution"
 msgstr "Upplösning"
 
@@ -2876,241 +2008,85 @@ msgstr "Ingångssidor"
 msgid "Pages not found"
 msgstr "Sidor hittades inte"
 
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Ingen besökardata tillgänglig."
 
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Laddar besökare…"
 
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "No results match the current filters."
-msgstr "Inga resultat matchar de aktuella filtren."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export access is refused for the current account or license."
-msgstr "Exportåtkomst nekas för aktuellt konto eller aktuell licens."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export file could not be generated."
-msgstr "Exportfilen kunde inte genereras."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export is running. The file downloads when ready."
-msgstr "Exporten körs. Filen laddas ned när den är klar."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export is queued. The file downloads when ready."
-msgstr "Exporten står i kö. Filen laddas ned när den är klar."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The completed export is missing a download URL."
-msgstr "Den slutförda exporten saknar en nedladdnings-URL."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export job could not be completed."
-msgstr "Exportjobbet kunde inte slutföras."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export job is missing a status URL."
-msgstr "Exportjobbet saknar en status-URL."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "The export is still running. Try again in a few moments."
-msgstr "Exporten körs fortfarande. Försök igen om en stund."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export report"
-msgstr "Exportera rapport"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export ready. Download started."
-msgstr "Exporten är klar. Nedladdningen har startat."
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export Excel"
-msgstr "Exportera Excel"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export CSV"
-msgstr "Exportera CSV"
-
-#: src/admin/premium/components/ReportExportAction/index.js
-msgid "Export JSON"
-msgstr "Exportera JSON"
-
-#: src/admin/premium/panels/GeoCitiesPanel.js
-#, fuzzy
-#: src/admin/premium/panels/GeoCitiesPanel.js
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#, fuzzy
-#: src/admin/premium/panels/GeoCitiesPanel.js
-msgid "City / Country"
-msgstr "Stad / land"
-
-#: src/admin/premium/panels/GeoCitiesPanel.js
-msgid "Hits"
-msgstr "Träffar"
-
-#: src/admin/premium/panels/GeolocationPanel.js
-msgid "Countries"
-msgstr "Länder"
-
-#: src/admin/premium/panels/GeolocationPanel.js
-msgid "Cities"
-msgstr "Städer"
-
-#: src/admin/premium/panels/PageDetailsGeoCitiesCard.js
-#, fuzzy
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 
-#. translators: 1: formatted date, 2: current metric label, 3: current metric count, 4: visitors label, 5: visitors count, 6: previous metric label, 7: previous metric count, 8: previous visitors label, 9: previous visitors count
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-msgstr "%1$s: %2$s %3$s, %4$s %5$s, %6$s %7$s, %8$s %9$s"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Daily page detail line chart"
-msgstr "Linjediagram för daglig sidinformation"
-
-#. translators: 1: metric label, 2: metric value.
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "%1$s: %2$s"
-msgstr "%1$s: %2$s"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 msgid "Ascending"
 msgstr "Stigande"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 msgid "Descending"
 msgstr "Fallande"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Accueil"
-msgstr "Start"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Back"
-msgstr "Tillbaka"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Open in WordPress"
-msgstr "Öppna i WordPress"
-
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views"
 msgstr "Dagliga sidvisningar"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. page views"
 msgstr "Föreg. sidvisningar"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. visitors"
 msgstr "Föreg. besökare"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "No details available for this page."
-msgstr "Inga detaljer tillgängliga för den här sidan."
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Hourly heatmap"
-msgstr "Timvis heatmap"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Page views list"
-msgstr "Lista över sidvisningar"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Sort by"
 msgstr "Sortera efter"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Date"
-msgstr "Datum"
-
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Display"
 msgstr "Visa"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "URL"
 msgstr "URL"
 
-#: src/admin/premium/panels/TopPagesPanel.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "Titel"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "Table: Page details by date"
-msgstr "Tabell: Sidinformation per datum"
-
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Föregående"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Nästa"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "of"
 msgstr "av"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "items"
 msgstr "objekt"
 
-#: src/admin/premium/panels/TopPagesPanel.js
-msgid "No country data available."
-msgstr "Ingen landsdata tillgänglig."
-
-#. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: page views count.
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s sidvisning"
 msgstr[1] "%s sidvisningar"
 
-#. translators: %s: percentage value.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: percentage value.
 msgid "%1$s%% share"
 msgstr "%1$s%% andel"
 
-#. translators: %s: total page views in the selected range.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#. translators: %s: total page views in the selected range.
 msgid "Based on %s tracked page views in the selected range."
 msgstr "Baserat på %s spårade sidvisningar i det valda intervallet."
 
@@ -3170,8 +2146,8 @@ msgstr "Webbläsarversioner"
 msgid "Aucune donnée identifiée disponible pour cette période."
 msgstr ""
 
-#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 #: src/admin/widgets/DeviceDetailsCard/index.js
+#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 msgid ""
 "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues "
 "suivies."
@@ -3242,8 +2218,8 @@ msgstr "Genomsnittlig aktiv tid under ett besök."
 msgid "Custom"
 msgstr "Anpassad"
 
-#. translators: 1: start date, 2: end date.
 #: src/admin/widgets/PeriodFilter/index.js
+#. translators: 1: start date, 2: end date.
 msgid "%1$s – %2$s"
 msgstr "%1$s – %2$s"
 
@@ -3251,9 +2227,8 @@ msgstr "%1$s – %2$s"
 msgid "Quick ranges"
 msgstr "Snabbintervall"
 
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
 #. translators: %s: current sort order label.
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Toggle sort order"
 msgstr "Växla sorteringsordning"
 
@@ -3274,13 +2249,13 @@ msgstr "Ingen data om hänvisande webbplatser tillgänglig."
 msgid "Loading referring sites…"
 msgstr "Laddar hänvisande webbplatser…"
 
-#. translators: %s: active first-column label.
 #: src/admin/widgets/ReportTableCard/index.js
+#. translators: %s: active first-column label.
 msgid "label"
 msgstr "etikett"
 
-#. translators: %s: table title.
 #: src/admin/widgets/ReportTableCard/index.js
+#. translators: %s: table title.
 msgid "Table"
 msgstr "Tabell"
 
@@ -3340,8 +2315,8 @@ msgid_plural "visitors"
 msgstr[0] "besökare"
 msgstr[1] "besökare"
 
-#. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 msgid ""
 "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous "
 "visitors %5$s"
@@ -3349,43 +2324,43 @@ msgstr ""
 "%1$s: Sidvisningar %2$s, besökare %3$s, tidigare sidvisningar %4$s, tidigare "
 "besökare %5$s"
 
-#. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 msgid "%1$s: Current %2$s, Previous %3$s"
 msgstr "%1$s: Aktuellt %2$s, föregående %3$s"
 
-#. translators: 1: formatted date, 2: page view count, 3: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: formatted date, 2: page view count, 3: visitor count
 msgid "%1$s: %2$s, %3$s"
 msgstr "%1$s: %2$s, %3$s"
 
-#. translators: 1: page view count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: page view count
 msgid "Page views: %1$s"
 msgstr "Sidvisningar: %1$s"
 
-#. translators: 1: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: visitor count
 msgid "Visitors: %1$s"
 msgstr "Besökare: %1$s"
 
-#. translators: 1: previous page view count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous page view count
 msgid "Previous page views: %1$s"
 msgstr "Tidigare sidvisningar: %1$s"
 
-#. translators: 1: previous visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous visitor count
 msgid "Previous visitors: %1$s"
 msgstr "Tidigare besökare: %1$s"
 
-#. translators: 1: current metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: current metric count
 msgid "Current: %1$s"
 msgstr "Aktuellt: %1$s"
 
-#. translators: 1: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: previous metric count
 msgid "Previous: %1$s"
 msgstr "Föregående: %1$s"
 
@@ -3397,13 +2372,13 @@ msgstr "Ingen data är tillgänglig för den här perioden."
 msgid "Loading chart…"
 msgstr "Laddar diagram…"
 
-#. translators: 1: metric label
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: metric label
 msgid "Current %s"
 msgstr "Aktuellt %s"
 
-#. translators: 1: metric label
 #: src/admin/widgets/TimeseriesChart/index.js
+#. translators: 1: metric label
 msgid "Previous %s"
 msgstr "Föregående %s"
 
@@ -3428,6 +2403,10 @@ msgstr "Privat"
 msgid "Table: Visitors"
 msgstr "Tabell: Besökare"
 
+#, fuzzy
+#~ msgid "Visitor details are not available in this package."
+#~ msgstr "Inga detaljer tillgängliga för den här sidan."
+
 #, php-format
 #~ msgid ""
 #~ "%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
@@ -3449,13 +2428,6 @@ msgstr "Tabell: Besökare"
 #, fuzzy
 #~ msgid "Reinstall local GeoIP database"
 #~ msgstr "Det går inte att uppdatera GeoIP-databasen."
-
-#~ msgid "Visitors details are not included in this package."
-#~ msgstr "Besökaruppgifter är tillgängliga i BimBeau Privacy Analytics Pro."
-
-#~ msgid "Page-level details are not included in this package."
-#~ msgstr ""
-#~ "Detaljer på sidnivå är tillgängliga i BimBeau Privacy Analytics Pro."
 
 #~ msgid "Every 30 days (default)"
 #~ msgstr "Var 30:e dag (standard)"
@@ -3566,13 +2538,6 @@ msgstr "Tabell: Besökare"
 #~ msgid "Plugin name (menu and dashboard)"
 #~ msgstr "Tilläggsnamn (meny och instrumentpanel)"
 
-#~ msgid "This panel is not included in this package."
-#~ msgstr "Den här panelen är tillgänglig i BimBeau Privacy Analytics Pro."
-
-#~ msgid "City map markers are not included in this package."
-#~ msgstr ""
-#~ "Stadsmarkörer på kartan är tillgängliga i BimBeau Privacy Analytics Pro."
-
 #~ msgid "City map"
 #~ msgstr "Stadskarta"
 
@@ -3628,3 +2593,4 @@ msgstr "Tabell: Besökare"
 
 #~ msgid "Upgrade"
 #~ msgstr "Uppgradera"
+

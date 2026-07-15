@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.30
+Stable tag: 8.45.40
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -116,7 +116,6 @@ Build configuration is maintained in `webpack.config.js`. Asset sources are mapp
 * `assets/js/style-admin.js` and generated admin CSS are built from `src/admin/style.scss`.
 * `assets/js/bbpa-essential-tracker.js` is maintained as readable source in `assets/js/bbpa-essential-tracker.js`.
 * `assets/js/bbpa-advanced-tracker.js` is maintained as readable source in `assets/js/bbpa-advanced-tracker.js`.
-* `assets/js/bbpa-event-registry.js` is maintained as readable source in `assets/js/bbpa-event-registry.js`.
 
 == Installation ==
 
@@ -219,5 +218,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.30 =
-* Fix Free package validation for JSX source files.
+= 8.45.40 =
+* Fix the public Free source export URL boundary and rebuild check.

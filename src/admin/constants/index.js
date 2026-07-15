@@ -16,7 +16,6 @@ export const DEFAULT_PANELS = [
 ];
 
 export const DEFAULT_SETTINGS = {
-	white_label_enabled: false,
 	respect_dnt_gpc: true,
 	url_strip_query: true,
 	url_query_allowlist: [
@@ -43,11 +42,6 @@ export const DEFAULT_SETTINGS = {
 	geoip_update_frequency: 'disabled',
 	maxmind_account_id: '',
 	maxmind_license_key: '',
-	pwa_icon_url: '',
-	pwa_icon_attachment_id: 0,
-	pwa_icon_generation_status: 'fallback',
-	pwa_icon_generation_message: '',
-	pwa_theme_color: '#ffffff',
 	visit_identifier_window_seconds: 1800,
 	pro_content_stats_post_types: [ 'post', 'page' ],
 	disabled_panels: [],

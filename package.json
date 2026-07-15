@@ -1,6 +1,6 @@
 {
   "name": "bimbeau-privacy-analytics",
-  "version": "8.45.30",
+  "version": "8.45.40",
   "private": true,
   "license": "GPL-3.0-or-later",
   "description": "BimBeau Privacy Analytics WordPress plugin assets.",
@@ -27,11 +27,13 @@
     "check:i18n-mo": "node scripts/check-i18n-mo-files.js",
     "check:i18n-json": "node scripts/check-i18n-json-files.js",
     "build:assets": "wp-scripts build --stats-error-details",
-    "check:free-package": "node --test scripts/__tests__/free-package-compliance.test.js",
+    "check:free-package": "npm run check:free-package:unit && npm run check:free-package:integration",
     "check:freemius-free-zip": "node scripts/verify-freemius-free-zip.js",
     "check:freemius-source-package": "node scripts/audit-freemius-source-package.js",
     "check:shared-source-boundary": "node scripts/validate-shared-source-boundary.js",
-    "check:public-source-export": "tmp=$(mktemp -d) && trap 'rm -rf \"$tmp\"' EXIT && bash scripts/export-public-free-source.sh \"$tmp\" && test ! -e \"$tmp/.freemius-sdk\""
+    "check:public-source-export": "node scripts/check-public-source-export.js",
+    "check:free-package:unit": "BBPA_FREE_PACKAGE_TEST_SUITE=unit node --test scripts/__tests__/free-package-unit.test.js scripts/__tests__/free-package-compliance.test.js",
+    "check:free-package:integration": "BBPA_FREE_PACKAGE_TEST_SUITE=integration node --test scripts/__tests__/free-package-compliance.test.js"
   },
   "dependencies": {
     "@nivo/bar": "^0.99.0",

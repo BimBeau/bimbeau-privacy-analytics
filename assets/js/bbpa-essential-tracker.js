@@ -236,20 +236,30 @@
         return noTrailingSlash === '' ? '/' : noTrailingSlash;
     }
 
-    function isFrontAppShellPath(rawPath) {
-        const normalizedPath = normalizeTrackerPath(rawPath);
-        const appBasePath = '/bbpa';
+    function getTrackerExcludedPaths(settings) {
+        const source = settings || root.BBPATracker || {};
+        if (!source || !Array.isArray(source.trackerExcludedPaths)) {
+            return [];
+        }
 
-        return normalizedPath === appBasePath || normalizedPath.indexOf(appBasePath + '/') === 0;
+        return source.trackerExcludedPaths
+            .filter(function (path) {
+                return typeof path === 'string' && path.trim() !== '';
+            })
+            .map(normalizeTrackerPath);
+    }
+
+    function isExcludedTrackerPath(rawPath, settings) {
+        const normalizedPath = normalizeTrackerPath(rawPath);
+        return getTrackerExcludedPaths(settings).some(function (excludedPath) {
+            return normalizedPath === excludedPath || normalizedPath.indexOf(excludedPath + '/') === 0;
+        });
     }
 
     function shouldSkipTrackingForFrontAppShell(settings) {
         const source = settings || root.BBPATracker || {};
-        if (source && source.isFrontAppShell === true) {
-            return true;
-        }
 
-        return isFrontAppShellPath(resolvePagePath(source));
+        return isExcludedTrackerPath(resolvePagePath(source), source);
     }
 
     function getTimestampBucket(now, bucketSizeSeconds) {
@@ -671,7 +681,6 @@
             if (shouldSkipTrackingForFrontAppShell(settings)) {
                 debugLog(settings, 'Essential tracking skipped on front app shell', {
                     pagePath: resolvePagePath(settings),
-                    isFrontAppShell: !!(settings && settings.isFrontAppShell),
                 });
                 return;
             }
@@ -753,7 +762,7 @@
         resolveIdempotenceState: resolveIdempotenceState,
         incrementIdempotency: incrementIdempotency,
         createHitCorrelationSeed: createHitCorrelationSeed,
-        isFrontAppShellPath: isFrontAppShellPath,
+        isExcludedTrackerPath: isExcludedTrackerPath,
         shouldSkipTrackingForFrontAppShell: shouldSkipTrackingForFrontAppShell,
     };
 

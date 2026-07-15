@@ -13,7 +13,6 @@ const BBPA_LEGACY_PRIVACY_OPTIONS_CLEANUP_COMPLETED = 'bbpa_legacy_privacy_optio
 const BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_MIN = 300;
 const BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_MAX = 86400;
 const BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_DEFAULT = 1800;
-const BBPA_PWA_ICON_MIN_SIZE = 512;
 const BBPA_ALLOWED_DISABLED_PANEL_IDS = [
     'realtime',
     'top-pages',
@@ -105,12 +104,6 @@ function bbpa_get_settings_defaults(): array
         'maxmind_account_id' => '',
         'maxmind_license_key' => '',
         'visit_identifier_window_seconds' => BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_DEFAULT,
-        'pwa_icon_url' => '',
-        'pwa_icon_attachment_id' => 0,
-        'pwa_icon_generated_icons' => [],
-        'pwa_icon_generation_status' => 'fallback',
-        'pwa_icon_generation_message' => '',
-        'pwa_theme_color' => '#ffffff',
         'disabled_panels' => [],
         'export_async_threshold_rows' => 500,
         'delete_data_on_uninstall' => false,
@@ -196,21 +189,6 @@ function bbpa_sanitize_settings($settings): array
     $settings['url_strip_query'] = (bool) rest_sanitize_boolean($settings['url_strip_query']);
     $settings['maxmind_account_id'] = trim(sanitize_text_field($settings['maxmind_account_id']));
     $settings['maxmind_license_key'] = trim(sanitize_text_field($settings['maxmind_license_key']));
-    $settings['pwa_icon_url'] = esc_url_raw((string) ($settings['pwa_icon_url'] ?? ''));
-    $settings['pwa_icon_attachment_id'] = absint($settings['pwa_icon_attachment_id'] ?? 0);
-    $settings['pwa_icon_generated_icons'] = bbpa_sanitize_pwa_generated_icons(
-        $settings['pwa_icon_generated_icons'] ?? []
-    );
-    $settings['pwa_icon_generation_status'] = sanitize_key((string) ($settings['pwa_icon_generation_status'] ?? 'fallback'));
-    if (!in_array($settings['pwa_icon_generation_status'], ['fallback', 'ready', 'too_small', 'invalid_source', 'generation_failed'], true)) {
-        $settings['pwa_icon_generation_status'] = 'fallback';
-    }
-    $settings['pwa_icon_generation_message'] = sanitize_text_field((string) ($settings['pwa_icon_generation_message'] ?? ''));
-    $pwa_theme_color = sanitize_hex_color((string) ($settings['pwa_theme_color'] ?? ''));
-    if (!is_string($pwa_theme_color) || !preg_match('/^#[0-9a-fA-F]{6}$/', $pwa_theme_color)) {
-        $pwa_theme_color = $defaults['pwa_theme_color'];
-    }
-    $settings['pwa_theme_color'] = strtolower($pwa_theme_color);
     $visit_identifier_window_seconds = absint($settings['visit_identifier_window_seconds']);
     $settings['visit_identifier_window_seconds'] = max(
         BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_MIN,
@@ -494,142 +472,6 @@ function bbpa_sanitize_settings_identifier_list($value, array $allowlist): array
 }
 
 /**
- * Sanitize generated PWA icon URL map.
- */
-function bbpa_sanitize_pwa_generated_icons($icons): array
-{
-    $sizes = bbpa_get_pwa_icon_sizes();
-    if (!is_array($icons)) {
-        return [];
-    }
-
-    $normalized = [];
-    foreach ($sizes as $size) {
-        $key = (string) $size;
-        $value = $icons[$key] ?? '';
-        $url = esc_url_raw((string) $value);
-        if ($url !== '') {
-            $normalized[$key] = $url;
-        }
-    }
-
-    return $normalized;
-}
-
-/**
- * Return required PWA icon sizes.
- */
-function bbpa_get_pwa_icon_sizes(): array
-{
-    return [72, 96, 128, 144, 152, 192, 384, 512];
-}
-
-/**
- * Build generated PWA icon storage base paths.
- */
-function bbpa_get_pwa_icon_generation_base_paths(): array
-{
-    $upload_dir = wp_upload_dir();
-    $relative_dir = 'bpa/pwa-icons';
-
-    return [
-        'dir' => trailingslashit($upload_dir['basedir']) . $relative_dir,
-        'url' => trailingslashit($upload_dir['baseurl']) . $relative_dir,
-    ];
-}
-
-/**
- * Resolve a valid attachment ID for a configured PWA icon URL.
- */
-function bbpa_resolve_pwa_icon_attachment_id(string $icon_url, int $preferred_attachment_id = 0): int
-{
-    if ($preferred_attachment_id > 0 && wp_attachment_is_image($preferred_attachment_id)) {
-        return $preferred_attachment_id;
-    }
-
-    if ($icon_url === '') {
-        return 0;
-    }
-
-    $resolved_attachment_id = attachment_url_to_postid($icon_url);
-    if ($resolved_attachment_id > 0 && wp_attachment_is_image($resolved_attachment_id)) {
-        return $resolved_attachment_id;
-    }
-
-    return 0;
-}
-
-/**
- * Generate plugin-scoped PWA PNG icon sizes for one source attachment.
- */
-function bbpa_generate_pwa_icons_from_attachment(int $attachment_id): array
-{
-    $metadata = wp_get_attachment_metadata($attachment_id);
-    $width = isset($metadata['width']) ? absint($metadata['width']) : 0;
-    $height = isset($metadata['height']) ? absint($metadata['height']) : 0;
-    if ($width < BBPA_PWA_ICON_MIN_SIZE || $height < BBPA_PWA_ICON_MIN_SIZE) {
-        return [
-            'status' => 'too_small',
-            'message' => __('The selected PWA icon must be at least 512x512 pixels.', 'bimbeau-privacy-analytics'),
-            'icons' => [],
-        ];
-    }
-
-    $source_file = get_attached_file($attachment_id);
-    if (!is_string($source_file) || $source_file === '' || !file_exists($source_file)) {
-        return [
-            'status' => 'invalid_source',
-            'message' => __('The selected PWA icon file cannot be read.', 'bimbeau-privacy-analytics'),
-            'icons' => [],
-        ];
-    }
-
-    $base_paths = bbpa_get_pwa_icon_generation_base_paths();
-    $target_dir = trailingslashit($base_paths['dir']) . $attachment_id;
-    $target_url = trailingslashit($base_paths['url']) . $attachment_id;
-    wp_mkdir_p($target_dir);
-
-    $icons = [];
-    foreach (bbpa_get_pwa_icon_sizes() as $size) {
-        $editor = wp_get_image_editor($source_file);
-        if (is_wp_error($editor)) {
-            return [
-                'status' => 'generation_failed',
-                'message' => __('WordPress image editor cannot generate PWA icons from the selected source.', 'bimbeau-privacy-analytics'),
-                'icons' => [],
-            ];
-        }
-
-        $resize_result = $editor->resize($size, $size, true);
-        if (is_wp_error($resize_result)) {
-            return [
-                'status' => 'generation_failed',
-                'message' => __('WordPress image editor cannot resize the selected PWA icon source.', 'bimbeau-privacy-analytics'),
-                'icons' => [],
-            ];
-        }
-
-        $target_file = trailingslashit($target_dir) . 'bbpa-pwa-icon-' . $size . 'x' . $size . '.png';
-        $save_result = $editor->save($target_file, 'image/png');
-        if (is_wp_error($save_result)) {
-            return [
-                'status' => 'generation_failed',
-                'message' => __('WordPress image editor cannot save generated PWA PNG icons.', 'bimbeau-privacy-analytics'),
-                'icons' => [],
-            ];
-        }
-
-        $icons[(string) $size] = trailingslashit($target_url) . basename($target_file);
-    }
-
-    return [
-        'status' => 'ready',
-        'message' => '',
-        'icons' => $icons,
-    ];
-}
-
-/**
  * Validate MaxMind credentials from settings.
  */
 function bbpa_validate_maxmind_settings(array $settings): array
@@ -797,27 +639,7 @@ function bbpa_update_settings($settings): array
     }
     $previous = bbpa_get_settings();
     $sanitized = bbpa_sanitize_settings($settings);
-    $sanitized['pwa_icon_generated_icons'] = [];
-    $sanitized['pwa_icon_generation_status'] = 'fallback';
-    $sanitized['pwa_icon_generation_message'] = '';
-    if ($sanitized['pwa_icon_url'] !== '') {
-        $attachment_id = bbpa_resolve_pwa_icon_attachment_id(
-            $sanitized['pwa_icon_url'],
-            (int) $sanitized['pwa_icon_attachment_id']
-        );
-        $sanitized['pwa_icon_attachment_id'] = $attachment_id;
-        if ($attachment_id > 0) {
-            $generation = bbpa_generate_pwa_icons_from_attachment($attachment_id);
-            $sanitized['pwa_icon_generated_icons'] = $generation['icons'];
-            $sanitized['pwa_icon_generation_status'] = $generation['status'];
-            $sanitized['pwa_icon_generation_message'] = $generation['message'];
-        } else {
-            $sanitized['pwa_icon_generation_status'] = 'invalid_source';
-            $sanitized['pwa_icon_generation_message'] = __('Select a media library image to generate PWA PNG icons.', 'bimbeau-privacy-analytics');
-        }
-    } else {
-        $sanitized['pwa_icon_attachment_id'] = 0;
-    }
+    $sanitized = apply_filters('bbpa_settings_before_update', $sanitized);
     $lookup_mode = (string) ($sanitized['geoip_lookup_mode'] ?? 'local_database');
     if ($lookup_mode === 'maxmind_api') {
         $errors = bbpa_validate_maxmind_settings($sanitized);

@@ -994,36 +994,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             );
         }
 
-        $coordinates_service_class = $this->get_premium_coordinates_service_class();
-        if (!class_exists($coordinates_service_class)) {
-            return $this->build_admin_response(
-                [
-                    'windowSeconds' => $window_seconds,
-                    'activeVisitors' => $active_visitors_total,
-                    'activeVisitorsTotal' => $active_visitors_total,
-                    'generatedAt' => $now,
-                    'privacyMode' => 'unknown',
-                    'countries' => $countries,
-                    'pages' => [],
-                    'pagesOthersCount' => 0,
-                    'referrers' => [],
-                    'referrersOthersCount' => 0,
-                    'devices' => [],
-                    'browsers' => [],
-                    'operatingSystems' => [],
-                    'privacyThreshold' => $privacy_threshold,
-                    'visits' => [],
-                    'dataScope' => 'standard',
-                ],
-                200,
-                true
-            );
-        }
-
-        $geo_weights = [];
-        $latest_hit_by_visitor = [];
         $visits = [];
-        $coordinates_service = new $coordinates_service_class();
 
         foreach ($hits as $index => $hit) {
             if (!is_array($hit)) {
@@ -1053,9 +1024,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $accuracy_radius = isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius'])
                 ? max(0, (int) $hit['accuracy_radius'])
                 : null;
-            $city_geoname_id = function_exists('bbpa_normalize_geoname_id')
-                ? bbpa_normalize_geoname_id($hit['city_geoname_id'] ?? null)
-                : null;
             $referrer_domain = isset($hit['referrer_domain'])
                 ? sanitize_text_field((string) $hit['referrer_domain'])
                 : '';
@@ -1080,6 +1048,14 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $page_path = isset($hit['page_path'])
                 ? sanitize_text_field((string) $hit['page_path'])
                 : '';
+            $coordinates = bbpa_normalize_coordinate_pair(
+                $hit['latitude'] ?? null,
+                $hit['longitude'] ?? null
+            );
+            $extension_fields = apply_filters('bbpa_realtime_visit_extension_fields', [], $hit);
+            if (!is_array($extension_fields)) {
+                $extension_fields = [];
+            }
 
             if (!isset($visits[$visitor_bucket_id])) {
                 $visits[$visitor_bucket_id] = [
@@ -1088,7 +1064,8 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                     'country' => $country_name,
                     'city' => $city_name,
                     'accuracy_radius' => $accuracy_radius,
-                    'city_geoname_id' => $city_geoname_id,
+                    'latitude' => $coordinates['latitude'] !== null ? (float) $coordinates['latitude'] : null,
+                    'longitude' => $coordinates['longitude'] !== null ? (float) $coordinates['longitude'] : null,
                     'current_page' => $page_path,
                     'page_views' => 0,
                     'referrer_domain' => $referrer_domain,
@@ -1102,6 +1079,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                     'last_view_at' => $timestamp,
                     'last_hit_index' => $index,
                 ];
+                $visits[$visitor_bucket_id] = array_merge($visits[$visitor_bucket_id], $extension_fields);
             }
 
             $existing_last_view_at = isset($visits[$visitor_bucket_id]['last_view_at'])
@@ -1139,20 +1117,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 $visits[$visitor_bucket_id]['last_hit_index'] = $index;
             }
 
-            if (
-                !isset($latest_hit_by_visitor[$visitor_bucket_id])
-                || $timestamp > (int) ($latest_hit_by_visitor[$visitor_bucket_id]['timestamp'] ?? 0)
-                || (
-                    $timestamp === (int) ($latest_hit_by_visitor[$visitor_bucket_id]['timestamp'] ?? 0)
-                    && $index > (int) ($latest_hit_by_visitor[$visitor_bucket_id]['index'] ?? -1)
-                )
-            ) {
-                $latest_hit_by_visitor[$visitor_bucket_id] = [
-                    'hit' => $hit,
-                    'timestamp' => $timestamp,
-                    'index' => $index,
-                ];
-            }
 
             if ($country_code !== '') {
                 $visits[$visitor_bucket_id]['country_code'] = $country_code;
@@ -1166,8 +1130,14 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             if ($accuracy_radius !== null) {
                 $visits[$visitor_bucket_id]['accuracy_radius'] = $accuracy_radius;
             }
-            if ($city_geoname_id !== null) {
-                $visits[$visitor_bucket_id]['city_geoname_id'] = $city_geoname_id;
+            if ($coordinates['latitude'] !== null) {
+                $visits[$visitor_bucket_id]['latitude'] = (float) $coordinates['latitude'];
+            }
+            if ($coordinates['longitude'] !== null) {
+                $visits[$visitor_bucket_id]['longitude'] = (float) $coordinates['longitude'];
+            }
+            if ($extension_fields !== []) {
+                $visits[$visitor_bucket_id] = array_merge($visits[$visitor_bucket_id], $extension_fields);
             }
             if ($referrer_domain !== '') {
                 $visits[$visitor_bucket_id]['referrer_domain'] = $referrer_domain;
@@ -1191,190 +1161,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 $visits[$visitor_bucket_id]['screen_resolution'] = $screen_resolution;
             }
         }
-
-        foreach ($latest_hit_by_visitor as $latest_hit_item) {
-            if (!is_array($latest_hit_item) || !isset($latest_hit_item['hit']) || !is_array($latest_hit_item['hit'])) {
-                continue;
-            }
-
-            $hit = $latest_hit_item['hit'];
-            $timestamp = isset($latest_hit_item['timestamp']) ? (int) $latest_hit_item['timestamp'] : 0;
-            $index = isset($latest_hit_item['index']) ? (int) $latest_hit_item['index'] : -1;
-
-            $visitor_id = isset($hit['visitor_id'])
-                ? sanitize_text_field((string) $hit['visitor_id'])
-                : '';
-            $visit_summary = isset($visits[$visitor_id]) && is_array($visits[$visitor_id])
-                ? $visits[$visitor_id]
-                : [];
-            $country_code = isset($visit_summary['country_code']) && is_string($visit_summary['country_code'])
-                ? strtoupper(sanitize_text_field((string) $visit_summary['country_code']))
-                : '';
-            if ($country_code === '') {
-                $country_code = isset($hit['country_code'])
-                ? strtoupper(sanitize_text_field((string) $hit['country_code']))
-                : '';
-            }
-            $city_name = isset($visit_summary['city']) && is_string($visit_summary['city'])
-                ? sanitize_text_field((string) $visit_summary['city'])
-                : '';
-            if ($city_name === '') {
-                $city_name = isset($hit['city'])
-                ? sanitize_text_field((string) $hit['city'])
-                : '';
-            }
-            $accuracy_radius = isset($visit_summary['accuracy_radius']) && is_numeric($visit_summary['accuracy_radius'])
-                ? max(0, (int) $visit_summary['accuracy_radius'])
-                : null;
-            if ($accuracy_radius === null) {
-                $accuracy_radius = isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius'])
-                ? max(0, (int) $hit['accuracy_radius'])
-                : null;
-            }
-            $city_geoname_id = function_exists('bbpa_normalize_geoname_id')
-                ? bbpa_normalize_geoname_id($hit['city_geoname_id'] ?? null)
-                : null;
-            if ($city_geoname_id === null && function_exists('bbpa_normalize_geoname_id')) {
-                $city_geoname_id = bbpa_normalize_geoname_id($visit_summary['city_geoname_id'] ?? null);
-            }
-
-            $coordinates = bbpa_normalize_coordinate_pair(
-                $hit['latitude'] ?? null,
-                $hit['longitude'] ?? null
-            );
-            $should_ignore_raw_coordinates = (
-                $coordinates['latitude'] !== null
-                && $coordinates['longitude'] !== null
-                && $city_name !== ''
-                && $city_geoname_id === null
-            );
-
-            if (($coordinates['latitude'] !== null && $coordinates['longitude'] !== null) && $city_name === '') {
-                $debug_log_key = sprintf(
-                    'raw_coordinates_without_city_label|%s|%s|%d|%d',
-                    $visitor_id,
-                    $country_code,
-                    $timestamp,
-                    $index
-                );
-                if ($this->should_emit_debug_log($debug_log_key, 5 * MINUTE_IN_SECONDS)) {
-                    $this->log_debug('Realtime snapshot point uses raw coordinates without city label.', [
-                        'reason' => 'raw_coordinates_used_without_city_label',
-                        'visitor_id' => $visitor_id,
-                        'country_code' => $country_code,
-                        'city_geoname_id' => $city_geoname_id,
-                        'timestamp' => $timestamp,
-                        'index' => $index,
-                    ]);
-                }
-            }
-
-            if ($should_ignore_raw_coordinates) {
-                $this->log_debug('Realtime snapshot point ignores raw coordinates that do not have a geoname id for the city label.', [
-                    'reason' => 'raw_coordinates_ignored_city_label_without_geoname',
-                    'visitor_id' => $visitor_id,
-                    'country_code' => $country_code,
-                    'city_geoname_id' => $city_geoname_id,
-                    'accuracy_radius' => $accuracy_radius,
-                    'timestamp' => $timestamp,
-                    'index' => $index,
-                ]);
-                $coordinates = [
-                    'latitude' => null,
-                    'longitude' => null,
-                ];
-            }
-
-            if ($coordinates['latitude'] === null || $coordinates['longitude'] === null) {
-                if ($city_geoname_id !== null) {
-                    $coordinates = $coordinates_service->resolve_coordinates_by_geoname_id($city_geoname_id);
-                }
-            }
-
-            if ($coordinates['latitude'] === null || $coordinates['longitude'] === null) {
-                if ($city_name !== '' || $country_code !== '') {
-                    $coordinates = $coordinates_service->resolve_coordinates($city_name, $country_code);
-                }
-            }
-
-            if ($coordinates['latitude'] === null || $coordinates['longitude'] === null) {
-                $this->log_debug('Realtime snapshot point skipped: missing coordinates without country fallback.', [
-                    'reason' => 'missing_coordinates_no_country_fallback',
-                    'visitor_id' => $visitor_id,
-                    'country_code' => $country_code,
-                    'city' => $city_name,
-                    'city_geoname_id' => $city_geoname_id,
-                    'accuracy_radius' => isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius'])
-                        ? max(0, (int) $hit['accuracy_radius'])
-                        : null,
-                    'geo_source' => isset($hit['geo_source'])
-                        ? sanitize_text_field((string) $hit['geo_source'])
-                        : '',
-                    'raw_latitude' => isset($hit['latitude']) && is_numeric($hit['latitude'])
-                        ? (float) $hit['latitude']
-                        : null,
-                    'raw_longitude' => isset($hit['longitude']) && is_numeric($hit['longitude'])
-                        ? (float) $hit['longitude']
-                        : null,
-                    'timestamp' => $timestamp,
-                    'index' => $index,
-                ]);
-                continue;
-            }
-
-            $latitude = (float) $coordinates['latitude'];
-            $longitude = (float) $coordinates['longitude'];
-            $point_key = sprintf('%.4F|%.4F', $latitude, $longitude);
-            $location_label = trim($city_name);
-
-            if ($location_label !== '' && $country_code !== '') {
-                $location_label = sprintf('%s (%s)', $location_label, $country_code);
-            } elseif ($location_label === '' && $country_code !== '') {
-                $location_label = $country_code;
-            }
-
-            if (!isset($geo_weights[$point_key])) {
-                $geo_weights[$point_key] = [
-                    'lat' => $latitude,
-                    'lng' => $longitude,
-                    'weight' => 0,
-                    'city_label_counts' => [],
-                    'accuracy_radius' => null,
-                    'latest_timestamp' => 0,
-                    'latest_index' => -1,
-                    'current_page' => '',
-                ];
-            }
-
-            $geo_weights[$point_key]['weight'] += 1;
-
-            if ($location_label !== '') {
-                if (!isset($geo_weights[$point_key]['city_label_counts'][$location_label])) {
-                    $geo_weights[$point_key]['city_label_counts'][$location_label] = 0;
-                }
-
-                $geo_weights[$point_key]['city_label_counts'][$location_label] += 1;
-            }
-
-            $page_path = isset($hit['page_path'])
-                ? sanitize_text_field((string) $hit['page_path'])
-                : '';
-            if (
-                $timestamp > (int) ($geo_weights[$point_key]['latest_timestamp'] ?? 0)
-                || (
-                    $timestamp === (int) ($geo_weights[$point_key]['latest_timestamp'] ?? 0)
-                    && $index > (int) ($geo_weights[$point_key]['latest_index'] ?? -1)
-                )
-            ) {
-                $geo_weights[$point_key]['latest_timestamp'] = $timestamp;
-                $geo_weights[$point_key]['latest_index'] = $index;
-                $geo_weights[$point_key]['current_page'] = $page_path;
-                if ($accuracy_radius !== null) {
-                    $geo_weights[$point_key]['accuracy_radius'] = $accuracy_radius;
-                }
-            }
-        }
-
 
         $window_realtime_visitors = $this->get_realtime_visitor_rows_in_window($window_start, $now);
         foreach ($window_realtime_visitors as $visitor_index => $realtime_row) {
@@ -1482,37 +1268,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             }
         }
 
-        $points = array_map(
-            static function (array $point): array {
-                $city_label = '';
-
-                if (!empty($point['city_label_counts']) && is_array($point['city_label_counts'])) {
-                    arsort($point['city_label_counts']);
-                    $labels = array_keys($point['city_label_counts']);
-                    $city_label = isset($labels[0]) ? sanitize_text_field((string) $labels[0]) : '';
-                }
-
-                return [
-                    'lat' => (float) ($point['lat'] ?? 0),
-                    'lng' => (float) ($point['lng'] ?? 0),
-                    'weight' => isset($point['weight']) ? (int) $point['weight'] : 0,
-                    'city' => $city_label,
-                    'accuracy_radius' => isset($point['accuracy_radius']) && is_numeric($point['accuracy_radius'])
-                        ? max(0, (int) $point['accuracy_radius'])
-                        : null,
-                    'currentPage' => isset($point['current_page'])
-                        ? sanitize_text_field((string) $point['current_page'])
-                        : '',
-                ];
-            },
-            array_values($geo_weights)
-        );
-        usort(
-            $points,
-            static function (array $left, array $right): int {
-                return ($right['weight'] ?? 0) <=> ($left['weight'] ?? 0);
-            }
-        );
+        $points = [];
         $visits = array_values($visits);
         foreach ($visits as $visit_index => $visit) {
             $source_category = isset($visit['source_category']) ? sanitize_text_field((string) $visit['source_category']) : '';
@@ -3056,13 +2812,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         return true;
     }
 
-
-    /**
-     * Resolve the premium city coordinates service class name without exposing a static class reference in Free packages.
-     */
-    private function get_premium_coordinates_service_class(): string {
-        return 'BBPA_' . 'City' . '_Coordinates' . '_Service';
-    }
 
     /**
      * Write compact info logs for actionable production monitoring.

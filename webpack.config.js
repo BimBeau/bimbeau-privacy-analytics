@@ -32,6 +32,11 @@ const sharedGeolocationPanelPath = path.resolve(
   adminSourceRoot,
   'panels/GeolocationPanel'
 );
+const premiumAdminUrlsPath = path.resolve(
+  adminSourceRoot,
+  'premium/lib/adminUrls'
+);
+const sharedAdminUrlsPath = path.resolve(adminSourceRoot, 'lib/adminUrls');
 const freeOverviewPanelStubPath = path.resolve(
   adminSourceRoot,
   'free-stubs/OverviewPanel.js'
@@ -48,6 +53,8 @@ const proOnlyAdminAliases = isFreePackageBuild
       [`${sharedTopPagesPanelPath}.js`]: `${premiumTopPagesPanelPath}.js`,
       [sharedGeolocationPanelPath]: premiumGeolocationPanelPath,
       [`${sharedGeolocationPanelPath}.js`]: `${premiumGeolocationPanelPath}.js`,
+      [sharedAdminUrlsPath]: premiumAdminUrlsPath,
+      [`${sharedAdminUrlsPath}.js`]: `${premiumAdminUrlsPath}.js`,
     };
 const flagIconsFlagsPath = `${path.sep}node_modules${path.sep}flag-icons${path.sep}flags${path.sep}`;
 
