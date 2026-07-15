@@ -232,9 +232,7 @@ function bbpa_activate(): void
      */
     do_action('bbpa_after_plugin_activation');
 
-    if (function_exists('bbpa_register_front_app_rewrite_rules')) {
-        bbpa_register_front_app_rewrite_rules();
-    }
+    do_action('bbpa_register_premium_rewrite_rules_for_activation');
 
     flush_rewrite_rules();
 }

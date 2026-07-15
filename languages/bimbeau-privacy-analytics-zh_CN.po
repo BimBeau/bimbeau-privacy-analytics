@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -65,60 +65,6 @@ msgid ""
 "Technical diagnostics are indicative and remain limited to script attributes "
 "and CMP markers."
 msgstr "技术诊断仅供参考，并且仅限于脚本属性和 CMP 标记。"
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "当前 PWA 图标预览"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr "预览使用与独立应用清单和加载启动页相同的运行时图标解析逻辑。"
-
-#: admin/admin.php
-msgid "Source"
-msgstr "来源"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "生成状态"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "自定义生成图标"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "插件备用图标"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "自定义图标集已准备就绪。"
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "备用图标集已启用。"
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "源图片太小（最小 512x512）。"
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "源图片无效。"
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "此服务器上的图标生成失败。"
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "未知生成状态。"
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "没有可用的预览图标 URL。"
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -518,7 +464,7 @@ msgstr "必须填写 MaxMind 许可证密钥。"
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "启用 IP 地理定位需要 MaxMind 凭据。"
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "统计"
 
@@ -961,6 +907,10 @@ msgstr "没有可用的引荐来源。"
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "全局小时热力图"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2333,6 +2283,47 @@ msgstr "私密"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "当前 PWA 图标预览"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr "预览使用与独立应用清单和加载启动页相同的运行时图标解析逻辑。"
+
+#~ msgid "Source"
+#~ msgstr "来源"
+
+#~ msgid "Generation status"
+#~ msgstr "生成状态"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "自定义生成图标"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "插件备用图标"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "自定义图标集已准备就绪。"
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "备用图标集已启用。"
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "源图片太小（最小 512x512）。"
+
+#~ msgid "Source image is invalid."
+#~ msgstr "源图片无效。"
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "此服务器上的图标生成失败。"
+
+#~ msgid "Unknown generation status."
+#~ msgstr "未知生成状态。"
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "没有可用的预览图标 URL。"
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."

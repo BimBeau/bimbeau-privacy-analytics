@@ -101,21 +101,6 @@ class BBPA_MaxMind_Service {
         return [
             'country' => bbpa_pick_maxmind_name($payload['country']['names'] ?? []),
             'country_code' => sanitize_text_field((string) ($payload['country']['iso_code'] ?? '')),
-            'region' => bbpa_pick_maxmind_name($payload['subdivisions'][0]['names'] ?? []),
-            'region_code' => sanitize_text_field((string) ($payload['subdivisions'][0]['iso_code'] ?? '')),
-            'city' => bbpa_pick_maxmind_name($payload['city']['names'] ?? []),
-            'city_geoname_id' => function_exists('bbpa_normalize_geoname_id')
-                ? bbpa_normalize_geoname_id($payload['city']['geoname_id'] ?? null)
-                : null,
-            'latitude' => isset($payload['location']['latitude'])
-                ? (float) $payload['location']['latitude']
-                : null,
-            'longitude' => isset($payload['location']['longitude'])
-                ? (float) $payload['location']['longitude']
-                : null,
-            'accuracy_radius' => isset($payload['location']['accuracy_radius'])
-                ? max(0, (int) $payload['location']['accuracy_radius'])
-                : null,
             'source' => 'maxmind-api',
         ];
     }

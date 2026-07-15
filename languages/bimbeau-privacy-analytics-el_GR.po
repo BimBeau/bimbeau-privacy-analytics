@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -70,62 +70,6 @@ msgid ""
 msgstr ""
 "Τα τεχνικά διαγνωστικά είναι ενδεικτικά και περιορίζονται στα χαρακτηριστικά "
 "των scripts και στους δείκτες CMP."
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "Τρέχουσα προεπισκόπηση εικονιδίου PWA"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr ""
-"Η προεπισκόπηση χρησιμοποιεί την ίδια ανάλυση εικονιδίου κατά την εκτέλεση "
-"με το manifest της αυτόνομης εφαρμογής και την οθόνη φόρτωσης."
-
-#: admin/admin.php
-msgid "Source"
-msgstr "Πηγή"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "Κατάσταση δημιουργίας"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "Προσαρμοσμένο δημιουργημένο εικονίδιο"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "Εφεδρικό εικονίδιο πρόσθετου"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "Το προσαρμοσμένο σύνολο εικονιδίων είναι έτοιμο."
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "Το εφεδρικό σύνολο εικονιδίων είναι ενεργό."
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "Η αρχική εικόνα είναι πολύ μικρή (ελάχιστο 512x512)."
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "Η αρχική εικόνα δεν είναι έγκυρη."
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "Η δημιουργία εικονιδίων απέτυχε σε αυτόν τον διακομιστή."
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "Άγνωστη κατάσταση δημιουργίας."
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "Δεν υπάρχει διαθέσιμο URL εικονιδίου προεπισκόπησης."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -538,7 +482,7 @@ msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr ""
 "Απαιτούνται διαπιστευτήρια MaxMind για την ενεργοποίηση γεωεντοπισμού IP."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "Στατιστικά"
 
@@ -1002,6 +946,10 @@ msgstr "Δεν υπάρχουν διαθέσιμοι παραπέμπτες."
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Καθολικός ωριαίος heatmap"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2432,6 +2380,49 @@ msgstr "Ιδιωτικό"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Πίνακας: Επισκέπτες"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "Τρέχουσα προεπισκόπηση εικονιδίου PWA"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr ""
+#~ "Η προεπισκόπηση χρησιμοποιεί την ίδια ανάλυση εικονιδίου κατά την "
+#~ "εκτέλεση με το manifest της αυτόνομης εφαρμογής και την οθόνη φόρτωσης."
+
+#~ msgid "Source"
+#~ msgstr "Πηγή"
+
+#~ msgid "Generation status"
+#~ msgstr "Κατάσταση δημιουργίας"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "Προσαρμοσμένο δημιουργημένο εικονίδιο"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "Εφεδρικό εικονίδιο πρόσθετου"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "Το προσαρμοσμένο σύνολο εικονιδίων είναι έτοιμο."
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "Το εφεδρικό σύνολο εικονιδίων είναι ενεργό."
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "Η αρχική εικόνα είναι πολύ μικρή (ελάχιστο 512x512)."
+
+#~ msgid "Source image is invalid."
+#~ msgstr "Η αρχική εικόνα δεν είναι έγκυρη."
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "Η δημιουργία εικονιδίων απέτυχε σε αυτόν τον διακομιστή."
+
+#~ msgid "Unknown generation status."
+#~ msgstr "Άγνωστη κατάσταση δημιουργίας."
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "Δεν υπάρχει διαθέσιμο URL εικονιδίου προεπισκόπησης."
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."

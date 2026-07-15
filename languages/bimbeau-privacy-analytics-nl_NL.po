@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -69,62 +69,6 @@ msgid ""
 msgstr ""
 "Technische diagnoses zijn indicatief en blijven beperkt tot scriptattributen "
 "en CMP-markeringen."
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "Huidige PWA-pictogramvoorvertoning"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr ""
-"De voorvertoning gebruikt dezelfde runtime-pictogramresolutie als het "
-"manifest van de zelfstandige app en het laadscherm."
-
-#: admin/admin.php
-msgid "Source"
-msgstr "Bron"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "Generatiestatus"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "Aangepast gegenereerd pictogram"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "Fallback-pictogram van de plugin"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "Aangepaste pictogramset is klaar."
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "Fallback-pictogramset is actief."
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "De bronafbeelding is te klein (minimaal 512x512)."
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "De bronafbeelding is ongeldig."
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "Pictogramgeneratie is mislukt op deze server."
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "Onbekende generatiestatus."
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "Er is geen URL voor het voorbeeldpictogram beschikbaar."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -527,7 +471,7 @@ msgstr "MaxMind-licentiesleutel is vereist."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "MaxMind-inloggegevens zijn vereist om IP-geolocatie in te schakelen."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "Statistieken"
 
@@ -989,6 +933,10 @@ msgstr "Geen verwijzers beschikbaar."
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Globale uurlijkse heatmap"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2413,6 +2361,49 @@ msgstr "Privé"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabel: bezoekers"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "Huidige PWA-pictogramvoorvertoning"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr ""
+#~ "De voorvertoning gebruikt dezelfde runtime-pictogramresolutie als het "
+#~ "manifest van de zelfstandige app en het laadscherm."
+
+#~ msgid "Source"
+#~ msgstr "Bron"
+
+#~ msgid "Generation status"
+#~ msgstr "Generatiestatus"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "Aangepast gegenereerd pictogram"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "Fallback-pictogram van de plugin"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "Aangepaste pictogramset is klaar."
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "Fallback-pictogramset is actief."
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "De bronafbeelding is te klein (minimaal 512x512)."
+
+#~ msgid "Source image is invalid."
+#~ msgstr "De bronafbeelding is ongeldig."
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "Pictogramgeneratie is mislukt op deze server."
+
+#~ msgid "Unknown generation status."
+#~ msgstr "Onbekende generatiestatus."
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "Er is geen URL voor het voorbeeldpictogram beschikbaar."
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."

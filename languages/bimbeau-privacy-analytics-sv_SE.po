@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -68,62 +68,6 @@ msgid ""
 msgstr ""
 "Teknisk diagnostik är vägledande och begränsas till skriptattribut och CMP-"
 "markörer."
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "Aktuell förhandsvisning av PWA-ikon"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr ""
-"Förhandsvisningen använder samma ikonupplösning vid körning som manifestet "
-"för den fristående appen och laddningsskärmen."
-
-#: admin/admin.php
-msgid "Source"
-msgstr "Källa"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "Genereringsstatus"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "Anpassad genererad ikon"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "Tilläggets reservikon"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "Den anpassade ikonuppsättningen är klar."
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "Reservikonuppsättningen är aktiv."
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "Källbilden är för liten (minst 512x512)."
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "Källbilden är ogiltig."
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "Ikongenereringen misslyckades på den här servern."
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "Okänd genereringsstatus."
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "Ingen URL för förhandsvisningsikonen är tillgänglig."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -526,7 +470,7 @@ msgstr "MaxMind-licensnyckel krävs."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "MaxMind-uppgifter krävs för att aktivera IP-geolokalisering."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "Statistik"
 
@@ -983,6 +927,10 @@ msgstr "Inga hänvisare tillgängliga."
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Global timvis heatmap"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2402,6 +2350,49 @@ msgstr "Privat"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabell: Besökare"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "Aktuell förhandsvisning av PWA-ikon"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr ""
+#~ "Förhandsvisningen använder samma ikonupplösning vid körning som "
+#~ "manifestet för den fristående appen och laddningsskärmen."
+
+#~ msgid "Source"
+#~ msgstr "Källa"
+
+#~ msgid "Generation status"
+#~ msgstr "Genereringsstatus"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "Anpassad genererad ikon"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "Tilläggets reservikon"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "Den anpassade ikonuppsättningen är klar."
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "Reservikonuppsättningen är aktiv."
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "Källbilden är för liten (minst 512x512)."
+
+#~ msgid "Source image is invalid."
+#~ msgstr "Källbilden är ogiltig."
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "Ikongenereringen misslyckades på den här servern."
+
+#~ msgid "Unknown generation status."
+#~ msgstr "Okänd genereringsstatus."
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "Ingen URL för förhandsvisningsikonen är tillgänglig."
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."

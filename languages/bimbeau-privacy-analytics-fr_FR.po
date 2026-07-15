@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -69,62 +69,6 @@ msgid ""
 msgstr ""
 "Les diagnostics techniques sont indicatifs et restent limités aux attributs "
 "des scripts et aux marqueurs CMP."
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "Aperçu actuel de l’icône PWA"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr ""
-"L’aperçu utilise la même résolution d’icône à l’exécution que le manifeste "
-"de l’application autonome et l’écran de chargement."
-
-#: admin/admin.php
-msgid "Source"
-msgstr "Source"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "État de génération"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "Icône personnalisée générée"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "Icône de secours du plugin"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "Le jeu d’icônes personnalisé est prêt."
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "Le jeu d’icônes de secours est actif."
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "L’image source est trop petite (minimum 512x512)."
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "L’image source est invalide."
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "La génération de l’icône a échoué sur ce serveur."
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "État de génération inconnu."
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "Aucune URL d’icône d’aperçu n’est disponible."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -533,7 +477,7 @@ msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr ""
 "Les identifiants MaxMind sont requis pour activer la géolocalisation IP."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "Statistiques"
 
@@ -1001,6 +945,10 @@ msgstr "Aucun référent disponible."
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Carte de chaleur horaire globale"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2441,6 +2389,49 @@ msgstr "Privé"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tableau : visiteurs"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "Aperçu actuel de l’icône PWA"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr ""
+#~ "L’aperçu utilise la même résolution d’icône à l’exécution que le "
+#~ "manifeste de l’application autonome et l’écran de chargement."
+
+#~ msgid "Source"
+#~ msgstr "Source"
+
+#~ msgid "Generation status"
+#~ msgstr "État de génération"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "Icône personnalisée générée"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "Icône de secours du plugin"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "Le jeu d’icônes personnalisé est prêt."
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "Le jeu d’icônes de secours est actif."
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "L’image source est trop petite (minimum 512x512)."
+
+#~ msgid "Source image is invalid."
+#~ msgstr "L’image source est invalide."
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "La génération de l’icône a échoué sur ce serveur."
+
+#~ msgid "Unknown generation status."
+#~ msgstr "État de génération inconnu."
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "Aucune URL d’icône d’aperçu n’est disponible."
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."

@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -69,62 +69,6 @@ msgid ""
 msgstr ""
 "Teknik tanılama göstergedir ve betik öznitelikleri ile CMP işaretleriyle "
 "sınırlı kalır."
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "Geçerli PWA simge önizlemesi"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr ""
-"Önizleme, bağımsız uygulama manifesti ve yükleme açılış ekranıyla aynı "
-"çalışma zamanı simge çözümlemesini kullanır."
-
-#: admin/admin.php
-msgid "Source"
-msgstr "Kaynak"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "Oluşturma durumu"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "Özel oluşturulmuş simge"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "Eklenti yedek simgesi"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "Özel simge seti hazır."
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "Yedek simge seti etkin."
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "Kaynak görsel çok küçük (en az 512x512)."
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "Kaynak görsel geçersiz."
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "Bu sunucuda simge oluşturma başarısız oldu."
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "Bilinmeyen oluşturma durumu."
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "Önizleme simgesi URL’si mevcut değil."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -528,7 +472,7 @@ msgstr ""
 "IP coğrafi konumlandırmayı etkinleştirmek için MaxMind kimlik bilgileri "
 "gereklidir."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "İstatistikler"
 
@@ -987,6 +931,10 @@ msgstr "Yönlendiren mevcut değil."
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Genel saatlik ısı haritası"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2404,6 +2352,49 @@ msgstr "Özel"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tablo: Ziyaretçiler"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "Geçerli PWA simge önizlemesi"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr ""
+#~ "Önizleme, bağımsız uygulama manifesti ve yükleme açılış ekranıyla aynı "
+#~ "çalışma zamanı simge çözümlemesini kullanır."
+
+#~ msgid "Source"
+#~ msgstr "Kaynak"
+
+#~ msgid "Generation status"
+#~ msgstr "Oluşturma durumu"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "Özel oluşturulmuş simge"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "Eklenti yedek simgesi"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "Özel simge seti hazır."
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "Yedek simge seti etkin."
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "Kaynak görsel çok küçük (en az 512x512)."
+
+#~ msgid "Source image is invalid."
+#~ msgstr "Kaynak görsel geçersiz."
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "Bu sunucuda simge oluşturma başarısız oldu."
+
+#~ msgid "Unknown generation status."
+#~ msgstr "Bilinmeyen oluşturma durumu."
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "Önizleme simgesi URL’si mevcut değil."
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."

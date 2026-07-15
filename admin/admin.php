@@ -427,18 +427,6 @@ function bbpa_normalize_admin_root_id(string $root_id): string
 }
 
 /**
- * Normalize the front app shell background color for a CSS custom property.
- */
-function bbpa_normalize_front_app_background_color(string $background_color): string
-{
-    $safe_background_color = sanitize_hex_color($background_color);
-
-    return is_string($safe_background_color) && preg_match('/^#[0-9a-fA-F]{6}$/', $safe_background_color) === 1
-        ? strtolower($safe_background_color)
-        : '#ffffff';
-}
-
-/**
  * Render the admin root element.
  */
 function bbpa_render_admin_page(): void
@@ -781,21 +769,6 @@ function bbpa_build_query_rest_url(string $path = '', string $scheme = 'rest'): 
 }
 
 /**
- * Resolve install prompt UX mode for front app runtime.
- */
-function bbpa_get_front_app_install_prompt_mode(): string
-{
-    $mode = apply_filters('bbpa_front_app_install_prompt_mode', 'custom');
-    $mode = is_string($mode) ? sanitize_key($mode) : 'custom';
-
-    if (!in_array($mode, ['native', 'custom'], true)) {
-        return 'custom';
-    }
-
-    return $mode;
-}
-
-/**
  * Returns true when a REST base URL uses the ?rest_route= query fallback.
  */
 function bbpa_is_query_rest_base(string $rest_url): bool
@@ -869,7 +842,7 @@ function bbpa_enqueue_admin_assets(string $hook_suffix): void
 /**
  * Enqueue admin app bundle and pass runtime configuration.
  */
-function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', array $overrides = []): void
+function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): void
 {
     $menu_label = bbpa_get_plugin_label();
     $settings = bbpa_get_settings();
@@ -878,30 +851,9 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         : !empty($settings['debug_enabled']);
     $flag_assets = bbpa_get_flag_assets();
 
-    $root_id = bbpa_normalize_admin_root_id(
-        isset($overrides['root_id']) && is_string($overrides['root_id']) && $overrides['root_id'] !== ''
-            ? $overrides['root_id']
-            : 'bbpa-admin'
-    );
-    $app_mode = isset($overrides['app_mode']) && is_string($overrides['app_mode']) && $overrides['app_mode'] !== ''
-        ? $overrides['app_mode']
-        : 'admin';
-    $is_app_mode = $app_mode === 'app';
-    $app_base_url = isset($overrides['app_base_url']) && is_string($overrides['app_base_url'])
-        ? $overrides['app_base_url']
-        : '';
+    $root_id = bbpa_normalize_admin_root_id('bbpa-admin');
     $panels = bbpa_get_admin_panels();
     $available_panels = bbpa_get_admin_panels(true);
-    if ($is_app_mode) {
-        $panels = array_values(
-            array_filter(
-                $panels,
-                static function (array $panel): bool {
-                    return ($panel['name'] ?? '') !== 'settings';
-                }
-            )
-        );
-    }
     $panel_names = array_values(
         array_filter(
             array_map(
@@ -918,10 +870,6 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
     $disabled_panels = isset($settings['disabled_panels']) && is_array($settings['disabled_panels'])
         ? bbpa_normalize_disabled_panels($settings['disabled_panels'])
         : [];
-    $pwa_assets = function_exists('bbpa_get_front_app_pwa_assets')
-        ? bbpa_get_front_app_pwa_assets()
-        : [];
-
     $asset_data = [
         'dependencies' => ['wp-element', 'wp-components', 'wp-i18n'],
         'version' => BBPA_VERSION,
@@ -963,7 +911,6 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         'bbpa_admin_app_script_relative_path',
         $admin_js_relative_path,
         [
-            'app_mode' => $app_mode,
             'current_panel' => $current_panel,
         ]
     );
@@ -974,14 +921,8 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
     $asset_data['dependencies'] = isset($asset_data['dependencies']) && is_array($asset_data['dependencies'])
         ? $asset_data['dependencies']
         : [];
-    if ($is_app_mode && !in_array('wp-components', $asset_data['dependencies'], true)) {
-        $asset_data['dependencies'][] = 'wp-components';
-    }
     $asset_data['version'] = bbpa_normalize_asset_version($asset_data['version'] ?? '');
     $admin_js_url = BBPA_URL . $admin_js_relative_path;
-    if ($is_app_mode && function_exists('bbpa_get_pwa_asset_url')) {
-        $admin_js_url = bbpa_get_pwa_asset_url($admin_js_relative_path);
-    }
 
     wp_register_script(
         'bbpa-admin',
@@ -1015,15 +956,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
     );
     wp_enqueue_script('bbpa-admin-boot-fallback');
 
-    if ($is_app_mode) {
-        wp_register_style(
-            'bbpa-front-app-shell',
-            BBPA_URL . 'front/css/app-shell.css',
-            [],
-            BBPA_VERSION
-        );
-        wp_enqueue_style('bbpa-front-app-shell');
-    }
+
 
     wp_enqueue_media();
 
@@ -1052,14 +985,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         }
     }
 
-    if (
-        $is_app_mode
-        && function_exists('bbpa_get_pwa_asset_url')
-        && function_exists('bbpa_resolve_front_app_pwa_asset_source_relative_path')
-        && is_file(BBPA_PATH . bbpa_resolve_front_app_pwa_asset_source_relative_path('assets/css/style-build-admin.css'))
-    ) {
-        $admin_extra_css_url = bbpa_get_pwa_asset_url('assets/css/style-build-admin.css');
-    }
+
 
     $admin_css_dependencies = [];
 
@@ -1094,18 +1020,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
     if ($admin_css_url !== '' && function_exists('set_url_scheme')) {
         $admin_css_url = set_url_scheme($admin_css_url);
     }
-    if ($is_app_mode && $admin_css_url !== '' && function_exists('bbpa_get_pwa_asset_url')) {
-        $admin_css_url = bbpa_get_pwa_asset_url('assets/css/style-admin.css');
-    }
-    if (
-        $is_app_mode
-        && $admin_css_url === ''
-        && function_exists('bbpa_get_pwa_asset_url')
-        && function_exists('bbpa_resolve_front_app_pwa_asset_source_relative_path')
-        && bbpa_resolve_front_app_pwa_asset_source_relative_path('assets/css/style-admin.css') !== 'assets/css/style-admin.css'
-    ) {
-        $admin_css_url = bbpa_get_pwa_asset_url('assets/css/style-admin.css');
-    }
+
 
     if ($admin_css_url !== '') {
         wp_enqueue_style(
@@ -1136,18 +1051,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
 
     wp_enqueue_style('wp-components');
 
-    // Explicit app-mode guard: always boot the admin application bundle/styles in app mode.
-    if ($is_app_mode) {
-        wp_enqueue_script('bbpa-admin');
 
-        if (wp_style_is('bbpa-admin-extras', 'registered')) {
-            wp_enqueue_style('bbpa-admin-extras');
-        }
-
-        if (wp_style_is('bbpa-admin', 'registered')) {
-            wp_enqueue_style('bbpa-admin');
-        }
-    }
 
     bbpa_add_admin_color_scheme_styles();
     $rest_config = bbpa_get_js_rest_config();
@@ -1161,9 +1065,6 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', arra
         $debug_enabled,
         $disabled_panels,
         $flag_assets,
-        $app_mode,
-        $app_base_url,
-        $pwa_assets,
         $available_panels
     );
 
@@ -1549,35 +1450,17 @@ function bbpa_build_admin_localized_payload(
     bool $debug_enabled,
     array $disabled_panels,
     array $flag_assets,
-    string $app_mode,
-    string $app_base_url,
-    array $pwa_assets,
     array $available_panels = []
 ): array {
     $sanitize_url = static function ($value): string {
         return is_string($value) ? esc_url_raw($value) : '';
     };
-    $is_white_label = function_exists('bbpa_is_white_label_enabled') && bbpa_is_white_label_enabled();
     $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-
-    $sanitize_generated_icons = static function ($icons) use ($sanitize_url): array {
-        if (!is_array($icons)) {
-            return [];
-        }
-
-        $normalized = [];
-        foreach ($icons as $size => $url) {
-            $normalized[sanitize_key((string) $size)] = $sanitize_url($url);
-        }
-
-        return $normalized;
-    };
 
     $payload = [
         'rootId' => sanitize_key($root_id),
         'currentUserId' => get_current_user_id(),
         'restNonce' => wp_create_nonce('wp_rest'),
-        'appNonce' => wp_create_nonce('bbpa_app_session'),
         'restUrl' => $sanitize_url($rest_config['rest_url'] ?? ''),
         'roles' => bbpa_get_roles_for_admin(),
         'panels' => $panels,
@@ -1599,7 +1482,6 @@ function bbpa_build_admin_localized_payload(
             'slug' => sanitize_key(BBPA_SLUG),
             'pluginLabel' => sanitize_text_field($menu_label),
             'brandLogoUrl' => $sanitize_url(BBPA_URL . 'assets/images/bbpa-logo-compact.svg'),
-            'isWhiteLabel' => $is_white_label,
             'timezoneString' => sanitize_text_field((string) wp_timezone_string()),
             'gmtOffset' => (float) get_option('gmt_offset', 0),
             'locale' => sanitize_text_field((string) get_locale()),
@@ -1617,43 +1499,6 @@ function bbpa_build_admin_localized_payload(
             'disabledPanels' => array_values(array_map('sanitize_key', $disabled_panels)),
             'postTypes' => bbpa_get_post_types_for_admin(),
             'flagAssets' => $flag_assets,
-            'appMode' => sanitize_key($app_mode),
-            'appBaseUrl' => $sanitize_url($app_base_url),
-            'pwa' => [
-                'appUrl' => $sanitize_url(function_exists('bbpa_get_front_app_url') ? bbpa_get_front_app_url() : home_url('/')),
-                'serviceWorkerUrl' => $sanitize_url($pwa_assets['service_worker_url'] ?? ''),
-                'installPromptMode' => sanitize_key(
-                    function_exists('bbpa_get_front_app_install_prompt_mode')
-                        ? bbpa_get_front_app_install_prompt_mode()
-                        : 'disabled'
-                ),
-                'manifestUrl' => $sanitize_url($pwa_assets['manifest_url'] ?? ''),
-                'previewIconUrl' => $sanitize_url($pwa_assets['preview_icon_url'] ?? ''),
-                'appleTouchIconUrl' => $sanitize_url($pwa_assets['apple_touch_icon'] ?? ''),
-                'loadingIconUrl' => $sanitize_url($pwa_assets['loading_icon'] ?? ''),
-                'fallbackIconUrl' => $sanitize_url($pwa_assets['fallback_icon_url'] ?? ''),
-                'generatedIcons' => $sanitize_generated_icons($pwa_assets['generated_icons'] ?? []),
-                'iconSource' => sanitize_key((string) ($pwa_assets['icon_source'] ?? 'fallback')),
-                'iconGenerationStatus' => sanitize_key((string) ($pwa_assets['icon_generation_status'] ?? 'fallback')),
-                'iconGenerationMessage' => sanitize_text_field((string) ($pwa_assets['icon_generation_message'] ?? '')),
-                'labels' => [
-                    'previewTitle' => __('Current PWA icon preview', 'bimbeau-privacy-analytics'),
-                    'previewHelp' => __('Preview uses the same runtime icon resolution as the standalone app manifest and loading splash.', 'bimbeau-privacy-analytics'),
-                    'sourceLabel' => __('Source', 'bimbeau-privacy-analytics'),
-                    'statusLabel' => __('Generation status', 'bimbeau-privacy-analytics'),
-                    'sourceCustom' => __('Custom generated icon', 'bimbeau-privacy-analytics'),
-                    'sourceFallback' => __('Plugin fallback icon', 'bimbeau-privacy-analytics'),
-                    'stateReady' => __('Custom icon set is ready.', 'bimbeau-privacy-analytics'),
-                    'stateFallback' => __('Fallback icon set is active.', 'bimbeau-privacy-analytics'),
-                    'stateTooSmall' => __('Source image is too small (minimum 512x512).', 'bimbeau-privacy-analytics'),
-                    'stateInvalidSource' => __('Source image is invalid.', 'bimbeau-privacy-analytics'),
-                    'stateGenerationFailed' => __('Icon generation failed on this server.', 'bimbeau-privacy-analytics'),
-                    'stateUnknown' => __('Unknown generation status.', 'bimbeau-privacy-analytics'),
-                    'unknownValue' => __('Unknown', 'bimbeau-privacy-analytics'),
-                    'noPreview' => __('No preview icon URL is available.', 'bimbeau-privacy-analytics'),
-                ],
-                'version' => BBPA_VERSION,
-            ],
         ],
     ];
 

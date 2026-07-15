@@ -43,7 +43,6 @@ export const DEFAULT_SETTINGS = {
 	maxmind_account_id: '',
 	maxmind_license_key: '',
 	visit_identifier_window_seconds: 1800,
-	pro_content_stats_post_types: [ 'post', 'page' ],
 	disabled_panels: [],
 	delete_data_on_uninstall: false,
 };

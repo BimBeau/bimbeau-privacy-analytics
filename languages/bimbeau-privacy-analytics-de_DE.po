@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -69,62 +69,6 @@ msgid ""
 msgstr ""
 "Technische Diagnosen sind indikativ und bleiben auf Skriptattribute und CMP-"
 "Markierungen beschränkt."
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "Aktuelle Vorschau des PWA-Symbols"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr ""
-"Die Vorschau verwendet dieselbe Laufzeit-Symbolauflösung wie das Manifest "
-"der eigenständigen App und der Ladebildschirm."
-
-#: admin/admin.php
-msgid "Source"
-msgstr "Quelle"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "Generierungsstatus"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "Benutzerdefiniert generiertes Symbol"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "Fallback-Symbol des Plugins"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "Das benutzerdefinierte Symbolset ist bereit."
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "Das Fallback-Symbolset ist aktiv."
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "Das Quellbild ist zu klein (mindestens 512x512)."
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "Das Quellbild ist ungültig."
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "Die Symbolgenerierung ist auf diesem Server fehlgeschlagen."
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "Unbekannter Generierungsstatus."
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "Es ist keine URL für das Vorschausymbol verfügbar."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -542,7 +486,7 @@ msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr ""
 "MaxMind-Zugangsdaten sind erforderlich, um IP-Geolokalisierung zu aktivieren."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "Statistiken"
 
@@ -1008,6 +952,10 @@ msgstr "Keine Referrer verfügbar."
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Globale stündliche Heatmap"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2435,6 +2383,49 @@ msgstr "Privat"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabelle: Besucher"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "Aktuelle Vorschau des PWA-Symbols"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr ""
+#~ "Die Vorschau verwendet dieselbe Laufzeit-Symbolauflösung wie das Manifest "
+#~ "der eigenständigen App und der Ladebildschirm."
+
+#~ msgid "Source"
+#~ msgstr "Quelle"
+
+#~ msgid "Generation status"
+#~ msgstr "Generierungsstatus"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "Benutzerdefiniert generiertes Symbol"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "Fallback-Symbol des Plugins"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "Das benutzerdefinierte Symbolset ist bereit."
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "Das Fallback-Symbolset ist aktiv."
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "Das Quellbild ist zu klein (mindestens 512x512)."
+
+#~ msgid "Source image is invalid."
+#~ msgstr "Das Quellbild ist ungültig."
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "Die Symbolgenerierung ist auf diesem Server fehlgeschlagen."
+
+#~ msgid "Unknown generation status."
+#~ msgstr "Unbekannter Generierungsstatus."
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "Es ist keine URL für das Vorschausymbol verfügbar."
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."

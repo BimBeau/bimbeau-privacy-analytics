@@ -17,7 +17,7 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
+#: bimbeau-privacy-analytics.php src/admin/free-stubs/registry.js src/admin/panels/registry.js
 #. Plugin Name of the plugin
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
@@ -70,62 +70,6 @@ msgid ""
 msgstr ""
 "Los diagnósticos técnicos son orientativos y se limitan a los atributos de "
 "los scripts y a los marcadores de la CMP."
-
-#: admin/admin.php
-msgid "Current PWA icon preview"
-msgstr "Vista previa actual del icono PWA"
-
-#: admin/admin.php
-msgid ""
-"Preview uses the same runtime icon resolution as the standalone app manifest "
-"and loading splash."
-msgstr ""
-"La vista previa utiliza la misma resolución de icono en ejecución que el "
-"manifiesto de la aplicación independiente y la pantalla de carga."
-
-#: admin/admin.php
-msgid "Source"
-msgstr "Fuente"
-
-#: admin/admin.php
-msgid "Generation status"
-msgstr "Estado de generación"
-
-#: admin/admin.php
-msgid "Custom generated icon"
-msgstr "Icono personalizado generado"
-
-#: admin/admin.php
-msgid "Plugin fallback icon"
-msgstr "Icono de reserva del plugin"
-
-#: admin/admin.php
-msgid "Custom icon set is ready."
-msgstr "El conjunto de iconos personalizados está listo."
-
-#: admin/admin.php
-msgid "Fallback icon set is active."
-msgstr "El conjunto de iconos de reserva está activo."
-
-#: admin/admin.php
-msgid "Source image is too small (minimum 512x512)."
-msgstr "La imagen de origen es demasiado pequeña (mínimo 512x512)."
-
-#: admin/admin.php
-msgid "Source image is invalid."
-msgstr "La imagen de origen no es válida."
-
-#: admin/admin.php
-msgid "Icon generation failed on this server."
-msgstr "La generación del icono ha fallado en este servidor."
-
-#: admin/admin.php
-msgid "Unknown generation status."
-msgstr "Estado de generación desconocido."
-
-#: admin/admin.php
-msgid "No preview icon URL is available."
-msgstr "No hay ninguna URL de icono de vista previa disponible."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -538,7 +482,7 @@ msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr ""
 "Se requieren credenciales de MaxMind para activar la geolocalización por IP."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "Estadísticas"
 
@@ -1002,6 +946,10 @@ msgstr "No hay referentes disponibles."
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Mapa de calor horario global"
+
+#: src/admin/free-stubs/SettingsPanel.js
+msgid "Settings are available in the WordPress admin."
+msgstr ""
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -2434,6 +2382,49 @@ msgstr "Privado"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabla: visitantes"
+
+#~ msgid "Current PWA icon preview"
+#~ msgstr "Vista previa actual del icono PWA"
+
+#~ msgid ""
+#~ "Preview uses the same runtime icon resolution as the standalone app "
+#~ "manifest and loading splash."
+#~ msgstr ""
+#~ "La vista previa utiliza la misma resolución de icono en ejecución que el "
+#~ "manifiesto de la aplicación independiente y la pantalla de carga."
+
+#~ msgid "Source"
+#~ msgstr "Fuente"
+
+#~ msgid "Generation status"
+#~ msgstr "Estado de generación"
+
+#~ msgid "Custom generated icon"
+#~ msgstr "Icono personalizado generado"
+
+#~ msgid "Plugin fallback icon"
+#~ msgstr "Icono de reserva del plugin"
+
+#~ msgid "Custom icon set is ready."
+#~ msgstr "El conjunto de iconos personalizados está listo."
+
+#~ msgid "Fallback icon set is active."
+#~ msgstr "El conjunto de iconos de reserva está activo."
+
+#~ msgid "Source image is too small (minimum 512x512)."
+#~ msgstr "La imagen de origen es demasiado pequeña (mínimo 512x512)."
+
+#~ msgid "Source image is invalid."
+#~ msgstr "La imagen de origen no es válida."
+
+#~ msgid "Icon generation failed on this server."
+#~ msgstr "La generación del icono ha fallado en este servidor."
+
+#~ msgid "Unknown generation status."
+#~ msgstr "Estado de generación desconocido."
+
+#~ msgid "No preview icon URL is available."
+#~ msgstr "No hay ninguna URL de icono de vista previa disponible."
 
 #, fuzzy
 #~ msgid "Visitor details are not available in this package."
