@@ -2002,6 +2002,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         return new WP_REST_Response(['state' => $state, 'auto_open_allowed' => bbpa_setup_wizard_auto_open_allowed($state), 'settings' => [
             'advanced_stats_enabled' => (bool) $settings['advanced_stats_enabled'],
             'geoip_lookup_mode' => (string) $settings['geoip_lookup_mode'],
+            'geoip_update_frequency' => (string) $settings['geoip_update_frequency'],
             'referrer_favicons_enabled' => (bool) $settings['referrer_favicons_enabled'],
         ], 'geoip' => ['local_database_available' => $updater ? $updater->is_local_database_available() : false]], 200);
     }
@@ -2016,6 +2017,8 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         elseif ($action === 'set_step') { $step = sanitize_key((string) $request->get_param('step')); if (!in_array($step, ['tracking', 'geolocation', 'referrers', 'complete'], true)) return new WP_Error('bbpa_invalid_setup_wizard_transition', '', ['status' => 400]); $state['current_step'] = $step; }
         elseif ($action === 'set_choice') { $choice = sanitize_key((string) $request->get_param('choice')); if (!in_array($choice, ['advanced_stats', 'geoip_database', 'referrer_favicons'], true)) return new WP_Error('bbpa_invalid_setup_wizard_choice', '', ['status' => 400]); $state['choices'][$choice] = (bool) rest_sanitize_boolean($request->get_param('value')); }
         elseif ($action === 'mark_auto_opened') { $state['auto_opened'] = true; }
+        elseif ($action === 'mark_geoip_downloaded') { $state['authorizations']['geoip_downloaded_at'] = $timestamp; $state['authorizations']['geoip_downloaded_by'] = $user_id; }
+        elseif ($action === 'mark_favicons_enabled') { $state['authorizations']['favicons_enabled_at'] = $timestamp; $state['authorizations']['favicons_enabled_by'] = $user_id; }
         elseif ($action === 'complete') { $state['status'] = 'completed'; $state['current_step'] = 'complete'; $state['completed_at'] = $timestamp; $state['completed_by'] = $user_id; }
         elseif ($action === 'restart') { $state['status'] = 'in_progress'; $state['current_step'] = 'tracking'; $state['started_at'] = $timestamp; $state['completed_at'] = null; $state['completed_by'] = null; }
         else return new WP_Error('bbpa_invalid_setup_wizard_action', '', ['status' => 400]);

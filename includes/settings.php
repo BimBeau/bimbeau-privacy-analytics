@@ -83,7 +83,7 @@ function bbpa_get_delegable_access_roles(): array
 function bbpa_get_settings_defaults(): array
 {
     $defaults = [
-        // New installations wait for an administrator's explicit wizard choice.
+        // New installations wait for an explicit administrator wizard choice.
         'advanced_stats_enabled' => false,
         'referrer_favicons_enabled' => false,
         'respect_dnt_gpc' => true,

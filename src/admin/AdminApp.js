@@ -31,6 +31,7 @@ import {
 import AppSidebar from './components/AppSidebar';
 import FeatureIcon from './components/icons/FeatureIcon';
 import PeriodFilter from './widgets/PeriodFilter';
+import SetupWizard from './components/SetupWizard';
 
 const HEADING_NOTICE_SELECTOR = [
 	'.bbpa-admin-app__heading > .notice',
@@ -77,6 +78,9 @@ const AdminApp = () => {
 		useState( false );
 	const [ isInstallAccepted, setIsInstallAccepted ] = useState( false );
 	const [ geoIpDatabaseStatus, setGeoIpDatabaseStatus ] = useState( null );
+	const [ setupWizard, setSetupWizard ] = useState( null );
+	const [ isSetupWizardOpen, setIsSetupWizardOpen ] = useState( false );
+	const [ setupNotice, setSetupNotice ] = useState( false );
 	const [ isGeoIpStatusLoading, setIsGeoIpStatusLoading ] = useState( true );
 	const installPromptMode =
 		ADMIN_CONFIG?.settings?.pwa?.installPromptMode === 'custom'
@@ -155,6 +159,33 @@ const AdminApp = () => {
 			isCurrent = false;
 		};
 	}, [ isAuthRequired ] );
+
+	useEffect( () => {
+		const openWizard = () => setIsSetupWizardOpen( true );
+		window.addEventListener( 'bbpa-open-setup-wizard', openWizard );
+		return () => window.removeEventListener( 'bbpa-open-setup-wizard', openWizard );
+	}, [] );
+
+	useEffect( () => {
+		if ( isAuthRequired ) return;
+		let current = true;
+		fetchAdminJson( '/admin/setup-wizard' ).then( async ( payload ) => {
+			if ( ! current ) return;
+			setSetupWizard( payload );
+			if ( payload?.auto_open_allowed ) {
+				await fetchAdminJson( '/admin/setup-wizard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { action: 'mark_auto_opened' } ) } );
+				if ( current ) setIsSetupWizardOpen( true );
+			}
+		} ).catch( () => {} );
+		return () => { current = false; };
+	}, [ isAuthRequired ] );
+
+	const closeSetupWizard = () => setIsSetupWizardOpen( false );
+	const completeSetupWizard = () => {
+		setIsSetupWizardOpen( false );
+		setSetupWizard( ( current ) => ( { ...current, state: { ...current?.state, status: 'completed' } } ) );
+		setSetupNotice( true );
+	};
 
 	useEffect( () => {
 		if ( hasRequestedPanel || requestedPanel === currentPanel ) {
@@ -462,6 +493,14 @@ const AdminApp = () => {
 					) }
 				</Notice>
 			) : null }
+			{ setupWizard?.state?.status !== 'completed' && ! isSetupWizardOpen ? (
+				<Notice status="info" isDismissible={ false }>
+					<strong>{ __( 'Complete the initial configuration', 'bimbeau-privacy-analytics' ) }</strong>
+					<p>{ __( 'Finish configuring tracking, local geolocation, and optional referrer favicons.', 'bimbeau-privacy-analytics' ) }</p>
+					<Button variant="secondary" onClick={ () => setIsSetupWizardOpen( true ) }>{ __( 'Resume configuration', 'bimbeau-privacy-analytics' ) }</Button>
+				</Notice>
+			) : null }
+			{ setupNotice ? <Notice status="success" isDismissible onRemove={ () => setSetupNotice( false ) }>{ __( 'Initial configuration completed.', 'bimbeau-privacy-analytics' ) }</Notice> : null }
 			{ shouldShowMissingGeoIpDatabaseNotice ? (
 				<Notice status="warning" isDismissible={ false }>
 					<div className="bbpa-admin-app__geoip-notice">
@@ -510,6 +549,7 @@ const AdminApp = () => {
 					</span>
 				</div>
 			) : null }
+			{ isSetupWizardOpen && setupWizard ? <SetupWizard initial={ setupWizard } onClose={ closeSetupWizard } onComplete={ completeSetupWizard } /> : null }
 		</div>
 	);
 };

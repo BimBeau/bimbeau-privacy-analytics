@@ -1822,6 +1822,29 @@ const SettingsPanel = () => {
                   </>
                 )}
                 {}
+                {activeTab === "general" && (
+                  <Card className="bbpa-settings-section">
+                    <CardHeader>
+                      <SettingsSectionTitle icon={LuBookmark}>
+                        {__("Referrer favicons", "bimbeau-privacy-analytics")}
+                      </SettingsSectionTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <ToggleControl
+                        label={__("Display referrer favicons", "bimbeau-privacy-analytics")}
+                        help={formState.referrer_favicons_enabled
+                          ? __("Allow BimBeau Privacy Analytics to contact referrer domains, retrieve validated icons server-side, and serve cached local copies in reports.", "bimbeau-privacy-analytics")
+                          : __("When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.", "bimbeau-privacy-analytics")}
+                        checked={Boolean(formState.referrer_favicons_enabled)}
+                        onChange={(value) => setFormState((prev) => ({ ...prev, referrer_favicons_enabled: Boolean(value) }))}
+                      />
+                      <Button variant="link" onClick={() => window.dispatchEvent(new CustomEvent("bbpa-open-setup-wizard"))}>
+                        {__("Run the configuration assistant again", "bimbeau-privacy-analytics")}
+                      </Button>
+                      <p>{__("This action presents your current settings and does not reset them.", "bimbeau-privacy-analytics")}</p>
+                    </CardBody>
+                  </Card>
+                )}
                 <Button
                   variant="primary"
                   isBusy={isSaving}

@@ -517,6 +517,27 @@ msgstr "Install app"
 msgid "BimBeau Privacy Analytics app installation was accepted."
 msgstr "BimBeau Privacy Analytics app installation was accepted."
 
+#: src/admin/AdminApp.js
+#, fuzzy
+msgid "Complete the initial configuration"
+msgstr "Events configuration"
+
+#: src/admin/AdminApp.js
+msgid ""
+"Finish configuring tracking, local geolocation, and optional referrer "
+"favicons."
+msgstr ""
+
+#: src/admin/AdminApp.js
+#, fuzzy
+msgid "Resume configuration"
+msgstr "Events configuration"
+
+#: src/admin/AdminApp.js
+#, fuzzy
+msgid "Initial configuration completed."
+msgstr "Events configuration"
+
 #: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
 #, fuzzy
 msgid "GeoIP database not installed"
@@ -762,6 +783,227 @@ msgstr "Technical state does not prove consent collection validity."
 #: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Direct"
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Unable to save this choice. Please try again."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "The GeoIP database could not be validated after download."
+msgstr "GeoIP database is not available yet."
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Unable to download the GeoIP database. Please try again."
+msgstr "Unable to load the GeoIP database status."
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Unable to finish configuration. Please try again."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Configure analytics tracking"
+msgstr "Configure geolocation"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Install the local GeoIP database"
+msgstr "Reinstall local GeoIP database"
+
+#: src/admin/components/SetupWizard/index.js src/admin/panels/SettingsPanel.js
+msgid "Display referrer favicons"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Your configuration is ready"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Step"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid "of 4"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"BimBeau Privacy Analytics stores analytics data in your WordPress "
+"installation. Optional external features remain inactive until you "
+"explicitly enable them."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Enable advanced statistics"
+msgstr "Enable advanced stats after consent"
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"Advanced statistics add device details, screen resolution, active time, and "
+"other enriched information when available."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"If your website requires prior analytics consent, your CMP must block the "
+"BimBeau Privacy Analytics advanced tracker until the visitor accepts the "
+"Analytics or Statistics category. BimBeau Privacy Analytics does not replace "
+"your CMP and does not record visitor consent."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Read the CMP documentation."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"The local GeoIP database allows BimBeau Privacy Analytics to display the "
+"geographic origin of visitors while performing IP lookups inside your "
+"WordPress installation."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"Downloading the database contacts the documented BimBeau GeoIP Database "
+"Service. The service can receive your server IP address and a technical User-"
+"Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"BimBeau Privacy Analytics can contact referrer domains to retrieve their "
+"icons and cache validated copies inside your WordPress installation."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"The contacted domains can receive your server IP address and a generic "
+"technical User-Agent. No request is sent directly from the administrator's "
+"browser, and no WordPress site URL is included in the User-Agent."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid "This feature is visual only and can be disabled later."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Advanced statistics:"
+msgstr "Advanced stats"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Enabled"
+msgstr "Enabled panels"
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Disabled"
+msgstr "Disabled"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Local GeoIP database:"
+msgstr "Install local GeoIP database"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Installed"
+msgstr "Install app"
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Not installed"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Automatic GeoIP updates:"
+msgstr "Automatic GeoIP database updates"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Referrer favicons:"
+msgstr "Referrers"
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"Other settings use the recommended defaults and can be changed later from "
+"the BimBeau Privacy Analytics settings."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Enable advanced statistics and continue"
+msgstr "Enable advanced stats after consent"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Continue with essential statistics only"
+msgstr "Essential stats only"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Download the GeoIP database and continue"
+msgstr "Install local GeoIP database"
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Continue without local geolocation"
+msgstr "Configure geolocation"
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Allow referrer favicons and continue"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Continue without enabling favicons"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Finish configuration"
+msgstr "Events configuration"
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Back"
+msgstr "Back"
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Finish later"
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Continue without geolocation?"
+msgstr "Configure geolocation"
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"Without a local GeoIP database, BimBeau Privacy Analytics will not be able "
+"to determine the geographic origin of visitors."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"Page views, visits, and traffic sources will continue to be measured, but "
+"country, region, and city information will not be available."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+msgid ""
+"You can download the GeoIP database later from the geolocation settings."
+msgstr ""
+
+#: src/admin/components/SetupWizard/index.js
+#, fuzzy
+msgid "Continue without geolocation"
+msgstr "Configure geolocation"
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Return to the download"
+msgstr ""
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -1855,6 +2097,31 @@ msgid "Events configuration"
 msgstr "Events configuration"
 
 #: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Referrer favicons"
+msgstr "Referrers"
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"Allow BimBeau Privacy Analytics to contact referrer domains, retrieve "
+"validated icons server-side, and serve cached local copies in reports."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid ""
+"When disabled, a local generic icon is displayed and no referrer domain is "
+"contacted for favicons."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Run the configuration assistant again"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "This action presents your current settings and does not reset them."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
 msgstr "Save settings"
 
@@ -2403,14 +2670,8 @@ msgstr "Table: Visitors"
 #~ msgid "Base GeoIP non installée"
 #~ msgstr "Local GeoIP database not installed"
 
-#~ msgid "Disabled"
-#~ msgstr "Disabled"
-
 #~ msgid "Update now"
 #~ msgstr "Update now"
-
-#~ msgid "Reinstall local GeoIP database"
-#~ msgstr "Reinstall local GeoIP database"
 
 #~ msgid ""
 #~ "Country and city reports require a local GeoIP database. Click “Install "

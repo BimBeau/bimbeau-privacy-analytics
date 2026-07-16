@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.45
+Stable tag: 8.45.46
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -87,15 +87,32 @@ Debug mode is the authoritative plugin switch for diagnostic logging. BimBeau Pr
 
 External services:
 
-Country-level geolocation reports require a local GeoIP database in local database mode. Automatic GeoIP updates are disabled by default, and BimBeau Privacy Analytics does not call the BimBeau GeoIP Database Service during plugin activation. Local GeoIP lookups do not send visitor IP addresses to BimBeau.
+= BimBeau GeoIP Database Service =
 
-The BimBeau GeoIP Database Service is contacted only when an administrator clicks the install/update database action in Geolocation settings, or when an administrator explicitly chooses an automatic update frequency. The plugin sends a server-side HTTP request to fetch the manifest and database archive, validates manifest metadata, verifies the downloaded archive checksum, and keeps an existing readable local database available when an update attempt fails. The service receives the WordPress server IP address as seen by the service, the HTTP User-Agent header, and the site URL only if a site URL is included in the User-Agent header. The GeoIP updater User-Agent does not include `home_url('/')`.
+The optional local GeoIP database provides country-level geolocation reports while lookups remain inside the WordPress installation. Automatic database downloads are disabled by default. Plugin activation, opening the dashboard, and opening the configuration assistant do not contact this service.
+
+The service is contacted only after an administrator clicks the manual database install/update action (including the explicit assistant action), or after an administrator later enables an automatic update frequency. It receives the WordPress server IP address as seen by the service and a technical User-Agent. The updater User-Agent does not include the site URL. Local IP lookups do not transmit visitor IP addresses to BimBeau.
 
 GeoIP service: https://github.com/BimBeau/bimbeau-geoip-database
 BimBeau Terms of Use: https://bimbeau.fr/bimbeau-privacy-analytics/en/legal/terms-of-use/
 BimBeau Privacy Policy: https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy-policy/
+
+= Referrer favicon retrieval =
+
+Referrer favicons are an optional visual feature. They are disabled until an administrator enables them in the first configuration assistant or General settings. When enabled, the WordPress server can contact a referrer domain to retrieve an icon; the domain can see the server IP address and a generic technical User-Agent. The User-Agent contains no site URL.
+
+The administrator browser never requests a favicon from a referrer domain. The plugin validates and stores only ICO, PNG, JPEG, or WebP files in local WordPress uploads storage and returns only that local URL to the admin interface. SVG and active content are rejected. The feature can be disabled at any time; reports then use a local generic icon and make no favicon requests.
+
+= MaxMind =
+
+MaxMind API mode is manually selected and requires a MaxMind Account ID and License Key. In this mode, MaxMind receives the IP address being resolved. Local database mode does not use the MaxMind API and does not send visitor IP addresses to MaxMind. See the MaxMind GeoLite EULA and privacy policy before configuring this service.
+
 MaxMind GeoLite EULA: https://www.maxmind.com/en/geolite/eula
 MaxMind privacy policy: https://www.maxmind.com/en/privacy-policy
+
+= Freemius =
+
+The Free package may load the Freemius SDK for account, pricing, upgrade, support, uninstall, and package identity flows. Free analytics features do not require a license, payment, quota, time-limited evaluation, or remote feature validation. Freemius communications depend on the account and support actions an administrator chooses.
 
 == Source Code and Build Instructions ==
 
@@ -121,11 +138,11 @@ Build configuration is maintained in `webpack.config.js`. Asset sources are mapp
 
 1. Upload the plugin folder to `/wp-content/plugins/`.
 2. Activate **BimBeau Privacy Analytics** through the **Plugins** screen in WordPress.
-3. Open **BimBeau Privacy Analytics** in the WordPress admin menu.
-4. Review the privacy and tracking settings before collecting analytics data.
-5. Configure retention, DNT/GPC handling, role exclusions, geolocation, and debug options according to your needs.
-6. If you use enriched analytics, configure your CMP to control `bbpa-advanced-tracker` / `assets/js/bbpa-advanced-tracker.js`.
-7. Review the geolocation settings. Local database mode uses the BimBeau GeoIP Database Service for database updates, while MaxMind API mode requires MaxMind credentials.
+3. Open **BimBeau Privacy Analytics** in the WordPress admin menu. Eligible new installations open the first configuration assistant once.
+4. Choose essential statistics only or enable advanced statistics. If you enable advanced tracking where prior consent is required, configure your CMP to control `bbpa-advanced-tracker` / `assets/js/bbpa-advanced-tracker.js`.
+5. Choose whether to manually download the local GeoIP database. This explicit action keeps automatic GeoIP updates disabled; geolocation can also be configured later.
+6. Choose whether to enable optional referrer favicons. When disabled, reports use a local generic icon and do not contact referrer domains.
+7. Finish the assistant, then review retention, DNT/GPC handling, role exclusions, geolocation, and debug options. All assistant choices can be changed later in settings.
 
 == Frequently Asked Questions ==
 
@@ -218,5 +235,7 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.45 =
-* Secure setup state and optional external requests.
+= 8.45.46 =
+* Manual release metadata update.
+* ## Unreleased
+* Finalize the first configuration assistant with explicit optional-service activation, guided local GeoIP installation, secure locally cached referrer favicons, complete documentation, and translations.
