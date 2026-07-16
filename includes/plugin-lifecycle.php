@@ -191,6 +191,27 @@ function bbpa_backfill_marketing_query_allowlist(): void
     update_option(BBPA_MARKETING_QUERY_ALLOWLIST_BACKFILL_COMPLETED, true, false);
 }
 
+/** Preserve the historic advanced-statistics default for sites upgrading from older releases. */
+function bbpa_migrate_existing_settings_for_setup_wizard(): void
+{
+    $settings = get_option('bbpa_settings', null);
+    if (!is_array($settings)) {
+        return;
+    }
+    $changed = false;
+    if (!array_key_exists('advanced_stats_enabled', $settings)) {
+        $settings['advanced_stats_enabled'] = true;
+        $changed = true;
+    }
+    if (!array_key_exists('referrer_favicons_enabled', $settings)) {
+        $settings['referrer_favicons_enabled'] = false;
+        $changed = true;
+    }
+    if ($changed) {
+        update_option('bbpa_settings', $settings, false);
+    }
+}
+
 /**
  * Plugin activation tasks.
  */
@@ -245,6 +266,7 @@ function bbpa_maybe_run_upgrades(): void
     bbpa_run_legacy_prefix_migration();
     bbpa_maybe_install_schema();
     bbpa_register_settings_option();
+    bbpa_migrate_existing_settings_for_setup_wizard();
     bbpa_backfill_marketing_query_allowlist();
     bbpa_run_legacy_privacy_options_cleanup();
     bbpa_with_suppressed_db_errors(static function (): void {

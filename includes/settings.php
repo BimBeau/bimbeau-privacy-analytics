@@ -83,7 +83,9 @@ function bbpa_get_delegable_access_roles(): array
 function bbpa_get_settings_defaults(): array
 {
     $defaults = [
-        'advanced_stats_enabled' => true,
+        // New installations wait for an administrator's explicit wizard choice.
+        'advanced_stats_enabled' => false,
+        'referrer_favicons_enabled' => false,
         'respect_dnt_gpc' => true,
         'url_strip_query' => true,
         'url_query_allowlist' => ['utm_source', 'utm_medium', 'utm_campaign', 'gclid', 'gbraid', 'wbraid', 'msclkid'],
@@ -185,6 +187,7 @@ function bbpa_sanitize_settings($settings): array
 
     unset($settings['plugin_label']);
     $settings['advanced_stats_enabled'] = (bool) rest_sanitize_boolean($settings['advanced_stats_enabled']);
+    $settings['referrer_favicons_enabled'] = (bool) rest_sanitize_boolean($settings['referrer_favicons_enabled'] ?? false);
     $settings['respect_dnt_gpc'] = (bool) rest_sanitize_boolean($settings['respect_dnt_gpc']);
     $settings['url_strip_query'] = (bool) rest_sanitize_boolean($settings['url_strip_query']);
     $settings['maxmind_account_id'] = trim(sanitize_text_field($settings['maxmind_account_id']));

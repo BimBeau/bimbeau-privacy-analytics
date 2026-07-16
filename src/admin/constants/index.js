@@ -16,6 +16,8 @@ export const DEFAULT_PANELS = [
 ];
 
 export const DEFAULT_SETTINGS = {
+	advanced_stats_enabled: false,
+	referrer_favicons_enabled: false,
 	respect_dnt_gpc: true,
 	url_strip_query: true,
 	url_query_allowlist: [
@@ -83,7 +85,7 @@ export const ADVANCED_STATS_DEPENDENT_PANELS = [
 ];
 
 export const isAdvancedStatsEnabled = ( settings = ADMIN_CONFIG?.settings ) =>
-	settings?.advanced_stats_enabled !== false;
+	settings?.advanced_stats_enabled === true;
 
 const NON_DISABLABLE_PANEL_NAMES = new Set( [ 'dashboard', 'settings' ] );
 
