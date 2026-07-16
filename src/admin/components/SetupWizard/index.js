@@ -4,9 +4,19 @@ import { Button, Card, CardBody, CardFooter, CardHeader, Modal, Notice, Spinner,
 import { fetchAdminJson } from '../../api/useAdminEndpoint';
 
 const STEPS = [ 'tracking', 'geolocation', 'referrers', 'complete' ];
+const CMP_DOCUMENTATION_URLS = {
+	default: 'https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy/consent-and-cmp/',
+	fr: 'https://bimbeau.fr/bimbeau-privacy-analytics/privacy/consent-and-cmp/',
+};
 const stepNumber = ( step ) => Math.max( 0, STEPS.indexOf( step ) ) + 1;
 const postWizard = ( action, extra = {} ) => fetchAdminJson( '/admin/setup-wizard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { action, ...extra } ) } );
 const saveSettings = ( settings ) => fetchAdminJson( '/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( settings ) } );
+const getCmpDocumentationUrl = () => {
+	const locale = window.BBPAAdmin?.settings?.locale || window.BBPAAdmin?.locale || '';
+	return String( locale ).toLowerCase().startsWith( 'fr' )
+		? CMP_DOCUMENTATION_URLS.fr
+		: CMP_DOCUMENTATION_URLS.default;
+};
 
 export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 	const [ payload, setPayload ] = useState( initial );
@@ -16,6 +26,12 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 	const state = payload?.state || {};
 	const step = state.current_step || 'tracking';
 	const settings = payload?.settings || {};
+	const syncSavedSettings = ( result ) => {
+		if ( ! result?.settings ) {
+			throw new Error( __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) );
+		}
+		setPayload( ( current ) => ( { ...current, settings: result.settings } ) );
+	};
 	const update = async ( action, extra ) => {
 		const result = await postWizard( action, extra );
 		setPayload( ( current ) => ( { ...current, state: result.state } ) );
@@ -24,7 +40,7 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 	const moveTo = ( next ) => update( 'set_step', { step: next } );
 	const chooseTracking = async ( enabled ) => {
 		setBusy( true ); setError( '' );
-		try { await saveSettings( { ...settings, advanced_stats_enabled: enabled } ); await update( 'set_choice', { choice: 'advanced_stats', value: enabled } ); await moveTo( 'geolocation' ); }
+		try { const result = await saveSettings( { ...settings, advanced_stats_enabled: enabled } ); syncSavedSettings( result ); await update( 'set_choice', { choice: 'advanced_stats', value: enabled } ); await moveTo( 'geolocation' ); }
 		catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); }
 		finally { setBusy( false ); }
 	};
@@ -35,7 +51,7 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 		finally { setBusy( false ); }
 	};
 	const skipGeoIp = async () => { setBusy( true ); try { await update( 'set_choice', { choice: 'geoip_database', value: false } ); await moveTo( 'referrers' ); setSkipOpen( false ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
-	const chooseFavicons = async ( enabled ) => { setBusy( true ); setError( '' ); try { await saveSettings( { ...settings, referrer_favicons_enabled: enabled } ); await update( 'set_choice', { choice: 'referrer_favicons', value: enabled } ); if ( enabled ) await update( 'mark_favicons_enabled' ); setPayload( ( current ) => ( { ...current, settings: { ...current.settings, referrer_favicons_enabled: enabled } } ) ); await moveTo( 'complete' ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
+	const chooseFavicons = async ( enabled ) => { setBusy( true ); setError( '' ); try { const result = await saveSettings( { ...settings, referrer_favicons_enabled: enabled } ); syncSavedSettings( result ); await update( 'set_choice', { choice: 'referrer_favicons', value: enabled } ); if ( enabled ) await update( 'mark_favicons_enabled' ); await moveTo( 'complete' ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
 	const finish = async () => { setBusy( true ); try { await update( 'complete' ); onComplete?.(); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to finish configuration. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
 	const finishLater = async () => { setBusy( true ); try { await update( 'start' ); onClose?.(); } finally { setBusy( false ); } };
 	const back = () => moveTo( STEPS[ Math.max( 0, stepNumber( step ) - 2 ) ] );
@@ -45,7 +61,7 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 			<p aria-live="polite">{ __( 'Step', 'bimbeau-privacy-analytics' ) } { stepNumber( step ) } { __( 'of 4', 'bimbeau-privacy-analytics' ) }</p>
 			{ error ? <Notice status="error" isDismissible={ false }>{ error }</Notice> : null }
 			<Card><CardHeader><strong>{ labels[ step ] }</strong></CardHeader><CardBody>
-				{ step === 'tracking' && <><p>{ __( 'BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them.', 'bimbeau-privacy-analytics' ) }</p><h3>{ __( 'Enable advanced statistics', 'bimbeau-privacy-analytics' ) }</h3><p>{ __( 'Advanced statistics add device details, screen resolution, active time, and other enriched information when available.', 'bimbeau-privacy-analytics' ) }</p><Notice status="info" isDismissible={ false }>{ __( 'If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent.', 'bimbeau-privacy-analytics' ) } <a href="https://bimbeau.com" target="_blank" rel="noopener noreferrer">{ __( 'Read the CMP documentation.', 'bimbeau-privacy-analytics' ) }</a></Notice></> }
+				{ step === 'tracking' && <><p>{ __( 'BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them.', 'bimbeau-privacy-analytics' ) }</p><h3>{ __( 'Enable advanced statistics', 'bimbeau-privacy-analytics' ) }</h3><p>{ __( 'Advanced statistics add device details, screen resolution, active time, and other enriched information when available.', 'bimbeau-privacy-analytics' ) }</p><Notice status="info" isDismissible={ false }>{ __( 'If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent.', 'bimbeau-privacy-analytics' ) } <a href={ getCmpDocumentationUrl() } target="_blank" rel="noopener noreferrer">{ __( 'Read the CMP documentation.', 'bimbeau-privacy-analytics' ) }</a></Notice></> }
 				{ step === 'geolocation' && <><p>{ __( 'The local GeoIP database allows BimBeau Privacy Analytics to display the geographic origin of visitors while performing IP lookups inside your WordPress installation.', 'bimbeau-privacy-analytics' ) }</p><Notice status="info" isDismissible={ false }>{ __( 'Downloading the database contacts the documented BimBeau GeoIP Database Service. The service can receive your server IP address and a technical User-Agent. Visitor IP addresses are not sent to BimBeau for local lookups.', 'bimbeau-privacy-analytics' ) }</Notice></> }
 				{ step === 'referrers' && <><p>{ __( 'BimBeau Privacy Analytics can contact referrer domains to retrieve their icons and cache validated copies inside your WordPress installation.', 'bimbeau-privacy-analytics' ) }</p><Notice status="info" isDismissible={ false }>{ __( "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent.", 'bimbeau-privacy-analytics' ) }</Notice><p>{ __( 'This feature is visual only and can be disabled later.', 'bimbeau-privacy-analytics' ) }</p></> }
 				{ step === 'complete' && <><p>{ __( 'Advanced statistics:', 'bimbeau-privacy-analytics' ) } { settings.advanced_stats_enabled ? __( 'Enabled', 'bimbeau-privacy-analytics' ) : __( 'Disabled', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'Local GeoIP database:', 'bimbeau-privacy-analytics' ) } { payload?.geoip?.local_database_available ? __( 'Installed', 'bimbeau-privacy-analytics' ) : __( 'Not installed', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'Automatic GeoIP updates:', 'bimbeau-privacy-analytics' ) } { settings.geoip_update_frequency === 'disabled' ? __( 'Disabled', 'bimbeau-privacy-analytics' ) : __( 'Enabled', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'Referrer favicons:', 'bimbeau-privacy-analytics' ) } { settings.referrer_favicons_enabled ? __( 'Enabled', 'bimbeau-privacy-analytics' ) : __( 'Disabled', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.', 'bimbeau-privacy-analytics' ) }</p></> }
