@@ -3,15 +3,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BimBeau Privacy Analytics Pro 6.78.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bimbeau-privacy-"
-"analytics\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/bimbeau-privacy-analytics\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2026-06-08 12:00+0200\n"
 "Last-Translator: BimBeau <contact@bimbeau.fr>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Domain: bpa\n"
@@ -49,8 +49,7 @@ msgstr "联系"
 msgid ""
 "Base tracking remains active. Enriched tracking is declarable through an "
 "external CMP. Data granularity depends on collected signals."
-msgstr ""
-"基础跟踪保持启用。增强跟踪可通过外部 CMP 声明。数据粒度取决于收集到的信号。"
+msgstr "基础跟踪保持启用。增强跟踪可通过外部 CMP 声明。数据粒度取决于收集到的信号。"
 
 #: admin/admin.php
 msgid "Loading, please wait…"
@@ -62,8 +61,8 @@ msgstr "当前运行状态"
 
 #: admin/admin.php
 msgid ""
-"Technical diagnostics are indicative and remain limited to script attributes "
-"and CMP markers."
+"Technical diagnostics are indicative and remain limited to script "
+"attributes and CMP markers."
 msgstr "技术诊断仅供参考，并且仅限于脚本属性和 CMP 标记。"
 
 #: admin/admin.php src/admin/constants/index.js
@@ -113,8 +112,8 @@ msgstr ""
 
 #: admin/admin.php
 msgid ""
-"To display countries and cities in your analytics reports, install the local "
-"GeoIP database from the geolocation settings. No GeoIP database is "
+"To display countries and cities in your analytics reports, install the "
+"local GeoIP database from the geolocation settings. No GeoIP database is "
 "downloaded automatically."
 msgstr ""
 
@@ -156,8 +155,7 @@ msgid "Period: last 30 days"
 msgstr "时间段：最近 30 天"
 
 #: admin/dashboard-widget.php
-msgid ""
-"Enable at least one analytics panel to display KPI values in this widget."
+msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "请至少启用一个分析面板，以便在此小工具中显示 KPI 值。"
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -198,9 +196,7 @@ msgstr "BimBeau Privacy Analytics 启用已被阻止"
 msgid ""
 "Only one BimBeau Privacy Analytics package can be active at a time. "
 "Deactivate the other BimBeau Privacy Analytics package first."
-msgstr ""
-"%1$s 已被停用，因为同一时间只能启用一个 BimBeau Privacy Analytics 包。%2$s 保"
-"持启用。"
+msgstr "%1$s 已被停用，因为同一时间只能启用一个 BimBeau Privacy Analytics 包。%2$s 保持启用。"
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -512,40 +508,36 @@ msgid "BimBeau Privacy Analytics app installation was accepted."
 msgstr "BimBeau Privacy Analytics 应用安装已接受。"
 
 #: src/admin/AdminApp.js
-#, fuzzy
 msgid "Complete the initial configuration"
-msgstr "事件配置"
+msgstr "完成初始配置"
 
 #: src/admin/AdminApp.js
 msgid ""
 "Finish configuring tracking, local geolocation, and optional referrer "
 "favicons."
-msgstr ""
+msgstr "完成跟踪、本地地理位置和可选引荐网站图标的配置。"
 
 #: src/admin/AdminApp.js
-#, fuzzy
 msgid "Resume configuration"
-msgstr "事件配置"
+msgstr "恢复配置"
 
 #: src/admin/AdminApp.js
 msgid "Initial configuration completed."
-msgstr "初始配置已完成。"
+msgstr "初始配置完成。"
 
 #: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "GeoIP database not installed"
-msgstr "GeoIP 数据库可用。"
+msgstr "未安装 GeoIP 数据库"
 
 #: src/admin/AdminApp.js
 msgid ""
 "Location reports are unavailable until the local GeoIP database has been "
 "downloaded. Download it from the Geolocation settings page."
-msgstr ""
+msgstr "在下载本地 GeoIP 数据库之前，位置报告不可用。从地理位置设置页面下载它。"
 
 #: src/admin/AdminApp.js
-#, fuzzy
 msgid "Open geolocation settings"
-msgstr "启用地理定位聚合"
+msgstr "打开地理位置设置"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -648,8 +640,7 @@ msgstr "增强跟踪器诊断"
 msgid ""
 "This diagnostic separates script DOM presence, runtime execution, and "
 "enriched payload activity. It never proves user consent."
-msgstr ""
-"此诊断区分脚本 DOM 存在、运行时执行和增强载荷活动。它绝不能证明用户已同意。"
+msgstr "此诊断区分脚本 DOM 存在、运行时执行和增强载荷活动。它绝不能证明用户已同意。"
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Available granularities"
@@ -695,8 +686,7 @@ msgstr "同意合规提醒"
 msgid ""
 "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP "
 "remains the source of truth for consent workflows."
-msgstr ""
-"BimBeau Privacy Analytics 仅提供技术诊断。你的 CMP 仍是同意流程的可信来源。"
+msgstr "BimBeau Privacy Analytics 仅提供技术诊断。你的 CMP 仍是同意流程的可信来源。"
 
 #: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
@@ -773,111 +763,117 @@ msgstr "直接访问"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to save this choice. Please try again."
-msgstr "Unable to save this choice. Please try again."
+msgstr "无法保存此选择。请再试一次。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "The GeoIP database could not be validated after download."
-msgstr "GeoIP 数据库尚不可用。"
+msgstr "下载后无法验证 GeoIP 数据库。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to download the GeoIP database. Please try again."
-msgstr "无法加载 GeoIP 数据库状态。"
+msgstr "无法下载 GeoIP 数据库。请再试一次。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to finish configuration. Please try again."
-msgstr "Unable to finish configuration. Please try again."
+msgstr "无法完成配置。请再试一次。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Configure analytics tracking"
-msgstr "地理定位"
+msgstr "配置分析跟踪"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Install the local GeoIP database"
-msgstr "无法更新 GeoIP 数据库。"
+msgstr "安装本地GeoIP数据库"
 
 #: src/admin/components/SetupWizard/index.js src/admin/panels/SettingsPanel.js
 msgid "Display referrer favicons"
-msgstr "Display referrer favicons"
+msgstr "显示引荐网站图标"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Your configuration is ready"
-msgstr "Your configuration is ready"
+msgstr "您的配置已准备就绪"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Step"
-msgstr "Step"
+msgstr "步"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "of 4"
-msgstr "of 4"
+msgstr "共 4 个"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "BimBeau Privacy Analytics stores analytics data in your WordPress "
 "installation. Optional external features remain inactive until you "
 "explicitly enable them."
-msgstr "BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them."
+msgstr "BimBeau Privacy Analytics 将分析数据存储在您的 WordPress 安装中。可选的外部功能在您明确启用之前保持不活动状态。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics"
-msgstr "同意后启用高级统计"
+msgstr "启用高级统计"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "Advanced statistics add device details, screen resolution, active time, and "
 "other enriched information when available."
-msgstr "Advanced statistics add device details, screen resolution, active time, and other enriched information when available."
+msgstr "高级统计数据添加设备详细信息、屏幕分辨率、活动时间和其他可用的丰富信息。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "If your website requires prior analytics consent, your CMP must block the "
 "BimBeau Privacy Analytics advanced tracker until the visitor accepts the "
-"Analytics or Statistics category. BimBeau Privacy Analytics does not replace "
-"your CMP and does not record visitor consent."
-msgstr "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent."
+"Analytics or Statistics category. BimBeau Privacy Analytics does not "
+"replace your CMP and does not record visitor consent."
+msgstr ""
+"如果您的网站需要事先获得分析同意，您的 CMP 必须阻止 BimBeau 隐私分析高级跟踪器，直到访问者接受分析或统计类别。 BimBeau "
+"Privacy Analytics 不会取代您的 CMP，也不会记录访问者的同意。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Read the CMP documentation."
-msgstr "Read the CMP documentation."
+msgstr "阅读 CMP 文档。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "The local GeoIP database allows BimBeau Privacy Analytics to display the "
 "geographic origin of visitors while performing IP lookups inside your "
 "WordPress installation."
-msgstr "The local GeoIP database allows BimBeau Privacy Analytics to display the geographic origin of visitors while performing IP lookups inside your WordPress installation."
+msgstr ""
+"本地 GeoIP 数据库允许 Bim​​Beau Privacy Analytics 在 WordPress 安装内执行 IP "
+"查找时显示访问者的地理来源。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "Downloading the database contacts the documented BimBeau GeoIP Database "
-"Service. The service can receive your server IP address and a technical User-"
-"Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
-msgstr "Downloading the database contacts the documented BimBeau GeoIP Database Service. The service can receive your server IP address and a technical User-Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
+"Service. The service can receive your server IP address and a technical "
+"User-Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
+msgstr ""
+"下载数据库需要联系记录的 BimBeau GeoIP 数据库服务。该服务可以接收您的服务器 IP 地址和技术用户代理。访客 IP 地址不会发送到 "
+"BimBeau 进行本地查找。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "BimBeau Privacy Analytics can contact referrer domains to retrieve their "
 "icons and cache validated copies inside your WordPress installation."
-msgstr "BimBeau Privacy Analytics can contact referrer domains to retrieve their icons and cache validated copies inside your WordPress installation."
+msgstr "BimBeau Privacy Analytics 可以联系引荐来源网址域以检索其图标并在您的 WordPress 安装中缓存经过验证的副本。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "The contacted domains can receive your server IP address and a generic "
 "technical User-Agent. No request is sent directly from the administrator's "
 "browser, and no WordPress site URL is included in the User-Agent."
-msgstr "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent."
+msgstr "联系的域可以接收您的服务器 IP 地址和通用技术用户代理。管理员的浏览器不会直接发送任何请求，用户代理中也不包含 WordPress 站点 URL。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "This feature is visual only and can be disabled later."
-msgstr "This feature is visual only and can be disabled later."
+msgstr "此功能仅可见，可以稍后禁用。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Advanced statistics:"
-msgstr "高级统计"
+msgstr "高级统计："
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Enabled"
-msgstr "已启用面板"
+msgstr "启用"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Disabled"
@@ -885,7 +881,7 @@ msgstr "已禁用"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Local GeoIP database:"
-msgstr "无法更新 GeoIP 数据库。"
+msgstr "本地 GeoIP 数据库："
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Installed"
@@ -893,21 +889,21 @@ msgstr "已安装"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Not installed"
-msgstr "Not installed"
+msgstr "未安装"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Automatic GeoIP updates:"
-msgstr "GeoIP 数据库自动更新"
+msgstr "自动 GeoIP 更新："
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Referrer favicons:"
-msgstr "引荐来源"
+msgstr "推荐人图标："
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "Other settings use the recommended defaults and can be changed later from "
 "the BimBeau Privacy Analytics settings."
-msgstr "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
+msgstr "其他设置使用建议的默认值，并且可以稍后从 BimBeau Privacy Analytics 设置进行更改。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics and continue"
@@ -915,7 +911,7 @@ msgstr "启用高级统计并继续"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Continue with essential statistics only"
-msgstr "仅基础统计"
+msgstr "仅继续进行基本统计数据"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Download the GeoIP database and continue"
@@ -923,15 +919,15 @@ msgstr "下载 GeoIP 数据库并继续"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Continue without local geolocation"
-msgstr "在不使用本地地理定位的情况下继续"
+msgstr "无需本地地理位置即可继续"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Allow referrer favicons and continue"
-msgstr "允许来源网站图标并继续"
+msgstr "允许引荐来源网址图标并继续"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Continue without enabling favicons"
-msgstr "继续但不启用网站图标"
+msgstr "继续而不启用网站图标"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish configuration"
@@ -939,7 +935,7 @@ msgstr "完成配置"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Back"
-msgstr "返回"
+msgstr "后退"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish later"
@@ -947,32 +943,31 @@ msgstr "稍后完成"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Continue without geolocation?"
-msgstr "地理定位"
+msgstr "不进行地理定位继续吗？"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "Without a local GeoIP database, BimBeau Privacy Analytics will not be able "
 "to determine the geographic origin of visitors."
-msgstr "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors."
+msgstr "如果没有本地 GeoIP 数据库，BimBeau Privacy Analytics 将无法确定访问者的地理来源。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid ""
 "Page views, visits, and traffic sources will continue to be measured, but "
 "country, region, and city information will not be available."
-msgstr "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available."
+msgstr "页面浏览量、访问量和流量来源将继续进行测量，但国家、地区和城市信息将不可用。"
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"You can download the GeoIP database later from the geolocation settings."
-msgstr "You can download the GeoIP database later from the geolocation settings."
+msgid "You can download the GeoIP database later from the geolocation settings."
+msgstr "您可以稍后从地理位置设置下载 GeoIP 数据库。"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Continue without geolocation"
-msgstr "地理定位"
+msgstr "无需地理定位即可继续"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Return to the download"
-msgstr "Return to the download"
+msgstr "返回下载"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -1008,14 +1003,14 @@ msgstr "所选时间段已有城市数据，但尚无城市具备可用坐标。
 
 #: src/admin/components/WorldMap/index.js
 msgid ""
-"No geolocated visits are available. Check your geolocation settings to start "
-"collecting city data."
+"No geolocated visits are available. Check your geolocation settings to "
+"start collecting city data."
 msgstr "没有可用的地理定位访问。请检查地理定位设置以开始收集城市数据。"
 
 #: src/admin/components/WorldMap/index.js
 msgid ""
-"No geolocated visits are available. Check your geolocation settings to start "
-"collecting country data."
+"No geolocated visits are available. Check your geolocation settings to "
+"start collecting country data."
 msgstr "没有可用的地理定位访问。请检查地理定位设置以开始收集国家/地区数据。"
 
 #: src/admin/components/WorldMap/index.js
@@ -1260,8 +1255,8 @@ msgstr "没有可用的访客数据。"
 
 #: src/admin/panels/RealtimePanel.js
 msgid ""
-"Visitor origin will be available after the local GeoIP database is installed "
-"from the plugin geolocation settings."
+"Visitor origin will be available after the local GeoIP database is "
+"installed from the plugin geolocation settings."
 msgstr ""
 
 #: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
@@ -1429,16 +1424,16 @@ msgstr "本地 GeoLite 数据库不可用。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
-"The local GeoIP database seems to be missing or unreadable. Country and city "
-"reports may be incomplete until it is reinstalled."
+"The local GeoIP database seems to be missing or unreadable. Country and "
+"city reports may be incomplete until it is reinstalled."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
 "Visitor origin cannot be displayed until the local GeoIP database has been "
-"downloaded. To install it, click “Download GeoIP database”. This action will "
-"contact an external service and store the database in the WordPress uploads "
-"directory."
+"downloaded. To install it, click “Download GeoIP database”. This action "
+"will contact an external service and store the database in the WordPress "
+"uploads directory."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1497,8 +1492,7 @@ msgstr "确认清除已捕获事件"
 msgid ""
 "This action permanently removes the captured events list shown in Events "
 "stats. Other analytics data remains unchanged."
-msgstr ""
-"此操作会永久移除“事件统计”中显示的已捕获事件列表。其他分析数据保持不变。"
+msgstr "此操作会永久移除“事件统计”中显示的已捕获事件列表。其他分析数据保持不变。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge the captured events list."
@@ -1532,8 +1526,7 @@ msgstr "角色访问"
 msgid ""
 "Administrators keep full access. Select additional roles that can open "
 "analytics pages, plugin settings, or the Contact page."
-msgstr ""
-"管理员保留完整访问权限。请选择其他可打开分析页面、插件设置或联系页面的角色。"
+msgstr "管理员保留完整访问权限。请选择其他可打开分析页面、插件设置或联系页面的角色。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1563,8 +1556,7 @@ msgstr "使用白标界面"
 msgid ""
 "Hide the BimBeau Privacy Analytics logo in the admin header and display the "
 "localized analytics title instead."
-msgstr ""
-"隐藏管理页眉中的 BimBeau Privacy Analytics 徽标，并改为显示本地化的分析标题。"
+msgstr "隐藏管理页眉中的 BimBeau Privacy Analytics 徽标，并改为显示本地化的分析标题。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
@@ -1586,9 +1578,7 @@ msgstr "快速统计"
 msgid ""
 "Enable Quick Stats on selected post types: add a Views (30d) column in the "
 "posts list and display a stats summary metabox while editing each post."
-msgstr ""
-"在所选文章类型上启用快速统计：在文章列表中添加浏览量（30天）列，并在编辑每篇"
-"文章时显示统计摘要元框。"
+msgstr "在所选文章类型上启用快速统计：在文章列表中添加浏览量（30天）列，并在编辑每篇文章时显示统计摘要元框。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No post types available."
@@ -1598,9 +1588,7 @@ msgstr "没有可用的文章类型。"
 msgid ""
 "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
 "database or MaxMind API."
-msgstr ""
-"选择 BimBeau Privacy Analytics 解析地理定位的方式：本地 GeoLite 数据库或 "
-"MaxMind API。"
+msgstr "选择 BimBeau Privacy Analytics 解析地理定位的方式：本地 GeoLite 数据库或 MaxMind API。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation source"
@@ -1618,10 +1606,11 @@ msgstr "MaxMind API 凭据"
 #, fuzzy
 msgid ""
 "Local database mode downloads the GeoLite MMDB file through the official "
-"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
+"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind "
+"requests."
 msgstr ""
-"本地数据库模式会从 BimBeau Privacy Analytics 镜像下载 GeoLite MMDB 文件。API "
-"模式使用实时 MaxMind 请求。"
+"本地数据库模式会从 BimBeau Privacy Analytics 镜像下载 GeoLite MMDB 文件。API 模式使用实时 MaxMind "
+"请求。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
@@ -1651,7 +1640,8 @@ msgstr "GeoIP 数据库自动更新"
 msgid ""
 "Choose whether the local GeoIP database should be updated automatically. In "
 "“manual updates only” mode, no external server is contacted automatically. "
-"You can still download or update the database manually with the button below."
+"You can still download or update the database manually with the button "
+"below."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1698,9 +1688,7 @@ msgstr "重试次数"
 msgid ""
 "Behavior: plugin activation completes quickly, and temporary local database "
 "unavailability does not block the rest of BimBeau Privacy Analytics."
-msgstr ""
-"行为：插件启用会快速完成，临时的本地数据库不可用不会阻止 BimBeau Privacy "
-"Analytics 的其他部分。"
+msgstr "行为：插件启用会快速完成，临时的本地数据库不可用不会阻止 BimBeau Privacy Analytics 的其他部分。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Privacy"
@@ -1801,9 +1789,7 @@ msgid ""
 "A CMP manages cookie consent on your website. It shows the cookie banner, "
 "stores visitor choices, and allows or blocks analytics scripts based on "
 "consent."
-msgstr ""
-"CMP 管理网站上的 Cookie 同意。它显示 Cookie 横幅、存储访客选择，并根据同意状"
-"态允许或阻止分析脚本。"
+msgstr "CMP 管理网站上的 Cookie 同意。它显示 Cookie 横幅、存储访客选择，并根据同意状态允许或阻止分析脚本。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Examples:"
@@ -1811,11 +1797,9 @@ msgstr "示例："
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
-"In your CMP, block the BimBeau Privacy Analytics advanced stats script until "
-"the Statistics or Analytics purpose is accepted."
-msgstr ""
-"在你的 CMP 中，在统计或分析目的被接受之前阻止 BimBeau Privacy Analytics 高级"
-"统计脚本。"
+"In your CMP, block the BimBeau Privacy Analytics advanced stats script "
+"until the Statistics or Analytics purpose is accepted."
+msgstr "在你的 CMP 中，在统计或分析目的被接受之前阻止 BimBeau Privacy Analytics 高级统计脚本。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
@@ -1841,8 +1825,7 @@ msgstr "访问测量"
 msgid ""
 "Defines how long visitor activity can remain grouped under the same visitor "
 "row before a new row is started after inactivity."
-msgstr ""
-"定义访客活动在因不活动而开始新访客行之前，可在同一访客行下保持分组的时长。"
+msgstr "定义访客活动在因不活动而开始新访客行之前，可在同一访客行下保持分组的时长。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Visitor activity window"
@@ -1855,9 +1838,8 @@ msgid ""
 "starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 "
 "hours)."
 msgstr ""
-"定义同一访客的活动可在一个访客行中保持分组的时长。在此不活动时段之后，"
-"BimBeau Privacy Analytics 会开始新的访客行。范围：300 到 86400 秒（5 分钟到 "
-"24 小时）。"
+"定义同一访客的活动可在一个访客行中保持分组的时长。在此不活动时段之后，BimBeau Privacy Analytics "
+"会开始新的访客行。范围：300 到 86400 秒（5 分钟到 24 小时）。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "URLs & campaigns"
@@ -1893,11 +1875,11 @@ msgstr "数据保留"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
+"Choose how long to keep temporary detailed events, report details, and "
+"long-term totals, then how often cleanup runs."
 msgstr ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
+"Choose how long to keep temporary detailed events, report details, and "
+"long-term totals, then how often cleanup runs."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Temporary detailed events retention (days)"
@@ -1953,8 +1935,8 @@ msgstr "排除项"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
-"Select roles to exclude from tracking. Select all roles to ignore all logged-"
-"in users."
+"Select roles to exclude from tracking. Select all roles to ignore all "
+"logged-in users."
 msgstr "选择要从跟踪中排除的角色。选择所有角色以忽略所有已登录用户。"
 
 #: src/admin/panels/SettingsPanel.js
@@ -1968,11 +1950,9 @@ msgstr "调试"
 #: src/admin/panels/SettingsPanel.js
 msgid ""
 "Enable diagnostic output for troubleshooting tracking events, realtime "
-"visitor detection, and REST payloads in the browser console and wp-content/"
-"debug.log."
-msgstr ""
-"启用诊断输出，用于在浏览器控制台和 wp-content/debug.log 中排查跟踪事件、实时"
-"访客检测和 REST 载荷。"
+"visitor detection, and REST payloads in the browser console and "
+"wp-content/debug.log."
+msgstr "启用诊断输出，用于在浏览器控制台和 wp-content/debug.log 中排查跟踪事件、实时访客检测和 REST 载荷。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug mode"
@@ -1982,8 +1962,7 @@ msgstr "调试模式"
 msgid ""
 "Writes detailed diagnostic logs to the console and to wp-content/debug.log "
 "when WordPress debug logging is enabled."
-msgstr ""
-"启用 WordPress 调试日志时，将详细诊断日志写入控制台和 wp-content/debug.log。"
+msgstr "启用 WordPress 调试日志时，将详细诊断日志写入控制台和 wp-content/debug.log。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Cleanup actions"
@@ -2007,9 +1986,7 @@ msgstr "卸载时删除插件表"
 msgid ""
 "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
 "analytics tables from the WordPress database."
-msgstr ""
-"启用后，卸载 BimBeau Privacy Analytics 会从 WordPress 数据库中删除所有插件分"
-"析表。"
+msgstr "启用后，卸载 BimBeau Privacy Analytics 会从 WordPress 数据库中删除所有插件分析表。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Sensitive actions"
@@ -2030,29 +2007,28 @@ msgid "Events configuration"
 msgstr "事件配置"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Referrer favicons"
-msgstr "引荐来源"
+msgstr "推荐人网站图标"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
 "Allow BimBeau Privacy Analytics to contact referrer domains, retrieve "
 "validated icons server-side, and serve cached local copies in reports."
-msgstr ""
+msgstr "允许 Bim​​Beau Privacy Analytics 联系引荐来源网址域，检索服务器端经过验证的图标，并在报告中提供缓存的本地副本。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
 "When disabled, a local generic icon is displayed and no referrer domain is "
 "contacted for favicons."
-msgstr ""
+msgstr "禁用后，将显示本地通用图标，并且不会为网站图标联系引荐来源网址域。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Run the configuration assistant again"
-msgstr ""
+msgstr "再次运行配置助手"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "This action presents your current settings and does not reset them."
-msgstr ""
+msgstr "此操作会显示您当前的设置，但不会重置它们。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
@@ -2092,8 +2068,8 @@ msgstr "此操作会立即运行保留清理，并仅移除早于配置窗口期
 
 #: src/admin/panels/SettingsPanel.js
 msgid ""
-"I confirm that I want to purge only data older than the configured retention "
-"window."
+"I confirm that I want to purge only data older than the configured "
+"retention window."
 msgstr "我确认只清除早于配置保留窗口的数据。"
 
 #: src/admin/panels/TopPagesListPanel.js
@@ -2326,8 +2302,7 @@ msgid "Loading KPIs…"
 msgstr "正在加载 KPI…"
 
 #: src/admin/widgets/OverviewKpis/index.js
-msgid ""
-"Visitors correspond to bounded visitor activity rows in the selected period."
+msgid "Visitors correspond to bounded visitor activity rows in the selected period."
 msgstr "访客对应于所选期间内有边界的访客活动行。"
 
 #: src/admin/widgets/OverviewKpis/index.js
@@ -2450,8 +2425,7 @@ msgstr[0] "位访客"
 msgid ""
 "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous "
 "visitors %5$s"
-msgstr ""
-"%1$s：页面浏览量 %2$s，访客 %3$s，上一周期页面浏览量 %4$s，上一周期访客 %5$s"
+msgstr "%1$s：页面浏览量 %2$s，访客 %3$s，上一周期页面浏览量 %4$s，上一周期访客 %5$s"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current metric count, 3: previous metric count
@@ -2531,209 +2505,3 @@ msgstr "私密"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
-
-#~ msgid "Current PWA icon preview"
-#~ msgstr "当前 PWA 图标预览"
-
-#~ msgid ""
-#~ "Preview uses the same runtime icon resolution as the standalone app "
-#~ "manifest and loading splash."
-#~ msgstr "预览使用与独立应用清单和加载启动页相同的运行时图标解析逻辑。"
-
-#~ msgid "Source"
-#~ msgstr "来源"
-
-#~ msgid "Generation status"
-#~ msgstr "生成状态"
-
-#~ msgid "Custom generated icon"
-#~ msgstr "自定义生成图标"
-
-#~ msgid "Plugin fallback icon"
-#~ msgstr "插件备用图标"
-
-#~ msgid "Custom icon set is ready."
-#~ msgstr "自定义图标集已准备就绪。"
-
-#~ msgid "Fallback icon set is active."
-#~ msgstr "备用图标集已启用。"
-
-#~ msgid "Source image is too small (minimum 512x512)."
-#~ msgstr "源图片太小（最小 512x512）。"
-
-#~ msgid "Source image is invalid."
-#~ msgstr "源图片无效。"
-
-#~ msgid "Icon generation failed on this server."
-#~ msgstr "此服务器上的图标生成失败。"
-
-#~ msgid "Unknown generation status."
-#~ msgstr "未知生成状态。"
-
-#~ msgid "No preview icon URL is available."
-#~ msgstr "没有可用的预览图标 URL。"
-
-#, fuzzy
-#~ msgid "Visitor details are not available in this package."
-#~ msgstr "此页面没有可用详情。"
-
-#, php-format
-#~ msgid ""
-#~ "%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
-#~ "first, then activate %1$s."
-#~ msgstr "当 %2$s 已启用时，无法启用 %1$s。请先停用 %2$s，然后启用 %1$s。"
-
-#, fuzzy
-#~ msgid "Base GeoIP non installée"
-#~ msgstr "本地 GeoLite 数据库不可用。"
-
-#~ msgid "Update now"
-#~ msgstr "立即更新"
-
-#~ msgid "Every 30 days (default)"
-#~ msgstr "每 30 天（默认）"
-
-#~ msgid "Controls the cron frequency for local GeoIP database updates."
-#~ msgstr "控制本地 GeoIP 数据库更新的 Cron 频率。"
-
-#~ msgid "BimBeau Privacy Analytics events analytics feature preview"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#, fuzzy
-#~ msgid "Export reports with confidence"
-#~ msgstr "导出报表"
-
-#~ msgid "BimBeau Privacy Analytics report export feature preview"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#~ msgid "BimBeau Privacy Analytics top pages feature preview"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#~ msgid "BimBeau Privacy Analytics quick stats feature preview"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#~ msgid "BimBeau Privacy Analytics geolocation feature preview"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#~ msgid "BimBeau Privacy Analytics app feature preview"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#~ msgid "BimBeau Privacy Analytics feature highlights"
-#~ msgstr "BimBeau Privacy Analytics Pro 功能预览"
-
-#, fuzzy
-#~ msgid "Previous feature"
-#~ msgstr "上一页"
-
-#, fuzzy
-#~ msgid "Next feature"
-#~ msgstr "下一页"
-
-#, fuzzy, php-format
-#~ msgid "Feature %1$s of %2$s"
-#~ msgstr "时间段：%1$s 至 %2$s"
-
-#~ msgid "GeoIP archive contains a suspicious file path."
-#~ msgstr "GeoIP 归档包含可疑文件路径。"
-
-#~ msgid "Unable to extract GeoIP MMDB file from archive."
-#~ msgstr "无法从归档中提取 GeoIP MMDB 文件。"
-
-#~ msgid "GeoIP MMDB file is missing from the archive."
-#~ msgstr "归档中缺少 GeoIP MMDB 文件。"
-
-#, php-format
-#~ msgid "GeoIP extraction failed: %s"
-#~ msgstr "GeoIP 解压失败：%s"
-
-#~ msgid "Source category"
-#~ msgstr "来源类别"
-
-#~ msgid ""
-#~ "Set retention periods for raw logs and aggregated analytics data, and "
-#~ "choose how often automated cleanup runs."
-#~ msgstr "设置原始日志和聚合分析数据的保留期，并选择自动清理运行频率。"
-
-#~ msgid "Raw logs purge automatically after the configured window."
-#~ msgstr "原始日志会在配置的窗口期后自动清除。"
-
-#~ msgid ""
-#~ "BimBeau Privacy Analytics permanently removes aggregated rows older than "
-#~ "the selected window; no long-term totals are kept beyond this retention "
-#~ "period."
-#~ msgstr ""
-#~ "BimBeau Privacy Analytics 会永久删除早于所选窗口期的聚合行；超过此保留期不"
-#~ "会保留长期总计。"
-
-#~ msgid ""
-#~ "Cleanup permanently removes aggregated and visitor-detail rows older than "
-#~ "the selected window."
-#~ msgstr "清理会永久移除早于所选窗口期的聚合行和访客详情行。"
-
-#~ msgid ""
-#~ "Defines the WP-Cron interval used to run aggregated retention cleanup "
-#~ "automatically."
-#~ msgstr "定义用于自动运行聚合保留清理的 WP-Cron 间隔。"
-
-#, fuzzy
-#~ msgid "White label"
-#~ msgstr "标签"
-
-#~ msgid "BimBeau Privacy Analytics overview"
-#~ msgstr "BimBeau Privacy Analytics 概览"
-
-#~ msgid "BimBeau Privacy Analytics data is not available for this period."
-#~ msgstr "此时间段没有可用的 BimBeau Privacy Analytics 数据。"
-
-#~ msgid "View BimBeau Privacy Analytics dashboard"
-#~ msgstr "查看 BimBeau Privacy Analytics 仪表盘"
-
-#~ msgid "Plugin name (menu and dashboard)"
-#~ msgstr "插件名称（菜单和仪表盘）"
-
-#~ msgid "City map"
-#~ msgstr "城市地图"
-
-#~ msgid "Top pages details"
-#~ msgstr "热门页面详情"
-
-#~ msgid "Only the first %d row will be exported."
-#~ msgid_plural "Only the first %d rows will be exported."
-#~ msgstr[0] "仅导出前 %d 行。"
-
-#~ msgid "%d row will be exported."
-#~ msgid_plural "%d rows will be exported."
-#~ msgstr[0] "将导出 %d 行。"
-
-#~ msgid "First activity"
-#~ msgstr "首次活动"
-
-#~ msgid "Last activity"
-#~ msgstr "最后活动"
-
-#~ msgid ""
-#~ "Define how long consecutive hits are grouped for one visitor visit "
-#~ "session."
-#~ msgstr "定义连续命中在一个访客访问会话中合并的时长。"
-
-#~ msgid ""
-#~ "Defines how long consecutive hits from the same visitor are grouped into "
-#~ "one visit identifier. Range: 300 to 86400 seconds (5 minutes to 24 "
-#~ "hours). A shorter window increases visit splits, while a longer window "
-#~ "merges more activity into one visit."
-#~ msgstr ""
-#~ "定义来自同一访客的连续命中被归入同一访问标识符的时长。范围：300 到 86400 "
-#~ "秒（5 分钟到 24小时）。较短窗口会增加访问拆分，较长窗口会将更多活动合并为"
-#~ "一次访问。"
-
-#~ msgid "First connection"
-#~ msgstr "首次连接"
-
-#~ msgid "Date of connection"
-#~ msgstr "连接日期"
-
-#~ msgid ""
-#~ "Visits = distinct visitors for the selected location and period. Hits = "
-#~ "tracked page hits."
-#~ msgstr "访问 = 所选位置和时间段内的唯一访客。命中 = 已跟踪的页面命中。"
-
