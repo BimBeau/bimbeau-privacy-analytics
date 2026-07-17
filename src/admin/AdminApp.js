@@ -28,7 +28,7 @@ import {
 	getVisiblePanels,
 	normalizePanels,
 } from './panels/registry';
-import AppSidebar from './components/AppSidebar';
+
 import FeatureIcon from './components/icons/FeatureIcon';
 import PeriodFilter from './widgets/PeriodFilter';
 import SetupWizard from './components/SetupWizard';
@@ -49,9 +49,10 @@ const AdminApp = () => {
 
 	const appContext =
 		ADMIN_CONFIG?.settings?.appMode === 'app' ? 'app' : 'admin';
-	const isPro = Boolean( ADMIN_CONFIG?.settings?.isPro );
+	let hasPremiumAccess = false;
+	
 	const panels = normalizePanels( ADMIN_CONFIG?.panels );
-	const visiblePanels = getVisiblePanels( panels, isPro, appContext );
+	const visiblePanels = getVisiblePanels( panels, hasPremiumAccess, appContext );
 	const firstVisiblePanel = visiblePanels[ 0 ]?.name || 'dashboard';
 	const requestedPanel = ADMIN_CONFIG?.currentPanel || firstVisiblePanel;
 	const hasRequestedPanel = visiblePanels.some(
@@ -66,26 +67,21 @@ const AdminApp = () => {
 		ADMIN_CONFIG?.settings?.pluginLabel ||
 		__( 'Statistics', 'bimbeau-privacy-analytics' );
 	const brandLogoUrl = ADMIN_CONFIG?.settings?.brandLogoUrl || '';
-	const isWhiteLabel = Boolean( ADMIN_CONFIG?.settings?.isWhiteLabel );
+	let displayBrandLogo = Boolean( brandLogoUrl );
+	
 	const pluginVersion = ADMIN_CONFIG?.settings?.pluginVersion || '';
 	const pluginVersionLabel = pluginVersion ? `v${ pluginVersion }` : '';
 	const dashboardUrl = useMemo( () => getAdminPanelUrl( 'dashboard' ), [] );
 	const [ rangeSelection, setRangeSelection ] = useSharedRangeSelection();
 	const noticesContainerRef = useRef( null );
 	const [ hasFreemiusNotices, setHasFreemiusNotices ] = useState( false );
-	const [ installPromptEvent, setInstallPromptEvent ] = useState( null );
-	const [ isInstallBannerVisible, setIsInstallBannerVisible ] =
-		useState( false );
-	const [ isInstallAccepted, setIsInstallAccepted ] = useState( false );
+	
 	const [ geoIpDatabaseStatus, setGeoIpDatabaseStatus ] = useState( null );
 	const [ setupWizard, setSetupWizard ] = useState( null );
 	const [ isSetupWizardOpen, setIsSetupWizardOpen ] = useState( false );
 	const [ setupNotice, setSetupNotice ] = useState( false );
 	const [ isGeoIpStatusLoading, setIsGeoIpStatusLoading ] = useState( true );
-	const installPromptMode =
-		ADMIN_CONFIG?.settings?.pwa?.installPromptMode === 'custom'
-			? 'custom'
-			: 'native';
+	
 	const { isAuthRequired, error: authRequiredError } = useAuthRequiredState();
 	const { data: realtimeData, isLoading: isRealtimeLoading } =
 		useRealtimeSnapshot( {
@@ -248,61 +244,13 @@ const AdminApp = () => {
 		};
 	}, [] );
 
-	useEffect( () => {
-		if ( appContext !== 'app' ) {
-			return undefined;
-		}
-
-		const isStandalone =
-			window.matchMedia?.( '(display-mode: standalone)' )?.matches ||
-			Boolean( window.navigator?.standalone );
-		if ( isStandalone ) {
-			return undefined;
-		}
-
-		const onBeforeInstallPrompt = ( event ) => {
-			if ( installPromptMode !== 'custom' ) {
-				return;
-			}
-
-			event.preventDefault();
-			setInstallPromptEvent( event );
-			setIsInstallBannerVisible( true );
-		};
-
-		const onAppInstalled = () => {
-			setIsInstallAccepted( true );
-			setInstallPromptEvent( null );
-			setIsInstallBannerVisible( false );
-		};
-
-		window.addEventListener( 'beforeinstallprompt', onBeforeInstallPrompt );
-		window.addEventListener( 'appinstalled', onAppInstalled );
-
-		return () => {
-			window.removeEventListener(
-				'beforeinstallprompt',
-				onBeforeInstallPrompt
-			);
-			window.removeEventListener( 'appinstalled', onAppInstalled );
-		};
-	}, [ appContext, installPromptMode ] );
+	
 
 	const onReloadApp = () => {
 		reloadForAuthRequired();
 	};
 
-	const onInstallApp = async () => {
-		if ( ! installPromptEvent ) {
-			return;
-		}
-
-		installPromptEvent.prompt();
-		const choice = await installPromptEvent.userChoice;
-		setInstallPromptEvent( null );
-		setIsInstallBannerVisible( false );
-		setIsInstallAccepted( choice?.outcome === 'accepted' );
-	};
+	
 
 	if ( ! ADMIN_CONFIG ) {
 		return (
@@ -393,9 +341,7 @@ const AdminApp = () => {
 							className="bbpa-admin-app__title-link"
 							href={ dashboardUrl }
 						>
-							{ isWhiteLabel || ! brandLogoUrl ? (
-								pluginLabel
-							) : (
+							{ displayBrandLogo ? (
 								<>
 									<img
 										className="bbpa-admin-app__brand-logo"
@@ -403,6 +349,8 @@ const AdminApp = () => {
 										alt={ pluginLabel }
 									/>
 								</>
+							) : (
+								pluginLabel
 							) }
 						</a>
 					</h1>
@@ -448,51 +396,8 @@ const AdminApp = () => {
 					ref={ noticesContainerRef }
 				/>
 			) : null }
-			{ installPromptMode === 'custom' &&
-			isInstallBannerVisible &&
-			installPromptEvent ? (
-				<Notice
-					className="bbpa-admin-app__install-notice"
-					status="info"
-					isDismissible
-					onRemove={ () => setIsInstallBannerVisible( false ) }
-				>
-					<div className="bbpa-admin-app__install-banner">
-						<div className="bbpa-admin-app__install-main">
-							<div className="bbpa-admin-app__install-copy">
-								<strong>
-									{ __(
-										'Install BimBeau Privacy Analytics app',
-										'bimbeau-privacy-analytics'
-									) }
-								</strong>
-								<p>
-									{ __(
-										'Get faster access from your home screen with an app-like experience.',
-										'bimbeau-privacy-analytics'
-									) }
-								</p>
-							</div>
-						</div>
-						<div className="bbpa-admin-app__install-action">
-							<Button variant="primary" onClick={ onInstallApp }>
-								{ __(
-									'Install app',
-									'bimbeau-privacy-analytics'
-								) }
-							</Button>
-						</div>
-					</div>
-				</Notice>
-			) : null }
-			{ isInstallAccepted ? (
-				<Notice status="success" isDismissible={ false }>
-					{ __(
-						'BimBeau Privacy Analytics app installation was accepted.',
-						'bimbeau-privacy-analytics'
-					) }
-				</Notice>
-			) : null }
+			{}
+			{}
 			{ setupWizard?.state?.status !== 'completed' && ! isSetupWizardOpen ? (
 				<Notice status="info" isDismissible={ false }>
 					<strong>{ __( 'Complete the initial configuration', 'bimbeau-privacy-analytics' ) }</strong>
@@ -531,13 +436,7 @@ const AdminApp = () => {
 				</Notice>
 			) : null }
 			<div className="bbpa-admin-app__body">
-				{ appContext === 'app' ? (
-					<AppSidebar
-						appMode={ appContext }
-						panels={ visiblePanels }
-						currentPanel={ currentPanel }
-					/>
-				) : null }
+				{}
 				<div className="bbpa-admin-app__panel-content">
 					{ panelContent }
 				</div>

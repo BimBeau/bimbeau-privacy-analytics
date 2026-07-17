@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Keep gettext ordering and wrapping independent from the runner locale.
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 languages_dir="${repo_root}/languages"
 pot_file="${languages_dir}/bimbeau-privacy-analytics.pot"
@@ -188,7 +192,7 @@ for po_file in "${languages_dir}"/bimbeau-privacy-analytics-*.po; do
   if [ -f "${po_file}" ]; then
     cp "${po_file}" "${po_backup_dir}/$(basename "${po_file}")"
     prepare_po_for_gettext "${po_file}"
-    msgmerge --update --backup=none "${po_file}" "${pot_file}"
+    msgmerge --update --backup=none --no-wrap "${po_file}" "${pot_file}"
     normalize_po_source_references "${po_file}"
   fi
 done

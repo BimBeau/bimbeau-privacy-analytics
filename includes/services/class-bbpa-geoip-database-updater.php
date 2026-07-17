@@ -588,7 +588,7 @@ class BBPA_GeoIP_Database_Updater {
     /**
      * Check whether the local MMDB file is ready for future lookup routing.
      */
-    private function is_local_database_available(): bool {
+    public function is_local_database_available(): bool {
         $target_path = $this->get_local_database_path();
         if ($target_path === '' || !$this->filesystem_service->exists($target_path) || !$this->filesystem_service->is_readable($target_path)) {
             return false;

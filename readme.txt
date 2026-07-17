@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.49
+Stable tag: 8.45.53
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,5 +235,9 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.49 =
-* Harden Freemius deployed tag verification with response normalization and paginated fallback.
+= 8.45.53 =
+* Fix version bump staged change validation.
+* ## Unreleased
+* Fix version bump staging validation so correctly staged release files can be committed.
+* Gate automated pull request merges on successful i18n, PHP compatibility, and runner-policy checks.
+* Fix Docker workspace path resolution for isolated PHP audits and stabilize generated i18n text formatting.

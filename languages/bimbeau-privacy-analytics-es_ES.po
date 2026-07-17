@@ -3,8 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BimBeau Privacy Analytics Pro 6.78.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bimbeau-privacy-"
-"analytics\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bimbeau-privacy-analytics\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2026-05-12 11:04+0200\n"
 "Last-Translator: BimBeau <contact@bimbeau.fr>\n"
@@ -26,8 +25,7 @@ msgstr "Analítica de BimBeau Privacy Analytics"
 #: bimbeau-privacy-analytics.php
 #. Description of the plugin
 msgid "Privacy-friendly, self-hosted analytics for WordPress."
-msgstr ""
-"Analíticas autoalojadas y respetuosas con la privacidad para WordPress."
+msgstr "Analíticas autoalojadas y respetuosas con la privacidad para WordPress."
 
 #: bimbeau-privacy-analytics.php
 #. Author of the plugin
@@ -47,13 +45,8 @@ msgid "Contact"
 msgstr "Contacto"
 
 #: admin/admin.php
-msgid ""
-"Base tracking remains active. Enriched tracking is declarable through an "
-"external CMP. Data granularity depends on collected signals."
-msgstr ""
-"El seguimiento básico permanece activo. El seguimiento enriquecido puede "
-"declararse mediante una CMP externa. La granularidad de los datos depende de "
-"las señales recopiladas."
+msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
+msgstr "El seguimiento básico permanece activo. El seguimiento enriquecido puede declararse mediante una CMP externa. La granularidad de los datos depende de las señales recopiladas."
 
 #: admin/admin.php
 msgid "Loading, please wait…"
@@ -64,12 +57,8 @@ msgid "Current runtime state"
 msgstr "Estado actual de ejecución"
 
 #: admin/admin.php
-msgid ""
-"Technical diagnostics are indicative and remain limited to script attributes "
-"and CMP markers."
-msgstr ""
-"Los diagnósticos técnicos son orientativos y se limitan a los atributos de "
-"los scripts y a los marcadores de la CMP."
+msgid "Technical diagnostics are indicative and remain limited to script attributes and CMP markers."
+msgstr "Los diagnósticos técnicos son orientativos y se limitan a los atributos de los scripts y a los marcadores de la CMP."
 
 #: admin/admin.php src/admin/constants/index.js
 msgid "Dashboard"
@@ -117,10 +106,7 @@ msgid "Enable country and city reports"
 msgstr ""
 
 #: admin/admin.php
-msgid ""
-"To display countries and cities in your analytics reports, install the local "
-"GeoIP database from the geolocation settings. No GeoIP database is "
-"downloaded automatically."
+msgid "To display countries and cities in your analytics reports, install the local GeoIP database from the geolocation settings. No GeoIP database is downloaded automatically."
 msgstr ""
 
 #: admin/admin.php
@@ -161,11 +147,8 @@ msgid "Period: last 30 days"
 msgstr "Período: últimos 30 días"
 
 #: admin/dashboard-widget.php
-msgid ""
-"Enable at least one analytics panel to display KPI values in this widget."
-msgstr ""
-"Activa al menos un panel de analítica para mostrar valores de KPI en este "
-"widget."
+msgid "Enable at least one analytics panel to display KPI values in this widget."
+msgstr "Activa al menos un panel de analítica para mostrar valores de KPI en este widget."
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
@@ -202,12 +185,8 @@ msgstr "Activación de BimBeau Privacy Analytics bloqueada"
 
 #: bimbeau-privacy-analytics.php
 #, fuzzy
-msgid ""
-"Only one BimBeau Privacy Analytics package can be active at a time. "
-"Deactivate the other BimBeau Privacy Analytics package first."
-msgstr ""
-"%1$s se desactivó porque solo un paquete de BimBeau Privacy Analytics puede "
-"estar activo a la vez. %2$s permanece activo."
+msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
+msgstr "%1$s se desactivó porque solo un paquete de BimBeau Privacy Analytics puede estar activo a la vez. %2$s permanece activo."
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -323,14 +302,11 @@ msgstr "Identificador de visita no válido."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
-msgstr ""
-"Se requiere el modo de base de datos local para actualizar la base de datos "
-"GeoIP."
+msgstr "Se requiere el modo de base de datos local para actualizar la base de datos GeoIP."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to create a temporary file for the GeoIP database download."
-msgstr ""
-"No se puede crear un archivo temporal para descargar la base de datos GeoIP."
+msgstr "No se puede crear un archivo temporal para descargar la base de datos GeoIP."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %s: HTTP error message returned by wp_remote_get.
@@ -346,8 +322,7 @@ msgstr "La descarga de la base de datos GeoIP ha fallado con estado HTTP %d."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database download returned an empty response body."
-msgstr ""
-"La descarga de la base de datos GeoIP devolvió un cuerpo de respuesta vacío."
+msgstr "La descarga de la base de datos GeoIP devolvió un cuerpo de respuesta vacío."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database download size does not match the manifest."
@@ -391,15 +366,11 @@ msgstr "El archivo GeoIP comprimido no se puede leer."
 #: includes/services/class-bbpa-geoip-database-updater.php
 #, fuzzy
 msgid "Server is missing required gzip extraction capabilities."
-msgstr ""
-"Al servidor le faltan capacidades necesarias para extraer archivos "
-"comprimidos."
+msgstr "Al servidor le faltan capacidades necesarias para extraer archivos comprimidos."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to allocate temporary workspace for GeoIP extraction."
-msgstr ""
-"No se puede asignar un espacio de trabajo temporal para la extracción de "
-"GeoIP."
+msgstr "No se puede asignar un espacio de trabajo temporal para la extracción de GeoIP."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP archive is empty or unreadable."
@@ -437,8 +408,7 @@ msgstr "No se puede escribir el archivo temporal de la base de datos GeoIP."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to replace GeoIP database file atomically."
-msgstr ""
-"No se puede reemplazar atómicamente el archivo de la base de datos GeoIP."
+msgstr "No se puede reemplazar atómicamente el archivo de la base de datos GeoIP."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to create a temporary file for GeoIP operations."
@@ -446,8 +416,7 @@ msgstr "No se puede crear un archivo temporal para operaciones GeoIP."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to create temporary workspace for GeoIP extraction."
-msgstr ""
-"No se puede crear un espacio de trabajo temporal para la extracción de GeoIP."
+msgstr "No se puede crear un espacio de trabajo temporal para la extracción de GeoIP."
 
 #: includes/services/class-bbpa-maxmind-service.php
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
@@ -479,8 +448,7 @@ msgstr "La clave de licencia de MaxMind es obligatoria."
 
 #: includes/settings.php
 msgid "MaxMind credentials are required to enable IP geolocation."
-msgstr ""
-"Se requieren credenciales de MaxMind para activar la geolocalización por IP."
+msgstr "Se requieren credenciales de MaxMind para activar la geolocalización por IP."
 
 #: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
@@ -519,9 +487,7 @@ msgstr "Instalar aplicación BimBeau Privacy Analytics"
 
 #: src/admin/AdminApp.js
 msgid "Get faster access from your home screen with an app-like experience."
-msgstr ""
-"Obtén acceso más rápido desde tu pantalla de inicio con una experiencia "
-"similar a una aplicación."
+msgstr "Obtén acceso más rápido desde tu pantalla de inicio con una experiencia similar a una aplicación."
 
 #: src/admin/AdminApp.js
 msgid "Install app"
@@ -536,9 +502,7 @@ msgid "Complete the initial configuration"
 msgstr "Completa la configuración inicial"
 
 #: src/admin/AdminApp.js
-msgid ""
-"Finish configuring tracking, local geolocation, and optional referrer "
-"favicons."
+msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
 msgstr "Termine de configurar el seguimiento, la geolocalización local y los favicons de referencia opcionales."
 
 #: src/admin/AdminApp.js
@@ -554,9 +518,7 @@ msgid "GeoIP database not installed"
 msgstr "Base de datos GeoIP no instalada"
 
 #: src/admin/AdminApp.js
-msgid ""
-"Location reports are unavailable until the local GeoIP database has been "
-"downloaded. Download it from the Geolocation settings page."
+msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
 msgstr "Los informes de ubicación no están disponibles hasta que se haya descargado la base de datos GeoIP local. Descárgalo desde la página de configuración de Geolocalización."
 
 #: src/admin/AdminApp.js
@@ -576,20 +538,12 @@ msgid "unknown status"
 msgstr "estado desconocido"
 
 #: src/admin/api/useAdminEndpoint.js
-msgid ""
-"The server returned invalid JSON. Check the endpoint response preview for "
-"details."
-msgstr ""
-"El servidor devolvió JSON no válido. Consulta la vista previa de la "
-"respuesta del endpoint para más detalles."
+msgid "The server returned invalid JSON. Check the endpoint response preview for details."
+msgstr "El servidor devolvió JSON no válido. Consulta la vista previa de la respuesta del endpoint para más detalles."
 
 #: src/admin/api/useAdminEndpoint.js
-msgid ""
-"The server returned an unexpected response. Check the endpoint response "
-"preview for details."
-msgstr ""
-"El servidor devolvió una respuesta inesperada. Consulta la vista previa de "
-"la respuesta del endpoint para más detalles."
+msgid "The server returned an unexpected response. Check the endpoint response preview for details."
+msgstr "El servidor devolvió una respuesta inesperada. Consulta la vista previa de la respuesta del endpoint para más detalles."
 
 #: src/admin/api/useAdminEndpoint.js
 msgid "Parser error:"
@@ -599,7 +553,7 @@ msgstr "Error de análisis:"
 msgid "Empty response body."
 msgstr "Cuerpo de respuesta vacío."
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
+#: src/admin/api/useAdminEndpoint.js src/admin/free-stubs/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "Missing REST configuration."
 msgstr "Falta la configuración REST."
 
@@ -633,8 +587,7 @@ msgstr "Cerrar notificación"
 
 #: src/admin/components/AdminErrorBoundary/index.js
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
-msgstr ""
-"BimBeau Privacy Analytics no puede cargar la interfaz de administración."
+msgstr "BimBeau Privacy Analytics no puede cargar la interfaz de administración."
 
 #: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: current admin panel and page label.
@@ -649,8 +602,7 @@ msgstr "Componente no definido: %s"
 #: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: React component name detected as undefined.
 msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
-msgstr ""
-"Posible incompatibilidad de Gutenberg/@wordpress/components: %s no definido"
+msgstr "Posible incompatibilidad de Gutenberg/@wordpress/components: %s no definido"
 
 #: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: comma-separated WordPress script handles checked while debugging.
@@ -667,13 +619,8 @@ msgid "Enriched tracker diagnostic"
 msgstr "Diagnóstico del seguimiento enriquecido"
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
-msgid ""
-"This diagnostic separates script DOM presence, runtime execution, and "
-"enriched payload activity. It never proves user consent."
-msgstr ""
-"Este diagnóstico separa la presencia del script en el DOM, la ejecución en "
-"tiempo de ejecución y la actividad de la carga enriquecida. Nunca prueba el "
-"consentimiento del usuario."
+msgid "This diagnostic separates script DOM presence, runtime execution, and enriched payload activity. It never proves user consent."
+msgstr "Este diagnóstico separa la presencia del script en el DOM, la ejecución en tiempo de ejecución y la actividad de la carga enriquecida. Nunca prueba el consentimiento del usuario."
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Available granularities"
@@ -701,8 +648,7 @@ msgstr "Marcadores CMP"
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Legal caution: technical diagnostics do not establish legal consent."
-msgstr ""
-"Aviso legal: los diagnósticos técnicos no acreditan consentimiento legal."
+msgstr "Aviso legal: los diagnósticos técnicos no acreditan consentimiento legal."
 
 #: src/admin/components/AppSidebar/index.js src/admin/free-stubs/AppSidebar.js
 msgid "Navigation"
@@ -717,12 +663,8 @@ msgid "Consent compliance reminder"
 msgstr "Recordatorio de cumplimiento del consentimiento"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
-msgid ""
-"BimBeau Privacy Analytics provides technical diagnostics only. Your CMP "
-"remains the source of truth for consent workflows."
-msgstr ""
-"BimBeau Privacy Analytics solo proporciona diagnósticos técnicos. Tu CMP "
-"sigue siendo la fuente de referencia para los flujos de consentimiento."
+msgid "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP remains the source of truth for consent workflows."
+msgstr "BimBeau Privacy Analytics solo proporciona diagnósticos técnicos. Tu CMP sigue siendo la fuente de referencia para los flujos de consentimiento."
 
 #: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
@@ -787,14 +729,11 @@ msgstr "Diagnósticos de privacidad en ejecución"
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Runtime granularity is reported from available granularities."
-msgstr ""
-"La granularidad en ejecución se informa a partir de las granularidades "
-"disponibles."
+msgstr "La granularidad en ejecución se informa a partir de las granularidades disponibles."
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Technical state does not prove consent collection validity."
-msgstr ""
-"El estado técnico no prueba la validez de la recogida de consentimiento."
+msgstr "El estado técnico no prueba la validez de la recogida de consentimiento."
 
 #: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
@@ -841,10 +780,7 @@ msgid "of 4"
 msgstr "de 4"
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"BimBeau Privacy Analytics stores analytics data in your WordPress "
-"installation. Optional external features remain inactive until you "
-"explicitly enable them."
+msgid "BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them."
 msgstr "BimBeau Privacy Analytics almacena datos analíticos en su instalación de WordPress. Las funciones externas opcionales permanecen inactivas hasta que las habilite explícitamente."
 
 #: src/admin/components/SetupWizard/index.js
@@ -852,17 +788,11 @@ msgid "Enable advanced statistics"
 msgstr "Habilitar estadísticas avanzadas"
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"Advanced statistics add device details, screen resolution, active time, and "
-"other enriched information when available."
+msgid "Advanced statistics add device details, screen resolution, active time, and other enriched information when available."
 msgstr "Las estadísticas avanzadas agregan detalles del dispositivo, resolución de pantalla, tiempo activo y otra información enriquecida cuando esté disponible."
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"If your website requires prior analytics consent, your CMP must block the "
-"BimBeau Privacy Analytics advanced tracker until the visitor accepts the "
-"Analytics or Statistics category. BimBeau Privacy Analytics does not replace "
-"your CMP and does not record visitor consent."
+msgid "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent."
 msgstr "Si su sitio web requiere consentimiento previo de análisis, su CMP debe bloquear el rastreador avanzado BimBeau Privacy Analytics hasta que el visitante acepte la categoría Análisis o Estadísticas. BimBeau Privacy Analytics no reemplaza su CMP y no registra el consentimiento del visitante."
 
 #: src/admin/components/SetupWizard/index.js
@@ -870,30 +800,19 @@ msgid "Read the CMP documentation."
 msgstr "Lea la documentación de CMP."
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"The local GeoIP database allows BimBeau Privacy Analytics to display the "
-"geographic origin of visitors while performing IP lookups inside your "
-"WordPress installation."
+msgid "The local GeoIP database allows BimBeau Privacy Analytics to display the geographic origin of visitors while performing IP lookups inside your WordPress installation."
 msgstr "La base de datos GeoIP local permite a BimBeau Privacy Analytics mostrar el origen geográfico de los visitantes mientras realiza búsquedas de IP dentro de su instalación de WordPress."
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"Downloading the database contacts the documented BimBeau GeoIP Database "
-"Service. The service can receive your server IP address and a technical User-"
-"Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
+msgid "Downloading the database contacts the documented BimBeau GeoIP Database Service. The service can receive your server IP address and a technical User-Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
 msgstr "Al descargar la base de datos se contacta con el Servicio de Base de Datos BimBeau GeoIP documentado. El servicio puede recibir la dirección IP de su servidor y un agente de usuario técnico. Las direcciones IP de los visitantes no se envían a BimBeau para búsquedas locales."
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"BimBeau Privacy Analytics can contact referrer domains to retrieve their "
-"icons and cache validated copies inside your WordPress installation."
+msgid "BimBeau Privacy Analytics can contact referrer domains to retrieve their icons and cache validated copies inside your WordPress installation."
 msgstr "BimBeau Privacy Analytics puede ponerse en contacto con los dominios de referencia para recuperar sus íconos y almacenar en caché copias validadas dentro de su instalación de WordPress."
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"The contacted domains can receive your server IP address and a generic "
-"technical User-Agent. No request is sent directly from the administrator's "
-"browser, and no WordPress site URL is included in the User-Agent."
+msgid "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent."
 msgstr "Los dominios contactados pueden recibir la dirección IP de su servidor y un User-Agent técnico genérico. No se envía ninguna solicitud directamente desde el navegador del administrador y no se incluye ninguna URL del sitio de WordPress en el User-Agent."
 
 #: src/admin/components/SetupWizard/index.js
@@ -933,9 +852,7 @@ msgid "Referrer favicons:"
 msgstr "Favicones de referencia:"
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"Other settings use the recommended defaults and can be changed later from "
-"the BimBeau Privacy Analytics settings."
+msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "Otras configuraciones utilizan los valores predeterminados recomendados y se pueden cambiar más adelante desde la configuración de BimBeau Privacy Analytics."
 
 #: src/admin/components/SetupWizard/index.js
@@ -979,20 +896,15 @@ msgid "Continue without geolocation?"
 msgstr "¿Continuar sin geolocalización?"
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"Without a local GeoIP database, BimBeau Privacy Analytics will not be able "
-"to determine the geographic origin of visitors."
+msgid "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors."
 msgstr "Sin una base de datos GeoIP local, BimBeau Privacy Analytics no podrá determinar el origen geográfico de los visitantes."
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"Page views, visits, and traffic sources will continue to be measured, but "
-"country, region, and city information will not be available."
+msgid "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available."
 msgstr "Se seguirán midiendo las visitas a las páginas, las visitas y las fuentes de tráfico, pero la información sobre el país, la región y la ciudad no estará disponible."
 
 #: src/admin/components/SetupWizard/index.js
-msgid ""
-"You can download the GeoIP database later from the geolocation settings."
+msgid "You can download the GeoIP database later from the geolocation settings."
 msgstr "Puede descargar la base de datos GeoIP más tarde desde la configuración de geolocalización."
 
 #: src/admin/components/SetupWizard/index.js
@@ -1030,28 +942,16 @@ msgid "approximate country area"
 msgstr "área aproximada del país"
 
 #: src/admin/components/WorldMap/index.js
-msgid ""
-"City data is available for the selected period, but none of the cities have "
-"usable coordinates yet."
-msgstr ""
-"Hay datos de ciudades para el período seleccionado, pero ninguna ciudad "
-"tiene aún coordenadas utilizables."
+msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
+msgstr "Hay datos de ciudades para el período seleccionado, pero ninguna ciudad tiene aún coordenadas utilizables."
 
 #: src/admin/components/WorldMap/index.js
-msgid ""
-"No geolocated visits are available. Check your geolocation settings to start "
-"collecting city data."
-msgstr ""
-"No hay visitas geolocalizadas disponibles. Revisa tus ajustes de "
-"geolocalización para empezar a recopilar datos de ciudad."
+msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
+msgstr "No hay visitas geolocalizadas disponibles. Revisa tus ajustes de geolocalización para empezar a recopilar datos de ciudad."
 
 #: src/admin/components/WorldMap/index.js
-msgid ""
-"No geolocated visits are available. Check your geolocation settings to start "
-"collecting country data."
-msgstr ""
-"No hay visitas geolocalizadas disponibles. Revisa tus ajustes de "
-"geolocalización para empezar a recopilar datos de país."
+msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
+msgstr "No hay visitas geolocalizadas disponibles. Revisa tus ajustes de geolocalización para empezar a recopilar datos de país."
 
 #: src/admin/components/WorldMap/index.js
 #. translators: %s: visitor count.
@@ -1286,9 +1186,7 @@ msgstr "No hay datos horarios globales disponibles para este período."
 
 #: src/admin/panels/OverviewPanel.js
 msgid "Global hourly heatmaps require hourly page aggregation data."
-msgstr ""
-"Los mapas de calor horarios globales requieren datos de agregación horaria "
-"de páginas."
+msgstr "Los mapas de calor horarios globales requieren datos de agregación horaria de páginas."
 
 #: src/admin/panels/RealtimePanel.js
 #, fuzzy
@@ -1296,9 +1194,7 @@ msgid "Visitor origin unavailable"
 msgstr "No hay datos de visitantes disponibles."
 
 #: src/admin/panels/RealtimePanel.js
-msgid ""
-"Visitor origin will be available after the local GeoIP database is installed "
-"from the plugin geolocation settings."
+msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
 msgstr ""
 
 #: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
@@ -1323,8 +1219,7 @@ msgstr "Resolución"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
-msgstr ""
-"La pantalla completa no está disponible en este contexto del navegador."
+msgstr "La pantalla completa no está disponible en este contexto del navegador."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Loading real-time data…"
@@ -1343,12 +1238,8 @@ msgid "Fullscreen"
 msgstr "Pantalla completa"
 
 #: src/admin/panels/RealtimePanel.js
-msgid ""
-"Essential-only scope: enriched visit details and precise map markers are "
-"unavailable."
-msgstr ""
-"Ámbito solo esencial: los detalles de visita enriquecidos y los marcadores "
-"precisos del mapa no están disponibles."
+msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
+msgstr "Ámbito solo esencial: los detalles de visita enriquecidos y los marcadores precisos del mapa no están disponibles."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Table: Real-time visitors"
@@ -1468,17 +1359,11 @@ msgid "Local GeoIP database unavailable"
 msgstr "La base de datos GeoLite local no está disponible."
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"The local GeoIP database seems to be missing or unreadable. Country and city "
-"reports may be incomplete until it is reinstalled."
+msgid "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Visitor origin cannot be displayed until the local GeoIP database has been "
-"downloaded. To install it, click “Download GeoIP database”. This action will "
-"contact an external service and store the database in the WordPress uploads "
-"directory."
+msgid "Visitor origin cannot be displayed until the local GeoIP database has been downloaded. To install it, click “Download GeoIP database”. This action will contact an external service and store the database in the WordPress uploads directory."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1503,8 +1388,7 @@ msgstr "Acceso a paneles de control, tarjetas KPI e informes de analítica."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to plugin configuration and administration options."
-msgstr ""
-"Acceso a la configuración del plugin y a las opciones de administración."
+msgstr "Acceso a la configuración del plugin y a las opciones de administración."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to the plugin Contact page."
@@ -1535,18 +1419,12 @@ msgid "Confirm captured events purge"
 msgstr "Confirmar purga de eventos capturados"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"This action permanently removes the captured events list shown in Events "
-"stats. Other analytics data remains unchanged."
-msgstr ""
-"Esta acción elimina permanentemente la lista de eventos capturados que se "
-"muestra en las estadísticas de eventos. Los demás datos de analítica no "
-"cambian."
+msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
+msgstr "Esta acción elimina permanentemente la lista de eventos capturados que se muestra en las estadísticas de eventos. Los demás datos de analítica no cambian."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge the captured events list."
-msgstr ""
-"Confirmo que quiero purgar permanentemente la lista de eventos capturados."
+msgstr "Confirmo que quiero purgar permanentemente la lista de eventos capturados."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge captured events"
@@ -1573,13 +1451,8 @@ msgid "Role access"
 msgstr "Acceso por rol"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Administrators keep full access. Select additional roles that can open "
-"analytics pages, plugin settings, or the Contact page."
-msgstr ""
-"Los administradores conservan acceso completo. Selecciona roles adicionales "
-"que puedan abrir las páginas de analítica, los ajustes del plugin o la "
-"página de contacto."
+msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page."
+msgstr "Los administradores conservan acceso completo. Selecciona roles adicionales que puedan abrir las páginas de analítica, los ajustes del plugin o la página de contacto."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1606,12 +1479,8 @@ msgid "Use white-label interface"
 msgstr "Usar la interfaz de marca blanca"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Hide the BimBeau Privacy Analytics logo in the admin header and display the "
-"localized analytics title instead."
-msgstr ""
-"Oculta el logotipo de BimBeau Privacy Analytics en la cabecera de "
-"administración y muestra en su lugar el título de analíticas localizado."
+msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
+msgstr "Oculta el logotipo de BimBeau Privacy Analytics en la cabecera de administración y muestra en su lugar el título de analíticas localizado."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
@@ -1623,34 +1492,23 @@ msgstr "Visible"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
-msgstr ""
-"Oculto mientras \"Activar estadísticas avanzadas tras el consentimiento\" "
-"esté desactivado."
+msgstr "Oculto mientras \"Activar estadísticas avanzadas tras el consentimiento\" esté desactivado."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Quick stats"
 msgstr "Estadísticas rápidas"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Enable Quick Stats on selected post types: add a Views (30d) column in the "
-"posts list and display a stats summary metabox while editing each post."
-msgstr ""
-"Activa Estadísticas rápidas en los tipos de contenido seleccionados: añade "
-"una columna Vistas (30d) en la lista de entradas y muestra una metabox de "
-"resumen de estadísticas al editar cada entrada."
+msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
+msgstr "Activa Estadísticas rápidas en los tipos de contenido seleccionados: añade una columna Vistas (30d) en la lista de entradas y muestra una metabox de resumen de estadísticas al editar cada entrada."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No post types available."
 msgstr "No hay tipos de contenido disponibles."
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite "
-"database or MaxMind API."
-msgstr ""
-"Elige cómo resuelve BimBeau Privacy Analytics la geolocalización: base de "
-"datos GeoLite local o API de MaxMind."
+msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
+msgstr "Elige cómo resuelve BimBeau Privacy Analytics la geolocalización: base de datos GeoLite local o API de MaxMind."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation source"
@@ -1666,13 +1524,8 @@ msgstr "Credenciales de la API de MaxMind"
 
 #: src/admin/panels/SettingsPanel.js
 #, fuzzy
-msgid ""
-"Local database mode downloads the GeoLite MMDB file through the official "
-"BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-msgstr ""
-"El modo de base de datos local descarga el archivo GeoLite MMDB desde los "
-"espejos de BimBeau Privacy Analytics. El modo API usa solicitudes MaxMind en "
-"directo."
+msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
+msgstr "El modo de base de datos local descarga el archivo GeoLite MMDB desde los espejos de BimBeau Privacy Analytics. El modo API usa solicitudes MaxMind en directo."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
@@ -1699,10 +1552,7 @@ msgid "Automatic GeoIP database updates"
 msgstr "Actualizaciones automáticas de la base de datos GeoIP"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Choose whether the local GeoIP database should be updated automatically. In "
-"“manual updates only” mode, no external server is contacted automatically. "
-"You can still download or update the database manually with the button below."
+msgid "Choose whether the local GeoIP database should be updated automatically. In “manual updates only” mode, no external server is contacted automatically. You can still download or update the database manually with the button below."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1711,9 +1561,7 @@ msgid "Manual GeoIP database download"
 msgstr "La descarga de la base de datos GeoIP ha fallado: %s"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"This manual download will contact an external service to download the local "
-"GeoIP database and store it in the WordPress uploads directory."
+msgid "This manual download will contact an external service to download the local GeoIP database and store it in the WordPress uploads directory."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1746,13 +1594,8 @@ msgid "Retry count"
 msgstr "Número de reintentos"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Behavior: plugin activation completes quickly, and temporary local database "
-"unavailability does not block the rest of BimBeau Privacy Analytics."
-msgstr ""
-"Comportamiento: la activación del plugin se completa rápidamente y la "
-"indisponibilidad temporal de la base de datos local no bloquea el resto de "
-"BimBeau Privacy Analytics."
+msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
+msgstr "Comportamiento: la activación del plugin se completa rápidamente y la indisponibilidad temporal de la base de datos local no bloquea el resto de BimBeau Privacy Analytics."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Privacy"
@@ -1767,13 +1610,8 @@ msgid "Essential stats only"
 msgstr "Solo estadísticas esenciales"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Essential stats run without consent. Advanced stats run only after "
-"Statistics / Analytics consent."
-msgstr ""
-"Las estadísticas esenciales se ejecutan sin consentimiento. Las estadísticas "
-"avanzadas solo se ejecutan tras el consentimiento de Estadísticas / "
-"Analítica."
+msgid "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent."
+msgstr "Las estadísticas esenciales se ejecutan sin consentimiento. Las estadísticas avanzadas solo se ejecutan tras el consentimiento de Estadísticas / Analítica."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Essential stats"
@@ -1784,12 +1622,8 @@ msgid "No consent required"
 msgstr "No requiere consentimiento"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Limited audience stats only. No ads, no cross-site tracking, no third-party "
-"reuse."
-msgstr ""
-"Solo estadísticas de audiencia limitadas. Sin anuncios, sin seguimiento "
-"entre sitios y sin reutilización por terceros."
+msgid "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse."
+msgstr "Solo estadísticas de audiencia limitadas. Sin anuncios, sin seguimiento entre sitios y sin reutilización por terceros."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Essential data"
@@ -1817,9 +1651,7 @@ msgstr "Activar estadísticas avanzadas tras el consentimiento"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Your CMP must block it until Statistics / Analytics consent is given."
-msgstr ""
-"Tu CMP debe bloquearlo hasta que se otorgue el consentimiento de "
-"Estadísticas / Analítica."
+msgstr "Tu CMP debe bloquearlo hasta que se otorgue el consentimiento de Estadísticas / Analítica."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Advanced data"
@@ -1830,12 +1662,8 @@ msgid "CMP setup"
 msgstr "Configuración de CMP"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Block the advanced stats script until Statistics / Analytics consent is "
-"given."
-msgstr ""
-"Bloquea el script de estadísticas avanzadas hasta que se otorgue el "
-"consentimiento de Estadísticas / Analítica."
+msgid "Block the advanced stats script until Statistics / Analytics consent is given."
+msgstr "Bloquea el script de estadísticas avanzadas hasta que se otorgue el consentimiento de Estadísticas / Analítica."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Script to block:"
@@ -1858,87 +1686,52 @@ msgid "What is a CMP?"
 msgstr "¿Qué es una CMP?"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"A CMP manages cookie consent on your website. It shows the cookie banner, "
-"stores visitor choices, and allows or blocks analytics scripts based on "
-"consent."
-msgstr ""
-"Una CMP gestiona el consentimiento de cookies en tu sitio web. Muestra el "
-"banner de cookies, guarda las elecciones de los visitantes y permite o "
-"bloquea scripts de analítica según el consentimiento."
+msgid "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent."
+msgstr "Una CMP gestiona el consentimiento de cookies en tu sitio web. Muestra el banner de cookies, guarda las elecciones de los visitantes y permite o bloquea scripts de analítica según el consentimiento."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Examples:"
 msgstr "Ejemplos:"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"In your CMP, block the BimBeau Privacy Analytics advanced stats script until "
-"the Statistics or Analytics purpose is accepted."
-msgstr ""
-"En tu CMP, bloquea el script de estadísticas avanzadas de BimBeau Privacy "
-"Analytics hasta que se acepte la finalidad Estadísticas o Analítica."
+msgid "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted."
+msgstr "En tu CMP, bloquea el script de estadísticas avanzadas de BimBeau Privacy Analytics hasta que se acepte la finalidad Estadísticas o Analítica."
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Advanced stats are disabled. BimBeau Privacy Analytics will only use "
-"essential stats."
-msgstr ""
-"Las estadísticas avanzadas están desactivadas. BimBeau Privacy Analytics "
-"solo usará estadísticas esenciales."
+msgid "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats."
+msgstr "Las estadísticas avanzadas están desactivadas. BimBeau Privacy Analytics solo usará estadísticas esenciales."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Respect DNT / GPC"
 msgstr "Respetar DNT / GPC"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Stop measurement when the visitor’s browser sends a Do Not Track or Global "
-"Privacy Control signal."
-msgstr ""
-"Detener la medición cuando el navegador del visitante envía una señal Do Not "
-"Track o Global Privacy Control."
+msgid "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal."
+msgstr "Detener la medición cuando el navegador del visitante envía una señal Do Not Track o Global Privacy Control."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Visit measurement"
 msgstr "Medición de visitas"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Defines how long visitor activity can remain grouped under the same visitor "
-"row before a new row is started after inactivity."
-msgstr ""
-"Define cuánto tiempo la actividad de un visitante puede permanecer agrupada "
-"en la misma fila de visitante antes de iniciar una nueva fila tras la "
-"inactividad."
+msgid "Defines how long visitor activity can remain grouped under the same visitor row before a new row is started after inactivity."
+msgstr "Define cuánto tiempo la actividad de un visitante puede permanecer agrupada en la misma fila de visitante antes de iniciar una nueva fila tras la inactividad."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Visitor activity window"
 msgstr "Ventana de actividad del visitante"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Defines how long activity from the same visitor can remain grouped into one "
-"visitor row. After this period of inactivity, BimBeau Privacy Analytics "
-"starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 "
-"hours)."
-msgstr ""
-"Define cuánto tiempo la actividad del mismo visitante puede permanecer "
-"agrupada en una sola fila de visitante. Tras este periodo de inactividad, "
-"BimBeau Privacy Analytics inicia una nueva fila de visitante. Rango: de 300 "
-"a 86400 segundos (de 5 minutos a 24 horas)."
+msgid "Defines how long activity from the same visitor can remain grouped into one visitor row. After this period of inactivity, BimBeau Privacy Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 hours)."
+msgstr "Define cuánto tiempo la actividad del mismo visitante puede permanecer agrupada en una sola fila de visitante. Tras este periodo de inactividad, BimBeau Privacy Analytics inicia una nueva fila de visitante. Rango: de 300 a 86400 segundos (de 5 minutos a 24 horas)."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "URLs & campaigns"
 msgstr "URL y campañas"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Control URL cleanup behavior and keep only campaign query parameters that "
-"should remain available for attribution."
-msgstr ""
-"Controla el comportamiento de limpieza de URL y conserva solo los parámetros "
-"de consulta de campaña que deben permanecer disponibles para atribución."
+msgid "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution."
+msgstr "Controla el comportamiento de limpieza de URL y conserva solo los parámetros de consulta de campaña que deben permanecer disponibles para atribución."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Clean URL query parameters"
@@ -1953,24 +1746,16 @@ msgid "Allowed query parameters"
 msgstr "Parámetros de consulta permitidos"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Comma-separated list of allowed query keys (used for URL tracking and UTM "
-"aggregation)."
-msgstr ""
-"Lista separada por comas de claves de consulta permitidas (usada para "
-"seguimiento de URL y agregación UTM)."
+msgid "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation)."
+msgstr "Lista separada por comas de claves de consulta permitidas (usada para seguimiento de URL y agregación UTM)."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data retention"
 msgstr "Retención de datos"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
-msgstr ""
-"Choose how long to keep temporary detailed events, report details, and long-"
-"term totals, then how often cleanup runs."
+msgid "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+msgstr "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Temporary detailed events retention (days)"
@@ -1985,32 +1770,20 @@ msgid "Report details retention"
 msgstr "Retención de detalles de informes"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Keeps detailed report dimensions such as pages, referrers, countries, "
-"devices, and visitor details."
-msgstr ""
-"Keeps detailed report dimensions such as pages, referrers, countries, "
-"devices, and visitor details."
+msgid "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
+msgstr "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Long-term totals retention"
 msgstr "Retención de totales a largo plazo"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
-"chart after report details expire."
-msgstr ""
-"Keeps anonymous daily totals for dashboard KPIs and the page views/visitors "
-"chart after report details expire."
+msgid "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire."
+msgstr "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire."
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Cleanup permanently removes expired details, while long-term totals remain "
-"available until their own retention window ends."
-msgstr ""
-"Cleanup permanently removes expired details, while long-term totals remain "
-"available until their own retention window ends."
+msgid "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
+msgstr "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Automatic cleanup frequency"
@@ -2025,12 +1798,8 @@ msgid "Exclusions"
 msgstr "Exclusiones"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Select roles to exclude from tracking. Select all roles to ignore all logged-"
-"in users."
-msgstr ""
-"Selecciona roles para excluir del seguimiento. Selecciona todos los roles "
-"para ignorar a todos los usuarios conectados."
+msgid "Select roles to exclude from tracking. Select all roles to ignore all logged-in users."
+msgstr "Selecciona roles para excluir del seguimiento. Selecciona todos los roles para ignorar a todos los usuarios conectados."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No roles available."
@@ -2041,38 +1810,24 @@ msgid "Debug"
 msgstr "Depuración"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Enable diagnostic output for troubleshooting tracking events, realtime "
-"visitor detection, and REST payloads in the browser console and wp-content/"
-"debug.log."
-msgstr ""
-"Activa la salida de diagnóstico para solucionar eventos de seguimiento, "
-"detección de visitantes en tiempo real y cargas REST en la consola del "
-"navegador y en wp-content/debug.log."
+msgid "Enable diagnostic output for troubleshooting tracking events, realtime visitor detection, and REST payloads in the browser console and wp-content/debug.log."
+msgstr "Activa la salida de diagnóstico para solucionar eventos de seguimiento, detección de visitantes en tiempo real y cargas REST en la consola del navegador y en wp-content/debug.log."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug mode"
 msgstr "Modo de depuración"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Writes detailed diagnostic logs to the console and to wp-content/debug.log "
-"when WordPress debug logging is enabled."
-msgstr ""
-"Escribe registros de diagnóstico detallados en la consola y en wp-content/"
-"debug.log cuando el registro de depuración de WordPress está activado."
+msgid "Writes detailed diagnostic logs to the console and to wp-content/debug.log when WordPress debug logging is enabled."
+msgstr "Escribe registros de diagnóstico detallados en la consola y en wp-content/debug.log cuando el registro de depuración de WordPress está activado."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Cleanup actions"
 msgstr "Acciones de limpieza"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Run retention cleanup immediately to remove only data older than the "
-"configured retention window."
-msgstr ""
-"Ejecutar la limpieza de retención de inmediato para eliminar solo los datos "
-"anteriores a la ventana de retención configurada."
+msgid "Run retention cleanup immediately to remove only data older than the configured retention window."
+msgstr "Ejecutar la limpieza de retención de inmediato para eliminar solo los datos anteriores a la ventana de retención configurada."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Run cleanup now"
@@ -2083,24 +1838,16 @@ msgid "Delete plugin tables on uninstall"
 msgstr "Eliminar tablas del plugin al desinstalar"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"When enabled, uninstalling BimBeau Privacy Analytics drops all plugin "
-"analytics tables from the WordPress database."
-msgstr ""
-"Cuando está activado, al desinstalar BimBeau Privacy Analytics se eliminan "
-"todas las tablas de analítica del plugin de la base de datos de WordPress."
+msgid "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin analytics tables from the WordPress database."
+msgstr "Cuando está activado, al desinstalar BimBeau Privacy Analytics se eliminan todas las tablas de analítica del plugin de la base de datos de WordPress."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Sensitive actions"
 msgstr "Acciones sensibles"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Remove all aggregate KPI analytics, visitor-detail analytics, and raw log "
-"entries."
-msgstr ""
-"Eliminar todas las analíticas KPI agregadas, analíticas de detalle de "
-"visitantes y entradas de registros sin procesar."
+msgid "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries."
+msgstr "Eliminar todas las analíticas KPI agregadas, analíticas de detalle de visitantes y entradas de registros sin procesar."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Delete all analytics data"
@@ -2115,15 +1862,11 @@ msgid "Referrer favicons"
 msgstr "Favicones de referencia"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"Allow BimBeau Privacy Analytics to contact referrer domains, retrieve "
-"validated icons server-side, and serve cached local copies in reports."
+msgid "Allow BimBeau Privacy Analytics to contact referrer domains, retrieve validated icons server-side, and serve cached local copies in reports."
 msgstr "Permita que BimBeau Privacy Analytics se comunique con los dominios de referencia, recupere íconos validados del lado del servidor y proporcione copias locales almacenadas en caché en informes."
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"When disabled, a local generic icon is displayed and no referrer domain is "
-"contacted for favicons."
+msgid "When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons."
 msgstr "Cuando está deshabilitado, se muestra un ícono genérico local y no se contacta a ningún dominio de referencia para obtener favicons."
 
 #: src/admin/panels/SettingsPanel.js
@@ -2147,17 +1890,12 @@ msgid "Confirm data purge"
 msgstr "Confirmar purga de datos"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"This action permanently removes all stored analytics and raw logs. Settings "
-"remain unchanged."
-msgstr ""
-"Esta acción elimina permanentemente todas las analíticas almacenadas y los "
-"registros sin procesar. Los ajustes permanecen sin cambios."
+msgid "This action permanently removes all stored analytics and raw logs. Settings remain unchanged."
+msgstr "Esta acción elimina permanentemente todas las analíticas almacenadas y los registros sin procesar. Los ajustes permanecen sin cambios."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
-msgstr ""
-"Confirmo que quiero purgar permanentemente todos los datos de analítica."
+msgstr "Confirmo que quiero purgar permanentemente todos los datos de analítica."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -2168,20 +1906,12 @@ msgid "Confirm aggregated data purge"
 msgstr "Confirmar purga de datos agregados"
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"This action runs retention cleanup immediately and removes only rows older "
-"than the configured window."
-msgstr ""
-"Esta acción ejecuta inmediatamente la limpieza de retención y elimina solo "
-"las filas anteriores a la ventana configurada."
+msgid "This action runs retention cleanup immediately and removes only rows older than the configured window."
+msgstr "Esta acción ejecuta inmediatamente la limpieza de retención y elimina solo las filas anteriores a la ventana configurada."
 
 #: src/admin/panels/SettingsPanel.js
-msgid ""
-"I confirm that I want to purge only data older than the configured retention "
-"window."
-msgstr ""
-"Confirmo que quiero purgar solo los datos anteriores a la ventana de "
-"retención configurada."
+msgid "I confirm that I want to purge only data older than the configured retention window."
+msgstr "Confirmo que quiero purgar solo los datos anteriores a la ventana de retención configurada."
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Top pages"
@@ -2371,9 +2101,7 @@ msgstr ""
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
 #. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
-msgid ""
-"Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues "
-"suivies."
+msgid "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies."
 msgstr ""
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
@@ -2415,11 +2143,8 @@ msgid "Loading KPIs…"
 msgstr "Cargando KPI…"
 
 #: src/admin/widgets/OverviewKpis/index.js
-msgid ""
-"Visitors correspond to bounded visitor activity rows in the selected period."
-msgstr ""
-"Los visitantes corresponden a filas de actividad de visitante delimitadas en "
-"el periodo seleccionado."
+msgid "Visitors correspond to bounded visitor activity rows in the selected period."
+msgstr "Los visitantes corresponden a filas de actividad de visitante delimitadas en el periodo seleccionado."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Pages / visit"
@@ -2540,12 +2265,8 @@ msgstr[1] "visitantes"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
-msgid ""
-"%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous "
-"visitors %5$s"
-msgstr ""
-"%1$s: Vistas de página %2$s, visitantes %3$s, vistas de página anteriores "
-"%4$s, visitantes anteriores %5$s"
+msgid "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s"
+msgstr "%1$s: Vistas de página %2$s, visitantes %3$s, vistas de página anteriores %4$s, visitantes anteriores %5$s"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current metric count, 3: previous metric count
@@ -2629,12 +2350,8 @@ msgstr "Tabla: visitantes"
 #~ msgid "Current PWA icon preview"
 #~ msgstr "Vista previa actual del icono PWA"
 
-#~ msgid ""
-#~ "Preview uses the same runtime icon resolution as the standalone app "
-#~ "manifest and loading splash."
-#~ msgstr ""
-#~ "La vista previa utiliza la misma resolución de icono en ejecución que el "
-#~ "manifiesto de la aplicación independiente y la pantalla de carga."
+#~ msgid "Preview uses the same runtime icon resolution as the standalone app manifest and loading splash."
+#~ msgstr "La vista previa utiliza la misma resolución de icono en ejecución que el manifiesto de la aplicación independiente y la pantalla de carga."
 
 #~ msgid "Source"
 #~ msgstr "Fuente"
@@ -2674,12 +2391,8 @@ msgstr "Tabla: visitantes"
 #~ msgstr "No hay detalles disponibles para esta página."
 
 #, php-format
-#~ msgid ""
-#~ "%1$s cannot be activated while %2$s is already active. Deactivate %2$s "
-#~ "first, then activate %1$s."
-#~ msgstr ""
-#~ "%1$s no se puede activar mientras %2$s ya está activo. Desactiva primero "
-#~ "%2$s y luego activa %1$s."
+#~ msgid "%1$s cannot be activated while %2$s is already active. Deactivate %2$s first, then activate %1$s."
+#~ msgstr "%1$s no se puede activar mientras %2$s ya está activo. Desactiva primero %2$s y luego activa %1$s."
 
 #, fuzzy
 #~ msgid "Base GeoIP non installée"
@@ -2692,9 +2405,7 @@ msgstr "Tabla: visitantes"
 #~ msgstr "Cada 30 días (por defecto)"
 
 #~ msgid "Controls the cron frequency for local GeoIP database updates."
-#~ msgstr ""
-#~ "Controla la frecuencia cron de las actualizaciones de la base de datos "
-#~ "GeoIP local."
+#~ msgstr "Controla la frecuencia cron de las actualizaciones de la base de datos GeoIP local."
 
 #~ msgid "BimBeau Privacy Analytics events analytics feature preview"
 #~ msgstr "Vista previa de función de BimBeau Privacy Analytics Pro"
@@ -2734,8 +2445,7 @@ msgstr "Tabla: visitantes"
 #~ msgstr "Período: del %1$s al %2$s"
 
 #~ msgid "GeoIP archive contains a suspicious file path."
-#~ msgstr ""
-#~ "El archivo GeoIP comprimido contiene una ruta de archivo sospechosa."
+#~ msgstr "El archivo GeoIP comprimido contiene una ruta de archivo sospechosa."
 
 #~ msgid "Unable to extract GeoIP MMDB file from archive."
 #~ msgstr "No se puede extraer el archivo GeoIP MMDB del archivo comprimido."
@@ -2750,41 +2460,20 @@ msgstr "Tabla: visitantes"
 #~ msgid "Source category"
 #~ msgstr "Categoría de fuente"
 
-#~ msgid ""
-#~ "Set retention periods for raw logs and aggregated analytics data, and "
-#~ "choose how often automated cleanup runs."
-#~ msgstr ""
-#~ "Define períodos de retención para registros sin procesar y datos de "
-#~ "analítica agregada, y elige con qué frecuencia se ejecuta la limpieza "
-#~ "automática."
+#~ msgid "Set retention periods for raw logs and aggregated analytics data, and choose how often automated cleanup runs."
+#~ msgstr "Define períodos de retención para registros sin procesar y datos de analítica agregada, y elige con qué frecuencia se ejecuta la limpieza automática."
 
 #~ msgid "Raw logs purge automatically after the configured window."
-#~ msgstr ""
-#~ "Los registros sin procesar se purgan automáticamente tras la ventana "
-#~ "configurada."
+#~ msgstr "Los registros sin procesar se purgan automáticamente tras la ventana configurada."
 
-#~ msgid ""
-#~ "BimBeau Privacy Analytics permanently removes aggregated rows older than "
-#~ "the selected window; no long-term totals are kept beyond this retention "
-#~ "period."
-#~ msgstr ""
-#~ "BimBeau Privacy Analytics elimina permanentemente las filas agregadas "
-#~ "anteriores a la ventana seleccionada; no se conservan totales a largo "
-#~ "plazo más allá de este período de retención."
+#~ msgid "BimBeau Privacy Analytics permanently removes aggregated rows older than the selected window; no long-term totals are kept beyond this retention period."
+#~ msgstr "BimBeau Privacy Analytics elimina permanentemente las filas agregadas anteriores a la ventana seleccionada; no se conservan totales a largo plazo más allá de este período de retención."
 
-#~ msgid ""
-#~ "Cleanup permanently removes aggregated and visitor-detail rows older than "
-#~ "the selected window."
-#~ msgstr ""
-#~ "La limpieza elimina permanentemente las filas agregadas y de detalle de "
-#~ "visitantes anteriores a la ventana seleccionada."
+#~ msgid "Cleanup permanently removes aggregated and visitor-detail rows older than the selected window."
+#~ msgstr "La limpieza elimina permanentemente las filas agregadas y de detalle de visitantes anteriores a la ventana seleccionada."
 
-#~ msgid ""
-#~ "Defines the WP-Cron interval used to run aggregated retention cleanup "
-#~ "automatically."
-#~ msgstr ""
-#~ "Define el intervalo de WP-Cron usado para ejecutar automáticamente la "
-#~ "limpieza de retención agregada."
+#~ msgid "Defines the WP-Cron interval used to run aggregated retention cleanup automatically."
+#~ msgstr "Define el intervalo de WP-Cron usado para ejecutar automáticamente la limpieza de retención agregada."
 
 #, fuzzy
 #~ msgid "White label"
@@ -2794,9 +2483,7 @@ msgstr "Tabla: visitantes"
 #~ msgstr "Vista general de BimBeau Privacy Analytics"
 
 #~ msgid "BimBeau Privacy Analytics data is not available for this period."
-#~ msgstr ""
-#~ "Los datos de BimBeau Privacy Analytics no están disponibles para este "
-#~ "período."
+#~ msgstr "Los datos de BimBeau Privacy Analytics no están disponibles para este período."
 
 #~ msgid "View BimBeau Privacy Analytics dashboard"
 #~ msgstr "Ver el panel de control de BimBeau Privacy Analytics"
@@ -2826,24 +2513,11 @@ msgstr "Tabla: visitantes"
 #~ msgid "Last activity"
 #~ msgstr "Última actividad"
 
-#~ msgid ""
-#~ "Define how long consecutive hits are grouped for one visitor visit "
-#~ "session."
-#~ msgstr ""
-#~ "Define durante cuánto tiempo se agrupan los impactos consecutivos en una "
-#~ "sesión de visita de un visitante."
+#~ msgid "Define how long consecutive hits are grouped for one visitor visit session."
+#~ msgstr "Define durante cuánto tiempo se agrupan los impactos consecutivos en una sesión de visita de un visitante."
 
-#~ msgid ""
-#~ "Defines how long consecutive hits from the same visitor are grouped into "
-#~ "one visit identifier. Range: 300 to 86400 seconds (5 minutes to 24 "
-#~ "hours). A shorter window increases visit splits, while a longer window "
-#~ "merges more activity into one visit."
-#~ msgstr ""
-#~ "Define durante cuánto tiempo se agrupan los impactos consecutivos del "
-#~ "mismo visitante en un identificador de visita. Rango: de 300 a 86400 "
-#~ "segundos (de 5 minutos a 24 horas). Una ventana más corta aumenta la "
-#~ "división de visitas, mientras que una más larga agrupa más actividad en "
-#~ "una visita."
+#~ msgid "Defines how long consecutive hits from the same visitor are grouped into one visit identifier. Range: 300 to 86400 seconds (5 minutes to 24 hours). A shorter window increases visit splits, while a longer window merges more activity into one visit."
+#~ msgstr "Define durante cuánto tiempo se agrupan los impactos consecutivos del mismo visitante en un identificador de visita. Rango: de 300 a 86400 segundos (de 5 minutos a 24 horas). Una ventana más corta aumenta la división de visitas, mientras que una más larga agrupa más actividad en una visita."
 
 #~ msgid "First connection"
 #~ msgstr "Primera conexión"
@@ -2851,12 +2525,9 @@ msgstr "Tabla: visitantes"
 #~ msgid "Date of connection"
 #~ msgstr "Fecha de conexión"
 
-#~ msgid ""
-#~ "Visits = distinct visitors for the selected location and period. Hits = "
-#~ "tracked page hits."
-#~ msgstr ""
-#~ "Visitas = visitantes distintos para la ubicación y el período "
-#~ "seleccionados. Hits = impactos de páginas registradas."
+#~ msgid "Visits = distinct visitors for the selected location and period. Hits = tracked page hits."
+#~ msgstr "Visitas = visitantes distintos para la ubicación y el período seleccionados. Hits = impactos de páginas registradas."
 
 #~ msgid "Upgrade"
 #~ msgstr "Actualizar"
+
