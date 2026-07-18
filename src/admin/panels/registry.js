@@ -50,7 +50,7 @@ const normalizePanels = ( panels ) => {
 		.filter( ( panel ) => panel.name );
 };
 
-const getVisiblePanels = ( panels, isPro, appContext = 'admin' ) =>
+const getVisiblePanels = ( panels, hasPremiumAccess, appContext = 'admin' ) =>
 	panels.filter( ( panel ) => {
 		const isSettingsHiddenInApp =
 			appContext === 'app' && panel.name === 'settings';

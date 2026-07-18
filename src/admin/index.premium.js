@@ -3,7 +3,6 @@
  */
 
 import { bootstrapAdmin } from "./bootstrap-common";
-import "./premium/styles/page-details.css";
 import {
   registerBPAServiceWorker,
   setupEventConfigDropPlaceholder,

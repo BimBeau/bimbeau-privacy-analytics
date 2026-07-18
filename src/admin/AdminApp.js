@@ -188,11 +188,27 @@ const AdminApp = () => {
 			return;
 		}
 
+		logger.warn( 'Requested admin panel is unavailable', {
+			action: 'admin.panel_unavailable',
+			requestedPanel,
+			fallbackPanel: firstVisiblePanel,
+			advancedStatsEnabled:
+				ADMIN_CONFIG?.settings?.advanced_stats_enabled,
+			visiblePanels: visiblePanels.map( ( panel ) => panel.name ),
+		} );
+
 		const fallbackUrl = getAdminPanelUrl( firstVisiblePanel );
 		if ( fallbackUrl && typeof window !== 'undefined' ) {
 			window.location.replace( fallbackUrl );
 		}
-	}, [ hasRequestedPanel, requestedPanel, currentPanel, firstVisiblePanel ] );
+	}, [
+		hasRequestedPanel,
+		requestedPanel,
+		currentPanel,
+		firstVisiblePanel,
+		logger,
+		visiblePanels,
+	] );
 
 	useEffect( () => {
 		setupGlobalErrorHandlers( logger );

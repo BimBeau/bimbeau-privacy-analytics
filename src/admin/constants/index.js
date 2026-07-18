@@ -84,8 +84,22 @@ export const ADVANCED_STATS_DEPENDENT_PANELS = [
 	'realtime',
 ];
 
+export const normalizeBooleanSetting = ( value, defaultValue = true ) => {
+	if ( value === undefined || value === null || value === '' ) {
+		return defaultValue;
+	}
+
+	if ( typeof value === 'string' ) {
+		const normalized = value.trim().toLowerCase();
+		if ( [ '0', 'false', 'off', 'no' ].includes( normalized ) ) return false;
+		if ( [ '1', 'true', 'on', 'yes' ].includes( normalized ) ) return true;
+	}
+
+	return Boolean( value );
+};
+
 export const isAdvancedStatsEnabled = ( settings = ADMIN_CONFIG?.settings ) =>
-	settings?.advanced_stats_enabled === true;
+	normalizeBooleanSetting( settings?.advanced_stats_enabled, true );
 
 const NON_DISABLABLE_PANEL_NAMES = new Set( [ 'dashboard', 'settings' ] );
 

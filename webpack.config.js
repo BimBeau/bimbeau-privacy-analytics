@@ -41,16 +41,10 @@ const freeOverviewPanelStubPath = path.resolve(
   adminSourceRoot,
   'free-stubs/OverviewPanel.js'
 );
-const freePanelRegistryPath = path.resolve(adminSourceRoot, 'free-stubs/registry.js');
-const freeUseAdminEndpointPath = path.resolve(adminSourceRoot, 'free-stubs/useAdminEndpoint.js');
 const proOnlyAdminAliases = isFreePackageBuild
   ? {
       [path.resolve(adminSourceRoot, 'panels/OverviewPanel')]: freeOverviewPanelStubPath,
       [path.resolve(adminSourceRoot, 'panels/OverviewPanel.js')]: freeOverviewPanelStubPath,
-      [path.resolve(adminSourceRoot, 'panels/registry')]: freePanelRegistryPath,
-      [path.resolve(adminSourceRoot, 'panels/registry.js')]: freePanelRegistryPath,
-      [path.resolve(adminSourceRoot, 'api/useAdminEndpoint')]: freeUseAdminEndpointPath,
-      [path.resolve(adminSourceRoot, 'api/useAdminEndpoint.js')]: freeUseAdminEndpointPath,
     }
   : {
       [sharedReportExportActionPath]: premiumReportExportActionPath,

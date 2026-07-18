@@ -199,21 +199,7 @@ const normalizeSettings = (settings) => ({
       settings.geoip_update_frequency
       ? settings.geoip_update_frequency
       : DEFAULT_SETTINGS.geoip_update_frequency,
-  pwa_theme_color:
-    typeof settings?.pwa_theme_color === "string" &&
-      settings.pwa_theme_color.trim()
-      ? settings.pwa_theme_color.trim()
-      : DEFAULT_SETTINGS.pwa_theme_color,
-  pwa_icon_attachment_id: Number.parseInt(settings?.pwa_icon_attachment_id, 10) || 0,
-  pwa_icon_generation_status:
-    typeof settings?.pwa_icon_generation_status === "string" &&
-      settings.pwa_icon_generation_status.trim()
-      ? settings.pwa_icon_generation_status.trim()
-      : DEFAULT_SETTINGS.pwa_icon_generation_status,
-  pwa_icon_generation_message:
-    typeof settings?.pwa_icon_generation_message === "string"
-      ? settings.pwa_icon_generation_message
-      : DEFAULT_SETTINGS.pwa_icon_generation_message,
+  
   disabled_panels: Array.isArray(settings?.disabled_panels)
     ? settings.disabled_panels
     : Array.isArray(settings?.hidden_panels)
@@ -228,6 +214,16 @@ const normalizeSettings = (settings) => ({
   contact_access_roles: Array.isArray(settings?.contact_access_roles)
     ? settings.contact_access_roles
     : DEFAULT_SETTINGS.contact_access_roles,
+  excluded_roles: Array.isArray(settings?.excluded_roles)
+    ? settings.excluded_roles
+    : DEFAULT_SETTINGS.excluded_roles,
+  excluded_paths: Array.isArray(settings?.excluded_paths)
+    ? settings.excluded_paths
+    : DEFAULT_SETTINGS.excluded_paths,
+  url_query_allowlist: Array.isArray(settings?.url_query_allowlist)
+    ? settings.url_query_allowlist
+    : DEFAULT_SETTINGS.url_query_allowlist,
+  
 });
 
 const SettingsPanel = () => {
@@ -257,7 +253,9 @@ const SettingsPanel = () => {
   const [geoIpDbStatus, setGeoIpDbStatus] = useState(null);
   const [pwaNotice, setPwaNotice] = useState(null);
   const [availableGranularities, setAvailableGranularities] = useState(
-    data?.availableGranularities || [],
+    Array.isArray(data?.availableGranularities)
+      ? data.availableGranularities
+      : [],
   );
   const [showCmpHelp, setShowCmpHelp] = useState(false);
   const formStateRef = useRef(formState);
@@ -377,7 +375,11 @@ const SettingsPanel = () => {
       window.BBPA_DEBUG = Boolean(normalized.debug_enabled);
       setValidationErrors({});
     }
-    setAvailableGranularities(data?.availableGranularities || []);
+    setAvailableGranularities(
+      Array.isArray(data?.availableGranularities)
+        ? data.availableGranularities
+        : [],
+    );
   }, [data]);
 
   const refreshGeoIpDbStatus = async () => {
@@ -876,7 +878,7 @@ const SettingsPanel = () => {
     },
   ];
   const postTypes = ADMIN_CONFIG?.settings?.postTypes || [];
-  const isPro = Boolean(ADMIN_CONFIG?.settings?.isPro);
+  
   const settingsTabs = [
     {
       name: "general",
@@ -902,8 +904,7 @@ const SettingsPanel = () => {
     () => getDisablablePanelOptions(ADMIN_CONFIG?.disablablePanels),
     [],
   );
-  const pwaConfig = ADMIN_CONFIG?.settings?.pwa || {};
-  const pwaAppUrl = pwaConfig.appUrl || "";
+  
   let eventsPurgeButton = null;
   let eventsPurgeModal = null;
 

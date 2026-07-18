@@ -7,7 +7,8 @@ const DEBUG_FLAG = () =>
 	Boolean( window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled );
 
 const ADMIN_CACHE_VERSION_PARAM = '_bbpa_cv';
-const APP_NONCE_RELOAD_STORAGE_KEY = 'bbpa-app-nonce-reload-attempted';
+let APP_NONCE_RELOAD_STORAGE_KEY = 'bbpa-admin-nonce-reload-attempted';
+
 
 const AUTH_REQUIRED_ERROR_CODES = new Set( [
 	'rest_cookie_invalid_nonce',

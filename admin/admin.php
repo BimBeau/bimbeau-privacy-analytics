@@ -1478,6 +1478,8 @@ function bbpa_build_admin_localized_payload(
             'privacyMode' => function_exists('bbpa_get_privacy_mode')
                 ? sanitize_key(bbpa_get_privacy_mode())
                 : 'essential',
+            'advanced_stats_enabled' => !array_key_exists('advanced_stats_enabled', $settings)
+                || rest_sanitize_boolean($settings['advanced_stats_enabled']),
             'adminCacheVersion' => bbpa_get_admin_cache_version(),
             'slug' => sanitize_key(BBPA_SLUG),
             'pluginLabel' => sanitize_text_field($menu_label),

@@ -15,8 +15,6 @@ const freeAdminEntryReferences = new Set([
   'src/admin/free-stubs/AdminApp.js',
   'src/admin/free-stubs/AppSidebar.js',
   'src/admin/free-stubs/OverviewPanel.js',
-  'src/admin/free-stubs/SettingsPanel.js',
-  'src/admin/free-stubs/registry.js',
 ]);
 const premiumOnlyReferenceNames = [
   ['Premium', 'Lock', 'State'].join(''),
