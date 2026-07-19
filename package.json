@@ -1,6 +1,6 @@
 {
   "name": "bimbeau-privacy-analytics",
-  "version": "8.45.62",
+  "version": "8.45.63",
   "private": true,
   "license": "GPL-3.0-or-later",
   "description": "BimBeau Privacy Analytics WordPress plugin assets.",
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "npm run build:assets && npm run build:i18n",
     "build:i18n": "bash scripts/build-i18n.sh",
-    "check:pre-pr:i18n": "composer install --no-interaction --prefer-dist --no-progress && npm ci --no-audit --fund=false && npm run build:i18n && composer test:i18n && git diff --exit-code -- languages ':(exclude)languages/*.mo' && npm run check:i18n-setup-wizard && npm run check:i18n-mo && npm run check:i18n-json",
+    "check:pre-pr:i18n": "composer install --no-interaction --prefer-dist --no-progress && npm ci --no-audit --fund=false && npm run build:i18n && composer test:i18n && git diff --exit-code -- languages ':(exclude)languages/*.mo' && npm run check:i18n-setup-wizard && npm run check:i18n-page-details-back && npm run check:i18n-mo && npm run check:i18n-json",
     "build:pricing": "node scripts/build-freemius-pricing-data.js",
     "build:zip": "bash scripts/build-plugin-zip.sh",
     "start": "wp-scripts start",
@@ -34,7 +34,8 @@
     "check:public-source-export": "node scripts/check-public-source-export.js",
     "check:free-package:unit": "BBPA_FREE_PACKAGE_TEST_SUITE=unit node --test scripts/__tests__/free-package-unit.test.js scripts/__tests__/free-package-compliance.test.js scripts/__tests__/release-gates.test.js",
     "check:free-package:integration": "BBPA_FREE_PACKAGE_TEST_SUITE=integration node --test scripts/__tests__/free-package-compliance.test.js",
-    "check:i18n-setup-wizard": "node scripts/check-setup-wizard-translations.js"
+    "check:i18n-setup-wizard": "node scripts/check-setup-wizard-translations.js",
+    "check:i18n-page-details-back": "node scripts/check-page-details-back-translations.js"
   },
   "dependencies": {
     "@nivo/bar": "^0.99.0",
