@@ -855,6 +855,10 @@ msgstr "Favicon παραπομπής:"
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "Άλλες ρυθμίσεις χρησιμοποιούν τις προτεινόμενες προεπιλογές και μπορούν να αλλάξουν αργότερα από τις ρυθμίσεις του BimBeau Privacy Analytics."
 
+#: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "Προηγούμενο"
+
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics and continue"
 msgstr "Ενεργοποιήστε τα σύνθετα στατιστικά και συνεχίστε"
@@ -882,10 +886,6 @@ msgstr "Συνεχίστε χωρίς να ενεργοποιήσετε τα fav
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish configuration"
 msgstr "Ολοκληρώστε τη διαμόρφωση"
-
-#: src/admin/components/SetupWizard/index.js
-msgid "Back"
-msgstr "Πίσω"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish later"
@@ -1873,12 +1873,17 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "Όταν είναι απενεργοποιημένο, εμφανίζεται ένα τοπικό γενικό εικονίδιο και δεν γίνεται επικοινωνία με τον τομέα παραπομπής για τα favicon."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the configuration assistant again"
+#, fuzzy
+msgid "Configuration assistant"
 msgstr "Εκτελέστε ξανά τον βοηθό διαμόρφωσης"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "This action presents your current settings and does not reset them."
-msgstr "Αυτή η ενέργεια παρουσιάζει τις τρέχουσες ρυθμίσεις σας και δεν τις επαναφέρει."
+msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Restart the assistant"
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
@@ -2012,10 +2017,6 @@ msgstr "URL"
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "Τίτλος"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Previous"
-msgstr "Προηγούμενο"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
@@ -2349,6 +2350,12 @@ msgstr "Ιδιωτικό"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Πίνακας: Επισκέπτες"
+
+#~ msgid "Back"
+#~ msgstr "Πίσω"
+
+#~ msgid "This action presents your current settings and does not reset them."
+#~ msgstr "Αυτή η ενέργεια παρουσιάζει τις τρέχουσες ρυθμίσεις σας και δεν τις επαναφέρει."
 
 #~ msgid "Referrer favicons"
 #~ msgstr "Favicon παραπομπής"

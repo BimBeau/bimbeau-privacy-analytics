@@ -855,6 +855,10 @@ msgstr "推荐人图标："
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "其他设置使用建议的默认值，并且可以稍后从 BimBeau Privacy Analytics 设置进行更改。"
 
+#: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "上一项"
+
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics and continue"
 msgstr "启用高级统计并继续"
@@ -882,10 +886,6 @@ msgstr "继续而不启用网站图标"
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish configuration"
 msgstr "完成配置"
-
-#: src/admin/components/SetupWizard/index.js
-msgid "Back"
-msgstr "后退"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish later"
@@ -1873,12 +1873,17 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "禁用后，将显示本地通用图标，并且不会为网站图标联系引荐来源网址域。"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the configuration assistant again"
+#, fuzzy
+msgid "Configuration assistant"
 msgstr "再次运行配置助手"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "This action presents your current settings and does not reset them."
-msgstr "此操作会显示您当前的设置，但不会重置它们。"
+msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Restart the assistant"
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
@@ -2012,10 +2017,6 @@ msgstr "URL"
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "标题"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Previous"
-msgstr "上一项"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
@@ -2345,6 +2346,12 @@ msgstr "私密"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
+
+#~ msgid "Back"
+#~ msgstr "后退"
+
+#~ msgid "This action presents your current settings and does not reset them."
+#~ msgstr "此操作会显示您当前的设置，但不会重置它们。"
 
 #~ msgid "Referrer favicons"
 #~ msgstr "推荐人网站图标"

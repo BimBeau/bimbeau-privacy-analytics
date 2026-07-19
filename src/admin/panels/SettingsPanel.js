@@ -37,6 +37,7 @@ import {
   LuMapPinCheck,
   LuPanelLeft,
   LuBookmark,
+  LuClipboardCheck,
   LuRuler,
   LuShieldCheck,
   LuRoute,
@@ -1849,10 +1850,21 @@ const SettingsPanel = () => {
                         checked={Boolean(formState.referrer_favicons_enabled)}
                         onChange={(value) => setFormState((prev) => ({ ...prev, referrer_favicons_enabled: Boolean(value) }))}
                       />
-                      <Button variant="link" onClick={() => window.dispatchEvent(new CustomEvent("bbpa-open-setup-wizard"))}>
-                        {__("Run the configuration assistant again", "bimbeau-privacy-analytics")}
+                    </CardBody>
+                  </Card>
+                )}
+                {activeTab === "general" && (
+                  <Card className="bbpa-settings-section bbpa-settings-section--setup-wizard">
+                    <CardHeader>
+                      <SettingsSectionTitle icon={LuClipboardCheck}>
+                        {__("Configuration assistant", "bimbeau-privacy-analytics")}
+                      </SettingsSectionTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <p>{__("Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.", "bimbeau-privacy-analytics")}</p>
+                      <Button variant="secondary" onClick={() => window.dispatchEvent(new CustomEvent("bbpa-open-setup-wizard", { detail: { restart: true } }))}>
+                        {__("Restart the assistant", "bimbeau-privacy-analytics")}
                       </Button>
-                      <p>{__("This action presents your current settings and does not reset them.", "bimbeau-privacy-analytics")}</p>
                     </CardBody>
                   </Card>
                 )}

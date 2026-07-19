@@ -115,7 +115,14 @@ const collectJsonMessages = (jsonFiles) => {
 
     Object.keys(domainData)
       .filter((msgid) => msgid !== '')
-      .forEach((msgid) => messages.add(msgid));
+      .forEach((msgid) => {
+        messages.add(msgid);
+        // WordPress stores contextual gettext keys as "context\u0004msgid".
+        // PO coverage is collected by msgid, so include the unqualified value.
+        if (msgid.includes('\u0004')) {
+          messages.add(msgid.slice(msgid.lastIndexOf('\u0004') + 1));
+        }
+      });
   });
 
   return messages;

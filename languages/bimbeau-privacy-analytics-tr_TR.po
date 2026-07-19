@@ -855,6 +855,10 @@ msgstr "Yönlendiren favicon'ları:"
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "Diğer ayarlar önerilen varsayılanları kullanır ve daha sonra BimBeau Gizlilik Analizi ayarlarından değiştirilebilir."
 
+#: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "Önceki"
+
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics and continue"
 msgstr "Gelişmiş istatistikleri etkinleştirin ve devam edin"
@@ -882,10 +886,6 @@ msgstr "Favori simgelerini etkinleştirmeden devam et"
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish configuration"
 msgstr "Yapılandırmayı bitir"
-
-#: src/admin/components/SetupWizard/index.js
-msgid "Back"
-msgstr "Geri"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish later"
@@ -1873,12 +1873,17 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "Devre dışı bırakıldığında, yerel bir genel simge görüntülenir ve sık kullanılan simgeler için hiçbir yönlendiren etki alanıyla bağlantı kurulmaz."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the configuration assistant again"
+#, fuzzy
+msgid "Configuration assistant"
 msgstr "Yapılandırma asistanını tekrar çalıştırın"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "This action presents your current settings and does not reset them."
-msgstr "Bu eylem mevcut ayarlarınızı sunar ve bunları sıfırlamaz."
+msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Restart the assistant"
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
@@ -2012,10 +2017,6 @@ msgstr "URL"
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "Başlık"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Previous"
-msgstr "Önceki"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
@@ -2345,6 +2346,12 @@ msgstr "Özel"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tablo: Ziyaretçiler"
+
+#~ msgid "Back"
+#~ msgstr "Geri"
+
+#~ msgid "This action presents your current settings and does not reset them."
+#~ msgstr "Bu eylem mevcut ayarlarınızı sunar ve bunları sıfırlamaz."
 
 #~ msgid "Referrer favicons"
 #~ msgstr "Yönlendiren favori simgeleri"

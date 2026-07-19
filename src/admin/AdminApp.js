@@ -158,7 +158,31 @@ const AdminApp = () => {
 	}, [ isAuthRequired ] );
 
 	useEffect( () => {
-		const openWizard = () => setIsSetupWizardOpen( true );
+		const openWizard = async ( event ) => {
+			if ( event?.detail?.restart !== true ) {
+				setIsSetupWizardOpen( true );
+				return;
+			}
+
+			try {
+				const payload = await fetchAdminJson( '/admin/setup-wizard' );
+				const result = await fetchAdminJson( '/admin/setup-wizard', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify( { action: 'set_step', step: 'tracking' } ),
+				} );
+				setSetupWizard( {
+					...payload,
+					state: result?.state || { ...payload?.state, current_step: 'tracking' },
+				} );
+				setIsSetupWizardOpen( true );
+			} catch ( error ) {
+				logger.warn( 'Unable to restart setup wizard', {
+					action: 'admin.setup_wizard_restart_failed',
+					message: error?.message || String( error ),
+				} );
+			}
+		};
 		window.addEventListener( 'bbpa-open-setup-wizard', openWizard );
 		return () => window.removeEventListener( 'bbpa-open-setup-wizard', openWizard );
 	}, [] );

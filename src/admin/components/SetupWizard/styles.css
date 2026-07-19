@@ -1,8 +1,54 @@
+.components-modal__screen-overlay.bbpa-setup-wizard__overlay {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	height: 100dvh;
+	padding: clamp(12px, 3vw, 32px);
+}
+
 .components-modal__frame.bbpa-setup-wizard__modal {
-	width: min(800px, calc(100vw - 32px));
+	box-sizing: border-box;
+	width: min(800px, 100%);
 	max-width: 800px;
+	max-height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+.bbpa-setup-wizard__modal .components-modal__content {
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
+
+.bbpa-setup-wizard .components-card__footer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.bbpa-setup-wizard__back.components-button {
+	order: -1;
 }
 
 .bbpa-setup-wizard__finish-later.components-button {
 	margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+	.components-modal__screen-overlay.bbpa-setup-wizard__overlay {
+		padding: 8px;
+	}
+
+	.bbpa-setup-wizard .components-card__footer,
+	.bbpa-setup-wizard .components-card__footer .components-button {
+		width: 100%;
+	}
+
+	.bbpa-setup-wizard .components-card__footer .components-button {
+		justify-content: center;
+		min-height: 44px;
+	}
 }

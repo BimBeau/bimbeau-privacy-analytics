@@ -860,6 +860,10 @@ msgstr "Referrer-Favicons:"
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "Andere Einstellungen verwenden die empfohlenen Standardeinstellungen und können später in den BimBeau Privacy Analytics-Einstellungen geändert werden."
 
+#: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+msgid "Previous"
+msgstr "Zurück"
+
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics and continue"
 msgstr "Erweiterte Statistiken aktivieren und fortfahren"
@@ -887,10 +891,6 @@ msgstr "Fahren Sie fort, ohne die Favoriten zu aktivieren"
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish configuration"
 msgstr "Konfiguration abschließen"
-
-#: src/admin/components/SetupWizard/index.js
-msgid "Back"
-msgstr "Zurück"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Finish later"
@@ -1879,12 +1879,17 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "Bei Deaktivierung wird ein lokales generisches Symbol angezeigt und es wird keine Referrer-Domain für Favicons kontaktiert."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the configuration assistant again"
+#, fuzzy
+msgid "Configuration assistant"
 msgstr "Führen Sie den Konfigurationsassistenten erneut aus"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "This action presents your current settings and does not reset them."
-msgstr "Diese Aktion zeigt Ihre aktuellen Einstellungen an und setzt sie nicht zurück."
+msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Restart the assistant"
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"
@@ -2018,10 +2023,6 @@ msgstr "URL"
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "Titel"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Previous"
-msgstr "Zurück"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
@@ -2355,6 +2356,12 @@ msgstr "Privat"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabelle: Besucher"
+
+#~ msgid "Back"
+#~ msgstr "Zurück"
+
+#~ msgid "This action presents your current settings and does not reset them."
+#~ msgstr "Diese Aktion zeigt Ihre aktuellen Einstellungen an und setzt sie nicht zurück."
 
 #~ msgid "Referrer favicons"
 #~ msgstr "Referrer-Favicons"
