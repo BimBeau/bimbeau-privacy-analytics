@@ -763,7 +763,7 @@ msgstr "配置分析跟踪"
 msgid "Install the local GeoIP database"
 msgstr "安装本地GeoIP数据库"
 
-#: src/admin/components/SetupWizard/index.js src/admin/panels/SettingsPanel.js
+#: src/admin/components/SetupWizard/index.js
 msgid "Display referrer favicons"
 msgstr "显示引荐网站图标"
 
@@ -1854,11 +1854,18 @@ msgid "Events configuration"
 msgstr "事件配置"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Referrer favicons"
-msgstr "推荐人网站图标"
+#, fuzzy
+msgid "Referring site icons"
+msgstr "引荐站点"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Allow BimBeau Privacy Analytics to contact referrer domains, retrieve validated icons server-side, and serve cached local copies in reports."
+#, fuzzy
+msgid "Display referring site favicons"
+msgstr "显示引荐网站图标"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
 msgstr "允许 Bim​​Beau Privacy Analytics 联系引荐来源网址域，检索服务器端经过验证的图标，并在报告中提供缓存的本地副本。"
 
 #: src/admin/panels/SettingsPanel.js
@@ -2338,4 +2345,7 @@ msgstr "私密"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
+
+#~ msgid "Referrer favicons"
+#~ msgstr "推荐人网站图标"
 

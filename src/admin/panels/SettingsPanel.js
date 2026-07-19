@@ -1827,14 +1827,14 @@ const SettingsPanel = () => {
                   <Card className="bbpa-settings-section">
                     <CardHeader>
                       <SettingsSectionTitle icon={LuBookmark}>
-                        {__("Referrer favicons", "bimbeau-privacy-analytics")}
+                        {__("Referring site icons", "bimbeau-privacy-analytics")}
                       </SettingsSectionTitle>
                     </CardHeader>
                     <CardBody>
                       <ToggleControl
-                        label={__("Display referrer favicons", "bimbeau-privacy-analytics")}
+                        label={__("Display referring site favicons", "bimbeau-privacy-analytics")}
                         help={formState.referrer_favicons_enabled
-                          ? __("Allow BimBeau Privacy Analytics to contact referrer domains, retrieve validated icons server-side, and serve cached local copies in reports.", "bimbeau-privacy-analytics")
+                          ? __("Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports.", "bimbeau-privacy-analytics")
                           : __("When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.", "bimbeau-privacy-analytics")}
                         checked={Boolean(formState.referrer_favicons_enabled)}
                         onChange={(value) => setFormState((prev) => ({ ...prev, referrer_favicons_enabled: Boolean(value) }))}

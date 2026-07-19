@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { LuArrowRight, LuGlobe } from 'react-icons/lu';
 
 import { fetchAdminJson } from '../../api/useAdminEndpoint';
-import { ADMIN_CONFIG } from '../../constants';
+import { ADMIN_CONFIG, normalizeBooleanSetting } from '../../constants';
 
 const resolveNormalizedDomain = ( domain ) => {
 	if ( typeof domain !== 'string' ) return '';
@@ -20,7 +20,10 @@ const isLocalFaviconUrl = ( url ) => {
 
 const ReferrerLabel = ( { domain, label, faviconsEnabled } ) => {
 	const normalizedDomain = useMemo( () => resolveNormalizedDomain( domain ), [ domain ] );
-	const enabled = faviconsEnabled ?? ADMIN_CONFIG?.settings?.referrer_favicons_enabled === true;
+	const enabled = normalizeBooleanSetting(
+		faviconsEnabled ?? ADMIN_CONFIG?.settings?.referrer_favicons_enabled,
+		false
+	);
 	const [ faviconUrl, setFaviconUrl ] = useState( '' );
 	const resolvedLabel = label || __( 'Direct', 'bimbeau-privacy-analytics' );
 

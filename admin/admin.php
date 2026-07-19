@@ -1480,6 +1480,8 @@ function bbpa_build_admin_localized_payload(
                 : 'essential',
             'advanced_stats_enabled' => !array_key_exists('advanced_stats_enabled', $settings)
                 || rest_sanitize_boolean($settings['advanced_stats_enabled']),
+            'referrer_favicons_enabled' => isset($settings['referrer_favicons_enabled'])
+                && rest_sanitize_boolean($settings['referrer_favicons_enabled']),
             'adminCacheVersion' => bbpa_get_admin_cache_version(),
             'slug' => sanitize_key(BBPA_SLUG),
             'pluginLabel' => sanitize_text_field($menu_label),

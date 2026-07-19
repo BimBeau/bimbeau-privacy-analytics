@@ -78,6 +78,7 @@ const AdminApp = () => {
 	
 	const [ geoIpDatabaseStatus, setGeoIpDatabaseStatus ] = useState( null );
 	const [ setupWizard, setSetupWizard ] = useState( null );
+	const [ isSetupWizardLoaded, setIsSetupWizardLoaded ] = useState( false );
 	const [ isSetupWizardOpen, setIsSetupWizardOpen ] = useState( false );
 	const [ setupNotice, setSetupNotice ] = useState( false );
 	const [ isGeoIpStatusLoading, setIsGeoIpStatusLoading ] = useState( true );
@@ -163,8 +164,13 @@ const AdminApp = () => {
 	}, [] );
 
 	useEffect( () => {
-		if ( isAuthRequired ) return;
+		if ( isAuthRequired ) {
+			setSetupWizard( null );
+			setIsSetupWizardLoaded( true );
+			return undefined;
+		}
 		let current = true;
+		setIsSetupWizardLoaded( false );
 		fetchAdminJson( '/admin/setup-wizard' ).then( async ( payload ) => {
 			if ( ! current ) return;
 			setSetupWizard( payload );
@@ -172,7 +178,11 @@ const AdminApp = () => {
 				await fetchAdminJson( '/admin/setup-wizard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { action: 'mark_auto_opened' } ) } );
 				if ( current ) setIsSetupWizardOpen( true );
 			}
-		} ).catch( () => {} );
+		} ).catch( () => {
+			if ( current ) setSetupWizard( null );
+		} ).finally( () => {
+			if ( current ) setIsSetupWizardLoaded( true );
+		} );
 		return () => { current = false; };
 	}, [ isAuthRequired ] );
 
@@ -414,7 +424,7 @@ const AdminApp = () => {
 			) : null }
 			{}
 			{}
-			{ setupWizard?.state?.status !== 'completed' && ! isSetupWizardOpen ? (
+			{ isSetupWizardLoaded && setupWizard && setupWizard.state?.status !== 'completed' && ! isSetupWizardOpen ? (
 				<Notice status="info" isDismissible={ false }>
 					<strong>{ __( 'Complete the initial configuration', 'bimbeau-privacy-analytics' ) }</strong>
 					<p>{ __( 'Finish configuring tracking, local geolocation, and optional referrer favicons.', 'bimbeau-privacy-analytics' ) }</p>

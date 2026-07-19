@@ -763,7 +763,7 @@ msgstr "Analitik izlemeyi yapılandırma"
 msgid "Install the local GeoIP database"
 msgstr "Yerel GeoIP veritabanını yükleyin"
 
-#: src/admin/components/SetupWizard/index.js src/admin/panels/SettingsPanel.js
+#: src/admin/components/SetupWizard/index.js
 msgid "Display referrer favicons"
 msgstr "Yönlendiren favori simgelerini görüntüle"
 
@@ -1854,11 +1854,18 @@ msgid "Events configuration"
 msgstr "Etkinlik yapılandırması"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Referrer favicons"
-msgstr "Yönlendiren favori simgeleri"
+#, fuzzy
+msgid "Referring site icons"
+msgstr "Yönlendiren siteler"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Allow BimBeau Privacy Analytics to contact referrer domains, retrieve validated icons server-side, and serve cached local copies in reports."
+#, fuzzy
+msgid "Display referring site favicons"
+msgstr "Yönlendiren favori simgelerini görüntüle"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
 msgstr "BimBeau Privacy Analytics'in yönlendiren alan adlarıyla iletişim kurmasına, sunucu tarafında doğrulanmış simgeler almasına ve raporlarda önbelleğe alınmış yerel kopyalar sunmasına izin verin."
 
 #: src/admin/panels/SettingsPanel.js
@@ -2338,4 +2345,7 @@ msgstr "Özel"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tablo: Ziyaretçiler"
+
+#~ msgid "Referrer favicons"
+#~ msgstr "Yönlendiren favori simgeleri"
 

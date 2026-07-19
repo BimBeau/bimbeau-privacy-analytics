@@ -763,7 +763,7 @@ msgstr "Configurar el seguimiento de análisis"
 msgid "Install the local GeoIP database"
 msgstr "Instalar la base de datos GeoIP local"
 
-#: src/admin/components/SetupWizard/index.js src/admin/panels/SettingsPanel.js
+#: src/admin/components/SetupWizard/index.js
 msgid "Display referrer favicons"
 msgstr "Mostrar favicons de referencia"
 
@@ -1854,11 +1854,18 @@ msgid "Events configuration"
 msgstr "Configuración de eventos"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Referrer favicons"
-msgstr "Favicones de referencia"
+#, fuzzy
+msgid "Referring site icons"
+msgstr "Sitios de referencia"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Allow BimBeau Privacy Analytics to contact referrer domains, retrieve validated icons server-side, and serve cached local copies in reports."
+#, fuzzy
+msgid "Display referring site favicons"
+msgstr "Mostrar favicons de referencia"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
 msgstr "Permita que BimBeau Privacy Analytics se comunique con los dominios de referencia, recupere íconos validados del lado del servidor y proporcione copias locales almacenadas en caché en informes."
 
 #: src/admin/panels/SettingsPanel.js
@@ -2342,6 +2349,9 @@ msgstr "Privado"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabla: visitantes"
+
+#~ msgid "Referrer favicons"
+#~ msgstr "Favicones de referencia"
 
 #~ msgid "Current PWA icon preview"
 #~ msgstr "Vista previa actual del icono PWA"
