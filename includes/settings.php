@@ -659,6 +659,10 @@ function bbpa_update_settings($settings): array
     }
     update_option('bbpa_settings', $sanitized, false);
 
+    if (!empty($sanitized['referrer_favicons_enabled']) && empty($previous['referrer_favicons_enabled']) && class_exists('BBPA_Favicon_Resolver')) {
+        BBPA_Favicon_Resolver::invalidate_negative_cache();
+    }
+
     if (function_exists('bbpa_flush_admin_settings_cache')) {
         bbpa_flush_admin_settings_cache();
     } elseif (function_exists('bbpa_flush_admin_cache')) {

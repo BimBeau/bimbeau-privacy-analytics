@@ -1977,18 +1977,20 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 [
                     'domain' => '',
                     'favicon_url' => '',
+                    'is_local' => false,
                 ],
                 200
             );
         }
 
         $resolver = new BBPA_Favicon_Resolver();
-        $favicon_url = $resolver->resolve_favicon_url_for_domain($domain);
+        $favicon = $resolver->resolve_favicon_for_domain($domain);
 
         return new WP_REST_Response(
             [
                 'domain' => $domain,
-                'favicon_url' => $favicon_url,
+                'favicon_url' => (string) ($favicon['url'] ?? ''),
+                'is_local' => isset($favicon['url'], $favicon['path']),
             ],
             200
         );
