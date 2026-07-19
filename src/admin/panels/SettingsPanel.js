@@ -170,6 +170,8 @@ const DataFeatureGrid = ({ items = [] }) => (
   </div>
 );
 
+const normalizeArray = (value) => (Array.isArray(value) ? value : []);
+
 const normalizeSettings = (settings) => ({
   ...DEFAULT_SETTINGS,
   ...(settings || {}),
@@ -204,31 +206,33 @@ const normalizeSettings = (settings) => ({
     ? settings.disabled_panels
     : Array.isArray(settings?.hidden_panels)
       ? settings.hidden_panels
-      : DEFAULT_SETTINGS.disabled_panels,
+      : normalizeArray(DEFAULT_SETTINGS.disabled_panels),
   stats_access_roles: Array.isArray(settings?.stats_access_roles)
     ? settings.stats_access_roles
-    : DEFAULT_SETTINGS.stats_access_roles,
+    : normalizeArray(DEFAULT_SETTINGS.stats_access_roles),
   settings_access_roles: Array.isArray(settings?.settings_access_roles)
     ? settings.settings_access_roles
-    : DEFAULT_SETTINGS.settings_access_roles,
+    : normalizeArray(DEFAULT_SETTINGS.settings_access_roles),
   contact_access_roles: Array.isArray(settings?.contact_access_roles)
     ? settings.contact_access_roles
-    : DEFAULT_SETTINGS.contact_access_roles,
+    : normalizeArray(DEFAULT_SETTINGS.contact_access_roles),
   excluded_roles: Array.isArray(settings?.excluded_roles)
     ? settings.excluded_roles
-    : DEFAULT_SETTINGS.excluded_roles,
+    : normalizeArray(DEFAULT_SETTINGS.excluded_roles),
   excluded_paths: Array.isArray(settings?.excluded_paths)
     ? settings.excluded_paths
-    : DEFAULT_SETTINGS.excluded_paths,
+    : normalizeArray(DEFAULT_SETTINGS.excluded_paths),
   url_query_allowlist: Array.isArray(settings?.url_query_allowlist)
     ? settings.url_query_allowlist
-    : DEFAULT_SETTINGS.url_query_allowlist,
+    : normalizeArray(DEFAULT_SETTINGS.url_query_allowlist),
   
 });
 
 const SettingsPanel = () => {
   const { data, isLoading, error } = useAdminEndpoint("/admin/settings");
-  const [formState, setFormState] = useState(DEFAULT_SETTINGS);
+  const [formState, setFormState] = useState(() =>
+    normalizeSettings(DEFAULT_SETTINGS),
+  );
   const [adminCacheVersion, setAdminCacheVersion] = useState(
     Number(ADMIN_CONFIG?.settings?.adminCacheVersion || 1),
   );
@@ -850,7 +854,7 @@ const SettingsPanel = () => {
 
   
 
-  const roles = ADMIN_CONFIG?.roles || [];
+  const roles = normalizeArray(ADMIN_CONFIG?.roles);
   const accessRoles = roles.filter(
     (role) => role.key !== "administrator" && Boolean(role.canDelegateAccess),
   );
@@ -877,7 +881,7 @@ const SettingsPanel = () => {
       description: __("Access to the plugin Contact page.", "bimbeau-privacy-analytics"),
     },
   ];
-  const postTypes = ADMIN_CONFIG?.settings?.postTypes || [];
+  const postTypes = normalizeArray(ADMIN_CONFIG?.settings?.postTypes);
   
   const settingsTabs = [
     {
@@ -1029,9 +1033,9 @@ const SettingsPanel = () => {
                                 <CardBody>
                                   <div className="bbpa-settings-roles__list">
                                     {accessRoles.map((role) => {
-                                      const isAllowed = formState[
-                                        permission.key
-                                      ].includes(role.key);
+                                      const isAllowed = normalizeArray(
+                                        formState[permission.key],
+                                      ).includes(role.key);
                                       return (
                                         <div
                                           key={`${permission.key}-${role.key}`}
@@ -1043,7 +1047,7 @@ const SettingsPanel = () => {
                                             onChange={(isChecked) => {
                                               setFormState((prev) => {
                                                 const nextRoles = new Set(
-                                                  prev[permission.key],
+                                                  normalizeArray(prev[permission.key]),
                                                 );
                                                 if (isChecked) {
                                                   nextRoles.add(role.key);
@@ -1096,7 +1100,9 @@ const SettingsPanel = () => {
                               const isForcedHidden =
                                 isAdvancedStatsDisabled &&
                                 ADVANCED_STATS_DEPENDENT_PANELS.includes(panel.key);
-                              const isVisibleByUserChoice = !formState.disabled_panels.includes(panel.key);
+                              const isVisibleByUserChoice = !normalizeArray(
+                                formState.disabled_panels,
+                              ).includes(panel.key);
                               const isVisible = isVisibleByUserChoice && !isForcedHidden;
                               return (
                                 <Card
@@ -1110,7 +1116,9 @@ const SettingsPanel = () => {
                                       disabled={isForcedHidden}
                                       onChange={(isChecked) => {
                                         setFormState((prev) => {
-                                          const nextDisabled = new Set(prev.disabled_panels);
+                                          const nextDisabled = new Set(
+                                            normalizeArray(prev.disabled_panels),
+                                          );
                                           if (isChecked) {
                                             nextDisabled.delete(panel.key);
                                           } else {
@@ -1699,12 +1707,14 @@ const SettingsPanel = () => {
                             <CheckboxControl
                               key={role.key}
                               label={role.label}
-                              checked={formState.excluded_roles.includes(
+                              checked={normalizeArray(formState.excluded_roles).includes(
                                 role.key,
                               )}
                               onChange={(isChecked) => {
                                 setFormState((prev) => {
-                                  const nextRoles = new Set(prev.excluded_roles);
+                                  const nextRoles = new Set(
+                                    normalizeArray(prev.excluded_roles),
+                                  );
                                   if (isChecked) {
                                     nextRoles.add(role.key);
                                   } else {

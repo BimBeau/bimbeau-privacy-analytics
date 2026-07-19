@@ -47,6 +47,7 @@ export const DEFAULT_SETTINGS = {
 	visit_identifier_window_seconds: 1800,
 	disabled_panels: [],
 	delete_data_on_uninstall: false,
+	
 };
 
 export const getDisabledPanels = ( settings = ADMIN_CONFIG?.settings ) => {
