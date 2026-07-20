@@ -68,7 +68,7 @@ msgstr "仪表盘"
 msgid "Real-time"
 msgstr "实时"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "页面"
 
@@ -89,7 +89,7 @@ msgstr "站内搜索"
 msgid "Geolocation"
 msgstr "地理定位"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "访客"
 
@@ -150,11 +150,11 @@ msgstr "时间段：最近 30 天"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "请至少启用一个分析面板，以便在此小工具中显示 KPI 值。"
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "访问"
 
-#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "页面浏览量"
 
@@ -450,84 +450,22 @@ msgstr "必须填写 MaxMind 许可证密钥。"
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "启用 IP 地理定位需要 MaxMind 凭据。"
 
-#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
+#: includes/settings.php src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "统计"
 
-#: src/admin/AdminApp.js
-#. translators: %s: active real-time visitor count.
-msgid "%s Visitor"
-msgstr "%s 位访客"
-
-#: src/admin/AdminApp.js
-#. translators: %s: active real-time visitor count.
-msgid "%s Visitors"
-msgstr "%s 位访客"
-
-#: src/admin/AdminApp.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "无法重新启动配置助手。请重试。"
-
-#: src/admin/AdminApp.js
-msgid "Initial configuration completed."
-msgstr "初始配置完成。"
-
-#: src/admin/AdminApp.js
-msgid "Missing admin configuration."
-msgstr "缺少管理配置。"
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
+#: src/admin/api/useAdminEndpoint.js
 msgid "Session expired, reload the application."
 msgstr ""
 
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
+#: src/admin/api/useAdminEndpoint.js
 #, fuzzy
 msgid "Reload application"
 msgstr "地理定位"
 
-#: src/admin/AdminApp.js
-msgid "No panel available for this screen."
-msgstr "此屏幕没有可用面板。"
-
-#: src/admin/AdminApp.js
-msgid "Install BimBeau Privacy Analytics app"
-msgstr "安装 BimBeau Privacy Analytics 应用"
-
-#: src/admin/AdminApp.js
-msgid "Get faster access from your home screen with an app-like experience."
-msgstr "通过类似应用的体验，从主屏幕更快访问。"
-
-#: src/admin/AdminApp.js
-msgid "Install app"
-msgstr "安装应用"
-
-#: src/admin/AdminApp.js
-msgid "BimBeau Privacy Analytics app installation was accepted."
-msgstr "BimBeau Privacy Analytics 应用安装已接受。"
-
-#: src/admin/AdminApp.js
-msgid "Complete the initial configuration"
-msgstr "完成初始配置"
-
-#: src/admin/AdminApp.js
-msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr "完成跟踪、本地地理位置和可选引荐网站图标的配置。"
-
-#: src/admin/AdminApp.js
-msgid "Resume configuration"
-msgstr "恢复配置"
-
-#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database not installed"
 msgstr "未安装 GeoIP 数据库"
-
-#: src/admin/AdminApp.js
-msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
-msgstr "在下载本地 GeoIP 数据库之前，位置报告不可用。从地理位置设置页面下载它。"
-
-#: src/admin/AdminApp.js
-msgid "Open geolocation settings"
-msgstr "打开地理位置设置"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -687,34 +625,6 @@ msgstr "响应预览："
 msgid "Loading: %s"
 msgstr "正在加载：%s"
 
-#: src/admin/components/EventScriptModal.js
-msgid "Event:"
-msgstr "事件："
-
-#: src/admin/components/EventScriptModal.js
-msgid "unknown"
-msgstr "未知"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Event ID:"
-msgstr "事件 ID："
-
-#: src/admin/components/EventScriptModal.js
-msgid "Timestamp:"
-msgstr "时间戳："
-
-#: src/admin/components/EventScriptModal.js
-msgid "Captured variables"
-msgstr "已捕获变量"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Copy"
-msgstr "复制"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Close"
-msgstr "关闭"
-
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
 msgstr "启用地理定位聚合"
@@ -739,7 +649,7 @@ msgstr "运行时粒度根据可用粒度报告。"
 msgid "Technical state does not prove consent collection validity."
 msgstr "技术状态不能证明同意收集的有效性。"
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "直接访问"
 
@@ -1046,27 +956,27 @@ msgstr "24个月"
 msgid "24 months"
 msgstr "24 个月"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "网址"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "No popular pages available."
 msgstr "没有可用的热门页面。"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/free-stubs/OverviewPanel.js
 msgid "Top referrers"
 msgstr "热门引荐来源"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "引荐来源"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/free-stubs/OverviewPanel.js
 msgid "No referrers available."
 msgstr "没有可用的引荐来源。"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/free-stubs/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "全局小时热力图"
 
@@ -1175,18 +1085,6 @@ msgstr "热门国家/地区"
 #, fuzzy
 msgid "Legacy visits"
 msgstr "每日访客"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Global hourly heatmap by day and hour"
-msgstr "按日期和小时显示的全局小时热力图"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "No global hourly data available for this period."
-msgstr "此时间段没有可用的全局小时数据。"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Global hourly heatmaps require hourly page aggregation data."
-msgstr "全局小时热力图需要页面小时聚合数据。"
 
 #: src/admin/panels/RealtimePanel.js
 #, fuzzy

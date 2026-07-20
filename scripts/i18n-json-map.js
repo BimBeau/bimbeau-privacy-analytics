@@ -16,16 +16,6 @@ const freeAdminEntryReferences = new Set([
   'src/admin/free-stubs/AppSidebar.js',
   'src/admin/free-stubs/OverviewPanel.js',
 ]);
-const premiumOnlyReferenceNames = [
-  ['Premium', 'Lock', 'State'].join(''),
-  ['Pwa', 'Stats', 'App', 'Card'].join(''),
-  ['Events', 'Panel'].join(''),
-  ['Geo', 'Cities', 'Panel'].join(''),
-  ['Page', 'Details', 'Geo', 'Cities', 'Card'].join(''),
-];
-const premiumOnlyReferencePattern = new RegExp(`(?:^src\\/admin\\/premium\\/|${premiumOnlyReferenceNames.join('|')})`);
-const packageTarget = process.env.BBPA_PACKAGE_TARGET || 'premium';
-
 const normalizeReference = (reference) => reference.replace(/:\d+(?::\d+)?$/, '');
 
 const collectMappedReferences = (languagesDir = defaultLanguagesDir) => {
@@ -51,7 +41,7 @@ const collectMappedReferences = (languagesDir = defaultLanguagesDir) => {
           .map(normalizeReference)
           .filter((reference) => sourceAdminReferencePattern.test(reference))
           .filter((reference) => javascriptReferencePattern.test(reference))
-          .filter((reference) => packageTarget !== 'free' || freeAdminEntryReferences.has(reference) || !premiumOnlyReferencePattern.test(reference))
+          .filter((reference) => freeAdminEntryReferences.has(reference) || fs.existsSync(path.join(repoRoot, reference)))
           .forEach((reference) => references.add(reference));
       });
     });

@@ -68,7 +68,7 @@ msgstr "Dashboard"
 msgid "Real-time"
 msgstr "Echtzeit"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Seiten"
 
@@ -89,7 +89,7 @@ msgstr "Interne Suchanfragen"
 msgid "Geolocation"
 msgstr "Geolokalisierung"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Besucher"
 
@@ -150,11 +150,11 @@ msgstr "Zeitraum: letzte 30 Tage"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "Aktivieren Sie mindestens ein Analyse-Panel, um KPI-Werte in diesem Widget anzuzeigen."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Besuche"
 
-#: admin/dashboard-widget.php src/admin/panels/OverviewPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Seitenaufrufe"
 
@@ -453,86 +453,22 @@ msgstr "Der MaxMind-Lizenzschlüssel ist erforderlich."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "MaxMind-Zugangsdaten sind erforderlich, um IP-Geolokalisierung zu aktivieren."
 
-#: includes/settings.php src/admin/AdminApp.js src/admin/free-stubs/AdminApp.js
+#: includes/settings.php src/admin/free-stubs/AdminApp.js
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: src/admin/AdminApp.js
-#. translators: %s: active real-time visitor count.
-msgid "%s Visitor"
-msgstr "%s Besucher"
-
-#: src/admin/AdminApp.js
-#. translators: %s: active real-time visitor count.
-msgid "%s Visitors"
-msgstr "%s Besucher"
-
-#: src/admin/AdminApp.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "Der Konfigurationsassistent konnte nicht neu gestartet werden. Bitte versuchen Sie es erneut."
-
-#: src/admin/AdminApp.js
-msgid "Initial configuration completed."
-msgstr "Erstkonfiguration abgeschlossen."
-
-#: src/admin/AdminApp.js
-msgid "Missing admin configuration."
-msgstr "Admin-Konfiguration fehlt."
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
+#: src/admin/api/useAdminEndpoint.js
 msgid "Session expired, reload the application."
 msgstr ""
 
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
+#: src/admin/api/useAdminEndpoint.js
 #, fuzzy
 msgid "Reload application"
 msgstr "Geolokalisierung"
 
-#: src/admin/AdminApp.js
-msgid "No panel available for this screen."
-msgstr "Für diesen Bildschirm ist kein Panel verfügbar."
-
-#: src/admin/AdminApp.js
-#, fuzzy
-msgid "Install BimBeau Privacy Analytics app"
-msgstr "BimBeau Privacy Analytics-App installieren"
-
-#: src/admin/AdminApp.js
-msgid "Get faster access from your home screen with an app-like experience."
-msgstr "Erhalten Sie schnelleren Zugriff vom Startbildschirm aus mit einem appähnlichen Erlebnis."
-
-#: src/admin/AdminApp.js
-msgid "Install app"
-msgstr "App installieren"
-
-#: src/admin/AdminApp.js
-#, fuzzy
-msgid "BimBeau Privacy Analytics app installation was accepted."
-msgstr "Die Installation der BimBeau Privacy Analytics-App wurde akzeptiert."
-
-#: src/admin/AdminApp.js
-msgid "Complete the initial configuration"
-msgstr "Erstkonfiguration abschließen"
-
-#: src/admin/AdminApp.js
-msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr "Schließen Sie die Konfiguration von Tracking, lokaler Geolokalisierung und optionalen Referrer-Favicons ab."
-
-#: src/admin/AdminApp.js
-msgid "Resume configuration"
-msgstr "Konfiguration fortsetzen"
-
-#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
+#: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database not installed"
 msgstr "GeoIP-Datenbank nicht installiert"
-
-#: src/admin/AdminApp.js
-msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
-msgstr "Standortberichte sind erst verfügbar, wenn die lokale GeoIP-Datenbank heruntergeladen wurde. Laden Sie es von der Seite mit den Geolocation-Einstellungen herunter."
-
-#: src/admin/AdminApp.js
-msgid "Open geolocation settings"
-msgstr "Öffnen Sie die Geolokalisierungseinstellungen"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -692,34 +628,6 @@ msgstr "Antwortvorschau:"
 msgid "Loading: %s"
 msgstr "Wird geladen: %s"
 
-#: src/admin/components/EventScriptModal.js
-msgid "Event:"
-msgstr "Ereignis:"
-
-#: src/admin/components/EventScriptModal.js
-msgid "unknown"
-msgstr "unbekannt"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Event ID:"
-msgstr "Ereignis-ID:"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Timestamp:"
-msgstr "Zeitstempel:"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Captured variables"
-msgstr "Erfasste Variablen"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Copy"
-msgstr "Kopieren"
-
-#: src/admin/components/EventScriptModal.js
-msgid "Close"
-msgstr "Schließen"
-
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
 msgstr "Geolocation-Aggregation aktivieren"
@@ -744,7 +652,7 @@ msgstr "Die Laufzeit-Granularität wird aus den verfügbaren Granularitäten gem
 msgid "Technical state does not prove consent collection validity."
 msgstr "Der technische Status belegt nicht die Gültigkeit der Einwilligungserfassung."
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Direkt"
 
@@ -1051,27 +959,27 @@ msgstr "24M"
 msgid "24 months"
 msgstr "24 Monate"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "URL"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "No popular pages available."
 msgstr "Keine beliebten Seiten verfügbar."
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/free-stubs/OverviewPanel.js
 msgid "Top referrers"
 msgstr "Top-Referrer"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "Referrer"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/free-stubs/OverviewPanel.js
 msgid "No referrers available."
 msgstr "Keine Referrer verfügbar."
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/OverviewPanel.js
+#: src/admin/free-stubs/OverviewPanel.js
 msgid "Hourly heatmap global"
 msgstr "Globale stündliche Heatmap"
 
@@ -1180,18 +1088,6 @@ msgstr "Top-Länder"
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Tägliche Besucher"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Global hourly heatmap by day and hour"
-msgstr "Globale stündliche Heatmap nach Tag und Stunde"
-
-#: src/admin/panels/OverviewPanel.js
-msgid "No global hourly data available for this period."
-msgstr "Für diesen Zeitraum sind keine globalen stündlichen Daten verfügbar."
-
-#: src/admin/panels/OverviewPanel.js
-msgid "Global hourly heatmaps require hourly page aggregation data."
-msgstr "Globale stündliche Heatmaps erfordern stündliche Seitenaggregationsdaten."
 
 #: src/admin/panels/RealtimePanel.js
 #, fuzzy

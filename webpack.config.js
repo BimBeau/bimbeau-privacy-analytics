@@ -5,57 +5,17 @@ const cssAssetPublicPath = process.env.BBPA_ADMIN_CSS_PUBLIC_PATH || '../';
 const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
   ? path.resolve(process.env.BBPA_ADMIN_SOURCE_ROOT)
   : path.resolve(__dirname, 'src/admin');
-const packageTarget = process.env.BBPA_PACKAGE_TARGET || 'free';
-const isFreePackageBuild = packageTarget === 'free';
-const adminEntryPoint = isFreePackageBuild ? 'index.free.js' : 'index.premium.js';
-const premiumReportExportActionPath = path.resolve(
-  adminSourceRoot,
-  'premium/components/ReportExportAction'
-);
-const sharedReportExportActionPath = path.resolve(
-  adminSourceRoot,
-  'components/ReportExportAction'
-);
-const premiumTopPagesPanelPath = path.resolve(
-  adminSourceRoot,
-  'premium/panels/TopPagesPanel'
-);
-const sharedTopPagesPanelPath = path.resolve(
-  adminSourceRoot,
-  'panels/TopPagesPanel'
-);
-const premiumGeolocationPanelPath = path.resolve(
-  adminSourceRoot,
-  'premium/panels/GeolocationPanel'
-);
-const sharedGeolocationPanelPath = path.resolve(
-  adminSourceRoot,
-  'panels/GeolocationPanel'
-);
-const premiumAdminUrlsPath = path.resolve(
-  adminSourceRoot,
-  'premium/lib/adminUrls'
-);
-const sharedAdminUrlsPath = path.resolve(adminSourceRoot, 'lib/adminUrls');
-const freeOverviewPanelStubPath = path.resolve(
-  adminSourceRoot,
-  'free-stubs/OverviewPanel.js'
-);
-const proOnlyAdminAliases = isFreePackageBuild
-  ? {
-      [path.resolve(adminSourceRoot, 'panels/OverviewPanel')]: freeOverviewPanelStubPath,
-      [path.resolve(adminSourceRoot, 'panels/OverviewPanel.js')]: freeOverviewPanelStubPath,
-    }
-  : {
-      [sharedReportExportActionPath]: premiumReportExportActionPath,
-      [`${sharedReportExportActionPath}/index.js`]: `${premiumReportExportActionPath}/index.js`,
-      [sharedTopPagesPanelPath]: premiumTopPagesPanelPath,
-      [`${sharedTopPagesPanelPath}.js`]: `${premiumTopPagesPanelPath}.js`,
-      [sharedGeolocationPanelPath]: premiumGeolocationPanelPath,
-      [`${sharedGeolocationPanelPath}.js`]: `${premiumGeolocationPanelPath}.js`,
-      [sharedAdminUrlsPath]: premiumAdminUrlsPath,
-      [`${sharedAdminUrlsPath}.js`]: `${premiumAdminUrlsPath}.js`,
-    };
+const freeAdminAppStubPath = path.resolve(adminSourceRoot, 'free-stubs/AdminApp.js');
+const freeOverviewPanelStubPath = path.resolve(adminSourceRoot, 'free-stubs/OverviewPanel.js');
+const freeAdminUrlsStubPath = path.resolve(adminSourceRoot, 'free-stubs/adminUrls.js');
+const freeAdminAliases = {
+  [path.resolve(adminSourceRoot, 'AdminApp')]: freeAdminAppStubPath,
+  [path.resolve(adminSourceRoot, 'AdminApp.js')]: freeAdminAppStubPath,
+  [path.resolve(adminSourceRoot, 'lib/adminUrls')]: freeAdminUrlsStubPath,
+  [path.resolve(adminSourceRoot, 'lib/adminUrls.js')]: freeAdminUrlsStubPath,
+  [path.resolve(adminSourceRoot, 'panels/OverviewPanel')]: freeOverviewPanelStubPath,
+  [path.resolve(adminSourceRoot, 'panels/OverviewPanel.js')]: freeOverviewPanelStubPath,
+};
 const flagIconsFlagsPath = `${path.sep}node_modules${path.sep}flag-icons${path.sep}flags${path.sep}`;
 
 const getSvgAssetFilename = ({ filename = '' } = {}) => {
@@ -102,7 +62,7 @@ module.exports = {
     ...(defaultConfig.resolve || {}),
     alias: {
       ...((defaultConfig.resolve || {}).alias || {}),
-      ...proOnlyAdminAliases,
+      ...freeAdminAliases,
     },
     modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
   },
@@ -121,8 +81,8 @@ module.exports = {
     ],
   },
   entry: {
-    admin: path.resolve(adminSourceRoot, adminEntryPoint),
-    'style-admin': path.resolve(adminSourceRoot, isFreePackageBuild ? 'style.free.scss' : 'style.scss'),
+    admin: path.resolve(adminSourceRoot, 'index.free.js'),
+    'style-admin': path.resolve(adminSourceRoot, 'style.free.scss'),
   },
   output: {
     ...defaultConfig.output,

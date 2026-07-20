@@ -256,7 +256,7 @@ const SettingsPanel = () => {
   const [isUpdatingGeoIpDb, setIsUpdatingGeoIpDb] = useState(false);
   const [geoIpDbNotice, setGeoIpDbNotice] = useState(null);
   const [geoIpDbStatus, setGeoIpDbStatus] = useState(null);
-  const [pwaNotice, setPwaNotice] = useState(null);
+
   const [availableGranularities, setAvailableGranularities] = useState(
     Array.isArray(data?.availableGranularities)
       ? data.availableGranularities
@@ -915,40 +915,6 @@ const SettingsPanel = () => {
 
   
 
-  const onCopyPwaUrl = async () => {
-    if (!pwaAppUrl) {
-      setPwaNotice({
-        status: "error",
-        message: __("PWA URL is unavailable.", "bimbeau-privacy-analytics"),
-      });
-      return;
-    }
-
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(pwaAppUrl);
-      } else {
-        const input = document.createElement("input");
-        input.value = pwaAppUrl;
-        document.body.appendChild(input);
-        input.select();
-        document.execCommand("copy");
-        document.body.removeChild(input);
-      }
-
-      setPwaNotice({
-        status: "success",
-        message: __("PWA URL copied.", "bimbeau-privacy-analytics"),
-      });
-    } catch (copyError) {
-      setPwaNotice({
-        status: "error",
-        message:
-          copyError?.message ||
-          __("Unable to copy the PWA URL.", "bimbeau-privacy-analytics"),
-      });
-    }
-  };
 
   const initialSettingsTabName = useMemo(() => {
     const params = new URLSearchParams(window.location.search || "");
@@ -956,17 +922,6 @@ const SettingsPanel = () => {
     return settingsTabs.some((tab) => tab.name === requestedTab) ? requestedTab : "general";
   }, [settingsTabs]);
 
-  const onOpenPwaUrl = () => {
-    if (!pwaAppUrl) {
-      setPwaNotice({
-        status: "error",
-        message: __("PWA URL is unavailable.", "bimbeau-privacy-analytics"),
-      });
-      return;
-    }
-
-    window.open(pwaAppUrl, "_blank", "noopener,noreferrer");
-  };
 
   return (
     <BpaCard title={__("Settings", "bimbeau-privacy-analytics")}>

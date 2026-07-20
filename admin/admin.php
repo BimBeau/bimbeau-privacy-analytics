@@ -1485,7 +1485,6 @@ function bbpa_build_admin_localized_payload(
             'adminCacheVersion' => bbpa_get_admin_cache_version(),
             'slug' => sanitize_key(BBPA_SLUG),
             'pluginLabel' => sanitize_text_field($menu_label),
-            'brandLogoUrl' => $sanitize_url(BBPA_URL . 'assets/images/bbpa-logo-compact.svg'),
             'timezoneString' => sanitize_text_field((string) wp_timezone_string()),
             'gmtOffset' => (float) get_option('gmt_offset', 0),
             'locale' => sanitize_text_field((string) get_locale()),
