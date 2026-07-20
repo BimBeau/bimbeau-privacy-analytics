@@ -464,9 +464,9 @@ msgstr "%s visitante"
 msgid "%s Visitors"
 msgstr "%s visitantes"
 
-#: src/admin/AdminApp.js src/admin/components/SetupWizard/index.js
-msgid "Unable to finish configuration. Please try again."
-msgstr "Não foi possível concluir a configuração. Por favor, tente novamente."
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "Não foi possível reiniciar o assistente de configuração. Tente novamente."
 
 #: src/admin/AdminApp.js
 msgid "Initial configuration completed."
@@ -754,6 +754,10 @@ msgstr "A base de dados GeoIP não pôde ser validada após o download."
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to download the GeoIP database. Please try again."
 msgstr "Não foi possível baixar o banco de dados GeoIP. Por favor, tente novamente."
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Unable to finish configuration. Please try again."
+msgstr "Não foi possível concluir a configuração. Por favor, tente novamente."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Configure analytics tracking"
@@ -1873,17 +1877,16 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "Quando desabilitado, um ícone genérico local é exibido e nenhum domínio referenciador é contatado para favicons."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configuration assistant"
-msgstr "Execute o assistente de configuração novamente"
+msgstr "Assistente de configuração"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
-msgstr ""
+msgid "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr "Reinicie o assistente a partir do primeiro passo para rever as principais definições do plugin. As definições atuais são preservadas e podem ser alteradas durante os diferentes passos."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Restart the assistant"
-msgstr ""
+msgstr "Reiniciar o assistente"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"

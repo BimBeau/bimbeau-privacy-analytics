@@ -1861,7 +1861,7 @@ const SettingsPanel = () => {
                       </SettingsSectionTitle>
                     </CardHeader>
                     <CardBody>
-                      <p>{__("Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.", "bimbeau-privacy-analytics")}</p>
+                      <p>{__("Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.", "bimbeau-privacy-analytics")}</p>
                       <Button variant="secondary" onClick={() => window.dispatchEvent(new CustomEvent("bbpa-open-setup-wizard", { detail: { reset: true } }))}>
                         {__("Restart the assistant", "bimbeau-privacy-analytics")}
                       </Button>

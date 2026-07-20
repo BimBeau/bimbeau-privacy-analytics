@@ -464,9 +464,9 @@ msgstr "%s ziyaretçi"
 msgid "%s Visitors"
 msgstr "%s ziyaretçi"
 
-#: src/admin/AdminApp.js src/admin/components/SetupWizard/index.js
-msgid "Unable to finish configuration. Please try again."
-msgstr "Yapılandırma tamamlanamıyor. Lütfen tekrar deneyin."
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "Yapılandırma yardımcısı yeniden başlatılamıyor. Lütfen tekrar deneyin."
 
 #: src/admin/AdminApp.js
 msgid "Initial configuration completed."
@@ -754,6 +754,10 @@ msgstr "GeoIP veritabanı indirme sonrasında doğrulanamadı."
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to download the GeoIP database. Please try again."
 msgstr "GeoIP veritabanı indirilemiyor. Lütfen tekrar deneyin."
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Unable to finish configuration. Please try again."
+msgstr "Yapılandırma tamamlanamıyor. Lütfen tekrar deneyin."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Configure analytics tracking"
@@ -1873,17 +1877,16 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "Devre dışı bırakıldığında, yerel bir genel simge görüntülenir ve sık kullanılan simgeler için hiçbir yönlendiren etki alanıyla bağlantı kurulmaz."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configuration assistant"
-msgstr "Yapılandırma asistanını tekrar çalıştırın"
+msgstr "Yapılandırma yardımcısı"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
-msgstr ""
+msgid "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr "Eklentinin ana ayarlarını gözden geçirmek için yardımcınızı ilk adımdan yeniden başlatın. Mevcut ayarlarınız korunur ve farklı adımlarda değiştirilebilir."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Restart the assistant"
-msgstr ""
+msgstr "Yardımcıyı yeniden başlat"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"

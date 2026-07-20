@@ -464,9 +464,9 @@ msgstr "%s 位访客"
 msgid "%s Visitors"
 msgstr "%s 位访客"
 
-#: src/admin/AdminApp.js src/admin/components/SetupWizard/index.js
-msgid "Unable to finish configuration. Please try again."
-msgstr "无法完成配置。请再试一次。"
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "无法重新启动配置助手。请重试。"
 
 #: src/admin/AdminApp.js
 msgid "Initial configuration completed."
@@ -756,6 +756,10 @@ msgid "Unable to download the GeoIP database. Please try again."
 msgstr "无法下载 GeoIP 数据库。请再试一次。"
 
 #: src/admin/components/SetupWizard/index.js
+msgid "Unable to finish configuration. Please try again."
+msgstr "无法完成配置。请再试一次。"
+
+#: src/admin/components/SetupWizard/index.js
 msgid "Configure analytics tracking"
 msgstr "配置分析跟踪"
 
@@ -857,7 +861,7 @@ msgstr "其他设置使用建议的默认值，并且可以稍后从 BimBeau Pri
 
 #: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
-msgstr "上一项"
+msgstr "上一步"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics and continue"
@@ -1873,17 +1877,16 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "禁用后，将显示本地通用图标，并且不会为网站图标联系引荐来源网址域。"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configuration assistant"
-msgstr "再次运行配置助手"
+msgstr "配置助手"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
-msgstr ""
+msgid "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr "从第一步重新启动助手，以检查插件的主要设置。当前设置将会保留，并可在各个步骤中进行更改。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Restart the assistant"
-msgstr ""
+msgstr "重新启动助手"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"

@@ -464,9 +464,9 @@ msgstr "%s besøgende"
 msgid "%s Visitors"
 msgstr "%s besøgende"
 
-#: src/admin/AdminApp.js src/admin/components/SetupWizard/index.js
-msgid "Unable to finish configuration. Please try again."
-msgstr "Kan ikke afslutte konfigurationen. Prøv venligst igen."
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "Konfigurationsassistenten kunne ikke genstartes. Prøv igen."
 
 #: src/admin/AdminApp.js
 msgid "Initial configuration completed."
@@ -754,6 +754,10 @@ msgstr "GeoIP-databasen kunne ikke valideres efter download."
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to download the GeoIP database. Please try again."
 msgstr "Kan ikke downloade GeoIP-databasen. Prøv venligst igen."
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Unable to finish configuration. Please try again."
+msgstr "Kan ikke afslutte konfigurationen. Prøv venligst igen."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Configure analytics tracking"
@@ -1873,17 +1877,16 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "Når den er deaktiveret, vises et lokalt generisk ikon, og der kontaktes ikke noget referer-domæne for favicons."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configuration assistant"
-msgstr "Kør konfigurationsassistenten igen"
+msgstr "Konfigurationsassistent"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
-msgstr ""
+msgid "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr "Genstart assistenten fra det første trin for at gennemgå pluginets vigtigste indstillinger. Dine nuværende indstillinger bevares og kan ændres under de forskellige trin."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Restart the assistant"
-msgstr ""
+msgstr "Genstart assistenten"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"

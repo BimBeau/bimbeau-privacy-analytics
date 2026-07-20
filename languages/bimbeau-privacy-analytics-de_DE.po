@@ -467,9 +467,9 @@ msgstr "%s Besucher"
 msgid "%s Visitors"
 msgstr "%s Besucher"
 
-#: src/admin/AdminApp.js src/admin/components/SetupWizard/index.js
-msgid "Unable to finish configuration. Please try again."
-msgstr "Die Konfiguration konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "Der Konfigurationsassistent konnte nicht neu gestartet werden. Bitte versuchen Sie es erneut."
 
 #: src/admin/AdminApp.js
 msgid "Initial configuration completed."
@@ -759,6 +759,10 @@ msgstr "Die GeoIP-Datenbank konnte nach dem Download nicht validiert werden."
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to download the GeoIP database. Please try again."
 msgstr "Die GeoIP-Datenbank kann nicht heruntergeladen werden. Bitte versuchen Sie es erneut."
+
+#: src/admin/components/SetupWizard/index.js
+msgid "Unable to finish configuration. Please try again."
+msgstr "Die Konfiguration konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Configure analytics tracking"
@@ -1879,17 +1883,16 @@ msgid "When disabled, a local generic icon is displayed and no referrer domain i
 msgstr "Bei Deaktivierung wird ein lokales generisches Symbol angezeigt und es wird keine Referrer-Domain für Favicons kontaktiert."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configuration assistant"
-msgstr "Führen Sie den Konfigurationsassistenten erneut aus"
+msgstr "Konfigurationsassistent"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Run the assistant again to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
-msgstr ""
+msgid "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps."
+msgstr "Starten Sie den Assistenten beim ersten Schritt neu, um die wichtigsten Plugin-Einstellungen zu überprüfen. Ihre aktuellen Einstellungen bleiben erhalten und können in den einzelnen Schritten geändert werden."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Restart the assistant"
-msgstr ""
+msgstr "Assistenten neu starten"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Save settings"

@@ -189,25 +189,21 @@ const AdminApp = () => {
 				} );
 				setupWizardResetRef.current = resetRequest;
 				const result = await resetRequest;
-				const opened = await fetchAdminJson( '/admin/setup-wizard', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify( { action: 'mark_auto_opened' } ),
-				} );
+				const refreshed = await fetchAdminJson( '/admin/setup-wizard' );
 				if ( ! isSetupWizardMountedRef.current ) {
 					return;
 				}
-				setSetupWizard( ( current ) => ( {
-					...current,
-					state: opened?.state || result?.state,
-				} ) );
+				setSetupWizard( {
+					...refreshed,
+					state: result?.state || refreshed?.state,
+				} );
 				setIsSetupWizardOpen( true );
 			} catch ( error ) {
 				if ( isSetupWizardMountedRef.current ) {
 					setSetupNotice( {
 						status: 'error',
 						message: __(
-							'Unable to finish configuration. Please try again.',
+							'Unable to restart the configuration assistant. Please try again.',
 							'bimbeau-privacy-analytics'
 						),
 					} );

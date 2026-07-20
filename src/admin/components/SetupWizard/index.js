@@ -56,7 +56,17 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 	const chooseFavicons = async ( enabled ) => { setBusy( true ); setError( '' ); try { setDraftSettings( ( current ) => ( { ...current, referrer_favicons_enabled: enabled } ) ); setDraftChoices( ( current ) => ( { ...current, referrer_favicons: enabled } ) ); await moveTo( 'complete' ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
 	const finish = async () => { setBusy( true ); try { const result = await saveSettings( settings ); syncSavedSettings( result ); for ( const [ choice, value ] of Object.entries( draftChoices ) ) await update( 'set_choice', { choice, value } ); if ( draftChoices.referrer_favicons ) await update( 'mark_favicons_enabled' ); await update( 'complete' ); onComplete?.(); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to finish configuration. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
 	const finishLater = async () => { setBusy( true ); try { await update( 'start' ); onClose?.(); } finally { setBusy( false ); } };
-	const back = () => moveTo( STEPS[ Math.max( 0, stepNumber( step ) - 2 ) ] );
+	const back = async () => {
+		setBusy( true );
+		setError( '' );
+		try {
+			await moveTo( STEPS[ Math.max( 0, stepNumber( step ) - 2 ) ] );
+		} catch ( requestError ) {
+			setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) );
+		} finally {
+			setBusy( false );
+		}
+	};
 	const labels = { tracking: __( 'Configure analytics tracking', 'bimbeau-privacy-analytics' ), geolocation: __( 'Install the local GeoIP database', 'bimbeau-privacy-analytics' ), referrers: __( 'Display referrer favicons', 'bimbeau-privacy-analytics' ), complete: __( 'Your configuration is ready', 'bimbeau-privacy-analytics' ) };
 	return <Modal className="bbpa-setup-wizard__modal" overlayClassName="bbpa-setup-wizard__overlay" title={ labels[ step ] } onRequestClose={ finishLater } shouldReturnFocusAfterClose>
 		<div className="bbpa-setup-wizard">
