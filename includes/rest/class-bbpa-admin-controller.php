@@ -2011,8 +2011,12 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
     /** Apply only whitelisted wizard state transitions; settings remain owned by their settings endpoint. */
     public function update_setup_wizard(WP_REST_Request $request) {
-        $state = bbpa_get_setup_wizard_state();
         $action = sanitize_key((string) $request->get_param('action'));
+        if (in_array($action, ['reset', 'restart'], true)) {
+            return new WP_REST_Response(['state' => bbpa_reset_setup_wizard_state()], 200);
+        }
+
+        $state = bbpa_get_setup_wizard_state();
         $user_id = get_current_user_id();
         $timestamp = current_time('mysql', true);
         if ($action === 'start') { $state['status'] = 'in_progress'; $state['started_at'] = $state['started_at'] ?: $timestamp; }
@@ -2022,7 +2026,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         elseif ($action === 'mark_geoip_downloaded') { $state['authorizations']['geoip_downloaded_at'] = $timestamp; $state['authorizations']['geoip_downloaded_by'] = $user_id; }
         elseif ($action === 'mark_favicons_enabled') { $state['authorizations']['favicons_enabled_at'] = $timestamp; $state['authorizations']['favicons_enabled_by'] = $user_id; }
         elseif ($action === 'complete') { $state['status'] = 'completed'; $state['current_step'] = 'complete'; $state['completed_at'] = $timestamp; $state['completed_by'] = $user_id; }
-        elseif ($action === 'restart') { $state['status'] = 'in_progress'; $state['current_step'] = 'tracking'; $state['started_at'] = $timestamp; $state['completed_at'] = null; $state['completed_by'] = null; }
         else return new WP_Error('bbpa_invalid_setup_wizard_action', '', ['status' => 400]);
         return new WP_REST_Response(['state' => bbpa_update_setup_wizard_state($state)], 200);
     }

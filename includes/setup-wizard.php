@@ -61,6 +61,12 @@ function bbpa_update_setup_wizard_state(array $state): array
     return $state;
 }
 
+/** Reset onboarding progress without changing any functional plugin settings. */
+function bbpa_reset_setup_wizard_state(): array
+{
+    return bbpa_update_setup_wizard_state(bbpa_get_setup_wizard_default_state());
+}
+
 function bbpa_setup_wizard_auto_open_allowed(array $state): bool
 {
     return $state['status'] === 'not_started' && !$state['auto_opened'];

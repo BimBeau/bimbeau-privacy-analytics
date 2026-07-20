@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 const BBPA_MARKETING_QUERY_ALLOWLIST_BACKFILL_COMPLETED = 'bbpa_marketing_query_allowlist_backfill_completed';
+const BBPA_ACTIVATION_REDIRECT_TRANSIENT = 'bbpa_redirect_after_activation';
 
 
 /**
@@ -215,7 +216,7 @@ function bbpa_migrate_existing_settings_for_setup_wizard(): void
 /**
  * Plugin activation tasks.
  */
-function bbpa_activate(): void
+function bbpa_activate(bool $network_wide = false, bool $allow_redirect = true): void
 {
     bbpa_run_legacy_prefix_migration();
     bbpa_with_suppressed_db_errors(static function (): void {
@@ -225,6 +226,14 @@ function bbpa_activate(): void
     bbpa_register_settings_option();
     bbpa_backfill_marketing_query_allowlist();
     bbpa_run_legacy_privacy_options_cleanup();
+
+    if (get_option(BBPA_SETUP_WIZARD_OPTION, null) === null) {
+        bbpa_update_setup_wizard_state(bbpa_get_setup_wizard_default_state());
+    }
+
+    if ($allow_redirect && bbpa_should_schedule_activation_redirect($network_wide)) {
+        set_transient(BBPA_ACTIVATION_REDIRECT_TRANSIENT, 1, MINUTE_IN_SECONDS);
+    }
 
     if (function_exists('bbpa_schedule_raw_log_cleanup')) {
         bbpa_schedule_raw_log_cleanup(true);
@@ -257,6 +266,61 @@ function bbpa_activate(): void
 
     flush_rewrite_rules();
 }
+
+/** Decide whether this request represents a normal, single-site admin activation. */
+function bbpa_should_schedule_activation_redirect(bool $network_wide): bool
+{
+    $action = isset($_GET['action']) ? sanitize_key(wp_unslash($_GET['action'])) : '';
+    $blocked_runtime = (defined('WP_CLI') && WP_CLI)
+        || wp_doing_ajax()
+        || (defined('REST_REQUEST') && REST_REQUEST)
+        || (defined('DOING_CRON') && DOING_CRON);
+
+    if ($network_wide || $blocked_runtime || isset($_GET['activate-multi']) || in_array($action, ['activate-selected', 'update-selected'], true)) {
+        return false;
+    }
+
+    $state = bbpa_get_setup_wizard_state();
+    return is_admin() && bbpa_setup_wizard_auto_open_allowed($state);
+}
+
+/** Consume and validate the one-time activation redirect target. */
+function bbpa_consume_activation_redirect(): ?string
+{
+    if (!get_transient(BBPA_ACTIVATION_REDIRECT_TRANSIENT)) {
+        return null;
+    }
+
+    delete_transient(BBPA_ACTIVATION_REDIRECT_TRANSIENT);
+
+    if (
+        !is_admin()
+        || wp_doing_ajax()
+        || (defined('WP_CLI') && WP_CLI)
+        || (defined('REST_REQUEST') && REST_REQUEST)
+        || (defined('DOING_CRON') && DOING_CRON)
+        || !current_user_can(bbpa_get_panel_capability('dashboard'))
+    ) {
+        return null;
+    }
+
+    return admin_url('admin.php?page=bimbeau-privacy-analytics');
+}
+
+/** Redirect once after activation, consuming the marker before sending headers. */
+function bbpa_maybe_redirect_after_activation(): void
+{
+    $redirect_url = bbpa_consume_activation_redirect();
+    if ($redirect_url === null) {
+        return;
+    }
+
+    wp_safe_redirect($redirect_url);
+    exit;
+}
+
+// Run after licensing SDK activation redirects so their connection flow keeps priority.
+add_action('admin_init', 'bbpa_maybe_redirect_after_activation', 999);
 
 /**
  * Run one-time upgrade migrations.

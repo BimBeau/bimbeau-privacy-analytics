@@ -3,7 +3,7 @@
 /**
  * Plugin Name: BimBeau Privacy Analytics
  * Description: Privacy-friendly, self-hosted analytics for WordPress.
- * Version: 8.45.65
+ * Version: 8.45.66
  * Author: BimBeau
  * Text Domain: bimbeau-privacy-analytics
  * Domain Path: /languages
@@ -421,5 +421,5 @@ register_deactivation_hook(__FILE__, 'bbpa_deactivate');
 
 if (get_option('bbpa_pending_activation_after_package_switch') === bbpa_get_current_package_basename(__FILE__)) {
     delete_option('bbpa_pending_activation_after_package_switch');
-    bbpa_activate();
+    bbpa_activate(false, false);
 }

@@ -81,6 +81,9 @@ const AdminApp = () => {
 	const [ isSetupWizardLoaded, setIsSetupWizardLoaded ] = useState( false );
 	const [ isSetupWizardOpen, setIsSetupWizardOpen ] = useState( false );
 	const [ setupNotice, setSetupNotice ] = useState( false );
+	const setupWizardRequestRef = useRef( null );
+	const setupWizardResetRef = useRef( null );
+	const isSetupWizardMountedRef = useRef( true );
 	const [ isGeoIpStatusLoading, setIsGeoIpStatusLoading ] = useState( true );
 	
 	const { isAuthRequired, error: authRequiredError } = useAuthRequiredState();
@@ -158,49 +161,92 @@ const AdminApp = () => {
 	}, [ isAuthRequired ] );
 
 	useEffect( () => {
+		isSetupWizardMountedRef.current = true;
+		return () => {
+			isSetupWizardMountedRef.current = false;
+		};
+	}, [] );
+
+	useEffect( () => {
 		const openWizard = async ( event ) => {
-			if ( event?.detail?.restart !== true ) {
+			const shouldReset =
+				event?.detail?.reset === true || event?.detail?.restart === true;
+			if ( ! shouldReset ) {
 				setIsSetupWizardOpen( true );
 				return;
 			}
 
+			if ( setupWizardResetRef.current ) {
+				return;
+			}
+
 			try {
-				const payload = await fetchAdminJson( '/admin/setup-wizard' );
-				const result = await fetchAdminJson( '/admin/setup-wizard', {
+				setSetupNotice( false );
+				const resetRequest = fetchAdminJson( '/admin/setup-wizard', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify( { action: 'set_step', step: 'tracking' } ),
+					body: JSON.stringify( { action: 'reset' } ),
 				} );
-				setSetupWizard( {
-					...payload,
-					state: result?.state || { ...payload?.state, current_step: 'tracking' },
+				setupWizardResetRef.current = resetRequest;
+				const result = await resetRequest;
+				const opened = await fetchAdminJson( '/admin/setup-wizard', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify( { action: 'mark_auto_opened' } ),
 				} );
+				if ( ! isSetupWizardMountedRef.current ) {
+					return;
+				}
+				setSetupWizard( ( current ) => ( {
+					...current,
+					state: opened?.state || result?.state,
+				} ) );
 				setIsSetupWizardOpen( true );
 			} catch ( error ) {
-				logger.warn( 'Unable to restart setup wizard', {
-					action: 'admin.setup_wizard_restart_failed',
+				if ( isSetupWizardMountedRef.current ) {
+					setSetupNotice( {
+						status: 'error',
+						message: __(
+							'Unable to finish configuration. Please try again.',
+							'bimbeau-privacy-analytics'
+						),
+					} );
+				}
+				logger.warn( 'Unable to reset setup wizard', {
+					action: 'admin.setup_wizard_reset_failed',
 					message: error?.message || String( error ),
 				} );
+			} finally {
+				setupWizardResetRef.current = null;
 			}
 		};
 		window.addEventListener( 'bbpa-open-setup-wizard', openWizard );
 		return () => window.removeEventListener( 'bbpa-open-setup-wizard', openWizard );
-	}, [] );
+	}, [ logger ] );
 
 	useEffect( () => {
 		if ( isAuthRequired ) {
+			setupWizardRequestRef.current = null;
 			setSetupWizard( null );
 			setIsSetupWizardLoaded( true );
 			return undefined;
 		}
 		let current = true;
 		setIsSetupWizardLoaded( false );
-		fetchAdminJson( '/admin/setup-wizard' ).then( async ( payload ) => {
+		if ( ! setupWizardRequestRef.current ) {
+			setupWizardRequestRef.current = fetchAdminJson( '/admin/setup-wizard' ).then( async ( payload ) => {
+				if ( ! payload?.auto_open_allowed ) {
+					return payload;
+				}
+				const opened = await fetchAdminJson( '/admin/setup-wizard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { action: 'mark_auto_opened' } ) } );
+				return { ...payload, state: opened?.state || payload.state, auto_open_allowed: false, shouldOpen: true };
+			} );
+		}
+		setupWizardRequestRef.current.then( ( payload ) => {
 			if ( ! current ) return;
 			setSetupWizard( payload );
-			if ( payload?.auto_open_allowed ) {
-				await fetchAdminJson( '/admin/setup-wizard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { action: 'mark_auto_opened' } ) } );
-				if ( current ) setIsSetupWizardOpen( true );
+			if ( payload?.shouldOpen ) {
+				setIsSetupWizardOpen( true );
 			}
 		} ).catch( () => {
 			if ( current ) setSetupWizard( null );
@@ -214,7 +260,7 @@ const AdminApp = () => {
 	const completeSetupWizard = () => {
 		setIsSetupWizardOpen( false );
 		setSetupWizard( ( current ) => ( { ...current, state: { ...current?.state, status: 'completed' } } ) );
-		setSetupNotice( true );
+		setSetupNotice( { status: 'success', message: __( 'Initial configuration completed.', 'bimbeau-privacy-analytics' ) } );
 	};
 
 	useEffect( () => {
@@ -455,7 +501,7 @@ const AdminApp = () => {
 					<Button variant="secondary" onClick={ () => setIsSetupWizardOpen( true ) }>{ __( 'Resume configuration', 'bimbeau-privacy-analytics' ) }</Button>
 				</Notice>
 			) : null }
-			{ setupNotice ? <Notice status="success" isDismissible onRemove={ () => setSetupNotice( false ) }>{ __( 'Initial configuration completed.', 'bimbeau-privacy-analytics' ) }</Notice> : null }
+			{ setupNotice ? <Notice status={ setupNotice.status } isDismissible onRemove={ () => setSetupNotice( false ) }>{ setupNotice.message }</Notice> : null }
 			{ shouldShowMissingGeoIpDatabaseNotice ? (
 				<Notice status="warning" isDismissible={ false }>
 					<div className="bbpa-admin-app__geoip-notice">
