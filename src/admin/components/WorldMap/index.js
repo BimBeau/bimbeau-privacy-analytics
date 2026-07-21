@@ -1326,6 +1326,11 @@ const WorldMapCityTooltip = ({ data, x, y }) => (
       />
       <span>{data.visitsLabel}</span>
     </div>
+    {data.currentPageLabel && (
+      <div className="bbpa-world-map__tooltip-page">
+        {data.currentPageLabel}
+      </div>
+    )}
   </div>
 );
 
@@ -2589,6 +2594,7 @@ const WorldMap = ({
           __("%s visits", "bimbeau-privacy-analytics"),
           formatHits(marker.hits),
         ),
+        currentPageLabel: marker.currentPageLabel,
       });
     },
     [formatHits, mapMode],

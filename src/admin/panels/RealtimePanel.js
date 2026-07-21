@@ -22,6 +22,7 @@ import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../lib/date';
 import { formatDeviceClassLabel } from '../lib/deviceClassLabel';
 import { getChannelLabel } from '../lib/channelLabels';
 import { isVisitorOriginUnavailable } from '../lib/geoipStatus';
+import { createLogger } from '../logger';
 
 const VisitorOriginUnavailableNotice = () => {
 	if (!isVisitorOriginUnavailable()) {
@@ -88,6 +89,15 @@ const getRealtimeVisitGeoField = (visit, fieldNames) => {
 	return '';
 };
 
+const parseRealtimeCoordinate = (value) => {
+	if (value === null || value === undefined || value === '') {
+		return null;
+	}
+
+	const numericValue = Number(value);
+	return Number.isFinite(numericValue) ? numericValue : null;
+};
+
 const normalizeRealtimeMapPoint = (point = {}) => {
 	const city =
 		getRealtimeVisitField(point, ['city', 'city_name', 'cityName', 'label']) ||
@@ -98,10 +108,10 @@ const normalizeRealtimeMapPoint = (point = {}) => {
 		getRealtimeVisitGeoField(point, ['accuracy_radius', 'accuracyRadius']) ??
 		NaN
 	);
-	const latitudeRaw = Number(
+	const latitudeRaw = parseRealtimeCoordinate(
 		point?.latitude ?? point?.lat ?? getRealtimeVisitGeoField(point, ['latitude', 'lat']) ?? NaN
 	);
-	const longitudeRaw = Number(
+	const longitudeRaw = parseRealtimeCoordinate(
 		point?.longitude ?? point?.lng ?? point?.lon ?? getRealtimeVisitGeoField(point, ['longitude', 'lng', 'lon']) ?? NaN
 	);
 
@@ -112,8 +122,8 @@ const normalizeRealtimeMapPoint = (point = {}) => {
 			Number.isFinite(accuracyRadiusRaw)
 				? Math.max(0, Math.round(accuracyRadiusRaw))
 				: null,
-		latitude: Number.isFinite(latitudeRaw) ? latitudeRaw : null,
-		longitude: Number.isFinite(longitudeRaw) ? longitudeRaw : null,
+		latitude: latitudeRaw,
+		longitude: longitudeRaw,
 	};
 };
 
@@ -133,10 +143,10 @@ const normalizeRealtimeVisit = (visit = {}) => {
 		getRealtimeVisitGeoField(visit, ['accuracy_radius', 'accuracyRadius']) ??
 		NaN
 	);
-	const latitudeRaw = Number(
+	const latitudeRaw = parseRealtimeCoordinate(
 		visit?.latitude ?? visit?.lat ?? getRealtimeVisitGeoField(visit, ['latitude', 'lat']) ?? NaN
 	);
-	const longitudeRaw = Number(
+	const longitudeRaw = parseRealtimeCoordinate(
 		visit?.longitude ?? visit?.lng ?? visit?.lon ?? getRealtimeVisitGeoField(visit, ['longitude', 'lng', 'lon']) ?? NaN
 	);
 	const currentPage = getRealtimeVisitField(visit, ['current_page', 'currentPage', 'page_path', 'path']);
@@ -171,8 +181,8 @@ const normalizeRealtimeVisit = (visit = {}) => {
 			Number.isFinite(accuracyRadiusRaw)
 				? Math.max(0, Math.round(accuracyRadiusRaw))
 				: null,
-		latitude: Number.isFinite(latitudeRaw) ? latitudeRaw : null,
-		longitude: Number.isFinite(longitudeRaw) ? longitudeRaw : null,
+		latitude: latitudeRaw,
+		longitude: longitudeRaw,
 		first_view_at: Number.isFinite(firstViewAt) ? firstViewAt : 0,
 		last_view_at: Number.isFinite(lastViewAt) ? lastViewAt : 0,
 		current_page: currentPage,
@@ -224,6 +234,73 @@ const buildRealtimeGeoKey = (latitude, longitude) => {
 	}
 
 	return `${lat.toFixed(4)}|${lng.toFixed(4)}`;
+};
+
+const resolveRealtimePage = (point = {}) =>
+	getRealtimeVisitField(point, ['current_page', 'currentPage', 'page_path', 'path']);
+
+export const normalizeRealtimeMapItem = (
+	point = {},
+	{ individualVisit = false, index = 0 } = {}
+) => {
+	const normalizedPoint = individualVisit
+		? normalizeRealtimeVisit(point)
+		: normalizeRealtimeMapPoint(point);
+	const metricCandidate = Number(
+		normalizedPoint?.weight ?? normalizedPoint?.hits ?? normalizedPoint?.count ?? NaN
+	);
+	const visits = individualVisit
+		? Number.isFinite(metricCandidate) && metricCandidate > 0
+			? metricCandidate
+			: 1
+		: Number.isFinite(metricCandidate)
+			? metricCandidate
+			: 0;
+	const currentPage = resolveRealtimePage(normalizedPoint);
+
+	return {
+		id:
+			getRealtimeVisitField(normalizedPoint, ['id', 'visitor_id', 'visitorId']) ||
+			`realtime-point-${index}`,
+		latitude: normalizedPoint.latitude,
+		longitude: normalizedPoint.longitude,
+		label: getLocationLabel(normalizedPoint),
+		visits,
+		accuracy_radius: normalizedPoint.accuracy_radius,
+		current_page: currentPage,
+		currentPageLabel: currentPage || __('Unknown page', 'bimbeau-privacy-analytics'),
+		visitor_id: getRealtimeVisitField(normalizedPoint, ['visitor_id', 'visitorId']),
+		country_code: getRealtimeVisitField(normalizedPoint, ['country_code', 'countryCode']),
+		city: normalizedPoint.city || '',
+		country: normalizedPoint.country || '',
+	};
+};
+
+export const aggregateRealtimeMapVisits = (visits = []) => {
+	const visitsByCoordinates = new Map();
+
+	visits.forEach((visit, index) => {
+		const item = normalizeRealtimeMapItem(visit, { individualVisit: true, index });
+		const coordinateKey = buildRealtimeGeoKey(item.latitude, item.longitude);
+
+		if (coordinateKey === '' || !visitsByCoordinates.has(coordinateKey)) {
+			visitsByCoordinates.set(coordinateKey || `invalid-${index}`, item);
+			return;
+		}
+
+		const existing = visitsByCoordinates.get(coordinateKey);
+		const pages = [...new Set([existing.current_page, item.current_page].filter(Boolean))];
+		visitsByCoordinates.set(coordinateKey, {
+			...existing,
+			visits: existing.visits + item.visits,
+			current_page: pages.join(', '),
+			currentPageLabel:
+				pages.join(', ') || __('Unknown page', 'bimbeau-privacy-analytics'),
+			visitor_id: '',
+		});
+	});
+
+	return Array.from(visitsByCoordinates.values());
 };
 
 const mergeRealtimeVisitWithConsentedPoint = (visit, mapPointByCoordinates) => {
@@ -369,6 +446,10 @@ const isFieldVisible = (field, isAdvancedEnabled) => {
 };
 
 const RealtimePanel = () => {
+	const logger = useMemo(
+		() => createLogger({ debugEnabled: () => Boolean(ADMIN_CONFIG?.settings?.debugEnabled) }),
+		[]
+	);
 	const { data, isLoading, error } = useRealtimeSnapshot();
 	const [isFullscreenActive, setIsFullscreenActive] = useState(false);
 	const [isFullscreenSupported, setIsFullscreenSupported] = useState(true);
@@ -499,39 +580,49 @@ const RealtimePanel = () => {
 			const consentedPoints = Array.isArray(data?.consentedMapPoints)
 				? data.consentedMapPoints
 				: [];
-			const sourcePoints =
-				consentedPoints.length > 0
-					? consentedPoints.map((point) => normalizeRealtimeMapPoint(point))
-					: realtimeVisits.map((visit) => normalizeRealtimeVisit(visit));
+			const isConsentedAggregate = consentedPoints.length > 0;
+			const sourcePoints = isConsentedAggregate
+				? consentedPoints.map((point, index) =>
+					normalizeRealtimeMapItem(point, { index })
+				)
+				: aggregateRealtimeMapVisits(realtimeVisits);
 
 			return {
-				items: sourcePoints.map((point, index) => {
-					const latitudeRaw = Number(point?.latitude ?? point?.lat ?? NaN);
-					const longitudeRaw = Number(point?.longitude ?? point?.lng ?? point?.lon ?? NaN);
-					const accuracyRadiusRaw = Number(
-						point?.accuracy_radius ?? point?.accuracyRadius ?? NaN
-					);
-
-					return {
-						id: `realtime-point-${index}`,
-						label: getLocationLabel(point),
-						latitude: Number.isFinite(latitudeRaw) ? latitudeRaw : null,
-						longitude: Number.isFinite(longitudeRaw) ? longitudeRaw : null,
-						accuracy_radius: Number.isFinite(accuracyRadiusRaw)
-							? Math.max(0, Math.round(accuracyRadiusRaw))
-							: null,
-						hits: Number(point?.weight ?? point?.hits ?? point?.count ?? 0),
-						currentPageLabel:
-							typeof point?.currentPage === 'string' &&
-								point.currentPage.trim() !== ''
-								? point.currentPage.trim()
-								: __('Unknown page', 'bimbeau-privacy-analytics'),
-					};
-				}),
+				items: sourcePoints,
 			};
 		},
 		[data?.consentedMapPoints, isEssentialOnlyScope, realtimeVisits]
 	);
+	useEffect(() => {
+		const items = realtimeMapData.items;
+		const validCoordinates = items.filter((item) => {
+			if (item.latitude === null || item.longitude === null) {
+				return false;
+			}
+			const latitude = Number(item.latitude);
+			const longitude = Number(item.longitude);
+			return Number.isFinite(latitude) && Number.isFinite(longitude) &&
+				!(Math.abs(latitude) < 0.0001 && Math.abs(longitude) < 0.0001);
+		});
+		const positiveMarkers = validCoordinates.filter((item) => Number(item.visits) > 0);
+
+		logger.debug('Realtime map marker normalization', {
+			action: 'realtime.map_markers.normalized',
+			realtimeVisits: realtimeVisits.length,
+			consentedMapPoints: Array.isArray(data?.consentedMapPoints)
+				? data.consentedMapPoints.length
+				: 0,
+			source: isEssentialOnlyScope
+				? 'essential_only'
+				: data?.consentedMapPoints?.length > 0
+					? 'consented_map_points'
+					: 'realtime_visits',
+			normalizedPoints: items.length,
+			validCoordinatePoints: validCoordinates.length,
+			excludedForZeroMetric: validCoordinates.length - positiveMarkers.length,
+			finalMarkers: positiveMarkers.length,
+		});
+	}, [data?.consentedMapPoints, isEssentialOnlyScope, logger, realtimeMapData, realtimeVisits.length]);
 	const realtimeVisitRows = useMemo(() => {
 		if (realtimeVisits.length > 0) {
 			const consentedPointByCoordinates = new Map();
