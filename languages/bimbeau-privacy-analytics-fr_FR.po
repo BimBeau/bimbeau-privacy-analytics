@@ -88,7 +88,7 @@ msgstr "Recherches internes"
 msgid "Geolocation"
 msgstr "Géolocalisation"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Visiteurs"
 
@@ -448,22 +448,84 @@ msgstr "La clé de licence MaxMind est requise."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "Les identifiants MaxMind sont requis pour activer la géolocalisation IP."
 
-#: includes/settings.php src/admin/free-stubs/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
+msgid "%s Visitor"
+msgstr "%s visiteur"
+
+#: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
+msgid "%s Visitors"
+msgstr "%s visiteurs"
+
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "Impossible de recommencer l’assistant de configuration. Veuillez réessayer."
+
+#: src/admin/AdminApp.js
+msgid "Initial configuration completed."
+msgstr "Configuration initiale terminée."
+
+#: src/admin/AdminApp.js
+msgid "Missing admin configuration."
+msgstr "Configuration admin manquante."
+
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
 msgid "Session expired, reload the application."
 msgstr ""
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
 #, fuzzy
 msgid "Reload application"
 msgstr "Recharger l’application"
 
-#: src/admin/panels/SettingsPanel.js
+#: src/admin/AdminApp.js
+msgid "No panel available for this screen."
+msgstr "Aucun panneau disponible pour cet écran."
+
+#: src/admin/AdminApp.js
+msgid "Install BimBeau Privacy Analytics app"
+msgstr "Installer l’application BimBeau Privacy Analytics"
+
+#: src/admin/AdminApp.js
+msgid "Get faster access from your home screen with an app-like experience."
+msgstr "Accédez plus rapidement depuis votre écran d’accueil avec une expérience proche d’une application."
+
+#: src/admin/AdminApp.js
+msgid "Install app"
+msgstr "Installer l’application"
+
+#: src/admin/AdminApp.js
+msgid "BimBeau Privacy Analytics app installation was accepted."
+msgstr "L’installation de l’application BimBeau Privacy Analytics a été acceptée."
+
+#: src/admin/AdminApp.js
+msgid "Complete the initial configuration"
+msgstr "Terminez la configuration initiale"
+
+#: src/admin/AdminApp.js
+msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
+msgstr "Terminez la configuration du suivi, de la géolocalisation locale et des favicons facultatifs des sites référents."
+
+#: src/admin/AdminApp.js
+msgid "Resume configuration"
+msgstr "Reprendre la configuration"
+
+#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
 msgid "GeoIP database not installed"
 msgstr "Base de données GeoIP non installée"
+
+#: src/admin/AdminApp.js
+msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
+msgstr "Les rapports de localisation ne sont pas disponibles tant que la base de données GeoIP locale n'a pas été téléchargée. Téléchargez-le depuis la page des paramètres de géolocalisation."
+
+#: src/admin/AdminApp.js
+msgid "Open geolocation settings"
+msgstr "Ouvrir les paramètres de géolocalisation"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -589,14 +651,6 @@ msgstr "Marqueurs CMP"
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr "Attention juridique : les diagnostics techniques n’établissent pas le consentement légal."
-
-#: src/admin/components/AppSidebar/index.js src/admin/free-stubs/AppSidebar.js
-msgid "Navigation"
-msgstr "Navigation"
-
-#: src/admin/components/AppSidebar/index.js src/admin/free-stubs/AppSidebar.js
-msgid "BimBeau Privacy Analytics navigation"
-msgstr "Navigation BimBeau Privacy Analytics"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"

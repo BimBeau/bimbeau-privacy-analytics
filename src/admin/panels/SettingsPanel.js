@@ -173,6 +173,8 @@ const DataFeatureGrid = ({ items = [] }) => (
 
 const normalizeArray = (value) => (Array.isArray(value) ? value : []);
 
+
+
 const normalizeSettings = (settings) => ({
   ...DEFAULT_SETTINGS,
   ...(settings || {}),
@@ -229,7 +231,7 @@ const normalizeSettings = (settings) => ({
   
 });
 
-const SettingsPanel = () => {
+const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }) => {
   const { data, isLoading, error } = useAdminEndpoint("/admin/settings");
   const [formState, setFormState] = useState(() =>
     normalizeSettings(DEFAULT_SETTINGS),
@@ -239,6 +241,7 @@ const SettingsPanel = () => {
   );
   const [allowlistInput, setAllowlistInput] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  
   const [saveNotice, setSaveNotice] = useState(null);
   const [saveToast, setSaveToast] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
@@ -441,6 +444,8 @@ const SettingsPanel = () => {
     });
 
     try {
+      let settingsPayload = nextState;
+      
       const response = await fetch(buildRestUrl("/admin/settings"), {
         method: "POST",
         cache: "no-store",
@@ -448,7 +453,7 @@ const SettingsPanel = () => {
           "Content-Type": "application/json",
           "X-WP-Nonce": ADMIN_CONFIG.restNonce,
         },
-        body: JSON.stringify(nextState),
+        body: JSON.stringify(settingsPayload),
       });
 
       const payload = await response.json().catch(() => null);
@@ -1817,7 +1822,7 @@ const SettingsPanel = () => {
                     </CardHeader>
                     <CardBody>
                       <p>{__("Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.", "bimbeau-privacy-analytics")}</p>
-                      <Button variant="secondary" onClick={() => window.dispatchEvent(new CustomEvent("bbpa-open-setup-wizard", { detail: { reset: true } }))}>
+                      <Button variant="secondary" isBusy={isSetupWizardRestarting} disabled={isSetupWizardRestarting || !onRestartSetupWizard} onClick={onRestartSetupWizard}>
                         {__("Restart the assistant", "bimbeau-privacy-analytics")}
                       </Button>
                     </CardBody>
@@ -1826,6 +1831,10 @@ const SettingsPanel = () => {
                 <Button
                   variant="primary"
                   isBusy={isSaving}
+                  disabled={
+                    isSaving
+                    
+                  }
                   onClick={onSave}
                   aria-label={__("Save settings", "bimbeau-privacy-analytics")}
                 >

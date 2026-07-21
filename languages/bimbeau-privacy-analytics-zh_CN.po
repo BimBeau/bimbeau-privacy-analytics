@@ -89,7 +89,7 @@ msgstr "站内搜索"
 msgid "Geolocation"
 msgstr "地理定位"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "访客"
 
@@ -450,22 +450,84 @@ msgstr "必须填写 MaxMind 许可证密钥。"
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "启用 IP 地理定位需要 MaxMind 凭据。"
 
-#: includes/settings.php src/admin/free-stubs/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js
 msgid "Statistics"
 msgstr "统计"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
+msgid "%s Visitor"
+msgstr "%s 位访客"
+
+#: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
+msgid "%s Visitors"
+msgstr "%s 位访客"
+
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "无法重新启动配置助手。请重试。"
+
+#: src/admin/AdminApp.js
+msgid "Initial configuration completed."
+msgstr "初始配置完成。"
+
+#: src/admin/AdminApp.js
+msgid "Missing admin configuration."
+msgstr "缺少管理配置。"
+
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
 msgid "Session expired, reload the application."
 msgstr ""
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
 #, fuzzy
 msgid "Reload application"
 msgstr "地理定位"
 
-#: src/admin/panels/SettingsPanel.js
+#: src/admin/AdminApp.js
+msgid "No panel available for this screen."
+msgstr "此屏幕没有可用面板。"
+
+#: src/admin/AdminApp.js
+msgid "Install BimBeau Privacy Analytics app"
+msgstr "安装 BimBeau Privacy Analytics 应用"
+
+#: src/admin/AdminApp.js
+msgid "Get faster access from your home screen with an app-like experience."
+msgstr "通过类似应用的体验，从主屏幕更快访问。"
+
+#: src/admin/AdminApp.js
+msgid "Install app"
+msgstr "安装应用"
+
+#: src/admin/AdminApp.js
+msgid "BimBeau Privacy Analytics app installation was accepted."
+msgstr "BimBeau Privacy Analytics 应用安装已接受。"
+
+#: src/admin/AdminApp.js
+msgid "Complete the initial configuration"
+msgstr "完成初始配置"
+
+#: src/admin/AdminApp.js
+msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
+msgstr "完成跟踪、本地地理位置和可选引荐网站图标的配置。"
+
+#: src/admin/AdminApp.js
+msgid "Resume configuration"
+msgstr "恢复配置"
+
+#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
 msgid "GeoIP database not installed"
 msgstr "未安装 GeoIP 数据库"
+
+#: src/admin/AdminApp.js
+msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
+msgstr "在下载本地 GeoIP 数据库之前，位置报告不可用。从地理位置设置页面下载它。"
+
+#: src/admin/AdminApp.js
+msgid "Open geolocation settings"
+msgstr "打开地理位置设置"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -591,14 +653,6 @@ msgstr "CMP 标记"
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr "法律提示：技术诊断不能证明合法同意。"
-
-#: src/admin/components/AppSidebar/index.js src/admin/free-stubs/AppSidebar.js
-msgid "Navigation"
-msgstr "导航"
-
-#: src/admin/components/AppSidebar/index.js src/admin/free-stubs/AppSidebar.js
-msgid "BimBeau Privacy Analytics navigation"
-msgstr "BimBeau Privacy Analytics 导航"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"

@@ -5,12 +5,9 @@ const cssAssetPublicPath = process.env.BBPA_ADMIN_CSS_PUBLIC_PATH || '../';
 const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
   ? path.resolve(process.env.BBPA_ADMIN_SOURCE_ROOT)
   : path.resolve(__dirname, 'src/admin');
-const freeAdminAppStubPath = path.resolve(adminSourceRoot, 'free-stubs/AdminApp.js');
 const freeOverviewPanelStubPath = path.resolve(adminSourceRoot, 'free-stubs/OverviewPanel.js');
 const freeAdminUrlsStubPath = path.resolve(adminSourceRoot, 'free-stubs/adminUrls.js');
 const freeAdminAliases = {
-  [path.resolve(adminSourceRoot, 'AdminApp')]: freeAdminAppStubPath,
-  [path.resolve(adminSourceRoot, 'AdminApp.js')]: freeAdminAppStubPath,
   [path.resolve(adminSourceRoot, 'lib/adminUrls')]: freeAdminUrlsStubPath,
   [path.resolve(adminSourceRoot, 'lib/adminUrls.js')]: freeAdminUrlsStubPath,
   [path.resolve(adminSourceRoot, 'panels/OverviewPanel')]: freeOverviewPanelStubPath,

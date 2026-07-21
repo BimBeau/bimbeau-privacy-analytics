@@ -89,7 +89,7 @@ msgstr "Dahili aramalar"
 msgid "Geolocation"
 msgstr "Coğrafi konum"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Ziyaretçiler"
 
@@ -450,22 +450,84 @@ msgstr "MaxMind Lisans Anahtarı gereklidir."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "IP coğrafi konumlandırmayı etkinleştirmek için MaxMind kimlik bilgileri gereklidir."
 
-#: includes/settings.php src/admin/free-stubs/AdminApp.js
+#: includes/settings.php src/admin/AdminApp.js
 msgid "Statistics"
 msgstr "İstatistikler"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
+msgid "%s Visitor"
+msgstr "%s ziyaretçi"
+
+#: src/admin/AdminApp.js
+#. translators: %s: active real-time visitor count.
+msgid "%s Visitors"
+msgstr "%s ziyaretçi"
+
+#: src/admin/AdminApp.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "Yapılandırma yardımcısı yeniden başlatılamıyor. Lütfen tekrar deneyin."
+
+#: src/admin/AdminApp.js
+msgid "Initial configuration completed."
+msgstr "İlk yapılandırma tamamlandı."
+
+#: src/admin/AdminApp.js
+msgid "Missing admin configuration."
+msgstr "Yönetici yapılandırması eksik."
+
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
 msgid "Session expired, reload the application."
 msgstr ""
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
 #, fuzzy
 msgid "Reload application"
 msgstr "Coğrafi konum"
 
-#: src/admin/panels/SettingsPanel.js
+#: src/admin/AdminApp.js
+msgid "No panel available for this screen."
+msgstr "Bu ekran için panel mevcut değil."
+
+#: src/admin/AdminApp.js
+msgid "Install BimBeau Privacy Analytics app"
+msgstr "BimBeau Privacy Analytics uygulamasını yükle"
+
+#: src/admin/AdminApp.js
+msgid "Get faster access from your home screen with an app-like experience."
+msgstr "Uygulama benzeri bir deneyimle ana ekranınızdan daha hızlı erişim sağlayın."
+
+#: src/admin/AdminApp.js
+msgid "Install app"
+msgstr "Uygulamayı yükle"
+
+#: src/admin/AdminApp.js
+msgid "BimBeau Privacy Analytics app installation was accepted."
+msgstr "BimBeau Privacy Analytics uygulaması kurulumu kabul edildi."
+
+#: src/admin/AdminApp.js
+msgid "Complete the initial configuration"
+msgstr "İlk yapılandırmayı tamamlayın"
+
+#: src/admin/AdminApp.js
+msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
+msgstr "İzlemeyi, yerel coğrafi konumu ve isteğe bağlı yönlendiren site simgelerini yapılandırmayı tamamlayın."
+
+#: src/admin/AdminApp.js
+msgid "Resume configuration"
+msgstr "Yapılandırmayı sürdür"
+
+#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
 msgid "GeoIP database not installed"
 msgstr "GeoIP veritabanı yüklü değil"
+
+#: src/admin/AdminApp.js
+msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
+msgstr "Yerel GeoIP veritabanı indirilene kadar konum raporları kullanılamaz. Coğrafi Konum ayarları sayfasından indirin."
+
+#: src/admin/AdminApp.js
+msgid "Open geolocation settings"
+msgstr "Coğrafi konum ayarlarını aç"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -591,14 +653,6 @@ msgstr "CMP işaretleri"
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr "Yasal uyarı: teknik tanılar yasal onayı kanıtlamaz."
-
-#: src/admin/components/AppSidebar/index.js src/admin/free-stubs/AppSidebar.js
-msgid "Navigation"
-msgstr "Gezinme"
-
-#: src/admin/components/AppSidebar/index.js src/admin/free-stubs/AppSidebar.js
-msgid "BimBeau Privacy Analytics navigation"
-msgstr "BimBeau Privacy Analytics gezinmesi"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"

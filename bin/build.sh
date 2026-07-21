@@ -74,7 +74,8 @@ build_front_assets() {
     return 0
   fi
 
-  rm -f "${admin_bundle_path}"
+  # A build target must only inspect artifacts emitted by its own compilation.
+  rm -rf "${repo_root}/build"
 
   local admin_source_root="${repo_root}/src/admin"
   local stripped_source_root=""

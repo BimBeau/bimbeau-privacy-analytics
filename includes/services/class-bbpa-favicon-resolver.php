@@ -3,9 +3,9 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v2';
-    private const CACHE_KEY_PREFIX = 'bbpa_favicon_v2_';
-    private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_v2_';
+    private const CACHE_VERSION = 'v3';
+    private const CACHE_KEY_PREFIX = 'bbpa_favicon_v3_';
+    private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_v3_';
     private const MAX_BYTES = 262144;
     private const MAX_REDIRECTS = 3;
 
@@ -37,24 +37,32 @@ class BBPA_Favicon_Resolver {
 
         $cache_key = self::CACHE_KEY_PREFIX . md5($host);
         $cached = get_transient($cache_key);
-        if (is_array($cached) && $this->is_valid_local_file($cached)) { return $cached; }
+        if (is_array($cached) && $this->is_valid_local_file($cached)) { $this->debug('cache', 'positive hit'); return $cached; }
         if ($cached !== false) { delete_transient($cache_key); }
-        if (get_transient($this->negative_key($host))) { return []; }
+        if (get_transient($this->negative_key($host))) { $this->debug('cache', 'negative hit'); return []; }
 
         $homepage = 'https://' . $host . '/';
         $this->debug('homepage URL', $this->redact_url($homepage));
         $html = $this->request($homepage, 'text/html,application/xhtml+xml');
-        $candidate = $html ? $this->extract_favicon_from_html((string) $html['body'], (string) $html['url']) : '';
-        if ($candidate === '') {
-            $base = $html ? (string) $html['url'] : $homepage;
-            $parts = wp_parse_url($base);
-            $candidate = (string) ($parts['scheme'] ?? 'https') . '://' . (string) ($parts['host'] ?? $host) . '/favicon.ico';
+        $base = $html ? (string) $html['url'] : $homepage;
+        $candidates = $html ? $this->extract_favicons_from_html((string) $html['body'], $base) : [];
+        $parts = wp_parse_url($base);
+        $origin = (string) ($parts['scheme'] ?? 'https') . '://' . (string) ($parts['host'] ?? $host) . (isset($parts['port']) ? ':' . $parts['port'] : '');
+        foreach (['/favicon.ico', '/favicon.png', '/apple-touch-icon.png'] as $path) $candidates[] = $origin . $path;
+        $candidates = array_values(array_unique(array_filter($candidates)));
+        $this->debug('candidates', implode(', ', array_map([$this, 'redact_url'], $candidates)));
+        $favicon = [];
+        $any_temporary_failure = false;
+        foreach ($candidates as $index => $candidate) {
+            $this->debug('candidate tried', ($index >= count($candidates) - 3 ? 'fallback ' : 'declared ') . $this->redact_url($candidate));
+            $favicon = $this->download_and_store($candidate, $host);
+            $any_temporary_failure = $any_temporary_failure || $this->last_failure_temporary;
+            if ($favicon) break;
+            $this->debug('candidate rejected', $this->last_failure ?: 'unavailable');
         }
-        $this->debug('favicon candidate', $this->redact_url($candidate));
-        $favicon = $this->download_and_store($candidate, $host);
         if (!$favicon) {
             $reason = $this->last_failure ?: 'favicon unavailable';
-            $temporary = $this->last_failure_temporary;
+            $temporary = $any_temporary_failure;
             set_transient($this->negative_key($host), ['reason' => $reason, 'temporary' => $temporary], $temporary ? 5 * MINUTE_IN_SECONDS : HOUR_IN_SECONDS);
             return $this->fail($host, $reason, $temporary);
         }
@@ -94,7 +102,7 @@ class BBPA_Favicon_Resolver {
     }
 
     private function download_and_store(string $url, string $host): array {
-        $response = $this->request($url, 'image/x-icon,image/png,image/jpeg,image/webp');
+        $response = $this->request($url, 'image/x-icon,image/png,image/jpeg,image/webp,application/octet-stream');
         if (!$response) return [];
         $this->debug('candidate HTTP response', $this->redact_url($response['url']) . ' [200]');
         $this->debug('candidate Content-Type', $response['content_type']);
@@ -114,21 +122,37 @@ class BBPA_Favicon_Resolver {
     private function validate_image(string $body, string $content_type): string {
         if ($body === '' || strlen($body) > self::MAX_BYTES || preg_match('/<(?:svg|html|script|\?xml)/i', substr($body, 0, 512))) return '';
         $media_type = strtolower(trim(explode(';', $content_type, 2)[0]));
-        if ($media_type !== '' && !in_array($media_type, ['image/x-icon', 'image/vnd.microsoft.icon', 'image/png', 'image/jpeg', 'image/webp'], true)) return '';
+        if ($media_type !== '' && !in_array($media_type, ['image/x-icon', 'image/vnd.microsoft.icon', 'image/png', 'image/jpeg', 'image/webp', 'application/octet-stream'], true)) return '';
         $signatures = ['png' => "\x89PNG\r\n\x1a\n", 'jpg' => "\xff\xd8\xff", 'webp' => 'RIFF', 'ico' => "\x00\x00\x01\x00"];
         foreach ($signatures as $format => $signature) if (str_starts_with($body, $signature) && ($format !== 'webp' || substr($body, 8, 4) === 'WEBP')) return $format;
         return '';
     }
 
-    private function extract_favicon_from_html(string $html, string $base): string {
-        if (!class_exists('DOMDocument')) return '';
+    private function extract_favicons_from_html(string $html, string $base): array {
+        if (!class_exists('DOMDocument')) return [];
         $dom = new DOMDocument(); libxml_use_internal_errors(true); $dom->loadHTML($html); libxml_clear_errors();
-        foreach ($dom->getElementsByTagName('link') as $link) {
-            if (strpos(strtolower((string) $link->getAttribute('rel')), 'icon') === false) continue;
-            $url = $this->resolve_absolute_url(trim((string) $link->getAttribute('href')), $base);
-            if ($url !== '') return $url;
+        $base_nodes = $dom->getElementsByTagName('base');
+        if ($base_nodes->length > 0) {
+            $declared_base = $this->resolve_absolute_url(trim((string) $base_nodes->item(0)->getAttribute('href')), $base);
+            if ($declared_base !== '') $base = $declared_base;
         }
-        return '';
+        $candidates = [];
+        foreach ($dom->getElementsByTagName('link') as $link) {
+            $rels = preg_split('/\s+/', strtolower(trim((string) $link->getAttribute('rel')))) ?: [];
+            $is_icon = in_array('icon', $rels, true);
+            $is_apple = in_array('apple-touch-icon', $rels, true) || in_array('apple-touch-icon-precomposed', $rels, true);
+            if (!$is_icon && !$is_apple) continue;
+            $url = $this->resolve_absolute_url(trim((string) $link->getAttribute('href')), $base);
+            if ($url === '') continue;
+            $extension = strtolower((string) pathinfo((string) (wp_parse_url($url, PHP_URL_PATH) ?: ''), PATHINFO_EXTENSION));
+            $sizes = strtolower(trim((string) $link->getAttribute('sizes')));
+            $safe_format = in_array($extension, ['ico', 'png', 'webp', 'jpg', 'jpeg'], true);
+            $preferred_size = (bool) preg_match('/(?:^|\s)(?:16x16|32x32|48x48|180x180|192x192)(?:\s|$)/', $sizes);
+            $priority = $safe_format ? 0 : ($preferred_size ? 1 : ($is_apple ? 2 : 3));
+            $candidates[] = ['url' => $url, 'priority' => $priority];
+        }
+        usort($candidates, static fn(array $left, array $right): int => $left['priority'] <=> $right['priority']);
+        return array_values(array_unique(array_column($candidates, 'url')));
     }
 
     private function resolve_absolute_url(string $url, string $base): string {
@@ -157,7 +181,7 @@ class BBPA_Favicon_Resolver {
         return $root !== false && $path !== false && str_starts_with($path, trailingslashit($root)) && (new BBPA_Filesystem_Service())->exists($path) && is_readable($path);
     }
     private function normalize_domain(string $domain): string { $value = strtolower(trim(preg_replace('#^https?://#i', '', $domain))); $value = explode('/', $value)[0] ?? ''; $value = explode(':', $value)[0] ?? ''; return preg_match('/^[a-z0-9.-]+$/', $value) ? rtrim($value, '.') : ''; }
-    private function is_safe_public_host(string $host): bool { if ($host === 'localhost' || str_ends_with($host, '.local')) return false; if (filter_var($host, FILTER_VALIDATE_IP)) return $this->is_public_ip($host); $records = function_exists('dns_get_record') ? dns_get_record($host, DNS_A | DNS_AAAA) : []; if (!$records) { $ip = gethostbyname($host); $records = $ip === $host ? [] : [['ip' => $ip]]; } foreach ($records as $record) { $ip = $record['ip'] ?? $record['ipv6'] ?? ''; if ($ip === '' || !$this->is_public_ip($ip)) return false; } return count($records) > 0; }
+    private function is_safe_public_host(string $host): bool { if ($host === 'localhost' || str_ends_with($host, '.local')) return false; if (filter_var($host, FILTER_VALIDATE_IP)) return $this->is_public_ip($host); $records = function_exists('dns_get_record') ? dns_get_record($host, DNS_A | DNS_AAAA) : []; $addresses = []; foreach (is_array($records) ? $records : [] as $record) { $ip = $record['ip'] ?? $record['ipv6'] ?? ''; if (is_string($ip) && filter_var($ip, FILTER_VALIDATE_IP)) $addresses[] = $ip; } if (!$addresses) { $ip = gethostbyname($host); if ($ip !== $host && filter_var($ip, FILTER_VALIDATE_IP)) $addresses[] = $ip; } if (!$addresses) return false; foreach (array_unique($addresses) as $ip) if (!$this->is_public_ip($ip)) return false; return true; }
     private function is_public_ip(string $ip): bool { return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false; }
     private function is_allowed_scheme(string $scheme): bool { return in_array(strtolower($scheme), ['http', 'https'], true); }
     private function get_user_agent(): string { return 'BimBeau Privacy Analytics Favicon Fetcher'; }

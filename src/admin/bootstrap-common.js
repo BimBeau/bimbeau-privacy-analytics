@@ -526,7 +526,11 @@ const setupRealtimeMapSnackbars = ( rootElement ) => {
 	window.setTimeout( scheduleScan, 1200 );
 };
 
-export const bootstrapAdmin = ( { beforeRender = [], afterRender = [] } = {} ) => {
+export const bootstrapAdmin = ( {
+	beforeRender = [],
+	afterRender = [],
+	PremiumPwaNavigation = null,
+} = {} ) => {
 	const root = document.getElementById( rootId );
 
 	if ( ! root ) {
@@ -549,7 +553,7 @@ export const bootstrapAdmin = ( { beforeRender = [], afterRender = [] } = {} ) =
 
 	const appElement = (
 		<AdminErrorBoundary>
-			<AdminApp />
+			<AdminApp PremiumPwaNavigation={ PremiumPwaNavigation } />
 		</AdminErrorBoundary>
 	);
 

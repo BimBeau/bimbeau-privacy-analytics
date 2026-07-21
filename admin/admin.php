@@ -973,6 +973,10 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
         ['path' => 'assets/css/style-style-admin.css', 'url' => BBPA_URL . 'assets/css/style-style-admin.css'],
         ['path' => 'build/style-style-admin.css', 'url' => BBPA_URL . 'build/style-style-admin.css'],
     ];
+    $admin_extra_css_candidates = apply_filters(
+        'bbpa_admin_extra_css_candidates',
+        $admin_extra_css_candidates
+    );
     $admin_extra_css_url = '';
 
     foreach ($admin_extra_css_candidates as $candidate) {
@@ -1005,6 +1009,10 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
         ['path' => 'assets/css/style-admin.css', 'url' => BBPA_URL . 'assets/css/style-admin.css'],
         ['path' => 'build/style-admin.css', 'url' => BBPA_URL . 'build/style-admin.css'],
     ];
+    $admin_css_candidates = apply_filters(
+        'bbpa_admin_css_candidates',
+        $admin_css_candidates
+    );
     $admin_css_url = '';
 
     foreach ($admin_css_candidates as $candidate) {
@@ -1472,6 +1480,8 @@ function bbpa_build_admin_localized_payload(
         'settings' => [
             'restNamespace' => sanitize_text_field((string) ($rest_config['rest_namespace'] ?? '')),
             'restInternalNamespace' => sanitize_text_field((string) ($rest_config['rest_internal_namespace'] ?? '')),
+            'appMode' => 'admin',
+            'runtimeContext' => 'wordpress-admin',
             'pluginVersion' => BBPA_VERSION,
             'geoipLookupMode' => sanitize_key((string) ($settings['geoip_lookup_mode'] ?? 'local_database')),
             'geoipDbStatus' => bbpa_get_admin_geoip_database_status_for_payload(),
@@ -1506,8 +1516,14 @@ function bbpa_build_admin_localized_payload(
     ];
 
     $filtered_payload = apply_filters('bbpa_admin_localized_payload', $payload);
+    $filtered_payload = is_array($filtered_payload) ? $filtered_payload : $payload;
+    $filtered_payload['settings'] = is_array($filtered_payload['settings'] ?? null) ? $filtered_payload['settings'] : [];
+    // The WordPress admin context is authoritative and cannot be promoted to a PWA by filters.
+    $filtered_payload['settings']['appMode'] = 'admin';
+    $filtered_payload['settings']['runtimeContext'] = 'wordpress-admin';
+    unset($filtered_payload['settings']['isPremiumPwa']);
 
-    return is_array($filtered_payload) ? $filtered_payload : $payload;
+    return $filtered_payload;
 }
 
 /**

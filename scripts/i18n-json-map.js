@@ -13,7 +13,6 @@ const sourceAdminReferencePattern = /^src\/admin\//;
 const freeAdminEntryReferences = new Set([
   'src/admin/index.free.js',
   'src/admin/free-stubs/AdminApp.js',
-  'src/admin/free-stubs/AppSidebar.js',
   'src/admin/free-stubs/OverviewPanel.js',
 ]);
 const normalizeReference = (reference) => reference.replace(/:\d+(?::\d+)?$/, '');

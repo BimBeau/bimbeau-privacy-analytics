@@ -641,6 +641,7 @@ function bbpa_update_settings($settings): array
         $requested_lookup_mode = sanitize_key((string) $settings['geoip_lookup_mode']);
     }
     $previous = bbpa_get_settings();
+    $settings = apply_filters('bbpa_settings_input_before_sanitize', $settings, $previous);
     $sanitized = bbpa_sanitize_settings($settings);
     $sanitized = apply_filters('bbpa_settings_before_update', $sanitized);
     $lookup_mode = (string) ($sanitized['geoip_lookup_mode'] ?? 'local_database');
