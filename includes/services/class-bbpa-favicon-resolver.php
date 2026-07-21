@@ -3,9 +3,9 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v3';
-    private const CACHE_KEY_PREFIX = 'bbpa_favicon_v3_';
-    private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_v3_';
+    private const CACHE_VERSION = 'v4';
+    private const CACHE_KEY_PREFIX = 'bbpa_favicon_v4_';
+    private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_v4_';
     private const MAX_BYTES = 262144;
     private const MAX_REDIRECTS = 3;
 
@@ -31,7 +31,7 @@ class BBPA_Favicon_Resolver {
     public function resolve_favicon_for_domain(string $domain): array {
         $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
         if (empty($settings['referrer_favicons_enabled'])) { return []; }
-        $host = $this->normalize_domain($domain);
+        $host = $this->normalize_observed_host($domain);
         $this->debug('normalized domain', $host);
         if ($host === '' || !$this->is_safe_public_host($host)) { return $this->fail($host, 'unsafe or invalid domain', false); }
 
@@ -44,6 +44,13 @@ class BBPA_Favicon_Resolver {
         $homepage = 'https://' . $host . '/';
         $this->debug('homepage URL', $this->redact_url($homepage));
         $html = $this->request($homepage, 'text/html,application/xhtml+xml');
+        if (!$html) {
+            $alternate = str_starts_with($host, 'www.') ? substr($host, 4) : 'www.' . $host;
+            if ($this->is_safe_public_host($alternate)) {
+                $homepage = 'https://' . $alternate . '/';
+                $html = $this->request($homepage, 'text/html,application/xhtml+xml');
+            }
+        }
         $base = $html ? (string) $html['url'] : $homepage;
         $candidates = $html ? $this->extract_favicons_from_html((string) $html['body'], $base) : [];
         $parts = wp_parse_url($base);
@@ -180,7 +187,7 @@ class BBPA_Favicon_Resolver {
         $path = realpath((string) $entry['path']);
         return $root !== false && $path !== false && str_starts_with($path, trailingslashit($root)) && (new BBPA_Filesystem_Service())->exists($path) && is_readable($path);
     }
-    private function normalize_domain(string $domain): string { $value = strtolower(trim(preg_replace('#^https?://#i', '', $domain))); $value = explode('/', $value)[0] ?? ''; $value = explode(':', $value)[0] ?? ''; return preg_match('/^[a-z0-9.-]+$/', $value) ? rtrim($value, '.') : ''; }
+    public function normalize_observed_host(string $domain): string { $value = strtolower(trim(preg_replace('#^https?://#i', '', $domain))); $value = explode('/', $value)[0] ?? ''; $parts = wp_parse_url('https://' . $value); $value = is_array($parts) ? (string) ($parts['host'] ?? '') : ''; return preg_match('/^[a-z0-9.-]+$/', $value) ? rtrim($value, '.') : ''; }
     private function is_safe_public_host(string $host): bool { if ($host === 'localhost' || str_ends_with($host, '.local')) return false; if (filter_var($host, FILTER_VALIDATE_IP)) return $this->is_public_ip($host); $records = function_exists('dns_get_record') ? dns_get_record($host, DNS_A | DNS_AAAA) : []; $addresses = []; foreach (is_array($records) ? $records : [] as $record) { $ip = $record['ip'] ?? $record['ipv6'] ?? ''; if (is_string($ip) && filter_var($ip, FILTER_VALIDATE_IP)) $addresses[] = $ip; } if (!$addresses) { $ip = gethostbyname($host); if ($ip !== $host && filter_var($ip, FILTER_VALIDATE_IP)) $addresses[] = $ip; } if (!$addresses) return false; foreach (array_unique($addresses) as $ip) if (!$this->is_public_ip($ip)) return false; return true; }
     private function is_public_ip(string $ip): bool { return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false; }
     private function is_allowed_scheme(string $scheme): bool { return in_array(strtolower($scheme), ['http', 'https'], true); }

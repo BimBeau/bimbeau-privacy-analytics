@@ -1,65 +1,25 @@
-import { useEffect, useMemo, useState } from '@wordpress/element';
+import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { LuArrowRight, LuGlobe } from 'react-icons/lu';
 
-import { fetchAdminJson } from '../../api/useAdminEndpoint';
 import { ADMIN_CONFIG, normalizeBooleanSetting } from '../../constants';
-
-const resolveNormalizedDomain = ( domain ) => {
-	if ( typeof domain !== 'string' ) {
-		return '';
-	}
-	return domain
-		.trim()
-		.replace( /^https?:\/\//i, '' )
-		.replace( /\/.*$/, '' )
-		.replace( /^www\./i, '' );
-};
+import { getCachedFavicon, normalizeReferrerHost } from './faviconCache';
 
 export const resolveDomainFaviconCandidates = ( internalFaviconUrl = '' ) =>
 	internalFaviconUrl ? [ internalFaviconUrl ] : [];
 
-const ReferrerLabel = ( { domain, label, faviconsEnabled } ) => {
+const ReferrerLabel = ( { domain, label, faviconsEnabled, favicon } ) => {
 	const normalizedDomain = useMemo(
-		() => resolveNormalizedDomain( domain ),
+		() => normalizeReferrerHost( domain ),
 		[ domain ]
 	);
 	const enabled = normalizeBooleanSetting(
 		faviconsEnabled ?? ADMIN_CONFIG?.settings?.referrer_favicons_enabled,
 		false
 	);
-	const [ faviconUrl, setFaviconUrl ] = useState( '' );
+	const resolvedFavicon = favicon || getCachedFavicon( normalizedDomain );
+	const faviconUrl = enabled && resolvedFavicon?.status === 'available' ? resolvedFavicon.url : '';
 	const resolvedLabel = label || __( 'Direct', 'bimbeau-privacy-analytics' );
-
-	useEffect( () => {
-		let isMounted = true;
-		setFaviconUrl( '' );
-		if ( ! enabled || ! normalizedDomain ) {
-			return undefined;
-		}
-		fetchAdminJson( '/admin/favicon', {
-			params: { domain: normalizedDomain },
-		} )
-			.then( ( payload ) => {
-				const url =
-					typeof payload?.favicon_url === 'string'
-						? payload.favicon_url.trim()
-						: '';
-				if ( isMounted ) {
-					setFaviconUrl(
-						payload?.is_local === true && url ? url : ''
-					);
-				}
-			} )
-			.catch( () => {
-				if ( isMounted ) {
-					setFaviconUrl( '' );
-				}
-			} );
-		return () => {
-			isMounted = false;
-		};
-	}, [ enabled, normalizedDomain ] );
 
 	return (
 		<span className="bbpa-referrer-label">
@@ -70,9 +30,9 @@ const ReferrerLabel = ( { domain, label, faviconsEnabled } ) => {
 					alt=""
 					width={ 16 }
 					height={ 16 }
-					loading="lazy"
-					decoding="async"
 				/>
+			) : enabled && normalizedDomain && resolvedFavicon?.status === 'loading' ? (
+				<span className="bbpa-referrer-label__favicon-fallback" aria-hidden="true" />
 			) : (
 				<span
 					className={ `bbpa-referrer-label__favicon-fallback${

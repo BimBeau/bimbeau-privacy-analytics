@@ -298,6 +298,13 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             ]
         );
 
+        register_rest_route(BBPA_REST_INTERNAL_NAMESPACE, '/admin/favicons', [
+            'methods' => 'GET',
+            'callback' => [$this, 'get_favicons'],
+            'permission_callback' => [$this, 'check_referrers_permissions'],
+            'args' => ['domains' => ['required' => true, 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field']],
+        ]);
+
     }
 
     /**
@@ -1994,6 +2001,21 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             ],
             200
         );
+    }
+
+    /** Resolve a bounded, deduplicated set of observed hosts in one authenticated request. */
+    public function get_favicons(WP_REST_Request $request): WP_REST_Response {
+        $domains = array_slice(array_values(array_unique(array_filter(array_map('trim', explode(',', (string) $request->get_param('domains')))))), 0, 20);
+        $resolver = new BBPA_Favicon_Resolver();
+        $favicons = [];
+        foreach ($domains as $domain) {
+            $host = $resolver->normalize_observed_host($domain);
+            if ($host === '' || isset($favicons[$host])) continue;
+            $favicon = $resolver->resolve_favicon_for_domain($host);
+            $is_local = isset($favicon['url'], $favicon['path']);
+            $favicons[$host] = ['url' => $is_local ? (string) $favicon['url'] : '', 'is_local' => $is_local, 'status' => $is_local ? 'available' : 'unavailable'];
+        }
+        return new WP_REST_Response(['favicons' => $favicons], 200);
     }
 
     /** Return local setup metadata and read-only GeoIP status without downloading anything. */

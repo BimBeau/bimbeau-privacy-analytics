@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.75
+Stable tag: 8.45.76
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,5 +235,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.75 =
-* Keep PWA shell selectors exclusively in Premium styles and enforce one shared PWA boundary contract across Free packaging audits.
+= 8.45.76 =
+* Load secure locally cached referrer favicons in bounded batches and preserve observed hosts during resolution.

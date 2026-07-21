@@ -14,6 +14,7 @@ import BpaCard from '../../components/BpaCard';
 import { ADMIN_CONFIG } from '../../constants';
 import FeatureIcon from '../../components/icons/FeatureIcon';
 import ReferrerLabel from '../../components/ReferrerLabel';
+import { normalizeReferrerHost, useReferrerFavicons } from '../../components/ReferrerLabel/faviconCache';
 import ReportExportAction from '../../components/ReportExportAction';
 import { getPreviousRange } from '../../lib/date';
 import {
@@ -78,6 +79,8 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 		);
 
 	const items = data?.items || [];
+	const faviconsEnabled = Boolean( ADMIN_CONFIG?.settings?.referrer_favicons_enabled );
+	const favicons = useReferrerFavicons( items.map( ( item ) => item.referrer_domain || '' ), faviconsEnabled );
 	const pagination = data?.pagination || {};
 	const totalPages = pagination.totalPages || 1;
 	const totalItems = pagination.totalItems || items.length;
@@ -130,6 +133,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 			key: `${ referrerDomain }-${ sourceCategory }-${ index }`,
 			referrer: referrerDomain,
 			referrerDomain: item.referrer_domain || '',
+			favicon: favicons.get( normalizeReferrerHost( item.referrer_domain || '' ) ),
 			category,
 			hits: item.hits,
 			comparisonKey: `${
@@ -291,7 +295,8 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 										<td>
 											<ReferrerLabel
 												domain={ row.referrerDomain }
-												label={ row.referrer }
+								label={ row.referrer }
+								favicon={ row.favicon }
 											/>
 										</td>
 										<td>{ row.category }</td>
