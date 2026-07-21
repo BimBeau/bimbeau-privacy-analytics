@@ -355,6 +355,26 @@
   font-weight: 600;
 }
 
+.bbpa-admin-app .bbpa-geoip-settings,
+.bbpa-admin-app .bbpa-geoip-settings__block { display: grid; gap: var(--bbpa-gap-sm); min-width: 0; }
+.bbpa-admin-app .bbpa-geoip-settings { gap: var(--bbpa-gap-lg); }
+.bbpa-admin-app .bbpa-geoip-settings__block h3,
+.bbpa-admin-app .bbpa-geoip-settings__block p { margin-block: 0; }
+.bbpa-admin-app .bbpa-geoip-settings__conditional-help { color: #50575e; }
+.bbpa-admin-app .bbpa-geoip-status { display: grid; gap: 0; margin: 0; }
+.bbpa-admin-app .bbpa-geoip-status > div { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr); gap: var(--bbpa-gap-sm); padding-block: var(--bbpa-gap-sm); border-bottom: 1px solid #dcdcde; }
+.bbpa-admin-app .bbpa-geoip-status dt { font-weight: 600; }
+.bbpa-admin-app .bbpa-geoip-status dd { margin: 0; overflow-wrap: anywhere; }
+.bbpa-admin-app .bbpa-geoip-status__badge { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 600; color: #1e1e1e; background: #f0f0f1; }
+.bbpa-admin-app .bbpa-geoip-status__badge--success { background: #d7f0df; color: #005c12; }
+.bbpa-admin-app .bbpa-geoip-status__badge--warning { background: #fcf0c3; color: #614200; }
+.bbpa-admin-app .bbpa-geoip-status__badge--error { background: #f7d4d6; color: #8a2424; }
+.bbpa-admin-app .bbpa-geoip-status__badge--info { background: #d9eaf7; color: #004b73; }
+.bbpa-admin-app .bbpa-geoip-technical { margin-top: var(--bbpa-gap-sm); }
+.bbpa-admin-app .bbpa-geoip-technical summary { cursor: pointer; font-weight: 600; padding-block: var(--bbpa-gap-sm); }
+.bbpa-admin-app .bbpa-geoip-technical summary:focus-visible { outline: 2px solid var(--wp-admin-theme-color, #2271b1); outline-offset: 2px; }
+@media (max-width: 600px) { .bbpa-admin-app .bbpa-geoip-status > div { grid-template-columns: minmax(0, 1fr); } }
+
 
 
 .bbpa-admin-app .bbpa-general-settings {

@@ -516,7 +516,7 @@ msgstr "Finish configuring tracking, local geolocation, and optional referrer fa
 msgid "Resume configuration"
 msgstr "Resume configuration"
 
-#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
+#: src/admin/AdminApp.js
 msgid "GeoIP database not installed"
 msgstr "GeoIP database not installed"
 
@@ -633,7 +633,7 @@ msgstr "Available granularities"
 msgid "Run diagnostic"
 msgstr "Run diagnostic"
 
-#: src/admin/components/AdvancedConsentTestCard/index.js
+#: src/admin/components/AdvancedConsentTestCard/index.js src/admin/panels/SettingsPanel.js
 msgid "Status"
 msgstr "Status"
 
@@ -1282,38 +1282,27 @@ msgid "Pending schedule"
 msgstr "Pending schedule"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "ok"
-msgstr "ok"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "error"
-msgstr "error"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "pending"
-msgstr "pending"
-
-#: src/admin/panels/SettingsPanel.js
 #, fuzzy
-msgid "Update GeoIP database"
-msgstr "Unable to update the GeoIP database."
+msgid "Update in progress"
+msgstr "Update now"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid "Download GeoIP database"
-msgstr "Install local GeoIP database"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Local GeoIP database unavailable"
-msgstr "Local GeoIP database unavailable"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled."
-msgstr "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Visitor origin cannot be displayed until the local GeoIP database has been downloaded. To install it, click “Download GeoIP database”. This action will contact an external service and store the database in the WordPress uploads directory."
+msgid "Error during last update"
 msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Operational"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Unavailable"
+msgstr "No available"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Database not downloaded"
+msgstr "GeoIP database download failed: %s"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
@@ -1456,25 +1445,27 @@ msgid "No post types available."
 msgstr "No post types available."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
-msgstr "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
+#, fuzzy
+msgid "Configure the geolocation source and GeoIP database updates."
+msgstr "Controls the cron frequency for local GeoIP database updates."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation source"
 msgstr "Geolocation source"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Local GeoLite database (default)"
+#, fuzzy
+msgid "Local GeoLite database — recommended"
 msgstr "Local GeoLite database (default)"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "MaxMind API credentials"
-msgstr "MaxMind API credentials"
+#, fuzzy
+msgid "MaxMind API"
+msgstr "MaxMind Account ID"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-msgstr "Local database mode downloads the GeoLite MMDB file from BimBeau Privacy Analytics mirrors. API mode uses live MaxMind requests."
+msgid "The local database works without external requests during tracking. The MaxMind API requires your credentials."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
@@ -1497,54 +1488,90 @@ msgid "Test MaxMind connection"
 msgstr "Test MaxMind connection"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Automatic GeoIP database updates"
-msgstr "Automatic GeoIP database updates"
+#, fuzzy
+msgid "Automatic updates"
+msgstr "Automatic GeoIP updates:"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Choose whether the local GeoIP database should be updated automatically. In “manual updates only” mode, no external server is contacted automatically. You can still download or update the database manually with the button below."
+#, fuzzy
+msgid "GeoLite local database download frequency."
+msgstr "GeoIP database download failed: %s"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No automatic download will be performed."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 #, fuzzy
-msgid "Manual GeoIP database download"
-msgstr "GeoIP database download failed: %s"
+msgid "Manual update"
+msgstr "Essential stats only"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "This manual download will contact an external service to download the local GeoIP database and store it in the WordPress uploads directory."
+#, fuzzy
+msgid "Immediately download the latest GeoLite database."
+msgstr "Unable to read the local GeoLite database."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Update now"
+msgstr "Update now"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "GeoIP database status"
+msgstr "GeoIP database not installed"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "The last GeoIP database update failed."
+msgstr "Automatic GeoIP database updates"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Last updated"
+msgstr "Last attempt"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Next update"
+msgstr "Next page"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Size"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Current state"
-msgstr "Current state"
+#, fuzzy
+msgid "Technical details"
+msgstr "Device details"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last attempt"
 msgstr "Last attempt"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Retry count"
+msgstr "Retry count"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Source or service"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 #, fuzzy
-msgid "Next scheduled GeoIP update"
-msgstr "Next scheduled GeoIP update"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last successful update"
-msgstr "Last successful update"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Database size"
-msgstr "Database size"
+msgid "BimBeau GeoIP Database Service"
+msgstr "Local GeoIP database unavailable"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last error code"
 msgstr "Last error code"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Retry count"
-msgstr "Retry count"
+msgid "Downloads contact an external service and store the database in the WordPress uploads directory."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
-msgstr "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
+msgid "Activation remains non-blocking when the local database is temporarily unavailable."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Privacy"
@@ -2303,6 +2330,56 @@ msgstr "Private"
 msgid "Table: Visitors"
 msgstr "Table: Visitors"
 
+#~ msgid "ok"
+#~ msgstr "ok"
+
+#~ msgid "error"
+#~ msgstr "error"
+
+#~ msgid "pending"
+#~ msgstr "pending"
+
+#, fuzzy
+#~ msgid "Update GeoIP database"
+#~ msgstr "Unable to update the GeoIP database."
+
+#, fuzzy
+#~ msgid "Download GeoIP database"
+#~ msgstr "Install local GeoIP database"
+
+#~ msgid "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled."
+#~ msgstr "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled."
+
+#~ msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
+#~ msgstr "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
+
+#~ msgid "MaxMind API credentials"
+#~ msgstr "MaxMind API credentials"
+
+#, fuzzy
+#~ msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
+#~ msgstr "Local database mode downloads the GeoLite MMDB file from BimBeau Privacy Analytics mirrors. API mode uses live MaxMind requests."
+
+#, fuzzy
+#~ msgid "Manual GeoIP database download"
+#~ msgstr "GeoIP database download failed: %s"
+
+#~ msgid "Current state"
+#~ msgstr "Current state"
+
+#, fuzzy
+#~ msgid "Next scheduled GeoIP update"
+#~ msgstr "Next scheduled GeoIP update"
+
+#~ msgid "Last successful update"
+#~ msgstr "Last successful update"
+
+#~ msgid "Database size"
+#~ msgstr "Database size"
+
+#~ msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
+#~ msgstr "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
+
 #~ msgid "Back"
 #~ msgstr "Back"
 
@@ -2363,9 +2440,6 @@ msgstr "Table: Visitors"
 #~ msgid "Base GeoIP non installée"
 #~ msgstr "Local GeoIP database not installed"
 
-#~ msgid "Update now"
-#~ msgstr "Update now"
-
 #~ msgid "Country and city reports require a local GeoIP database. Click “Install local GeoIP database” to download the GeoLite database and store it locally in this WordPress installation. Local lookups do not send visitor IP addresses to BimBeau."
 #~ msgstr "Country and city reports require a local GeoIP database. Click “Install local GeoIP database” to download the GeoLite database and store it locally in this WordPress installation. Local lookups do not send visitor IP addresses to BimBeau."
 
@@ -2374,9 +2448,6 @@ msgstr "Table: Visitors"
 
 #~ msgid "Every 30 days (default)"
 #~ msgstr "Every 30 days (default)"
-
-#~ msgid "Controls the cron frequency for local GeoIP database updates."
-#~ msgstr "Controls the cron frequency for local GeoIP database updates."
 
 #~ msgid "BimBeau Privacy Analytics events analytics feature preview"
 #~ msgstr "BimBeau Privacy Analytics Pro feature preview"

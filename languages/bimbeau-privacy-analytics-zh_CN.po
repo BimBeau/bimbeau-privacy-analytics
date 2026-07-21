@@ -517,7 +517,7 @@ msgstr "完成跟踪、本地地理位置和可选引荐网站图标的配置。
 msgid "Resume configuration"
 msgstr "恢复配置"
 
-#: src/admin/AdminApp.js src/admin/panels/SettingsPanel.js
+#: src/admin/AdminApp.js
 msgid "GeoIP database not installed"
 msgstr "未安装 GeoIP 数据库"
 
@@ -634,7 +634,7 @@ msgstr "可用粒度"
 msgid "Run diagnostic"
 msgstr "运行诊断"
 
-#: src/admin/components/AdvancedConsentTestCard/index.js
+#: src/admin/components/AdvancedConsentTestCard/index.js src/admin/panels/SettingsPanel.js
 msgid "Status"
 msgstr "状态"
 
@@ -1284,39 +1284,27 @@ msgid "Pending schedule"
 msgstr "计划待处理"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "ok"
-msgstr "正常"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "error"
-msgstr "错误"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "pending"
-msgstr "待处理"
-
-#: src/admin/panels/SettingsPanel.js
 #, fuzzy
-msgid "Update GeoIP database"
-msgstr "无法更新 GeoIP 数据库。"
+msgid "Update in progress"
+msgstr "在 WordPress 中打开"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid "Download GeoIP database"
-msgstr "无法更新 GeoIP 数据库。"
-
-#: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid "Local GeoIP database unavailable"
-msgstr "本地 GeoLite 数据库不可用。"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled."
+msgid "Error during last update"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Visitor origin cannot be displayed until the local GeoIP database has been downloaded. To install it, click “Download GeoIP database”. This action will contact an external service and store the database in the WordPress uploads directory."
+msgid "Operational"
 msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Unavailable"
+msgstr "不可用"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Database not downloaded"
+msgstr "GeoIP 数据库下载失败：%s"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
@@ -1459,25 +1447,27 @@ msgid "No post types available."
 msgstr "没有可用的文章类型。"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
-msgstr "选择 BimBeau Privacy Analytics 解析地理定位的方式：本地 GeoLite 数据库或 MaxMind API。"
+#, fuzzy
+msgid "Configure the geolocation source and GeoIP database updates."
+msgstr "GeoIP 数据库自动更新"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation source"
 msgstr "地理定位来源"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Local GeoLite database (default)"
+#, fuzzy
+msgid "Local GeoLite database — recommended"
 msgstr "本地 GeoLite 数据库（默认）"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "MaxMind API credentials"
-msgstr "MaxMind API 凭据"
+#, fuzzy
+msgid "MaxMind API"
+msgstr "MaxMind 账户 ID"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
-msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-msgstr "本地数据库模式会从 BimBeau Privacy Analytics 镜像下载 GeoLite MMDB 文件。API 模式使用实时 MaxMind 请求。"
+msgid "The local database works without external requests during tracking. The MaxMind API requires your credentials."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
@@ -1500,54 +1490,91 @@ msgid "Test MaxMind connection"
 msgstr "测试 MaxMind 连接"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Automatic GeoIP database updates"
-msgstr "GeoIP 数据库自动更新"
+#, fuzzy
+msgid "Automatic updates"
+msgstr "自动 GeoIP 更新："
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Choose whether the local GeoIP database should be updated automatically. In “manual updates only” mode, no external server is contacted automatically. You can still download or update the database manually with the button below."
+#, fuzzy
+msgid "GeoLite local database download frequency."
+msgstr "GeoIP 数据库下载失败：%s"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "No automatic download will be performed."
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 #, fuzzy
-msgid "Manual GeoIP database download"
-msgstr "GeoIP 数据库下载失败：%s"
+msgid "Manual update"
+msgstr "仅基础统计"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "This manual download will contact an external service to download the local GeoIP database and store it in the WordPress uploads directory."
+#, fuzzy
+msgid "Immediately download the latest GeoLite database."
+msgstr "无法读取本地 GeoLite 数据库。"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Update now"
+msgstr "更新"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "GeoIP database status"
+msgstr "未安装 GeoIP 数据库"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "The last GeoIP database update failed."
+msgstr "GeoIP 数据库自动更新"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Last updated"
+msgstr "上次尝试"
+
+#: src/admin/panels/SettingsPanel.js
+#, fuzzy
+msgid "Next update"
+msgstr "下一页"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Size"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Current state"
-msgstr "当前状态"
+#, fuzzy
+msgid "Technical details"
+msgstr "设备详情"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last attempt"
 msgstr "上次尝试"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Retry count"
+msgstr "重试次数"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Source or service"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
 #, fuzzy
-msgid "Next scheduled GeoIP update"
-msgstr "下次计划重试"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Last successful update"
-msgstr "上次成功更新"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Database size"
-msgstr "数据库大小"
+msgid "BimBeau GeoIP Database Service"
+msgstr "本地 GeoLite 数据库不可用。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last error code"
 msgstr "上次错误代码"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Retry count"
-msgstr "重试次数"
+msgid "Downloads contact an external service and store the database in the WordPress uploads directory."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
-msgstr "行为：插件启用会快速完成，临时的本地数据库不可用不会阻止 BimBeau Privacy Analytics 的其他部分。"
+msgid "Activation remains non-blocking when the local database is temporarily unavailable."
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Privacy"
@@ -2301,6 +2328,53 @@ msgstr "私密"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
+
+#~ msgid "ok"
+#~ msgstr "正常"
+
+#~ msgid "error"
+#~ msgstr "错误"
+
+#~ msgid "pending"
+#~ msgstr "待处理"
+
+#, fuzzy
+#~ msgid "Update GeoIP database"
+#~ msgstr "无法更新 GeoIP 数据库。"
+
+#, fuzzy
+#~ msgid "Download GeoIP database"
+#~ msgstr "无法更新 GeoIP 数据库。"
+
+#~ msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
+#~ msgstr "选择 BimBeau Privacy Analytics 解析地理定位的方式：本地 GeoLite 数据库或 MaxMind API。"
+
+#~ msgid "MaxMind API credentials"
+#~ msgstr "MaxMind API 凭据"
+
+#, fuzzy
+#~ msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
+#~ msgstr "本地数据库模式会从 BimBeau Privacy Analytics 镜像下载 GeoLite MMDB 文件。API 模式使用实时 MaxMind 请求。"
+
+#, fuzzy
+#~ msgid "Manual GeoIP database download"
+#~ msgstr "GeoIP 数据库下载失败：%s"
+
+#~ msgid "Current state"
+#~ msgstr "当前状态"
+
+#, fuzzy
+#~ msgid "Next scheduled GeoIP update"
+#~ msgstr "下次计划重试"
+
+#~ msgid "Last successful update"
+#~ msgstr "上次成功更新"
+
+#~ msgid "Database size"
+#~ msgstr "数据库大小"
+
+#~ msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
+#~ msgstr "行为：插件启用会快速完成，临时的本地数据库不可用不会阻止 BimBeau Privacy Analytics 的其他部分。"
 
 #~ msgid "Back"
 #~ msgstr "后退"

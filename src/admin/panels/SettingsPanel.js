@@ -690,16 +690,45 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
 
   const geoIpUiStatus = useMemo(() => {
     const status = String(geoIpDbStatus?.status || "").toLowerCase();
+    if (isUpdatingGeoIpDb) {
+      return {
+        label: __("Update in progress", "bimbeau-privacy-analytics"),
+        tone: "info",
+      };
+    }
+
+    if (status === "error" || geoIpDbStatus?.last_error_code) {
+      return {
+        label: __("Error during last update", "bimbeau-privacy-analytics"),
+        tone: "error",
+      };
+    }
+
     if (status === "success" || geoIpDbStatus?.operational) {
-      return __("ok", "bimbeau-privacy-analytics");
+      return {
+        label: __("Operational", "bimbeau-privacy-analytics"),
+        tone: "success",
+      };
     }
 
-    if (status === "error") {
-      return __("error", "bimbeau-privacy-analytics");
+    if (Number(geoIpDbStatus?.last_success_at || 0) > 0) {
+      return {
+        label: __("Unavailable", "bimbeau-privacy-analytics"),
+        tone: "warning",
+      };
     }
 
-    return __("pending", "bimbeau-privacy-analytics");
-  }, [geoIpDbStatus?.operational, geoIpDbStatus?.status]);
+    return {
+      label: __("Database not downloaded", "bimbeau-privacy-analytics"),
+      tone: "warning",
+    };
+  }, [
+    geoIpDbStatus?.last_error_code,
+    geoIpDbStatus?.last_success_at,
+    geoIpDbStatus?.operational,
+    geoIpDbStatus?.status,
+    isUpdatingGeoIpDb,
+  ]);
 
   const geoIpDatabaseMode = useMemo(() => {
     const isOperational = geoIpDbStatus?.operational === true;
@@ -712,35 +741,7 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
     return lastSuccessAt > 0 ? "unavailable" : "missing";
   }, [geoIpDbStatus?.last_success_at, geoIpDbStatus?.operational]);
 
-  const geoIpManualButtonLabel = useMemo(() => {
-    if (geoIpDatabaseMode === "operational") {
-      return __("Update GeoIP database", "bimbeau-privacy-analytics");
-    }
-
-    if (geoIpDatabaseMode === "unavailable") {
-      return __("Download GeoIP database", "bimbeau-privacy-analytics");
-    }
-
-    return __("Download GeoIP database", "bimbeau-privacy-analytics");
-  }, [geoIpDatabaseMode]);
-
-  const geoIpMissingDatabaseCard = useMemo(() => {
-    if (geoIpDatabaseMode === "operational") {
-      return null;
-    }
-
-    if (geoIpDatabaseMode === "unavailable") {
-      return {
-        title: __("Local GeoIP database unavailable", "bimbeau-privacy-analytics"),
-        body: __("The local GeoIP database seems to be missing or unreadable. Country and city reports may be incomplete until it is reinstalled.", "bimbeau-privacy-analytics"),
-      };
-    }
-
-    return {
-      title: __("GeoIP database not installed", "bimbeau-privacy-analytics"),
-      body: __("Visitor origin cannot be displayed until the local GeoIP database has been downloaded. To install it, click “Download GeoIP database”. This action will contact an external service and store the database in the WordPress uploads directory.", "bimbeau-privacy-analytics"),
-    };
-  }, [geoIpDatabaseMode]);
+  const geoIpHasError = geoIpUiStatus.tone === "error";
 
   const onPurge = async () => {
     if (!ADMIN_CONFIG?.restNonce || !ADMIN_CONFIG?.restUrl) {
@@ -1132,23 +1133,25 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                       </SettingsSectionTitle>
                       <p>
                         {__(
-                          "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API.",
+                          "Configure the geolocation source and GeoIP database updates.",
                           "bimbeau-privacy-analytics",
                         )}
                       </p>
+                      <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-source-title">
+                      <h3 id="bbpa-geoip-source-title">{__("Geolocation source", "bimbeau-privacy-analytics")}</h3>
                       <SelectControl
                         label={__("Geolocation source", "bimbeau-privacy-analytics")}
                         value={formState.geoip_lookup_mode || "local_database"}
                         options={[
                           {
                             label: __(
-                              "Local GeoLite database (default)",
+                              "Local GeoLite database — recommended",
                               "bimbeau-privacy-analytics",
                             ),
                             value: "local_database",
                           },
                           {
-                            label: __("MaxMind API credentials", "bimbeau-privacy-analytics"),
+                            label: __("MaxMind API", "bimbeau-privacy-analytics"),
                             value: "maxmind_api",
                           },
                         ]}
@@ -1159,10 +1162,11 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                           }))
                         }
                         help={__(
-                          "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests.",
+                          "The local database works without external requests during tracking. The MaxMind API requires your credentials.",
                           "bimbeau-privacy-analytics",
                         )}
                       />
+                      </section>
                       {isApiLookupMode && (
                         <>
                           <TextControl
@@ -1188,10 +1192,15 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                                 }));
                               }
                             }}
-                            isInvalid={Boolean(validationErrors.maxmind_account_id)}
+                            isInvalid={Boolean(
+                              validationErrors.maxmind_account_id,
+                            )}
                           />
                           <TextControl
-                            label={__("MaxMind License Key", "bimbeau-privacy-analytics")}
+                            label={__(
+                              "MaxMind License Key",
+                              "bimbeau-privacy-analytics",
+                            )}
                             type="password"
                             help={
                               validationErrors.maxmind_license_key ||
@@ -1213,7 +1222,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                                 }));
                               }
                             }}
-                            isInvalid={Boolean(validationErrors.maxmind_license_key)}
+                            isInvalid={Boolean(
+                              validationErrors.maxmind_license_key,
+                            )}
                           />
                         </>
                       )}
@@ -1226,7 +1237,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                         </Notice>
                       )}
                       {geoIpDbNotice && (
-                        <Notice status={geoIpDbNotice.status} isDismissible={false}>
+                        <Notice
+                          status={geoIpDbNotice.status}
+                          isDismissible={false}
+                        >
                           {geoIpDbNotice.message}
                         </Notice>
                       )}
@@ -1239,69 +1253,47 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                           {__("Test MaxMind connection", "bimbeau-privacy-analytics")}
                         </Button>
                       ) : (
-                        <>
-                          <SelectControl
-                            label={__("Automatic GeoIP database updates", "bimbeau-privacy-analytics")}
-                            value={formState.geoip_update_frequency}
-                            options={GEOIP_UPDATE_FREQUENCY_OPTIONS}
-                            help={__(
-                              "Choose whether the local GeoIP database should be updated automatically. In “manual updates only” mode, no external server is contacted automatically. You can still download or update the database manually with the button below.",
-                              "bimbeau-privacy-analytics",
-                            )}
-                            onChange={(value) =>
-                              setFormState((prev) => ({
-                                ...prev,
-                                geoip_update_frequency: value,
-                              }))
-                            }
-                          />
-                          <Notice status="warning" isDismissible={false}>
-                            <strong>{__("Manual GeoIP database download", "bimbeau-privacy-analytics")}</strong>
-                            <p>
-                              {__(
-                                "This manual download will contact an external service to download the local GeoIP database and store it in the WordPress uploads directory.",
-                                "bimbeau-privacy-analytics",
-                              )}
-                            </p>
-                          </Notice>
-                          {geoIpMissingDatabaseCard && (
-                            <Notice status="info" isDismissible={false}>
-                              <strong>{geoIpMissingDatabaseCard.title}</strong>
-                              <p>{geoIpMissingDatabaseCard.body}</p>
-                              <Button
-                                variant="secondary"
-                                isBusy={isUpdatingGeoIpDb}
-                                onClick={onUpdateGeoIpDatabase}
-                              >
-                                {geoIpManualButtonLabel}
-                              </Button>
-                            </Notice>
-                          )}
-                          {!geoIpMissingDatabaseCard && (
-                            <Button
-                              variant="secondary"
-                              isBusy={isUpdatingGeoIpDb}
-                              onClick={onUpdateGeoIpDatabase}
-                            >
-                              {geoIpManualButtonLabel}
+                        <div className="bbpa-geoip-settings">
+                          <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-automatic-title">
+                            <h3 id="bbpa-geoip-automatic-title">{__("Automatic updates", "bimbeau-privacy-analytics")}</h3>
+                            <SelectControl
+                              label={__("Automatic updates", "bimbeau-privacy-analytics")}
+                              value={formState.geoip_update_frequency}
+                              options={GEOIP_UPDATE_FREQUENCY_OPTIONS}
+                              help={__("GeoLite local database download frequency.", "bimbeau-privacy-analytics")}
+                              onChange={(value) => setFormState((prev) => ({ ...prev, geoip_update_frequency: value }))}
+                            />
+                            {formState.geoip_update_frequency === "disabled" && <p className="bbpa-geoip-settings__conditional-help">{__("No automatic download will be performed.", "bimbeau-privacy-analytics")}</p>}
+                          </section>
+                          <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-manual-title">
+                            <h3 id="bbpa-geoip-manual-title">{__("Manual update", "bimbeau-privacy-analytics")}</h3>
+                            <p>{__("Immediately download the latest GeoLite database.", "bimbeau-privacy-analytics")}</p>
+                            <Button variant={geoIpDatabaseMode === "missing" ? "primary" : "secondary"} isBusy={isUpdatingGeoIpDb} disabled={isUpdatingGeoIpDb} onClick={onUpdateGeoIpDatabase}>
+                              {__("Update now", "bimbeau-privacy-analytics")}
                             </Button>
-                          )}
-                          <p>{`${__("Current state", "bimbeau-privacy-analytics")}: ${geoIpUiStatus}`}</p>
-                          <p>{`${__("Last attempt", "bimbeau-privacy-analytics")}: ${geoIpLastAttempt}`}</p>
-                          <p>{`${__("Next scheduled GeoIP update", "bimbeau-privacy-analytics")}: ${geoIpNextRun}`}</p>
-                          <p>{`${__("Last successful update", "bimbeau-privacy-analytics")}: ${geoIpLastUpdated}`}</p>
-                          <p>{`${__("Database size", "bimbeau-privacy-analytics")}: ${geoIpSizeMb}`}</p>
-                          {geoIpDbStatus?.last_error_code && (
-                            <p>{`${__("Last error code", "bimbeau-privacy-analytics")}: ${geoIpDbStatus.last_error_code}`}</p>
-                          )}
-                          <p>{`${__("Retry count", "bimbeau-privacy-analytics")}: ${Number(geoIpDbStatus?.retry_count || 0)}`}</p>
-                          <p>
-                            {__(
-                              "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics.",
-                              "bimbeau-privacy-analytics",
-                            )}
-                          </p>
-                        </>
+                          </section>
+                          <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-status-title">
+                            <h3 id="bbpa-geoip-status-title">{__("GeoIP database status", "bimbeau-privacy-analytics")}</h3>
+                            {geoIpHasError && <Notice status="error" isDismissible={false}>{__("The last GeoIP database update failed.", "bimbeau-privacy-analytics")}</Notice>}
+                            <dl className="bbpa-geoip-status">
+                              <div><dt>{__("Status", "bimbeau-privacy-analytics")}</dt><dd><span className={`bbpa-geoip-status__badge bbpa-geoip-status__badge--${geoIpUiStatus.tone}`}>{geoIpUiStatus.label}</span></dd></div>
+                              <div><dt>{__("Last updated", "bimbeau-privacy-analytics")}</dt><dd>{geoIpLastUpdated}</dd></div>
+                              <div><dt>{__("Next update", "bimbeau-privacy-analytics")}</dt><dd>{geoIpNextRun}</dd></div>
+                              <div><dt>{__("Size", "bimbeau-privacy-analytics")}</dt><dd>{geoIpSizeMb}</dd></div>
+                            </dl>
+                            <details className="bbpa-geoip-technical" open={geoIpHasError || undefined}>
+                              <summary>{__("Technical details", "bimbeau-privacy-analytics")}</summary>
+                              <dl className="bbpa-geoip-status">
+                                <div><dt>{__("Last attempt", "bimbeau-privacy-analytics")}</dt><dd>{geoIpLastAttempt}</dd></div>
+                                <div><dt>{__("Retry count", "bimbeau-privacy-analytics")}</dt><dd>{Number(geoIpDbStatus?.retry_count || 0)}</dd></div>
+                                <div><dt>{__("Source or service", "bimbeau-privacy-analytics")}</dt><dd>{__("BimBeau GeoIP Database Service", "bimbeau-privacy-analytics")}</dd></div>
+                                {geoIpDbStatus?.last_error_code && <div><dt>{__("Last error code", "bimbeau-privacy-analytics")}</dt><dd><code>{geoIpDbStatus.last_error_code}</code></dd></div>}
+                              </dl>
+                              <p>{__("Downloads contact an external service and store the database in the WordPress uploads directory.", "bimbeau-privacy-analytics")}</p>
+                              <p>{__("Activation remains non-blocking when the local database is temporarily unavailable.", "bimbeau-privacy-analytics")}</p>
+                            </details>
+                          </section>
+                        </div>
                       )}
                     </CardBody>
                   </Card>
