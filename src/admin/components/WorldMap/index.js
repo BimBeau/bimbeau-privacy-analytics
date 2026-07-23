@@ -1397,6 +1397,7 @@ const WorldMap = ({
   const hasAppliedInitialResetRef = useRef(false);
   const hasAppliedRealtimeAutoFocusRef = useRef(false);
   const unresolvedCountryCodeCountsRef = useRef(new Map());
+  const lastCityMarkerDiagnosticRef = useRef("");
   const dragStateRef = useRef(null);
   const pinchStateRef = useRef(null);
   const activePointersRef = useRef(new Map());
@@ -2232,6 +2233,12 @@ const WorldMap = ({
     if (cityMarkerDiagnostics.excludedCitiesCount <= 0) {
       return;
     }
+
+    const diagnosticSignature = JSON.stringify(cityMarkerDiagnostics);
+    if (lastCityMarkerDiagnosticRef.current === diagnosticSignature) {
+      return;
+    }
+    lastCityMarkerDiagnosticRef.current = diagnosticSignature;
 
     logger.debug("WorldMap city marker exclusions detected", {
       action: "worldmap.city_markers.excluded",

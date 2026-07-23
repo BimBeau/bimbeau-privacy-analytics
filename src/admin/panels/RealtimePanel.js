@@ -469,6 +469,7 @@ const RealtimePanel = () => {
 		() => createLogger({ debugEnabled: () => Boolean(ADMIN_CONFIG?.settings?.debugEnabled) }),
 		[]
 	);
+	const lastMarkerDiagnosticRef = useRef('');
 	const { data, isLoading, error } = useRealtimeSnapshot();
 	const [isFullscreenActive, setIsFullscreenActive] = useState(false);
 	const [isFullscreenSupported, setIsFullscreenSupported] = useState(true);
@@ -624,6 +625,19 @@ const RealtimePanel = () => {
 				!(Math.abs(latitude) < 0.0001 && Math.abs(longitude) < 0.0001);
 		});
 		const positiveMarkers = validCoordinates.filter((item) => Number(item.visits) > 0);
+		const diagnosticSignature = JSON.stringify({
+			realtimeVisits: realtimeVisits.length,
+			consentedMapPoints: Array.isArray(data?.consentedMapPoints)
+				? data.consentedMapPoints.length
+				: 0,
+			normalizedPoints: items.length,
+			validCoordinatePoints: validCoordinates.length,
+			finalMarkers: positiveMarkers.length,
+		});
+		if (lastMarkerDiagnosticRef.current === diagnosticSignature) {
+			return;
+		}
+		lastMarkerDiagnosticRef.current = diagnosticSignature;
 
 		logger.debug('Realtime map marker normalization', {
 			action: 'realtime.map_markers.normalized',

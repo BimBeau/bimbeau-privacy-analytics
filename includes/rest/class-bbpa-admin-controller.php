@@ -1220,7 +1220,11 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $fallback_accuracy_radius = isset($realtime_row['accuracy_radius']) && is_numeric($realtime_row['accuracy_radius'])
                 ? max(0, (int) $realtime_row['accuracy_radius'])
                 : null;
-            $fallback_visit_data = [
+            $fallback_extension_fields = apply_filters('bbpa_realtime_visit_extension_fields', [], $realtime_row);
+            if (!is_array($fallback_extension_fields)) {
+                $fallback_extension_fields = [];
+            }
+            $fallback_visit_data = array_merge([
                 'visitor_id' => $fallback_visitor_id,
                 'country_code' => isset($realtime_row['country_code']) ? strtoupper(sanitize_text_field((string) $realtime_row['country_code'])) : '',
                 'country' => isset($realtime_row['country']) ? sanitize_text_field((string) $realtime_row['country']) : '',
@@ -1241,7 +1245,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 'last_view_at' => $row_timestamp,
                 'realtime_page_views' => 1,
                 'last_realtime_row_index' => (int) $visitor_index,
-            ];
+            ], $fallback_extension_fields);
 
             if (!isset($visits[$visitor_bucket])) {
                 $visits[$visitor_bucket] = $fallback_visit_data;
@@ -1295,10 +1299,12 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                         $visits[$visitor_bucket][$field] = $fallback_visit_data[$field];
                     }
                 }
+                foreach ($fallback_extension_fields as $field => $value) {
+                    $visits[$visitor_bucket][$field] = $value;
+                }
             }
         }
 
-        $points = [];
         $visits = array_values($visits);
         foreach ($visits as $visit_index => $visit) {
             $source_category = isset($visit['source_category']) ? sanitize_text_field((string) $visit['source_category']) : '';
@@ -1314,6 +1320,22 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $hit_page_views = isset($visit['page_views']) ? max(1, (int) $visit['page_views']) : 1;
             $realtime_page_views = isset($visit['realtime_page_views']) ? max(0, (int) $visit['realtime_page_views']) : 0;
             $visits[$visit_index]['page_views'] = max($hit_page_views, $realtime_page_views);
+        }
+
+        // Premium can derive map points while the internal coordinates are still
+        // available. The shared controller deliberately has no knowledge of the
+        // Premium coordinate service; Free keeps the neutral empty default.
+        $point_result = $essential_only_mode
+            ? []
+            : apply_filters('bbpa_realtime_map_points', [], $visits);
+        $point_diagnostics = [];
+        if (is_array($point_result) && isset($point_result['points']) && is_array($point_result['points'])) {
+            $points = array_values($point_result['points']);
+            $point_diagnostics = isset($point_result['diagnostics']) && is_array($point_result['diagnostics'])
+                ? $point_result['diagnostics']
+                : [];
+        } else {
+            $points = is_array($point_result) ? array_values($point_result) : [];
         }
 
         if ($essential_only_mode) {
@@ -1365,6 +1387,15 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             'visits_count' => count($visits),
             'points_count' => count($points),
         ], self::REALTIME_INFO_LOG_EVERY_N_REQUESTS);
+        $this->log_debug('Realtime map point summary.', array_merge([
+            'visits_received' => count($visits),
+            'raw_coordinates' => 0,
+            'geoname' => 0,
+            'city' => 0,
+            'excluded' => count($visits),
+            'consented_map_points' => count($points),
+            'premium_callback' => has_filter('bbpa_realtime_map_points') !== false,
+        ], $point_diagnostics));
 
 
         if (function_exists('bbpa_is_ui_field_visible')) {
