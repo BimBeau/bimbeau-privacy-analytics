@@ -1877,6 +1877,7 @@ const WorldMap = ({
         const canUseCountryFallback = Boolean(fallbackCountryCenter);
         const shouldUseCountryFallback =
           mapMode !== "cities" &&
+          mapMode !== "realtime-markers" &&
           canUseCountryFallback &&
           (hasInvalidCoordinates || hasZeroCoordinates);
         const resolvedCoordinates = resolveCityCoordinates(

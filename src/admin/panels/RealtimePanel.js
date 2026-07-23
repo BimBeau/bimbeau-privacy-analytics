@@ -226,10 +226,29 @@ const ChannelLabel = ({ sourceCategory = '', referrerDomain = '' }) => {
 };
 
 const buildRealtimeGeoKey = (latitude, longitude) => {
+	if (
+		latitude === null ||
+		latitude === undefined ||
+		longitude === null ||
+		longitude === undefined ||
+		(typeof latitude === 'string' && latitude.trim() === '') ||
+		(typeof longitude === 'string' && longitude.trim() === '')
+	) {
+		return '';
+	}
+
 	const lat = Number(latitude);
 	const lng = Number(longitude);
 
-	if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+	if (
+		!Number.isFinite(lat) ||
+		!Number.isFinite(lng) ||
+		lat < -90 ||
+		lat > 90 ||
+		lng < -180 ||
+		lng > 180 ||
+		(lat === 0 && lng === 0)
+	) {
 		return '';
 	}
 
