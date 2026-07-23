@@ -1060,6 +1060,90 @@ const isUnknownCityValue = (value) => {
   return normalizedValue === "" || normalizedValue === "unknown city";
 };
 
+export const MarkerMapLayer = ({
+  width,
+  height,
+  projectionScale,
+  projectionTranslation,
+  geoFeatures,
+  cityMarkers,
+  onCountryMouseEnter,
+  onCountryMouseMove,
+  onCountryMouseLeave,
+  onCityMarkerEnter,
+  onCityMarkerMove,
+  onCityMarkerLeave,
+}) => {
+  const { projection, path } = useGeoMap({
+    width,
+    height,
+    projectionType: "mercator",
+    projectionScale,
+    projectionTranslation,
+    projectionRotation: [0, 0, 0],
+    fillColor: NO_DATA_COLOR,
+    borderWidth: 1.5,
+    borderColor: DEFAULT_COUNTRY_STROKE_COLOR,
+  });
+
+  return (
+    <>
+      <g className="nivo-geo-features bbpa-world-map__projected-features">
+        {geoFeatures.map((feature, index) => (
+          <path
+            key={feature.id || `feature-${index}`}
+            d={path(feature) || undefined}
+            fill={NO_DATA_COLOR}
+            stroke={DEFAULT_COUNTRY_STROKE_COLOR}
+            strokeWidth={1.5}
+            strokeLinejoin="bevel"
+            onMouseEnter={(event) => onCountryMouseEnter(feature, event)}
+            onMouseMove={(event) => onCountryMouseMove(feature, event)}
+            onMouseLeave={onCountryMouseLeave}
+          />
+        ))}
+      </g>
+      <g className="bbpa-world-map__city-markers" style={{ pointerEvents: "all" }}>
+        {cityMarkers.map((marker) => {
+          const point = projection([marker.longitude, marker.latitude]);
+          if (!point || !Number.isFinite(point[0]) || !Number.isFinite(point[1])) {
+            return null;
+          }
+
+          return (
+            <circle
+              key={marker.id}
+              className="bbpa-world-map__city-marker"
+              cx={point[0]}
+              cy={point[1]}
+              r={marker.radius}
+              fill={marker.color}
+              style={{
+                pointerEvents: "all",
+                "--bbpa-city-marker-opacity": marker.opacity,
+                "--bbpa-city-marker-pulse-scale": marker.pulseScale,
+              }}
+              data-city-marker-id={marker.id}
+              tabIndex={0}
+              role="img"
+              aria-label={marker.tooltipLabel}
+              title={marker.tooltipLabel}
+              onPointerEnter={(event) => onCityMarkerEnter?.(marker, event)}
+              onPointerMove={(event) => onCityMarkerMove?.(marker, event)}
+              onPointerLeave={onCityMarkerLeave}
+              onMouseEnter={(event) => onCityMarkerEnter?.(marker, event)}
+              onMouseMove={(event) => onCityMarkerMove?.(marker, event)}
+              onMouseLeave={onCityMarkerLeave}
+              onFocus={(event) => onCityMarkerEnter?.(marker, event)}
+              onBlur={onCityMarkerLeave}
+            />
+          );
+        })}
+      </g>
+    </>
+  );
+};
+
 export const WorldChoropleth = ({
   data,
   geoFeatures,
@@ -1130,21 +1214,6 @@ export const WorldChoropleth = ({
     ],
     [height, viewport.translateY, viewport.translateX, width],
   );
-  // Nivo does not expose its internal projection to Choropleth custom layers.
-  // Marker maps therefore render their geography and markers through the same
-  // useGeoMap result instead of attempting to reproduce Nivo's projection.
-  const { projection: markerMapProjection, path: markerMapPath } = useGeoMap({
-    width,
-    height,
-    projectionType: "mercator",
-    projectionScale,
-    projectionTranslation,
-    projectionRotation: [0, 0, 0],
-    fillColor: NO_DATA_COLOR,
-    borderWidth: 1.5,
-    borderColor: DEFAULT_COUNTRY_STROKE_COLOR,
-  });
-
   const colorScale = useMemo(() => {
     if (typeof countryColorScale === "function") {
       return countryColorScale;
@@ -1181,90 +1250,26 @@ export const WorldChoropleth = ({
     [],
   );
 
-  const markerMapFeaturesLayer = useMemo(
+  const markerMapLayer = useMemo(
     () => () => (
-      <g className="nivo-geo-features bbpa-world-map__projected-features">
-        {geoFeatures.map((feature, index) => (
-          <path
-            key={feature.id || `feature-${index}`}
-            d={markerMapPath(feature) || undefined}
-            fill={NO_DATA_COLOR}
-            stroke={DEFAULT_COUNTRY_STROKE_COLOR}
-            strokeWidth={1.5}
-            strokeLinejoin="bevel"
-            onMouseEnter={(event) => handleCountryMouseEnter(feature, event)}
-            onMouseMove={(event) => handleCountryMouseMove(feature, event)}
-            onMouseLeave={handleCountryMouseLeave}
-          />
-        ))}
-      </g>
+      <MarkerMapLayer
+        width={width}
+        height={height}
+        projectionScale={projectionScale}
+        projectionTranslation={projectionTranslation}
+        geoFeatures={geoFeatures}
+        cityMarkers={cityMarkers}
+        onCountryMouseEnter={handleCountryMouseEnter}
+        onCountryMouseMove={handleCountryMouseMove}
+        onCountryMouseLeave={handleCountryMouseLeave}
+        onCityMarkerEnter={onCityMarkerEnter}
+        onCityMarkerMove={onCityMarkerMove}
+        onCityMarkerLeave={onCityMarkerLeave}
+      />
     ),
-    [
-      geoFeatures,
-      handleCountryMouseEnter,
-      handleCountryMouseLeave,
-      handleCountryMouseMove,
-      markerMapPath,
-    ],
-  );
-
-  const markersLayer = useMemo(
-    () => () => (
-      <g
-        className="bbpa-world-map__city-markers"
-        style={{ pointerEvents: "all" }}
-      >
-        {cityMarkers.map((marker) => {
-          const point = markerMapProjection([
-            marker.longitude,
-            marker.latitude,
-          ]);
-          if (
-            !point ||
-            !Number.isFinite(point[0]) ||
-            !Number.isFinite(point[1])
-          ) {
-            return null;
-          }
-
-          return (
-            <circle
-              key={marker.id}
-              className="bbpa-world-map__city-marker"
-              cx={point[0]}
-              cy={point[1]}
-              r={marker.radius}
-              fill={marker.color}
-              style={{
-                pointerEvents: "all",
-                "--bbpa-city-marker-opacity": marker.opacity,
-                "--bbpa-city-marker-pulse-scale": marker.pulseScale,
-              }}
-              data-city-marker-id={marker.id}
-              tabIndex={0}
-              role="img"
-              aria-label={marker.tooltipLabel}
-              title={marker.tooltipLabel}
-              onPointerEnter={(event) => onCityMarkerEnter?.(marker, event)}
-              onPointerMove={(event) => onCityMarkerMove?.(marker, event)}
-              onPointerLeave={onCityMarkerLeave}
-              onMouseEnter={(event) => onCityMarkerEnter?.(marker, event)}
-              onMouseMove={(event) => onCityMarkerMove?.(marker, event)}
-              onMouseLeave={onCityMarkerLeave}
-              onFocus={(event) => onCityMarkerEnter?.(marker, event)}
-              onBlur={onCityMarkerLeave}
-            />
-          );
-        })}
-      </g>
-    ),
-    [
-      markerMapProjection,
-      cityMarkers,
-      onCityMarkerEnter,
-      onCityMarkerLeave,
-      onCityMarkerMove,
-    ],
+    [cityMarkers, geoFeatures, handleCountryMouseEnter, handleCountryMouseLeave,
+      handleCountryMouseMove, height, onCityMarkerEnter, onCityMarkerLeave,
+      onCityMarkerMove, projectionScale, projectionTranslation, width],
   );
 
   return (
@@ -1283,7 +1288,7 @@ export const WorldChoropleth = ({
       borderColor={countryBorderColor}
       layers={
         isMarkerMapMode(mapMode)
-          ? ["graticule", markerMapFeaturesLayer, markersLayer]
+          ? ["graticule", markerMapLayer]
           : ["graticule", "features", "legends"]
       }
       projectionType="mercator"
