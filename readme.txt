@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.79
+Stable tag: 8.45.80
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,5 +235,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.79 =
-* Render authorized realtime visitor coordinates as weighted map markers and preserve active-page tooltip labels.
+= 8.45.80 =
+* Keep realtime geographic markers aligned with country geometry during auto-focus, zoom, pan, reset, resize, and fullscreen display.

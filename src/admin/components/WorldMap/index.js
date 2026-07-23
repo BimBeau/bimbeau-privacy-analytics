@@ -7,7 +7,7 @@ import {
 } from "@wordpress/element";
 import { Button, Tooltip, VisuallyHidden } from "@wordpress/components";
 import { __, sprintf } from "@wordpress/i18n";
-import { Choropleth, projectionById } from "@nivo/geo";
+import { Choropleth, projectionById, useGeoMap } from "@nivo/geo";
 import { scaleQuantize, scaleThreshold } from "d3-scale";
 
 import useAdminEndpoint from "../../api/useAdminEndpoint";
@@ -1130,18 +1130,20 @@ export const WorldChoropleth = ({
     ],
     [height, viewport.translateY, viewport.translateX, width],
   );
-  const cityMarkerProjection = useMemo(
-    () =>
-      projectionById
-        .mercator()
-        .scale(projectionScale)
-        .translate([
-          width * projectionTranslation[0],
-          height * projectionTranslation[1],
-        ])
-        .rotate([0, 0, 0]),
-    [height, projectionScale, projectionTranslation, width],
-  );
+  // Nivo does not expose its internal projection to Choropleth custom layers.
+  // Marker maps therefore render their geography and markers through the same
+  // useGeoMap result instead of attempting to reproduce Nivo's projection.
+  const { projection: markerMapProjection, path: markerMapPath } = useGeoMap({
+    width,
+    height,
+    projectionType: "mercator",
+    projectionScale,
+    projectionTranslation,
+    projectionRotation: [0, 0, 0],
+    fillColor: NO_DATA_COLOR,
+    borderWidth: 1.5,
+    borderColor: DEFAULT_COUNTRY_STROKE_COLOR,
+  });
 
   const colorScale = useMemo(() => {
     if (typeof countryColorScale === "function") {
@@ -1179,6 +1181,33 @@ export const WorldChoropleth = ({
     [],
   );
 
+  const markerMapFeaturesLayer = useMemo(
+    () => () => (
+      <g className="nivo-geo-features bbpa-world-map__projected-features">
+        {geoFeatures.map((feature, index) => (
+          <path
+            key={feature.id || `feature-${index}`}
+            d={markerMapPath(feature) || undefined}
+            fill={NO_DATA_COLOR}
+            stroke={DEFAULT_COUNTRY_STROKE_COLOR}
+            strokeWidth={1.5}
+            strokeLinejoin="bevel"
+            onMouseEnter={(event) => handleCountryMouseEnter(feature, event)}
+            onMouseMove={(event) => handleCountryMouseMove(feature, event)}
+            onMouseLeave={handleCountryMouseLeave}
+          />
+        ))}
+      </g>
+    ),
+    [
+      geoFeatures,
+      handleCountryMouseEnter,
+      handleCountryMouseLeave,
+      handleCountryMouseMove,
+      markerMapPath,
+    ],
+  );
+
   const markersLayer = useMemo(
     () => () => (
       <g
@@ -1186,7 +1215,7 @@ export const WorldChoropleth = ({
         style={{ pointerEvents: "all" }}
       >
         {cityMarkers.map((marker) => {
-          const point = cityMarkerProjection([
+          const point = markerMapProjection([
             marker.longitude,
             marker.latitude,
           ]);
@@ -1230,7 +1259,7 @@ export const WorldChoropleth = ({
       </g>
     ),
     [
-      cityMarkerProjection,
+      markerMapProjection,
       cityMarkers,
       onCityMarkerEnter,
       onCityMarkerLeave,
@@ -1254,7 +1283,7 @@ export const WorldChoropleth = ({
       borderColor={countryBorderColor}
       layers={
         isMarkerMapMode(mapMode)
-          ? ["graticule", "features", markersLayer]
+          ? ["graticule", markerMapFeaturesLayer, markersLayer]
           : ["graticule", "features", "legends"]
       }
       projectionType="mercator"
