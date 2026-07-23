@@ -15,6 +15,7 @@ import BpaCard from '../components/BpaCard';
 import WorldMap from '../components/WorldMap';
 import useRealtimeSnapshot from '../hooks/useRealtimeSnapshot';
 import BrandIcon from '../components/icons/BrandIcon';
+import PageTitle from '../components/PageTitle';
 import { getCountryFlagClass, isUnknownCountryCode } from '../lib/countryNames';
 import { formatScreenResolution } from '../lib/formatScreenResolution';
 import { getLocationLabel } from '../lib/locationLabel';
@@ -864,8 +865,8 @@ const RealtimePanel = () => {
 														<td><span className="bbpa-country-label">{hasCountry ? <span className={`bbpa-country-flag ${flagClass}`} role="img" aria-label={countryLabel} /> : <span className="bbpa-country-flag bbpa-country-flag--unknown" role="img" aria-label={__('Unknown country', 'bimbeau-privacy-analytics')} />}{countryFallbackLabel ? <span className="bbpa-country-flag-fallback" aria-hidden="true">{countryFallbackLabel}</span> : null}<span className={getPlaceholderLabelClassName(countryLabel)}>{countryLabel}</span></span></td>
 														<td><span className={locationLabelClassName}>{locationLabel}</span></td>
 														<td>{formatConnectionTime(visit?.first_view_at)}</td>
-														<td className="bbpa-realtime-current-page-cell">
-															{visit?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}
+												<td className="bbpa-realtime-current-page-cell">
+													<PageTitle>{visit?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}</PageTitle>
 														</td>
 														{!isEssentialOnlyScope ? (
 															<>

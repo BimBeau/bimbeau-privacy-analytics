@@ -11,10 +11,7 @@
 }
 
 .bbpa-admin-app .bbpa-report-table--realtime-visits tbody td.bbpa-realtime-current-page-cell:not(:empty) {
-  max-width: 320px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  min-width: 0;
   vertical-align: top;
   -webkit-background-clip: text;
   background-clip: text;

@@ -14,14 +14,6 @@ export const decodeHtmlEntities = ( value ) => {
 	);
 };
 
-export const truncatePageTitle = ( title ) => {
-	if ( typeof title !== 'string' ) {
-		return '';
-	}
-
-	return title.length > 25 ? `${ title.slice( 0, 25 ) }...` : title;
-};
-
 export const calculateChangePercent = ( current, previous ) => {
 	if ( previous === null || previous === undefined ) {
 		return null;

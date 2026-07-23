@@ -1240,6 +1240,15 @@
   border: none !important;
 }
 
+.bbpa-report-table--adaptive-label {
+  table-layout: fixed;
+}
+
+.bbpa-report-table__page-column,
+.bbpa-report-table__page-cell {
+  min-width: 0;
+}
+
 .bbpa-report-table th {
   border: none !important;
   font-size: 14px;
@@ -1566,11 +1575,24 @@ ul.striped > :nth-child(odd) {
 }
 
 .bbpa-report-table__row-action {
-  display: inline-flex;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 0;
   height: auto;
   min-height: auto;
   text-decoration: none;
+}
+
+.bbpa-page-title {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bbpa-report-table__row-action:hover,

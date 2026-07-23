@@ -16,11 +16,11 @@ import { ADMIN_CONFIG, DEFAULT_PAGE_LABEL_DISPLAY } from '../../constants';
 import FeatureIcon from '../../components/icons/FeatureIcon';
 import ReportExportAction from '../../components/ReportExportAction';
 import MiniSparkline from '../../components/MiniSparkline';
+import PageTitle from '../../components/PageTitle';
 import useSharedPageLabelDisplay from '../../hooks/useSharedPageLabelDisplay';
 import {
 	calculateChangePercent,
 	formatChangePercent,
-	truncatePageTitle,
 	decodeHtmlEntities,
 } from '../../lib/formatters';
 import { getPreviousRange } from '../../lib/date';
@@ -405,12 +405,17 @@ const ReportTableCard = ( {
 				<>
 					<div className="bbpa-table-scroll">
 						<table
-							className="widefat striped bbpa-report-table"
+							className="widefat striped bbpa-report-table bbpa-report-table--adaptive-label"
 							aria-label={ tableLabel }
 						>
 							<thead>
 								<tr>
-									<th scope="col">{ activeLabelHeader }</th>
+									<th
+										scope="col"
+										className="bbpa-report-table__page-column"
+									>
+										{ activeLabelHeader }
+									</th>
 									<th scope="col">
 										<span className="bbpa-report-table__metric-header">
 											<span>{ metricLabel }</span>
@@ -473,15 +478,13 @@ const ReportTableCard = ( {
 												: undefined
 										}
 									>
-										<td>
+										<td className="bbpa-report-table__page-cell">
 											{ ( () => {
 												const baseLabel =
 													supportsPageLabelToggle &&
 													pageLabelDisplay === 'title'
-														? truncatePageTitle(
-																row.pageTitle ||
-																	row.label
-														  )
+																? row.pageTitle ||
+																  row.label
 														: row.label;
 												const renderedLabel =
 													renderLabel
@@ -495,7 +498,11 @@ const ReportTableCard = ( {
 													! row.isActionable &&
 													! row.href
 												) {
-													return renderedLabel;
+															return (
+																<PageTitle title={ baseLabel }>
+																	{ renderedLabel }
+																</PageTitle>
+															);
 												}
 
 												return (
@@ -516,14 +523,18 @@ const ReportTableCard = ( {
 														} }
 														className="bbpa-report-table__row-action"
 														aria-label={
-															rowActionLabel ||
-															__(
+																	`${
+																		rowActionLabel ||
+																		__(
 																'Open details',
 																'bimbeau-privacy-analytics'
-															)
+																			)
+																	}: ${ baseLabel }`
 														}
 													>
-														{ renderedLabel }
+														<PageTitle title={ baseLabel }>
+															{ renderedLabel }
+														</PageTitle>
 													</Button>
 												);
 											} )() }

@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.83
+Stable tag: 8.45.84
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,5 +235,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.83 =
-* Restore validated realtime visitor markers by deriving Premium map points before sensitive visit fields are removed from REST responses.
+= 8.45.84 =
+* Adapt page-title labels to the available listing width while preserving complete titles for data operations and accessible labels.
