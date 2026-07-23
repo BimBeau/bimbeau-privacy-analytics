@@ -736,6 +736,7 @@ const RealtimePanel = () => {
 			<BpaCard
 				title={__('Real-time', 'bimbeau-privacy-analytics')}
 				className="bbpa-realtime-panel__card"
+				bodyClassName="bbpa-listing-region"
 				ref={cardContainerRef}
 				data-fullscreen-active={isFullscreenActive ? 'true' : 'false'}
 				style={

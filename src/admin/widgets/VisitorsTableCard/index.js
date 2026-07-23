@@ -238,7 +238,7 @@ const VisitorsTableCard = ({
 	);
 
 	return (
-		<BpaCard title={title} headerActions={headerActions}>
+		<BpaCard title={title} headerActions={headerActions} bodyClassName="bbpa-listing-region">
 			<div className="bbpa-table-controls">
 				<div className="bbpa-table-controls__group">
 					<SelectControl

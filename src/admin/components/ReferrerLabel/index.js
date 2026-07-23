@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { LuArrowRight, LuGlobe } from 'react-icons/lu';
 
 import { ADMIN_CONFIG, normalizeBooleanSetting } from '../../constants';
+import PageTitle from '../PageTitle';
 import { getCachedFavicon, normalizeReferrerHost } from './faviconCache';
 
 export const resolveDomainFaviconCandidates = ( internalFaviconUrl = '' ) =>
@@ -49,7 +50,7 @@ const ReferrerLabel = ( { domain, label, faviconsEnabled, favicon } ) => {
 					) }
 				</span>
 			) }
-			<span>{ resolvedLabel }</span>
+			<PageTitle>{ resolvedLabel }</PageTitle>
 		</span>
 	);
 };

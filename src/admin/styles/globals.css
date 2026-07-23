@@ -1216,6 +1216,22 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Keep listing tools and data fluid inside full-width cards without allowing
+ * intrinsically wide labels to determine the card or page width. */
+.bbpa-listing-region {
+  width: min(100%, 1280px);
+  max-width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.bbpa-listing-region > *,
+.bbpa-listing-region .bbpa-table-controls,
+.bbpa-listing-region .bbpa-table-controls__group {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .bbpa-table-scroll > table {
   width: max-content;
   min-width: 100%;
@@ -1237,7 +1253,14 @@
 
 .bbpa-report-table {
   width: 100%;
+  max-width: 100%;
   border: none !important;
+}
+
+.bbpa-table-scroll > .bbpa-report-table--adaptive-label {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .bbpa-report-table--adaptive-label {
@@ -1246,7 +1269,19 @@
 
 .bbpa-report-table__page-column,
 .bbpa-report-table__page-cell {
+  width: min(70%, 900px);
+  max-width: 900px;
   min-width: 0;
+}
+
+.bbpa-report-table--adaptive-label th:not(.bbpa-report-table__page-column),
+.bbpa-report-table--adaptive-label td:not(.bbpa-report-table__page-cell) {
+  width: 180px;
+}
+
+.bbpa-report-table--adaptive-label .bbpa-report-table__open-column,
+.bbpa-report-table--adaptive-label .bbpa-report-table__open-cell {
+  width: 48px;
 }
 
 .bbpa-report-table th {
@@ -1284,6 +1319,13 @@ ul.striped > :nth-child(odd) {
 
 .bbpa-report-table--visitors td {
   vertical-align: top;
+}
+
+.bbpa-events-panel__page-cell,
+.bbpa-realtime-current-page-cell {
+  width: clamp(240px, 40vw, 900px);
+  max-width: 900px;
+  min-width: 0;
 }
 
 @media (max-width: 782px) {
@@ -1636,9 +1678,16 @@ ul.striped > :nth-child(odd) {
 }
 
 .bbpa-referrer-label {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   align-items: center;
   gap: 8px;
+}
+
+.bbpa-referrer-label .bbpa-page-title {
+  flex: 1 1 auto;
 }
 
 .bbpa-referrer-label__favicon {

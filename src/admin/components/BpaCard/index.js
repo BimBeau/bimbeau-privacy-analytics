@@ -6,7 +6,10 @@ const Wrapper = ( { className, children } ) => (
 );
 
 const BpaCard = forwardRef(
-	( { title, headerActions = null, children, ...props }, ref ) => {
+	(
+		{ title, headerActions = null, bodyClassName = '', children, ...props },
+		ref
+	) => {
 		const CardComponent = Card || Wrapper;
 		const CardHeaderComponent = CardHeader || Wrapper;
 		const CardBodyComponent = CardBody || Wrapper;
@@ -55,7 +58,13 @@ const BpaCard = forwardRef(
 				: null,
 			createElement(
 				CardBodyComponent,
-				CardBody ? undefined : { className: 'bbpa-card__body' },
+				CardBody
+					? { className: bodyClassName || undefined }
+					: {
+							className: [ 'bbpa-card__body', bodyClassName ]
+								.filter( Boolean )
+								.join( ' ' ),
+					  },
 				children
 			)
 		);

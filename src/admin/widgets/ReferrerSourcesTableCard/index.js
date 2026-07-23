@@ -163,6 +163,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 		<BpaCard
 			title={ __( 'Referring sites', 'bimbeau-privacy-analytics' ) }
 			headerActions={ headerActions }
+			bodyClassName="bbpa-listing-region"
 		>
 			<div className="bbpa-table-controls">
 				<div className="bbpa-table-controls__group">
@@ -264,12 +265,12 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 				<>
 					<div className="bbpa-table-scroll">
 						<table
-							className="widefat striped bbpa-report-table"
+							className="widefat striped bbpa-report-table bbpa-report-table--adaptive-label bbpa-report-table--referrers"
 							aria-label={ tableLabel }
 						>
 							<thead>
 								<tr>
-									<th scope="col">
+									<th scope="col" className="bbpa-report-table__page-column">
 										{ __(
 											'Referrer',
 											'bimbeau-privacy-analytics'
@@ -292,7 +293,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 							<tbody>
 								{ rows.map( ( row ) => (
 									<tr key={ row.key }>
-										<td>
+										<td className="bbpa-report-table__page-cell">
 											<ReferrerLabel
 												domain={ row.referrerDomain }
 								label={ row.referrer }
