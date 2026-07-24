@@ -12,11 +12,19 @@ import {
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
 import BpaCard from '../../components/BpaCard';
-import { ADMIN_CONFIG, DEFAULT_PAGE_LABEL_DISPLAY } from '../../constants';
+import {
+	ADMIN_CONFIG,
+	DEFAULT_PAGE_LABEL_DISPLAY,
+	normalizeBooleanSetting,
+} from '../../constants';
 import FeatureIcon from '../../components/icons/FeatureIcon';
 import ReportExportAction from '../../components/ReportExportAction';
 import MiniSparkline from '../../components/MiniSparkline';
 import PageTitle from '../../components/PageTitle';
+import {
+	normalizeReferrerHost,
+	useReferrerFavicons,
+} from '../../components/ReferrerLabel/faviconCache';
 import useSharedPageLabelDisplay from '../../hooks/useSharedPageLabelDisplay';
 import {
 	calculateChangePercent,
@@ -59,6 +67,7 @@ const ReportTableCard = ( {
 	showOpenButton = true,
 	metricSeriesKey = '',
 	renderMetricAccessory,
+	loadReferrerFavicons = false,
 } ) => {
 	const [ page, setPage ] = useState( 1 );
 	const [ perPage, setPerPage ] = useState( 10 );
@@ -174,6 +183,16 @@ const ReportTableCard = ( {
 		);
 
 	const items = data?.items || [];
+	const faviconsEnabled =
+		loadReferrerFavicons &&
+		normalizeBooleanSetting(
+			ADMIN_CONFIG?.settings?.referrer_favicons_enabled,
+			false
+		);
+	const referrerFavicons = useReferrerFavicons(
+		items.map( ( item ) => item?.label || '' ),
+		faviconsEnabled
+	);
 	const pagination = data?.pagination || {};
 	const totalPages =
 		Number( pagination.totalPages || pagination.total_pages || 1 ) || 1;
@@ -494,7 +513,12 @@ const ReportTableCard = ( {
 													renderLabel
 														? renderLabel(
 																baseLabel,
-																row.item
+																row.item,
+																referrerFavicons.get(
+																	normalizeReferrerHost(
+																		row.item?.label || ''
+																	)
+																)
 														  )
 														: baseLabel;
 

@@ -1690,6 +1690,13 @@ ul.striped > :nth-child(odd) {
   flex: 1 1 auto;
 }
 
+.bbpa-referrer-label .bbpa-referrer-label__domain {
+  overflow: visible;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  white-space: normal;
+}
+
 .bbpa-referrer-label__favicon {
   width: 16px;
   height: 16px;
