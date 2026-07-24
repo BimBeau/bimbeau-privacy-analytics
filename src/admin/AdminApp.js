@@ -77,6 +77,7 @@ const AdminApp = ( { PremiumPwaNavigation = null } ) => {
 	const [ hasFreemiusNotices, setHasFreemiusNotices ] = useState( false );
 	
 	const [ geoIpDatabaseStatus, setGeoIpDatabaseStatus ] = useState( null );
+	const [ geoIpStatusError, setGeoIpStatusError ] = useState( null );
 	const [ setupWizard, setSetupWizard ] = useState( null );
 	const [ isSetupWizardLoaded, setIsSetupWizardLoaded ] = useState( false );
 	const [ isSetupWizardOpen, setIsSetupWizardOpen ] = useState( false );
@@ -125,7 +126,12 @@ const AdminApp = ( { PremiumPwaNavigation = null } ) => {
 	const shouldShowMissingGeoIpDatabaseNotice =
 		lookupMode === 'local_database' &&
 		! isAuthRequired &&
+		! geoIpStatusError &&
 		! isGeoIpStatusLoading &&
+		geoIpDatabaseStatus !== null &&
+		Object.prototype.hasOwnProperty.call( geoIpDatabaseStatus, 'local_available' ) &&
+		Object.prototype.hasOwnProperty.call( geoIpDatabaseStatus, 'operational' ) &&
+		Object.prototype.hasOwnProperty.call( geoIpDatabaseStatus, 'last_success_at' ) &&
 		Number( geoIpDatabaseStatus?.last_success_at || 0 ) <= 0 &&
 		geoIpDatabaseStatus?.local_available !== true &&
 		geoIpDatabaseStatus?.operational !== true;
@@ -138,6 +144,7 @@ const AdminApp = ( { PremiumPwaNavigation = null } ) => {
 
 		let isCurrent = true;
 		setIsGeoIpStatusLoading( true );
+		setGeoIpStatusError( null );
 
 		fetchAdminJson( '/admin/geoip-database/status' )
 			.then( ( payload ) => {
@@ -145,9 +152,10 @@ const AdminApp = ( { PremiumPwaNavigation = null } ) => {
 					setGeoIpDatabaseStatus( payload?.database || null );
 				}
 			} )
-			.catch( () => {
+			.catch( ( requestError ) => {
 				if ( isCurrent ) {
 					setGeoIpDatabaseStatus( null );
+					setGeoIpStatusError( requestError || { code: 'request_error' } );
 				}
 			} )
 			.finally( () => {

@@ -45,7 +45,7 @@ function bbpa_rest_request_has_valid_authenticated_app_session(WP_REST_Request $
         return false;
     }
 
-    if (is_user_logged_in() && wp_verify_nonce($app_nonce, 'bbpa_admin_session')) {
+    if (is_user_logged_in() && wp_verify_nonce($app_nonce, 'bbpa_app_session')) {
         return true;
     }
 
@@ -56,7 +56,7 @@ function bbpa_rest_request_has_valid_authenticated_app_session(WP_REST_Request $
 
     wp_set_current_user((int) $cookie_user_id);
 
-    return wp_verify_nonce($app_nonce, 'bbpa_admin_session') !== false;
+    return wp_verify_nonce($app_nonce, 'bbpa_app_session') !== false;
 }
 
 /**

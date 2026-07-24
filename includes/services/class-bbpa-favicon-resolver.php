@@ -109,7 +109,7 @@ class BBPA_Favicon_Resolver {
     }
 
     private function download_and_store(string $url, string $host): array {
-        $response = $this->request($url, 'image/x-icon,image/png,image/jpeg,image/webp,application/octet-stream');
+        $response = $this->request($url, 'image/x-icon,image/vnd.microsoft.icon,image/png,image/jpeg,image/webp,image/svg+xml,application/octet-stream');
         if (!$response) return [];
         $this->debug('candidate HTTP response', $this->redact_url($response['url']) . ' [200]');
         $this->debug('candidate Content-Type', $response['content_type']);
@@ -127,9 +127,14 @@ class BBPA_Favicon_Resolver {
     }
 
     private function validate_image(string $body, string $content_type): string {
-        if ($body === '' || strlen($body) > self::MAX_BYTES || preg_match('/<(?:svg|html|script|\?xml)/i', substr($body, 0, 512))) return '';
+        if ($body === '' || strlen($body) > self::MAX_BYTES || preg_match('/<(?:html|script)/i', substr($body, 0, 512))) return '';
         $media_type = strtolower(trim(explode(';', $content_type, 2)[0]));
-        if ($media_type !== '' && !in_array($media_type, ['image/x-icon', 'image/vnd.microsoft.icon', 'image/png', 'image/jpeg', 'image/webp', 'application/octet-stream'], true)) return '';
+        if ($media_type !== '' && !in_array($media_type, ['image/x-icon', 'image/vnd.microsoft.icon', 'image/png', 'image/jpeg', 'image/webp', 'image/svg+xml', 'application/octet-stream'], true)) return '';
+        if ($media_type === 'image/svg+xml' || preg_match('/^\s*(?:<\?xml[^>]*>\s*)?<svg\b/i', $body)) {
+            if (!preg_match('/^\s*(?:<\?xml[^>]*>\s*)?<svg\b[^>]*>.*<\/svg>\s*$/is', $body)) return '';
+            if (preg_match('/<\s*(?:script|foreignObject|iframe|object|embed)\b|\bon\w+\s*=|(?:href|src)\s*=\s*["\']\s*(?:https?:|\/\/|data:)/i', $body)) return '';
+            return 'svg';
+        }
         $signatures = ['png' => "\x89PNG\r\n\x1a\n", 'jpg' => "\xff\xd8\xff", 'webp' => 'RIFF', 'ico' => "\x00\x00\x01\x00"];
         foreach ($signatures as $format => $signature) if (str_starts_with($body, $signature) && ($format !== 'webp' || substr($body, 8, 4) === 'WEBP')) return $format;
         return '';
@@ -153,7 +158,7 @@ class BBPA_Favicon_Resolver {
             if ($url === '') continue;
             $extension = strtolower((string) pathinfo((string) (wp_parse_url($url, PHP_URL_PATH) ?: ''), PATHINFO_EXTENSION));
             $sizes = strtolower(trim((string) $link->getAttribute('sizes')));
-            $safe_format = in_array($extension, ['ico', 'png', 'webp', 'jpg', 'jpeg'], true);
+            $safe_format = in_array($extension, ['ico', 'png', 'webp', 'jpg', 'jpeg', 'svg'], true);
             $preferred_size = (bool) preg_match('/(?:^|\s)(?:16x16|32x32|48x48|180x180|192x192)(?:\s|$)/', $sizes);
             $priority = $safe_format ? 0 : ($preferred_size ? 1 : ($is_apple ? 2 : 3));
             $candidates[] = ['url' => $url, 'priority' => $priority];

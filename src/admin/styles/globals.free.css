@@ -1126,10 +1126,10 @@
 /* Keep listing tools and data fluid inside full-width cards without allowing
  * intrinsically wide labels to determine the card or page width. */
 .bbpa-listing-region {
-  width: min(100%, 1280px);
-  max-width: 100%;
+  width: 100%;
+  max-width: none;
   min-width: 0;
-  margin-inline: auto;
+  box-sizing: border-box;
 }
 
 .bbpa-listing-region > *,
