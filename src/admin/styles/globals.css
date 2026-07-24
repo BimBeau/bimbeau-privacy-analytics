@@ -1285,6 +1285,12 @@
   width: 180px;
 }
 
+.bbpa-report-table--referrers th:not(.bbpa-report-table__page-column),
+.bbpa-report-table--referrers td:not(.bbpa-report-table__page-cell) {
+  width: 1%;
+  white-space: nowrap;
+}
+
 .bbpa-report-table--adaptive-label .bbpa-report-table__open-column,
 .bbpa-report-table--adaptive-label .bbpa-report-table__open-cell {
   width: 48px;
@@ -1697,10 +1703,12 @@ ul.striped > :nth-child(odd) {
 }
 
 .bbpa-referrer-label .bbpa-referrer-label__domain {
-  overflow: visible;
-  overflow-wrap: anywhere;
-  text-overflow: clip;
-  white-space: normal;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bbpa-referrer-label__favicon {

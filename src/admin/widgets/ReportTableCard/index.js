@@ -68,6 +68,7 @@ const ReportTableCard = ( {
 	metricSeriesKey = '',
 	renderMetricAccessory,
 	loadReferrerFavicons = false,
+	tableClassName = '',
 } ) => {
 	const [ page, setPage ] = useState( 1 );
 	const [ perPage, setPerPage ] = useState( 10 );
@@ -265,6 +266,8 @@ const ReportTableCard = ( {
 				isActionable: typeof onRowClick === 'function',
 			};
 		} );
+	const shouldRenderOpenColumn =
+		showOpenButton && rows.some( ( row ) => Boolean( row.href ) );
 	const comparisonValuesByKey = useMemo( () => {
 		if ( ! showMetricTrend ) {
 			return new Map();
@@ -428,7 +431,9 @@ const ReportTableCard = ( {
 				<>
 					<div className="bbpa-table-scroll">
 						<table
-							className="widefat striped bbpa-report-table bbpa-report-table--adaptive-label"
+							className={ `widefat striped bbpa-report-table bbpa-report-table--adaptive-label${
+								tableClassName ? ` ${ tableClassName }` : ''
+							}` }
 							aria-label={ tableLabel }
 						>
 							<thead>
@@ -479,7 +484,7 @@ const ReportTableCard = ( {
 											</span>
 										</th>
 									) : null }
-									{ showOpenButton ? (
+									{ shouldRenderOpenColumn ? (
 										<th
 											scope="col"
 											className="bbpa-report-table__open-column"
@@ -496,7 +501,7 @@ const ReportTableCard = ( {
 									<tr
 										key={ row.key }
 										className={
-											showOpenButton && row.href
+											shouldRenderOpenColumn && row.href
 												? 'bbpa-report-table__row--has-open-link'
 												: undefined
 										}
@@ -679,7 +684,7 @@ const ReportTableCard = ( {
 													: row.extraValue }
 											</td>
 										) : null }
-										{ showOpenButton ? (
+										{ shouldRenderOpenColumn ? (
 											<td className="bbpa-report-table__open-cell">
 												{ row.href ? (
 													<Button
