@@ -69,6 +69,7 @@ const ReportTableCard = ( {
 	renderMetricAccessory,
 	loadReferrerFavicons = false,
 	tableClassName = '',
+	useAdaptiveLabel = true,
 } ) => {
 	const [ page, setPage ] = useState( 1 );
 	const [ perPage, setPerPage ] = useState( 10 );
@@ -431,7 +432,11 @@ const ReportTableCard = ( {
 				<>
 					<div className="bbpa-table-scroll">
 						<table
-							className={ `widefat striped bbpa-report-table bbpa-report-table--adaptive-label${
+							className={ `widefat striped bbpa-report-table${
+								useAdaptiveLabel
+									? ' bbpa-report-table--adaptive-label'
+									: ''
+							}${
 								tableClassName ? ` ${ tableClassName }` : ''
 							}` }
 							aria-label={ tableLabel }
