@@ -978,11 +978,13 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
         $admin_extra_css_candidates
     );
     $admin_extra_css_url = '';
+    $admin_extra_css_path = '';
 
     foreach ($admin_extra_css_candidates as $candidate) {
         try {
             bbpa_safe_existing_file(BBPA_PATH, $candidate['path']);
             $admin_extra_css_url = $candidate['url'];
+            $admin_extra_css_path = $candidate['path'];
             break;
         } catch (RuntimeException | InvalidArgumentException $exception) {
             continue;
@@ -1000,7 +1002,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
             'bbpa-admin-extras',
             $admin_extra_css_url,
             [],
-            $asset_data['version']
+            bbpa_get_asset_file_version($admin_extra_css_path)
         );
         wp_style_add_data('bbpa-admin-extras', 'rtl', 'replace');
     }
@@ -1014,11 +1016,13 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
         $admin_css_candidates
     );
     $admin_css_url = '';
+    $admin_css_path = '';
 
     foreach ($admin_css_candidates as $candidate) {
         try {
             bbpa_safe_existing_file(BBPA_PATH, $candidate['path']);
             $admin_css_url = $candidate['url'];
+            $admin_css_path = $candidate['path'];
             break;
         } catch (RuntimeException | InvalidArgumentException $exception) {
             continue;
@@ -1035,7 +1039,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
             'bbpa-admin',
             $admin_css_url,
             $admin_css_dependencies,
-            $asset_data['version']
+            bbpa_get_asset_file_version($admin_css_path)
         );
     }
 
@@ -1411,6 +1415,24 @@ function bbpa_normalize_asset_version($version): string
     $normalized = sanitize_text_field((string) $version);
 
     return $normalized !== '' ? $normalized : BBPA_VERSION;
+}
+
+/**
+ * Build a content-derived cache version for a distributed asset.
+ */
+function bbpa_get_asset_file_version(string $relative_path): string
+{
+    try {
+        $asset_file = bbpa_safe_existing_file(BBPA_PATH, $relative_path);
+    } catch (RuntimeException | InvalidArgumentException $exception) {
+        return BBPA_VERSION;
+    }
+
+    $fingerprint = hash_file('sha256', $asset_file);
+
+    return is_string($fingerprint) && $fingerprint !== ''
+        ? substr($fingerprint, 0, 16)
+        : BBPA_VERSION;
 }
 
 function bbpa_get_admin_geoip_database_status_for_payload(): array
