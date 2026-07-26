@@ -39,36 +39,6 @@ function bbpa_purge_analytics_data(): array
 }
 
 /**
- * Purge captured events entries from events stats.
- */
-function bbpa_purge_captured_events_data(): array
-{
-    global $wpdb;
-
-    $table_suffixes = [
-        'bbpa_event_occurrences',
-        'bbpa_event_actions_daily',
-        'bbpa_events_daily',
-    ];
-
-    $results = [];
-    foreach ($table_suffixes as $table_suffix) {
-        $table_name = bbpa_resolve_sql_table($table_suffix);
-        if ($table_name === null) {
-            bbpa_safe_log('Storage', 'warning', 'SQL guard blocked unknown table in captured events purge', ['table_suffix' => $table_suffix]);
-            continue;
-        }
-        $results[$table_suffix] = (int) $wpdb->query("DELETE FROM `{$table_name}`"); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name is allowlisted via bbpa_resolve_sql_table().
-    }
-
-    bbpa_flush_admin_cache();
-
-    return [
-        'tables' => $results,
-    ];
-}
-
-/**
  * Purge visitor-detail analytics data while keeping aggregate KPI tables.
  */
 function bbpa_purge_aggregated_data(): array
@@ -108,9 +78,8 @@ function bbpa_purge_aggregated_data(): array
         'bbpa_geo_daily' => 'date_bucket',
         'bbpa_time_daily' => 'date_bucket',
         'bbpa_page_time_daily' => 'date_bucket',
-        'bbpa_event_actions_daily' => 'day_bucket',
-        'bbpa_events_daily' => 'day_bucket',
     ];
+    $date_bucket_tables = apply_filters('bbpa_retention_date_bucket_tables', $date_bucket_tables);
     foreach ($date_bucket_tables as $table_suffix => $bucket_column) {
         $table_deletions[$table_suffix] = bbpa_delete_by_retention_cutoff(
             $table_suffix,
@@ -123,8 +92,8 @@ function bbpa_purge_aggregated_data(): array
     $datetime_bucket_tables = [
         'bbpa_hourly' => 'date_bucket',
         'bbpa_entry_exit_hourly' => 'date_bucket',
-        'bbpa_event_occurrences' => 'triggered_at',
     ];
+    $datetime_bucket_tables = apply_filters('bbpa_retention_datetime_bucket_tables', $datetime_bucket_tables);
     foreach ($datetime_bucket_tables as $table_suffix => $bucket_column) {
         $table_deletions[$table_suffix] = bbpa_delete_by_retention_cutoff(
             $table_suffix,

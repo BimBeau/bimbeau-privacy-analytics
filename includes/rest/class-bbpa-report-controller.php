@@ -2630,8 +2630,6 @@ class BBPA_Report_Controller {
             $wpdb->prefix . 'bbpa_geo_daily',
             $wpdb->prefix . 'bbpa_entry_exit_daily',
             $wpdb->prefix . 'bbpa_entry_exit_hourly',
-            $wpdb->prefix . 'bbpa_event_daily',
-            $wpdb->prefix . 'bbpa_event_occurrences',
             $wpdb->prefix . 'bbpa_visitors',
         ];
 

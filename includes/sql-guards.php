@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function bbpa_get_allowed_sql_table_suffixes(): array
 {
-    return [
+    $tables = [
         'bbpa_daily',
         'bbpa_hourly',
         'bbpa_sessions',
@@ -32,10 +32,9 @@ function bbpa_get_allowed_sql_table_suffixes(): array
         'bbpa_page_time_daily',
         'bbpa_visitors',
         'bbpa_visitor_activity_daily',
-        'bbpa_event_occurrences',
-        'bbpa_event_actions_daily',
-        'bbpa_events_daily',
     ];
+
+    return apply_filters('bbpa_allowed_sql_table_suffixes', $tables);
 }
 
 function bbpa_get_allowed_sql_columns(): array
@@ -61,18 +60,17 @@ function bbpa_get_allowed_sql_columns(): array
         'bbpa_visitor_activity_daily',
     ];
 
-    return array_merge(
+    $columns = array_merge(
         array_fill_keys($date_bucket_tables, ['date_bucket']),
         [
             'bbpa_visitors' => ['last_view_at'],
             'bbpa_visitor_activity_daily' => ['date_bucket'],
             'bbpa_hourly' => ['date_bucket'],
             'bbpa_entry_exit_hourly' => ['date_bucket'],
-            'bbpa_event_actions_daily' => ['day_bucket'],
-            'bbpa_events_daily' => ['day_bucket'],
-            'bbpa_event_occurrences' => ['triggered_at'],
         ]
     );
+
+    return apply_filters('bbpa_allowed_sql_columns', $columns);
 }
 
 function bbpa_resolve_sql_table(string $table_suffix): ?string

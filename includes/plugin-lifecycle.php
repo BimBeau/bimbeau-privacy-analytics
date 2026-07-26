@@ -385,10 +385,8 @@ function bbpa_after_uninstall_cleanup(): void
         'bbpa_time_daily',
         'bbpa_page_time_daily',
         'bbpa_overview_daily',
-        'bbpa_event_occurrences',
-        'bbpa_event_actions_daily',
-        'bbpa_events_daily',
     ];
+    $table_suffixes = apply_filters('bbpa_uninstall_table_suffixes', $table_suffixes);
 
     foreach ($table_suffixes as $table_suffix) {
         $table_name = $wpdb->prefix . $table_suffix;

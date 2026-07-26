@@ -61,9 +61,6 @@ function bbpa_install_schema(): void
     $visitor_activity_daily_table = $wpdb->prefix . 'bbpa_visitor_activity_daily';
     $time_daily_table = $wpdb->prefix . 'bbpa_time_daily';
     $overview_daily_table = $wpdb->prefix . 'bbpa_overview_daily';
-    $event_actions_daily_table = $wpdb->prefix . 'bbpa_event_actions_daily';
-    $events_daily_table = $wpdb->prefix . 'bbpa_events_daily';
-    $event_occurrences_table = $wpdb->prefix . 'bbpa_event_occurrences';
     $page_time_daily_table = $wpdb->prefix . 'bbpa_page_time_daily';
     $daily_source_category_table = $wpdb->prefix . 'bbpa_daily_source_category';
 
@@ -254,23 +251,6 @@ function bbpa_install_schema(): void
         KEY date_bucket (date_bucket)
     ) {$charset_collate};";
 
-    $event_actions_daily_schema = "CREATE TABLE {$event_actions_daily_table} (
-        day_bucket DATE NOT NULL,
-        event_id VARCHAR(191) NOT NULL,
-        action_type VARCHAR(64) NOT NULL,
-        status VARCHAR(32) NOT NULL,
-        events_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
-        PRIMARY KEY  (day_bucket, event_id, action_type, status),
-        KEY day_bucket (day_bucket),
-        KEY event_id (event_id),
-        KEY action_type (action_type),
-        KEY status (status)
-    ) {$charset_collate};";
-
-
-    $event_occurrences_schema = bbpa_get_event_occurrences_table_schema($event_occurrences_table, $charset_collate);
-
-
     $page_time_daily_schema = "CREATE TABLE {$page_time_daily_table} (
         date_bucket DATE NOT NULL,
         page_path VARCHAR(2048) NOT NULL,
@@ -280,23 +260,7 @@ function bbpa_install_schema(): void
         KEY date_bucket_page (date_bucket, page_path(255)),
         KEY page_path (page_path(255))
     ) {$charset_collate};";
-    $events_daily_schema = "CREATE TABLE {$events_daily_table} (
-        day_bucket DATE NOT NULL,
-        last_triggered_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
-        event_id VARCHAR(191) NOT NULL,
-        trigger_type VARCHAR(32) NOT NULL,
-        page_path VARCHAR(2048) NOT NULL,
-        action_status VARCHAR(32) NOT NULL DEFAULT 'no_action',
-        triggered_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
-        PRIMARY KEY  (day_bucket, event_id, trigger_type, page_path(255), action_status),
-        KEY day_bucket (day_bucket),
-        KEY event_id (event_id),
-        KEY trigger_type (trigger_type),
-        KEY action_status (action_status),
-        KEY day_bucket_event_id (day_bucket, event_id)
-    ) {$charset_collate};";
-
-    bbpa_run_dbdelta_schemas([
+    $schemas = [
         $daily_schema,
         $hourly_schema,
         $hits_daily_schema,
@@ -310,34 +274,14 @@ function bbpa_install_schema(): void
         $visitor_activity_daily_schema,
         $time_daily_schema,
         $overview_daily_schema,
-        $event_actions_daily_schema,
-        $events_daily_schema,
-        $event_occurrences_schema,
         $page_time_daily_schema,
-    ]);
+    ];
+    $schemas = apply_filters('bbpa_additional_schema_definitions', $schemas, $charset_collate);
+    bbpa_run_dbdelta_schemas($schemas);
+    do_action('bbpa_after_core_schema_install');
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta does not support DROP TABLE statements for cleanup migrations.
     $wpdb->query("DROP TABLE IF EXISTS `{$sessions_table}`");
-
-    $legacy_action_status_exists = $wpdb->get_var(
-        $wpdb->prepare(
-            'SHOW COLUMNS FROM ' . $events_daily_table . ' LIKE %s',
-            'has_enabled_action'
-        )
-    );
-
-    if (!empty($legacy_action_status_exists)) {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta cannot transform and backfill legacy columns conditionally.
-        $wpdb->query("ALTER TABLE `{$events_daily_table}` ADD COLUMN action_status VARCHAR(32) NOT NULL DEFAULT 'no_action' AFTER page_path");
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- targeted one-off data migration from legacy boolean flag.
-        $wpdb->query("UPDATE `{$events_daily_table}` SET action_status = CASE WHEN has_enabled_action = 1 THEN 'skipped' ELSE 'no_action' END");
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta cannot adjust an existing composite primary key safely in place.
-        $wpdb->query("ALTER TABLE `{$events_daily_table}` DROP PRIMARY KEY");
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta cannot preserve legacy data while redefining composite primary keys.
-        $wpdb->query("ALTER TABLE `{$events_daily_table}` ADD PRIMARY KEY (day_bucket, event_id, trigger_type, page_path(255), action_status)");
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta does not drop obsolete legacy columns.
-        $wpdb->query("ALTER TABLE `{$events_daily_table}` DROP COLUMN has_enabled_action");
-    }
 
     bbpa_run_db_migrations();
 
@@ -345,71 +289,9 @@ function bbpa_install_schema(): void
 }
 
 
-/**
- * Build the canonical event occurrences table schema.
- */
-function bbpa_get_event_occurrences_table_schema(string $table, string $charset_collate): string
-{
-    return "CREATE TABLE {$table} (
-        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-        day_bucket DATE NOT NULL,
-        triggered_at DATETIME NOT NULL,
-        event_id VARCHAR(191) NOT NULL,
-        trigger_type VARCHAR(32) NOT NULL,
-        page_path VARCHAR(2048) NOT NULL,
-        action_status VARCHAR(32) NOT NULL DEFAULT 'no_action',
-        execution_status VARCHAR(32) NOT NULL DEFAULT 'matched',
-        skip_reason VARCHAR(191) NULL DEFAULT NULL,
-        error_message VARCHAR(255) NULL DEFAULT NULL,
-        verification_level VARCHAR(32) NOT NULL DEFAULT 'none',
-        error_category VARCHAR(64) NULL DEFAULT NULL,
-        http_status SMALLINT UNSIGNED NULL DEFAULT NULL,
-        provider_code VARCHAR(64) NULL DEFAULT NULL,
-        retryable TINYINT(1) NULL DEFAULT NULL,
-        executed_at DATETIME NULL DEFAULT NULL,
-        country VARCHAR(191) NOT NULL DEFAULT '',
-        country_code CHAR(2) NOT NULL DEFAULT '',
-        city VARCHAR(191) NOT NULL DEFAULT '',
-        country_flag VARCHAR(16) NOT NULL DEFAULT '',
-        operating_system VARCHAR(64) NOT NULL DEFAULT '',
-        browser VARCHAR(64) NOT NULL DEFAULT '',
-        screen_resolution VARCHAR(32) NOT NULL DEFAULT '',
-        device_class VARCHAR(50) NOT NULL DEFAULT '',
-        source_category VARCHAR(20) NOT NULL DEFAULT '',
-        event_context_json LONGTEXT NULL DEFAULT NULL,
-        consent_granted TINYINT(1) NOT NULL DEFAULT 0,
-        PRIMARY KEY  (id),
-        KEY day_bucket (day_bucket),
-        KEY triggered_at (triggered_at),
-        KEY event_id (event_id),
-        KEY event_id_triggered_at (event_id, triggered_at),
-        KEY source_category (source_category)
-    ) {$charset_collate};";
-}
 
-/**
- * Ensure event occurrences table exists before running incremental column migrations.
- */
-function bbpa_ensure_event_occurrences_table(): void
-{
-    global $wpdb;
 
-    $table = $wpdb->prefix . 'bbpa_event_occurrences';
-    if (bbpa_table_exists($table)) {
-        return;
-    }
 
-    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-    $schema = bbpa_get_event_occurrences_table_schema($table, $wpdb->get_charset_collate());
-    dbDelta($schema);
-
-    if (bbpa_table_exists($table)) {
-        bbpa_safe_log('Storage', 'info', 'Event occurrences table ensured', [
-            'table' => $table,
-        ]);
-    }
-}
 
 /**
  * Execute dbDelta statements for table creation/alignment.
@@ -423,67 +305,9 @@ function bbpa_run_dbdelta_schemas(array $schemas): void
     }
 }
 
-/**
- * Ensure the events daily table contains the last_triggered_at column.
- */
-function bbpa_ensure_events_daily_last_triggered_at_column(): void
-{
-    global $wpdb;
-    $events_daily_table = $wpdb->prefix . 'bbpa_events_daily';
-    $event_occurrences_table = $wpdb->prefix . 'bbpa_event_occurrences';
-    $page_time_daily_table = $wpdb->prefix . 'bbpa_page_time_daily';
 
-    if (!bbpa_table_exists($events_daily_table)) {
-        bbpa_log_missing_table_debug($events_daily_table);
-        return;
-    }
 
-    $last_triggered_column_exists = $wpdb->get_var(
-        $wpdb->prepare(
-            'SHOW COLUMNS FROM ' . $events_daily_table . ' LIKE %s',
-            'last_triggered_at'
-        )
-    );
 
-    if (!empty($last_triggered_column_exists)) {
-        return;
-    }
-
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta cannot place a column with AFTER in a legacy table without table recreation.
-    $wpdb->query("ALTER TABLE `{$events_daily_table}` ADD COLUMN last_triggered_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00' AFTER day_bucket");
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- one-time deterministic backfill for legacy rows.
-    $wpdb->query("UPDATE `{$events_daily_table}` SET last_triggered_at = CONCAT(day_bucket, ' 00:00:00') WHERE last_triggered_at IN ('1970-01-01 00:00:00', '0000-00-00 00:00:00') OR last_triggered_at IS NULL");
-}
-
-/**
- * Ensure the event occurrences table contains the consent_granted column.
- */
-function bbpa_ensure_event_occurrences_consent_column(): void
-{
-    global $wpdb;
-    $table = $wpdb->prefix . 'bbpa_event_occurrences';
-
-    if (!bbpa_table_exists($table)) {
-        bbpa_log_missing_table_debug($table);
-        return;
-    }
-
-    $consent_column_exists = $wpdb->get_var(
-        $wpdb->prepare(
-            'SHOW COLUMNS FROM ' . $table . ' LIKE %s',
-            'consent_granted'
-        )
-    );
-
-    if (!empty($consent_column_exists)) {
-        return;
-    }
-
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta cannot preserve legacy column order in this migration path.
-    $wpdb->query("ALTER TABLE `{$table}` ADD COLUMN consent_granted TINYINT(1) NOT NULL DEFAULT 0 AFTER city");
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- one-time idempotent data backfill for historical rows.
-    $wpdb->query("UPDATE `{$table}` SET consent_granted = 1 WHERE city <> '' OR country <> ''");
-}
 
 
 
@@ -658,31 +482,7 @@ function bbpa_ensure_visitors_source_category_column(): void
     }
 }
 
-/**
- * Ensure event occurrence rows can record acquisition channel.
- */
-function bbpa_ensure_event_occurrences_source_category_column(): void
-{
-    global $wpdb;
-    $table = $wpdb->prefix . 'bbpa_event_occurrences';
 
-    if (!bbpa_table_exists($table)) {
-        bbpa_log_missing_table_debug($table);
-        return;
-    }
-
-    $column_exists = $wpdb->get_var($wpdb->prepare("SHOW COLUMNS FROM `{$table}` LIKE %s", 'source_category'));
-    if (empty($column_exists)) {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- Targeted additive migration for event acquisition reporting.
-        $wpdb->query("ALTER TABLE `{$table}` ADD COLUMN source_category VARCHAR(20) NOT NULL DEFAULT '' AFTER device_class");
-    }
-
-    $index_exists = $wpdb->get_var($wpdb->prepare("SHOW INDEX FROM `{$table}` WHERE Key_name = %s", 'source_category'));
-    if (empty($index_exists)) {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- Targeted additive index for event acquisition reporting.
-        $wpdb->query("ALTER TABLE `{$table}` ADD KEY source_category (source_category)");
-    }
-}
 
 /**
  * Ensure visitor rows can record whether Advanced tracker data enriched the visit.
@@ -754,16 +554,12 @@ function bbpa_run_db_migrations(): void
 
     $installed = get_option('bbpa_db_migration_version', '0.0.0');
 
-    bbpa_ensure_events_daily_last_triggered_at_column();
-    bbpa_ensure_event_occurrences_table();
-    bbpa_ensure_event_occurrences_consent_column();
-    bbpa_ensure_event_occurrences_render_columns();
-    bbpa_ensure_event_occurrences_source_category_column();
     bbpa_backfill_overview_daily_from_existing();
     bbpa_backfill_overview_daily_visitors_from_visits();
     bbpa_ensure_page_time_daily_table();
     bbpa_ensure_visitors_enriched_data_column();
     bbpa_ensure_visitors_source_category_column();
+    do_action('bbpa_run_additional_db_migrations');
 
     if (version_compare((string) $installed, BBPA_DB_MIGRATION_VERSION, '<')) {
         update_option('bbpa_db_migration_version', BBPA_DB_MIGRATION_VERSION, false);
@@ -782,7 +578,6 @@ function bbpa_can_run_db_migrations(): bool
         $wpdb->prefix . 'bbpa_entry_exit_daily',
         $wpdb->prefix . 'bbpa_time_daily',
         $wpdb->prefix . 'bbpa_overview_daily',
-        $wpdb->prefix . 'bbpa_events_daily',
     ];
 
     foreach ($required_tables as $table) {
@@ -795,48 +590,7 @@ function bbpa_can_run_db_migrations(): bool
     return true;
 }
 
-/**
- * Ensure the event occurrences table contains render columns used by REST ingestion.
- */
-function bbpa_ensure_event_occurrences_render_columns(): void
-{
-    global $wpdb;
-    $table = $wpdb->prefix . 'bbpa_event_occurrences';
 
-    if (!bbpa_table_exists($table)) {
-        bbpa_log_missing_table_debug($table);
-        return;
-    }
-
-    $columns = [
-        'execution_status' => "ALTER TABLE `%s` ADD COLUMN execution_status VARCHAR(32) NOT NULL DEFAULT 'matched' AFTER action_status",
-        'skip_reason' => "ALTER TABLE `%s` ADD COLUMN skip_reason VARCHAR(191) NULL DEFAULT NULL AFTER execution_status",
-        'error_message' => "ALTER TABLE `%s` ADD COLUMN error_message VARCHAR(255) NULL DEFAULT NULL AFTER skip_reason",
-        'verification_level' => "ALTER TABLE `%s` ADD COLUMN verification_level VARCHAR(32) NOT NULL DEFAULT 'none' AFTER error_message",
-        'error_category' => "ALTER TABLE `%s` ADD COLUMN error_category VARCHAR(64) NULL DEFAULT NULL AFTER verification_level",
-        'http_status' => "ALTER TABLE `%s` ADD COLUMN http_status SMALLINT UNSIGNED NULL DEFAULT NULL AFTER error_category",
-        'provider_code' => "ALTER TABLE `%s` ADD COLUMN provider_code VARCHAR(64) NULL DEFAULT NULL AFTER http_status",
-        'retryable' => "ALTER TABLE `%s` ADD COLUMN retryable TINYINT(1) NULL DEFAULT NULL AFTER provider_code",
-        'executed_at' => "ALTER TABLE `%s` ADD COLUMN executed_at DATETIME NULL DEFAULT NULL AFTER retryable",
-        'country' => "ALTER TABLE `%s` ADD COLUMN country VARCHAR(191) NOT NULL DEFAULT '' AFTER executed_at",
-        'city' => "ALTER TABLE `%s` ADD COLUMN city VARCHAR(191) NOT NULL DEFAULT '' AFTER country",
-        'country_code' => "ALTER TABLE `%s` ADD COLUMN country_code CHAR(2) NOT NULL DEFAULT '' AFTER country",
-        'country_flag' => "ALTER TABLE `%s` ADD COLUMN country_flag VARCHAR(16) NOT NULL DEFAULT '' AFTER country_code",
-        'operating_system' => "ALTER TABLE `%s` ADD COLUMN operating_system VARCHAR(64) NOT NULL DEFAULT '' AFTER city",
-        'browser' => "ALTER TABLE `%s` ADD COLUMN browser VARCHAR(64) NOT NULL DEFAULT '' AFTER operating_system",
-        'screen_resolution' => "ALTER TABLE `%s` ADD COLUMN screen_resolution VARCHAR(32) NOT NULL DEFAULT '' AFTER browser",
-        'device_class' => "ALTER TABLE `%s` ADD COLUMN device_class VARCHAR(50) NOT NULL DEFAULT '' AFTER browser",
-        'event_context_json' => "ALTER TABLE `%s` ADD COLUMN event_context_json LONGTEXT NULL DEFAULT NULL AFTER device_class",
-    ];
-
-    foreach ($columns as $column_name => $query) {
-        $column_exists = $wpdb->get_var($wpdb->prepare("SHOW COLUMNS FROM `{$table}` LIKE %s", $column_name));
-        if (empty($column_exists)) {
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- dbDelta cannot guarantee AFTER placement for targeted incremental columns.
-            $wpdb->query(sprintf($query, $table));
-        }
-    }
-}
 
 
 
@@ -906,7 +660,7 @@ function bbpa_maybe_install_schema(): void
  */
 function bbpa_get_critical_schema_table_suffixes(): array
 {
-    return [
+    $tables = [
         'bbpa_daily',
         'bbpa_hits_daily',
         'bbpa_daily_source_category',
@@ -916,15 +670,14 @@ function bbpa_get_critical_schema_table_suffixes(): array
         'bbpa_visitor_activity_daily',
         'bbpa_time_daily',
         'bbpa_overview_daily',
-        'bbpa_events_daily',
-        'bbpa_event_occurrences',
-        'bbpa_event_actions_daily',
         'bbpa_page_time_daily',
         'bbpa_hourly',
         'bbpa_404s_daily',
         'bbpa_search_terms_daily',
         'bbpa_entry_exit_hourly',
     ];
+
+    return apply_filters('bbpa_critical_schema_table_suffixes', $tables);
 }
 
 /**
