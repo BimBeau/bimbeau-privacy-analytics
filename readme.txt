@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.101
+Stable tag: 8.45.102
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,5 +235,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.101 =
-* Preserve readable WordPress page labels for saved event targets while retaining their tracking paths [Pro].
+= 8.45.102 =
+* Keep PWA listing columns content-sized, with consistent headers and no reserved first-column width.

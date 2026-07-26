@@ -1259,7 +1259,7 @@
 
 .bbpa-report-table {
   width: max-content;
-  min-width: max(100%, 520px);
+  min-width: 100%;
   max-width: none;
   table-layout: auto;
   border-collapse: collapse;
@@ -1271,7 +1271,7 @@
 
 .bbpa-table-scroll > .bbpa-report-table--adaptive-label {
   width: max-content;
-  min-width: max(100%, 520px);
+  min-width: 100%;
   max-width: none;
 }
 
@@ -1281,16 +1281,6 @@
 
 .bbpa-report-table--adaptive-label th,
 .bbpa-report-table--adaptive-label td {
-  min-width: 112px;
-  white-space: nowrap;
-}
-
-.bbpa-report-table--referrers {
-  min-width: max(100%, 560px);
-}
-
-.bbpa-report-table--referrers th,
-.bbpa-report-table--referrers td {
   min-width: 112px;
   white-space: nowrap;
 }
