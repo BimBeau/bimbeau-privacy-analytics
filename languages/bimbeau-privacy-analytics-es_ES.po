@@ -205,6 +205,49 @@ msgstr "Activación de BimBeau Privacy Analytics bloqueada"
 msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
 msgstr "%1$s se desactivó porque solo un paquete de BimBeau Privacy Analytics puede estar activo a la vez. %2$s permanece activo."
 
+#: free-runtime/includes/aggregation.php includes/aggregation.php
+msgid "BimBeau Privacy Analytics aggregated retention cleanup"
+msgstr "Limpieza de retención agregada de BimBeau Privacy Analytics"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+msgid "Once Monthly"
+msgstr "Una vez al mes"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 15 days"
+msgstr "Cada 15 días"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 45 days"
+msgstr "Cada 45 días"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 60 days"
+msgstr "Cada 60 días"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 3 months"
+msgstr "Cada 3 meses"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 6 months"
+msgstr "Cada 6 meses"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every year"
+msgstr "Cada año"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 2 years"
+msgstr "Cada 2 años"
+
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "Limpieza de registros sin procesar de BimBeau Privacy Analytics"
@@ -1246,37 +1289,9 @@ msgid "Manual updates only"
 msgstr "Solo estadísticas esenciales"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Every 15 days"
-msgstr "Cada 15 días"
-
-#: src/admin/panels/SettingsPanel.js
 #, fuzzy
 msgid "Every 30 days"
 msgstr "Cada 60 días"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 45 days"
-msgstr "Cada 45 días"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 60 days"
-msgstr "Cada 60 días"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 3 months"
-msgstr "Cada 3 meses"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 6 months"
-msgstr "Cada 6 meses"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every year"
-msgstr "Cada año"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 2 years"
-msgstr "Cada 2 años"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for %(days)s days"
@@ -2384,12 +2399,6 @@ msgstr "Privado"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabla: visitantes"
-
-#~ msgid "BimBeau Privacy Analytics aggregated retention cleanup"
-#~ msgstr "Limpieza de retención agregada de BimBeau Privacy Analytics"
-
-#~ msgid "Once Monthly"
-#~ msgstr "Una vez al mes"
 
 #~ msgid "Local GeoLite database is unavailable."
 #~ msgstr "La base de datos GeoLite local no está disponible."

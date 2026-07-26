@@ -197,13 +197,13 @@ validate_zip_main_file() {
   fi
 }
 
-ensure_free_runtime_callbacks() {
+verify_free_runtime_callbacks() {
   if [ "${BBPA_PACKAGE_TARGET:-free}" != "free" ]; then
     return 0
   fi
 
-  node "${repo_root}/scripts/ensure-free-runtime-callbacks.js" \
-    "${repo_root}" \
+  node "${repo_root}/scripts/verify-free-runtime-callbacks.js" \
+    "${temp_dir}/${plugin_slug}" \
     "${temp_dir}/${plugin_slug}"
 }
 
@@ -217,7 +217,7 @@ build_front_assets
 run_phase "plugin distribution staging (build-plugin-dist.sh)" \
   env BBPA_PACKAGE_TARGET="${BBPA_PACKAGE_TARGET:-free}" "${repo_root}/scripts/build-plugin-dist.sh" "${temp_dir}"
 run_phase "Free runtime callback preservation" \
-  ensure_free_runtime_callbacks
+  verify_free_runtime_callbacks
 
 plugin_zip="${dist_dir}/${plugin_slug}.zip"
 

@@ -204,6 +204,49 @@ msgstr "BimBeau Privacy Analytics 启用已被阻止"
 msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
 msgstr "%1$s 已被停用，因为同一时间只能启用一个 BimBeau Privacy Analytics 包。%2$s 保持启用。"
 
+#: free-runtime/includes/aggregation.php includes/aggregation.php
+msgid "BimBeau Privacy Analytics aggregated retention cleanup"
+msgstr "BimBeau Privacy Analytics 聚合留存清理"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+msgid "Once Monthly"
+msgstr "每月一次"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 15 days"
+msgstr "每 15 天"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 45 days"
+msgstr "每 45 天"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 60 days"
+msgstr "每 60 天"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 3 months"
+msgstr "每 3 个月"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 6 months"
+msgstr "每 6 个月"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every year"
+msgstr "每年"
+
+#: free-runtime/includes/geolocation.php includes/geolocation.php
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 2 years"
+msgstr "每 2 年"
+
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics 原始日志清理"
@@ -1244,37 +1287,9 @@ msgid "Manual updates only"
 msgstr "仅基础统计"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Every 15 days"
-msgstr "每 15 天"
-
-#: src/admin/panels/SettingsPanel.js
 #, fuzzy
 msgid "Every 30 days"
 msgstr "每 60 天"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 45 days"
-msgstr "每 45 天"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 60 days"
-msgstr "每 60 天"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 3 months"
-msgstr "每 3 个月"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 6 months"
-msgstr "每 6 个月"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every year"
-msgstr "每年"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Every 2 years"
-msgstr "每 2 年"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for %(days)s days"
@@ -2379,12 +2394,6 @@ msgstr "私密"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
-
-#~ msgid "BimBeau Privacy Analytics aggregated retention cleanup"
-#~ msgstr "BimBeau Privacy Analytics 聚合留存清理"
-
-#~ msgid "Once Monthly"
-#~ msgstr "每月一次"
 
 #~ msgid "Local GeoLite database is unavailable."
 #~ msgstr "本地 GeoLite 数据库不可用。"
