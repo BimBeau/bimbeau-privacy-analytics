@@ -1258,36 +1258,53 @@
 }
 
 .bbpa-report-table {
-  width: 100%;
-  max-width: 100%;
+  width: max-content;
+  min-width: max(100%, 520px);
+  max-width: none;
+  table-layout: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
   border: none !important;
+  color: inherit;
+  font-family: inherit;
 }
 
 .bbpa-table-scroll > .bbpa-report-table--adaptive-label {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
+  width: max-content;
+  min-width: max(100%, 520px);
+  max-width: none;
 }
 
 .bbpa-report-table--adaptive-label {
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .bbpa-report-table__page-column,
 .bbpa-report-table__page-cell {
-  width: min(70%, 900px);
+  width: clamp(240px, 45vw, 900px);
   max-width: 900px;
-  min-width: 0;
+  min-width: 240px;
 }
 
 .bbpa-report-table--adaptive-label th:not(.bbpa-report-table__page-column),
 .bbpa-report-table--adaptive-label td:not(.bbpa-report-table__page-cell) {
-  width: 180px;
+  min-width: 112px;
+  white-space: nowrap;
+}
+
+.bbpa-report-table--referrers {
+  min-width: max(100%, 560px);
+}
+
+.bbpa-report-table--referrers .bbpa-report-table__page-column,
+.bbpa-report-table--referrers .bbpa-report-table__page-cell {
+  width: clamp(260px, 48vw, 900px);
+  min-width: 260px;
 }
 
 .bbpa-report-table--referrers th:not(.bbpa-report-table__page-column),
 .bbpa-report-table--referrers td:not(.bbpa-report-table__page-cell) {
-  width: 1%;
+  min-width: 112px;
   white-space: nowrap;
 }
 
@@ -1298,14 +1315,38 @@
 
 .bbpa-report-table th {
   border: none !important;
+  box-sizing: border-box;
+  padding: 10px 12px;
   font-size: 14px;
   font-weight: 500;
+  line-height: 1.4;
   text-align: left;
+  vertical-align: middle;
 }
 
 .bbpa-report-table td {
+  box-sizing: border-box;
+  padding: 10px 12px;
   font-size: 13px;
   line-height: 1.5em;
+  vertical-align: middle;
+}
+
+.bbpa-admin-app .bbpa-report-table.striped > tbody > :nth-child(odd) {
+  background-color: color-mix(in srgb, var(--color-3) 8%, transparent);
+}
+
+.bbpa-admin-app .screen-reader-text {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 .bbpa-private-label {
@@ -1678,6 +1719,13 @@ ul.striped > :nth-child(odd) {
   }
 }
 
+@media (hover: none), (pointer: coarse) {
+  .bbpa-report-table__open-column,
+  .bbpa-report-table__open-cell {
+    display: none;
+  }
+}
+
 .bbpa-report-table__open-cell .components-button {
   height: 20px;
   padding: 6px;
@@ -1686,7 +1734,9 @@ ul.striped > :nth-child(odd) {
 .bbpa-report-table__metric {
   display: inline-flex;
   align-items: center;
+  flex-wrap: nowrap;
   gap: var(--bbpa-gap-xs);
+  white-space: nowrap;
 }
 
 .bbpa-referrer-label {
