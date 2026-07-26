@@ -37,7 +37,7 @@ const HEADING_NOTICE_SELECTOR = [
 	'.bbpa-admin-app__heading > .fs-notice',
 ].join( ', ' );
 
-const AdminApp = ( { PremiumPwaNavigation = null } ) => {
+const AdminApp = () => {
 	const debugEnabled = Boolean(
 		window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled
 	);

@@ -12,8 +12,7 @@ if (!defined('ABSPATH')) {
  * Validate a BimBeau Privacy Analytics REST request nonce.
  *
  * Accepts the standard WordPress REST nonce from the X-WP-Nonce header or
- * _wpnonce request parameter. App-mode requests may also use the app-session
- * nonce from X-BBPA-App-Nonce or app_nonce when allowed.
+ * _wpnonce request parameter.
  */
 function bbpa_rest_request_has_valid_nonce(WP_REST_Request $request, bool $allow_app_nonce = true): bool
 {
@@ -38,27 +37,6 @@ function bbpa_rest_request_has_valid_nonce(WP_REST_Request $request, bool $allow
  * app nonce is accepted only when the logged-in cookie still identifies a real
  * WordPress user and the nonce validates against that session token.
  */
-function bbpa_rest_request_has_valid_authenticated_app_session(WP_REST_Request $request): bool
-{
-    $app_nonce = bbpa_rest_request_get_nonce_value($request, 'X-BBPA-App-Nonce', 'app_nonce');
-    if ($app_nonce === '') {
-        return false;
-    }
-
-    if (is_user_logged_in() && wp_verify_nonce($app_nonce, 'bbpa_app_session')) {
-        return true;
-    }
-
-    $cookie_user_id = wp_validate_auth_cookie('', 'logged_in');
-    if (!$cookie_user_id) {
-        return false;
-    }
-
-    wp_set_current_user((int) $cookie_user_id);
-
-    return wp_verify_nonce($app_nonce, 'bbpa_app_session') !== false;
-}
-
 /**
  * Read and sanitize a nonce value from a REST request header or parameter.
  */

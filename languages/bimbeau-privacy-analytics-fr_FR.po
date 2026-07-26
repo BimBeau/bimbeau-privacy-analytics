@@ -16,19 +16,19 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #. Plugin Name of the plugin
+#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics"
 
-#: bimbeau-privacy-analytics.php
 #. Description of the plugin
+#: bimbeau-privacy-analytics.php
 msgid "Privacy-friendly, self-hosted analytics for WordPress."
 msgstr "Statistiques auto-hébergées et respectueuses de la vie privée pour WordPress."
 
-#: bimbeau-privacy-analytics.php
 #. Author of the plugin
+#: bimbeau-privacy-analytics.php
 msgid "BimBeau"
 msgstr "BimBeau"
 
@@ -36,9 +36,13 @@ msgstr "BimBeau"
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: admin/admin.php src/admin/components/ProBadge/index.js
+#: admin/admin.php
 msgid "Pro"
 msgstr "Pro"
+
+#: admin/admin.php
+msgid "Upgrade to Pro"
+msgstr ""
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -64,11 +68,13 @@ msgstr "Les diagnostics techniques sont indicatifs et restent limités aux attri
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Temps réel"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Pages"
 
@@ -76,7 +82,9 @@ msgstr "Pages"
 msgid "Acquisition"
 msgstr "Acquisition"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Sites référents"
 
@@ -84,19 +92,26 @@ msgstr "Sites référents"
 msgid "Internal searches"
 msgstr "Recherches internes"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Géolocalisation"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Visiteurs"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/widgets/DeviceDetailsCard/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "Appareils"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Réglages"
 
@@ -116,26 +131,26 @@ msgstr "Configurer la géolocalisation"
 msgid "Later"
 msgstr "Plus tard"
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, php-format
 msgid "%s overview"
 msgstr "%s vue de page"
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, php-format
 msgid "%s data is not available for this period."
 msgstr "Les données de %s ne sont pas disponibles pour cette période."
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, php-format
 msgid "View %s dashboard"
 msgstr "Voir le tableau de bord %s"
 
-#: admin/dashboard-widget.php
 #. translators: 1: Start date, 2: End date for the selected reporting period.
+#: admin/dashboard-widget.php
 #, php-format
 msgid "Period: %1$s to %2$s"
 msgstr "Période : du %1$s au %2$s"
@@ -148,21 +163,22 @@ msgstr "Période : 30 derniers jours"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "Activez au moins un panneau d’analyse pour afficher les indicateurs dans ce widget."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/panels/AcquisitionPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Visites"
 
-#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Pages vues"
 
 #: admin/dashboard-widget.php
 msgid "Referrers"
 msgstr "Référents"
-
-#: src/admin/constants/index.js src/admin/panels/SettingsPanel.js
-msgid "Events"
-msgstr "Événements"
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics Pro"
@@ -186,87 +202,27 @@ msgstr "Activation de BimBeau Privacy Analytics bloquée"
 msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
 msgstr "%1$s a été désactivé, car un seul paquet BimBeau Privacy Analytics peut être actif à la fois. %2$s reste actif."
 
-#: includes/aggregation.php
-msgid "BimBeau Privacy Analytics aggregated retention cleanup"
-msgstr "Nettoyage de rétention agrégée BimBeau Privacy Analytics"
-
-#: includes/geolocation.php
-msgid "Once Monthly"
-msgstr "Une fois par mois"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 15 days"
-msgstr "Tous les 15 jours"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 45 days"
-msgstr "Tous les 45 jours"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 60 days"
-msgstr "Tous les 60 jours"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 3 months"
-msgstr "Tous les 3 mois"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 6 months"
-msgstr "Tous les 6 mois"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every year"
-msgstr "Tous les ans"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 2 years"
-msgstr "Tous les 2 ans"
-
-#: includes/geolocation.php
-msgid "Local GeoLite database is unavailable."
-msgstr "La base GeoLite locale est indisponible."
-
-#: includes/geolocation.php
-msgid "Unable to read the local GeoLite database."
-msgstr "Impossible de lire la base GeoLite locale."
-
-#: includes/geolocation.php
-msgid "No geolocation record found for this IP."
-msgstr "Aucun enregistrement de géolocalisation trouvé pour cette IP."
-
-#: includes/geolocation.php
-msgid "Unable to determine the visitor IP."
-msgstr "Impossible de déterminer l’IP du visiteur."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Stats"
-msgstr "Stats"
-
-#: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 jours"
-
-#: src/admin/lib/channelLabels.js
-msgid "Other"
-msgstr "Autre"
-
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "Nettoyage des journaux bruts BimBeau Privacy Analytics"
 
-#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "Ce panneau d’analyse est désactivé pour la navigation."
 
-#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "Authentication is required to access analytics data."
 msgstr "Une authentification est requise pour accéder aux données d’analyse."
 
-#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "Connexion à MaxMind réussie."
 
-#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database updated successfully."
 msgstr "La base de données GeoIP a été mise à jour avec succès."
 
@@ -277,6 +233,24 @@ msgstr "La base de données GeoIP est disponible."
 #: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is not available yet."
 msgstr "La base de données GeoIP n’est pas encore disponible."
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/SearchTermsPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Unknown"
+msgstr "Page inconnue"
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Unknown country"
+msgstr "Drapeau de pays inconnu"
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -306,14 +280,14 @@ msgstr "Le mode base de données locale est requis pour mettre à jour la base G
 msgid "Unable to create a temporary file for the GeoIP database download."
 msgstr "Impossible de créer un fichier temporaire pour le téléchargement de la base GeoIP."
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database download failed: %s"
 msgstr "Échec du téléchargement de la base GeoIP : %s"
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %d: HTTP status code returned by the GeoIP download request.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database download failed with HTTP status %d."
 msgstr "Échec du téléchargement de la base GeoIP avec le statut HTTP %d."
@@ -331,14 +305,14 @@ msgstr ""
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "La base de données GeoIP n’est pas encore disponible."
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "Échec du téléchargement de la base GeoIP : %s"
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %d: HTTP status code returned by the GeoIP manifest request.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "Échec du téléchargement de la base GeoIP avec le statut HTTP %d."
@@ -416,14 +390,14 @@ msgstr "Impossible de créer un fichier temporaire pour les opérations GeoIP."
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "Impossible de créer un espace temporaire pour l’extraction GeoIP."
 
-#: includes/services/class-bbpa-maxmind-service.php
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
+#: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "Erreur API MaxMind (%1$s) : %2$s."
 
-#: includes/services/class-bbpa-maxmind-service.php
 #. translators: %s: MaxMind API response code.
+#: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%s)."
 msgstr "Erreur API MaxMind (%s)."
@@ -452,13 +426,13 @@ msgstr "Les identifiants MaxMind sont requis pour activer la géolocalisation IP
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: src/admin/AdminApp.js
 #. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
 msgid "%s Visitor"
 msgstr "%s visiteur"
 
-#: src/admin/AdminApp.js
 #. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
 msgid "%s Visitors"
 msgstr "%s visiteurs"
 
@@ -486,22 +460,6 @@ msgstr "Recharger l’application"
 #: src/admin/AdminApp.js
 msgid "No panel available for this screen."
 msgstr "Aucun panneau disponible pour cet écran."
-
-#: src/admin/AdminApp.js
-msgid "Install BimBeau Privacy Analytics app"
-msgstr "Installer l’application BimBeau Privacy Analytics"
-
-#: src/admin/AdminApp.js
-msgid "Get faster access from your home screen with an app-like experience."
-msgstr "Accédez plus rapidement depuis votre écran d’accueil avec une expérience proche d’une application."
-
-#: src/admin/AdminApp.js
-msgid "Install app"
-msgstr "Installer l’application"
-
-#: src/admin/AdminApp.js
-msgid "BimBeau Privacy Analytics app installation was accepted."
-msgstr "L’installation de l’application BimBeau Privacy Analytics a été acceptée."
 
 #: src/admin/AdminApp.js
 msgid "Complete the initial configuration"
@@ -591,28 +549,28 @@ msgstr "Fermer la notification"
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
 msgstr "BimBeau Privacy Analytics ne peut pas charger l’interface d’administration."
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: current admin panel and page label.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Panel/page: %s"
 msgstr "Panneau/page : %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Component undefined: %s"
 msgstr "Composant non défini : %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
 msgstr "Incompatibilité possible avec Gutenberg/@wordpress/components : %s non défini"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: comma-separated WordPress script handles checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Script handles checked: %s"
 msgstr "Handles de scripts vérifiés : %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Global namespaces checked: %s"
 msgstr "Espaces de noms globaux vérifiés : %s"
 
@@ -632,7 +590,8 @@ msgstr "Granularités disponibles"
 msgid "Run diagnostic"
 msgstr "Lancer le diagnostic"
 
-#: src/admin/components/AdvancedConsentTestCard/index.js src/admin/panels/SettingsPanel.js
+#: src/admin/components/AdvancedConsentTestCard/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Status"
 msgstr "État"
 
@@ -660,7 +619,8 @@ msgstr "Rappel de conformité du consentement"
 msgid "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP remains the source of truth for consent workflows."
 msgstr "BimBeau Privacy Analytics fournit uniquement des diagnostics techniques. Votre CMP reste la source de référence des parcours de consentement."
 
-#: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/DataState/index.js
+#: src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
 msgstr "Chargement…"
 
@@ -672,8 +632,8 @@ msgstr "Point de terminaison :"
 msgid "Response preview:"
 msgstr "Aperçu de la réponse :"
 
-#: src/admin/components/DataTableCard/index.js
 #. translators: %s: card title.
+#: src/admin/components/DataTableCard/index.js
 msgid "Loading: %s"
 msgstr "Chargement : %s"
 
@@ -701,7 +661,10 @@ msgstr "La granularité d’exécution est indiquée à partir des granularités
 msgid "Technical state does not prove consent collection validity."
 msgstr "L’état technique ne prouve pas la validité de la collecte du consentement."
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Accès direct"
 
@@ -821,7 +784,10 @@ msgstr "Icônes de référence :"
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "D'autres paramètres utilisent les valeurs par défaut recommandées et peuvent être modifiés ultérieurement à partir des paramètres de BimBeau Privacy Analytics."
 
-#: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/SetupWizard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Précédent"
 
@@ -893,13 +859,13 @@ msgstr "Dézoomer la carte"
 msgid "Reset map zoom"
 msgstr "Réinitialiser le zoom"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#: src/admin/components/WorldMap/index.js
 msgid "%1$s: %2$s visits%3$s"
 msgstr "%1$s : %2$s visites%3$s"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: approximation scope label.
+#: src/admin/components/WorldMap/index.js
 msgid " (%s)"
 msgstr " (%s)"
 
@@ -919,20 +885,20 @@ msgstr "Aucune visite géolocalisée n’est disponible. Vérifiez vos réglages
 msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
 msgstr "Aucune visite géolocalisée n’est disponible. Vérifiez vos réglages de géolocalisation pour commencer à collecter des données par pays."
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: visitor count.
+#: src/admin/components/WorldMap/index.js
 #, fuzzy
 msgid "%s visitors"
 msgstr "%s visiteurs"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: share of total visitors.
+#: src/admin/components/WorldMap/index.js
 #, fuzzy
 msgid "%s of total visitors"
 msgstr "%s du total des visites"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: visit count.
+#: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s visites"
 
@@ -957,6 +923,10 @@ msgid "Map legend"
 msgstr "Légende de la carte"
 
 #: src/admin/constants/index.js
+msgid "Events"
+msgstr "Événements"
+
+#: src/admin/constants/index.js
 msgid "Today"
 msgstr "Aujourd’hui"
 
@@ -975,6 +945,10 @@ msgstr "7 jours"
 #: src/admin/constants/index.js
 msgid "30d"
 msgstr "30j"
+
+#: src/admin/constants/index.js
+msgid "30 days"
+msgstr "30 jours"
 
 #: src/admin/constants/index.js
 msgid "90d"
@@ -1020,7 +994,9 @@ msgstr "Aucune page populaire disponible."
 msgid "Top referrers"
 msgstr "Principaux référents"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "Référent"
 
@@ -1064,6 +1040,10 @@ msgstr "Autres campagnes"
 msgid "AI Assistants"
 msgstr "Assistants IA"
 
+#: src/admin/lib/channelLabels.js
+msgid "Other"
+msgstr "Autre"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Position approximative"
@@ -1072,10 +1052,16 @@ msgstr "Position approximative"
 msgid "Approximate city"
 msgstr "Ville approximative"
 
-#: src/admin/lib/locationLabel.js
 #. translators: %d: geolocation accuracy radius in kilometers.
+#: src/admin/lib/locationLabel.js
 msgid "Approx. %d km"
 msgstr "Env. %d km"
+
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "No available"
+msgstr "Indisponible"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1089,12 +1075,18 @@ msgstr "Aucune donnée de canal d’acquisition n’est disponible pour cette p�
 msgid "Table: Acquisition channels"
 msgstr "Tableau : canaux d’acquisition"
 
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Channel"
+msgstr "Canal d’entrée"
+
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr "Part du trafic"
 
-#: src/admin/panels/AcquisitionPanel.js
 #. translators: %s: Total visits in the selected range.
+#: src/admin/panels/AcquisitionPanel.js
 msgid "Total visits: %s"
 msgstr "Total des visites : %s"
 
@@ -1102,14 +1094,14 @@ msgstr "Total des visites : %s"
 msgid "No country data available for the selected period."
 msgstr "Aucune donnée de pays disponible pour la période sélectionnée."
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: 1: country name, 2: visitor count.
+#: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s visites"
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: 1: country name, 2: no data label.
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
@@ -1121,14 +1113,19 @@ msgstr "Aucune donnée"
 msgid "Unknown country flag"
 msgstr "Drapeau de pays inconnu"
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: %s: country name.
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "Flag of %s"
 msgstr "Drapeau de %s"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
 msgstr "Principaux pays"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
@@ -1143,11 +1140,18 @@ msgstr "Provenance indisponible"
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
 msgstr "La provenance des visiteurs sera disponible après installation de la base GeoIP locale depuis les réglages de géolocalisation du plugin."
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "Hash de l’ID visiteur"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr ""
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Heure de connexion"
 
@@ -1155,11 +1159,32 @@ msgstr "Heure de connexion"
 msgid "Current page"
 msgstr "Page actuelle"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Systèmes d’exploitation"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Navigateurs"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Version du navigateur"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/AudienceBreakdownCards/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Appareils"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Resolution"
 msgstr "Résolution"
 
@@ -1212,8 +1237,36 @@ msgid "Manual updates only"
 msgstr "Mise à jour manuelle uniquement"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Every 15 days"
+msgstr "Tous les 15 jours"
+
+#: src/admin/panels/SettingsPanel.js
 msgid "Every 30 days"
 msgstr "Tous les 30 jours"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 45 days"
+msgstr "Tous les 45 jours"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 60 days"
+msgstr "Tous les 60 jours"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 3 months"
+msgstr "Tous les 3 mois"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 6 months"
+msgstr "Tous les 6 mois"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every year"
+msgstr "Tous les ans"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 2 years"
+msgstr "Tous les 2 ans"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for %(days)s days"
@@ -1308,8 +1361,8 @@ msgid "Aggregated analytics data purged."
 msgstr "Données d’analyse agrégées purgées."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Captured events data purged."
-msgstr "Données des événements capturés purgées."
+msgid "Stats"
+msgstr "Stats"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to dashboards, KPI cards, and analytics reports."
@@ -1332,44 +1385,8 @@ msgid "Tracking & privacy"
 msgstr "Suivi et confidentialité"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "App"
-msgstr "Application"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
 msgstr "Maintenance"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Delete captured events list"
-msgstr "Supprimer la liste des événements capturés"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Confirm captured events purge"
-msgstr "Confirmer la purge des événements capturés"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
-msgstr "Cette action supprime définitivement la liste des événements capturés affichée dans les statistiques d’événements. Les autres données d’analyse restent inchangées."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "I confirm that I want to permanently purge the captured events list."
-msgstr "Je confirme vouloir purger définitivement la liste des événements capturés."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Purge captured events"
-msgstr "Purger les événements capturés"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "PWA URL is unavailable."
-msgstr "L’URL PWA est indisponible."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "PWA URL copied."
-msgstr "URL PWA copiée."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Unable to copy the PWA URL."
-msgstr "Impossible de copier l’URL PWA."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Loading settings…"
@@ -1396,22 +1413,6 @@ msgid "Hidden"
 msgstr "Masqué"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Interface branding"
-msgstr "Identité de l’interface"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "White-label interface controls are available in Pro."
-msgstr "Les contrôles d’interface en marque blanche sont disponibles en Pro."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Use white-label interface"
-msgstr "Utiliser l’interface en marque blanche"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
-msgstr "Masque le logo BimBeau Privacy Analytics dans l’en-tête d’administration et affiche le titre d’analyse localisé à la place."
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
 msgstr "Panneaux activés"
 
@@ -1422,18 +1423,6 @@ msgstr "Visible"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
 msgstr "Masqué tant que \"Activer les statistiques avancées après consentement\" est désactivé."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Quick stats"
-msgstr "Stats rapides"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
-msgstr "Activez les Stats rapides sur les types de contenus sélectionnés : ajoutez une colonne Vues (30j) dans la liste des articles et affichez une metabox de résumé statistique lors de la modification de chaque article."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No post types available."
-msgstr "Aucun type de contenu disponible."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."
@@ -1810,10 +1799,6 @@ msgid "Delete all analytics data"
 msgstr "Supprimer toutes les données d’analyse"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Events configuration"
-msgstr "Configuration des événements"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Referring site icons"
 msgstr "Icônes des sites référents"
 
@@ -1860,6 +1845,10 @@ msgstr "Cette action supprime définitivement toutes les analyses stockées et l
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Je confirme vouloir purger définitivement toutes les données d’analyse."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -1925,81 +1914,45 @@ msgstr "Pages d’entrée"
 msgid "Pages not found"
 msgstr "Pages introuvables"
 
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Aucune donnée visiteur disponible."
 
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Chargement des visiteurs…"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "Croissant"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "Décroissant"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Daily page views"
-msgstr "Pages vues quotidiennes"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. page views"
-msgstr "Pages vues préc."
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. visitors"
-msgstr "Visiteurs préc."
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Trier par"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "Afficher"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "Titre"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Next"
-msgstr "Suivant"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "sur"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "éléments"
-
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
+msgid "Tablet"
+msgstr "Tableau"
+
 #. translators: %s: page views count.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s vue de page"
 msgstr[1] "%s vues de page"
 
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 #. translators: %s: percentage value.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%1$s%% share"
 msgstr "%1$s%% de part"
 
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 #. translators: %s: total page views in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Based on %s tracked page views in the selected range."
 msgstr "Basé sur %s pages vues suivies dans la plage sélectionnée."
 
@@ -2059,8 +2012,8 @@ msgstr "Versions des navigateurs"
 msgid "Aucune donnée identifiée disponible pour cette période."
 msgstr ""
 
-#: src/admin/widgets/DeviceDetailsCard/index.js
 #. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
+#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies."
 msgstr ""
 
@@ -2126,8 +2079,8 @@ msgstr "Temps actif moyen passé pendant une visite."
 msgid "Custom"
 msgstr "Personnalisé"
 
-#: src/admin/widgets/PeriodFilter/index.js
 #. translators: 1: start date, 2: end date.
+#: src/admin/widgets/PeriodFilter/index.js
 msgid "%1$s – %2$s"
 msgstr "%1$s – %2$s"
 
@@ -2135,8 +2088,19 @@ msgstr "%1$s – %2$s"
 msgid "Quick ranges"
 msgstr "Plages rapides"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Ascending"
+msgstr "Croissant"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Descending"
+msgstr "Décroissant"
+
 #. translators: %s: current sort order label.
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Toggle sort order"
 msgstr "Inverser l’ordre de tri"
 
@@ -2150,6 +2114,32 @@ msgid "Referrer unavailable"
 msgstr "Aucun référent disponible."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Sort by"
+msgstr "Trier par"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr ""
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Search"
+msgstr "Recherche payante"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Search…"
+msgstr "Recherche payante"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "Aucune donnée de site référent disponible."
 
@@ -2157,15 +2147,64 @@ msgstr "Aucune donnée de site référent disponible."
 msgid "Loading referring sites…"
 msgstr "Chargement des sites référents…"
 
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
+#, fuzzy
+msgid "Previous page"
+msgstr "Pages vues précédentes"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#, fuzzy
+msgid "Next page"
+msgstr "Prochaine mise à jour"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Suivant"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Page"
+msgstr "Pages"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "of"
+msgstr "sur"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "items"
+msgstr "éléments"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Title"
+msgstr "Titre"
+
 #. translators: %s: active first-column label.
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "label"
 msgstr "libellé"
 
-#: src/admin/widgets/ReportTableCard/index.js
 #. translators: %s: table title.
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Table"
 msgstr "Tableau"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Display"
+msgstr "Afficher"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "URL"
+msgstr "URL"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Loading"
@@ -2192,12 +2231,24 @@ msgid "Previous visitors"
 msgstr "Visiteurs précédents"
 
 #: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. page views"
+msgstr "Pages vues préc."
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. visitors"
+msgstr "Visiteurs préc."
+
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors"
 msgstr "Pages vues et visiteurs quotidiens"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors line chart"
 msgstr "Graphique linéaire quotidien des pages vues et des visiteurs"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views"
+msgstr "Pages vues quotidiennes"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views line chart"
@@ -2223,48 +2274,48 @@ msgid_plural "visitors"
 msgstr[0] "visiteur"
 msgstr[1] "visiteurs"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s"
 msgstr "%1$s : pages vues %2$s, visiteurs %3$s, pages vues précédentes %4$s, visiteurs précédents %5$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current metric count, 3: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Current %2$s, Previous %3$s"
 msgstr "%1$s : actuel %2$s, précédent %3$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: page view count, 3: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: %2$s, %3$s"
 msgstr "%1$s : %2$s, %3$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: page view count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Page views: %1$s"
 msgstr "Pages vues : %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Visitors: %1$s"
 msgstr "Visiteurs : %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous page view count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous page views: %1$s"
 msgstr "Pages vues précédentes : %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous visitors: %1$s"
 msgstr "Visiteurs précédents : %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: current metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Current: %1$s"
 msgstr "Actuel : %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous: %1$s"
 msgstr "Précédent : %1$s"
 
@@ -2276,13 +2327,13 @@ msgstr "Aucune donnée disponible pour cette période."
 msgid "Loading chart…"
 msgstr "Chargement du graphique…"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Current %s"
 msgstr "Actuel %s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous %s"
 msgstr "Précédent %s"
 
@@ -2305,6 +2356,90 @@ msgstr "Privé"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tableau : visiteurs"
+
+#~ msgid "BimBeau Privacy Analytics aggregated retention cleanup"
+#~ msgstr "Nettoyage de rétention agrégée BimBeau Privacy Analytics"
+
+#~ msgid "Once Monthly"
+#~ msgstr "Une fois par mois"
+
+#~ msgid "Local GeoLite database is unavailable."
+#~ msgstr "La base GeoLite locale est indisponible."
+
+#~ msgid "Unable to read the local GeoLite database."
+#~ msgstr "Impossible de lire la base GeoLite locale."
+
+#~ msgid "No geolocation record found for this IP."
+#~ msgstr "Aucun enregistrement de géolocalisation trouvé pour cette IP."
+
+#~ msgid "Unable to determine the visitor IP."
+#~ msgstr "Impossible de déterminer l’IP du visiteur."
+
+#~ msgid "Install BimBeau Privacy Analytics app"
+#~ msgstr "Installer l’application BimBeau Privacy Analytics"
+
+#~ msgid "Get faster access from your home screen with an app-like experience."
+#~ msgstr "Accédez plus rapidement depuis votre écran d’accueil avec une expérience proche d’une application."
+
+#~ msgid "Install app"
+#~ msgstr "Installer l’application"
+
+#~ msgid "BimBeau Privacy Analytics app installation was accepted."
+#~ msgstr "L’installation de l’application BimBeau Privacy Analytics a été acceptée."
+
+#~ msgid "Captured events data purged."
+#~ msgstr "Données des événements capturés purgées."
+
+#~ msgid "App"
+#~ msgstr "Application"
+
+#~ msgid "Delete captured events list"
+#~ msgstr "Supprimer la liste des événements capturés"
+
+#~ msgid "Confirm captured events purge"
+#~ msgstr "Confirmer la purge des événements capturés"
+
+#~ msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
+#~ msgstr "Cette action supprime définitivement la liste des événements capturés affichée dans les statistiques d’événements. Les autres données d’analyse restent inchangées."
+
+#~ msgid "I confirm that I want to permanently purge the captured events list."
+#~ msgstr "Je confirme vouloir purger définitivement la liste des événements capturés."
+
+#~ msgid "Purge captured events"
+#~ msgstr "Purger les événements capturés"
+
+#~ msgid "PWA URL is unavailable."
+#~ msgstr "L’URL PWA est indisponible."
+
+#~ msgid "PWA URL copied."
+#~ msgstr "URL PWA copiée."
+
+#~ msgid "Unable to copy the PWA URL."
+#~ msgstr "Impossible de copier l’URL PWA."
+
+#~ msgid "Interface branding"
+#~ msgstr "Identité de l’interface"
+
+#~ msgid "White-label interface controls are available in Pro."
+#~ msgstr "Les contrôles d’interface en marque blanche sont disponibles en Pro."
+
+#~ msgid "Use white-label interface"
+#~ msgstr "Utiliser l’interface en marque blanche"
+
+#~ msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
+#~ msgstr "Masque le logo BimBeau Privacy Analytics dans l’en-tête d’administration et affiche le titre d’analyse localisé à la place."
+
+#~ msgid "Quick stats"
+#~ msgstr "Stats rapides"
+
+#~ msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
+#~ msgstr "Activez les Stats rapides sur les types de contenus sélectionnés : ajoutez une colonne Vues (30j) dans la liste des articles et affichez une metabox de résumé statistique lors de la modification de chaque article."
+
+#~ msgid "No post types available."
+#~ msgstr "Aucun type de contenu disponible."
+
+#~ msgid "Events configuration"
+#~ msgstr "Configuration des événements"
 
 #, fuzzy
 #~ msgid "The export job is missing a processing URL."
@@ -2385,4 +2520,3 @@ msgstr "Tableau : visiteurs"
 
 #~ msgid "Referrer favicons"
 #~ msgstr "Icônes de référencement"
-

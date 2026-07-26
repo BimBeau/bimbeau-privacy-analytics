@@ -16,19 +16,19 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #. Plugin Name of the plugin
+#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "Αναλυτικά BimBeau Privacy Analytics"
 
-#: bimbeau-privacy-analytics.php
 #. Description of the plugin
+#: bimbeau-privacy-analytics.php
 msgid "Privacy-friendly, self-hosted analytics for WordPress."
 msgstr "Αναλυτικά στοιχεία για WordPress με σεβασμό στο απόρρητο και αυτοφιλοξενία."
 
-#: bimbeau-privacy-analytics.php
 #. Author of the plugin
+#: bimbeau-privacy-analytics.php
 msgid "BimBeau"
 msgstr "BimBeau"
 
@@ -36,9 +36,13 @@ msgstr "BimBeau"
 msgid "Update"
 msgstr "Ενημέρωση"
 
-#: admin/admin.php src/admin/components/ProBadge/index.js
+#: admin/admin.php
 msgid "Pro"
 msgstr "Pro"
+
+#: admin/admin.php
+msgid "Upgrade to Pro"
+msgstr ""
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -64,11 +68,13 @@ msgstr "Τα τεχνικά διαγνωστικά είναι ενδεικτικ
 msgid "Dashboard"
 msgstr "Πίνακας ελέγχου"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Πραγματικός χρόνος"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Σελίδες"
 
@@ -77,7 +83,9 @@ msgstr "Σελίδες"
 msgid "Acquisition"
 msgstr "Απόκτηση"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Ιστότοποι παραπομπής"
 
@@ -85,19 +93,26 @@ msgstr "Ιστότοποι παραπομπής"
 msgid "Internal searches"
 msgstr "Εσωτερικές αναζητήσεις"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Γεωεντοπισμός"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Επισκέπτες"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/widgets/DeviceDetailsCard/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "Συσκευές"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
@@ -118,26 +133,26 @@ msgstr "Γεωεντοπισμός"
 msgid "Later"
 msgstr ""
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, fuzzy, php-format
 msgid "%s overview"
 msgstr "%s προβολή σελίδας"
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, fuzzy, php-format
 msgid "%s data is not available for this period."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα για αυτήν την περίοδο."
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, fuzzy, php-format
 msgid "View %s dashboard"
 msgstr "Πίνακας ελέγχου"
 
-#: admin/dashboard-widget.php
 #. translators: 1: Start date, 2: End date for the selected reporting period.
+#: admin/dashboard-widget.php
 #, php-format
 msgid "Period: %1$s to %2$s"
 msgstr "Περίοδος: %1$s έως %2$s"
@@ -150,21 +165,22 @@ msgstr "Περίοδος: τελευταίες 30 ημέρες"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "Ενεργοποιήστε τουλάχιστον έναν πίνακα αναλυτικών για να εμφανιστούν τιμές KPI σε αυτό το widget."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/panels/AcquisitionPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Επισκέψεις"
 
-#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Προβολές σελίδας"
 
 #: admin/dashboard-widget.php
 msgid "Referrers"
 msgstr "Παραπέμπτες"
-
-#: src/admin/constants/index.js src/admin/panels/SettingsPanel.js
-msgid "Events"
-msgstr "Συμβάντα"
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics Pro"
@@ -188,87 +204,27 @@ msgstr "Η ενεργοποίηση του BimBeau Privacy Analytics αποκλ�
 msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
 msgstr "Το %1$s απενεργοποιήθηκε επειδή μόνο ένα πακέτο BimBeau Privacy Analytics μπορεί να είναι ενεργό κάθε φορά. Το %2$s παραμένει ενεργό."
 
-#: includes/aggregation.php
-msgid "BimBeau Privacy Analytics aggregated retention cleanup"
-msgstr "Εκκαθάριση συγκεντρωτικής διατήρησης BimBeau Privacy Analytics"
-
-#: includes/geolocation.php
-msgid "Once Monthly"
-msgstr "Μία φορά τον μήνα"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 15 days"
-msgstr "Κάθε 15 ημέρες"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 45 days"
-msgstr "Κάθε 45 ημέρες"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 60 days"
-msgstr "Κάθε 60 ημέρες"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 3 months"
-msgstr "Κάθε 3 μήνες"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 6 months"
-msgstr "Κάθε 6 μήνες"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every year"
-msgstr "Κάθε έτος"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 2 years"
-msgstr "Κάθε 2 έτη"
-
-#: includes/geolocation.php
-msgid "Local GeoLite database is unavailable."
-msgstr "Η τοπική βάση δεδομένων GeoLite δεν είναι διαθέσιμη."
-
-#: includes/geolocation.php
-msgid "Unable to read the local GeoLite database."
-msgstr "Δεν είναι δυνατή η ανάγνωση της τοπικής βάσης δεδομένων GeoLite."
-
-#: includes/geolocation.php
-msgid "No geolocation record found for this IP."
-msgstr "Δεν βρέθηκε εγγραφή γεωεντοπισμού για αυτήν την IP."
-
-#: includes/geolocation.php
-msgid "Unable to determine the visitor IP."
-msgstr "Δεν είναι δυνατός ο προσδιορισμός της IP του επισκέπτη."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Stats"
-msgstr "Στατιστικά"
-
-#: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 ημέρες"
-
-#: src/admin/lib/channelLabels.js
-msgid "Other"
-msgstr "Άλλο"
-
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "Εκκαθάριση ακατέργαστων αρχείων καταγραφής BimBeau Privacy Analytics"
 
-#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "Αυτός ο πίνακας αναλυτικών είναι απενεργοποιημένος για την πλοήγηση."
 
-#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "Authentication is required to access analytics data."
 msgstr "Απαιτείται έλεγχος ταυτότητας για πρόσβαση στα δεδομένα αναλυτικών."
 
-#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "Η σύνδεση MaxMind πέτυχε."
 
-#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database updated successfully."
 msgstr "Η βάση δεδομένων GeoIP ενημερώθηκε με επιτυχία."
 
@@ -279,6 +235,24 @@ msgstr "Η βάση δεδομένων GeoIP είναι διαθέσιμη."
 #: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is not available yet."
 msgstr "Η βάση δεδομένων GeoIP δεν είναι ακόμη διαθέσιμη."
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/SearchTermsPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Unknown"
+msgstr "Άγνωστη σελίδα"
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Unknown country"
+msgstr "Σημαία άγνωστης χώρας"
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -308,14 +282,14 @@ msgstr "Απαιτείται λειτουργία τοπικής βάσης δε
 msgid "Unable to create a temporary file for the GeoIP database download."
 msgstr "Δεν είναι δυνατή η δημιουργία προσωρινού αρχείου για τη λήψη της βάσης GeoIP."
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database download failed: %s"
 msgstr "Η λήψη της βάσης GeoIP απέτυχε: %s"
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %d: HTTP status code returned by the GeoIP download request.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database download failed with HTTP status %d."
 msgstr "Η λήψη της βάσης GeoIP απέτυχε με κατάσταση HTTP %d."
@@ -333,14 +307,14 @@ msgstr ""
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "Η βάση δεδομένων GeoIP δεν είναι ακόμη διαθέσιμη."
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "Η λήψη της βάσης GeoIP απέτυχε: %s"
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %d: HTTP status code returned by the GeoIP manifest request.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "Η λήψη της βάσης GeoIP απέτυχε με κατάσταση HTTP %d."
@@ -418,14 +392,14 @@ msgstr "Δεν είναι δυνατή η δημιουργία προσωριν�
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "Δεν είναι δυνατή η δημιουργία προσωρινού χώρου εργασίας για την εξαγωγή GeoIP."
 
-#: includes/services/class-bbpa-maxmind-service.php
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
+#: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "Σφάλμα API MaxMind (%1$s): %2$s."
 
-#: includes/services/class-bbpa-maxmind-service.php
 #. translators: %s: MaxMind API response code.
+#: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%s)."
 msgstr "Σφάλμα API MaxMind (%s)."
@@ -454,13 +428,13 @@ msgstr "Απαιτούνται διαπιστευτήρια MaxMind για τη�
 msgid "Statistics"
 msgstr "Στατιστικά"
 
-#: src/admin/AdminApp.js
 #. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
 msgid "%s Visitor"
 msgstr "%s επισκέπτης"
 
-#: src/admin/AdminApp.js
 #. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
 msgid "%s Visitors"
 msgstr "%s επισκέπτες"
 
@@ -488,22 +462,6 @@ msgstr "Γεωεντοπισμός"
 #: src/admin/AdminApp.js
 msgid "No panel available for this screen."
 msgstr "Δεν υπάρχει διαθέσιμος πίνακας για αυτήν την οθόνη."
-
-#: src/admin/AdminApp.js
-msgid "Install BimBeau Privacy Analytics app"
-msgstr "Εγκατάσταση εφαρμογής BimBeau Privacy Analytics"
-
-#: src/admin/AdminApp.js
-msgid "Get faster access from your home screen with an app-like experience."
-msgstr "Αποκτήστε ταχύτερη πρόσβαση από την αρχική οθόνη σας με εμπειρία τύπου εφαρμογής."
-
-#: src/admin/AdminApp.js
-msgid "Install app"
-msgstr "Εγκατάσταση εφαρμογής"
-
-#: src/admin/AdminApp.js
-msgid "BimBeau Privacy Analytics app installation was accepted."
-msgstr "Η εγκατάσταση της εφαρμογής BimBeau Privacy Analytics έγινε αποδεκτή."
 
 #: src/admin/AdminApp.js
 msgid "Complete the initial configuration"
@@ -593,28 +551,28 @@ msgstr "Κλείσιμο ειδοποίησης"
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
 msgstr "Το BimBeau Privacy Analytics δεν μπορεί να φορτώσει το περιβάλλον διαχείρισης."
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: current admin panel and page label.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Panel/page: %s"
 msgstr "Πίνακας/σελίδα: %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Component undefined: %s"
 msgstr "Μη ορισμένο στοιχείο: %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
 msgstr "Πιθανή ασυμφωνία Gutenberg/@wordpress/components: το %s δεν έχει οριστεί"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: comma-separated WordPress script handles checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Script handles checked: %s"
 msgstr "Ελέγχθηκαν handles script: %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Global namespaces checked: %s"
 msgstr "Ελέγχθηκαν καθολικά namespaces: %s"
 
@@ -634,7 +592,8 @@ msgstr "Διαθέσιμες αναλύσεις"
 msgid "Run diagnostic"
 msgstr "Εκτέλεση διαγνωστικού"
 
-#: src/admin/components/AdvancedConsentTestCard/index.js src/admin/panels/SettingsPanel.js
+#: src/admin/components/AdvancedConsentTestCard/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Status"
 msgstr "Κατάσταση"
 
@@ -662,7 +621,8 @@ msgstr "Υπενθύμιση συμμόρφωσης συναίνεσης"
 msgid "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP remains the source of truth for consent workflows."
 msgstr "Το BimBeau Privacy Analytics παρέχει μόνο τεχνικούς διαγνωστικούς ελέγχους. Το CMP σας παραμένει η πηγή αλήθειας για τις ροές συναίνεσης."
 
-#: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/DataState/index.js
+#: src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
 msgstr "Φόρτωση…"
 
@@ -674,8 +634,8 @@ msgstr "Endpoint:"
 msgid "Response preview:"
 msgstr "Προεπισκόπηση απόκρισης:"
 
-#: src/admin/components/DataTableCard/index.js
 #. translators: %s: card title.
+#: src/admin/components/DataTableCard/index.js
 msgid "Loading: %s"
 msgstr "Φόρτωση: %s"
 
@@ -703,7 +663,10 @@ msgstr "Η ανάλυση εκτέλεσης αναφέρεται από τις 
 msgid "Technical state does not prove consent collection validity."
 msgstr "Η τεχνική κατάσταση δεν αποδεικνύει την εγκυρότητα συλλογής συναίνεσης."
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Άμεση πρόσβαση"
 
@@ -823,7 +786,10 @@ msgstr "Favicon παραπομπής:"
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "Άλλες ρυθμίσεις χρησιμοποιούν τις προτεινόμενες προεπιλογές και μπορούν να αλλάξουν αργότερα από τις ρυθμίσεις του BimBeau Privacy Analytics."
 
-#: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/SetupWizard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Προηγούμενο"
 
@@ -895,13 +861,13 @@ msgstr "Σμίκρυνση χάρτη"
 msgid "Reset map zoom"
 msgstr "Επαναφορά μεγέθυνσης χάρτη"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#: src/admin/components/WorldMap/index.js
 msgid "%1$s: %2$s visits%3$s"
 msgstr "%1$s: %2$s επισκέψεις%3$s"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: approximation scope label.
+#: src/admin/components/WorldMap/index.js
 msgid " (%s)"
 msgstr " (%s)"
 
@@ -921,20 +887,20 @@ msgstr "Δεν υπάρχουν διαθέσιμες γεωεντοπισμέν�
 msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
 msgstr "Δεν υπάρχουν διαθέσιμες γεωεντοπισμένες επισκέψεις. Ελέγξτε τις ρυθμίσεις γεωεντοπισμού για να ξεκινήσει η συλλογή δεδομένων χώρας."
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: visitor count.
+#: src/admin/components/WorldMap/index.js
 #, fuzzy
 msgid "%s visitors"
 msgstr "%s επισκέπτες"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: share of total visitors.
+#: src/admin/components/WorldMap/index.js
 #, fuzzy
 msgid "%s of total visitors"
 msgstr "%s των συνολικών επισκέψεων"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: visit count.
+#: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s επισκέψεις"
 
@@ -959,6 +925,10 @@ msgid "Map legend"
 msgstr "Υπόμνημα χάρτη"
 
 #: src/admin/constants/index.js
+msgid "Events"
+msgstr "Συμβάντα"
+
+#: src/admin/constants/index.js
 msgid "Today"
 msgstr "Σήμερα"
 
@@ -977,6 +947,10 @@ msgstr "7 ημέρες"
 #: src/admin/constants/index.js
 msgid "30d"
 msgstr "30η"
+
+#: src/admin/constants/index.js
+msgid "30 days"
+msgstr "30 ημέρες"
 
 #: src/admin/constants/index.js
 msgid "90d"
@@ -1022,7 +996,9 @@ msgstr "Δεν υπάρχουν διαθέσιμες δημοφιλείς σελ
 msgid "Top referrers"
 msgstr "Κορυφαίοι παραπέμπτες"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "Παραπέμπτης"
 
@@ -1066,6 +1042,10 @@ msgstr "Άλλες καμπάνιες"
 msgid "AI Assistants"
 msgstr "Βοηθοί ΤΝ"
 
+#: src/admin/lib/channelLabels.js
+msgid "Other"
+msgstr "Άλλο"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Κατά προσέγγιση θέση"
@@ -1074,10 +1054,16 @@ msgstr "Κατά προσέγγιση θέση"
 msgid "Approximate city"
 msgstr "Κατά προσέγγιση πόλη"
 
-#: src/admin/lib/locationLabel.js
 #. translators: %d: geolocation accuracy radius in kilometers.
+#: src/admin/lib/locationLabel.js
 msgid "Approx. %d km"
 msgstr "Περ. %d χλμ"
+
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "No available"
+msgstr "Μη διαθέσιμο"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1093,12 +1079,18 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα προφίλ
 msgid "Table: Acquisition channels"
 msgstr "Πίνακας: Επισκέπτες"
 
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Channel"
+msgstr "Σελίδες εισόδου"
+
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr ""
 
-#: src/admin/panels/AcquisitionPanel.js
 #. translators: %s: Total visits in the selected range.
+#: src/admin/panels/AcquisitionPanel.js
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "%s των συνολικών επισκέψεων"
@@ -1107,14 +1099,14 @@ msgstr "%s των συνολικών επισκέψεων"
 msgid "No country data available for the selected period."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας για την επιλεγμένη περίοδο."
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: 1: country name, 2: visitor count.
+#: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s επισκέψεις"
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: 1: country name, 2: no data label.
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
@@ -1126,14 +1118,19 @@ msgstr "Δεν υπάρχουν δεδομένα"
 msgid "Unknown country flag"
 msgstr "Σημαία άγνωστης χώρας"
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: %s: country name.
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "Flag of %s"
 msgstr "Σημαία του/της %s"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
 msgstr "Κορυφαίες χώρες"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
@@ -1149,11 +1146,18 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκε
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
 msgstr ""
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "Hash ID επισκέπτη"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "City"
+msgstr ""
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Χρόνος σύνδεσης"
 
@@ -1161,11 +1165,32 @@ msgstr "Χρόνος σύνδεσης"
 msgid "Current page"
 msgstr "Τρέχουσα σελίδα"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Λειτουργικά συστήματα"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Περιηγητές"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Έκδοση περιηγητή"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/AudienceBreakdownCards/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Συσκευές"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Resolution"
 msgstr "Ανάλυση"
 
@@ -1219,9 +1244,37 @@ msgid "Manual updates only"
 msgstr "Μόνο βασικά στατιστικά"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Every 15 days"
+msgstr "Κάθε 15 ημέρες"
+
+#: src/admin/panels/SettingsPanel.js
 #, fuzzy
 msgid "Every 30 days"
 msgstr "Κάθε 60 ημέρες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 45 days"
+msgstr "Κάθε 45 ημέρες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 60 days"
+msgstr "Κάθε 60 ημέρες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 3 months"
+msgstr "Κάθε 3 μήνες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 6 months"
+msgstr "Κάθε 6 μήνες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every year"
+msgstr "Κάθε έτος"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 2 years"
+msgstr "Κάθε 2 έτη"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for %(days)s days"
@@ -1319,8 +1372,8 @@ msgid "Aggregated analytics data purged."
 msgstr "Τα συγκεντρωτικά δεδομένα αναλυτικών εκκαθαρίστηκαν."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Captured events data purged."
-msgstr "Τα δεδομένα καταγεγραμμένων συμβάντων εκκαθαρίστηκαν."
+msgid "Stats"
+msgstr "Στατιστικά"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to dashboards, KPI cards, and analytics reports."
@@ -1343,44 +1396,8 @@ msgid "Tracking & privacy"
 msgstr "Παρακολούθηση και απόρρητο"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "App"
-msgstr "Εφαρμογή"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
 msgstr "Συντήρηση"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Delete captured events list"
-msgstr "Διαγραφή λίστας καταγεγραμμένων συμβάντων"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Confirm captured events purge"
-msgstr "Επιβεβαίωση εκκαθάρισης καταγεγραμμένων συμβάντων"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
-msgstr "Αυτή η ενέργεια αφαιρεί μόνιμα τη λίστα καταγεγραμμένων συμβάντων που εμφανίζεται στα στατιστικά συμβάντων. Τα άλλα δεδομένα αναλυτικών παραμένουν αμετάβλητα."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "I confirm that I want to permanently purge the captured events list."
-msgstr "Επιβεβαιώνω ότι θέλω να εκκαθαρίσω μόνιμα τη λίστα καταγεγραμμένων συμβάντων."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Purge captured events"
-msgstr "Εκκαθάριση καταγεγραμμένων συμβάντων"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "PWA URL is unavailable."
-msgstr "Το URL του PWA δεν είναι διαθέσιμο."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "PWA URL copied."
-msgstr "Το URL του PWA αντιγράφηκε."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Unable to copy the PWA URL."
-msgstr "Δεν είναι δυνατή η αντιγραφή του URL του PWA."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Loading settings…"
@@ -1407,22 +1424,6 @@ msgid "Hidden"
 msgstr "Κρυφό"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Interface branding"
-msgstr "Επωνυμία διεπαφής"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "White-label interface controls are available in Pro."
-msgstr "Τα στοιχεία ελέγχου διεπαφής white-label είναι διαθέσιμα στην έκδοση Pro."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Use white-label interface"
-msgstr "Χρήση διεπαφής white-label"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
-msgstr "Αποκρύπτει το λογότυπο BimBeau Privacy Analytics στην κεφαλίδα διαχείρισης και εμφανίζει τον τοπικοποιημένο τίτλο αναλυτικών στοιχείων στη θέση του."
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
 msgstr "Ενεργοί πίνακες"
 
@@ -1433,18 +1434,6 @@ msgstr "Ορατό"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
 msgstr "Κρυφό όσο η επιλογή \"Ενεργοποίηση προηγμένων στατιστικών μετά τη συναίνεση\" είναι απενεργοποιημένη."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Quick stats"
-msgstr "Γρήγορα στατιστικά"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
-msgstr "Ενεργοποιήστε τα Γρήγορα στατιστικά για επιλεγμένους τύπους περιεχομένου: προσθέστε στήλη Προβολές (30η) στη λίστα άρθρων και εμφανίστε metabox σύνοψης στατιστικών κατά την επεξεργασία κάθε άρθρου."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No post types available."
-msgstr "Δεν υπάρχουν διαθέσιμοι τύποι δημοσιεύσεων."
 
 #: src/admin/panels/SettingsPanel.js
 #, fuzzy
@@ -1833,10 +1822,6 @@ msgid "Delete all analytics data"
 msgstr "Διαγραφή όλων των δεδομένων αναλυτικών"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Events configuration"
-msgstr "Ρύθμιση συμβάντων"
-
-#: src/admin/panels/SettingsPanel.js
 #, fuzzy
 msgid "Referring site icons"
 msgstr "Ιστότοποι παραπομπής"
@@ -1886,6 +1871,10 @@ msgstr "Αυτή η ενέργεια αφαιρεί μόνιμα όλα τα α�
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Επιβεβαιώνω ότι θέλω να εκκαθαρίσω μόνιμα όλα τα δεδομένα αναλυτικών."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -1951,81 +1940,45 @@ msgstr "Σελίδες εισόδου"
 msgid "Pages not found"
 msgstr "Σελίδες που δεν βρέθηκαν"
 
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
 
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Φόρτωση επισκεπτών…"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "Αύξουσα"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "Φθίνουσα"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Daily page views"
-msgstr "Ημερήσιες προβολές σελίδας"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. page views"
-msgstr "Προηγ. προβολές σελίδας"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. visitors"
-msgstr "Προηγ. επισκέπτες"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Ταξινόμηση κατά"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "Εμφάνιση"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "Τίτλος"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Next"
-msgstr "Επόμενο"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "από"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "στοιχεία"
-
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
+msgid "Tablet"
+msgstr "Πίνακας"
+
 #. translators: %s: page views count.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s προβολή σελίδας"
 msgstr[1] "%s προβολές σελίδας"
 
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 #. translators: %s: percentage value.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%1$s%% share"
 msgstr "%1$s%% μερίδιο"
 
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 #. translators: %s: total page views in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Based on %s tracked page views in the selected range."
 msgstr "Βάσει %s καταγεγραμμένων προβολών σελίδας στο επιλεγμένο εύρος."
 
@@ -2085,8 +2038,8 @@ msgstr "Εκδόσεις περιηγητή"
 msgid "Aucune donnée identifiée disponible pour cette période."
 msgstr ""
 
-#: src/admin/widgets/DeviceDetailsCard/index.js
 #. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
+#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies."
 msgstr ""
 
@@ -2152,8 +2105,8 @@ msgstr "Μέσος ενεργός χρόνος κατά τη διάρκεια μ
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
-#: src/admin/widgets/PeriodFilter/index.js
 #. translators: 1: start date, 2: end date.
+#: src/admin/widgets/PeriodFilter/index.js
 msgid "%1$s – %2$s"
 msgstr "%1$s – %2$s"
 
@@ -2161,8 +2114,19 @@ msgstr "%1$s – %2$s"
 msgid "Quick ranges"
 msgstr "Γρήγορα διαστήματα"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Ascending"
+msgstr "Αύξουσα"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Descending"
+msgstr "Φθίνουσα"
+
 #. translators: %s: current sort order label.
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Toggle sort order"
 msgstr "Εναλλαγή σειράς ταξινόμησης"
 
@@ -2176,6 +2140,32 @@ msgid "Referrer unavailable"
 msgstr "Δεν υπάρχουν διαθέσιμοι παραπέμπτες."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Sort by"
+msgstr "Ταξινόμηση κατά"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr ""
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Search"
+msgstr "Πληρωμένη αναζήτηση"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Search…"
+msgstr "Πληρωμένη αναζήτηση"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα ιστότοπων παραπομπής."
 
@@ -2183,15 +2173,64 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα ιστότο
 msgid "Loading referring sites…"
 msgstr "Φόρτωση ιστότοπων παραπομπής…"
 
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
+#, fuzzy
+msgid "Previous page"
+msgstr "Προηγούμενες προβολές σελίδας"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#, fuzzy
+msgid "Next page"
+msgstr "Επόμενη σελίδα"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Επόμενο"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Page"
+msgstr "Σελίδες"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "of"
+msgstr "από"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "items"
+msgstr "στοιχεία"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Title"
+msgstr "Τίτλος"
+
 #. translators: %s: active first-column label.
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "label"
 msgstr "ετικέτα"
 
-#: src/admin/widgets/ReportTableCard/index.js
 #. translators: %s: table title.
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Table"
 msgstr "Πίνακας"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Display"
+msgstr "Εμφάνιση"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "URL"
+msgstr "URL"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Loading"
@@ -2218,12 +2257,24 @@ msgid "Previous visitors"
 msgstr "Προηγούμενοι επισκέπτες"
 
 #: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. page views"
+msgstr "Προηγ. προβολές σελίδας"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. visitors"
+msgstr "Προηγ. επισκέπτες"
+
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors"
 msgstr "Ημερήσιες προβολές σελίδων και επισκέπτες"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors line chart"
 msgstr "Γραμμικό γράφημα ημερήσιων προβολών σελίδων και επισκεπτών"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views"
+msgstr "Ημερήσιες προβολές σελίδας"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views line chart"
@@ -2249,48 +2300,48 @@ msgid_plural "visitors"
 msgstr[0] "Επισκέπτης"
 msgstr[1] "Επισκέπτες"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s"
 msgstr "%1$s: Προβολές σελίδων %2$s, επισκέπτες %3$s, προηγούμενες προβολές σελίδων %4$s, προηγούμενοι επισκέπτες %5$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current metric count, 3: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Current %2$s, Previous %3$s"
 msgstr "%1$s: Τρέχον %2$s, Προηγούμενο %3$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: page view count, 3: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: %2$s, %3$s"
 msgstr "%1$s: %2$s, %3$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: page view count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Page views: %1$s"
 msgstr "Προβολές σελίδας: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Visitors: %1$s"
 msgstr "Επισκέπτες: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous page view count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous page views: %1$s"
 msgstr "Προηγούμενες προβολές σελίδας: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous visitors: %1$s"
 msgstr "Προηγούμενοι επισκέπτες: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: current metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Current: %1$s"
 msgstr "Τρέχον: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous: %1$s"
 msgstr "Προηγούμενο: %1$s"
 
@@ -2302,13 +2353,13 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα για αυ�
 msgid "Loading chart…"
 msgstr "Φόρτωση γραφήματος…"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Current %s"
 msgstr "Τρέχον %s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous %s"
 msgstr "Προηγούμενο %s"
 
@@ -2332,6 +2383,90 @@ msgstr "Ιδιωτικό"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Πίνακας: Επισκέπτες"
+
+#~ msgid "BimBeau Privacy Analytics aggregated retention cleanup"
+#~ msgstr "Εκκαθάριση συγκεντρωτικής διατήρησης BimBeau Privacy Analytics"
+
+#~ msgid "Once Monthly"
+#~ msgstr "Μία φορά τον μήνα"
+
+#~ msgid "Local GeoLite database is unavailable."
+#~ msgstr "Η τοπική βάση δεδομένων GeoLite δεν είναι διαθέσιμη."
+
+#~ msgid "Unable to read the local GeoLite database."
+#~ msgstr "Δεν είναι δυνατή η ανάγνωση της τοπικής βάσης δεδομένων GeoLite."
+
+#~ msgid "No geolocation record found for this IP."
+#~ msgstr "Δεν βρέθηκε εγγραφή γεωεντοπισμού για αυτήν την IP."
+
+#~ msgid "Unable to determine the visitor IP."
+#~ msgstr "Δεν είναι δυνατός ο προσδιορισμός της IP του επισκέπτη."
+
+#~ msgid "Install BimBeau Privacy Analytics app"
+#~ msgstr "Εγκατάσταση εφαρμογής BimBeau Privacy Analytics"
+
+#~ msgid "Get faster access from your home screen with an app-like experience."
+#~ msgstr "Αποκτήστε ταχύτερη πρόσβαση από την αρχική οθόνη σας με εμπειρία τύπου εφαρμογής."
+
+#~ msgid "Install app"
+#~ msgstr "Εγκατάσταση εφαρμογής"
+
+#~ msgid "BimBeau Privacy Analytics app installation was accepted."
+#~ msgstr "Η εγκατάσταση της εφαρμογής BimBeau Privacy Analytics έγινε αποδεκτή."
+
+#~ msgid "Captured events data purged."
+#~ msgstr "Τα δεδομένα καταγεγραμμένων συμβάντων εκκαθαρίστηκαν."
+
+#~ msgid "App"
+#~ msgstr "Εφαρμογή"
+
+#~ msgid "Delete captured events list"
+#~ msgstr "Διαγραφή λίστας καταγεγραμμένων συμβάντων"
+
+#~ msgid "Confirm captured events purge"
+#~ msgstr "Επιβεβαίωση εκκαθάρισης καταγεγραμμένων συμβάντων"
+
+#~ msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
+#~ msgstr "Αυτή η ενέργεια αφαιρεί μόνιμα τη λίστα καταγεγραμμένων συμβάντων που εμφανίζεται στα στατιστικά συμβάντων. Τα άλλα δεδομένα αναλυτικών παραμένουν αμετάβλητα."
+
+#~ msgid "I confirm that I want to permanently purge the captured events list."
+#~ msgstr "Επιβεβαιώνω ότι θέλω να εκκαθαρίσω μόνιμα τη λίστα καταγεγραμμένων συμβάντων."
+
+#~ msgid "Purge captured events"
+#~ msgstr "Εκκαθάριση καταγεγραμμένων συμβάντων"
+
+#~ msgid "PWA URL is unavailable."
+#~ msgstr "Το URL του PWA δεν είναι διαθέσιμο."
+
+#~ msgid "PWA URL copied."
+#~ msgstr "Το URL του PWA αντιγράφηκε."
+
+#~ msgid "Unable to copy the PWA URL."
+#~ msgstr "Δεν είναι δυνατή η αντιγραφή του URL του PWA."
+
+#~ msgid "Interface branding"
+#~ msgstr "Επωνυμία διεπαφής"
+
+#~ msgid "White-label interface controls are available in Pro."
+#~ msgstr "Τα στοιχεία ελέγχου διεπαφής white-label είναι διαθέσιμα στην έκδοση Pro."
+
+#~ msgid "Use white-label interface"
+#~ msgstr "Χρήση διεπαφής white-label"
+
+#~ msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
+#~ msgstr "Αποκρύπτει το λογότυπο BimBeau Privacy Analytics στην κεφαλίδα διαχείρισης και εμφανίζει τον τοπικοποιημένο τίτλο αναλυτικών στοιχείων στη θέση του."
+
+#~ msgid "Quick stats"
+#~ msgstr "Γρήγορα στατιστικά"
+
+#~ msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
+#~ msgstr "Ενεργοποιήστε τα Γρήγορα στατιστικά για επιλεγμένους τύπους περιεχομένου: προσθέστε στήλη Προβολές (30η) στη λίστα άρθρων και εμφανίστε metabox σύνοψης στατιστικών κατά την επεξεργασία κάθε άρθρου."
+
+#~ msgid "No post types available."
+#~ msgstr "Δεν υπάρχουν διαθέσιμοι τύποι δημοσιεύσεων."
+
+#~ msgid "Events configuration"
+#~ msgstr "Ρύθμιση συμβάντων"
 
 #, fuzzy
 #~ msgid "The export job is missing a processing URL."
@@ -2407,4 +2542,3 @@ msgstr "Πίνακας: Επισκέπτες"
 
 #~ msgid "Referrer favicons"
 #~ msgstr "Favicon παραπομπής"
-

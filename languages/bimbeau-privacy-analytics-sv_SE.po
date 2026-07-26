@@ -16,19 +16,19 @@ msgstr ""
 "X-Domain: bpa\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #. Plugin Name of the plugin
+#: bimbeau-privacy-analytics.php src/admin/panels/registry.js
 #, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics-analys"
 
-#: bimbeau-privacy-analytics.php
 #. Description of the plugin
+#: bimbeau-privacy-analytics.php
 msgid "Privacy-friendly, self-hosted analytics for WordPress."
 msgstr "Integritetsvänlig, självhostad statistik för WordPress."
 
-#: bimbeau-privacy-analytics.php
 #. Author of the plugin
+#: bimbeau-privacy-analytics.php
 msgid "BimBeau"
 msgstr "BimBeau"
 
@@ -36,9 +36,14 @@ msgstr "BimBeau"
 msgid "Update"
 msgstr "Uppdatera"
 
-#: admin/admin.php src/admin/components/ProBadge/index.js
+#: admin/admin.php
 msgid "Pro"
 msgstr "Pro"
+
+#: admin/admin.php
+#, fuzzy
+msgid "Upgrade to Pro"
+msgstr "Uppgradera"
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -64,11 +69,13 @@ msgstr "Teknisk diagnostik är vägledande och begränsas till skriptattribut oc
 msgid "Dashboard"
 msgstr "Instrumentpanel"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Realtid"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Sidor"
 
@@ -77,7 +84,9 @@ msgstr "Sidor"
 msgid "Acquisition"
 msgstr "Förvärv"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Hänvisande webbplatser"
 
@@ -85,19 +94,26 @@ msgstr "Hänvisande webbplatser"
 msgid "Internal searches"
 msgstr "Interna sökningar"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Geolokalisering"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
 msgstr "Besökare"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/widgets/DeviceDetailsCard/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "Enheter"
 
-#: admin/admin.php src/admin/constants/index.js src/admin/panels/SettingsPanel.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -118,26 +134,26 @@ msgstr "Geolokalisering"
 msgid "Later"
 msgstr ""
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, fuzzy, php-format
 msgid "%s overview"
 msgstr "%s sidvisning"
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, fuzzy, php-format
 msgid "%s data is not available for this period."
 msgstr "Ingen data är tillgänglig för den här perioden."
 
-#: admin/dashboard-widget.php
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
+#: admin/dashboard-widget.php
 #, fuzzy, php-format
 msgid "View %s dashboard"
 msgstr "Instrumentpanel"
 
-#: admin/dashboard-widget.php
 #. translators: 1: Start date, 2: End date for the selected reporting period.
+#: admin/dashboard-widget.php
 #, php-format
 msgid "Period: %1$s to %2$s"
 msgstr "Period: %1$s till %2$s"
@@ -150,21 +166,22 @@ msgstr "Period: senaste 30 dagarna"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "Aktivera minst en statistikpanel för att visa KPI-värden i den här widgeten."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/panels/AcquisitionPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Besök"
 
-#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/TimeseriesChart/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Sidvisningar"
 
 #: admin/dashboard-widget.php
 msgid "Referrers"
 msgstr "Hänvisare"
-
-#: src/admin/constants/index.js src/admin/panels/SettingsPanel.js
-msgid "Events"
-msgstr "Händelser"
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics Pro"
@@ -188,87 +205,27 @@ msgstr "Aktivering av BimBeau Privacy Analytics blockerad"
 msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
 msgstr "%1$s inaktiverades eftersom endast ett BimBeau Privacy Analytics-paket kan vara aktivt åt gången. %2$s förblir aktivt."
 
-#: includes/aggregation.php
-msgid "BimBeau Privacy Analytics aggregated retention cleanup"
-msgstr "BimBeau Privacy Analytics-rensning av aggregerad lagring"
-
-#: includes/geolocation.php
-msgid "Once Monthly"
-msgstr "En gång i månaden"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 15 days"
-msgstr "Var 15:e dag"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 45 days"
-msgstr "Var 45:e dag"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 60 days"
-msgstr "Var 60:e dag"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 3 months"
-msgstr "Var 3:e månad"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 6 months"
-msgstr "Var 6:e månad"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every year"
-msgstr "Varje år"
-
-#: includes/geolocation.php src/admin/panels/SettingsPanel.js
-msgid "Every 2 years"
-msgstr "Vartannat år"
-
-#: includes/geolocation.php
-msgid "Local GeoLite database is unavailable."
-msgstr "Den lokala GeoLite-databasen är inte tillgänglig."
-
-#: includes/geolocation.php
-msgid "Unable to read the local GeoLite database."
-msgstr "Det går inte att läsa den lokala GeoLite-databasen."
-
-#: includes/geolocation.php
-msgid "No geolocation record found for this IP."
-msgstr "Ingen geolokaliseringspost hittades för denna IP-adress."
-
-#: includes/geolocation.php
-msgid "Unable to determine the visitor IP."
-msgstr "Det går inte att fastställa besökarens IP-adress."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Stats"
-msgstr "Statistik"
-
-#: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 dagar"
-
-#: src/admin/lib/channelLabels.js
-msgid "Other"
-msgstr "Övrigt"
-
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics-rensning av råloggar"
 
-#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "This analytics panel is disabled for navigation."
 msgstr "Den här analyspanelen är inaktiverad för navigering."
 
-#: includes/rest/class-bbpa-admin-controller.php includes/rest/class-bbpa-report-controller.php
+#: includes/rest/class-bbpa-admin-controller.php
+#: includes/rest/class-bbpa-report-controller.php
 msgid "Authentication is required to access analytics data."
 msgstr "Autentisering krävs för att komma åt analysdata."
 
-#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "Anslutningen till MaxMind lyckades."
 
-#: includes/rest/class-bbpa-admin-controller.php src/admin/panels/SettingsPanel.js
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database updated successfully."
 msgstr "GeoIP-databasen uppdaterades."
 
@@ -279,6 +236,24 @@ msgstr "GeoIP-databasen är tillgänglig."
 #: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is not available yet."
 msgstr "GeoIP-databasen är inte tillgänglig än."
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/SearchTermsPanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Unknown"
+msgstr "Okänd sida"
+
+#: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Unknown country"
+msgstr "Okänd landsflagga"
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -308,14 +283,14 @@ msgstr "Lokalt databasläge krävs för att uppdatera GeoIP-databasen."
 msgid "Unable to create a temporary file for the GeoIP database download."
 msgstr "Det går inte att skapa en tillfällig fil för nedladdning av GeoIP-databasen."
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database download failed: %s"
 msgstr "Nedladdning av GeoIP-databasen misslyckades: %s"
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %d: HTTP status code returned by the GeoIP download request.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database download failed with HTTP status %d."
 msgstr "Nedladdning av GeoIP-databasen misslyckades med HTTP-status %d."
@@ -333,14 +308,14 @@ msgstr ""
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "GeoIP-databasen är inte tillgänglig än."
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %s: HTTP error message returned by wp_remote_get.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "Nedladdning av GeoIP-databasen misslyckades: %s"
 
-#: includes/services/class-bbpa-geoip-database-updater.php
 #. translators: %d: HTTP status code returned by the GeoIP manifest request.
+#: includes/services/class-bbpa-geoip-database-updater.php
 #, fuzzy, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "Nedladdning av GeoIP-databasen misslyckades med HTTP-status %d."
@@ -418,14 +393,14 @@ msgstr "Det går inte att skapa en tillfällig fil för GeoIP-åtgärder."
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "Det går inte att skapa en tillfällig arbetsyta för GeoIP-extrahering."
 
-#: includes/services/class-bbpa-maxmind-service.php
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
+#: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "MaxMind API-fel (%1$s): %2$s."
 
-#: includes/services/class-bbpa-maxmind-service.php
 #. translators: %s: MaxMind API response code.
+#: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%s)."
 msgstr "MaxMind API-fel (%s)."
@@ -454,13 +429,13 @@ msgstr "MaxMind-uppgifter krävs för att aktivera IP-geolokalisering."
 msgid "Statistics"
 msgstr "Statistik"
 
-#: src/admin/AdminApp.js
 #. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
 msgid "%s Visitor"
 msgstr "%s besökare"
 
-#: src/admin/AdminApp.js
 #. translators: %s: active real-time visitor count.
+#: src/admin/AdminApp.js
 msgid "%s Visitors"
 msgstr "%s besökare"
 
@@ -488,22 +463,6 @@ msgstr "Geolokalisering"
 #: src/admin/AdminApp.js
 msgid "No panel available for this screen."
 msgstr "Ingen panel tillgänglig för den här skärmen."
-
-#: src/admin/AdminApp.js
-msgid "Install BimBeau Privacy Analytics app"
-msgstr "Installera BimBeau Privacy Analytics-appen"
-
-#: src/admin/AdminApp.js
-msgid "Get faster access from your home screen with an app-like experience."
-msgstr "Få snabbare åtkomst från hemskärmen med en applikt upplevelse."
-
-#: src/admin/AdminApp.js
-msgid "Install app"
-msgstr "Installera appen"
-
-#: src/admin/AdminApp.js
-msgid "BimBeau Privacy Analytics app installation was accepted."
-msgstr "Installationen av BimBeau Privacy Analytics-appen accepterades."
 
 #: src/admin/AdminApp.js
 msgid "Complete the initial configuration"
@@ -593,28 +552,28 @@ msgstr "Stäng avisering"
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
 msgstr "BimBeau Privacy Analytics kan inte ladda administratörsgränssnittet."
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: current admin panel and page label.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Panel/page: %s"
 msgstr "Panel/sida: %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Component undefined: %s"
 msgstr "Komponent odefinierad: %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: React component name detected as undefined.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Possible Gutenberg/@wordpress/components mismatch: %s undefined"
 msgstr "Möjlig Gutenberg/@wordpress/components-inkompatibilitet: %s odefinierad"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: comma-separated WordPress script handles checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Script handles checked: %s"
 msgstr "Kontrollerade skripthandtag: %s"
 
-#: src/admin/components/AdminErrorBoundary/index.js
 #. translators: %s: comma-separated JavaScript global namespaces checked while debugging.
+#: src/admin/components/AdminErrorBoundary/index.js
 msgid "Global namespaces checked: %s"
 msgstr "Kontrollerade globala namnrymder: %s"
 
@@ -634,7 +593,8 @@ msgstr "Tillgängliga granulariteter"
 msgid "Run diagnostic"
 msgstr "Kör diagnostik"
 
-#: src/admin/components/AdvancedConsentTestCard/index.js src/admin/panels/SettingsPanel.js
+#: src/admin/components/AdvancedConsentTestCard/index.js
+#: src/admin/panels/SettingsPanel.js
 msgid "Status"
 msgstr "Status"
 
@@ -662,7 +622,8 @@ msgstr "Påminnelse om samtyckesefterlevnad"
 msgid "BimBeau Privacy Analytics provides technical diagnostics only. Your CMP remains the source of truth for consent workflows."
 msgstr "BimBeau Privacy Analytics tillhandahåller endast teknisk diagnostik. Din CMP är fortsatt sanningskällan för samtyckesflöden."
 
-#: src/admin/components/DataState/index.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/DataState/index.js
+#: src/admin/widgets/OverviewKpis/index.js
 msgid "Loading…"
 msgstr "Laddar…"
 
@@ -674,8 +635,8 @@ msgstr "Endpoint:"
 msgid "Response preview:"
 msgstr "Förhandsvisning av svar:"
 
-#: src/admin/components/DataTableCard/index.js
 #. translators: %s: card title.
+#: src/admin/components/DataTableCard/index.js
 msgid "Loading: %s"
 msgstr "Laddar: %s"
 
@@ -703,7 +664,10 @@ msgstr "Körningsgranularitet rapporteras från tillgängliga granulariteter."
 msgid "Technical state does not prove consent collection validity."
 msgstr "Teknisk status bevisar inte att samtyckesinsamlingen är giltig."
 
-#: src/admin/components/ReferrerLabel/index.js src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/ReferrerLabel/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Direkttrafik"
 
@@ -823,7 +787,10 @@ msgstr "Referensfavikoner:"
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
 msgstr "Andra inställningar använder de rekommenderade standardinställningarna och kan ändras senare från BimBeau Privacy Analytics-inställningarna."
 
-#: src/admin/components/SetupWizard/index.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/components/SetupWizard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Föregående"
 
@@ -895,13 +862,13 @@ msgstr "Zooma ut kartan"
 msgid "Reset map zoom"
 msgstr "Återställ kartzoom"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#: src/admin/components/WorldMap/index.js
 msgid "%1$s: %2$s visits%3$s"
 msgstr "%1$s: %2$s besök%3$s"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: approximation scope label.
+#: src/admin/components/WorldMap/index.js
 msgid " (%s)"
 msgstr " (%s)"
 
@@ -921,20 +888,20 @@ msgstr "Inga geolokaliserade besök är tillgängliga. Kontrollera dina geolokal
 msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
 msgstr "Inga geolokaliserade besök är tillgängliga. Kontrollera dina geolokaliseringsinställningar för att börja samla in landsdata."
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: visitor count.
+#: src/admin/components/WorldMap/index.js
 #, fuzzy
 msgid "%s visitors"
 msgstr "%s besökare"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: share of total visitors.
+#: src/admin/components/WorldMap/index.js
 #, fuzzy
 msgid "%s of total visitors"
 msgstr "%s av totala besök"
 
-#: src/admin/components/WorldMap/index.js
 #. translators: %s: visit count.
+#: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s besök"
 
@@ -959,6 +926,10 @@ msgid "Map legend"
 msgstr "Kartförklaring"
 
 #: src/admin/constants/index.js
+msgid "Events"
+msgstr "Händelser"
+
+#: src/admin/constants/index.js
 msgid "Today"
 msgstr "I dag"
 
@@ -977,6 +948,10 @@ msgstr "7 dagar"
 #: src/admin/constants/index.js
 msgid "30d"
 msgstr "30d"
+
+#: src/admin/constants/index.js
+msgid "30 days"
+msgstr "30 dagar"
 
 #: src/admin/constants/index.js
 msgid "90d"
@@ -1022,7 +997,9 @@ msgstr "Inga populära sidor tillgängliga."
 msgid "Top referrers"
 msgstr "Topp-hänvisare"
 
-#: src/admin/free-stubs/OverviewPanel.js src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Referrer"
 msgstr "Hänvisare"
 
@@ -1066,6 +1043,10 @@ msgstr "Andra kampanjer"
 msgid "AI Assistants"
 msgstr "AI-assistenter"
 
+#: src/admin/lib/channelLabels.js
+msgid "Other"
+msgstr "Övrigt"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Ungefärlig position"
@@ -1074,10 +1055,16 @@ msgstr "Ungefärlig position"
 msgid "Approximate city"
 msgstr "Ungefärlig stad"
 
-#: src/admin/lib/locationLabel.js
 #. translators: %d: geolocation accuracy radius in kilometers.
+#: src/admin/lib/locationLabel.js
 msgid "Approx. %d km"
 msgstr "Cirka %d km"
+
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "No available"
+msgstr "Inte tillgängligt"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1093,12 +1080,18 @@ msgstr "Ingen besökarprofildata är tillgänglig för den här perioden."
 msgid "Table: Acquisition channels"
 msgstr "Tabell: Besökare"
 
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Channel"
+msgstr "Ingångssidor"
+
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr ""
 
-#: src/admin/panels/AcquisitionPanel.js
 #. translators: %s: Total visits in the selected range.
+#: src/admin/panels/AcquisitionPanel.js
 #, fuzzy
 msgid "Total visits: %s"
 msgstr "%s av totala besök"
@@ -1107,14 +1100,14 @@ msgstr "%s av totala besök"
 msgid "No country data available for the selected period."
 msgstr "Ingen landsdata är tillgänglig för den valda perioden."
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: 1: country name, 2: visitor count.
+#: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s besök"
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: 1: country name, 2: no data label.
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
@@ -1126,14 +1119,19 @@ msgstr "Ingen data"
 msgid "Unknown country flag"
 msgstr "Okänd landsflagga"
 
-#: src/admin/panels/GeoCountriesPanel.js
 #. translators: %s: country name.
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "Flag of %s"
 msgstr "Flagga för %s"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
 msgstr "Toppländer"
+
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
@@ -1149,11 +1147,19 @@ msgstr "Ingen besökardata tillgänglig."
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
 msgstr ""
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitor ID hash"
 msgstr "Besökar-ID-hash"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "City"
+msgstr "Stadskarta"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Anslutningstid"
 
@@ -1161,11 +1167,32 @@ msgstr "Anslutningstid"
 msgid "Current page"
 msgstr "Aktuell sida"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Operativsystem"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Webbläsare"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Browser version"
 msgstr "Webbläsarversion"
 
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/AudienceBreakdownCards/index.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Enheter"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Resolution"
 msgstr "Upplösning"
 
@@ -1219,9 +1246,37 @@ msgid "Manual updates only"
 msgstr "Endast nödvändig statistik"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Every 15 days"
+msgstr "Var 15:e dag"
+
+#: src/admin/panels/SettingsPanel.js
 #, fuzzy
 msgid "Every 30 days"
 msgstr "Var 60:e dag"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 45 days"
+msgstr "Var 45:e dag"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 60 days"
+msgstr "Var 60:e dag"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 3 months"
+msgstr "Var 3:e månad"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 6 months"
+msgstr "Var 6:e månad"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every year"
+msgstr "Varje år"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Every 2 years"
+msgstr "Vartannat år"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for %(days)s days"
@@ -1319,8 +1374,8 @@ msgid "Aggregated analytics data purged."
 msgstr "Aggregerad analysdata har rensats."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Captured events data purged."
-msgstr "Data för insamlade händelser har rensats."
+msgid "Stats"
+msgstr "Statistik"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to dashboards, KPI cards, and analytics reports."
@@ -1343,44 +1398,8 @@ msgid "Tracking & privacy"
 msgstr "Spårning och integritet"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "App"
-msgstr "App"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Maintenance"
 msgstr "Underhåll"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Delete captured events list"
-msgstr "Ta bort lista över insamlade händelser"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Confirm captured events purge"
-msgstr "Bekräfta rensning av insamlade händelser"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
-msgstr "Den här åtgärden tar permanent bort listan över insamlade händelser som visas i händelsestatistiken. Övrig analysdata förblir oförändrad."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "I confirm that I want to permanently purge the captured events list."
-msgstr "Jag bekräftar att jag vill rensa listan över insamlade händelser permanent."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Purge captured events"
-msgstr "Rensa insamlade händelser"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "PWA URL is unavailable."
-msgstr "PWA-URL är inte tillgänglig."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "PWA URL copied."
-msgstr "PWA-URL kopierad."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Unable to copy the PWA URL."
-msgstr "Det går inte att kopiera PWA-URL:en."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Loading settings…"
@@ -1407,22 +1426,6 @@ msgid "Hidden"
 msgstr "Dold"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Interface branding"
-msgstr "Gränssnittsprofilering"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "White-label interface controls are available in Pro."
-msgstr "Kontroller för white-label-gränssnittet finns i Pro."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Use white-label interface"
-msgstr "Använd white-label-gränssnitt"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
-msgstr "Döljer BimBeau Privacy Analytics-logotypen i administrationssidhuvudet och visar den lokaliserade analystiteln i stället."
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Enabled panels"
 msgstr "Aktiverade paneler"
 
@@ -1433,18 +1436,6 @@ msgstr "Synlig"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden while \"Enable advanced stats after consent\" is disabled."
 msgstr "Dold medan \"Aktivera avancerad statistik efter samtycke\" är inaktiverat."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Quick stats"
-msgstr "Snabbstatistik"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
-msgstr "Aktivera Snabbstatistik för valda inläggstyper: lägg till en kolumn Visningar (30d) i inläggslistan och visa en metabox med statistiköversikt när varje inlägg redigeras."
-
-#: src/admin/panels/SettingsPanel.js
-msgid "No post types available."
-msgstr "Inga inläggstyper tillgängliga."
 
 #: src/admin/panels/SettingsPanel.js
 #, fuzzy
@@ -1832,10 +1823,6 @@ msgid "Delete all analytics data"
 msgstr "Ta bort all analysdata"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Events configuration"
-msgstr "Händelsekonfiguration"
-
-#: src/admin/panels/SettingsPanel.js
 #, fuzzy
 msgid "Referring site icons"
 msgstr "Hänvisande webbplatser"
@@ -1885,6 +1872,10 @@ msgstr "Den här åtgärden tar permanent bort all lagrad analysdata och alla r�
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Jag bekräftar att jag vill rensa all analysdata permanent."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -1950,81 +1941,45 @@ msgstr "Ingångssidor"
 msgid "Pages not found"
 msgstr "Sidor hittades inte"
 
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Ingen besökardata tillgänglig."
 
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Laddar besökare…"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "Stigande"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "Fallande"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Daily page views"
-msgstr "Dagliga sidvisningar"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. page views"
-msgstr "Föreg. sidvisningar"
-
-#: src/admin/widgets/TimeseriesChart/index.js
-msgid "Prev. visitors"
-msgstr "Föreg. besökare"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Sortera efter"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "Visa"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "Titel"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "Next"
-msgstr "Nästa"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "av"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "objekt"
-
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
+msgid "Tablet"
+msgstr "Tabell"
+
 #. translators: %s: page views count.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s sidvisning"
 msgstr[1] "%s sidvisningar"
 
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 #. translators: %s: percentage value.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%1$s%% share"
 msgstr "%1$s%% andel"
 
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 #. translators: %s: total page views in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Based on %s tracked page views in the selected range."
 msgstr "Baserat på %s spårade sidvisningar i det valda intervallet."
 
@@ -2084,8 +2039,8 @@ msgstr "Webbläsarversioner"
 msgid "Aucune donnée identifiée disponible pour cette période."
 msgstr ""
 
-#: src/admin/widgets/DeviceDetailsCard/index.js
 #. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
+#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies."
 msgstr ""
 
@@ -2151,8 +2106,8 @@ msgstr "Genomsnittlig aktiv tid under ett besök."
 msgid "Custom"
 msgstr "Anpassad"
 
-#: src/admin/widgets/PeriodFilter/index.js
 #. translators: 1: start date, 2: end date.
+#: src/admin/widgets/PeriodFilter/index.js
 msgid "%1$s – %2$s"
 msgstr "%1$s – %2$s"
 
@@ -2160,8 +2115,19 @@ msgstr "%1$s – %2$s"
 msgid "Quick ranges"
 msgstr "Snabbintervall"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Ascending"
+msgstr "Stigande"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Descending"
+msgstr "Fallande"
+
 #. translators: %s: current sort order label.
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Toggle sort order"
 msgstr "Växla sorteringsordning"
 
@@ -2175,6 +2141,32 @@ msgid "Referrer unavailable"
 msgstr "Inga hänvisare tillgängliga."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Sort by"
+msgstr "Sortera efter"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Rows"
+msgstr ""
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Search"
+msgstr "Betald sökning"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Search…"
+msgstr "Betald sökning"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "Ingen data om hänvisande webbplatser tillgänglig."
 
@@ -2182,15 +2174,64 @@ msgstr "Ingen data om hänvisande webbplatser tillgänglig."
 msgid "Loading referring sites…"
 msgstr "Laddar hänvisande webbplatser…"
 
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
+#, fuzzy
+msgid "Previous page"
+msgstr "Tidigare sidvisningar"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#, fuzzy
+msgid "Next page"
+msgstr "Nästa sida"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Nästa"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Page"
+msgstr "Sidor"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "of"
+msgstr "av"
+
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "items"
+msgstr "objekt"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Title"
+msgstr "Titel"
+
 #. translators: %s: active first-column label.
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "label"
 msgstr "etikett"
 
-#: src/admin/widgets/ReportTableCard/index.js
 #. translators: %s: table title.
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Table"
 msgstr "Tabell"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Display"
+msgstr "Visa"
+
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "URL"
+msgstr "URL"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Loading"
@@ -2217,12 +2258,24 @@ msgid "Previous visitors"
 msgstr "Tidigare besökare"
 
 #: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. page views"
+msgstr "Föreg. sidvisningar"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Prev. visitors"
+msgstr "Föreg. besökare"
+
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors"
 msgstr "Dagliga sidvisningar och besökare"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors line chart"
 msgstr "Linjediagram över dagliga sidvisningar och besökare"
+
+#: src/admin/widgets/TimeseriesChart/index.js
+msgid "Daily page views"
+msgstr "Dagliga sidvisningar"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views line chart"
@@ -2248,48 +2301,48 @@ msgid_plural "visitors"
 msgstr[0] "besökare"
 msgstr[1] "besökare"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s"
 msgstr "%1$s: Sidvisningar %2$s, besökare %3$s, tidigare sidvisningar %4$s, tidigare besökare %5$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: current metric count, 3: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Current %2$s, Previous %3$s"
 msgstr "%1$s: Aktuellt %2$s, föregående %3$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: formatted date, 2: page view count, 3: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: %2$s, %3$s"
 msgstr "%1$s: %2$s, %3$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: page view count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Page views: %1$s"
 msgstr "Sidvisningar: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Visitors: %1$s"
 msgstr "Besökare: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous page view count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous page views: %1$s"
 msgstr "Tidigare sidvisningar: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous visitor count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous visitors: %1$s"
 msgstr "Tidigare besökare: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: current metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Current: %1$s"
 msgstr "Aktuellt: %1$s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: previous metric count
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous: %1$s"
 msgstr "Föregående: %1$s"
 
@@ -2301,13 +2354,13 @@ msgstr "Ingen data är tillgänglig för den här perioden."
 msgid "Loading chart…"
 msgstr "Laddar diagram…"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Current %s"
 msgstr "Aktuellt %s"
 
-#: src/admin/widgets/TimeseriesChart/index.js
 #. translators: 1: metric label
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous %s"
 msgstr "Föregående %s"
 
@@ -2331,6 +2384,90 @@ msgstr "Privat"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabell: Besökare"
+
+#~ msgid "BimBeau Privacy Analytics aggregated retention cleanup"
+#~ msgstr "BimBeau Privacy Analytics-rensning av aggregerad lagring"
+
+#~ msgid "Once Monthly"
+#~ msgstr "En gång i månaden"
+
+#~ msgid "Local GeoLite database is unavailable."
+#~ msgstr "Den lokala GeoLite-databasen är inte tillgänglig."
+
+#~ msgid "Unable to read the local GeoLite database."
+#~ msgstr "Det går inte att läsa den lokala GeoLite-databasen."
+
+#~ msgid "No geolocation record found for this IP."
+#~ msgstr "Ingen geolokaliseringspost hittades för denna IP-adress."
+
+#~ msgid "Unable to determine the visitor IP."
+#~ msgstr "Det går inte att fastställa besökarens IP-adress."
+
+#~ msgid "Install BimBeau Privacy Analytics app"
+#~ msgstr "Installera BimBeau Privacy Analytics-appen"
+
+#~ msgid "Get faster access from your home screen with an app-like experience."
+#~ msgstr "Få snabbare åtkomst från hemskärmen med en applikt upplevelse."
+
+#~ msgid "Install app"
+#~ msgstr "Installera appen"
+
+#~ msgid "BimBeau Privacy Analytics app installation was accepted."
+#~ msgstr "Installationen av BimBeau Privacy Analytics-appen accepterades."
+
+#~ msgid "Captured events data purged."
+#~ msgstr "Data för insamlade händelser har rensats."
+
+#~ msgid "App"
+#~ msgstr "App"
+
+#~ msgid "Delete captured events list"
+#~ msgstr "Ta bort lista över insamlade händelser"
+
+#~ msgid "Confirm captured events purge"
+#~ msgstr "Bekräfta rensning av insamlade händelser"
+
+#~ msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
+#~ msgstr "Den här åtgärden tar permanent bort listan över insamlade händelser som visas i händelsestatistiken. Övrig analysdata förblir oförändrad."
+
+#~ msgid "I confirm that I want to permanently purge the captured events list."
+#~ msgstr "Jag bekräftar att jag vill rensa listan över insamlade händelser permanent."
+
+#~ msgid "Purge captured events"
+#~ msgstr "Rensa insamlade händelser"
+
+#~ msgid "PWA URL is unavailable."
+#~ msgstr "PWA-URL är inte tillgänglig."
+
+#~ msgid "PWA URL copied."
+#~ msgstr "PWA-URL kopierad."
+
+#~ msgid "Unable to copy the PWA URL."
+#~ msgstr "Det går inte att kopiera PWA-URL:en."
+
+#~ msgid "Interface branding"
+#~ msgstr "Gränssnittsprofilering"
+
+#~ msgid "White-label interface controls are available in Pro."
+#~ msgstr "Kontroller för white-label-gränssnittet finns i Pro."
+
+#~ msgid "Use white-label interface"
+#~ msgstr "Använd white-label-gränssnitt"
+
+#~ msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
+#~ msgstr "Döljer BimBeau Privacy Analytics-logotypen i administrationssidhuvudet och visar den lokaliserade analystiteln i stället."
+
+#~ msgid "Quick stats"
+#~ msgstr "Snabbstatistik"
+
+#~ msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
+#~ msgstr "Aktivera Snabbstatistik för valda inläggstyper: lägg till en kolumn Visningar (30d) i inläggslistan och visa en metabox med statistiköversikt när varje inlägg redigeras."
+
+#~ msgid "No post types available."
+#~ msgstr "Inga inläggstyper tillgängliga."
+
+#~ msgid "Events configuration"
+#~ msgstr "Händelsekonfiguration"
 
 #, fuzzy
 #~ msgid "The export job is missing a processing URL."
@@ -2545,9 +2682,6 @@ msgstr "Tabell: Besökare"
 #~ msgid "Plugin name (menu and dashboard)"
 #~ msgstr "Tilläggsnamn (meny och instrumentpanel)"
 
-#~ msgid "City map"
-#~ msgstr "Stadskarta"
-
 #~ msgid "Top pages details"
 #~ msgstr "Detaljer för toppsidor"
 
@@ -2581,7 +2715,3 @@ msgstr "Tabell: Besökare"
 
 #~ msgid "Visits = distinct visitors for the selected location and period. Hits = tracked page hits."
 #~ msgstr "Besök = unika besökare för vald plats och period. Träffar = spårade sidträffar."
-
-#~ msgid "Upgrade"
-#~ msgstr "Uppgradera"
-

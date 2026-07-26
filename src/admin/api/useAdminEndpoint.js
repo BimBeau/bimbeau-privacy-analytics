@@ -277,17 +277,10 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 			}
 		);
 	}
-	const appNonce = ADMIN_CONFIG?.appNonce;
 	const restNonce = ADMIN_CONFIG?.restNonce;
-	const authHeaders = isAppMode
-		? {
-				...( appNonce ? { 'X-BBPA-App-Nonce': appNonce } : {} ),
-		  }
-		: {
-				...( restNonce ? { 'X-WP-Nonce': restNonce } : {} ),
-		  };
+	const authHeaders = { ...( restNonce ? { 'X-WP-Nonce': restNonce } : {} ) };
 
-	if ( ! ADMIN_CONFIG?.restUrl || ( ! appNonce && ! restNonce ) ) {
+	if ( ! ADMIN_CONFIG?.restUrl || ! restNonce ) {
 		throw {
 			message: __(
 				'Missing REST configuration.',

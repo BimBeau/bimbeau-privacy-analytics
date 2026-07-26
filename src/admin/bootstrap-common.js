@@ -528,21 +528,11 @@ const setupRealtimeMapSnackbars = ( rootElement ) => {
 
 export const bootstrapAdmin = ( {
 	beforeRender = [],
-	afterRender = [],
-	PremiumPwaNavigation = null,
+	afterRender = []
 } = {} ) => {
 	const root = document.getElementById( rootId );
 
 	if ( ! root ) {
-		const pwaRoot = document.getElementById( 'bbpa-app' );
-		if ( pwaRoot?.dataset?.bbpaLoading === '1' ) {
-			pwaRoot.removeAttribute( 'data-bbpa-loading' );
-			pwaRoot.classList.remove( 'bbpa-front-app-loading' );
-			pwaRoot.innerHTML = '';
-			throw new Error(
-				`BimBeau Privacy Analytics could not mount: #${ rootId } is missing from the Premium PWA document.`
-			);
-		}
 		return;
 	}
 
@@ -562,7 +552,7 @@ export const bootstrapAdmin = ( {
 
 	const appElement = (
 		<AdminErrorBoundary>
-			<AdminApp PremiumPwaNavigation={ PremiumPwaNavigation } />
+			<AdminApp />
 		</AdminErrorBoundary>
 	);
 
