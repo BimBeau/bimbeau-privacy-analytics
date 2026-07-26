@@ -443,12 +443,7 @@ const ReportTableCard = ( {
 						>
 							<thead>
 								<tr>
-									<th
-										scope="col"
-										className="bbpa-report-table__page-column"
-									>
-										{ activeLabelHeader }
-									</th>
+									<th scope="col">{ activeLabelHeader }</th>
 									<th scope="col">
 										<span className="bbpa-report-table__metric-header">
 											<span>{ metricLabel }</span>
@@ -511,7 +506,7 @@ const ReportTableCard = ( {
 												: undefined
 										}
 									>
-										<td className="bbpa-report-table__page-cell">
+										<td>
 											{ ( () => {
 												const baseLabel =
 													supportsPageLabelToggle &&

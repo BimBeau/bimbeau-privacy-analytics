@@ -270,7 +270,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 						>
 							<thead>
 								<tr>
-									<th scope="col" className="bbpa-report-table__page-column">
+									<th scope="col">
 										{ __(
 											'Referrer',
 											'bimbeau-privacy-analytics'
@@ -293,11 +293,11 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 							<tbody>
 								{ rows.map( ( row ) => (
 									<tr key={ row.key }>
-										<td className="bbpa-report-table__page-cell">
+										<td>
 											<ReferrerLabel
 												domain={ row.referrerDomain }
-								label={ row.referrer }
-								favicon={ row.favicon }
+												label={ row.referrer }
+												favicon={ row.favicon }
 											/>
 										</td>
 										<td>{ row.category }</td>

@@ -24,9 +24,7 @@ body.bbpa-app-shell .bbpa-events-panel__page-cell,body.bbpa-app-shell .bbpa-real
 .bbpa-admin-app--app .bbpa-report-table th{font-size:14px;font-weight:500}
 .bbpa-admin-app--app .bbpa-report-table td{font-size:13px}
 .bbpa-admin-app--app .bbpa-report-table.striped>tbody>:nth-child(odd){background-color:color-mix(in srgb,var(--color-3) 8%,transparent)}
-.bbpa-admin-app--app .bbpa-report-table__page-column,.bbpa-admin-app--app .bbpa-report-table__page-cell{width:clamp(240px,45vw,900px);min-width:240px;max-width:900px}
-.bbpa-admin-app--app .bbpa-report-table--referrers .bbpa-report-table__page-column,.bbpa-admin-app--app .bbpa-report-table--referrers .bbpa-report-table__page-cell{width:clamp(260px,48vw,900px);min-width:260px}
-.bbpa-admin-app--app .bbpa-report-table th:not(.bbpa-report-table__page-column),.bbpa-admin-app--app .bbpa-report-table td:not(.bbpa-report-table__page-cell){min-width:112px}
+.bbpa-admin-app--app .bbpa-report-table th,.bbpa-admin-app--app .bbpa-report-table td{min-width:112px}
 .bbpa-admin-app--app .bbpa-report-table__metric{display:inline-flex;align-items:center;flex-wrap:nowrap;white-space:nowrap}
 .bbpa-admin-app--app .screen-reader-text{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
 @media (hover:none),(pointer:coarse){.bbpa-admin-app--app .bbpa-report-table__open-column,.bbpa-admin-app--app .bbpa-report-table__open-cell{display:none}}

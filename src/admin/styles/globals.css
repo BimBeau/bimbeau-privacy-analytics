@@ -1279,15 +1279,8 @@
   table-layout: auto;
 }
 
-.bbpa-report-table__page-column,
-.bbpa-report-table__page-cell {
-  width: clamp(240px, 45vw, 900px);
-  max-width: 900px;
-  min-width: 240px;
-}
-
-.bbpa-report-table--adaptive-label th:not(.bbpa-report-table__page-column),
-.bbpa-report-table--adaptive-label td:not(.bbpa-report-table__page-cell) {
+.bbpa-report-table--adaptive-label th,
+.bbpa-report-table--adaptive-label td {
   min-width: 112px;
   white-space: nowrap;
 }
@@ -1296,14 +1289,8 @@
   min-width: max(100%, 560px);
 }
 
-.bbpa-report-table--referrers .bbpa-report-table__page-column,
-.bbpa-report-table--referrers .bbpa-report-table__page-cell {
-  width: clamp(260px, 48vw, 900px);
-  min-width: 260px;
-}
-
-.bbpa-report-table--referrers th:not(.bbpa-report-table__page-column),
-.bbpa-report-table--referrers td:not(.bbpa-report-table__page-cell) {
+.bbpa-report-table--referrers th,
+.bbpa-report-table--referrers td {
   min-width: 112px;
   white-space: nowrap;
 }
