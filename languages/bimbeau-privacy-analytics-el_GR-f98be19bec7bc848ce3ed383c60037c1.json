@@ -31,6 +31,12 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Προβολές σελίδων %2$s, επισκέπτες %3$s, προηγούμενες προβολές σελίδων %4$s, προηγούμενοι επισκέπτες %5$s"
       ],
+      "%s Visitor": [
+        "%s επισκέπτης"
+      ],
+      "%s Visitors": [
+        "%s επισκέπτες"
+      ],
       "%s page view": [
         "%s προβολή σελίδας",
         "%s προβολές σελίδας"
@@ -251,6 +257,9 @@
       "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
         "Λίστα επιτρεπόμενων κλειδιών query χωρισμένη με κόμματα (χρησιμοποιείται για παρακολούθηση URL και συγκέντρωση UTM)."
       ],
+      "Complete the initial configuration": [
+        "Ολοκληρώστε την αρχική διαμόρφωση"
+      ],
       "Component undefined: %s": [
         "Μη ορισμένο στοιχείο: %s"
       ],
@@ -389,9 +398,6 @@
       "Disabled": [
         "Απενεργοποιημένο"
       ],
-      "Dismiss notification": [
-        "Κλείσιμο ειδοποίησης"
-      ],
       "Display": [
         "Εμφάνιση"
       ],
@@ -518,6 +524,9 @@
       "Finish configuration": [
         "Ολοκληρώστε τη διαμόρφωση"
       ],
+      "Finish configuring tracking, local geolocation, and optional referrer favicons.": [
+        "Ολοκληρώστε τη διαμόρφωση της παρακολούθησης, της τοπικής γεωγραφικής θέσης και των προαιρετικών favicon παραπομπής."
+      ],
       "Finish later": [
         "Τελειώστε αργότερα"
       ],
@@ -526,6 +535,9 @@
       ],
       "General": [
         "Γενικά"
+      ],
+      "GeoIP database not installed": [
+        "Η βάση δεδομένων GeoIP δεν έχει εγκατασταθεί"
       ],
       "GeoIP database status": [
         "Η βάση δεδομένων GeoIP δεν έχει εγκατασταθεί"
@@ -568,6 +580,9 @@
       ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "Στο CMP σας, αποκλείστε το script προηγμένων στατιστικών του BimBeau Privacy Analytics μέχρι να γίνει αποδεκτός ο σκοπός Στατιστικά ή Αναλυτικά."
+      ],
+      "Initial configuration completed.": [
+        "Η αρχική διαμόρφωση ολοκληρώθηκε."
       ],
       "Install the local GeoIP database": [
         "Εγκαταστήστε την τοπική βάση δεδομένων GeoIP"
@@ -662,6 +677,9 @@
       "Local GeoLite database — recommended": [
         "Τοπική βάση GeoLite (προεπιλογή)"
       ],
+      "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
+        "Οι αναφορές τοποθεσίας δεν είναι διαθέσιμες έως ότου ολοκληρωθεί η λήψη της τοπικής βάσης δεδομένων GeoIP. Κατεβάστε το από τη σελίδα ρυθμίσεων γεωγραφικής τοποθεσίας."
+      ],
       "Long-term totals retention": [
         "Διατήρηση μακροπρόθεσμων συνόλων"
       ],
@@ -698,11 +716,11 @@
       "Missing REST configuration.": [
         "Λείπει ρύθμιση REST."
       ],
+      "Missing admin configuration.": [
+        "Λείπει ρύθμιση διαχειριστή."
+      ],
       "Most used operating systems": [
         "Πιο χρησιμοποιούμενα λειτουργικά συστήματα"
-      ],
-      "New visitor": [
-        "Νέος επισκέπτης"
       ],
       "Next": [
         "Επόμενο"
@@ -773,6 +791,9 @@
       "No overview metrics available.": [
         "Δεν υπάρχουν διαθέσιμες μετρικές επισκόπησης."
       ],
+      "No panel available for this screen.": [
+        "Δεν υπάρχει διαθέσιμος πίνακας για αυτήν την οθόνη."
+      ],
       "No popular pages available.": [
         "Δεν υπάρχουν διαθέσιμες δημοφιλείς σελίδες."
       ],
@@ -806,6 +827,9 @@
       "Open details": [
         "Άνοιγμα λεπτομερειών"
       ],
+      "Open geolocation settings": [
+        "Ανοίξτε τις ρυθμίσεις γεωγραφικής θέσης"
+      ],
       "Open row": [
         "Άνοιγμα γραμμής"
       ],
@@ -835,9 +859,6 @@
       ],
       "Page": [
         "Σελίδες"
-      ],
-      "Page viewed": [
-        "Προβολή σελίδας"
       ],
       "Page views": [
         "Προβολές σελίδας"
@@ -947,6 +968,9 @@
       "Referring sites": [
         "Ιστότοποι παραπομπής"
       ],
+      "Reload page": [
+        "Γεωεντοπισμός"
+      ],
       "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
         "Αφαίρεση όλων των συγκεντρωτικών αναλυτικών KPI, των λεπτομερειών επισκεπτών και των εγγραφών ακατέργαστων logs."
       ],
@@ -973,6 +997,9 @@
       ],
       "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.": [
         "Επανεκκινήστε τον βοηθό από το πρώτο βήμα για να ελέγξετε τις κύριες ρυθμίσεις του πρόσθετου. Οι τρέχουσες ρυθμίσεις σας διατηρούνται και μπορούν να αλλάξουν στα διάφορα βήματα."
+      ],
+      "Resume configuration": [
+        "Συνέχιση της διαμόρφωσης"
       ],
       "Retry count": [
         "Πλήθος επαναλήψεων"
@@ -1060,6 +1087,9 @@
       ],
       "Source or service": [
         ""
+      ],
+      "Statistics": [
+        "Στατιστικά"
       ],
       "Stats": [
         "Στατιστικά"
@@ -1184,6 +1214,9 @@
       "Unable to load the GeoIP database status.": [
         "Δεν είναι δυνατή η φόρτωση της κατάστασης της βάσης GeoIP."
       ],
+      "Unable to restart the configuration assistant. Please try again.": [
+        "Δεν είναι δυνατή η επανεκκίνηση του βοηθού διαμόρφωσης. Δοκιμάστε ξανά."
+      ],
       "Unable to save this choice. Please try again.": [
         "Δεν είναι δυνατή η αποθήκευση αυτής της επιλογής. Δοκιμάστε ξανά."
       ],
@@ -1194,19 +1227,13 @@
         "Μη διαθέσιμο"
       ],
       "Unknown": [
-        "Άγνωστη σελίδα"
+        ""
       ],
       "Unknown country": [
         "Σημαία άγνωστης χώρας"
       ],
       "Unknown country flag": [
         "Σημαία άγνωστης χώρας"
-      ],
-      "Unknown page": [
-        "Άγνωστη σελίδα"
-      ],
-      "Unknown visitor": [
-        "Άγνωστος επισκέπτης"
       ],
       "Update in progress": [
         "Άνοιγμα στο WordPress"
@@ -1231,9 +1258,6 @@
       ],
       "Visitor activity window": [
         "Παράθυρο δραστηριότητας επισκέπτη"
-      ],
-      "Visitor inactive": [
-        "Ανενεργός επισκέπτης"
       ],
       "Visitors": [
         "Επισκέπτες"
@@ -1276,6 +1300,9 @@
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "Το CMP σας πρέπει να το αποκλείει μέχρι να δοθεί συναίνεση για Στατιστικά / Αναλυτικά."
+      ],
+      "Your WordPress session has expired. Reload this page.": [
+        ""
       ],
       "Your configuration is ready": [
         "Η διαμόρφωσή σας είναι έτοιμη"

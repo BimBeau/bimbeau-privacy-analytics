@@ -33,11 +33,7 @@ function bbpa_build_tracker_localized_settings(?int $post_id, bool $auto_track, 
     $debug_enabled = isset($settings['debug_enabled']) && is_bool($settings['debug_enabled'])
         ? $settings['debug_enabled']
         : false;
-    $debug_query_enabled = false;
-    if (isset($_GET['bbpa_debug'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only debug query flag, no state change.
-        $debug_query_enabled = sanitize_text_field(wp_unslash((string) $_GET['bbpa_debug'])) === '1'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only debug query flag, no state change.
-    }
-    $debug_runtime_enabled = $debug_enabled || $debug_query_enabled;
+    $debug_runtime_enabled = $debug_enabled;
     $run_id = function_exists('wp_generate_uuid4') ? wp_generate_uuid4() : uniqid('bbpa_', true);
     $advanced_stats_enabled = isset($settings['advanced_stats_enabled']) && is_bool($settings['advanced_stats_enabled'])
         ? $settings['advanced_stats_enabled']

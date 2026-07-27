@@ -31,6 +31,12 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s : pages vues %2$s, visiteurs %3$s, pages vues précédentes %4$s, visiteurs précédents %5$s"
       ],
+      "%s Visitor": [
+        "%s visiteur"
+      ],
+      "%s Visitors": [
+        "%s visiteurs"
+      ],
       "%s page view": [
         "%s vue de page",
         "%s vues de page"
@@ -251,6 +257,9 @@
       "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
         "Liste des clés de requête autorisées, séparées par des virgules (utilisée pour le suivi des URL et l’agrégation UTM)."
       ],
+      "Complete the initial configuration": [
+        "Terminez la configuration initiale"
+      ],
       "Component undefined: %s": [
         "Composant non défini : %s"
       ],
@@ -389,9 +398,6 @@
       "Disabled": [
         "Désactivées"
       ],
-      "Dismiss notification": [
-        "Fermer la notification"
-      ],
       "Display": [
         "Afficher"
       ],
@@ -518,6 +524,9 @@
       "Finish configuration": [
         "Terminer la configuration"
       ],
+      "Finish configuring tracking, local geolocation, and optional referrer favicons.": [
+        "Terminez la configuration du suivi, de la géolocalisation locale et des favicons facultatifs des sites référents."
+      ],
       "Finish later": [
         "Terminer plus tard"
       ],
@@ -526,6 +535,9 @@
       ],
       "General": [
         "Général"
+      ],
+      "GeoIP database not installed": [
+        "Base de données GeoIP non installée"
       ],
       "GeoIP database status": [
         "État de la base GeoIP"
@@ -568,6 +580,9 @@
       ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "Dans votre CMP, bloquez le script de statistiques avancées BimBeau Privacy Analytics jusqu’à ce que la finalité Statistiques ou Analytics soit acceptée."
+      ],
+      "Initial configuration completed.": [
+        "Configuration initiale terminée."
       ],
       "Install the local GeoIP database": [
         "Installer la base de données GeoIP locale"
@@ -662,6 +677,9 @@
       "Local GeoLite database — recommended": [
         "Base GeoLite locale — recommandée"
       ],
+      "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
+        "Les rapports de localisation ne sont pas disponibles tant que la base de données GeoIP locale n'a pas été téléchargée. Téléchargez-le depuis la page des paramètres de géolocalisation."
+      ],
       "Long-term totals retention": [
         "Rétention des totaux longue durée"
       ],
@@ -698,11 +716,11 @@
       "Missing REST configuration.": [
         "Configuration REST manquante."
       ],
+      "Missing admin configuration.": [
+        "Configuration admin manquante."
+      ],
       "Most used operating systems": [
         "Systèmes d’exploitation les plus utilisés"
-      ],
-      "New visitor": [
-        "Nouveau visiteur"
       ],
       "Next": [
         "Suivant"
@@ -773,6 +791,9 @@
       "No overview metrics available.": [
         "Aucune métrique de synthèse disponible."
       ],
+      "No panel available for this screen.": [
+        "Aucun panneau disponible pour cet écran."
+      ],
       "No popular pages available.": [
         "Aucune page populaire disponible."
       ],
@@ -806,6 +827,9 @@
       "Open details": [
         "Ouvrir les détails"
       ],
+      "Open geolocation settings": [
+        "Ouvrir les paramètres de géolocalisation"
+      ],
       "Open row": [
         "Ouvrir la ligne"
       ],
@@ -835,9 +859,6 @@
       ],
       "Page": [
         "Pages"
-      ],
-      "Page viewed": [
-        "Page consultée"
       ],
       "Page views": [
         "Pages vues"
@@ -947,6 +968,9 @@
       "Referring sites": [
         "Sites référents"
       ],
+      "Reload page": [
+        "Recharger l’application"
+      ],
       "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
         "Supprimer toutes les analyses KPI agrégées, les détails visiteurs et les entrées de journaux bruts."
       ],
@@ -973,6 +997,9 @@
       ],
       "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.": [
         "Recommencez l’assistant depuis la première étape pour revoir les principaux réglages du plugin. Vos réglages actuels sont conservés et peuvent être modifiés au cours des différentes étapes."
+      ],
+      "Resume configuration": [
+        "Reprendre la configuration"
       ],
       "Retry count": [
         "Nombre de tentatives"
@@ -1060,6 +1087,9 @@
       ],
       "Source or service": [
         ""
+      ],
+      "Statistics": [
+        "Statistiques"
       ],
       "Stats": [
         "Stats"
@@ -1184,6 +1214,9 @@
       "Unable to load the GeoIP database status.": [
         "Impossible de charger l’état de la base GeoIP."
       ],
+      "Unable to restart the configuration assistant. Please try again.": [
+        "Impossible de recommencer l’assistant de configuration. Veuillez réessayer."
+      ],
       "Unable to save this choice. Please try again.": [
         "Impossible de sauvegarder ce choix. Veuillez réessayer."
       ],
@@ -1194,19 +1227,13 @@
         "Indisponible"
       ],
       "Unknown": [
-        "Page inconnue"
+        ""
       ],
       "Unknown country": [
         "Drapeau de pays inconnu"
       ],
       "Unknown country flag": [
         "Drapeau de pays inconnu"
-      ],
-      "Unknown page": [
-        "Page inconnue"
-      ],
-      "Unknown visitor": [
-        "Visiteur inconnu"
       ],
       "Update in progress": [
         "Mise à jour en cours"
@@ -1231,9 +1258,6 @@
       ],
       "Visitor activity window": [
         "Fenêtre d’activité visiteur"
-      ],
-      "Visitor inactive": [
-        "Visiteur inactif"
       ],
       "Visitors": [
         "Visiteurs"
@@ -1276,6 +1300,9 @@
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "Votre CMP doit le bloquer jusqu’à ce que le consentement Statistiques / Analytics soit donné."
+      ],
+      "Your WordPress session has expired. Reload this page.": [
+        ""
       ],
       "Your configuration is ready": [
         "Votre configuration est prête"

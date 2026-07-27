@@ -558,76 +558,11 @@ function bbpa_get_visit_identifier_window_seconds(): int
 }
 
 /**
- * Parse a request-scoped debug override value.
- */
-function bbpa_parse_debug_override_value($value): ?bool
-{
-    if (is_bool($value)) {
-        return $value;
-    }
-
-    if (is_numeric($value)) {
-        return ((int) $value) === 1;
-    }
-
-    if (!is_string($value)) {
-        return null;
-    }
-
-    $normalized = strtolower(trim($value));
-    if ($normalized === '') {
-        return null;
-    }
-
-    if (in_array($normalized, ['1', 'true', 'yes', 'on'], true)) {
-        return true;
-    }
-
-    if (in_array($normalized, ['0', 'false', 'no', 'off'], true)) {
-        return false;
-    }
-
-    return null;
-}
-
-/**
- * Get debug mode request override from admin URLs or REST headers.
- */
-function bbpa_get_debug_mode_request_override(): ?bool
-{
-    if (
-        is_admin()
-        && function_exists('bbpa_is_plugin_admin_page')
-        && bbpa_is_plugin_admin_page()
-        && isset($_GET['bbpa_debug'])
-        && current_user_can(bbpa_get_settings_access_capability())
-        && isset($_GET['_wpnonce'])
-        && is_string($_GET['_wpnonce'])
-        && wp_verify_nonce(sanitize_text_field(wp_unslash((string) $_GET['_wpnonce'])), 'bbpa_toggle_debug_mode')
-    ) {
-        $debug_override = sanitize_text_field(wp_unslash((string) $_GET['bbpa_debug']));
-        return bbpa_parse_debug_override_value($debug_override);
-    }
-
-    if (isset($_SERVER['HTTP_X_BBPA_DEBUG'])) {
-        $debug_header = sanitize_text_field(wp_unslash((string) $_SERVER['HTTP_X_BBPA_DEBUG']));
-        return bbpa_parse_debug_override_value($debug_header);
-    }
-
-    return null;
-}
-
-/**
  * Determine whether debug mode is enabled for the current request.
  */
 function bbpa_is_debug_mode_enabled(): bool
 {
     $settings = bbpa_get_settings();
-    $override = bbpa_get_debug_mode_request_override();
-    if ($override !== null) {
-        return $override;
-    }
-
     return !empty($settings['debug_enabled']);
 }
 

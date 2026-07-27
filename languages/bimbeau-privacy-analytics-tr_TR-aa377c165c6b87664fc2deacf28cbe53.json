@@ -31,6 +31,12 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Sayfa görüntülemeleri %2$s, ziyaretçiler %3$s, önceki sayfa görüntülemeleri %4$s, önceki ziyaretçiler %5$s"
       ],
+      "%s Visitor": [
+        "%s ziyaretçi"
+      ],
+      "%s Visitors": [
+        "%s ziyaretçi"
+      ],
       "%s page view": [
         "%s sayfa görüntüleme"
       ],
@@ -250,6 +256,9 @@
       "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
         "İzin verilen sorgu anahtarlarının virgülle ayrılmış listesi (URL izleme ve UTM birleştirme için kullanılır)."
       ],
+      "Complete the initial configuration": [
+        "İlk yapılandırmayı tamamlayın"
+      ],
       "Component undefined: %s": [
         "Bileşen tanımsız: %s"
       ],
@@ -388,9 +397,6 @@
       "Disabled": [
         "Devre dışı"
       ],
-      "Dismiss notification": [
-        "Bildirimi kapat"
-      ],
       "Display": [
         "Göster"
       ],
@@ -517,6 +523,9 @@
       "Finish configuration": [
         "Yapılandırmayı bitir"
       ],
+      "Finish configuring tracking, local geolocation, and optional referrer favicons.": [
+        "İzlemeyi, yerel coğrafi konumu ve isteğe bağlı yönlendiren site simgelerini yapılandırmayı tamamlayın."
+      ],
       "Finish later": [
         "Daha sonra bitir"
       ],
@@ -525,6 +534,9 @@
       ],
       "General": [
         "Genel"
+      ],
+      "GeoIP database not installed": [
+        "GeoIP veritabanı yüklü değil"
       ],
       "GeoIP database status": [
         "GeoIP veritabanı yüklü değil"
@@ -567,6 +579,9 @@
       ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "CMP’nizde, İstatistik veya Analitik amacı kabul edilene kadar BimBeau Privacy Analytics gelişmiş istatistik betiğini engelleyin."
+      ],
+      "Initial configuration completed.": [
+        "İlk yapılandırma tamamlandı."
       ],
       "Install the local GeoIP database": [
         "Yerel GeoIP veritabanını yükleyin"
@@ -661,6 +676,9 @@
       "Local GeoLite database — recommended": [
         "Yerel GeoLite veritabanı (varsayılan)"
       ],
+      "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
+        "Yerel GeoIP veritabanı indirilene kadar konum raporları kullanılamaz. Coğrafi Konum ayarları sayfasından indirin."
+      ],
       "Long-term totals retention": [
         "Uzun vadeli toplamları saklama süresi"
       ],
@@ -697,11 +715,11 @@
       "Missing REST configuration.": [
         "REST yapılandırması eksik."
       ],
+      "Missing admin configuration.": [
+        "Yönetici yapılandırması eksik."
+      ],
       "Most used operating systems": [
         "En çok kullanılan işletim sistemleri"
-      ],
-      "New visitor": [
-        "Yeni ziyaretçi"
       ],
       "Next": [
         "Sonraki"
@@ -772,6 +790,9 @@
       "No overview metrics available.": [
         "Genel bakış metrikleri mevcut değil."
       ],
+      "No panel available for this screen.": [
+        "Bu ekran için panel mevcut değil."
+      ],
       "No popular pages available.": [
         "Popüler sayfa mevcut değil."
       ],
@@ -805,6 +826,9 @@
       "Open details": [
         "Ayrıntıları aç"
       ],
+      "Open geolocation settings": [
+        "Coğrafi konum ayarlarını aç"
+      ],
       "Open row": [
         "Satırı aç"
       ],
@@ -834,9 +858,6 @@
       ],
       "Page": [
         "Sayfalar"
-      ],
-      "Page viewed": [
-        "Sayfa görüntülendi"
       ],
       "Page views": [
         "Sayfa görüntülemeleri"
@@ -946,6 +967,9 @@
       "Referring sites": [
         "Yönlendiren siteler"
       ],
+      "Reload page": [
+        "Coğrafi konum"
+      ],
       "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
         "Tüm toplu KPI analizlerini, ziyaretçi ayrıntısı analizlerini ve ham günlük girişlerini kaldır."
       ],
@@ -972,6 +996,9 @@
       ],
       "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.": [
         "Eklentinin ana ayarlarını gözden geçirmek için yardımcınızı ilk adımdan yeniden başlatın. Mevcut ayarlarınız korunur ve farklı adımlarda değiştirilebilir."
+      ],
+      "Resume configuration": [
+        "Yapılandırmayı sürdür"
       ],
       "Retry count": [
         "Yeniden deneme sayısı"
@@ -1059,6 +1086,9 @@
       ],
       "Source or service": [
         ""
+      ],
+      "Statistics": [
+        "İstatistikler"
       ],
       "Stats": [
         "İstatistikler"
@@ -1183,6 +1213,9 @@
       "Unable to load the GeoIP database status.": [
         "GeoIP veritabanı durumu yüklenemiyor."
       ],
+      "Unable to restart the configuration assistant. Please try again.": [
+        "Yapılandırma yardımcısı yeniden başlatılamıyor. Lütfen tekrar deneyin."
+      ],
       "Unable to save this choice. Please try again.": [
         "Bu seçim kaydedilemiyor. Lütfen tekrar deneyin."
       ],
@@ -1193,19 +1226,13 @@
         "Kullanılabilir değil"
       ],
       "Unknown": [
-        "Bilinmeyen sayfa"
+        ""
       ],
       "Unknown country": [
         "Bilinmeyen ülke bayrağı"
       ],
       "Unknown country flag": [
         "Bilinmeyen ülke bayrağı"
-      ],
-      "Unknown page": [
-        "Bilinmeyen sayfa"
-      ],
-      "Unknown visitor": [
-        "Bilinmeyen ziyaretçi"
       ],
       "Update in progress": [
         "WordPress’te aç"
@@ -1230,9 +1257,6 @@
       ],
       "Visitor activity window": [
         "Ziyaretçi etkinlik penceresi"
-      ],
-      "Visitor inactive": [
-        "Ziyaretçi etkin değil"
       ],
       "Visitors": [
         "Ziyaretçiler"
@@ -1275,6 +1299,9 @@
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "CMP’niz, İstatistik / Analitik onayı verilene kadar bunu engellemelidir."
+      ],
+      "Your WordPress session has expired. Reload this page.": [
+        ""
       ],
       "Your configuration is ready": [
         "Yapılandırmanız hazır"

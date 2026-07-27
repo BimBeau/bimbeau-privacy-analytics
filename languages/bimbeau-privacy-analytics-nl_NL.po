@@ -98,7 +98,7 @@ msgstr "Interne zoekopdrachten"
 msgid "Geolocation"
 msgstr "Geolocatie"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -293,9 +293,8 @@ msgstr "GeoIP-database is nog niet beschikbaar."
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Unknown"
-msgstr "Onbekende pagina"
+msgstr ""
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
@@ -475,9 +474,68 @@ msgstr "MaxMind-licentiesleutel is vereist."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "MaxMind-inloggegevens zijn vereist om IP-geolocatie in te schakelen."
 
-#: includes/settings.php
+#: includes/settings.php src/admin/AdminAppCore.js
 msgid "Statistics"
 msgstr "Statistieken"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminAppCore.js
+msgid "%s Visitor"
+msgstr "%s bezoeker"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminAppCore.js
+msgid "%s Visitors"
+msgstr "%s bezoekers"
+
+#: src/admin/AdminAppCore.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "De configuratieassistent kan niet opnieuw worden gestart. Probeer het opnieuw."
+
+#: src/admin/AdminAppCore.js
+msgid "Initial configuration completed."
+msgstr "Initiële configuratie voltooid."
+
+#: src/admin/AdminAppCore.js
+msgid "Missing admin configuration."
+msgstr "Beheerconfiguratie ontbreekt."
+
+#: src/admin/AdminAppCore.js
+msgid "Your WordPress session has expired. Reload this page."
+msgstr ""
+
+#: src/admin/AdminAppCore.js
+#, fuzzy
+msgid "Reload page"
+msgstr "Geolocatie"
+
+#: src/admin/AdminAppCore.js
+msgid "No panel available for this screen."
+msgstr "Geen paneel beschikbaar voor dit scherm."
+
+#: src/admin/AdminAppCore.js
+msgid "Complete the initial configuration"
+msgstr "Voltooi de initiële configuratie"
+
+#: src/admin/AdminAppCore.js
+msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
+msgstr "Voltooi het configureren van tracking, lokale geolocatie en optionele verwijzingsfavicons."
+
+#: src/admin/AdminAppCore.js
+msgid "Resume configuration"
+msgstr "Configuratie hervatten"
+
+#: src/admin/AdminAppCore.js
+msgid "GeoIP database not installed"
+msgstr "GeoIP-database niet geïnstalleerd"
+
+#: src/admin/AdminAppCore.js
+msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
+msgstr "Locatierapporten zijn pas beschikbaar nadat de lokale GeoIP-database is gedownload. Download het van de pagina Geolocatie-instellingen."
+
+#: src/admin/AdminAppCore.js
+msgid "Open geolocation settings"
+msgstr "Open geolocatie-instellingen"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -514,30 +572,6 @@ msgstr "REST-configuratie ontbreekt."
 #: src/admin/api/useAdminEndpoint.js src/admin/hooks/useRealtimeSnapshot.js
 msgid "Loading error."
 msgstr "Fout bij laden."
-
-#: src/admin/bootstrap-common.js
-msgid "New visitor"
-msgstr "Nieuwe bezoeker"
-
-#: src/admin/bootstrap-common.js
-msgid "Page viewed"
-msgstr "Pagina bekeken"
-
-#: src/admin/bootstrap-common.js
-msgid "Visitor inactive"
-msgstr "Bezoeker inactief"
-
-#: src/admin/bootstrap-common.js
-msgid "Unknown page"
-msgstr "Onbekende pagina"
-
-#: src/admin/bootstrap-common.js
-msgid "Unknown visitor"
-msgstr "Onbekende bezoeker"
-
-#: src/admin/bootstrap-common.js
-msgid "Dismiss notification"
-msgstr "Melding sluiten"
 
 #: src/admin/components/AdminErrorBoundary/index.js
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
@@ -845,6 +879,7 @@ msgstr "Keer terug naar het downloaden"
 msgid "World map"
 msgstr "Wereldkaart"
 
+#. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s bezoeken"

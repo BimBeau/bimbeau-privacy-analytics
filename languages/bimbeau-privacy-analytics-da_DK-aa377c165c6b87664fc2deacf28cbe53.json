@@ -31,6 +31,12 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Sidevisninger %2$s, besøgende %3$s, tidligere sidevisninger %4$s, tidligere besøgende %5$s"
       ],
+      "%s Visitor": [
+        "%s besøgende"
+      ],
+      "%s Visitors": [
+        "%s besøgende"
+      ],
       "%s page view": [
         "%s sidevisning",
         "%s sidevisninger"
@@ -251,6 +257,9 @@
       "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
         "Kommasepareret liste over tilladte forespørgselsnøgler (bruges til URL-sporing og UTM-aggregering)."
       ],
+      "Complete the initial configuration": [
+        "Fuldfør den indledende konfiguration"
+      ],
       "Component undefined: %s": [
         "Komponent ikke defineret: %s"
       ],
@@ -389,9 +398,6 @@
       "Disabled": [
         "Deaktiveret"
       ],
-      "Dismiss notification": [
-        "Luk notifikation"
-      ],
       "Display": [
         "Vis"
       ],
@@ -518,6 +524,9 @@
       "Finish configuration": [
         "Afslut konfigurationen"
       ],
+      "Finish configuring tracking, local geolocation, and optional referrer favicons.": [
+        "Afslut konfigurationen af ​​sporing, lokal geolokation og valgfri henvisningsfavicons."
+      ],
       "Finish later": [
         "Afslut senere"
       ],
@@ -526,6 +535,9 @@
       ],
       "General": [
         "Generelt"
+      ],
+      "GeoIP database not installed": [
+        "GeoIP-database ikke installeret"
       ],
       "GeoIP database status": [
         "GeoIP-database ikke installeret"
@@ -568,6 +580,9 @@
       ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "I din CMP skal du blokere BimBeau Privacy Analytics-scriptet til avanceret statistik, indtil formålet Statistik eller Analyse er accepteret."
+      ],
+      "Initial configuration completed.": [
+        "Indledende konfiguration afsluttet."
       ],
       "Install the local GeoIP database": [
         "Installer den lokale GeoIP-database"
@@ -662,6 +677,9 @@
       "Local GeoLite database — recommended": [
         "Lokal GeoLite-database (standard)"
       ],
+      "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
+        "Placeringsrapporter er ikke tilgængelige, før den lokale GeoIP-database er blevet downloadet. Download det fra siden med indstillinger for geografisk placering."
+      ],
       "Long-term totals retention": [
         "Opbevaring af langsigtede totaler"
       ],
@@ -698,11 +716,11 @@
       "Missing REST configuration.": [
         "Manglende REST-konfiguration."
       ],
+      "Missing admin configuration.": [
+        "Manglende admin-konfiguration."
+      ],
       "Most used operating systems": [
         "Mest anvendte operativsystemer"
-      ],
-      "New visitor": [
-        "Ny besøgende"
       ],
       "Next": [
         "Næste"
@@ -773,6 +791,9 @@
       "No overview metrics available.": [
         "Ingen oversigtsmålinger tilgængelige."
       ],
+      "No panel available for this screen.": [
+        "Intet panel tilgængeligt for denne skærm."
+      ],
       "No popular pages available.": [
         "Ingen populære sider tilgængelige."
       ],
@@ -806,6 +827,9 @@
       "Open details": [
         "Åbn detaljer"
       ],
+      "Open geolocation settings": [
+        "Åbn geoplaceringsindstillinger"
+      ],
       "Open row": [
         "Åbn række"
       ],
@@ -835,9 +859,6 @@
       ],
       "Page": [
         "Sider"
-      ],
-      "Page viewed": [
-        "Side vist"
       ],
       "Page views": [
         "Sidevisninger"
@@ -947,6 +968,9 @@
       "Referring sites": [
         "Henvisende websteder"
       ],
+      "Reload page": [
+        "Geolokalisering"
+      ],
       "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
         "Fjern alle aggregerede KPI-analyser, analyser med besøgsdetaljer og rå logposter."
       ],
@@ -973,6 +997,9 @@
       ],
       "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.": [
         "Genstart assistenten fra det første trin for at gennemgå pluginets vigtigste indstillinger. Dine nuværende indstillinger bevares og kan ændres under de forskellige trin."
+      ],
+      "Resume configuration": [
+        "Genoptag konfiguration"
       ],
       "Retry count": [
         "Antal forsøg"
@@ -1060,6 +1087,9 @@
       ],
       "Source or service": [
         ""
+      ],
+      "Statistics": [
+        "Statistik"
       ],
       "Stats": [
         "Statistik"
@@ -1184,6 +1214,9 @@
       "Unable to load the GeoIP database status.": [
         "Kan ikke indlæse status for GeoIP-databasen."
       ],
+      "Unable to restart the configuration assistant. Please try again.": [
+        "Konfigurationsassistenten kunne ikke genstartes. Prøv igen."
+      ],
       "Unable to save this choice. Please try again.": [
         "Dette valg kunne ikke gemmes. Prøv venligst igen."
       ],
@@ -1194,19 +1227,13 @@
         "Ikke tilgængelig"
       ],
       "Unknown": [
-        "Ukendt side"
+        ""
       ],
       "Unknown country": [
         "Ukendt landeflag"
       ],
       "Unknown country flag": [
         "Ukendt landeflag"
-      ],
-      "Unknown page": [
-        "Ukendt side"
-      ],
-      "Unknown visitor": [
-        "Ukendt besøgende"
       ],
       "Update in progress": [
         "Åbn i WordPress"
@@ -1231,9 +1258,6 @@
       ],
       "Visitor activity window": [
         "Aktivitetsvindue for besøgende"
-      ],
-      "Visitor inactive": [
-        "Besøgende inaktiv"
       ],
       "Visitors": [
         "Besøgende"
@@ -1276,6 +1300,9 @@
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "Din CMP skal blokere det, indtil der er givet samtykke til Statistik / Analyse."
+      ],
+      "Your WordPress session has expired. Reload this page.": [
+        ""
       ],
       "Your configuration is ready": [
         "Din konfiguration er klar"

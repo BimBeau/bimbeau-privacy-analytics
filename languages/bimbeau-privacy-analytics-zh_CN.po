@@ -98,7 +98,7 @@ msgstr "站内搜索"
 msgid "Geolocation"
 msgstr "地理定位"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -293,9 +293,8 @@ msgstr "GeoIP 数据库尚不可用。"
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Unknown"
-msgstr "未知页面"
+msgstr ""
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
@@ -475,9 +474,68 @@ msgstr "必须填写 MaxMind 许可证密钥。"
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "启用 IP 地理定位需要 MaxMind 凭据。"
 
-#: includes/settings.php
+#: includes/settings.php src/admin/AdminAppCore.js
 msgid "Statistics"
 msgstr "统计"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminAppCore.js
+msgid "%s Visitor"
+msgstr "%s 位访客"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminAppCore.js
+msgid "%s Visitors"
+msgstr "%s 位访客"
+
+#: src/admin/AdminAppCore.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "无法重新启动配置助手。请重试。"
+
+#: src/admin/AdminAppCore.js
+msgid "Initial configuration completed."
+msgstr "初始配置完成。"
+
+#: src/admin/AdminAppCore.js
+msgid "Missing admin configuration."
+msgstr "缺少管理配置。"
+
+#: src/admin/AdminAppCore.js
+msgid "Your WordPress session has expired. Reload this page."
+msgstr ""
+
+#: src/admin/AdminAppCore.js
+#, fuzzy
+msgid "Reload page"
+msgstr "地理定位"
+
+#: src/admin/AdminAppCore.js
+msgid "No panel available for this screen."
+msgstr "此屏幕没有可用面板。"
+
+#: src/admin/AdminAppCore.js
+msgid "Complete the initial configuration"
+msgstr "完成初始配置"
+
+#: src/admin/AdminAppCore.js
+msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
+msgstr "完成跟踪、本地地理位置和可选引荐网站图标的配置。"
+
+#: src/admin/AdminAppCore.js
+msgid "Resume configuration"
+msgstr "恢复配置"
+
+#: src/admin/AdminAppCore.js
+msgid "GeoIP database not installed"
+msgstr "未安装 GeoIP 数据库"
+
+#: src/admin/AdminAppCore.js
+msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
+msgstr "在下载本地 GeoIP 数据库之前，位置报告不可用。从地理位置设置页面下载它。"
+
+#: src/admin/AdminAppCore.js
+msgid "Open geolocation settings"
+msgstr "打开地理位置设置"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -514,30 +572,6 @@ msgstr "缺少 REST 配置。"
 #: src/admin/api/useAdminEndpoint.js src/admin/hooks/useRealtimeSnapshot.js
 msgid "Loading error."
 msgstr "加载错误。"
-
-#: src/admin/bootstrap-common.js
-msgid "New visitor"
-msgstr "新访客"
-
-#: src/admin/bootstrap-common.js
-msgid "Page viewed"
-msgstr "页面已浏览"
-
-#: src/admin/bootstrap-common.js
-msgid "Visitor inactive"
-msgstr "访客不活跃"
-
-#: src/admin/bootstrap-common.js
-msgid "Unknown page"
-msgstr "未知页面"
-
-#: src/admin/bootstrap-common.js
-msgid "Unknown visitor"
-msgstr "未知访客"
-
-#: src/admin/bootstrap-common.js
-msgid "Dismiss notification"
-msgstr "关闭通知"
 
 #: src/admin/components/AdminErrorBoundary/index.js
 msgid "BimBeau Privacy Analytics cannot load the admin interface."
@@ -845,6 +879,7 @@ msgstr "返回下载"
 msgid "World map"
 msgstr "世界地图"
 
+#. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s 次访问"

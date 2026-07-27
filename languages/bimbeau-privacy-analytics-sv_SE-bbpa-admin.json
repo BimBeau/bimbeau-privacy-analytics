@@ -31,6 +31,12 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Sidvisningar %2$s, besökare %3$s, tidigare sidvisningar %4$s, tidigare besökare %5$s"
       ],
+      "%s Visitor": [
+        "%s besökare"
+      ],
+      "%s Visitors": [
+        "%s besökare"
+      ],
       "%s page view": [
         "%s sidvisning",
         "%s sidvisningar"
@@ -251,6 +257,9 @@
       "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).": [
         "Kommaseparerad lista över tillåtna frågenycklar (används för URL-spårning och UTM-aggregering)."
       ],
+      "Complete the initial configuration": [
+        "Slutför den initiala konfigurationen"
+      ],
       "Component undefined: %s": [
         "Komponent odefinierad: %s"
       ],
@@ -389,9 +398,6 @@
       "Disabled": [
         "Inaktiverad"
       ],
-      "Dismiss notification": [
-        "Stäng avisering"
-      ],
       "Display": [
         "Visa"
       ],
@@ -518,6 +524,9 @@
       "Finish configuration": [
         "Avsluta konfigurationen"
       ],
+      "Finish configuring tracking, local geolocation, and optional referrer favicons.": [
+        "Slutför konfigureringen av spårning, lokal geolokalisering och valfria referensfaviconer."
+      ],
       "Finish later": [
         "Avsluta senare"
       ],
@@ -526,6 +535,9 @@
       ],
       "General": [
         "Allmänt"
+      ],
+      "GeoIP database not installed": [
+        "GeoIP-databas inte installerad"
       ],
       "GeoIP database status": [
         "GeoIP-databas inte installerad"
@@ -568,6 +580,9 @@
       ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "Blockera BimBeau Privacy Analytics-skriptet för avancerad statistik i din CMP tills ändamålet Statistik eller Analys har accepterats."
+      ],
+      "Initial configuration completed.": [
+        "Initial konfiguration slutförd."
       ],
       "Install the local GeoIP database": [
         "Installera den lokala GeoIP-databasen"
@@ -662,6 +677,9 @@
       "Local GeoLite database — recommended": [
         "Lokal GeoLite-databas (standard)"
       ],
+      "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
+        "Platsrapporter är inte tillgängliga förrän den lokala GeoIP-databasen har laddats ner. Ladda ner den från sidan med inställningar för geolokalisering."
+      ],
       "Long-term totals retention": [
         "Lagring av långsiktiga totaler"
       ],
@@ -698,11 +716,11 @@
       "Missing REST configuration.": [
         "REST-konfiguration saknas."
       ],
+      "Missing admin configuration.": [
+        "Admin-konfiguration saknas."
+      ],
       "Most used operating systems": [
         "Mest använda operativsystem"
-      ],
-      "New visitor": [
-        "Ny besökare"
       ],
       "Next": [
         "Nästa"
@@ -773,6 +791,9 @@
       "No overview metrics available.": [
         "Inga översiktsmått tillgängliga."
       ],
+      "No panel available for this screen.": [
+        "Ingen panel tillgänglig för den här skärmen."
+      ],
       "No popular pages available.": [
         "Inga populära sidor tillgängliga."
       ],
@@ -806,6 +827,9 @@
       "Open details": [
         "Öppna detaljer"
       ],
+      "Open geolocation settings": [
+        "Öppna geolokaliseringsinställningar"
+      ],
       "Open row": [
         "Öppna rad"
       ],
@@ -835,9 +859,6 @@
       ],
       "Page": [
         "Sidor"
-      ],
-      "Page viewed": [
-        "Sida visad"
       ],
       "Page views": [
         "Sidvisningar"
@@ -947,6 +968,9 @@
       "Referring sites": [
         "Hänvisande webbplatser"
       ],
+      "Reload page": [
+        "Geolokalisering"
+      ],
       "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries.": [
         "Ta bort all aggregerad KPI-analys, besökardetaljanalys och råloggposter."
       ],
@@ -973,6 +997,9 @@
       ],
       "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.": [
         "Starta om assistenten från det första steget för att granska tilläggets viktigaste inställningar. Dina nuvarande inställningar behålls och kan ändras under de olika stegen."
+      ],
+      "Resume configuration": [
+        "Återuppta konfigurationen"
       ],
       "Retry count": [
         "Antal omförsök"
@@ -1060,6 +1087,9 @@
       ],
       "Source or service": [
         ""
+      ],
+      "Statistics": [
+        "Statistik"
       ],
       "Stats": [
         "Statistik"
@@ -1184,6 +1214,9 @@
       "Unable to load the GeoIP database status.": [
         "Det går inte att läsa in GeoIP-databasens status."
       ],
+      "Unable to restart the configuration assistant. Please try again.": [
+        "Det gick inte att starta om konfigurationsassistenten. Försök igen."
+      ],
       "Unable to save this choice. Please try again.": [
         "Det gick inte att spara detta val. Försök igen."
       ],
@@ -1194,19 +1227,13 @@
         "Inte tillgängligt"
       ],
       "Unknown": [
-        "Okänd sida"
+        ""
       ],
       "Unknown country": [
         "Okänd landsflagga"
       ],
       "Unknown country flag": [
         "Okänd landsflagga"
-      ],
-      "Unknown page": [
-        "Okänd sida"
-      ],
-      "Unknown visitor": [
-        "Okänd besökare"
       ],
       "Update in progress": [
         "Uppdatera nu"
@@ -1231,9 +1258,6 @@
       ],
       "Visitor activity window": [
         "Aktivitetsfönster för besökare"
-      ],
-      "Visitor inactive": [
-        "Besökare inaktiv"
       ],
       "Visitors": [
         "Besökare"
@@ -1276,6 +1300,9 @@
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "Din CMP måste blockera den tills samtycke till statistik/analys har getts."
+      ],
+      "Your WordPress session has expired. Reload this page.": [
+        ""
       ],
       "Your configuration is ready": [
         "Din konfiguration är klar"

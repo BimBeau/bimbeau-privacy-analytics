@@ -4,6 +4,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { scaleQuantize } from 'd3-scale';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
+import { ADMIN_CONFIG } from '../../constants';
 import BpaCard from '../BpaCard';
 import DataState from '../DataState';
 import worldGeo from '../../data/world-countries.geojson';
@@ -69,7 +70,7 @@ export const WorldChoropleth = ( { data, geoFeatures, maxDomainValue, tooltipRen
 
 const WorldMap = ( { range, endpoint = '/geo-countries', emptyLabel, emptyStateNoticeStatus, unknownCountryLabel = __( 'Unknown country', 'bimbeau-privacy-analytics' ) } ) => {
 	const params = useMemo( () => ( { from: range?.from, to: range?.to } ), [ range?.from, range?.to ] );
-	const { data, isLoading, error } = useAdminEndpoint( endpoint, params );
+	const { data, isLoading, error } = useAdminEndpoint( endpoint, params, { namespace: ADMIN_CONFIG?.settings?.restNamespace } );
 	const entries = Array.isArray( data?.countries ) ? data.countries : [];
 	const chartData = useMemo( () => normalizeCountryData( entries ), [ entries ] );
 	const maxDomainValue = Math.max( Number( data?.maxHits ) || 0, ...chartData.map( ( item ) => item.value ) );
@@ -81,7 +82,7 @@ const WorldMap = ( { range, endpoint = '/geo-countries', emptyLabel, emptyStateN
 			<WorldChoropleth data={ chartData } geoFeatures={ worldGeo.features || [] } maxDomainValue={ maxDomainValue } tooltipRenderer={ ( { feature } ) => {
 				const name = featureName( feature );
 				const value = Number( feature?.value ) || 0;
-				return <div className="bbpa-world-map__tooltip"><strong>{ name || unknownCountryLabel }</strong><span>{ sprintf( __( '%s visits', 'bimbeau-privacy-analytics' ), value ) }</span></div>;
+				return <div className="bbpa-world-map__tooltip"><strong>{ name || unknownCountryLabel }</strong><span>{ sprintf( /* translators: %s: visit count. */ __( '%s visits', 'bimbeau-privacy-analytics' ), value ) }</span></div>;
 			} } />
 		</div> }
 	</BpaCard>;

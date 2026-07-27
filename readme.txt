@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.111
+Stable tag: 8.45.113
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -112,7 +112,14 @@ MaxMind privacy policy: https://www.maxmind.com/en/privacy-policy
 
 = Freemius =
 
-The Free package may load the Freemius SDK for account, pricing, upgrade, support, uninstall, and package identity flows. Free analytics features do not require a license, payment, quota, time-limited evaluation, or remote feature validation. Freemius communications depend on the account and support actions an administrator chooses.
+The Free package may load the Freemius SDK for account, pricing, upgrade, support, uninstall, and package identity flows. Free analytics features do not require a license, payment, quota, time-limited evaluation, or remote feature validation.
+
+Freemius communications occur when an administrator opens Freemius-managed account, pricing, upgrade, support, or uninstall screens, opts in to Freemius usage tracking, activates or manages a paid license, submits a support request, or confirms an uninstall reason. Depending on the chosen action, Freemius may receive plugin and SDK versions, WordPress and PHP versions, site URL, site language, administrator account identity and email, license and subscription identifiers, feature usage or diagnostic details included in a support request, and the selected uninstall reason.
+
+Freemius Terms of Service: https://freemius.com/terms/
+Freemius Privacy Policy: https://freemius.com/privacy/
+
+Third-party software and dataset notices distributed with the plugin are listed in `THIRD-PARTY-NOTICES.txt`.
 
 == Source Code and Build Instructions ==
 
@@ -235,5 +242,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.111 =
-* Keep Premium JavaScript, PWA styles, and translation residues out of the WordPress.org Free package.
+= 8.45.113 =
+* Restore the shared Free and Pro administration shell, report styling, country map routing, and setup assistant controls.
