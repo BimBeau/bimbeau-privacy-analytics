@@ -19,7 +19,7 @@ class BBPA_MaxMind_Service {
         $url = sprintf('%s/city/%s', self::GEOLITE_BASE_URL, rawurlencode($ip));
         $auth = base64_encode($account_id . ':' . $license_key);
         $version = defined('BBPA_VERSION') ? BBPA_VERSION : 'unknown';
-        $user_agent = sprintf('BimBeau Privacy Analytics/%s; %s', $version, home_url('/'));
+        $user_agent = sprintf('BimBeau Privacy Analytics/%s', $version);
         $response = wp_remote_get(
             $url,
             [

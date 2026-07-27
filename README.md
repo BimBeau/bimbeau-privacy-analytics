@@ -26,24 +26,31 @@ The public Free source repository for BimBeau Privacy Analytics is available at:
 
 <https://github.com/BimBeau/bimbeau-privacy-analytics>
 
-Install dependencies and rebuild generated assets from the repository root with:
+The complete build requires Node.js 24 (the `package.json` engine is `>=24 <25`), npm, PHP, WP-CLI, gettext with `msgmerge`, `msgfmt`, and `msgattrib`, and the Composer development dependencies used by the validation suite. Install the dependencies and rebuild generated assets from the repository root with:
 
 ```bash
-npm ci
+composer install --no-interaction --prefer-dist --no-progress
+npm ci --no-audit --fund=false
 npm run build
 ```
 
-The build configuration is maintained in `webpack.config.js`. WordPress.org review-relevant assets map to source files as follows:
+Generate the reproducible WordPress.org Free ZIP with:
 
-- `assets/js/admin.js` is built from `src/admin/index.js` and modules under `src/admin/`.
-- `assets/js/style-admin.js` and generated admin CSS are built from `src/admin/style.scss`.
-- `assets/js/bbpa-essential-tracker.js` is maintained as readable source in `assets/js/bbpa-essential-tracker.js`.
-- `assets/js/bbpa-advanced-tracker.js` is maintained as readable source in `assets/js/bbpa-advanced-tracker.js`.
+```bash
+npm run build:wordpress-org-free
+```
 
-`npm run build` is the documented rebuild command for generated admin assets. The tracker files listed above are readable JavaScript source files maintained directly in `assets/js/`.
+`webpack.config.js` writes intermediate compiled assets to `build/`; packaging places distributable files under `assets/` in the ZIP. For `BBPA_PACKAGE_TARGET=free`, review-relevant assets map to source and generation steps as follows:
+
+- `assets/js/admin.js` is compiled from the Free entry `src/admin/index.free.js` and its imported modules under `src/admin/`.
+- `assets/js/style-admin.js`, `assets/css/style-admin.css`, and the RTL/admin CSS aliases are Webpack outputs of `src/admin/style.free.scss` and its Sass imports. `style-admin.js` is the loader emitted for the style entry, not a hand-authored source file.
+- Edition-sensitive imports use the aliases in `webpack.config.js`; Free aliases select human-readable modules under `src/admin/free-stubs/` and exclude Premium implementations from the Free bundle.
+- `assets/js/bbpa-essential-tracker.js` and `assets/js/bbpa-advanced-tracker.js` are human-readable public source files. `scripts/build-plugin-dist.sh` stages them and `scripts/minify-trackers.js` minifies only the staged package copies.
+
+`npm run build` rebuilds intermediate admin and i18n output. `npm run build:wordpress-org-free` exports the public Free source, compiles it with the Free entries and aliases, stages and validates the runtime, and writes the ZIP and provenance record to `dist/`.
 
 ## Requirements
 
 - WordPress 6.4+
 - PHP 7.4+
-- Node.js 20+ for asset and release tooling
+- Node.js 24 (`>=24 <25`) for asset and release tooling

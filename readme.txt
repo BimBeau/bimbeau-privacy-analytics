@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.113
+Stable tag: 8.45.114
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -105,7 +105,7 @@ The administrator browser never requests a favicon from a referrer domain. The p
 
 = MaxMind =
 
-MaxMind API mode is manually selected and requires a MaxMind Account ID and License Key. In this mode, MaxMind receives the IP address being resolved. Local database mode does not use the MaxMind API and does not send visitor IP addresses to MaxMind. See the MaxMind GeoLite EULA and privacy policy before configuring this service.
+MaxMind API mode is disabled until an administrator manually selects it and supplies a MaxMind Account ID and License Key. A lookup is sent only while that configured mode is resolving an IP address. MaxMind receives the IP address being resolved, the account credentials in an Authorization header, and a technical User-Agent containing only the plugin name and version. The User-Agent contains no site URL or domain. Local database mode does not use the MaxMind API and does not send visitor IP addresses to MaxMind. See the MaxMind GeoLite EULA and privacy policy before configuring this service.
 
 MaxMind GeoLite EULA: https://www.maxmind.com/en/geolite/eula
 MaxMind privacy policy: https://www.maxmind.com/en/privacy-policy
@@ -127,19 +127,28 @@ The public source repository for BimBeau Privacy Analytics Free is available at:
 
 https://github.com/BimBeau/bimbeau-privacy-analytics
 
-Use the following commands from the repository root to install dependencies and rebuild generated assets:
+The complete build requires Node.js 24 (the `package.json` engine is `>=24 <25`), npm, PHP, WP-CLI, gettext with `msgmerge`, `msgfmt`, and `msgattrib`, and the Composer development dependencies used by the validation suite. Install the PHP and JavaScript dependencies, then rebuild generated admin and translation assets from the repository root:
 
 ```bash
-npm ci
+composer install --no-interaction --prefer-dist --no-progress
+npm ci --no-audit --fund=false
 npm run build
 ```
 
-Build configuration is maintained in `webpack.config.js`. Asset sources are mapped as follows:
+Generate the reproducible WordPress.org Free ZIP with:
 
-* `assets/js/admin.js` is built from `src/admin/index.js` and modules under `src/admin/`.
-* `assets/js/style-admin.js` and generated admin CSS are built from `src/admin/style.scss`.
-* `assets/js/bbpa-essential-tracker.js` is maintained as readable source in `assets/js/bbpa-essential-tracker.js`.
-* `assets/js/bbpa-advanced-tracker.js` is maintained as readable source in `assets/js/bbpa-advanced-tracker.js`.
+```bash
+npm run build:wordpress-org-free
+```
+
+`webpack.config.js` writes intermediate compiled assets to `build/`; the packaging scripts place the distributable files under `assets/` in the ZIP. For `BBPA_PACKAGE_TARGET=free`, the human-readable sources and generation steps are:
+
+* `assets/js/admin.js` is compiled from the Free entry `src/admin/index.free.js` and its imported modules under `src/admin/`.
+* `assets/js/style-admin.js`, `assets/css/style-admin.css`, and the RTL/admin CSS aliases are Webpack outputs of the Free style entry `src/admin/style.free.scss` and its Sass imports. `style-admin.js` is the JavaScript loader emitted for that style entry, not a hand-authored source file.
+* Free builds resolve edition-sensitive admin imports through the aliases in `webpack.config.js`. Those aliases select the human-readable implementations under `src/admin/free-stubs/` and prevent Premium implementations from entering the Free bundle.
+* `assets/js/bbpa-essential-tracker.js` and `assets/js/bbpa-advanced-tracker.js` are the human-readable tracker sources in the public repository. `scripts/build-plugin-dist.sh` copies them into the staged package and `scripts/minify-trackers.js` minifies the staged copies; the repository source files remain readable.
+
+The `npm run build` command rebuilds intermediate admin and i18n output. The `npm run build:wordpress-org-free` command exports the public Free source tree, compiles it with the Free entries and aliases, stages the runtime files, minifies only the staged tracker copies, validates the package, and writes the ZIP and provenance record to `dist/`.
 
 == Installation ==
 
@@ -242,5 +251,7 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.113 =
-* Restore the shared Free and Pro administration shell, report styling, country map routing, and setup assistant controls.
+= 8.45.114 =
+* Remove the site URL from MaxMind requests.
+* Correct the public Free source and build documentation.
+* Strengthen WordPress.org compliance regression checks.
