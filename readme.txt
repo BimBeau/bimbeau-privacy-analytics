@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.115
+Stable tag: 8.45.117
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -251,5 +251,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.115 =
-* Fix Free Realtime and Geolocation maps failing to load when the Nivo choropleth receives an invalid color function instead of a quantize scale.
+= 8.45.117 =
+* Fix the Free real-time map to use country-level markers without Premium city-coordinate accuracy data, restoring WordPress.org Free package generation.

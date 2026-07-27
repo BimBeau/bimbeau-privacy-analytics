@@ -1,19 +1,21 @@
 .bbpa-world-map {
   width: 100%;
+  max-width: 100%;
   position: relative;
   display: flex;
   justify-content: center;
   border-radius: var(--bbpa-gap-sm);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .bbpa-world-map__chart {
   width: 100%;
+  max-width: 100%;
   min-height: 420px;
   height: 420px;
   position: relative;
   border-radius: var(--bbpa-gap-sm);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .bbpa-world-map__controls {

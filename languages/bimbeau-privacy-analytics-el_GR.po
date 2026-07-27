@@ -69,6 +69,7 @@ msgid "Dashboard"
 msgstr "Πίνακας ελέγχου"
 
 #: admin/admin.php src/admin/constants/index.js
+#: src/admin/free-stubs/RealtimePanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Πραγματικός χρόνος"
@@ -99,8 +100,8 @@ msgid "Geolocation"
 msgstr "Γεωεντοπισμός"
 
 #: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -171,7 +172,8 @@ msgstr "Ενεργοποιήστε τουλάχιστον έναν πίνακα 
 msgid "Visits"
 msgstr "Επισκέψεις"
 
-#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -289,16 +291,18 @@ msgid "GeoIP database is not available yet."
 msgstr "Η βάση δεδομένων GeoIP δεν είναι ακόμη διαθέσιμη."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/deviceClassLabel.js
+#: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
 msgid "Unknown"
-msgstr ""
+msgstr "Άγνωστη σελίδα"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/components/WorldMap/index.js src/admin/free-stubs/RealtimePanel.js
+#: src/admin/lib/countryNames.js src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -677,6 +681,15 @@ msgstr "Εισαγάγετε τα διαπιστευτήρια MaxMind"
 msgid "Traffic data is pending"
 msgstr "Τα δεδομένα κίνησης εκκρεμούν"
 
+#: src/admin/components/HourlyHeatmap/index.js
+msgid "No hourly details available for this page."
+msgstr "Δεν υπάρχουν διαθέσιμες ωριαίες λεπτομέρειες για αυτήν τη σελίδα."
+
+#: src/admin/components/HourlyHeatmap/index.js
+#, fuzzy
+msgid "Hourly activity heatmap by day and hour"
+msgstr "Καθολικός ωριαίος heatmap ανά ημέρα και ώρα"
+
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "Διαγνωστικά εκτέλεσης απορρήτου"
@@ -879,10 +892,28 @@ msgstr "Επιστρέψτε στη λήψη"
 msgid "World map"
 msgstr "Παγκόσμιος χάρτης"
 
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "Zoom in"
+msgstr "Μεγέθυνση χάρτη"
+
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "Zoom out"
+msgstr "Σμίκρυνση χάρτη"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "Επαναφορά"
+
 #. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s επισκέψεις"
+
+#: src/admin/components/WorldMap/index.js src/admin/panels/GeoCountriesPanel.js
+msgid "No data"
+msgstr "Δεν υπάρχουν δεδομένα"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -966,10 +997,123 @@ msgstr "Δεν υπάρχουν διαθέσιμοι παραπέμπτες."
 msgid "Hourly heatmap global"
 msgstr "Καθολικός ωριαίος heatmap"
 
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/free-stubs/OverviewPanel.js
+msgid "Global hourly heatmap by day and hour"
+msgstr "Καθολικός ωριαίος heatmap ανά ημέρα και ώρα"
+
+#: src/admin/free-stubs/OverviewPanel.js
+msgid "No global hourly data available for this period."
+msgstr "Δεν υπάρχουν διαθέσιμα καθολικά ωριαία δεδομένα για αυτήν την περίοδο."
+
+#: src/admin/free-stubs/OverviewPanel.js
+msgid "Global hourly heatmaps require hourly page aggregation data."
+msgstr "Οι καθολικοί ωριαίοι heatmaps απαιτούν δεδομένα ωριαίας συγκέντρωσης σελίδων."
+
+#: src/admin/free-stubs/RealtimePanel.js
 #, fuzzy
-msgid "No country data is available yet."
-msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας."
+msgid "Visitor origin unavailable"
+msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
+msgstr ""
+
+#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/locationLabel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "No available"
+msgstr "Μη διαθέσιμο"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "Hash ID επισκέπτη"
+
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "Χρόνος σύνδεσης"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Current page"
+msgstr "Τρέχουσα σελίδα"
+
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Channel"
+msgstr "Σελίδες εισόδου"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Λειτουργικά συστήματα"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Περιηγητές"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "Έκδοση περιηγητή"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Συσκευές"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "Ανάλυση"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Fullscreen is unavailable in this browser context."
+msgstr "Η πλήρης οθόνη δεν είναι διαθέσιμη σε αυτό το περιβάλλον περιηγητή."
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Loading real-time data…"
+msgstr "Φόρτωση δεδομένων πραγματικού χρόνου…"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Visitor"
+msgstr "Επισκέπτης"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Exit fullscreen"
+msgstr "Έξοδος από πλήρη οθόνη"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Fullscreen"
+msgstr "Πλήρης οθόνη"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#, fuzzy
+msgid "Essential-only scope: enriched visit details are unavailable."
+msgstr "Πεδίο μόνο βασικών: οι εμπλουτισμένες λεπτομέρειες επίσκεψης και οι ακριβείς δείκτες χάρτη δεν είναι διαθέσιμα."
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Table: Real-time visitors"
+msgstr "Πίνακας: Επισκέπτες πραγματικού χρόνου"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Άγνωστη σελίδα"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "No visits in the current activity window."
+msgstr "Δεν υπάρχουν επισκέψεις στο τρέχον παράθυρο δραστηριότητας."
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1007,10 +1151,83 @@ msgstr "Βοηθοί ΤΝ"
 msgid "Other"
 msgstr "Άλλο"
 
-#: src/admin/lib/locationLabel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Monday"
+msgstr "Δευτέρα"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Mon"
+msgstr "Δευ"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Tuesday"
+msgstr "Τρίτη"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Tue"
+msgstr "Τρι"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Wednesday"
+msgstr "Τετάρτη"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Wed"
+msgstr "Τετ"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Thursday"
+msgstr "Πέμπτη"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Thu"
+msgstr "Πεμ"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Friday"
+msgstr "Παρασκευή"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Fri"
+msgstr "Παρ"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Saturday"
+msgstr "Σάββατο"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Sat"
+msgstr "Σαβ"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Sunday"
+msgstr "Κυριακή"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Sun"
+msgstr "Κυρ"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Hourly heatmaps are unavailable for pages not found (404)."
+msgstr "Οι ωριαίοι heatmaps δεν είναι διαθέσιμοι για σελίδες που δεν βρέθηκαν (404)."
+
+#: src/admin/lib/hourlyHeatmap.js
 #, fuzzy
-msgid "No available"
-msgstr "Μη διαθέσιμο"
+msgid "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
+msgstr "Οι ωριαίοι heatmaps έχουν απενεργοποιηθεί από το φίλτρο bpa_hourly_aggregation_enabled."
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Hourly heatmaps are unavailable because the hourly aggregation table is missing."
+msgstr "Οι ωριαίοι heatmaps δεν είναι διαθέσιμοι επειδή λείπει ο πίνακας ωριαίας συγκέντρωσης."
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
+msgstr "Οι ωριαίοι heatmaps απαιτούν δεδομένα ωριαίας συγκέντρωσης σελίδων για την επιλεγμένη πηγή."
+
+#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
+#: src/admin/lib/hourlyHeatmap.js
+msgid "%1$s at %2$s — %3$s: %4$s"
+msgstr "%1$s στις %2$s — %3$s: %4$s"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1025,12 +1242,6 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα προφίλ
 #, fuzzy
 msgid "Table: Acquisition channels"
 msgstr "Πίνακας: Επισκέπτες"
-
-#: src/admin/panels/AcquisitionPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
-msgid "Channel"
-msgstr "Σελίδες εισόδου"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -1058,10 +1269,6 @@ msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
 #: src/admin/panels/GeoCountriesPanel.js
-msgid "No data"
-msgstr "Δεν υπάρχουν δεδομένα"
-
-#: src/admin/panels/GeoCountriesPanel.js
 msgid "Unknown country flag"
 msgstr "Σημαία άγνωστης χώρας"
 
@@ -1075,14 +1282,14 @@ msgid "Top countries"
 msgstr "Κορυφαίες χώρες"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr ""
-
-#: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Ημερήσιοι επισκέπτες"
+
+#: src/admin/panels/RealtimePanel.js
+#, fuzzy
+msgid "No country data is available yet."
+msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας."
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1844,11 +2051,6 @@ msgid "No device usage available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χρήσης συσκευών."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Ανάλυση"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No resolution data available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα ανάλυσης."
 
@@ -2202,14 +2404,6 @@ msgid "0s"
 msgstr "0δ"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Hash ID επισκέπτη"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Χρόνος σύνδεσης"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Active time"
 msgstr "Ενεργός χρόνος"
 
@@ -2217,25 +2411,6 @@ msgstr "Ενεργός χρόνος"
 #, fuzzy
 msgid "Entry channel"
 msgstr "Σελίδες εισόδου"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "Λειτουργικά συστήματα"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "Περιηγητές"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Έκδοση περιηγητή"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "Συσκευές"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"

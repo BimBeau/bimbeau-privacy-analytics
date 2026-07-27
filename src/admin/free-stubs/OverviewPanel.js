@@ -1,7 +1,15 @@
 import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { Spinner } from '@wordpress/components';
 
+import useAdminEndpoint from '../api/useAdminEndpoint';
 import BpaCard from '../components/BpaCard';
+import HourlyHeatmap from '../components/HourlyHeatmap';
+import {
+	getHourlyAvailability,
+	getHourlyUnavailableReason,
+	normalizeHourlyItems,
+} from '../lib/hourlyHeatmap';
 import { getRangeFromSelection } from '../lib/date';
 import OverviewKpis from '../widgets/OverviewKpis';
 import ReportTableCard from '../widgets/ReportTableCard';
@@ -16,6 +24,12 @@ const OverviewPanel = ( { rangeSelection } ) => {
 	);
 	const isTopPagesEnabled = isPanelEnabled( 'top-pages' );
 	const isReferrersEnabled = isPanelEnabled( 'referrers' );
+	const { data: hourlyData, isLoading: isHourlyLoading } =
+		useAdminEndpoint( '/admin/hourly-heatmap-global', range );
+	const hourlyItems = useMemo(
+		() => normalizeHourlyItems( hourlyData?.items ),
+		[ hourlyData ]
+	);
 
 	return (
 		<div className="bbpa-overview">
@@ -48,13 +62,27 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						exportReportKey="referrers"
 						emptyLabel={ __( 'No referrers available.', 'bimbeau-privacy-analytics' ) }
 						labelFallback={ __( 'Direct', 'bimbeau-privacy-analytics' ) }
-						renderLabel={ ( label, item ) => <ReferrerLabel domain={ item?.label || '' } label={ label } /> }
+						renderLabel={ ( label, item, favicon ) => <ReferrerLabel domain={ item?.label || '' } label={ label } favicon={ favicon } /> }
+						loadReferrerFavicons
 						metricLabel={ __( 'Visits', 'bimbeau-privacy-analytics' ) }
 						enableSearch={ false }
 						showMetricTrend
 					/>
 				) : null }
-				<BpaCard title={ __( 'Hourly heatmap global', 'bimbeau-privacy-analytics' ) } />
+				<BpaCard title={ __( 'Hourly heatmap global', 'bimbeau-privacy-analytics' ) }>
+					{ isHourlyLoading ? <Spinner /> : (
+						<HourlyHeatmap
+							ariaLabel={ __( 'Global hourly heatmap by day and hour', 'bimbeau-privacy-analytics' ) }
+							emptyDataLabel={ __( 'No global hourly data available for this period.', 'bimbeau-privacy-analytics' ) }
+							unavailableLabel={ __( 'Global hourly heatmaps require hourly page aggregation data.', 'bimbeau-privacy-analytics' ) }
+							items={ hourlyItems }
+							hourlyAvailable={ getHourlyAvailability( hourlyData ) }
+							hourlyUnavailableReason={ getHourlyUnavailableReason( hourlyData ) }
+							metricLabel={ __( 'Page views', 'bimbeau-privacy-analytics' ) }
+							useShortDayLabels
+						/>
+					) }
+				</BpaCard>
 			</div>
 		</div>
 	);

@@ -10,6 +10,9 @@
         "lang": "tr_TR",
         "plural-forms": "nplurals=1; plural=0;"
       },
+      "%1$s at %2$s — %3$s: %4$s": [
+        "%1$s, %2$s — %3$s: %4$s"
+      ],
       "%1$s – %2$s": [
         "%1$s – %2$s"
       ],
@@ -310,6 +313,9 @@
       "Current %s": [
         "Geçerli %s"
       ],
+      "Current page": [
+        "Geçerli sayfa"
+      ],
       "Current: %1$s": [
         "Geçerli: %1$s"
       ],
@@ -484,6 +490,9 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Temel istatistikler onay olmadan çalışır. Gelişmiş istatistikler yalnızca İstatistik / Analitik onayından sonra çalışır."
       ],
+      "Essential-only scope: enriched visit details are unavailable.": [
+        "Yalnızca temel kapsam: zenginleştirilmiş ziyaret ayrıntıları ve hassas harita işaretçileri kullanılamaz."
+      ],
       "Every 15 days": [
         "Her 15 günde bir"
       ],
@@ -514,6 +523,9 @@
       "Exclusions": [
         "Hariç tutmalar"
       ],
+      "Exit fullscreen": [
+        "Tam ekrandan çık"
+      ],
       "Exit pages": [
         "Çıkış sayfaları"
       ],
@@ -531,6 +543,18 @@
       ],
       "Flag of %s": [
         "%s bayrağı"
+      ],
+      "Fri": [
+        "Cum"
+      ],
+      "Friday": [
+        "Cuma"
+      ],
+      "Fullscreen": [
+        "Tam ekran"
+      ],
+      "Fullscreen is unavailable in this browser context.": [
+        "Bu tarayıcı bağlamında tam ekran kullanılamıyor."
       ],
       "General": [
         "Genel"
@@ -553,6 +577,12 @@
       "Geolocation source": [
         "Coğrafi konum kaynağı"
       ],
+      "Global hourly heatmap by day and hour": [
+        "Gün ve saate göre genel saatlik ısı haritası"
+      ],
+      "Global hourly heatmaps require hourly page aggregation data.": [
+        "Genel saatlik ısı haritaları saatlik sayfa toplama verisi gerektirir."
+      ],
       "Global namespaces checked: %s": [
         "Kontrol edilen global ad alanları: %s"
       ],
@@ -562,8 +592,23 @@
       "Hidden while \"Enable advanced stats after consent\" is disabled.": [
         "Onaydan sonra gelişmiş istatistikleri etkinleştir devre dışıyken gizlenir."
       ],
+      "Hourly activity heatmap by day and hour": [
+        "Gün ve saate göre genel saatlik ısı haritası"
+      ],
       "Hourly heatmap global": [
         "Genel saatlik ısı haritası"
+      ],
+      "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter.": [
+        "Saatlik ısı haritaları bpa_hourly_aggregation_enabled filtresi tarafından devre dışı bırakılmış."
+      ],
+      "Hourly heatmaps are unavailable because the hourly aggregation table is missing.": [
+        "Saatlik toplama tablosu eksik olduğu için saatlik ısı haritaları kullanılamaz."
+      ],
+      "Hourly heatmaps are unavailable for pages not found (404).": [
+        "Saatlik ısı haritaları bulunamayan sayfalar (404) için kullanılamaz."
+      ],
+      "Hourly heatmaps require hourly page aggregation data for the selected source.": [
+        "Saatlik ısı haritaları seçilen kaynak için saatlik sayfa toplama verisi gerektirir."
       ],
       "I confirm that I want to permanently purge all analytics data.": [
         "Tüm analiz verilerini kalıcı olarak temizlemek istediğimi onaylıyorum."
@@ -655,6 +700,9 @@
       "Loading error.": [
         "Yükleme hatası."
       ],
+      "Loading real-time data…": [
+        "Gerçek zamanlı veri yükleniyor…"
+      ],
       "Loading referring sites…": [
         "Yönlendiren siteler yükleniyor…"
       ],
@@ -717,6 +765,12 @@
       ],
       "Missing admin configuration.": [
         "Yönetici yapılandırması eksik."
+      ],
+      "Mon": [
+        "Pzt"
+      ],
+      "Monday": [
+        "Pazartesi"
       ],
       "Most used operating systems": [
         "En çok kullanılan işletim sistemleri"
@@ -781,6 +835,12 @@
       "No exit pages available.": [
         "Çıkış sayfası mevcut değil."
       ],
+      "No global hourly data available for this period.": [
+        "Bu dönem için genel saatlik veri mevcut değil."
+      ],
+      "No hourly details available for this page.": [
+        "Bu sayfa için saatlik ayrıntı mevcut değil."
+      ],
       "No missing pages available.": [
         "Eksik sayfa mevcut değil."
       ],
@@ -813,6 +873,9 @@
       ],
       "No visitor data available.": [
         "Ziyaretçi verisi mevcut değil."
+      ],
+      "No visits in the current activity window.": [
+        "Geçerli etkinlik penceresinde ziyaret yok."
       ],
       "Not installed": [
         "Kurulu değil"
@@ -982,6 +1045,9 @@
       "Requires consent": [
         "Onay gerektirir"
       ],
+      "Reset": [
+        "Sıfırla"
+      ],
       "Resolution": [
         "Çözünürlük"
       ],
@@ -1029,6 +1095,12 @@
       ],
       "Runtime granularity is reported from available granularities.": [
         "Çalışma zamanı ayrıntı düzeyi, kullanılabilir ayrıntı düzeylerinden raporlanır."
+      ],
+      "Sat": [
+        "Cmt"
+      ],
+      "Saturday": [
+        "Cumartesi"
       ],
       "Save": [
         "Kaydet"
@@ -1102,11 +1174,20 @@
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Ziyaretçinin tarayıcısı Do Not Track veya Global Privacy Control sinyali gönderdiğinde ölçümü durdur."
       ],
+      "Sun": [
+        "Paz"
+      ],
+      "Sunday": [
+        "Pazar"
+      ],
       "Table": [
         "Tablo"
       ],
       "Table: Acquisition channels": [
         "Tablo: Ziyaretçiler"
+      ],
+      "Table: Real-time visitors": [
+        "Tablo: Gerçek zamanlı ziyaretçiler"
       ],
       "Table: Referring sites": [
         "Tablo: Yönlendiren siteler"
@@ -1162,6 +1243,12 @@
       "This feature is visual only and can be disabled later.": [
         "Bu özellik yalnızca görseldir ve daha sonra devre dışı bırakılabilir."
       ],
+      "Thu": [
+        "Per"
+      ],
+      "Thursday": [
+        "Perşembe"
+      ],
       "Title": [
         "Başlık"
       ],
@@ -1195,6 +1282,12 @@
       "Traffic share": [
         ""
       ],
+      "Tue": [
+        "Sal"
+      ],
+      "Tuesday": [
+        "Salı"
+      ],
       "URL": [
         "URL"
       ],
@@ -1226,13 +1319,16 @@
         "Kullanılabilir değil"
       ],
       "Unknown": [
-        ""
+        "Bilinmeyen sayfa"
       ],
       "Unknown country": [
         "Bilinmeyen ülke bayrağı"
       ],
       "Unknown country flag": [
         "Bilinmeyen ülke bayrağı"
+      ],
+      "Unknown page": [
+        "Bilinmeyen sayfa"
       ],
       "Update in progress": [
         "WordPress’te aç"
@@ -1252,11 +1348,20 @@
       "Visit measurement": [
         "Ziyaret ölçümü"
       ],
+      "Visitor": [
+        "Ziyaretçi"
+      ],
       "Visitor ID hash": [
         "Ziyaretçi kimliği karması"
       ],
       "Visitor activity window": [
         "Ziyaretçi etkinlik penceresi"
+      ],
+      "Visitor origin unavailable": [
+        "Ziyaretçi verisi mevcut değil."
+      ],
+      "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
+        ""
       ],
       "Visitors": [
         "Ziyaretçiler"
@@ -1269,6 +1374,12 @@
       ],
       "Visits": [
         "Ziyaretler"
+      ],
+      "Wed": [
+        "Çar"
+      ],
+      "Wednesday": [
+        "Çarşamba"
       ],
       "What is a CMP?": [
         "CMP nedir?"
@@ -1305,6 +1416,12 @@
       ],
       "Your configuration is ready": [
         "Yapılandırmanız hazır"
+      ],
+      "Zoom in": [
+        "Haritada yakınlaştır"
+      ],
+      "Zoom out": [
+        "Haritada uzaklaştır"
       ],
       "items": [
         "öğe"

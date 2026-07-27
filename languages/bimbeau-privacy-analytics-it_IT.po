@@ -69,6 +69,7 @@ msgid "Dashboard"
 msgstr "Dashboard"
 
 #: admin/admin.php src/admin/constants/index.js
+#: src/admin/free-stubs/RealtimePanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Tempo reale"
@@ -99,8 +100,8 @@ msgid "Geolocation"
 msgstr "Geolocalizzazione"
 
 #: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -171,7 +172,8 @@ msgstr "Abilita almeno un pannello di analisi per mostrare i valori KPI in quest
 msgid "Visits"
 msgstr "Visite"
 
-#: admin/dashboard-widget.php src/admin/widgets/OverviewKpis/index.js
+#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -289,16 +291,18 @@ msgid "GeoIP database is not available yet."
 msgstr "Il database GeoIP non è ancora disponibile."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/SearchTermsPanel.js
+#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/deviceClassLabel.js
+#: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
 msgid "Unknown"
-msgstr ""
+msgstr "Pagina sconosciuta"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/components/WorldMap/index.js src/admin/free-stubs/RealtimePanel.js
+#: src/admin/lib/countryNames.js src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -677,6 +681,15 @@ msgstr "Inserisci le credenziali MaxMind"
 msgid "Traffic data is pending"
 msgstr "Dati di traffico in attesa"
 
+#: src/admin/components/HourlyHeatmap/index.js
+msgid "No hourly details available for this page."
+msgstr "Nessun dettaglio orario disponibile per questa pagina."
+
+#: src/admin/components/HourlyHeatmap/index.js
+#, fuzzy
+msgid "Hourly activity heatmap by day and hour"
+msgstr "Mappa termica oraria globale per giorno e ora"
+
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "Diagnostica runtime privacy"
@@ -879,10 +892,28 @@ msgstr "Ritorna al download"
 msgid "World map"
 msgstr "Mappa del mondo"
 
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "Zoom in"
+msgstr "Ingrandisci mappa"
+
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "Zoom out"
+msgstr "Riduci mappa"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "Reimposta"
+
 #. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s visite"
+
+#: src/admin/components/WorldMap/index.js src/admin/panels/GeoCountriesPanel.js
+msgid "No data"
+msgstr "Nessun dato"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -966,10 +997,123 @@ msgstr "Nessun referrer disponibile."
 msgid "Hourly heatmap global"
 msgstr "Mappa termica oraria globale"
 
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/free-stubs/OverviewPanel.js
+msgid "Global hourly heatmap by day and hour"
+msgstr "Mappa termica oraria globale per giorno e ora"
+
+#: src/admin/free-stubs/OverviewPanel.js
+msgid "No global hourly data available for this period."
+msgstr "Nessun dato orario globale disponibile per questo periodo."
+
+#: src/admin/free-stubs/OverviewPanel.js
+msgid "Global hourly heatmaps require hourly page aggregation data."
+msgstr "Le mappe termiche orarie globali richiedono dati di aggregazione oraria delle pagine."
+
+#: src/admin/free-stubs/RealtimePanel.js
 #, fuzzy
-msgid "No country data is available yet."
-msgstr "Nessun dato paese disponibile."
+msgid "Visitor origin unavailable"
+msgstr "Nessun dato visitatore disponibile."
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
+msgstr ""
+
+#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/locationLabel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "No available"
+msgstr "Non disponibile"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "Hash ID visitatore"
+
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "Ora di connessione"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Current page"
+msgstr "Pagina corrente"
+
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Channel"
+msgstr "Pagine di ingresso"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Sistemi operativi"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Browser"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "Versione browser"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Dispositivi"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "Risoluzione"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Fullscreen is unavailable in this browser context."
+msgstr "La modalità schermo intero non è disponibile in questo contesto del browser."
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Loading real-time data…"
+msgstr "Caricamento dati in tempo reale…"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Visitor"
+msgstr "Visitatore"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Exit fullscreen"
+msgstr "Esci da schermo intero"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Fullscreen"
+msgstr "Schermo intero"
+
+#: src/admin/free-stubs/RealtimePanel.js
+#, fuzzy
+msgid "Essential-only scope: enriched visit details are unavailable."
+msgstr "Ambito solo essenziale: i dettagli visita arricchiti e i marker mappa precisi non sono disponibili."
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Table: Real-time visitors"
+msgstr "Tabella: visitatori in tempo reale"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Pagina sconosciuta"
+
+#: src/admin/free-stubs/RealtimePanel.js
+msgid "No visits in the current activity window."
+msgstr "Nessuna visita nella finestra di attività corrente."
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1007,10 +1151,83 @@ msgstr "Assistenti IA"
 msgid "Other"
 msgstr "Altro"
 
-#: src/admin/lib/locationLabel.js src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Monday"
+msgstr "Lunedì"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Mon"
+msgstr "Lun"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Tuesday"
+msgstr "Martedì"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Tue"
+msgstr "Mar"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Wednesday"
+msgstr "Mercoledì"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Wed"
+msgstr "Mer"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Thursday"
+msgstr "Giovedì"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Thu"
+msgstr "Gio"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Friday"
+msgstr "Venerdì"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Fri"
+msgstr "Ven"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Saturday"
+msgstr "Sabato"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Sat"
+msgstr "Sab"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Sunday"
+msgstr "Domenica"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Sun"
+msgstr "Dom"
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Hourly heatmaps are unavailable for pages not found (404)."
+msgstr "Le mappe termiche orarie non sono disponibili per le pagine non trovate (404)."
+
+#: src/admin/lib/hourlyHeatmap.js
 #, fuzzy
-msgid "No available"
-msgstr "Non disponibile"
+msgid "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
+msgstr "Le mappe termiche orarie sono disabilitate dal filtro bpa_hourly_aggregation_enabled."
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Hourly heatmaps are unavailable because the hourly aggregation table is missing."
+msgstr "Le mappe termiche orarie non sono disponibili perché manca la tabella di aggregazione oraria."
+
+#: src/admin/lib/hourlyHeatmap.js
+msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
+msgstr "Le mappe termiche orarie richiedono dati di aggregazione oraria delle pagine per l'origine selezionata."
+
+#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
+#: src/admin/lib/hourlyHeatmap.js
+msgid "%1$s at %2$s — %3$s: %4$s"
+msgstr "%1$s alle %2$s — %3$s: %4$s"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1025,12 +1242,6 @@ msgstr "Nessun dato del profilo visitatore disponibile per questo periodo."
 #, fuzzy
 msgid "Table: Acquisition channels"
 msgstr "Tabella: visitatori"
-
-#: src/admin/panels/AcquisitionPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
-msgid "Channel"
-msgstr "Pagine di ingresso"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -1058,10 +1269,6 @@ msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
 #: src/admin/panels/GeoCountriesPanel.js
-msgid "No data"
-msgstr "Nessun dato"
-
-#: src/admin/panels/GeoCountriesPanel.js
 msgid "Unknown country flag"
 msgstr "Bandiera paese sconosciuto"
 
@@ -1075,14 +1282,14 @@ msgid "Top countries"
 msgstr "Paesi principali"
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr ""
-
-#: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Visitatori giornalieri"
+
+#: src/admin/panels/RealtimePanel.js
+#, fuzzy
+msgid "No country data is available yet."
+msgstr "Nessun dato paese disponibile."
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1843,11 +2050,6 @@ msgid "No device usage available."
 msgstr "Nessun dato di utilizzo dispositivi disponibile."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Risoluzione"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No resolution data available."
 msgstr "Nessun dato di risoluzione disponibile."
 
@@ -2201,14 +2403,6 @@ msgid "0s"
 msgstr "0s"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Hash ID visitatore"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Ora di connessione"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Active time"
 msgstr "Tempo attivo"
 
@@ -2216,25 +2410,6 @@ msgstr "Tempo attivo"
 #, fuzzy
 msgid "Entry channel"
 msgstr "Pagine di ingresso"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "Sistemi operativi"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "Browser"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Versione browser"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "Dispositivi"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"

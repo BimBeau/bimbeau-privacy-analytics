@@ -1,10 +1,989 @@
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from '@wordpress/element';
+import { Button, Notice, Tooltip } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import WorldMap from '../components/WorldMap';
 
-const RealtimePanel = () => (
-	<section className="bbpa-realtime-panel">
-		<WorldMap endpoint="/geo-countries" emptyLabel={ __( 'No country data is available yet.', 'bimbeau-privacy-analytics' ) } />
-	</section>
+import { ADMIN_CONFIG } from '../constants';
+
+import DataState from '../components/DataState';
+import BpaCard from '../components/BpaCard';
+import WorldMap from '../components/WorldMap';
+import useRealtimeSnapshot from '../hooks/useRealtimeSnapshot';
+import BrandIcon from '../components/icons/BrandIcon';
+import PageTitle from '../components/PageTitle';
+import { getCountryFlagClass, isUnknownCountryCode } from '../lib/countryNames';
+import { formatScreenResolution } from '../lib/formatScreenResolution';
+import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../lib/date';
+import { formatDeviceClassLabel } from '../lib/deviceClassLabel';
+import { getChannelLabel } from '../lib/channelLabels';
+import { isVisitorOriginUnavailable } from '../lib/geoipStatus';
+
+const VisitorOriginUnavailableNotice = () => {
+	if ( ! isVisitorOriginUnavailable() ) {
+		return null;
+	}
+
+	return (
+		<Notice status="info" isDismissible={ false }>
+			<strong>
+				{ __(
+					'Visitor origin unavailable',
+					'bimbeau-privacy-analytics'
+				) }
+			</strong>
+			<p>
+				{ __(
+					'Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.',
+					'bimbeau-privacy-analytics'
+				) }
+			</p>
+		</Notice>
+	);
+};
+
+const formatConnectionTime = ( timestamp ) => {
+	const parsedTimestamp = Number( timestamp );
+
+	if ( ! Number.isFinite( parsedTimestamp ) || parsedTimestamp <= 0 ) {
+		return __( 'Unknown', 'bimbeau-privacy-analytics' );
+	}
+
+	const normalizedTimestamp =
+		normalizeUnixTimestampSeconds( parsedTimestamp );
+	if ( normalizedTimestamp === null ) {
+		return __( 'Unknown', 'bimbeau-privacy-analytics' );
+	}
+
+	return formatWpDateTime(
+		normalizedTimestamp,
+		__( 'Unknown', 'bimbeau-privacy-analytics' )
+	);
+};
+
+const getRealtimeVisitField = ( visit, fieldNames ) => {
+	for ( const fieldName of fieldNames ) {
+		const value = visit?.[ fieldName ];
+		if ( typeof value === 'string' && value.trim() !== '' ) {
+			return value.trim();
+		}
+		if ( typeof value === 'number' && Number.isFinite( value ) ) {
+			return String( value );
+		}
+	}
+
+	return '';
+};
+
+const getRealtimeVisitGeoField = ( visit, fieldNames ) => {
+	const geoCandidates = [ visit?.geo, visit?.geolocation, visit?.location ];
+
+	for ( const candidate of geoCandidates ) {
+		if ( ! candidate || typeof candidate !== 'object' ) {
+			continue;
+		}
+
+		const resolvedValue = getRealtimeVisitField( candidate, fieldNames );
+		if ( resolvedValue !== '' ) {
+			return resolvedValue;
+		}
+	}
+
+	return '';
+};
+
+const normalizeRealtimeVisit = ( visit = {} ) => {
+	const countryCode =
+		getRealtimeVisitField( visit, [ 'country_code', 'countryCode' ] ) ||
+		getRealtimeVisitGeoField( visit, [
+			'country_code',
+			'countryCode',
+			'country',
+		] );
+	const country =
+		getRealtimeVisitField( visit, [
+			'country',
+			'country_name',
+			'countryName',
+		] ) ||
+		getRealtimeVisitGeoField( visit, [
+			'country_name',
+			'countryName',
+			'country',
+		] );
+	const currentPage = getRealtimeVisitField( visit, [
+		'current_page',
+		'currentPage',
+		'page_path',
+		'path',
+	] );
+	const referrerDomain = getRealtimeVisitField( visit, [
+		'referrer_domain',
+		'referrerDomain',
+		'referrer',
+	] );
+	const sourceCategory = getRealtimeVisitField( visit, [
+		'source_category',
+		'sourceCategory',
+		'channel',
+	] );
+	const operatingSystem = getRealtimeVisitField( visit, [
+		'operating_system',
+		'operatingSystem',
+		'os',
+	] );
+	const browser = getRealtimeVisitField( visit, [
+		'browser',
+		'browser_name',
+		'browserName',
+	] );
+	const browserVersion = getRealtimeVisitField( visit, [
+		'browser_version',
+		'browserVersion',
+	] );
+	const deviceClass = getRealtimeVisitField( visit, [
+		'device_class',
+		'deviceClass',
+		'device',
+	] );
+	const screenResolution = formatScreenResolution(
+		getRealtimeVisitField( visit, [
+			'screen_resolution',
+			'screenResolution',
+			'resolution',
+			'resolution_label',
+			'resolutionLabel',
+		] )
+	);
+
+	const firstViewAt = Number(
+		visit?.first_view_at ??
+			visit?.firstViewAt ??
+			visit?.last_view_at ??
+			visit?.lastViewAt ??
+			0
+	);
+	const lastViewAt = Number(
+		visit?.last_view_at ?? visit?.lastViewAt ?? firstViewAt
+	);
+
+	return {
+		...visit,
+		visitor_id: getRealtimeVisitField( visit, [ 'visitor_id' ] ),
+		country_code: countryCode,
+		country,
+		first_view_at: Number.isFinite( firstViewAt ) ? firstViewAt : 0,
+		last_view_at: Number.isFinite( lastViewAt ) ? lastViewAt : 0,
+		current_page: currentPage,
+		referrer_domain: referrerDomain,
+		source_category: sourceCategory,
+		operating_system: operatingSystem,
+		browser,
+		browser_version: browserVersion,
+		device_class: deviceClass,
+		screen_resolution: screenResolution,
+	};
+};
+
+const getRealtimeVisitChannelValue = ( visit = {} ) => {
+	const sourceCategory = getRealtimeVisitField( visit, [
+		'source_category',
+		'sourceCategory',
+		'channel',
+	] );
+	if ( sourceCategory !== '' ) {
+		return sourceCategory;
+	}
+
+	const referrerDomain = getRealtimeVisitField( visit, [
+		'referrer_domain',
+		'referrerDomain',
+		'referrer',
+	] );
+	return referrerDomain !== '' ? 'Referrals' : 'Direct';
+};
+
+const ChannelLabel = ( { sourceCategory = '', referrerDomain = '' } ) => {
+	const channelLabel = getChannelLabel(
+		sourceCategory || ( referrerDomain ? 'Referrals' : 'Direct' )
+	);
+	const diagnosticReferrer =
+		typeof referrerDomain === 'string' ? referrerDomain.trim() : '';
+	const label = channelLabel || getChannelLabel( 'Other' );
+
+	if ( diagnosticReferrer !== '' ) {
+		return (
+			<Tooltip text={ diagnosticReferrer }>
+				<span title={ diagnosticReferrer }>{ label }</span>
+			</Tooltip>
+		);
+	}
+
+	return <span>{ label }</span>;
+};
+
+export const aggregateRealtimeVisitsByCountry = ( visits = [] ) => {
+	const countries = new Map();
+
+	for ( const visit of Array.isArray( visits ) ? visits : [] ) {
+		const normalized = normalizeRealtimeVisit( visit );
+		const code = normalized.country_code.trim().toUpperCase();
+		if ( ! code || isUnknownCountryCode( code ) ) {
+			continue;
+		}
+
+		const existing = countries.get( code ) || {
+			id: code,
+			code,
+			country_code: code,
+			label: normalized.country || code,
+			visits: 0,
+			pages: [],
+		};
+		existing.visits += 1;
+		if (
+			normalized.current_page &&
+			! existing.pages.includes( normalized.current_page )
+		) {
+			existing.pages.push( normalized.current_page );
+		}
+		countries.set( code, existing );
+	}
+
+	return Array.from( countries.values() );
+};
+
+const shouldDisplayRealtimeVisitRow = ( visit ) => {
+	return Boolean( visit );
+};
+
+const formatVisitorHashForTable = ( hash ) => {
+	if ( typeof hash !== 'string' ) {
+		return '';
+	}
+
+	const normalizedHash = hash.trim();
+	if ( normalizedHash.length <= 10 ) {
+		return normalizedHash;
+	}
+
+	return `${ normalizedHash.slice( 0, 10 ) }...`;
+};
+
+const buildRealtimeVisitRowKey = ( visit, index ) => {
+	const visitorId = getRealtimeVisitField( visit, [ 'visitor_id' ] );
+	const visitLastViewAt = Number(
+		visit?.last_view_at ?? visit?.lastViewAt ?? 0
+	);
+	if ( visitorId ) {
+		return `realtime-visit-${ visitorId }-${
+			Number.isFinite( visitLastViewAt ) ? visitLastViewAt : 0
+		}`;
+	}
+	const countryCode = getRealtimeVisitField( visit, [
+		'country_code',
+		'countryCode',
+	] ).toLowerCase();
+	const currentPage = getRealtimeVisitField( visit, [
+		'current_page',
+		'currentPage',
+		'page_path',
+		'path',
+	] );
+
+	if ( countryCode || currentPage ) {
+		return `realtime-visit-${ countryCode || 'unknown' }-${
+			currentPage || 'unknown-page'
+		}-${ index }`;
+	}
+
+	return `realtime-visit-${ index }`;
+};
+
+const NO_AVAILABLE_LABEL = __( 'No available', 'bimbeau-privacy-analytics' );
+const UNKNOWN_LABEL = __( 'Unknown', 'bimbeau-privacy-analytics' );
+const UNKNOWN_COUNTRY_LABEL = __(
+	'Unknown country',
+	'bimbeau-privacy-analytics'
 );
+const MUTED_PLACEHOLDER_LABELS = new Set( [
+	NO_AVAILABLE_LABEL,
+	UNKNOWN_LABEL,
+	UNKNOWN_COUNTRY_LABEL,
+] );
+
+const getPlaceholderLabelClassName = ( label, baseClassName = '' ) => {
+	const classNames = baseClassName ? [ baseClassName ] : [];
+
+	if ( MUTED_PLACEHOLDER_LABELS.has( label ) ) {
+		classNames.push( 'bbpa-label--unavailable' );
+	}
+
+	return classNames.join( ' ' );
+};
+
+const VISITOR_TABLE_LABELS = {
+	visitorId: __( 'Visitor ID hash', 'bimbeau-privacy-analytics' ),
+	country: __( 'Country', 'bimbeau-privacy-analytics' ),
+	connectionTime: __( 'Connection time', 'bimbeau-privacy-analytics' ),
+	currentPage: __( 'Current page', 'bimbeau-privacy-analytics' ),
+	channel: __( 'Channel', 'bimbeau-privacy-analytics' ),
+	operatingSystem: __( 'Operating system', 'bimbeau-privacy-analytics' ),
+	browser: __( 'Browser', 'bimbeau-privacy-analytics' ),
+	browserVersion: __( 'Browser version', 'bimbeau-privacy-analytics' ),
+	device: __( 'Device', 'bimbeau-privacy-analytics' ),
+	resolution: __( 'Resolution', 'bimbeau-privacy-analytics' ),
+};
+
+const fieldVisibilityMatrix =
+	ADMIN_CONFIG?.settings?.fieldVisibilityMatrix?.realtime_visits || {};
+
+const fallbackMatrix = {
+	referrer_domain: 'advanced_after_consent',
+	source_category: 'advanced_after_consent',
+	operating_system: 'advanced_after_consent',
+	browser: 'advanced_after_consent',
+	browser_version: 'advanced_after_consent',
+	device_class: 'advanced_after_consent',
+	screen_resolution: 'advanced_after_consent',
+};
+
+const isFieldVisible = ( field, isAdvancedEnabled ) => {
+	const mode =
+		fieldVisibilityMatrix?.[ field ] ||
+		fallbackMatrix?.[ field ] ||
+		'essential';
+	if ( mode === 'never' ) {
+		return false;
+	}
+	if ( mode === 'advanced_after_consent' ) {
+		return isAdvancedEnabled;
+	}
+	return true;
+};
+
+const RealtimePanel = () => {
+	const { data, isLoading, error } = useRealtimeSnapshot();
+	const [ isFullscreenActive, setIsFullscreenActive ] = useState( false );
+	const [ isFullscreenSupported, setIsFullscreenSupported ] =
+		useState( true );
+	const [ cardDimensions, setCardDimensions ] = useState( {
+		width: 0,
+		height: 0,
+	} );
+	const cardContainerRef = useRef( null );
+	const numberFormatter = useMemo( () => new Intl.NumberFormat(), [] );
+	const measureCardDimensions = useCallback( () => {
+		const cardNode = cardContainerRef.current;
+		if ( ! cardNode ) {
+			return;
+		}
+
+		const nextRect = cardNode.getBoundingClientRect();
+		const nextWidth = Math.round( Math.max( 0, nextRect.width ) );
+		const nextHeight = Math.round( Math.max( 0, nextRect.height ) );
+
+		setCardDimensions( ( currentDimensions ) => {
+			if (
+				currentDimensions.width === nextWidth &&
+				currentDimensions.height === nextHeight
+			) {
+				return currentDimensions;
+			}
+
+			return {
+				width: nextWidth,
+				height: nextHeight,
+			};
+		} );
+	}, [] );
+
+	useEffect( () => {
+		const cardNode = cardContainerRef.current;
+		const requestFullscreenFn = cardNode?.requestFullscreen;
+		const fullscreenEnabled = Boolean( document.fullscreenEnabled );
+		const hasRequestFullscreen = typeof requestFullscreenFn === 'function';
+		const isSupported = fullscreenEnabled && hasRequestFullscreen;
+
+		setIsFullscreenSupported( isSupported );
+	}, [] );
+
+	useEffect( () => {
+		measureCardDimensions();
+
+		const handleResize = () => {
+			measureCardDimensions();
+		};
+
+		window.addEventListener( 'resize', handleResize );
+
+		let resizeObserver;
+		if ( typeof window.ResizeObserver === 'function' ) {
+			resizeObserver = new window.ResizeObserver( () => {
+				measureCardDimensions();
+			} );
+			if ( cardContainerRef.current ) {
+				resizeObserver.observe( cardContainerRef.current );
+			}
+		}
+
+		return () => {
+			window.removeEventListener( 'resize', handleResize );
+			if ( resizeObserver ) {
+				resizeObserver.disconnect();
+			}
+		};
+	}, [ measureCardDimensions ] );
+
+	useEffect( () => {
+		const handleFullscreenChange = () => {
+			const cardNode = cardContainerRef.current;
+			const isCardFullscreen =
+				Boolean( cardNode ) && document.fullscreenElement === cardNode;
+
+			setIsFullscreenActive( isCardFullscreen );
+			measureCardDimensions();
+			window.dispatchEvent( new Event( 'resize' ) );
+		};
+
+		document.addEventListener( 'fullscreenchange', handleFullscreenChange );
+
+		return () => {
+			document.removeEventListener(
+				'fullscreenchange',
+				handleFullscreenChange
+			);
+		};
+	}, [ measureCardDimensions ] );
+
+	const toggleFullscreen = useCallback( async () => {
+		const cardNode = cardContainerRef.current;
+		if ( ! cardNode || ! isFullscreenSupported ) {
+			return;
+		}
+
+		try {
+			if ( document.fullscreenElement === cardNode ) {
+				await document.exitFullscreen();
+			} else {
+				await cardNode.requestFullscreen();
+			}
+		} catch {
+			setIsFullscreenSupported( false );
+		}
+	}, [ isFullscreenSupported ] );
+
+	const fullscreenContentStyle = isFullscreenActive
+		? {
+				minHeight: `${ Math.max( 280, cardDimensions.height ) }px`,
+		  }
+		: undefined;
+	const activeVisitors = Number(
+		data?.activeVisitorsTotal ?? data?.activeVisitors ?? 0
+	);
+	const realtimeVisits = useMemo(
+		() => ( Array.isArray( data?.visits ) ? data.visits : [] ),
+		[ data?.visits ]
+	);
+	const dataScope =
+		typeof data?.dataScope === 'string' ? data.dataScope.trim() : '';
+	const isEssentialOnlyScope = dataScope === 'essential_only';
+	const isAdvancedScope = ! isEssentialOnlyScope;
+	const realtimeMapData = useMemo(
+		() => ( {
+			items: aggregateRealtimeVisitsByCountry( realtimeVisits ),
+		} ),
+		[ realtimeVisits ]
+	);
+	const realtimeVisitRows = useMemo( () => {
+		if ( realtimeVisits.length > 0 ) {
+			return realtimeVisits
+				.filter( ( visit ) => shouldDisplayRealtimeVisitRow( visit ) )
+				.map( ( visit ) => {
+					const normalizedVisit = normalizeRealtimeVisit( visit );
+
+					if ( ! isEssentialOnlyScope ) {
+						return normalizedVisit;
+					}
+
+					return {
+						...normalizedVisit,
+						referrer_domain: '',
+						source_category: '',
+						operating_system: '',
+						browser: '',
+						browser_version: '',
+						device_class: '',
+						screen_resolution: '',
+					};
+				} )
+				.sort(
+					( left, right ) =>
+						Number( right?.first_view_at ?? 0 ) -
+						Number( left?.first_view_at ?? 0 )
+				);
+		}
+
+		return [];
+	}, [ isEssentialOnlyScope, realtimeVisits ] );
+
+	const realtimePanelClassName = `bbpa-report-panel bbpa-realtime-panel${
+		activeVisitors === 0 ? ' bbpa-realtime-panel--no-visitors' : ''
+	}`;
+
+	return (
+		<div className={ realtimePanelClassName }>
+			<BpaCard
+				title={ __( 'Real-time', 'bimbeau-privacy-analytics' ) }
+				className="bbpa-realtime-panel__card"
+				bodyClassName="bbpa-listing-region"
+				ref={ cardContainerRef }
+				data-fullscreen-active={ isFullscreenActive ? 'true' : 'false' }
+				style={
+					isFullscreenActive
+						? {
+								width: '100vw',
+								height: '100vh',
+								maxWidth: '100vw',
+								maxHeight: '100vh',
+						  }
+						: undefined
+				}
+			>
+				{ ! isFullscreenSupported ? (
+					<p className="bbpa-realtime-panel__meta">
+						{ __(
+							'Fullscreen is unavailable in this browser context.',
+							'bimbeau-privacy-analytics'
+						) }
+					</p>
+				) : null }
+				<VisitorOriginUnavailableNotice />
+				<DataState
+					isLoading={ isLoading }
+					error={ error }
+					isEmpty={ false }
+					emptyLabel=""
+					loadingLabel={ __(
+						'Loading real-time data…',
+						'bimbeau-privacy-analytics'
+					) }
+					skeletonRows={ 2 }
+				/>
+				{ ! isLoading && ! error ? (
+					<div
+						className="bbpa-realtime-panel__body"
+						style={ fullscreenContentStyle }
+					>
+						<WorldMap
+							mapMode="country-markers"
+							dataOverride={ realtimeMapData }
+							isLoadingOverride={ false }
+							errorOverride={ null }
+							topLeftOverlay={
+								<p
+									className="bbpa-realtime-panel__kpi bbpa-realtime-panel__kpi--overlay"
+									aria-live="polite"
+								>
+									<span className="bbpa-realtime-panel__kpi-value">
+										{ numberFormatter.format(
+											activeVisitors
+										) }
+									</span>
+									<span className="bbpa-realtime-panel__kpi-label">
+										{ activeVisitors === 1
+											? __(
+													'Visitor',
+													'bimbeau-privacy-analytics'
+											  )
+											: __(
+													'Visitors',
+													'bimbeau-privacy-analytics'
+											  ) }
+									</span>
+								</p>
+							}
+							controlsSlot={
+								<Tooltip
+									text={
+										isFullscreenActive
+											? __(
+													'Exit fullscreen',
+													'bimbeau-privacy-analytics'
+											  )
+											: __(
+													'Fullscreen',
+													'bimbeau-privacy-analytics'
+											  )
+									}
+								>
+									<Button
+										variant="secondary"
+										icon={
+											isFullscreenActive
+												? 'fullscreen-exit-alt'
+												: 'fullscreen-alt'
+										}
+										label={
+											isFullscreenActive
+												? __(
+														'Exit fullscreen',
+														'bimbeau-privacy-analytics'
+												  )
+												: __(
+														'Fullscreen',
+														'bimbeau-privacy-analytics'
+												  )
+										}
+										onClick={ toggleFullscreen }
+										disabled={ ! isFullscreenSupported }
+										aria-pressed={ isFullscreenActive }
+									/>
+								</Tooltip>
+							}
+							emptyLabel=""
+						/>
+						<div className="bbpa-realtime-panel__visits">
+							{ isEssentialOnlyScope ? (
+								<p className="bbpa-realtime-panel__meta">
+									{ __(
+										'Essential-only scope: enriched visit details are unavailable.',
+										'bimbeau-privacy-analytics'
+									) }
+								</p>
+							) : null }
+							{ realtimeVisitRows.length > 0 ? (
+								<div className="bbpa-table-scroll">
+									<table
+										className="widefat striped bbpa-report-table bbpa-report-table--visitors bbpa-report-table--realtime-visits"
+										aria-label={ __(
+											'Table: Real-time visitors',
+											'bimbeau-privacy-analytics'
+										) }
+									>
+										<thead>
+											<tr>
+												<th scope="col">
+													{
+														VISITOR_TABLE_LABELS.visitorId
+													}
+												</th>
+												<th scope="col">
+													{
+														VISITOR_TABLE_LABELS.country
+													}
+												</th>
+												<th scope="col">
+													{
+														VISITOR_TABLE_LABELS.connectionTime
+													}
+												</th>
+												<th scope="col">
+													{
+														VISITOR_TABLE_LABELS.currentPage
+													}
+												</th>
+												{ isFieldVisible(
+													'source_category',
+													isAdvancedScope
+												) ? (
+													<th scope="col">
+														{
+															VISITOR_TABLE_LABELS.channel
+														}
+													</th>
+												) : null }
+												{ isFieldVisible(
+													'operating_system',
+													isAdvancedScope
+												) ? (
+													<th scope="col">
+														{
+															VISITOR_TABLE_LABELS.operatingSystem
+														}
+													</th>
+												) : null }
+												{ isFieldVisible(
+													'browser',
+													isAdvancedScope
+												) ? (
+													<th scope="col">
+														{
+															VISITOR_TABLE_LABELS.browser
+														}
+													</th>
+												) : null }
+												{ isFieldVisible(
+													'browser_version',
+													isAdvancedScope
+												) ? (
+													<th scope="col">
+														{
+															VISITOR_TABLE_LABELS.browserVersion
+														}
+													</th>
+												) : null }
+												{ isFieldVisible(
+													'device_class',
+													isAdvancedScope
+												) ? (
+													<th scope="col">
+														{
+															VISITOR_TABLE_LABELS.device
+														}
+													</th>
+												) : null }
+												{ isFieldVisible(
+													'screen_resolution',
+													isAdvancedScope
+												) ? (
+													<th scope="col">
+														{
+															VISITOR_TABLE_LABELS.resolution
+														}
+													</th>
+												) : null }
+											</tr>
+										</thead>
+										<tbody>
+											{ realtimeVisitRows.map(
+												( visit, index ) => {
+													const countryCode = (
+														visit?.country_code ||
+														''
+													).toLowerCase();
+													const flagClass =
+														getCountryFlagClass(
+															countryCode
+														);
+													const hasCountry =
+														! isUnknownCountryCode(
+															countryCode
+														) && flagClass;
+													const countryLabel =
+														visit?.country ||
+														UNKNOWN_COUNTRY_LABEL;
+													const countryFlagFallbackCandidate =
+														typeof visit?.country_flag ===
+														'string'
+															? visit.country_flag.trim()
+															: '';
+													const countryFallbackLabel =
+														countryFlagFallbackCandidate &&
+														! /^[A-Za-z]{2}$/.test(
+															countryFlagFallbackCandidate
+														)
+															? countryFlagFallbackCandidate
+															: '';
+													const screenResolutionLabel =
+														formatScreenResolution(
+															visit?.screen_resolution
+														) || UNKNOWN_LABEL;
+													return (
+														<tr
+															key={ buildRealtimeVisitRowKey(
+																visit,
+																index
+															) }
+														>
+															<td>
+																{ visit?.visitor_id ? (
+																	<Tooltip
+																		text={
+																			visit.visitor_id
+																		}
+																	>
+																		<code>
+																			{ formatVisitorHashForTable(
+																				visit.visitor_id
+																			) }
+																		</code>
+																	</Tooltip>
+																) : (
+																	'—'
+																) }
+															</td>
+															<td>
+																<span className="bbpa-country-label">
+																	{ hasCountry ? (
+																		<span
+																			className={ `bbpa-country-flag ${ flagClass }` }
+																			role="img"
+																			aria-label={
+																				countryLabel
+																			}
+																		/>
+																	) : (
+																		<span
+																			className="bbpa-country-flag bbpa-country-flag--unknown"
+																			role="img"
+																			aria-label={ __(
+																				'Unknown country',
+																				'bimbeau-privacy-analytics'
+																			) }
+																		/>
+																	) }
+																	{ countryFallbackLabel ? (
+																		<span
+																			className="bbpa-country-flag-fallback"
+																			aria-hidden="true"
+																		>
+																			{
+																				countryFallbackLabel
+																			}
+																		</span>
+																	) : null }
+																	<span
+																		className={ getPlaceholderLabelClassName(
+																			countryLabel
+																		) }
+																	>
+																		{
+																			countryLabel
+																		}
+																	</span>
+																</span>
+															</td>
+															<td>
+																{ formatConnectionTime(
+																	visit?.first_view_at
+																) }
+															</td>
+															<td className="bbpa-realtime-current-page-cell">
+																<PageTitle>
+																	{ visit?.current_page ||
+																		__(
+																			'Unknown page',
+																			'bimbeau-privacy-analytics'
+																		) }
+																</PageTitle>
+															</td>
+															{ ! isEssentialOnlyScope ? (
+																<>
+																	<td>
+																		<ChannelLabel
+																			sourceCategory={ getRealtimeVisitChannelValue(
+																				visit
+																			) }
+																			referrerDomain={
+																				visit?.referrer_domain ||
+																				''
+																			}
+																		/>
+																	</td>
+																	<td>
+																		<span className="bbpa-brand-label">
+																			<BrandIcon
+																				kind="os"
+																				value={
+																					visit?.operating_system
+																				}
+																				className="bbpa-brand-icon"
+																			/>
+																			<span
+																				className={ getPlaceholderLabelClassName(
+																					visit?.operating_system ||
+																						UNKNOWN_LABEL
+																				) }
+																			>
+																				{ visit?.operating_system ||
+																					UNKNOWN_LABEL }
+																			</span>
+																		</span>
+																	</td>
+																	<td>
+																		<span className="bbpa-brand-label">
+																			<BrandIcon
+																				kind="browser"
+																				value={
+																					visit?.browser
+																				}
+																				className="bbpa-brand-icon"
+																			/>
+																			<span
+																				className={ getPlaceholderLabelClassName(
+																					visit?.browser ||
+																						UNKNOWN_LABEL
+																				) }
+																			>
+																				{ visit?.browser ||
+																					UNKNOWN_LABEL }
+																			</span>
+																		</span>
+																	</td>
+																	<td>
+																		<span
+																			className={ getPlaceholderLabelClassName(
+																				visit?.browser_version ||
+																					UNKNOWN_LABEL
+																			) }
+																		>
+																			{ visit?.browser_version ||
+																				UNKNOWN_LABEL }
+																		</span>
+																	</td>
+																	<td>
+																		<span className="bbpa-brand-label">
+																			<BrandIcon
+																				kind="device"
+																				value={
+																					visit?.device_class
+																				}
+																				className="bbpa-brand-icon"
+																			/>
+																			<span
+																				className={ getPlaceholderLabelClassName(
+																					formatDeviceClassLabel(
+																						visit?.device_class,
+																						UNKNOWN_LABEL
+																					)
+																				) }
+																			>
+																				{ formatDeviceClassLabel(
+																					visit?.device_class,
+																					UNKNOWN_LABEL
+																				) }
+																			</span>
+																		</span>
+																	</td>
+																	<td>
+																		<span
+																			className={ getPlaceholderLabelClassName(
+																				screenResolutionLabel
+																			) }
+																		>
+																			{
+																				screenResolutionLabel
+																			}
+																		</span>
+																	</td>
+																</>
+															) : null }
+														</tr>
+													);
+												}
+											) }
+										</tbody>
+									</table>
+								</div>
+							) : (
+								<p className="bbpa-realtime-panel__meta">
+									{ __(
+										'No visits in the current activity window.',
+										'bimbeau-privacy-analytics'
+									) }
+								</p>
+							) }
+						</div>
+					</div>
+				) : null }
+			</BpaCard>
+		</div>
+	);
+};
 
 export default RealtimePanel;
