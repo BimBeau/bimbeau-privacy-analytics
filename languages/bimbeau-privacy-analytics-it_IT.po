@@ -13,6 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: bimbeau-privacy-analytics\n"
 "X-Generator: Poedit 2.4.3\n"
 
 #. Plugin Name of the plugin
@@ -40,9 +41,8 @@ msgid "Pro"
 msgstr "Pro"
 
 #: admin/admin.php
-#, fuzzy
 msgid "Upgrade to Pro"
-msgstr "Aggiorna"
+msgstr ""
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -69,7 +69,7 @@ msgid "Dashboard"
 msgstr "Dashboard"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Tempo reale"
 
@@ -98,9 +98,9 @@ msgstr "Ricerche interne"
 msgid "Geolocation"
 msgstr "Geolocalizzazione"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -289,8 +289,7 @@ msgid "GeoIP database is not available yet."
 msgstr "Il database GeoIP non è ancora disponibile."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/SearchTermsPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -300,7 +299,7 @@ msgstr "Pagina sconosciuta"
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -476,68 +475,9 @@ msgstr "La chiave di licenza MaxMind è obbligatoria."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "Le credenziali MaxMind sono necessarie per abilitare la geolocalizzazione IP."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php
 msgid "Statistics"
 msgstr "Statistiche"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitor"
-msgstr "%s visitatore"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitors"
-msgstr "%s visitatori"
-
-#: src/admin/AdminApp.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "Impossibile riavviare la procedura guidata di configurazione. Riprova."
-
-#: src/admin/AdminApp.js
-msgid "Initial configuration completed."
-msgstr "Configurazione iniziale completata."
-
-#: src/admin/AdminApp.js
-msgid "Missing admin configuration."
-msgstr "Configurazione amministratore mancante."
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-msgid "Session expired, reload the application."
-msgstr ""
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-#, fuzzy
-msgid "Reload application"
-msgstr "Geolocalizzazione"
-
-#: src/admin/AdminApp.js
-msgid "No panel available for this screen."
-msgstr "Nessun pannello disponibile per questa schermata."
-
-#: src/admin/AdminApp.js
-msgid "Complete the initial configuration"
-msgstr "Completa la configurazione iniziale"
-
-#: src/admin/AdminApp.js
-msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr "Completa la configurazione del monitoraggio, della geolocalizzazione locale e delle favicon referrer opzionali."
-
-#: src/admin/AdminApp.js
-msgid "Resume configuration"
-msgstr "Riprendi la configurazione"
-
-#: src/admin/AdminApp.js
-msgid "GeoIP database not installed"
-msgstr "Database GeoIP non installato"
-
-#: src/admin/AdminApp.js
-msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
-msgstr "I rapporti sulla posizione non sono disponibili finché non viene scaricato il database GeoIP locale. Scaricalo dalla pagina delle impostazioni di geolocalizzazione."
-
-#: src/admin/AdminApp.js
-msgid "Open geolocation settings"
-msgstr "Apri le impostazioni di geolocalizzazione"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -587,7 +527,7 @@ msgstr "Pagina visualizzata"
 msgid "Visitor inactive"
 msgstr "Visitatore inattivo"
 
-#: src/admin/bootstrap-common.js src/admin/panels/RealtimePanel.js
+#: src/admin/bootstrap-common.js
 msgid "Unknown page"
 msgstr "Pagina sconosciuta"
 
@@ -902,83 +842,12 @@ msgid "Return to the download"
 msgstr "Ritorna al download"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Zoom in map"
-msgstr "Ingrandisci mappa"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Zoom out map"
-msgstr "Riduci mappa"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset map zoom"
-msgstr "Reimposta zoom mappa"
-
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
-#: src/admin/components/WorldMap/index.js
-msgid "%1$s: %2$s visits%3$s"
-msgstr "%1$s: %2$s visite%3$s"
-
-#. translators: %s: approximation scope label.
-#: src/admin/components/WorldMap/index.js
-msgid " (%s)"
-msgstr " (%s)"
-
-#: src/admin/components/WorldMap/index.js
-msgid "approximate country area"
-msgstr "area approssimativa del paese"
-
-#: src/admin/components/WorldMap/index.js
-msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
-msgstr "I dati delle città sono disponibili per il periodo selezionato, ma nessuna città ha ancora coordinate utilizzabili."
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
-msgstr "Non sono disponibili visite geolocalizzate. Controlla le impostazioni di geolocalizzazione per iniziare a raccogliere dati città."
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
-msgstr "Non sono disponibili visite geolocalizzate. Controlla le impostazioni di geolocalizzazione per iniziare a raccogliere dati paese."
-
-#. translators: %s: visitor count.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s visitors"
-msgstr "%s visitatori"
-
-#. translators: %s: share of total visitors.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s of total visitors"
-msgstr "%s delle visite totali"
-
-#. translators: %s: visit count.
-#: src/admin/components/WorldMap/index.js
-msgid "%s visits"
-msgstr "%s visite"
-
-#: src/admin/components/WorldMap/index.js
 msgid "World map"
 msgstr "Mappa del mondo"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Loading world map"
-msgstr "Caricamento mappa del mondo"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "Controlli zoom mappa"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "Reimposta"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map legend"
-msgstr "Legenda mappa"
-
-#: src/admin/constants/index.js
-msgid "Events"
-msgstr "Eventi"
+msgid "%s visits"
+msgstr "%s visite"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -1062,6 +931,11 @@ msgstr "Nessun referrer disponibile."
 msgid "Hourly heatmap global"
 msgstr "Mappa termica oraria globale"
 
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/RealtimePanel.js
+#, fuzzy
+msgid "No country data is available yet."
+msgstr "Nessun dato paese disponibile."
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Ricerca organica"
@@ -1098,8 +972,7 @@ msgstr "Assistenti IA"
 msgid "Other"
 msgstr "Altro"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/lib/locationLabel.js src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "No available"
 msgstr "Non disponibile"
@@ -1118,7 +991,7 @@ msgstr "Nessun dato del profilo visitatore disponibile per questo periodo."
 msgid "Table: Acquisition channels"
 msgstr "Tabella: visitatori"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #, fuzzy
 msgid "Channel"
@@ -1166,7 +1039,7 @@ msgstr "Bandiera di %s"
 msgid "Top countries"
 msgstr "Paesi principali"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
 msgstr ""
@@ -1175,90 +1048,6 @@ msgstr ""
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Visitatori giornalieri"
-
-#: src/admin/panels/RealtimePanel.js
-#, fuzzy
-msgid "Visitor origin unavailable"
-msgstr "Nessun dato visitatore disponibile."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Hash ID visitatore"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Ora di connessione"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "Pagina corrente"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "Sistemi operativi"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "Browser"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Versione browser"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "Dispositivi"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Risoluzione"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen is unavailable in this browser context."
-msgstr "La modalità schermo intero non è disponibile in questo contesto del browser."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Loading real-time data…"
-msgstr "Caricamento dati in tempo reale…"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgstr "Visitatore"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Exit fullscreen"
-msgstr "Esci da schermo intero"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen"
-msgstr "Schermo intero"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
-msgstr "Ambito solo essenziale: i dettagli visita arricchiti e i marker mappa precisi non sono disponibili."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr "Tabella: visitatori in tempo reale"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "No visits in the current activity window."
-msgstr "Nessuna visita nella finestra di attività corrente."
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1961,7 +1750,6 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 
@@ -2018,6 +1806,11 @@ msgstr "Ripartizione utilizzo dispositivi"
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No device usage available."
 msgstr "Nessun dato di utilizzo dispositivi disponibile."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "Risoluzione"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No resolution data available."
@@ -2373,6 +2166,14 @@ msgid "0s"
 msgstr "0s"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "Hash ID visitatore"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "Ora di connessione"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Active time"
 msgstr "Tempo attivo"
 
@@ -2382,325 +2183,28 @@ msgid "Entry channel"
 msgstr "Pagine di ingresso"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Sistemi operativi"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Browser"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "Versione browser"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Dispositivi"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "Privato"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabella: visitatori"
-
-#~ msgid "Install BimBeau Privacy Analytics app"
-#~ msgstr "Installa l'app BimBeau Privacy Analytics"
-
-#~ msgid "Get faster access from your home screen with an app-like experience."
-#~ msgstr "Accedi più rapidamente dalla schermata Home con un'esperienza simile a un'app."
-
-#~ msgid "Install app"
-#~ msgstr "Installa app"
-
-#~ msgid "BimBeau Privacy Analytics app installation was accepted."
-#~ msgstr "L'installazione dell'app BimBeau Privacy Analytics è stata accettata."
-
-#~ msgid "Captured events data purged."
-#~ msgstr "Dati degli eventi acquisiti eliminati."
-
-#~ msgid "App"
-#~ msgstr "App"
-
-#~ msgid "Delete captured events list"
-#~ msgstr "Elimina elenco eventi acquisiti"
-
-#~ msgid "Confirm captured events purge"
-#~ msgstr "Conferma eliminazione eventi acquisiti"
-
-#~ msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
-#~ msgstr "Questa azione rimuove definitivamente l’elenco degli eventi acquisiti mostrato nelle statistiche eventi. Gli altri dati di analisi restano invariati."
-
-#~ msgid "I confirm that I want to permanently purge the captured events list."
-#~ msgstr "Confermo di voler eliminare definitivamente l’elenco degli eventi acquisiti."
-
-#~ msgid "Purge captured events"
-#~ msgstr "Elimina eventi acquisiti"
-
-#~ msgid "PWA URL is unavailable."
-#~ msgstr "L'URL PWA non è disponibile."
-
-#~ msgid "PWA URL copied."
-#~ msgstr "URL PWA copiato."
-
-#~ msgid "Unable to copy the PWA URL."
-#~ msgstr "Impossibile copiare l'URL PWA."
-
-#~ msgid "Interface branding"
-#~ msgstr "Identità dell’interfaccia"
-
-#~ msgid "White-label interface controls are available in Pro."
-#~ msgstr "I controlli dell’interfaccia white-label sono disponibili in Pro."
-
-#~ msgid "Use white-label interface"
-#~ msgstr "Usa l’interfaccia white-label"
-
-#~ msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
-#~ msgstr "Nasconde il logo di BimBeau Privacy Analytics nell’intestazione di amministrazione e mostra al suo posto il titolo localizzato delle statistiche."
-
-#~ msgid "Quick stats"
-#~ msgstr "Statistiche rapide"
-
-#~ msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
-#~ msgstr "Abilita Statistiche rapide sui tipi di contenuto selezionati: aggiungi una colonna Visualizzazioni (30g) nell’elenco degli articoli e mostra una metabox di riepilogo statistiche durante la modifica di ogni articolo."
-
-#~ msgid "No post types available."
-#~ msgstr "Nessun tipo di contenuto disponibile."
-
-#~ msgid "Events configuration"
-#~ msgstr "Configurazione eventi"
-
-#, fuzzy
-#~ msgid "The export job is missing a processing URL."
-#~ msgstr "Al processo di esportazione manca un URL di stato."
-
-#~ msgid "The JSON export could not be generated."
-#~ msgstr "Non è stato possibile generare l’esportazione JSON."
-
-#~ msgid "Export is running. The file downloads when ready."
-#~ msgstr "L’esportazione è in corso. Il file verrà scaricato quando è pronto."
-
-#~ msgid "Export is queued. The file downloads when ready."
-#~ msgstr "L’esportazione è in coda. Il file verrà scaricato quando è pronto."
-
-#~ msgid "The export is still running. Try again in a few moments."
-#~ msgstr "L’esportazione è ancora in corso. Riprova tra poco."
-
-#~ msgid "Export ready. Download started."
-#~ msgstr "Esportazione pronta. Download avviato."
-
-#~ msgid "ok"
-#~ msgstr "ok"
-
-#~ msgid "error"
-#~ msgstr "errore"
-
-#~ msgid "pending"
-#~ msgstr "in sospeso"
-
-#, fuzzy
-#~ msgid "Update GeoIP database"
-#~ msgstr "Impossibile aggiornare il database GeoIP."
-
-#, fuzzy
-#~ msgid "Download GeoIP database"
-#~ msgstr "Impossibile aggiornare il database GeoIP."
-
-#~ msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
-#~ msgstr "Scegli come BimBeau Privacy Analytics risolve la geolocalizzazione: database GeoLite locale o API MaxMind."
-
-#~ msgid "MaxMind API credentials"
-#~ msgstr "Credenziali API MaxMind"
-
-#, fuzzy
-#~ msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-#~ msgstr "La modalità database locale scarica il file MMDB GeoLite dai mirror di BimBeau Privacy Analytics. La modalità API usa richieste MaxMind live."
-
-#, fuzzy
-#~ msgid "Manual GeoIP database download"
-#~ msgstr "Download del database GeoIP non riuscito: %s"
-
-#~ msgid "Current state"
-#~ msgstr "Stato attuale"
-
-#, fuzzy
-#~ msgid "Next scheduled GeoIP update"
-#~ msgstr "Prossimo tentativo pianificato"
-
-#~ msgid "Last successful update"
-#~ msgstr "Ultimo aggiornamento riuscito"
-
-#~ msgid "Database size"
-#~ msgstr "Dimensione database"
-
-#~ msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
-#~ msgstr "Comportamento: l'attivazione del plugin si completa rapidamente e l'indisponibilità temporanea del database locale non blocca il resto di BimBeau Privacy Analytics."
-
-#~ msgid "Back"
-#~ msgstr "Indietro"
-
-#~ msgid "This action presents your current settings and does not reset them."
-#~ msgstr "Questa azione presenta le impostazioni correnti e non le ripristina."
-
-#~ msgid "Referrer favicons"
-#~ msgstr "Favicon dei referrer"
-
-#~ msgid "Current PWA icon preview"
-#~ msgstr "Anteprima attuale dell'icona PWA"
-
-#~ msgid "Preview uses the same runtime icon resolution as the standalone app manifest and loading splash."
-#~ msgstr "L'anteprima usa la stessa risoluzione dell'icona in esecuzione del manifesto dell'app autonoma e della schermata di caricamento."
-
-#~ msgid "Source"
-#~ msgstr "Origine"
-
-#~ msgid "Generation status"
-#~ msgstr "Stato di generazione"
-
-#~ msgid "Custom generated icon"
-#~ msgstr "Icona personalizzata generata"
-
-#~ msgid "Plugin fallback icon"
-#~ msgstr "Icona di riserva del plugin"
-
-#~ msgid "Custom icon set is ready."
-#~ msgstr "Il set di icone personalizzato è pronto."
-
-#~ msgid "Fallback icon set is active."
-#~ msgstr "Il set di icone di riserva è attivo."
-
-#~ msgid "Source image is too small (minimum 512x512)."
-#~ msgstr "L'immagine di origine è troppo piccola (minimo 512x512)."
-
-#~ msgid "Source image is invalid."
-#~ msgstr "L'immagine di origine non è valida."
-
-#~ msgid "Icon generation failed on this server."
-#~ msgstr "La generazione dell'icona non è riuscita su questo server."
-
-#~ msgid "Unknown generation status."
-#~ msgstr "Stato di generazione sconosciuto."
-
-#~ msgid "No preview icon URL is available."
-#~ msgstr "Non è disponibile alcun URL per l'icona di anteprima."
-
-#, fuzzy
-#~ msgid "Visitor details are not available in this package."
-#~ msgstr "Nessun dettaglio disponibile per questa pagina."
-
-#, php-format
-#~ msgid "%1$s cannot be activated while %2$s is already active. Deactivate %2$s first, then activate %1$s."
-#~ msgstr "%1$s non può essere attivato mentre %2$s è già attivo. Disattiva prima %2$s, poi attiva %1$s."
-
-#, fuzzy
-#~ msgid "Base GeoIP non installée"
-#~ msgstr "Il database GeoLite locale non è disponibile."
-
-#~ msgid "Every 30 days (default)"
-#~ msgstr "Ogni 30 giorni (predefinito)"
-
-#~ msgid "BimBeau Privacy Analytics events analytics feature preview"
-#~ msgstr "Anteprima funzione BimBeau Privacy Analytics Pro"
-
-#, fuzzy
-#~ msgid "Export reports with confidence"
-#~ msgstr "Esporta report"
-
-#~ msgid "BimBeau Privacy Analytics report export feature preview"
-#~ msgstr "Anteprima funzione BimBeau Privacy Analytics Pro"
-
-#~ msgid "BimBeau Privacy Analytics top pages feature preview"
-#~ msgstr "Anteprima funzione BimBeau Privacy Analytics Pro"
-
-#~ msgid "BimBeau Privacy Analytics quick stats feature preview"
-#~ msgstr "Anteprima funzione BimBeau Privacy Analytics Pro"
-
-#~ msgid "BimBeau Privacy Analytics geolocation feature preview"
-#~ msgstr "Anteprima funzione BimBeau Privacy Analytics Pro"
-
-#~ msgid "BimBeau Privacy Analytics app feature preview"
-#~ msgstr "Anteprima funzione BimBeau Privacy Analytics Pro"
-
-#~ msgid "BimBeau Privacy Analytics feature highlights"
-#~ msgstr "Anteprima funzione BimBeau Privacy Analytics Pro"
-
-#, fuzzy
-#~ msgid "Previous feature"
-#~ msgstr "Pagina precedente"
-
-#, fuzzy
-#~ msgid "Next feature"
-#~ msgstr "Pagina successiva"
-
-#, fuzzy, php-format
-#~ msgid "Feature %1$s of %2$s"
-#~ msgstr "Periodo: da %1$s a %2$s"
-
-#~ msgid "GeoIP archive contains a suspicious file path."
-#~ msgstr "L'archivio GeoIP contiene un percorso file sospetto."
-
-#~ msgid "Unable to extract GeoIP MMDB file from archive."
-#~ msgstr "Impossibile estrarre il file MMDB GeoIP dall'archivio."
-
-#~ msgid "GeoIP MMDB file is missing from the archive."
-#~ msgstr "Il file MMDB GeoIP manca nell'archivio."
-
-#, php-format
-#~ msgid "GeoIP extraction failed: %s"
-#~ msgstr "Estrazione GeoIP non riuscita: %s"
-
-#~ msgid "Source category"
-#~ msgstr "Categoria origine"
-
-#~ msgid "Set retention periods for raw logs and aggregated analytics data, and choose how often automated cleanup runs."
-#~ msgstr "Imposta i periodi di conservazione per log grezzi e dati di analisi aggregati, e scegli con quale frequenza eseguire la pulizia automatica."
-
-#~ msgid "Raw logs purge automatically after the configured window."
-#~ msgstr "I log grezzi vengono eliminati automaticamente dopo la finestra configurata."
-
-#~ msgid "BimBeau Privacy Analytics permanently removes aggregated rows older than the selected window; no long-term totals are kept beyond this retention period."
-#~ msgstr "BimBeau Privacy Analytics rimuove definitivamente le righe aggregate più vecchie della finestra selezionata; oltre questo periodo di conservazione non vengono mantenuti totali a lungo termine."
-
-#~ msgid "Cleanup permanently removes aggregated and visitor-detail rows older than the selected window."
-#~ msgstr "La pulizia rimuove definitivamente le righe aggregate e di dettaglio visitatore più vecchie della finestra selezionata."
-
-#~ msgid "Defines the WP-Cron interval used to run aggregated retention cleanup automatically."
-#~ msgstr "Definisce l'intervallo WP-Cron usato per eseguire automaticamente la pulizia della conservazione aggregata."
-
-#, fuzzy
-#~ msgid "White label"
-#~ msgstr "etichetta"
-
-#~ msgid "BimBeau Privacy Analytics overview"
-#~ msgstr "Panoramica di BimBeau Privacy Analytics"
-
-#~ msgid "BimBeau Privacy Analytics data is not available for this period."
-#~ msgstr "I dati di BimBeau Privacy Analytics non sono disponibili per questo periodo."
-
-#~ msgid "View BimBeau Privacy Analytics dashboard"
-#~ msgstr "Visualizza la dashboard di BimBeau Privacy Analytics"
-
-#~ msgid "Plugin name (menu and dashboard)"
-#~ msgstr "Nome plugin (menu e dashboard)"
-
-#~ msgid "City map"
-#~ msgstr "Mappa città"
-
-#~ msgid "Top pages details"
-#~ msgstr "Dettagli pagine principali"
-
-#~ msgid "Only the first %d row will be exported."
-#~ msgid_plural "Only the first %d rows will be exported."
-#~ msgstr[0] "Verrà esportata solo la prima %d riga."
-#~ msgstr[1] "Verranno esportate solo le prime %d righe."
-
-#~ msgid "%d row will be exported."
-#~ msgid_plural "%d rows will be exported."
-#~ msgstr[0] "Verrà esportata %d riga."
-#~ msgstr[1] "Verranno esportate %d righe."
-
-#~ msgid "First activity"
-#~ msgstr "Prima attività"
-
-#~ msgid "Last activity"
-#~ msgstr "Ultima attività"
-
-#~ msgid "Define how long consecutive hits are grouped for one visitor visit session."
-#~ msgstr "Definisci per quanto tempo gli hit consecutivi vengono raggruppati in una sessione di visita del visitatore."
-
-#~ msgid "Defines how long consecutive hits from the same visitor are grouped into one visit identifier. Range: 300 to 86400 seconds (5 minutes to 24 hours). A shorter window increases visit splits, while a longer window merges more activity into one visit."
-#~ msgstr "Definisce per quanto tempo gli hit consecutivi dello stesso visitatore vengono raggruppati in un unico identificativo visita. Intervallo: da 300 a 86400 secondi (da 5 minuti a 24 ore). Una finestra più breve aumenta la divisione delle visite, mentre una più lunga unisce più attività in una visita."
-
-#~ msgid "First connection"
-#~ msgstr "Prima connessione"
-
-#~ msgid "Date of connection"
-#~ msgstr "Data di connessione"
-
-#~ msgid "Visits = distinct visitors for the selected location and period. Hits = tracked page hits."
-#~ msgstr "Visite = visitatori distinti per la località e il periodo selezionati. Hit = visualizzazioni di pagina tracciate."

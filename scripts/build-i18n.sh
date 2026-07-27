@@ -53,6 +53,7 @@ cleanup_i18n_po_backups() {
     fi
   done
 
+  find "${languages_dir}" -maxdepth 1 -type f -name '*.po.i18n-backup' -delete
   rm -rf "${po_backup_dir}"
 }
 
@@ -193,6 +194,25 @@ for po_file in "${languages_dir}"/bimbeau-privacy-analytics-*.po; do
     cp "${po_file}" "${po_backup_dir}/$(basename "${po_file}")"
     prepare_po_for_gettext "${po_file}"
     msgmerge --update --backup=none --no-wrap "${po_file}" "${pot_file}"
+    clean_po_file="${po_file}.clean"
+    msgattrib --no-obsolete --no-wrap --output-file="${clean_po_file}" "${po_file}"
+    mv "${clean_po_file}" "${po_file}"
+    python3 - "${po_file}" <<'PYHEADER'
+from pathlib import Path
+import re
+import sys
+
+path = Path(sys.argv[1])
+content = path.read_text(encoding="utf-8")
+content = re.sub(r'"Project-Id-Version:.*?\\n"', lambda _: '"Project-Id-Version: BimBeau Privacy Analytics\\n"', content, count=1)
+if re.search(r'"X-Domain:.*?\\n"', content):
+    content = re.sub(r'"X-Domain:.*?\\n"', lambda _: '"X-Domain: bimbeau-privacy-analytics\\n"', content, count=1)
+else:
+    marker = re.search(r'("Plural-Forms:.*?\\n"\n)', content)
+    if marker:
+        content = content[:marker.end()] + '"X-Domain: bimbeau-privacy-analytics\\n"\n' + content[marker.end():]
+path.write_text(content, encoding="utf-8")
+PYHEADER
     normalize_po_source_references "${po_file}"
   fi
 done

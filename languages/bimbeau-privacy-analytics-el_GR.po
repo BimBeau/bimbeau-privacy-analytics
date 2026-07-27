@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: BimBeau Privacy Analytics Pro 6.78.0\n"
+"Project-Id-Version: BimBeau Privacy Analytics\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bimbeau-privacy-analytics\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2026-05-12 11:03+0200\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Domain: bpa\n"
+"X-Domain: bimbeau-privacy-analytics\n"
 "X-Generator: Poedit 2.4.3\n"
 
 #. Plugin Name of the plugin
@@ -69,7 +69,7 @@ msgid "Dashboard"
 msgstr "Πίνακας ελέγχου"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Πραγματικός χρόνος"
 
@@ -98,9 +98,9 @@ msgstr "Εσωτερικές αναζητήσεις"
 msgid "Geolocation"
 msgstr "Γεωεντοπισμός"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -289,8 +289,7 @@ msgid "GeoIP database is not available yet."
 msgstr "Η βάση δεδομένων GeoIP δεν είναι ακόμη διαθέσιμη."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/SearchTermsPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -300,7 +299,7 @@ msgstr "Άγνωστη σελίδα"
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -476,68 +475,9 @@ msgstr "Απαιτείται το κλειδί άδειας MaxMind."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "Απαιτούνται διαπιστευτήρια MaxMind για την ενεργοποίηση γεωεντοπισμού IP."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php
 msgid "Statistics"
 msgstr "Στατιστικά"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitor"
-msgstr "%s επισκέπτης"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitors"
-msgstr "%s επισκέπτες"
-
-#: src/admin/AdminApp.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "Δεν είναι δυνατή η επανεκκίνηση του βοηθού διαμόρφωσης. Δοκιμάστε ξανά."
-
-#: src/admin/AdminApp.js
-msgid "Initial configuration completed."
-msgstr "Η αρχική διαμόρφωση ολοκληρώθηκε."
-
-#: src/admin/AdminApp.js
-msgid "Missing admin configuration."
-msgstr "Λείπει ρύθμιση διαχειριστή."
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-msgid "Session expired, reload the application."
-msgstr ""
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-#, fuzzy
-msgid "Reload application"
-msgstr "Γεωεντοπισμός"
-
-#: src/admin/AdminApp.js
-msgid "No panel available for this screen."
-msgstr "Δεν υπάρχει διαθέσιμος πίνακας για αυτήν την οθόνη."
-
-#: src/admin/AdminApp.js
-msgid "Complete the initial configuration"
-msgstr "Ολοκληρώστε την αρχική διαμόρφωση"
-
-#: src/admin/AdminApp.js
-msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr "Ολοκληρώστε τη διαμόρφωση της παρακολούθησης, της τοπικής γεωγραφικής θέσης και των προαιρετικών favicon παραπομπής."
-
-#: src/admin/AdminApp.js
-msgid "Resume configuration"
-msgstr "Συνέχιση της διαμόρφωσης"
-
-#: src/admin/AdminApp.js
-msgid "GeoIP database not installed"
-msgstr "Η βάση δεδομένων GeoIP δεν έχει εγκατασταθεί"
-
-#: src/admin/AdminApp.js
-msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
-msgstr "Οι αναφορές τοποθεσίας δεν είναι διαθέσιμες έως ότου ολοκληρωθεί η λήψη της τοπικής βάσης δεδομένων GeoIP. Κατεβάστε το από τη σελίδα ρυθμίσεων γεωγραφικής τοποθεσίας."
-
-#: src/admin/AdminApp.js
-msgid "Open geolocation settings"
-msgstr "Ανοίξτε τις ρυθμίσεις γεωγραφικής θέσης"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -587,7 +527,7 @@ msgstr "Προβολή σελίδας"
 msgid "Visitor inactive"
 msgstr "Ανενεργός επισκέπτης"
 
-#: src/admin/bootstrap-common.js src/admin/panels/RealtimePanel.js
+#: src/admin/bootstrap-common.js
 msgid "Unknown page"
 msgstr "Άγνωστη σελίδα"
 
@@ -902,83 +842,12 @@ msgid "Return to the download"
 msgstr "Επιστρέψτε στη λήψη"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Zoom in map"
-msgstr "Μεγέθυνση χάρτη"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Zoom out map"
-msgstr "Σμίκρυνση χάρτη"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset map zoom"
-msgstr "Επαναφορά μεγέθυνσης χάρτη"
-
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
-#: src/admin/components/WorldMap/index.js
-msgid "%1$s: %2$s visits%3$s"
-msgstr "%1$s: %2$s επισκέψεις%3$s"
-
-#. translators: %s: approximation scope label.
-#: src/admin/components/WorldMap/index.js
-msgid " (%s)"
-msgstr " (%s)"
-
-#: src/admin/components/WorldMap/index.js
-msgid "approximate country area"
-msgstr "κατά προσέγγιση περιοχή χώρας"
-
-#: src/admin/components/WorldMap/index.js
-msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
-msgstr "Τα δεδομένα πόλεων είναι διαθέσιμα για την επιλεγμένη περίοδο, αλλά καμία πόλη δεν έχει ακόμη χρησιμοποιήσιμες συντεταγμένες."
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
-msgstr "Δεν υπάρχουν διαθέσιμες γεωεντοπισμένες επισκέψεις. Ελέγξτε τις ρυθμίσεις γεωεντοπισμού για να ξεκινήσει η συλλογή δεδομένων πόλης."
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
-msgstr "Δεν υπάρχουν διαθέσιμες γεωεντοπισμένες επισκέψεις. Ελέγξτε τις ρυθμίσεις γεωεντοπισμού για να ξεκινήσει η συλλογή δεδομένων χώρας."
-
-#. translators: %s: visitor count.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s visitors"
-msgstr "%s επισκέπτες"
-
-#. translators: %s: share of total visitors.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s of total visitors"
-msgstr "%s των συνολικών επισκέψεων"
-
-#. translators: %s: visit count.
-#: src/admin/components/WorldMap/index.js
-msgid "%s visits"
-msgstr "%s επισκέψεις"
-
-#: src/admin/components/WorldMap/index.js
 msgid "World map"
 msgstr "Παγκόσμιος χάρτης"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Loading world map"
-msgstr "Φόρτωση παγκόσμιου χάρτη"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "Χειριστήρια μεγέθυνσης χάρτη"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "Επαναφορά"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map legend"
-msgstr "Υπόμνημα χάρτη"
-
-#: src/admin/constants/index.js
-msgid "Events"
-msgstr "Συμβάντα"
+msgid "%s visits"
+msgstr "%s επισκέψεις"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -1062,6 +931,11 @@ msgstr "Δεν υπάρχουν διαθέσιμοι παραπέμπτες."
 msgid "Hourly heatmap global"
 msgstr "Καθολικός ωριαίος heatmap"
 
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/RealtimePanel.js
+#, fuzzy
+msgid "No country data is available yet."
+msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας."
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Οργανική αναζήτηση"
@@ -1098,8 +972,7 @@ msgstr "Βοηθοί ΤΝ"
 msgid "Other"
 msgstr "Άλλο"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/lib/locationLabel.js src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "No available"
 msgstr "Μη διαθέσιμο"
@@ -1118,7 +991,7 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα προφίλ
 msgid "Table: Acquisition channels"
 msgstr "Πίνακας: Επισκέπτες"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #, fuzzy
 msgid "Channel"
@@ -1166,7 +1039,7 @@ msgstr "Σημαία του/της %s"
 msgid "Top countries"
 msgstr "Κορυφαίες χώρες"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
 msgstr ""
@@ -1175,90 +1048,6 @@ msgstr ""
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Ημερήσιοι επισκέπτες"
-
-#: src/admin/panels/RealtimePanel.js
-#, fuzzy
-msgid "Visitor origin unavailable"
-msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Hash ID επισκέπτη"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Χρόνος σύνδεσης"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "Τρέχουσα σελίδα"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "Λειτουργικά συστήματα"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "Περιηγητές"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Έκδοση περιηγητή"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "Συσκευές"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Ανάλυση"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen is unavailable in this browser context."
-msgstr "Η πλήρης οθόνη δεν είναι διαθέσιμη σε αυτό το περιβάλλον περιηγητή."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Loading real-time data…"
-msgstr "Φόρτωση δεδομένων πραγματικού χρόνου…"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgstr "Επισκέπτης"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Exit fullscreen"
-msgstr "Έξοδος από πλήρη οθόνη"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen"
-msgstr "Πλήρης οθόνη"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
-msgstr "Πεδίο μόνο βασικών: οι εμπλουτισμένες λεπτομέρειες επίσκεψης και οι ακριβείς δείκτες χάρτη δεν είναι διαθέσιμα."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr "Πίνακας: Επισκέπτες πραγματικού χρόνου"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "No visits in the current activity window."
-msgstr "Δεν υπάρχουν επισκέψεις στο τρέχον παράθυρο δραστηριότητας."
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1962,7 +1751,6 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 
@@ -2019,6 +1807,11 @@ msgstr "Κατανομή χρήσης συσκευών"
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No device usage available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χρήσης συσκευών."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "Ανάλυση"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No resolution data available."
@@ -2374,6 +2167,14 @@ msgid "0s"
 msgstr "0δ"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "Hash ID επισκέπτη"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "Χρόνος σύνδεσης"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Active time"
 msgstr "Ενεργός χρόνος"
 
@@ -2383,150 +2184,28 @@ msgid "Entry channel"
 msgstr "Σελίδες εισόδου"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Λειτουργικά συστήματα"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Περιηγητές"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "Έκδοση περιηγητή"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Συσκευές"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "Ιδιωτικό"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Πίνακας: Επισκέπτες"
-
-#~ msgid "Install BimBeau Privacy Analytics app"
-#~ msgstr "Εγκατάσταση εφαρμογής BimBeau Privacy Analytics"
-
-#~ msgid "Get faster access from your home screen with an app-like experience."
-#~ msgstr "Αποκτήστε ταχύτερη πρόσβαση από την αρχική οθόνη σας με εμπειρία τύπου εφαρμογής."
-
-#~ msgid "Install app"
-#~ msgstr "Εγκατάσταση εφαρμογής"
-
-#~ msgid "BimBeau Privacy Analytics app installation was accepted."
-#~ msgstr "Η εγκατάσταση της εφαρμογής BimBeau Privacy Analytics έγινε αποδεκτή."
-
-#~ msgid "Captured events data purged."
-#~ msgstr "Τα δεδομένα καταγεγραμμένων συμβάντων εκκαθαρίστηκαν."
-
-#~ msgid "App"
-#~ msgstr "Εφαρμογή"
-
-#~ msgid "Delete captured events list"
-#~ msgstr "Διαγραφή λίστας καταγεγραμμένων συμβάντων"
-
-#~ msgid "Confirm captured events purge"
-#~ msgstr "Επιβεβαίωση εκκαθάρισης καταγεγραμμένων συμβάντων"
-
-#~ msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
-#~ msgstr "Αυτή η ενέργεια αφαιρεί μόνιμα τη λίστα καταγεγραμμένων συμβάντων που εμφανίζεται στα στατιστικά συμβάντων. Τα άλλα δεδομένα αναλυτικών παραμένουν αμετάβλητα."
-
-#~ msgid "I confirm that I want to permanently purge the captured events list."
-#~ msgstr "Επιβεβαιώνω ότι θέλω να εκκαθαρίσω μόνιμα τη λίστα καταγεγραμμένων συμβάντων."
-
-#~ msgid "Purge captured events"
-#~ msgstr "Εκκαθάριση καταγεγραμμένων συμβάντων"
-
-#~ msgid "PWA URL is unavailable."
-#~ msgstr "Το URL του PWA δεν είναι διαθέσιμο."
-
-#~ msgid "PWA URL copied."
-#~ msgstr "Το URL του PWA αντιγράφηκε."
-
-#~ msgid "Unable to copy the PWA URL."
-#~ msgstr "Δεν είναι δυνατή η αντιγραφή του URL του PWA."
-
-#~ msgid "Interface branding"
-#~ msgstr "Επωνυμία διεπαφής"
-
-#~ msgid "White-label interface controls are available in Pro."
-#~ msgstr "Τα στοιχεία ελέγχου διεπαφής white-label είναι διαθέσιμα στην έκδοση Pro."
-
-#~ msgid "Use white-label interface"
-#~ msgstr "Χρήση διεπαφής white-label"
-
-#~ msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
-#~ msgstr "Αποκρύπτει το λογότυπο BimBeau Privacy Analytics στην κεφαλίδα διαχείρισης και εμφανίζει τον τοπικοποιημένο τίτλο αναλυτικών στοιχείων στη θέση του."
-
-#~ msgid "Quick stats"
-#~ msgstr "Γρήγορα στατιστικά"
-
-#~ msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
-#~ msgstr "Ενεργοποιήστε τα Γρήγορα στατιστικά για επιλεγμένους τύπους περιεχομένου: προσθέστε στήλη Προβολές (30η) στη λίστα άρθρων και εμφανίστε metabox σύνοψης στατιστικών κατά την επεξεργασία κάθε άρθρου."
-
-#~ msgid "No post types available."
-#~ msgstr "Δεν υπάρχουν διαθέσιμοι τύποι δημοσιεύσεων."
-
-#~ msgid "Events configuration"
-#~ msgstr "Ρύθμιση συμβάντων"
-
-#, fuzzy
-#~ msgid "The export job is missing a processing URL."
-#~ msgstr "Από την εργασία εξαγωγής λείπει URL κατάστασης."
-
-#~ msgid "The JSON export could not be generated."
-#~ msgstr "Δεν ήταν δυνατή η δημιουργία της εξαγωγής JSON."
-
-#~ msgid "Export is running. The file downloads when ready."
-#~ msgstr "Η εξαγωγή εκτελείται. Το αρχείο θα ληφθεί όταν είναι έτοιμο."
-
-#~ msgid "Export is queued. The file downloads when ready."
-#~ msgstr "Η εξαγωγή βρίσκεται στην ουρά. Το αρχείο θα ληφθεί όταν είναι έτοιμο."
-
-#~ msgid "The export is still running. Try again in a few moments."
-#~ msgstr "Η εξαγωγή εκτελείται ακόμη. Δοκιμάστε ξανά σε λίγο."
-
-#~ msgid "Export ready. Download started."
-#~ msgstr "Η εξαγωγή είναι έτοιμη. Η λήψη ξεκίνησε."
-
-#~ msgid "ok"
-#~ msgstr "εντάξει"
-
-#~ msgid "error"
-#~ msgstr "σφάλμα"
-
-#~ msgid "pending"
-#~ msgstr "σε εκκρεμότητα"
-
-#, fuzzy
-#~ msgid "Update GeoIP database"
-#~ msgstr "Δεν είναι δυνατή η ενημέρωση της βάσης GeoIP."
-
-#, fuzzy
-#~ msgid "Download GeoIP database"
-#~ msgstr "Δεν είναι δυνατή η ενημέρωση της βάσης GeoIP."
-
-#~ msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
-#~ msgstr "Επιλέξτε πώς το BimBeau Privacy Analytics επιλύει τον γεωεντοπισμό: τοπική βάση GeoLite ή API MaxMind."
-
-#~ msgid "MaxMind API credentials"
-#~ msgstr "Διαπιστευτήρια API MaxMind"
-
-#, fuzzy
-#~ msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-#~ msgstr "Η λειτουργία τοπικής βάσης κατεβάζει το αρχείο GeoLite MMDB από mirrors του BimBeau Privacy Analytics. Η λειτουργία API χρησιμοποιεί ζωντανά αιτήματα MaxMind."
-
-#, fuzzy
-#~ msgid "Manual GeoIP database download"
-#~ msgstr "Η λήψη της βάσης GeoIP απέτυχε: %s"
-
-#~ msgid "Current state"
-#~ msgstr "Τρέχουσα κατάσταση"
-
-#, fuzzy
-#~ msgid "Next scheduled GeoIP update"
-#~ msgstr "Επόμενη προγραμματισμένη επανάληψη"
-
-#~ msgid "Last successful update"
-#~ msgstr "Τελευταία επιτυχής ενημέρωση"
-
-#~ msgid "Database size"
-#~ msgstr "Μέγεθος βάσης δεδομένων"
-
-#~ msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
-#~ msgstr "Συμπεριφορά: η ενεργοποίηση του πρόσθετου ολοκληρώνεται γρήγορα και η προσωρινή μη διαθεσιμότητα της τοπικής βάσης δεν αποκλείει το υπόλοιπο BimBeau Privacy Analytics."
-
-#~ msgid "Back"
-#~ msgstr "Πίσω"
-
-#~ msgid "This action presents your current settings and does not reset them."
-#~ msgstr "Αυτή η ενέργεια παρουσιάζει τις τρέχουσες ρυθμίσεις σας και δεν τις επαναφέρει."
-
-#~ msgid "Referrer favicons"
-#~ msgstr "Favicon παραπομπής"

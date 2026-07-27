@@ -7,14 +7,8 @@ const DEBUG_FLAG = () =>
 	Boolean( window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled );
 
 const ADMIN_CACHE_VERSION_PARAM = '_bbpa_cv';
-let APP_NONCE_RELOAD_STORAGE_KEY = 'bbpa-admin-nonce-reload-attempted';
-
-
 const AUTH_REQUIRED_ERROR_CODES = new Set( [
 	'rest_cookie_invalid_nonce',
-	'bbpa_auth_required',
-	'bbpa_invalid_rest_nonce',
-	'bbpa_invalid_app_nonce',
 ] );
 
 const authRequiredStore = {
@@ -51,16 +45,7 @@ export const clearAuthRequired = () => {
 	notifyAuthRequiredListeners();
 };
 
-export const clearAppNonceReloadAttempt = () => {
-	try {
-		window.sessionStorage?.removeItem( APP_NONCE_RELOAD_STORAGE_KEY );
-	} catch ( error ) {
-		// Ignore storage cleanup failures.
-	}
-};
-
 export const reloadForAuthRequired = () => {
-	clearAppNonceReloadAttempt();
 	if ( typeof window !== 'undefined' && window.location ) {
 		window.location.reload();
 	}
@@ -72,28 +57,6 @@ export const useAuthRequiredState = () => {
 	useEffect( () => subscribeAuthRequired( setState ), [] );
 
 	return state;
-};
-
-const triggerAppNonceReload = () => {
-	if (
-		ADMIN_CONFIG?.settings?.appMode !== 'app' ||
-		typeof window === 'undefined' ||
-		! window.location
-	) {
-		return false;
-	}
-
-	try {
-		if ( window.sessionStorage?.getItem( APP_NONCE_RELOAD_STORAGE_KEY ) ) {
-			return false;
-		}
-		window.sessionStorage?.setItem( APP_NONCE_RELOAD_STORAGE_KEY, '1' );
-	} catch ( error ) {
-		// Continue with a normal reload when sessionStorage is unavailable.
-	}
-
-	window.location.reload();
-	return true;
 };
 
 export const buildRestUrl = ( path, params, namespace, options = {} ) => {
@@ -139,9 +102,6 @@ export const buildRestUrl = ( path, params, namespace, options = {} ) => {
 	return url.toString();
 };
 
-export const isAppSessionExpiredErrorCode = ( code ) =>
-	AUTH_REQUIRED_ERROR_CODES.has( code );
-
 export const parseEndpointError = async ( response, endpoint = '' ) => {
 	let payload = null;
 
@@ -153,21 +113,11 @@ export const parseEndpointError = async ( response, endpoint = '' ) => {
 
 	const errorCode = payload?.code || 'bbpa_api_error';
 	const endpointLabel = endpoint || response.url || '';
-	const isAuthStatus = response.status === 401 || response.status === 403;
 	const isExpiredSession =
-		ADMIN_CONFIG?.settings?.appMode === 'app'
-			? isAuthStatus && isAppSessionExpiredErrorCode( errorCode )
-			: response.status === 403 &&
-			  errorCode === 'rest_cookie_invalid_nonce';
-	const explicitMessage = isExpiredSession
-		? __(
-				'Session expired, reload the application.',
-				'bimbeau-privacy-analytics'
-		  )
-		: payload?.message ||
-		  `${ __( 'API error', 'bimbeau-privacy-analytics' ) } (${
-				response.status
-		  })`;
+		response.status === 403 && errorCode === 'rest_cookie_invalid_nonce';
+	const explicitMessage =
+		payload?.message ||
+		`${ __( 'API error', 'bimbeau-privacy-analytics' ) } (${ response.status })`;
 	return {
 		status: response.status,
 		code: errorCode,
@@ -175,9 +125,7 @@ export const parseEndpointError = async ( response, endpoint = '' ) => {
 		endpoint: endpointLabel,
 		isLocked: false,
 		isExpiredSession,
-		actionLabel: isExpiredSession
-			? __( 'Reload application', 'bimbeau-privacy-analytics' )
-			: '',
+		actionLabel: '',
 		upgradeUrl: '',
 	};
 };
@@ -263,22 +211,10 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 		urlOptions,
 	} = options;
 
-	const isAppMode = ADMIN_CONFIG?.settings?.appMode === 'app';
-	if ( isAppMode && getAuthRequiredState().isAuthRequired ) {
-		throw (
-			getAuthRequiredState().error || {
-				message: __(
-					'Session expired, reload the application.',
-					'bimbeau-privacy-analytics'
-				),
-				isExpiredSession: true,
-				isAuthRequired: true,
-				isLocked: false,
-			}
-		);
-	}
 	const restNonce = ADMIN_CONFIG?.restNonce;
-	const authHeaders = { ...( restNonce ? { 'X-WP-Nonce': restNonce } : {} ) };
+	const authHeaders = {
+		...( restNonce ? { 'X-WP-Nonce': restNonce } : {} ),
+	};
 
 	if ( ! ADMIN_CONFIG?.restUrl || ! restNonce ) {
 		throw {
@@ -306,23 +242,10 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 
 	if ( ! response.ok ) {
 		const endpointError = await parseEndpointError( response, endpoint );
-		if ( endpointError.isExpiredSession && isAppMode ) {
-			const didReload = triggerAppNonceReload();
-			if ( ! didReload ) {
-				setAuthRequired( {
-					...endpointError,
-					isAuthRequired: true,
-				} );
-			}
-		}
 		throw endpointError;
 	}
 
 	const payload = await parseJsonResponse( response );
-	if ( isAppMode ) {
-		clearAppNonceReloadAttempt();
-		clearAuthRequired();
-	}
 	return payload;
 };
 
@@ -345,14 +268,6 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 	} = options;
 
 	useEffect( () => {
-		if (
-			ADMIN_CONFIG?.settings?.appMode === 'app' &&
-			getAuthRequiredState().isAuthRequired
-		) {
-			setIsLoading( false );
-			setError( null );
-			return undefined;
-		}
 
 		if ( ! enabled || ! path ) {
 			setIsLoading( false );

@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: BimBeau Privacy Analytics Pro 6.78.0\n"
+"Project-Id-Version: BimBeau Privacy Analytics\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bimbeau-privacy-analytics\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2026-06-08 12:00+0200\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Domain: bpa\n"
+"X-Domain: bimbeau-privacy-analytics\n"
 "X-Generator: Poedit 2.4.3\n"
 
 #. Plugin Name of the plugin
@@ -69,7 +69,7 @@ msgid "Dashboard"
 msgstr "仪表盘"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "实时"
 
@@ -98,9 +98,9 @@ msgstr "站内搜索"
 msgid "Geolocation"
 msgstr "地理定位"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -289,8 +289,7 @@ msgid "GeoIP database is not available yet."
 msgstr "GeoIP 数据库尚不可用。"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/SearchTermsPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -300,7 +299,7 @@ msgstr "未知页面"
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -476,68 +475,9 @@ msgstr "必须填写 MaxMind 许可证密钥。"
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "启用 IP 地理定位需要 MaxMind 凭据。"
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php
 msgid "Statistics"
 msgstr "统计"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitor"
-msgstr "%s 位访客"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitors"
-msgstr "%s 位访客"
-
-#: src/admin/AdminApp.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "无法重新启动配置助手。请重试。"
-
-#: src/admin/AdminApp.js
-msgid "Initial configuration completed."
-msgstr "初始配置完成。"
-
-#: src/admin/AdminApp.js
-msgid "Missing admin configuration."
-msgstr "缺少管理配置。"
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-msgid "Session expired, reload the application."
-msgstr ""
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-#, fuzzy
-msgid "Reload application"
-msgstr "地理定位"
-
-#: src/admin/AdminApp.js
-msgid "No panel available for this screen."
-msgstr "此屏幕没有可用面板。"
-
-#: src/admin/AdminApp.js
-msgid "Complete the initial configuration"
-msgstr "完成初始配置"
-
-#: src/admin/AdminApp.js
-msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr "完成跟踪、本地地理位置和可选引荐网站图标的配置。"
-
-#: src/admin/AdminApp.js
-msgid "Resume configuration"
-msgstr "恢复配置"
-
-#: src/admin/AdminApp.js
-msgid "GeoIP database not installed"
-msgstr "未安装 GeoIP 数据库"
-
-#: src/admin/AdminApp.js
-msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
-msgstr "在下载本地 GeoIP 数据库之前，位置报告不可用。从地理位置设置页面下载它。"
-
-#: src/admin/AdminApp.js
-msgid "Open geolocation settings"
-msgstr "打开地理位置设置"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -587,7 +527,7 @@ msgstr "页面已浏览"
 msgid "Visitor inactive"
 msgstr "访客不活跃"
 
-#: src/admin/bootstrap-common.js src/admin/panels/RealtimePanel.js
+#: src/admin/bootstrap-common.js
 msgid "Unknown page"
 msgstr "未知页面"
 
@@ -902,83 +842,12 @@ msgid "Return to the download"
 msgstr "返回下载"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Zoom in map"
-msgstr "放大地图"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Zoom out map"
-msgstr "缩小地图"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset map zoom"
-msgstr "重置地图缩放"
-
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
-#: src/admin/components/WorldMap/index.js
-msgid "%1$s: %2$s visits%3$s"
-msgstr "%1$s：%2$s 次访问%3$s"
-
-#. translators: %s: approximation scope label.
-#: src/admin/components/WorldMap/index.js
-msgid " (%s)"
-msgstr "（%s）"
-
-#: src/admin/components/WorldMap/index.js
-msgid "approximate country area"
-msgstr "近似国家/地区范围"
-
-#: src/admin/components/WorldMap/index.js
-msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
-msgstr "所选时间段已有城市数据，但尚无城市具备可用坐标。"
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
-msgstr "没有可用的地理定位访问。请检查地理定位设置以开始收集城市数据。"
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
-msgstr "没有可用的地理定位访问。请检查地理定位设置以开始收集国家/地区数据。"
-
-#. translators: %s: visitor count.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s visitors"
-msgstr "%s 位访客"
-
-#. translators: %s: share of total visitors.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s of total visitors"
-msgstr "占总访问量的 %s"
-
-#. translators: %s: visit count.
-#: src/admin/components/WorldMap/index.js
-msgid "%s visits"
-msgstr "%s 次访问"
-
-#: src/admin/components/WorldMap/index.js
 msgid "World map"
 msgstr "世界地图"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Loading world map"
-msgstr "正在加载世界地图"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "地图缩放控件"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "重置"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map legend"
-msgstr "地图图例"
-
-#: src/admin/constants/index.js
-msgid "Events"
-msgstr "事件"
+msgid "%s visits"
+msgstr "%s 次访问"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -1062,6 +931,11 @@ msgstr "没有可用的引荐来源。"
 msgid "Hourly heatmap global"
 msgstr "全局小时热力图"
 
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/RealtimePanel.js
+#, fuzzy
+msgid "No country data is available yet."
+msgstr "没有可用的国家/地区数据。"
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "自然搜索"
@@ -1098,8 +972,7 @@ msgstr "AI 助手"
 msgid "Other"
 msgstr "其他"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/lib/locationLabel.js src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "No available"
 msgstr "不可用"
@@ -1118,7 +991,7 @@ msgstr "此时间段没有可用的访客画像数据。"
 msgid "Table: Acquisition channels"
 msgstr "表格：访客"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #, fuzzy
 msgid "Channel"
@@ -1166,7 +1039,7 @@ msgstr "%s 的旗帜"
 msgid "Top countries"
 msgstr "热门国家/地区"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
 msgstr ""
@@ -1175,90 +1048,6 @@ msgstr ""
 #, fuzzy
 msgid "Legacy visits"
 msgstr "每日访客"
-
-#: src/admin/panels/RealtimePanel.js
-#, fuzzy
-msgid "Visitor origin unavailable"
-msgstr "没有可用的访客数据。"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "访客 ID 哈希"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "连接时间"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "当前页面"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "操作系统"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "浏览器"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "浏览器版本"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "设备"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "分辨率"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen is unavailable in this browser context."
-msgstr "当前浏览器上下文不支持全屏。"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Loading real-time data…"
-msgstr "正在加载实时数据…"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgstr "访客"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Exit fullscreen"
-msgstr "退出全屏"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen"
-msgstr "全屏"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
-msgstr "仅基础范围：增强访问详情和精确地图标记不可用。"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr "表格：实时访客"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "No visits in the current activity window."
-msgstr "当前活动窗口内没有访问。"
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1962,7 +1751,6 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Smartphone"
 msgstr "智能手机"
 
@@ -2018,6 +1806,11 @@ msgstr "设备使用细分"
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No device usage available."
 msgstr "没有可用的设备使用数据。"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "分辨率"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No resolution data available."
@@ -2370,6 +2163,14 @@ msgid "0s"
 msgstr "0秒"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "访客 ID 哈希"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "连接时间"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Active time"
 msgstr "活跃时间"
 
@@ -2379,150 +2180,28 @@ msgid "Entry channel"
 msgstr "入口页面"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "操作系统"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "浏览器"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "浏览器版本"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "设备"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "私密"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
-
-#~ msgid "Install BimBeau Privacy Analytics app"
-#~ msgstr "安装 BimBeau Privacy Analytics 应用"
-
-#~ msgid "Get faster access from your home screen with an app-like experience."
-#~ msgstr "通过类似应用的体验，从主屏幕更快访问。"
-
-#~ msgid "Install app"
-#~ msgstr "安装应用"
-
-#~ msgid "BimBeau Privacy Analytics app installation was accepted."
-#~ msgstr "BimBeau Privacy Analytics 应用安装已接受。"
-
-#~ msgid "Captured events data purged."
-#~ msgstr "已捕获事件数据已清除。"
-
-#~ msgid "App"
-#~ msgstr "应用"
-
-#~ msgid "Delete captured events list"
-#~ msgstr "删除已捕获事件列表"
-
-#~ msgid "Confirm captured events purge"
-#~ msgstr "确认清除已捕获事件"
-
-#~ msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
-#~ msgstr "此操作会永久移除“事件统计”中显示的已捕获事件列表。其他分析数据保持不变。"
-
-#~ msgid "I confirm that I want to permanently purge the captured events list."
-#~ msgstr "我确认要永久清除已捕获事件列表。"
-
-#~ msgid "Purge captured events"
-#~ msgstr "清除已捕获事件"
-
-#~ msgid "PWA URL is unavailable."
-#~ msgstr "PWA URL 不可用。"
-
-#~ msgid "PWA URL copied."
-#~ msgstr "PWA URL 已复制。"
-
-#~ msgid "Unable to copy the PWA URL."
-#~ msgstr "无法复制 PWA URL。"
-
-#~ msgid "Interface branding"
-#~ msgstr "界面品牌标识"
-
-#~ msgid "White-label interface controls are available in Pro."
-#~ msgstr "白标界面控件在 Pro 版中可用。"
-
-#~ msgid "Use white-label interface"
-#~ msgstr "使用白标界面"
-
-#~ msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
-#~ msgstr "隐藏管理页眉中的 BimBeau Privacy Analytics 徽标，并改为显示本地化的分析标题。"
-
-#~ msgid "Quick stats"
-#~ msgstr "快速统计"
-
-#~ msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
-#~ msgstr "在所选文章类型上启用快速统计：在文章列表中添加浏览量（30天）列，并在编辑每篇文章时显示统计摘要元框。"
-
-#~ msgid "No post types available."
-#~ msgstr "没有可用的文章类型。"
-
-#~ msgid "Events configuration"
-#~ msgstr "事件配置"
-
-#, fuzzy
-#~ msgid "The export job is missing a processing URL."
-#~ msgstr "导出任务缺少状态 URL。"
-
-#~ msgid "The JSON export could not be generated."
-#~ msgstr "无法生成 JSON 导出。"
-
-#~ msgid "Export is running. The file downloads when ready."
-#~ msgstr "导出正在运行。文件准备好后会下载。"
-
-#~ msgid "Export is queued. The file downloads when ready."
-#~ msgstr "导出已排队。文件准备好后会下载。"
-
-#~ msgid "The export is still running. Try again in a few moments."
-#~ msgstr "导出仍在运行。请稍后重试。"
-
-#~ msgid "Export ready. Download started."
-#~ msgstr "导出已准备好。下载已开始。"
-
-#~ msgid "ok"
-#~ msgstr "正常"
-
-#~ msgid "error"
-#~ msgstr "错误"
-
-#~ msgid "pending"
-#~ msgstr "待处理"
-
-#, fuzzy
-#~ msgid "Update GeoIP database"
-#~ msgstr "无法更新 GeoIP 数据库。"
-
-#, fuzzy
-#~ msgid "Download GeoIP database"
-#~ msgstr "无法更新 GeoIP 数据库。"
-
-#~ msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
-#~ msgstr "选择 BimBeau Privacy Analytics 解析地理定位的方式：本地 GeoLite 数据库或 MaxMind API。"
-
-#~ msgid "MaxMind API credentials"
-#~ msgstr "MaxMind API 凭据"
-
-#, fuzzy
-#~ msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-#~ msgstr "本地数据库模式会从 BimBeau Privacy Analytics 镜像下载 GeoLite MMDB 文件。API 模式使用实时 MaxMind 请求。"
-
-#, fuzzy
-#~ msgid "Manual GeoIP database download"
-#~ msgstr "GeoIP 数据库下载失败：%s"
-
-#~ msgid "Current state"
-#~ msgstr "当前状态"
-
-#, fuzzy
-#~ msgid "Next scheduled GeoIP update"
-#~ msgstr "下次计划重试"
-
-#~ msgid "Last successful update"
-#~ msgstr "上次成功更新"
-
-#~ msgid "Database size"
-#~ msgstr "数据库大小"
-
-#~ msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
-#~ msgstr "行为：插件启用会快速完成，临时的本地数据库不可用不会阻止 BimBeau Privacy Analytics 的其他部分。"
-
-#~ msgid "Back"
-#~ msgstr "后退"
-
-#~ msgid "This action presents your current settings and does not reset them."
-#~ msgstr "此操作会显示您当前的设置，但不会重置它们。"
-
-#~ msgid "Referrer favicons"
-#~ msgstr "推荐人网站图标"

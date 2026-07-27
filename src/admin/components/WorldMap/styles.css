@@ -50,61 +50,6 @@
   fill: #50575e !important;
 }
 
-.bbpa-world-map__city-marker {
-  --bbpa-city-marker-opacity: 0.5;
-  --bbpa-city-marker-pulse-scale: 1.1;
-  fill-opacity: var(--bbpa-city-marker-opacity);
-  stroke: none;
-  outline: none;
-  cursor: crosshair;
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: fill-opacity 0.16s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.bbpa-world-map__city-marker:hover,
-.bbpa-world-map__city-marker:focus,
-.bbpa-world-map__city-marker:focus-visible {
-  fill-opacity: min(1, calc(var(--bbpa-city-marker-opacity) + 0.22));
-  stroke: none;
-  outline: none;
-}
-
-.bbpa-world-map__city-markers {
-  pointer-events: none;
-}
-
-.bbpa-world-map__city-markers .bbpa-world-map__city-marker {
-  pointer-events: all;
-}
-
-.bbpa-world-map__chart--realtime-markers .bbpa-world-map__city-marker {
-  animation: bbpa-world-map-city-marker-pulse 1.8s ease-in-out infinite;
-  animation-duration: 1.45s;
-}
-
-@keyframes bbpa-world-map-city-marker-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    fill-opacity: var(--bbpa-city-marker-opacity);
-  }
-
-  50% {
-    transform: scale(var(--bbpa-city-marker-pulse-scale));
-    fill-opacity: min(1, calc(var(--bbpa-city-marker-opacity) + 0.12));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .bbpa-world-map__city-marker,
-  .bbpa-world-map__chart--realtime-markers .bbpa-world-map__city-marker {
-    animation: none;
-    transition: none;
-  }
-}
-
 .bbpa-world-map__legend {
   position: absolute;
   left: var(--bbpa-gap-sm);

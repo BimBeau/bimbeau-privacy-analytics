@@ -81,7 +81,6 @@ export const ADVANCED_STATS_DEPENDENT_PANELS = [
 	'geolocation',
 	'visitors',
 	'devices',
-	'events',
 	'realtime',
 ];
 
@@ -113,7 +112,6 @@ const PANEL_OPTION_LABELS = {
 	geolocation: __( 'Geolocation', 'bimbeau-privacy-analytics' ),
 	visitors: __( 'Visitors', 'bimbeau-privacy-analytics' ),
 	devices: __( 'Devices', 'bimbeau-privacy-analytics' ),
-	events: __( 'Events', 'bimbeau-privacy-analytics' ),
 };
 
 export const getDisablablePanelOptions = (

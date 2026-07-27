@@ -74,7 +74,6 @@ msgstr ""
 #: admin/admin.php
 #: src/admin/constants/index.js
 #: src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr ""
@@ -116,11 +115,9 @@ msgid "Geolocation"
 msgstr ""
 
 #: admin/admin.php
-#: src/admin/AdminApp.js
 #: src/admin/constants/index.js
 #: src/admin/constants/index.js
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -329,15 +326,6 @@ msgstr ""
 #: includes/rest/class-bbpa-admin-controller.php
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/lib/deviceClassLabel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -353,9 +341,6 @@ msgstr ""
 #: src/admin/lib/countryNames.js
 #: src/admin/lib/countryNames.js
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
@@ -531,71 +516,7 @@ msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr ""
 
 #: includes/settings.php
-#: src/admin/AdminApp.js
 msgid "Statistics"
-msgstr ""
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-#, js-format
-msgid "%s Visitor"
-msgstr ""
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-#, js-format
-msgid "%s Visitors"
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Initial configuration completed."
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Missing admin configuration."
-msgstr ""
-
-#: src/admin/AdminApp.js
-#: src/admin/api/useAdminEndpoint.js
-#: src/admin/api/useAdminEndpoint.js
-msgid "Session expired, reload the application."
-msgstr ""
-
-#: src/admin/AdminApp.js
-#: src/admin/api/useAdminEndpoint.js
-msgid "Reload application"
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "No panel available for this screen."
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Complete the initial configuration"
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Resume configuration"
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "GeoIP database not installed"
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
-msgstr ""
-
-#: src/admin/AdminApp.js
-msgid "Open geolocation settings"
 msgstr ""
 
 #: src/admin/api/useAdminEndpoint.js
@@ -658,10 +579,6 @@ msgid "Visitor inactive"
 msgstr ""
 
 #: src/admin/bootstrap-common.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr ""
 
@@ -987,85 +904,12 @@ msgid "Return to the download"
 msgstr ""
 
 #: src/admin/components/WorldMap/index.js
-msgid "Zoom in map"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "Zoom out map"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset map zoom"
-msgstr ""
-
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
-#: src/admin/components/WorldMap/index.js
-#, js-format
-msgid "%1$s: %2$s visits%3$s"
-msgstr ""
-
-#. translators: %s: approximation scope label.
-#: src/admin/components/WorldMap/index.js
-#, js-format
-msgid " (%s)"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "approximate country area"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
-msgstr ""
-
-#. translators: %s: visitor count.
-#: src/admin/components/WorldMap/index.js
-#, js-format
-msgid "%s visitors"
-msgstr ""
-
-#. translators: %s: share of total visitors.
-#: src/admin/components/WorldMap/index.js
-#, js-format
-msgid "%s of total visitors"
-msgstr ""
-
-#. translators: %s: visit count.
-#: src/admin/components/WorldMap/index.js
-#, js-format
-msgid "%s visits"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
 msgid "World map"
 msgstr ""
 
 #: src/admin/components/WorldMap/index.js
-msgid "Loading world map"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr ""
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map legend"
-msgstr ""
-
-#: src/admin/constants/index.js
-msgid "Events"
+#, js-format
+msgid "%s visits"
 msgstr ""
 
 #: src/admin/constants/index.js
@@ -1159,6 +1003,11 @@ msgstr ""
 msgid "Hourly heatmap global"
 msgstr ""
 
+#: src/admin/free-stubs/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+msgid "No country data is available yet."
+msgstr ""
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr ""
@@ -1196,7 +1045,6 @@ msgid "Other"
 msgstr ""
 
 #: src/admin/lib/locationLabel.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr ""
@@ -1214,7 +1062,6 @@ msgid "Table: Acquisition channels"
 msgstr ""
 
 #: src/admin/panels/AcquisitionPanel.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Channel"
@@ -1265,7 +1112,6 @@ msgid "Top countries"
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
@@ -1273,89 +1119,6 @@ msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor origin unavailable"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen is unavailable in this browser context."
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Loading real-time data…"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Exit fullscreen"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "No visits in the current activity window."
 msgstr ""
 
 #: src/admin/panels/SearchTermsPanel.js
@@ -2107,6 +1870,11 @@ msgid "No device usage available."
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr ""
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No resolution data available."
 msgstr ""
 
@@ -2475,11 +2243,36 @@ msgid "0s"
 msgstr ""
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Active time"
 msgstr ""
 
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Entry channel"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Operating system"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Device"
 msgstr ""
 
 #: src/admin/widgets/VisitorsTableCard/index.js

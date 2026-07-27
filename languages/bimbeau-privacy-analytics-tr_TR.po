@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: BimBeau Privacy Analytics Pro 6.78.0\n"
+"Project-Id-Version: BimBeau Privacy Analytics\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bimbeau-privacy-analytics\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2026-05-12 11:05+0200\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Domain: bpa\n"
+"X-Domain: bimbeau-privacy-analytics\n"
 "X-Generator: Poedit 2.4.3\n"
 
 #. Plugin Name of the plugin
@@ -69,7 +69,7 @@ msgid "Dashboard"
 msgstr "Gösterge paneli"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Gerçek zamanlı"
 
@@ -98,9 +98,9 @@ msgstr "Dahili aramalar"
 msgid "Geolocation"
 msgstr "Coğrafi konum"
 
-#: admin/admin.php src/admin/AdminApp.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/constants/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -289,8 +289,7 @@ msgid "GeoIP database is not available yet."
 msgstr "GeoIP veritabanı henüz mevcut değil."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/SearchTermsPanel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -300,7 +299,7 @@ msgstr "Bilinmeyen sayfa"
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -476,68 +475,9 @@ msgstr "MaxMind Lisans Anahtarı gereklidir."
 msgid "MaxMind credentials are required to enable IP geolocation."
 msgstr "IP coğrafi konumlandırmayı etkinleştirmek için MaxMind kimlik bilgileri gereklidir."
 
-#: includes/settings.php src/admin/AdminApp.js
+#: includes/settings.php
 msgid "Statistics"
 msgstr "İstatistikler"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitor"
-msgstr "%s ziyaretçi"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminApp.js
-msgid "%s Visitors"
-msgstr "%s ziyaretçi"
-
-#: src/admin/AdminApp.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "Yapılandırma yardımcısı yeniden başlatılamıyor. Lütfen tekrar deneyin."
-
-#: src/admin/AdminApp.js
-msgid "Initial configuration completed."
-msgstr "İlk yapılandırma tamamlandı."
-
-#: src/admin/AdminApp.js
-msgid "Missing admin configuration."
-msgstr "Yönetici yapılandırması eksik."
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-msgid "Session expired, reload the application."
-msgstr ""
-
-#: src/admin/AdminApp.js src/admin/api/useAdminEndpoint.js
-#, fuzzy
-msgid "Reload application"
-msgstr "Coğrafi konum"
-
-#: src/admin/AdminApp.js
-msgid "No panel available for this screen."
-msgstr "Bu ekran için panel mevcut değil."
-
-#: src/admin/AdminApp.js
-msgid "Complete the initial configuration"
-msgstr "İlk yapılandırmayı tamamlayın"
-
-#: src/admin/AdminApp.js
-msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr "İzlemeyi, yerel coğrafi konumu ve isteğe bağlı yönlendiren site simgelerini yapılandırmayı tamamlayın."
-
-#: src/admin/AdminApp.js
-msgid "Resume configuration"
-msgstr "Yapılandırmayı sürdür"
-
-#: src/admin/AdminApp.js
-msgid "GeoIP database not installed"
-msgstr "GeoIP veritabanı yüklü değil"
-
-#: src/admin/AdminApp.js
-msgid "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page."
-msgstr "Yerel GeoIP veritabanı indirilene kadar konum raporları kullanılamaz. Coğrafi Konum ayarları sayfasından indirin."
-
-#: src/admin/AdminApp.js
-msgid "Open geolocation settings"
-msgstr "Coğrafi konum ayarlarını aç"
 
 #: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
 msgid "API error"
@@ -587,7 +527,7 @@ msgstr "Sayfa görüntülendi"
 msgid "Visitor inactive"
 msgstr "Ziyaretçi etkin değil"
 
-#: src/admin/bootstrap-common.js src/admin/panels/RealtimePanel.js
+#: src/admin/bootstrap-common.js
 msgid "Unknown page"
 msgstr "Bilinmeyen sayfa"
 
@@ -902,83 +842,12 @@ msgid "Return to the download"
 msgstr "İndirmeye geri dön"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Zoom in map"
-msgstr "Haritada yakınlaştır"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Zoom out map"
-msgstr "Haritada uzaklaştır"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset map zoom"
-msgstr "Yakınlaştırmayı sıfırla"
-
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
-#: src/admin/components/WorldMap/index.js
-msgid "%1$s: %2$s visits%3$s"
-msgstr "%1$s: %2$s ziyaret%3$s"
-
-#. translators: %s: approximation scope label.
-#: src/admin/components/WorldMap/index.js
-msgid " (%s)"
-msgstr " (%s)"
-
-#: src/admin/components/WorldMap/index.js
-msgid "approximate country area"
-msgstr "yaklaşık ülke alanı"
-
-#: src/admin/components/WorldMap/index.js
-msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
-msgstr "Seçilen dönem için şehir verileri var, ancak şehirlerin hiçbirinde henüz kullanılabilir koordinat yok."
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
-msgstr "Coğrafi konumlu ziyaret yok. Şehir verisi toplamaya başlamak için coğrafi konum ayarlarınızı kontrol edin."
-
-#: src/admin/components/WorldMap/index.js
-msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
-msgstr "Coğrafi konumlu ziyaret yok. Ülke verisi toplamaya başlamak için coğrafi konum ayarlarınızı kontrol edin."
-
-#. translators: %s: visitor count.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s visitors"
-msgstr "%s ziyaretçi"
-
-#. translators: %s: share of total visitors.
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "%s of total visitors"
-msgstr "toplam ziyaretlerin %s kadarı"
-
-#. translators: %s: visit count.
-#: src/admin/components/WorldMap/index.js
-msgid "%s visits"
-msgstr "%s ziyaret"
-
-#: src/admin/components/WorldMap/index.js
 msgid "World map"
 msgstr "Dünya haritası"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Loading world map"
-msgstr "Dünya haritası yükleniyor"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "Yakınlaştırma kontrolleri"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "Sıfırla"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Map legend"
-msgstr "Harita açıklaması"
-
-#: src/admin/constants/index.js
-msgid "Events"
-msgstr "Etkinlikler"
+msgid "%s visits"
+msgstr "%s ziyaret"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -1062,6 +931,11 @@ msgstr "Yönlendiren mevcut değil."
 msgid "Hourly heatmap global"
 msgstr "Genel saatlik ısı haritası"
 
+#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/RealtimePanel.js
+#, fuzzy
+msgid "No country data is available yet."
+msgstr "Ülke verisi mevcut değil."
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Organik arama"
@@ -1098,8 +972,7 @@ msgstr "Yapay zekâ asistanları"
 msgid "Other"
 msgstr "Diğer"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/lib/locationLabel.js src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "No available"
 msgstr "Kullanılabilir değil"
@@ -1118,7 +991,7 @@ msgstr "Bu dönem için ziyaretçi profili verisi mevcut değil."
 msgid "Table: Acquisition channels"
 msgstr "Tablo: Ziyaretçiler"
 
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #, fuzzy
 msgid "Channel"
@@ -1166,7 +1039,7 @@ msgstr "%s bayrağı"
 msgid "Top countries"
 msgstr "Popüler ülkeler"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
 msgstr ""
@@ -1175,90 +1048,6 @@ msgstr ""
 #, fuzzy
 msgid "Legacy visits"
 msgstr "Günlük ziyaretçiler"
-
-#: src/admin/panels/RealtimePanel.js
-#, fuzzy
-msgid "Visitor origin unavailable"
-msgstr "Ziyaretçi verisi mevcut değil."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Ziyaretçi kimliği karması"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Bağlantı zamanı"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "Geçerli sayfa"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "İşletim sistemleri"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "Tarayıcılar"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Tarayıcı sürümü"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "Cihazlar"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Çözünürlük"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen is unavailable in this browser context."
-msgstr "Bu tarayıcı bağlamında tam ekran kullanılamıyor."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Loading real-time data…"
-msgstr "Gerçek zamanlı veri yükleniyor…"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgstr "Ziyaretçi"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Exit fullscreen"
-msgstr "Tam ekrandan çık"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Fullscreen"
-msgstr "Tam ekran"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
-msgstr "Yalnızca temel kapsam: zenginleştirilmiş ziyaret ayrıntıları ve hassas harita işaretçileri kullanılamaz."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr "Tablo: Gerçek zamanlı ziyaretçiler"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "No visits in the current activity window."
-msgstr "Geçerli etkinlik penceresinde ziyaret yok."
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1962,7 +1751,6 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Smartphone"
 msgstr "Akıllı telefon"
 
@@ -2018,6 +1806,11 @@ msgstr "Cihaz kullanımı kırılımı"
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No device usage available."
 msgstr "Cihaz kullanımı mevcut değil."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "Çözünürlük"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No resolution data available."
@@ -2370,6 +2163,14 @@ msgid "0s"
 msgstr "0sn"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "Ziyaretçi kimliği karması"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "Bağlantı zamanı"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Active time"
 msgstr "Etkin süre"
 
@@ -2379,150 +2180,28 @@ msgid "Entry channel"
 msgstr "Giriş sayfaları"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "İşletim sistemleri"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Tarayıcılar"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "Tarayıcı sürümü"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Cihazlar"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "Özel"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tablo: Ziyaretçiler"
-
-#~ msgid "Install BimBeau Privacy Analytics app"
-#~ msgstr "BimBeau Privacy Analytics uygulamasını yükle"
-
-#~ msgid "Get faster access from your home screen with an app-like experience."
-#~ msgstr "Uygulama benzeri bir deneyimle ana ekranınızdan daha hızlı erişim sağlayın."
-
-#~ msgid "Install app"
-#~ msgstr "Uygulamayı yükle"
-
-#~ msgid "BimBeau Privacy Analytics app installation was accepted."
-#~ msgstr "BimBeau Privacy Analytics uygulaması kurulumu kabul edildi."
-
-#~ msgid "Captured events data purged."
-#~ msgstr "Yakalanan etkinlik verileri temizlendi."
-
-#~ msgid "App"
-#~ msgstr "Uygulama"
-
-#~ msgid "Delete captured events list"
-#~ msgstr "Yakalanan etkinlikler listesini sil"
-
-#~ msgid "Confirm captured events purge"
-#~ msgstr "Yakalanan etkinlikleri temizlemeyi onayla"
-
-#~ msgid "This action permanently removes the captured events list shown in Events stats. Other analytics data remains unchanged."
-#~ msgstr "Bu eylem, Etkinlik istatistiklerinde gösterilen yakalanan etkinlikler listesini kalıcı olarak kaldırır. Diğer analiz verileri değişmeden kalır."
-
-#~ msgid "I confirm that I want to permanently purge the captured events list."
-#~ msgstr "Yakalanan etkinlikler listesini kalıcı olarak temizlemek istediğimi onaylıyorum."
-
-#~ msgid "Purge captured events"
-#~ msgstr "Yakalanan etkinlikleri temizle"
-
-#~ msgid "PWA URL is unavailable."
-#~ msgstr "PWA URL’si kullanılamıyor."
-
-#~ msgid "PWA URL copied."
-#~ msgstr "PWA URL’si kopyalandı."
-
-#~ msgid "Unable to copy the PWA URL."
-#~ msgstr "PWA URL’si kopyalanamıyor."
-
-#~ msgid "Interface branding"
-#~ msgstr "Arayüz markalaması"
-
-#~ msgid "White-label interface controls are available in Pro."
-#~ msgstr "Beyaz etiket arayüz kontrolleri Pro’da kullanılabilir."
-
-#~ msgid "Use white-label interface"
-#~ msgstr "Beyaz etiket arayüzünü kullan"
-
-#~ msgid "Hide the BimBeau Privacy Analytics logo in the admin header and display the localized analytics title instead."
-#~ msgstr "Yönetici üst bilgisindeki BimBeau Privacy Analytics logosunu gizler ve bunun yerine yerelleştirilmiş analiz başlığını gösterir."
-
-#~ msgid "Quick stats"
-#~ msgstr "Hızlı istatistikler"
-
-#~ msgid "Enable Quick Stats on selected post types: add a Views (30d) column in the posts list and display a stats summary metabox while editing each post."
-#~ msgstr "Seçilen yazı türlerinde Hızlı istatistikleri etkinleştirin: yazı listesine Görüntülenme (30g) sütunu ekleyin ve her yazıyı düzenlerken istatistik özeti metabox’ı gösterin."
-
-#~ msgid "No post types available."
-#~ msgstr "Yazı türü mevcut değil."
-
-#~ msgid "Events configuration"
-#~ msgstr "Etkinlik yapılandırması"
-
-#, fuzzy
-#~ msgid "The export job is missing a processing URL."
-#~ msgstr "Dışa aktarma işinde durum URL’si eksik."
-
-#~ msgid "The JSON export could not be generated."
-#~ msgstr "JSON dışa aktarımı oluşturulamadı."
-
-#~ msgid "Export is running. The file downloads when ready."
-#~ msgstr "Dışa aktarma çalışıyor. Dosya hazır olduğunda indirilecek."
-
-#~ msgid "Export is queued. The file downloads when ready."
-#~ msgstr "Dışa aktarma sırada. Dosya hazır olduğunda indirilecek."
-
-#~ msgid "The export is still running. Try again in a few moments."
-#~ msgstr "Dışa aktarma hâlâ çalışıyor. Birkaç dakika sonra tekrar deneyin."
-
-#~ msgid "Export ready. Download started."
-#~ msgstr "Dışa aktarma hazır. İndirme başladı."
-
-#~ msgid "ok"
-#~ msgstr "tamam"
-
-#~ msgid "error"
-#~ msgstr "hata"
-
-#~ msgid "pending"
-#~ msgstr "beklemede"
-
-#, fuzzy
-#~ msgid "Update GeoIP database"
-#~ msgstr "GeoIP veritabanı güncellenemiyor."
-
-#, fuzzy
-#~ msgid "Download GeoIP database"
-#~ msgstr "GeoIP veritabanı güncellenemiyor."
-
-#~ msgid "Choose how BimBeau Privacy Analytics resolves geolocation: local GeoLite database or MaxMind API."
-#~ msgstr "BimBeau Privacy Analytics’in coğrafi konumu nasıl çözeceğini seçin: yerel GeoLite veritabanı veya MaxMind API."
-
-#~ msgid "MaxMind API credentials"
-#~ msgstr "MaxMind API kimlik bilgileri"
-
-#, fuzzy
-#~ msgid "Local database mode downloads the GeoLite MMDB file through the official BimBeau GeoIP Database Service manifest. API mode uses live MaxMind requests."
-#~ msgstr "Yerel veritabanı modu GeoLite MMDB dosyasını BimBeau Privacy Analytics aynalarından indirir. API modu canlı MaxMind isteklerini kullanır."
-
-#, fuzzy
-#~ msgid "Manual GeoIP database download"
-#~ msgstr "GeoIP veritabanı indirmesi başarısız: %s"
-
-#~ msgid "Current state"
-#~ msgstr "Geçerli durum"
-
-#, fuzzy
-#~ msgid "Next scheduled GeoIP update"
-#~ msgstr "Sonraki planlanmış yeniden deneme"
-
-#~ msgid "Last successful update"
-#~ msgstr "Son başarılı güncelleme"
-
-#~ msgid "Database size"
-#~ msgstr "Veritabanı boyutu"
-
-#~ msgid "Behavior: plugin activation completes quickly, and temporary local database unavailability does not block the rest of BimBeau Privacy Analytics."
-#~ msgstr "Davranış: eklenti etkinleştirme hızla tamamlanır ve geçici yerel veritabanı kullanılamazlığı BimBeau Privacy Analytics’in geri kalanını engellemez."
-
-#~ msgid "Back"
-#~ msgstr "Geri"
-
-#~ msgid "This action presents your current settings and does not reset them."
-#~ msgstr "Bu eylem mevcut ayarlarınızı sunar ve bunları sıfırlamaz."
-
-#~ msgid "Referrer favicons"
-#~ msgstr "Yönlendiren favori simgeleri"

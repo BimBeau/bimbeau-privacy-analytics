@@ -673,23 +673,7 @@
 }
 
 
-.bbpa-events-panel__stats-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  align-items: stretch;
-  gap: var(--bbpa-gap-sm);
-  margin-bottom: 12px;
-}
-
-.bbpa-events-panel__stats-kpi {
-  min-width: 0;
-}
-
-
 @media (max-width: 1200px) {
-  .bbpa-events-panel__stats-kpi-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 782px) {
@@ -697,10 +681,6 @@
 .bbpa-admin-app .bbpa-admin-app__brand-logo {
 	margin-bottom: 5px;
 }
-	
-  .bbpa-events-panel__stats-kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 .bbpa-kpi-card__body {
   display: grid;
@@ -814,39 +794,6 @@
 }
 
 .bbpa-kpi-card__badge--info {
-  color: #0c4a6e;
-  background-color: #d9edf7;
-}
-
-
-.bbpa-events-panel__status-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.5;
-  white-space: nowrap;
-}
-
-.bbpa-events-panel__status-pill--success {
-  color: var(--color-7);
-  background-color: var(--color-6);
-}
-
-.bbpa-events-panel__status-pill--error {
-  color: var(--color-9);
-  background-color: var(--color-8);
-}
-
-.bbpa-events-panel__status-pill--warning {
-  color: var(--color-11);
-  background-color: var(--color-10);
-}
-
-.bbpa-events-panel__status-pill--info {
   color: #0c4a6e;
   background-color: #d9edf7;
 }
@@ -1256,13 +1203,6 @@ ul.striped > :nth-child(odd) {
 
 .bbpa-report-table--visitors td {
   vertical-align: top;
-}
-
-.bbpa-events-panel__page-cell,
-.bbpa-realtime-current-page-cell {
-  width: clamp(240px, 40vw, 900px);
-  max-width: 900px;
-  min-width: 0;
 }
 
 @media (max-width: 782px) {
@@ -1692,68 +1632,7 @@ ul.striped > :nth-child(odd) {
   color: var(--color-11);
 }
 
-.bbpa-events-panel__header-toggle.components-base-control {
-  margin-bottom: 0;
-}
-
-.bbpa-events-panel__mobile-toggle-row {
-  display: none;
-}
-
-.bbpa-events-panel__actions-list {
-  margin-top: var(--bbpa-gap-md);
-  display: grid;
-  gap: var(--bbpa-gap-md);
-}
-
-.bbpa-events-panel__event-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--bbpa-gap-md);
-}
-
 @media (max-width: 782px) {
-  .bbpa-events-panel__event-header-layout {
-    align-items: flex-start;
-  }
-
-  .bbpa-events-panel__header-toggle-item {
-    display: none;
-  }
-
-  .bbpa-events-panel__mobile-toggle-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--bbpa-gap-sm);
-    margin-bottom: var(--bbpa-gap-md);
-  }
-
-  .bbpa-events-panel__event-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-.bbpa-events-panel__action-card {
-  border: 1px solid #dcdcde;
-  border-radius: 4px;
-  padding: var(--bbpa-gap-md);
-  background: #fff;
-}
-
-.bbpa-events-panel__event-header,
-.bbpa-events-panel__action-header {
-  cursor: pointer;
-}
-
-.bbpa-events-panel__action-body {
-  margin-top: var(--bbpa-gap-md);
-}
-
-.bbpa-events-panel__event-actions {
-  margin-top: var(--bbpa-gap-md);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bbpa-gap-sm);
 }
 
 .bbpa-admin-app .bbpa-label--unavailable,
@@ -1774,22 +1653,6 @@ ul.striped > :nth-child(odd) {
 
 
 
-
-.bbpa-events-panel__drag-handle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  cursor: grab;
-  color: inherit;
-}
-
-.bbpa-events-panel__drag-handle:active {
-  cursor: grabbing;
-}
 
 .bbpa-mini-sparkline {
 	display: inline-flex;
