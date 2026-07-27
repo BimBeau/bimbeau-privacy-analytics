@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.114
+Stable tag: 8.45.115
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -251,7 +251,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.114 =
-* Remove the site URL from MaxMind requests.
-* Correct the public Free source and build documentation.
-* Strengthen WordPress.org compliance regression checks.
+= 8.45.115 =
+* Fix Free Realtime and Geolocation maps failing to load when the Nivo choropleth receives an invalid color function instead of a quantize scale.
