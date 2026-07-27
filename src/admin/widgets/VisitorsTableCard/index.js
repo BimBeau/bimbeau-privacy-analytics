@@ -90,7 +90,6 @@ const formatVisitorHashForTable = (hash) => {
 const VISITOR_TABLE_LABELS = {
 	visitorId: __('Visitor ID hash', 'bimbeau-privacy-analytics'),
 	country: __('Country', 'bimbeau-privacy-analytics'),
-	city: __('City', 'bimbeau-privacy-analytics'),
 	connectionTime: __('Connection time', 'bimbeau-privacy-analytics'),
 	timeSpent: __('Active time', 'bimbeau-privacy-analytics'),
 	pageViews: __('Page views', 'bimbeau-privacy-analytics'),
@@ -112,11 +111,6 @@ const VISITOR_SORT_OPTIONS = [
 	{
 		label: __('Country', 'bimbeau-privacy-analytics'),
 		value: 'country',
-		order: 'asc',
-	},
-	{
-		label: __('City', 'bimbeau-privacy-analytics'),
-		value: 'city',
 		order: 'asc',
 	},
 	{
@@ -310,9 +304,6 @@ const VisitorsTableCard = ({
 										{VISITOR_TABLE_LABELS.country}
 									</th>
 									<th scope="col">
-										{VISITOR_TABLE_LABELS.city}
-									</th>
-									<th scope="col">
 										{VISITOR_TABLE_LABELS.connectionTime}
 									</th>
 									<th scope="col">
@@ -421,22 +412,7 @@ const VisitorsTableCard = ({
 													</span>
 												)}
 											</td>
-											<td
-												data-label={
-													VISITOR_TABLE_LABELS.city
-												}
-												{...getPrivateDataCellProps(
-													isPrivateData
-												)}
-											>
-												{isPrivateData
-													? renderPrivateDataLabel()
-													: renderMaybeUnavailableLabel(
-														getLocationLabel(
-															item
-														)
-													)}
-											</td>
+
 											<td
 												data-label={
 													VISITOR_TABLE_LABELS.connectionTime

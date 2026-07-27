@@ -41,7 +41,6 @@ function bbpa_upsert_visitor_activity_daily(array $hit): bool
     $device_class = isset($hit['device_class']) ? sanitize_text_field((string) $hit['device_class']) : '';
     $country_code = $granularity === 'enriched' && isset($hit['country_code']) ? sanitize_text_field((string) $hit['country_code']) : '';
     $country = $granularity === 'enriched' && isset($hit['country']) ? sanitize_text_field((string) $hit['country']) : '';
-    $city = $granularity === 'enriched' && isset($hit['city']) ? sanitize_text_field((string) $hit['city']) : '';
     $has_enriched_data = $granularity === 'enriched' ? 1 : 0;
     $page_views = $is_page_view ? 1 : 0;
 
@@ -61,28 +60,30 @@ function bbpa_upsert_visitor_activity_daily(array $hit): bool
     $result = $wpdb->query(
         $wpdb->prepare(
             "INSERT INTO `{$table}`
-                (date_bucket, visitor_id, device_class, country_code, country, city, has_enriched_data, first_seen_at, last_seen_at, page_views)
-            VALUES (%s, %s, %s, %s, %s, %s, %d, %d, %d, %d)
+                (date_bucket, visitor_id, device_class, country_code, country, has_enriched_data, first_seen_at, last_seen_at, page_views)
+            VALUES (%s, %s, %s, %s, %s, %d, %d, %d, %d)
             ON DUPLICATE KEY UPDATE
                 last_seen_at = GREATEST(last_seen_at, VALUES(last_seen_at)),
                 page_views = page_views + VALUES(page_views),
                 device_class = CASE WHEN VALUES(device_class) <> '' THEN VALUES(device_class) ELSE device_class END,
                 country_code = CASE WHEN VALUES(country_code) <> '' THEN VALUES(country_code) ELSE country_code END,
                 country = CASE WHEN VALUES(country) <> '' THEN VALUES(country) ELSE country END,
-                city = CASE WHEN VALUES(city) <> '' THEN VALUES(city) ELSE city END,
                 has_enriched_data = CASE WHEN VALUES(has_enriched_data) = 1 THEN 1 ELSE has_enriched_data END",
             $date_bucket,
             $visitor_id,
             $device_class,
             $country_code,
             $country,
-            $city,
             $has_enriched_data,
             $timestamp,
             $timestamp,
             $page_views
         )
     );
+
+    if ($result !== false) {
+        do_action('bbpa_after_upsert_visitor_activity_daily', $hit, $visitor_id, $date_bucket);
+    }
 
     return $result !== false;
 }
@@ -134,7 +135,6 @@ function bbpa_store_visitor_hit(array $hit): bool
         'active_time_ms' => isset($hit['active_ms_delta']) ? absint($hit['active_ms_delta']) : 0,
         'country_code' => isset($hit['country_code']) ? sanitize_text_field((string) $hit['country_code']) : '',
         'country' => isset($hit['country']) ? sanitize_text_field((string) $hit['country']) : '',
-        'city' => isset($hit['city']) ? sanitize_text_field((string) $hit['city']) : '',
         'referrer_domain' => isset($hit['referrer_domain']) ? sanitize_text_field((string) $hit['referrer_domain']) : '',
         'source_category' => isset($hit['source_category']) ? sanitize_text_field((string) $hit['source_category']) : '',
         'browser' => isset($hit['browser']) ? sanitize_text_field((string) $hit['browser']) : '',
@@ -148,7 +148,6 @@ function bbpa_store_visitor_hit(array $hit): bool
     if ($granularity !== 'enriched') {
         $data['country_code'] = '';
         $data['country'] = '';
-        $data['city'] = '';
         $data['referrer_domain'] = '';
         $data['source_category'] = '';
         $data['browser'] = '';
@@ -161,8 +160,8 @@ function bbpa_store_visitor_hit(array $hit): bool
     $result = $wpdb->query(
         $wpdb->prepare(
             "INSERT INTO `{$table}`
-                (visitor_id, first_view_at, last_view_at, entry_page, exit_page, total_views, active_time_ms, country_code, country, city, referrer_domain, source_category, browser, browser_version, device_class, operating_system, screen_resolution, has_enriched_data)
-            VALUES (%s, %d, %d, %s, %s, %d, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d)
+                (visitor_id, first_view_at, last_view_at, entry_page, exit_page, total_views, active_time_ms, country_code, country, referrer_domain, source_category, browser, browser_version, device_class, operating_system, screen_resolution, has_enriched_data)
+            VALUES (%s, %d, %d, %s, %s, %d, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d)
             ON DUPLICATE KEY UPDATE
                 total_views = total_views + VALUES(total_views),
                 active_time_ms = active_time_ms + VALUES(active_time_ms),
@@ -170,7 +169,6 @@ function bbpa_store_visitor_hit(array $hit): bool
                 exit_page = VALUES(exit_page),
                 country_code = CASE WHEN VALUES(country_code) <> '' THEN VALUES(country_code) ELSE country_code END,
                 country = CASE WHEN VALUES(country) <> '' THEN VALUES(country) ELSE country END,
-                city = CASE WHEN VALUES(city) <> '' THEN VALUES(city) ELSE city END,
                 referrer_domain = CASE WHEN referrer_domain = '' AND VALUES(referrer_domain) <> '' THEN VALUES(referrer_domain) ELSE referrer_domain END,
                 source_category = CASE WHEN source_category = '' AND VALUES(source_category) <> '' THEN VALUES(source_category) ELSE source_category END,
                 browser = CASE WHEN VALUES(browser) <> '' THEN VALUES(browser) ELSE browser END,
@@ -188,7 +186,6 @@ function bbpa_store_visitor_hit(array $hit): bool
             $data['active_time_ms'],
             $data['country_code'],
             $data['country'],
-            $data['city'],
             $data['referrer_domain'],
             $data['source_category'],
             $data['browser'],
@@ -199,6 +196,10 @@ function bbpa_store_visitor_hit(array $hit): bool
             $data['has_enriched_data']
         )
     );
+
+    if ($result !== false) {
+        do_action('bbpa_after_store_visitor_hit', $hit, $visitor_id, $timestamp);
+    }
 
     return $result !== false;
 }

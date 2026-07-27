@@ -965,7 +965,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                     'visitor_id' => sanitize_text_field((string) $visitor_id),
                     'country_code' => isset($latest_hit['country_code']) ? sanitize_text_field((string) $latest_hit['country_code']) : '',
                     'country' => isset($latest_hit['country']) ? sanitize_text_field((string) $latest_hit['country']) : '',
-                    'city' => '',
                     'current_page' => '',
                     'page_views' => 1,
                     'referrer_domain' => '',
@@ -1048,12 +1047,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $country_name = isset($hit['country'])
                 ? sanitize_text_field((string) $hit['country'])
                 : '';
-            $city_name = isset($hit['city'])
-                ? sanitize_text_field((string) $hit['city'])
-                : '';
-            $accuracy_radius = isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius'])
-                ? max(0, (int) $hit['accuracy_radius'])
-                : null;
             $referrer_domain = isset($hit['referrer_domain'])
                 ? sanitize_text_field((string) $hit['referrer_domain'])
                 : '';
@@ -1078,10 +1071,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $page_path = isset($hit['page_path'])
                 ? sanitize_text_field((string) $hit['page_path'])
                 : '';
-            $coordinates = bbpa_normalize_coordinate_pair(
-                $hit['latitude'] ?? null,
-                $hit['longitude'] ?? null
-            );
             $extension_fields = apply_filters('bbpa_realtime_visit_extension_fields', [], $hit);
             if (!is_array($extension_fields)) {
                 $extension_fields = [];
@@ -1092,10 +1081,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                     'visitor_id' => $visitor_id,
                     'country_code' => $country_code,
                     'country' => $country_name,
-                    'city' => $city_name,
-                    'accuracy_radius' => $accuracy_radius,
-                    'latitude' => $coordinates['latitude'] !== null ? (float) $coordinates['latitude'] : null,
-                    'longitude' => $coordinates['longitude'] !== null ? (float) $coordinates['longitude'] : null,
                     'current_page' => $page_path,
                     'page_views' => 0,
                     'referrer_domain' => $referrer_domain,
@@ -1154,18 +1139,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             if ($country_name !== '') {
                 $visits[$visitor_bucket_id]['country'] = $country_name;
             }
-            if ($city_name !== '') {
-                $visits[$visitor_bucket_id]['city'] = $city_name;
-            }
-            if ($accuracy_radius !== null) {
-                $visits[$visitor_bucket_id]['accuracy_radius'] = $accuracy_radius;
-            }
-            if ($coordinates['latitude'] !== null) {
-                $visits[$visitor_bucket_id]['latitude'] = (float) $coordinates['latitude'];
-            }
-            if ($coordinates['longitude'] !== null) {
-                $visits[$visitor_bucket_id]['longitude'] = (float) $coordinates['longitude'];
-            }
             if ($extension_fields !== []) {
                 $visits[$visitor_bucket_id] = array_merge($visits[$visitor_bucket_id], $extension_fields);
             }
@@ -1213,13 +1186,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 $fallback_visitor_id = $visitor_bucket;
             }
 
-            $fallback_coordinates = bbpa_normalize_coordinate_pair(
-                $realtime_row['latitude'] ?? null,
-                $realtime_row['longitude'] ?? null
-            );
-            $fallback_accuracy_radius = isset($realtime_row['accuracy_radius']) && is_numeric($realtime_row['accuracy_radius'])
-                ? max(0, (int) $realtime_row['accuracy_radius'])
-                : null;
             $fallback_extension_fields = apply_filters('bbpa_realtime_visit_extension_fields', [], $realtime_row);
             if (!is_array($fallback_extension_fields)) {
                 $fallback_extension_fields = [];
@@ -1228,10 +1194,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 'visitor_id' => $fallback_visitor_id,
                 'country_code' => isset($realtime_row['country_code']) ? strtoupper(sanitize_text_field((string) $realtime_row['country_code'])) : '',
                 'country' => isset($realtime_row['country']) ? sanitize_text_field((string) $realtime_row['country']) : '',
-                'city' => isset($realtime_row['city']) ? sanitize_text_field((string) $realtime_row['city']) : '',
-                'accuracy_radius' => $fallback_accuracy_radius,
-                'latitude' => $fallback_coordinates['latitude'] !== null ? (float) $fallback_coordinates['latitude'] : null,
-                'longitude' => $fallback_coordinates['longitude'] !== null ? (float) $fallback_coordinates['longitude'] : null,
                 'current_page' => isset($realtime_row['page_path']) ? sanitize_text_field((string) $realtime_row['page_path']) : '',
                 'page_views' => 1,
                 'referrer_domain' => isset($realtime_row['referrer_domain']) ? sanitize_text_field((string) $realtime_row['referrer_domain']) : '',
@@ -1280,7 +1242,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 foreach ([
                     'country_code',
                     'country',
-                    'city',
                     'referrer_domain',
                     'source_category',
                     'operating_system',
@@ -1294,11 +1255,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                     }
                 }
 
-                foreach (['accuracy_radius', 'latitude', 'longitude'] as $field) {
-                    if ($fallback_visit_data[$field] !== null) {
-                        $visits[$visitor_bucket][$field] = $fallback_visit_data[$field];
-                    }
-                }
                 foreach ($fallback_extension_fields as $field => $value) {
                     $visits[$visitor_bucket][$field] = $value;
                 }
@@ -1345,8 +1301,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                         'visitor_id' => isset($visit['visitor_id']) ? sanitize_text_field((string) $visit['visitor_id']) : '',
                         'country_code' => isset($visit['country_code']) ? sanitize_text_field((string) $visit['country_code']) : '',
                         'country' => isset($visit['country']) ? sanitize_text_field((string) $visit['country']) : '',
-                        'city' => '',
-                        'current_page' => '',
+                            'current_page' => '',
                         'page_views' => isset($visit['page_views']) ? max(1, (int) $visit['page_views']) : 1,
                         'referrer_domain' => '',
                         'source_category' => '',
@@ -1391,7 +1346,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             'visits_received' => count($visits),
             'raw_coordinates' => 0,
             'geoname' => 0,
-            'city' => 0,
             'excluded' => count($visits),
             'consented_map_points' => count($points),
             'premium_callback' => has_filter('bbpa_realtime_map_points') !== false,
@@ -1541,7 +1495,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         $enriched_fields = [
             'country_code',
             'country',
-            'city',
             'operating_system',
             'browser',
             'device_class',

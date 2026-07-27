@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function bbpa_get_ui_field_visibility_matrix(): array
 {
-    return [
+    $matrix = [
         'dashboard' => [
             'bucket' => 'essential',
             'pageViews' => 'essential',
@@ -33,7 +33,6 @@ function bbpa_get_ui_field_visibility_matrix(): array
             'first_view_at' => 'essential',
             'last_view_at' => 'essential',
             'page_views' => 'essential',
-            'city' => 'advanced_after_consent',
             'current_page' => 'advanced_after_consent',
             'referrer_domain' => 'advanced_after_consent',
             'source_category' => 'advanced_after_consent',
@@ -42,16 +41,6 @@ function bbpa_get_ui_field_visibility_matrix(): array
             'browser_version' => 'advanced_after_consent',
             'device_class' => 'advanced_after_consent',
             'screen_resolution' => 'advanced_after_consent',
-            'latitude' => 'never',
-            'longitude' => 'never',
-        ],
-        'realtime_points' => [
-            'lat' => 'advanced_after_consent',
-            'lng' => 'advanced_after_consent',
-            'weight' => 'advanced_after_consent',
-            'city' => 'advanced_after_consent',
-            'accuracy_radius' => 'advanced_after_consent',
-            'currentPage' => 'advanced_after_consent',
         ],
         'referrers' => [
             'label' => 'advanced_after_consent',
@@ -62,9 +51,6 @@ function bbpa_get_ui_field_visibility_matrix(): array
             'country' => 'essential',
             'visits' => 'essential',
             'hits' => 'essential',
-            'city' => 'advanced_after_consent',
-            'latitude' => 'never',
-            'longitude' => 'never',
         ],
         'devices' => [
             'label' => 'advanced_after_consent',
@@ -77,6 +63,8 @@ function bbpa_get_ui_field_visibility_matrix(): array
             'visits' => 'essential',
         ],
     ];
+
+    return apply_filters('bbpa_ui_field_visibility_matrix', $matrix);
 }
 
 /**

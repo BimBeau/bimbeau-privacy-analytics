@@ -169,20 +169,13 @@ function bbpa_install_schema(): void
     $geo_schema = "CREATE TABLE {$geo_table} (
         date_bucket DATE NOT NULL,
         country_code CHAR(2) NOT NULL,
-        region_code VARCHAR(20) NOT NULL,
-        city_name VARCHAR(255) NOT NULL,
-        city_geoname_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
-        latitude DECIMAL(10,7) NOT NULL DEFAULT 0,
-        longitude DECIMAL(10,7) NOT NULL DEFAULT 0,
         hits BIGINT UNSIGNED NOT NULL DEFAULT 0,
         visits BIGINT UNSIGNED NOT NULL DEFAULT 0,
-        PRIMARY KEY  (date_bucket, country_code, region_code, city_name(191)),
+        PRIMARY KEY  (date_bucket, country_code),
         KEY date_bucket (date_bucket),
-        KEY country_code (country_code),
-        KEY region_code (region_code),
-        KEY city_name (city_name(191)),
-        KEY city_geoname_id (city_geoname_id)
+        KEY country_code (country_code)
     ) {$charset_collate};";
+    $geo_schema = apply_filters('bbpa_geo_daily_schema', $geo_schema, $geo_table, $charset_collate);
 
     $visitors_schema = "CREATE TABLE {$visitors_table} (
         visitor_id VARCHAR(64) NOT NULL,
@@ -194,7 +187,6 @@ function bbpa_install_schema(): void
         active_time_ms BIGINT UNSIGNED NOT NULL DEFAULT 0,
         country_code CHAR(2) NOT NULL,
         country VARCHAR(255) NOT NULL,
-        city VARCHAR(255) NOT NULL,
         referrer_domain VARCHAR(255) NOT NULL,
         source_category VARCHAR(20) NOT NULL DEFAULT '',
         browser VARCHAR(100) NOT NULL,
@@ -218,7 +210,6 @@ function bbpa_install_schema(): void
         device_class VARCHAR(50) NOT NULL,
         country_code CHAR(2) NOT NULL DEFAULT '',
         country VARCHAR(255) NOT NULL DEFAULT '',
-        city VARCHAR(255) NOT NULL DEFAULT '',
         has_enriched_data TINYINT(1) NOT NULL DEFAULT 0,
         first_seen_at BIGINT UNSIGNED NOT NULL,
         last_seen_at BIGINT UNSIGNED NOT NULL,
@@ -226,8 +217,7 @@ function bbpa_install_schema(): void
         PRIMARY KEY  (date_bucket, visitor_id),
         KEY date_bucket (date_bucket),
         KEY visitor_id (visitor_id),
-        KEY date_bucket_device (date_bucket, device_class),
-        KEY date_bucket_city (date_bucket, country_code, city(191))
+        KEY date_bucket_device (date_bucket, device_class)
     ) {$charset_collate};";
 
     $time_daily_schema = "CREATE TABLE {$time_daily_table} (
@@ -260,6 +250,9 @@ function bbpa_install_schema(): void
         KEY date_bucket_page (date_bucket, page_path(255)),
         KEY page_path (page_path(255))
     ) {$charset_collate};";
+    $visitors_schema = apply_filters('bbpa_visitors_schema', $visitors_schema, $visitors_table, $charset_collate);
+    $visitor_activity_daily_schema = apply_filters('bbpa_visitor_activity_daily_schema', $visitor_activity_daily_schema, $visitor_activity_daily_table, $charset_collate);
+
     $schemas = [
         $daily_schema,
         $hourly_schema,

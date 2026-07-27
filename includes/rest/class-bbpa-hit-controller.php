@@ -462,10 +462,6 @@ class BBPA_Hit_Controller {
             'operating_system' => '',
             'country_code' => '',
             'country' => '',
-            'city' => '',
-            'latitude' => null,
-            'longitude' => null,
-            'accuracy_radius' => null,
         ];
 
         $hit['granularity'] = $this->resolve_hit_granularity($request, $hit);
@@ -487,25 +483,14 @@ class BBPA_Hit_Controller {
             $hit['operating_system'] = $this->detect_operating_system($request->get_header('User-Agent'));
             $hit['country_code'] = $country['country_code'] ?? '';
             $hit['country'] = $country['country'] ?? '';
-            $hit['city'] = $country['city'] ?? '';
-            $hit['latitude'] = isset($country['latitude']) && is_numeric($country['latitude'])
-                ? (float) $country['latitude']
-                : null;
-            $hit['longitude'] = isset($country['longitude']) && is_numeric($country['longitude'])
-                ? (float) $country['longitude']
-                : null;
-            $hit['accuracy_radius'] = isset($country['accuracy_radius']) && is_numeric($country['accuracy_radius'])
-                ? max(0, (int) $country['accuracy_radius'])
-                : null;
-            $this->log_debug('Geolocation payload merged into sanitized hit.', [
+            $extension_fields = apply_filters('bbpa_enriched_hit_extension_fields', [], $request, $hit);
+            if (is_array($extension_fields)) {
+                $hit = array_merge($hit, $extension_fields);
+            }
+            $this->log_debug('Country geolocation payload merged into sanitized hit.', [
                 'event_name' => (string) ($hit['event_name'] ?? ''),
                 'granularity' => (string) ($hit['granularity'] ?? 'base'),
                 'country_code' => (string) ($hit['country_code'] ?? ''),
-                'city' => (string) ($hit['city'] ?? ''),
-                'accuracy_radius_present' => isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius']),
-                'accuracy_radius' => isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius']) ? (int) $hit['accuracy_radius'] : null,
-                'latitude_present' => isset($hit['latitude']) && is_numeric($hit['latitude']),
-                'longitude_present' => isset($hit['longitude']) && is_numeric($hit['longitude']),
             ]);
         }
 
@@ -534,16 +519,7 @@ class BBPA_Hit_Controller {
         ] as $field) {
             $hit[$field] = '';
         }
-        foreach ([
-            'city',
-            'latitude',
-            'longitude',
-            'accuracy_radius',
-        ] as $field) {
-            $hit[$field] = in_array($field, ['latitude', 'longitude', 'accuracy_radius'], true)
-                ? null
-                : '';
-        }
+
 
         return $hit;
     }
@@ -1290,11 +1266,6 @@ class BBPA_Hit_Controller {
                     'visit_id_present' => !empty($hit['visit_id']),
                     'visitor_id_present' => !empty($hit['visitor_id']),
                     'country_code' => (string) ($hit['country_code'] ?? ''),
-                    'city' => (string) ($hit['city'] ?? ''),
-                    'city_name' => (string) ($hit['city_name'] ?? ''),
-                    'resolved_city_name' => (string) ($hit['city_name'] ?? $hit['city'] ?? ''),
-                    'latitude_present' => isset($hit['latitude']) && is_numeric($hit['latitude']),
-                    'longitude_present' => isset($hit['longitude']) && is_numeric($hit['longitude']),
                 ]);
             }
         } elseif ($is_enriched_event_upgrade) {
@@ -1488,12 +1459,6 @@ class BBPA_Hit_Controller {
         ];
 
         if ($granularity === 'enriched') {
-            $this->log_debug('Realtime bucket write pre-check.', [
-                'accuracy_radius_key_exists' => array_key_exists('accuracy_radius', $hit),
-                'accuracy_radius' => $hit['accuracy_radius'] ?? null,
-                'latitude' => $hit['latitude'] ?? null,
-                'longitude' => $hit['longitude'] ?? null,
-            ]);
             $visitor_bucket = '';
             $visitor_id = !empty($hit['visitor_id']) ? sanitize_text_field((string) $hit['visitor_id']) : '';
             $visit_id = !empty($hit['visit_id']) ? sanitize_text_field((string) $hit['visit_id']) : '';
@@ -1520,34 +1485,16 @@ class BBPA_Hit_Controller {
                 $row['page_path'] = $page_path;
             }
 
-            foreach (['country_code', 'country', 'city', 'device_class', 'browser', 'browser_version', 'operating_system', 'screen_resolution', 'referrer_domain', 'source_category'] as $field) {
+            foreach (['country_code', 'country', 'device_class', 'browser', 'browser_version', 'operating_system', 'screen_resolution', 'referrer_domain', 'source_category'] as $field) {
                 if (!empty($hit[$field])) {
                     $row[$field] = sanitize_text_field((string) $hit[$field]);
                 }
             }
 
-            $coordinates = function_exists('bbpa_normalize_coordinate_pair')
-                ? bbpa_normalize_coordinate_pair($hit['latitude'] ?? null, $hit['longitude'] ?? null)
-                : ['latitude' => null, 'longitude' => null];
-
-            if ($coordinates['latitude'] !== null && $coordinates['longitude'] !== null) {
-                $row['latitude'] = (float) $coordinates['latitude'];
-                $row['longitude'] = (float) $coordinates['longitude'];
+            $extension_fields = apply_filters('bbpa_realtime_storage_extension_fields', [], $hit);
+            if (is_array($extension_fields)) {
+                $row = array_merge($row, $extension_fields);
             }
-
-
-            $accuracy_radius = isset($hit['accuracy_radius']) && is_numeric($hit['accuracy_radius'])
-                ? max(0, (int) $hit['accuracy_radius'])
-                : null;
-            if ($accuracy_radius !== null) {
-                $row['accuracy_radius'] = $accuracy_radius;
-            }
-            $this->log_debug('Realtime bucket row assembled.', [
-                'accuracy_radius_key_exists' => array_key_exists('accuracy_radius', $row),
-                'accuracy_radius' => $row['accuracy_radius'] ?? null,
-                'latitude' => $row['latitude'] ?? null,
-                'longitude' => $row['longitude'] ?? null,
-            ]);
         }
 
         $realtime_hits[] = $row;

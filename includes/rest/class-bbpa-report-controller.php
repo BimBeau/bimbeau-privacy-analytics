@@ -481,12 +481,11 @@ class BBPA_Report_Controller {
         $page_path = $this->get_page_path_filter($request);
         $sorting = $this->normalize_sorting(
             $request,
-            [
+            apply_filters('bbpa_visitors_sorting_columns', [
                 'pages' => 'total_views',
                 'time_spent' => 'active_time_ms',
                 'visitor' => 'visitor_id',
                 'country' => 'country',
-                'city' => 'city',
                 'referrer' => 'referrer_domain',
                 'source_category' => 'source_category',
                 'browser' => 'browser',
@@ -495,7 +494,7 @@ class BBPA_Report_Controller {
                 'resolution' => 'screen_resolution',
                 'first_view' => 'first_view_at',
                 'last_view' => 'last_view_at',
-            ],
+            ]),
             'first_view'
         );
 
@@ -520,8 +519,17 @@ class BBPA_Report_Controller {
 
         if ($search_term !== '') {
             $like = '%' . $wpdb->esc_like($search_term) . '%';
-            $where[] = '(visitor_id LIKE %s OR country LIKE %s OR country_code LIKE %s OR city LIKE %s OR referrer_domain LIKE %s OR source_category LIKE %s OR browser LIKE %s OR browser_version LIKE %s OR device_class LIKE %s OR operating_system LIKE %s OR screen_resolution LIKE %s OR entry_page LIKE %s OR exit_page LIKE %s)';
-            $params = array_merge($params, [$like, $like, $like, $like, $like, $like, $like, $like, $like, $like, $like, $like, $like]);
+            $allowed_search_columns = [
+                'visitor_id', 'country', 'country_code', 'referrer_domain', 'source_category',
+                'browser', 'browser_version', 'device_class', 'operating_system',
+                'screen_resolution', 'entry_page', 'exit_page',
+            ];
+            $search_columns = apply_filters('bbpa_visitors_search_columns', $allowed_search_columns);
+            $search_columns = array_values(array_intersect((array) $search_columns, apply_filters('bbpa_visitors_search_column_allowlist', $allowed_search_columns)));
+            if ($search_columns !== []) {
+                $where[] = '(' . implode(' OR ', array_map(static fn(string $column): string => $column . ' LIKE %s', $search_columns)) . ')';
+                $params = array_merge($params, array_fill(0, count($search_columns), $like));
+            }
         }
 
         if ($page_path !== '') {
@@ -539,12 +547,11 @@ class BBPA_Report_Controller {
         $count_sql = "SELECT COUNT(*) FROM {$table} WHERE {$where_sql}";
         $total_items = (int) $wpdb->get_var($wpdb->prepare($count_sql, $params));
 
-        $order_column = bbpa_sql_allowlisted_identifier((string) $sorting['orderby_key'], [
+        $order_column = bbpa_sql_allowlisted_identifier((string) $sorting['orderby_key'], apply_filters('bbpa_visitors_sorting_columns', [
             'pages' => 'total_views',
             'time_spent' => 'active_time_ms',
             'visitor' => 'visitor_id',
             'country' => 'country',
-            'city' => 'city',
             'referrer' => 'referrer_domain',
             'source_category' => 'source_category',
             'browser' => 'browser',
@@ -553,12 +560,17 @@ class BBPA_Report_Controller {
             'resolution' => 'screen_resolution',
             'first_view' => 'first_view_at',
             'last_view' => 'last_view_at',
-        ], 'first_view');
+        ]), 'first_view');
         $order_direction = strtoupper($sorting['order']) === 'ASC' ? 'ASC' : 'DESC';
 
         $source_category_select = $this->table_has_column($table, 'source_category') ? 'source_category' : "'' AS source_category";
 
-        $list_sql = "SELECT visitor_id, country_code, country, city, total_views AS page_views, active_time_ms, referrer_domain, {$source_category_select}, browser, browser_version, device_class, operating_system, screen_resolution, has_enriched_data, entry_page, exit_page, first_view_at, last_view_at FROM {$table} WHERE {$where_sql} ORDER BY {$order_column} {$order_direction} LIMIT %d OFFSET %d";
+        $select_columns = apply_filters('bbpa_visitors_select_columns', []);
+        $select_allowlist = apply_filters('bbpa_visitors_select_column_allowlist', []);
+        $select_columns = array_values(array_intersect((array) $select_columns, (array) $select_allowlist));
+        $extension_select = $select_columns !== [] ? ', ' . implode(', ', $select_columns) : '';
+
+        $list_sql = "SELECT visitor_id, country_code, country{$extension_select}, total_views AS page_views, active_time_ms, referrer_domain, {$source_category_select}, browser, browser_version, device_class, operating_system, screen_resolution, has_enriched_data, entry_page, exit_page, first_view_at, last_view_at FROM {$table} WHERE {$where_sql} ORDER BY {$order_column} {$order_direction} LIMIT %d OFFSET %d";
         $list_params = array_merge($params, [$pagination['per_page'], $pagination['offset']]);
         $rows = $wpdb->get_results($wpdb->prepare($list_sql, $list_params), ARRAY_A);
         if (!is_array($rows)) {
@@ -567,11 +579,10 @@ class BBPA_Report_Controller {
 
         $items = array_map(
             function (array $row): array {
-                return [
+                $item = [
                     'visitor_id' => sanitize_text_field((string) ($row['visitor_id'] ?? '')),
                     'country_code' => sanitize_text_field((string) ($row['country_code'] ?? '')),
                     'country' => sanitize_text_field((string) ($row['country'] ?? '')),
-                    'city' => sanitize_text_field((string) ($row['city'] ?? '')),
                     'page_views' => absint($row['page_views'] ?? 0),
                     'active_time_ms' => absint($row['active_time_ms'] ?? 0),
                     'referrer_domain' => sanitize_text_field((string) ($row['referrer_domain'] ?? '')),
@@ -589,6 +600,9 @@ class BBPA_Report_Controller {
                     'first_view_at' => absint($row['first_view_at'] ?? 0),
                     'last_view_at' => absint($row['last_view_at'] ?? 0),
                 ];
+
+                $item = apply_filters('bbpa_visitors_response_item', $item, $row);
+                return is_array($item) ? $item : [];
             },
             $rows
         );

@@ -18,7 +18,6 @@ import BrandIcon from '../components/icons/BrandIcon';
 import PageTitle from '../components/PageTitle';
 import { getCountryFlagClass, isUnknownCountryCode } from '../lib/countryNames';
 import { formatScreenResolution } from '../lib/formatScreenResolution';
-import { getLocationLabel } from '../lib/locationLabel';
 import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../lib/date';
 import { formatDeviceClassLabel } from '../lib/deviceClassLabel';
 import { getChannelLabel } from '../lib/channelLabels';
@@ -104,9 +103,9 @@ const normalizeRealtimeMapPoint = (point = {}) => {
 		getRealtimeVisitField(point, ['city', 'city_name', 'cityName', 'label']) ||
 		getRealtimeVisitGeoField(point, ['city', 'city_name', 'cityName', 'label']);
 	const accuracyRadiusRaw = Number(
-		point?.accuracy_radius ??
 		point?.accuracyRadius ??
-		getRealtimeVisitGeoField(point, ['accuracy_radius', 'accuracyRadius']) ??
+		point?.accuracyRadius ??
+		getRealtimeVisitGeoField(point, ['accuracyRadius', 'accuracyRadius']) ??
 		NaN
 	);
 	const latitudeRaw = parseRealtimeCoordinate(
@@ -119,7 +118,7 @@ const normalizeRealtimeMapPoint = (point = {}) => {
 	return {
 		...point,
 		city,
-		accuracy_radius:
+		accuracyRadius:
 			Number.isFinite(accuracyRadiusRaw)
 				? Math.max(0, Math.round(accuracyRadiusRaw))
 				: null,
@@ -139,9 +138,9 @@ const normalizeRealtimeVisit = (visit = {}) => {
 		getRealtimeVisitField(visit, ['city', 'city_name', 'cityName']) ||
 		getRealtimeVisitGeoField(visit, ['city', 'city_name', 'cityName']);
 	const accuracyRadiusRaw = Number(
-		visit?.accuracy_radius ??
 		visit?.accuracyRadius ??
-		getRealtimeVisitGeoField(visit, ['accuracy_radius', 'accuracyRadius']) ??
+		visit?.accuracyRadius ??
+		getRealtimeVisitGeoField(visit, ['accuracyRadius', 'accuracyRadius']) ??
 		NaN
 	);
 	const latitudeRaw = parseRealtimeCoordinate(
@@ -178,7 +177,7 @@ const normalizeRealtimeVisit = (visit = {}) => {
 		country_code: countryCode,
 		country,
 		city,
-		accuracy_radius:
+		accuracyRadius:
 			Number.isFinite(accuracyRadiusRaw)
 				? Math.max(0, Math.round(accuracyRadiusRaw))
 				: null,
@@ -284,9 +283,8 @@ export const normalizeRealtimeMapItem = (
 			`realtime-point-${index}`,
 		latitude: normalizedPoint.latitude,
 		longitude: normalizedPoint.longitude,
-		label: getLocationLabel(normalizedPoint),
 		visits,
-		accuracy_radius: normalizedPoint.accuracy_radius,
+		accuracyRadius: normalizedPoint.accuracyRadius,
 		current_page: currentPage,
 		currentPageLabel: currentPage || __('Unknown page', 'bimbeau-privacy-analytics'),
 		visitor_id: getRealtimeVisitField(normalizedPoint, ['visitor_id', 'visitorId']),
@@ -325,7 +323,7 @@ export const aggregateRealtimeMapVisits = (visits = []) => {
 
 const mergeRealtimeVisitWithConsentedPoint = (visit, mapPointByCoordinates) => {
 	const normalizedVisit = normalizeRealtimeVisit(visit);
-	const hasVisitAccuracyRadius = Number.isFinite(Number(normalizedVisit?.accuracy_radius)) && Number(normalizedVisit?.accuracy_radius) > 0;
+	const hasVisitAccuracyRadius = Number.isFinite(Number(normalizedVisit?.accuracyRadius)) && Number(normalizedVisit?.accuracyRadius) > 0;
 
 	if (hasVisitAccuracyRadius) {
 		return normalizedVisit;
@@ -341,14 +339,14 @@ const mergeRealtimeVisitWithConsentedPoint = (visit, mapPointByCoordinates) => {
 		return normalizedVisit;
 	}
 
-	const pointAccuracyRadius = Number(matchingPoint?.accuracy_radius ?? matchingPoint?.accuracyRadius ?? null);
+	const pointAccuracyRadius = Number(matchingPoint?.accuracyRadius ?? matchingPoint?.accuracyRadius ?? null);
 	if (!Number.isFinite(pointAccuracyRadius) || pointAccuracyRadius <= 0) {
 		return normalizedVisit;
 	}
 
 	return {
 		...normalizedVisit,
-		accuracy_radius: Math.round(pointAccuracyRadius),
+		accuracyRadius: Math.round(pointAccuracyRadius),
 	};
 };
 
@@ -429,7 +427,6 @@ const getPlaceholderLabelClassName = (label, baseClassName = '') => {
 const VISITOR_TABLE_LABELS = {
 	visitorId: __('Visitor ID hash', 'bimbeau-privacy-analytics'),
 	country: __('Country', 'bimbeau-privacy-analytics'),
-	city: __('City', 'bimbeau-privacy-analytics'),
 	connectionTime: __('Connection time', 'bimbeau-privacy-analytics'),
 	currentPage: __('Current page', 'bimbeau-privacy-analytics'),
 	channel: __('Channel', 'bimbeau-privacy-analytics'),
@@ -712,7 +709,6 @@ const RealtimePanel = () => {
 					visitor_id: `active-${index + 1}`,
 					country_code: '',
 					country: __('Unknown country', 'bimbeau-privacy-analytics'),
-					city: getLocationLabel(normalizedPoint),
 					first_view_at: 0,
 					current_page:
 						normalizedPoint?.currentPage || __('Unknown page', 'bimbeau-privacy-analytics'),
@@ -823,7 +819,6 @@ const RealtimePanel = () => {
 										<thead><tr>
 											<th scope="col">{VISITOR_TABLE_LABELS.visitorId}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.country}</th>
-											<th scope="col">{VISITOR_TABLE_LABELS.city}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.connectionTime}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.currentPage}</th>
 											{isFieldVisible('source_category', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.channel}</th> : null}
@@ -845,13 +840,8 @@ const RealtimePanel = () => {
 													countryFlagFallbackCandidate && ! /^[A-Za-z]{2}$/.test(countryFlagFallbackCandidate)
 														? countryFlagFallbackCandidate
 														: '';
-												const locationLabel = getLocationLabel(visit);
 												const screenResolutionLabel =
 													formatScreenResolution(visit?.screen_resolution) || UNKNOWN_LABEL;
-												const locationLabelClassName = getPlaceholderLabelClassName(
-													locationLabel,
-													'bbpa-location-label'
-												);
 												return (
 													<tr key={buildRealtimeVisitRowKey(visit, index)}>
 														<td>
@@ -864,7 +854,6 @@ const RealtimePanel = () => {
 															)}
 														</td>
 														<td><span className="bbpa-country-label">{hasCountry ? <span className={`bbpa-country-flag ${flagClass}`} role="img" aria-label={countryLabel} /> : <span className="bbpa-country-flag bbpa-country-flag--unknown" role="img" aria-label={__('Unknown country', 'bimbeau-privacy-analytics')} />}{countryFallbackLabel ? <span className="bbpa-country-flag-fallback" aria-hidden="true">{countryFallbackLabel}</span> : null}<span className={getPlaceholderLabelClassName(countryLabel)}>{countryLabel}</span></span></td>
-														<td><span className={locationLabelClassName}>{locationLabel}</span></td>
 														<td>{formatConnectionTime(visit?.first_view_at)}</td>
 												<td className="bbpa-realtime-current-page-cell">
 													<PageTitle>{visit?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}</PageTitle>

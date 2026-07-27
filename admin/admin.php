@@ -1643,27 +1643,6 @@ function bbpa_get_geolocation_admin_fallback_script(): string
         return item.code || item.label || __('Unknown country', 'bimbeau-privacy-analytics');
     };
 
-    var formatCityLabel = function (item) {
-        if (!item) {
-            return __('Unknown', 'bimbeau-privacy-analytics');
-        }
-
-        var city = item.city_name || item.label || __('Unknown', 'bimbeau-privacy-analytics');
-        var region = item.region_code || '';
-        var country = item.country_code || '';
-        var parts = [city];
-
-        if (region) {
-            parts.push(region);
-        }
-
-        if (country) {
-            parts.push(country);
-        }
-
-        return parts.join(', ');
-    };
-
     var DataTable = function (props) {
         var items = Array.isArray(props.items) ? props.items : [];
         var labelFormatter =
