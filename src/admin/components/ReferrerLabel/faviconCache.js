@@ -25,7 +25,14 @@ export const normalizeReferrerHost = (domain) => {
 export const getCachedFavicon = (domain) =>
   cache.get(normalizeReferrerHost(domain));
 
-export const useReferrerFavicons = (domains, enabled) => {
+export const useReferrerFavicons = (domains, enabled, providedFavicons = []) => {
+  domains.forEach((domain, index) => {
+    const host = normalizeReferrerHost(domain);
+    const favicon = providedFavicons[index];
+    if (host && favicon?.is_local && favicon?.url) {
+      cache.set(host, { status: "available", url: favicon.url });
+    }
+  });
   const domainKey = domains.join("\n");
   // The serialized list keeps the host set stable when report rows are recreated.
   // eslint-disable-next-line react-hooks/exhaustive-deps

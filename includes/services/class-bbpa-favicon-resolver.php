@@ -27,18 +27,53 @@ class BBPA_Favicon_Resolver {
         return (string) ($result['url'] ?? '');
     }
 
+    /**
+     * Return an existing deterministic uploads favicon without DNS or HTTP access.
+     *
+     * The file is the durable positive cache; the legacy transient is only a
+     * compatibility hint and is repaired when an existing v4 file is found.
+     */
+    public function get_cached_favicon_for_domain(string $domain): array {
+        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+        if (empty($settings['referrer_favicons_enabled'])) { return []; }
+
+        $host = $this->normalize_observed_host($domain);
+        if ($host === '') { return []; }
+        $cache_key = self::CACHE_KEY_PREFIX . md5($host);
+        $cached = get_transient($cache_key);
+        if (is_array($cached) && $this->is_valid_local_file($cached)) { return $cached; }
+        if ($cached !== false) { delete_transient($cache_key); }
+
+        $uploads = wp_upload_dir(null, false, false);
+        if (!empty($uploads['error']) || empty($uploads['basedir']) || empty($uploads['baseurl'])) { return []; }
+        $directory = trailingslashit($uploads['basedir']) . 'bbpa/favicons';
+        $basename = hash('sha256', $host);
+        foreach (['ico', 'png', 'jpg', 'webp'] as $extension) {
+            $entry = [
+                'path' => trailingslashit($directory) . $basename . '.' . $extension,
+                'url' => trailingslashit($uploads['baseurl']) . 'bbpa/favicons/' . $basename . '.' . $extension,
+                'cache_version' => self::CACHE_VERSION,
+            ];
+            if ($this->is_valid_local_file($entry)) {
+                set_transient($cache_key, $entry, DAY_IN_SECONDS);
+                return $entry;
+            }
+        }
+        return [];
+    }
+
     /** Return a favicon URL only when its corresponding uploads file still exists. */
     public function resolve_favicon_for_domain(string $domain): array {
         $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
         if (empty($settings['referrer_favicons_enabled'])) { return []; }
         $host = $this->normalize_observed_host($domain);
         $this->debug('normalized domain', $host);
-        if ($host === '' || !$this->is_safe_public_host($host)) { return $this->fail($host, 'unsafe or invalid domain', false); }
+        if ($host === '') { return $this->fail($host, 'unsafe or invalid domain', false); }
+        $cached = $this->get_cached_favicon_for_domain($host);
+        if ($cached) { $this->debug('cache', 'durable positive hit'); return $cached; }
+        if (!$this->is_safe_public_host($host)) { return $this->fail($host, 'unsafe or invalid domain', false); }
 
         $cache_key = self::CACHE_KEY_PREFIX . md5($host);
-        $cached = get_transient($cache_key);
-        if (is_array($cached) && $this->is_valid_local_file($cached)) { $this->debug('cache', 'positive hit'); return $cached; }
-        if ($cached !== false) { delete_transient($cache_key); }
         if (get_transient($this->negative_key($host))) { $this->debug('cache', 'negative hit'); return []; }
 
         $homepage = 'https://' . $host . '/';

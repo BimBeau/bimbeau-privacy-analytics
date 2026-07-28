@@ -2053,6 +2053,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         );
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
+            $cached['items'] = $this->add_cached_referrer_favicons($cached['items'] ?? []);
             return new WP_REST_Response($cached, 200);
         }
 
@@ -2092,6 +2093,8 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             },
             $rows ?: []
         );
+
+        $items = $this->add_cached_referrer_favicons($items);
 
         $payload = [
             'range' => $range,
@@ -2905,4 +2908,21 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         BBPA_Logger::channel('Admin')->info($message, $context);
     }
+    /** Add durable local favicons to the visible top-referrer rows only. */
+    private function add_cached_referrer_favicons(array $items): array {
+        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+        if (empty($settings['referrer_favicons_enabled'])) { return $items; }
+        $resolver = new BBPA_Favicon_Resolver();
+        foreach ($items as &$item) {
+            $domain = trim((string) ($item['_series_label'] ?? $item['label'] ?? ''));
+            if ($domain === '') { continue; }
+            $favicon = $resolver->get_cached_favicon_for_domain($domain);
+            if (!empty($favicon['url']) && !empty($favicon['path'])) {
+                $item['favicon'] = ['status' => 'available', 'url' => (string) $favicon['url'], 'is_local' => true];
+            }
+        }
+        unset($item);
+        return $items;
+    }
+
 }

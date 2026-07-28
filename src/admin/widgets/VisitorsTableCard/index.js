@@ -13,6 +13,7 @@ import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
 import BpaCard from '../../components/BpaCard';
 import ReferrerLabel from '../../components/ReferrerLabel';
+import { normalizeReferrerHost, useReferrerFavicons } from '../../components/ReferrerLabel/faviconCache';
 import ReportExportAction from '../../components/ReportExportAction';
 import { ADMIN_CONFIG } from '../../constants';
 import BrandIcon from '../../components/icons/BrandIcon';
@@ -209,6 +210,8 @@ const VisitorsTableCard = ({
 	};
 
 	const items = data?.items || [];
+	const faviconsEnabled = Boolean( ADMIN_CONFIG?.settings?.referrer_favicons_enabled );
+	const favicons = useReferrerFavicons( items.map( ( item ) => item.referrer_domain || '' ), faviconsEnabled, items.map( ( item ) => item.favicon ) );
 	const pagination = data?.pagination || {};
 	const totalPages = pagination.totalPages || 1;
 	const totalItems = pagination.totalItems || items.length;
@@ -461,6 +464,7 @@ const VisitorsTableCard = ({
 															item.referrer_domain ||
 															''
 														}
+														favicon={ item.favicon || favicons.get( normalizeReferrerHost( item.referrer_domain || '' ) ) }
 														label={
 															item.referrer_domain ||
 															__(

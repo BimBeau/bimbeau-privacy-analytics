@@ -193,7 +193,8 @@ const ReportTableCard = ( {
 		);
 	const referrerFavicons = useReferrerFavicons(
 		items.map( ( item ) => item?.label || '' ),
-		faviconsEnabled
+		faviconsEnabled,
+		items.map( ( item ) => item?.favicon )
 	);
 	const pagination = data?.pagination || {};
 	const totalPages =
@@ -519,7 +520,8 @@ const ReportTableCard = ( {
 														? renderLabel(
 																baseLabel,
 																row.item,
-																referrerFavicons.get(
+																row.item?.favicon ||
+															referrerFavicons.get(
 																	normalizeReferrerHost(
 																		row.item?.label || ''
 																	)

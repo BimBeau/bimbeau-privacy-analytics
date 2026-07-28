@@ -607,6 +607,8 @@ class BBPA_Report_Controller {
             $rows
         );
 
+        $items = $this->add_cached_favicons($items, 'referrer_domain');
+
         return new WP_REST_Response(
             [
                 'rawLogsEnabled' => bbpa_raw_logs_enabled(),
@@ -1789,6 +1791,7 @@ class BBPA_Report_Controller {
         );
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
+            $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'referrer_domain');
             return new WP_REST_Response($cached, 200);
         }
 
@@ -1906,6 +1909,8 @@ class BBPA_Report_Controller {
             $rows ?: []
         );
 
+        $items = $this->add_cached_favicons($items, 'referrer_domain');
+
         $payload = [
             'range' => $range,
             'pagination' => [
@@ -1957,6 +1962,7 @@ class BBPA_Report_Controller {
         );
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
+            $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'label');
             return new WP_REST_Response($cached, 200);
         }
 
@@ -2079,6 +2085,8 @@ class BBPA_Report_Controller {
                 $rows ?: []
             );
         }
+
+        $items = $this->add_cached_favicons($items, 'label');
 
         $payload = [
             'range' => $range,
@@ -3041,4 +3049,21 @@ class BBPA_Report_Controller {
         wp_cache_set($cache_key, $payload, 'bbpa_report', $ttl);
         set_transient($cache_key, $payload, $ttl);
     }
+    /** Add only already-local favicons to visible response rows without network access. */
+    private function add_cached_favicons(array $items, string $domain_key): array {
+        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+        if (empty($settings['referrer_favicons_enabled'])) { return $items; }
+        $resolver = new BBPA_Favicon_Resolver();
+        foreach ($items as &$item) {
+            $domain = trim((string) ($item[$domain_key] ?? ''));
+            if ($domain === '') { continue; }
+            $favicon = $resolver->get_cached_favicon_for_domain($domain);
+            if (!empty($favicon['url']) && !empty($favicon['path'])) {
+                $item['favicon'] = ['status' => 'available', 'url' => (string) $favicon['url'], 'is_local' => true];
+            }
+        }
+        unset($item);
+        return $items;
+    }
+
 }
