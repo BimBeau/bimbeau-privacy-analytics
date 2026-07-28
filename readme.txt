@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.122
+Stable tag: 8.45.123
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -251,5 +251,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.122 =
-* Restore the complete shared country choropleth, responsive zoom, pan, pointer controls, and robust country data loading in Free and Pro.
+= 8.45.123 =
+* Strengthen Free/Pro WorldMap parity test and assert shared country engine capabilities.
