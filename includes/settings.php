@@ -542,6 +542,37 @@ function bbpa_get_settings(): array
 }
 
 /**
+ * Return setting keys that must be removed from the shared option.
+ *
+ * Unknown keys are otherwise retained as opaque module data. Extensions may
+ * declare retired keys here once their migration no longer needs the value.
+ *
+ * @return array<int, string>
+ */
+function bbpa_get_deprecated_settings_keys(): array
+{
+    $keys = [
+        'hidden_panels',
+        'hidden_dashboard_cards',
+        'maxmind_api_key',
+        'plugin_label',
+        'strict_mode',
+    ];
+
+    /**
+     * Filter setting keys that are intentionally deleted during general writes.
+     *
+     * @param array<int, string> $keys Deprecated setting keys.
+     */
+    $keys = apply_filters('bbpa_deprecated_settings_keys', $keys);
+    if (!is_array($keys)) {
+        return [];
+    }
+
+    return array_values(array_unique(array_filter(array_map('sanitize_key', $keys))));
+}
+
+/**
  * Resolve the session window used for visit identifiers.
  */
 function bbpa_get_visit_identifier_window_seconds(): int
@@ -575,9 +606,20 @@ function bbpa_update_settings($settings): array
     if (is_array($settings) && isset($settings['geoip_lookup_mode'])) {
         $requested_lookup_mode = sanitize_key((string) $settings['geoip_lookup_mode']);
     }
+    $raw_previous = get_option('bbpa_settings', []);
+    if (!is_array($raw_previous)) {
+        $raw_previous = [];
+    }
     $previous = bbpa_get_settings();
     $settings = apply_filters('bbpa_settings_input_before_sanitize', $settings, $previous);
-    $sanitized = bbpa_sanitize_settings($settings);
+    if (!is_array($settings)) {
+        $settings = [];
+    }
+
+    // Only defaults registered by the loaded runtime define writable keys.
+    // Values owned by absent modules remain opaque and cannot enter sanitizers.
+    $managed_input = array_intersect_key($settings, bbpa_get_settings_defaults());
+    $sanitized = bbpa_sanitize_settings($managed_input);
     $sanitized = apply_filters('bbpa_settings_before_update', $sanitized);
     $lookup_mode = (string) ($sanitized['geoip_lookup_mode'] ?? 'local_database');
     if ($lookup_mode === 'maxmind_api') {
@@ -593,7 +635,11 @@ function bbpa_update_settings($settings): array
             );
         }
     }
-    update_option('bbpa_settings', $sanitized, false);
+    $persisted = array_merge($raw_previous, $sanitized);
+    foreach (bbpa_get_deprecated_settings_keys() as $deprecated_key) {
+        unset($persisted[$deprecated_key]);
+    }
+    update_option('bbpa_settings', $persisted, false);
 
     if (!empty($sanitized['referrer_favicons_enabled']) && empty($previous['referrer_favicons_enabled']) && class_exists('BBPA_Favicon_Resolver')) {
         BBPA_Favicon_Resolver::invalidate_negative_cache();
