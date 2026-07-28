@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
-import { Choropleth } from '@nivo/geo';
+import { Choropleth, projectionById } from '@nivo/geo';
 import { __, sprintf } from '@wordpress/i18n';
 import { Button, Tooltip } from '@wordpress/components';
 import { scaleQuantize } from 'd3-scale';
@@ -141,11 +141,22 @@ export const CountryMarkerLayer = ( {
 	projection,
 	markerData = [],
 } ) => {
-	if ( typeof projection !== 'function' ) {
+	if (
+		typeof projection !== 'function' ||
+		! Array.isArray( features ) ||
+		! Array.isArray( markerData )
+	) {
 		return null;
 	}
 	const markers = new Map(
-		markerData.map( ( item ) => [ normalizeCode( item.id ), item ] )
+		markerData
+			.map( ( item ) => ( {
+				...item,
+				id: normalizeCode( item?.id ),
+				value: normalizeMapValue( item?.value ),
+			} ) )
+			.filter( ( item ) => item.id && item.value > 0 )
+			.map( ( item ) => [ item.id, item ] )
 	);
 	return (
 		<g className="bbpa-world-map__country-markers">
@@ -176,6 +187,31 @@ export const CountryMarkerLayer = ( {
 			} ) }
 		</g>
 	);
+};
+
+export const createCountryMarkerProjection = ( {
+	width,
+	height,
+	zoom = 1,
+} ) => {
+	const safeWidth = Number( width );
+	const safeHeight = Number( height );
+	const safeZoom = normalizeMapValue( zoom ) || 1;
+	const projectionFactory = projectionById?.mercator;
+
+	if (
+		typeof projectionFactory !== 'function' ||
+		! Number.isFinite( safeWidth ) ||
+		! Number.isFinite( safeHeight ) ||
+		safeWidth <= 0 ||
+		safeHeight <= 0
+	) {
+		return null;
+	}
+
+	return projectionFactory()
+		.scale( 130 * safeZoom )
+		.translate( [ safeWidth * 0.5, safeHeight * 0.5 ] );
 };
 
 export const normalizeCountryData = (
@@ -250,6 +286,12 @@ export const WorldChoropleth = ( {
 	);
 	const domain = [ 0, Math.max( 1, sanitizedMaxDomainValue ) ];
 	const colorScale = scaleQuantize().domain( domain ).range( range );
+	const safeMarkerData = Array.isArray( markerData ) ? markerData : [];
+	const markerProjection = createCountryMarkerProjection( {
+		width,
+		height,
+		zoom,
+	} );
 	return (
 		<Choropleth
 			data={ sanitizedData }
@@ -266,16 +308,21 @@ export const WorldChoropleth = ( {
 			borderColor="#ffffff"
 			tooltip={ tooltipRenderer }
 			layers={
-				markerData.length > 0
+				safeMarkerData.length > 0
 					? [
 							'features',
 							( layerProps ) => (
 								<CountryMarkerLayer
 									{ ...layerProps }
-									markerData={ markerData }
+									features={
+										Array.isArray( geoFeatures )
+											? geoFeatures
+											: []
+									}
+									projection={ markerProjection }
+									markerData={ safeMarkerData }
 								/>
 							),
-							'borders',
 					  ]
 					: undefined
 			}
