@@ -468,6 +468,8 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         );
       }
 
+      
+
       const nextAdminCacheVersion = Number(
         payload?.cacheVersion || adminCacheVersion + 1,
       );
