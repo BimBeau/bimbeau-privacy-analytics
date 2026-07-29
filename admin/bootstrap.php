@@ -61,5 +61,3 @@ add_action('admin_head', 'bbpa_add_admin_menu_icon_styles');
 add_action('admin_head', 'bbpa_add_admin_color_scheme_styles');
 add_action('wp_dashboard_setup', 'bbpa_register_dashboard_widget');
 add_filter('rest_url', 'bbpa_filter_rest_url_for_admin_pages', 10, 4);
-add_action('admin_init', 'bbpa_handle_geoip_notice_dismissal');
-add_action('admin_notices', 'bbpa_render_geoip_database_admin_notice');

@@ -115,22 +115,6 @@ msgstr "Appareils"
 msgid "Settings"
 msgstr "Réglages"
 
-#: admin/admin.php
-msgid "Enable country and city reports"
-msgstr "Activer les rapports par pays et par ville"
-
-#: admin/admin.php
-msgid "To display countries and cities in your analytics reports, install the local GeoIP database from the geolocation settings. No GeoIP database is downloaded automatically."
-msgstr "Pour afficher les pays et les villes dans vos statistiques, installez la base GeoIP locale depuis les réglages de géolocalisation. Aucune base GeoIP n’est téléchargée automatiquement."
-
-#: admin/admin.php
-msgid "Configure geolocation"
-msgstr "Configurer la géolocalisation"
-
-#: admin/admin.php
-msgid "Later"
-msgstr "Plus tard"
-
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
 #, php-format
@@ -490,12 +474,12 @@ msgid "%s Visitors"
 msgstr "%s visiteurs"
 
 #: src/admin/AdminAppCore.js
-msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "Impossible de recommencer l’assistant de configuration. Veuillez réessayer."
-
-#: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
 msgstr "Configuration initiale terminée."
+
+#: src/admin/AdminAppCore.js
+msgid "Unable to restart the configuration assistant. Please try again."
+msgstr "Impossible de recommencer l’assistant de configuration. Veuillez réessayer."
 
 #: src/admin/AdminAppCore.js
 msgid "Missing admin configuration."

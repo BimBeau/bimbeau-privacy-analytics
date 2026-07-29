@@ -31,6 +31,11 @@ import {
 import FeatureIcon from './components/icons/FeatureIcon';
 import PeriodFilter from './widgets/PeriodFilter';
 import SetupWizard from './components/SetupWizard';
+import {
+	consumeSetupWizardCompletedFlash,
+	persistSetupWizardCompletedFlash,
+	reloadAdminPage,
+} from './lib/adminReload';
 
 const HEADING_NOTICE_SELECTOR = [
 	'.bbpa-admin-app__heading > .notice',
@@ -114,6 +119,8 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 		[]
 	);
 	const shouldShowMissingGeoIpDatabaseNotice =
+		isSetupWizardLoaded &&
+		setupWizard?.state?.status === 'completed' &&
 		lookupMode === 'local_database' &&
 		! isAuthRequired &&
 		! geoIpStatusError &&
@@ -125,6 +132,12 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 		Number( geoIpDatabaseStatus?.last_success_at || 0 ) <= 0 &&
 		geoIpDatabaseStatus?.local_available !== true &&
 		geoIpDatabaseStatus?.operational !== true;
+
+	useEffect( () => {
+		if ( consumeSetupWizardCompletedFlash() ) {
+			setSetupNotice( { status: 'success', message: __( 'Initial configuration completed.', 'bimbeau-privacy-analytics' ) } );
+		}
+	}, [] );
 
 	useEffect( () => {
 		if ( isAuthRequired ) {
@@ -246,9 +259,8 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 
 	const closeSetupWizard = () => setIsSetupWizardOpen( false );
 	const completeSetupWizard = () => {
-		setIsSetupWizardOpen( false );
-		setSetupWizard( ( current ) => ( { ...current, state: { ...current?.state, status: 'completed' } } ) );
-		setSetupNotice( { status: 'success', message: __( 'Initial configuration completed.', 'bimbeau-privacy-analytics' ) } );
+		persistSetupWizardCompletedFlash();
+		reloadAdminPage();
 	};
 
 	useEffect( () => {
