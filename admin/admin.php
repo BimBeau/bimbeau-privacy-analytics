@@ -693,10 +693,10 @@ function bbpa_redirect_disabled_admin_page(): void
     }
 
     $settings = bbpa_get_settings();
-    $disabled_panels = bbpa_get_effective_hidden_panels($settings);
+    $hidden_by_policy = bbpa_get_effective_hidden_panels($settings);
     $is_panel_disabled = $requested_panel !== 'dashboard'
         && $requested_panel !== 'settings'
-        && in_array($requested_panel, $disabled_panels, true);
+        && in_array($requested_panel, $hidden_by_policy, true);
 
     if ($is_panel_disabled) {
         bbpa_safe_redirect_to_panel_slug($fallback_panel);
@@ -867,9 +867,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
     if (!in_array($current_panel, $panel_names, true)) {
         $current_panel = 'dashboard';
     }
-    $disabled_panels = isset($settings['disabled_panels']) && is_array($settings['disabled_panels'])
-        ? bbpa_normalize_disabled_panels($settings['disabled_panels'])
-        : [];
+    $hidden_by_policy = bbpa_get_effective_hidden_panels($settings);
     $asset_data = [
         'dependencies' => ['wp-element', 'wp-components', 'wp-i18n'],
         'version' => BBPA_VERSION,
@@ -1075,7 +1073,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
         $current_panel,
         $menu_label,
         $debug_enabled,
-        $disabled_panels,
+        $hidden_by_policy,
         $flag_assets,
         $available_panels
     );
@@ -1107,10 +1105,6 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
     );
     var requestedTab = currentPageParams.get('bbpa_tab');
     var topPagesPage = pluginSlug + '-top-pages';
-    var appSettings = window.BBPAAdmin && window.BBPAAdmin.settings
-        ? window.BBPAAdmin.settings
-        : {};
-    var disabledPanels = Array.isArray(appSettings.disabledPanels) ? appSettings.disabledPanels : [];
     var availablePanels = Array.isArray(window.BBPAAdmin && window.BBPAAdmin.panels)
         ? window.BBPAAdmin.panels.map(function (panel) {
             return String(panel && panel.name ? panel.name : '');
@@ -1121,9 +1115,6 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
             return false;
         }
 
-        if (disabledPanels.indexOf(panelName) !== -1) {
-            return true;
-        }
 
         return availablePanels.length > 0 && availablePanels.indexOf(panelName) === -1;
     };
@@ -1478,7 +1469,7 @@ function bbpa_build_admin_localized_payload(
     string $current_panel,
     string $menu_label,
     bool $debug_enabled,
-    array $disabled_panels,
+    array $hidden_by_policy,
     array $flag_assets,
     array $available_panels = []
 ): array {
@@ -1495,7 +1486,6 @@ function bbpa_build_admin_localized_payload(
         'roles' => bbpa_get_roles_for_admin(),
         'panels' => $panels,
         'availablePanels' => $available_panels ?: $panels,
-        'disablablePanels' => bbpa_get_disablable_admin_panels($available_panels ?: $panels),
         'restSources' => bbpa_get_rest_sources(),
         'features' => bbpa_features(),
         'currentPanel' => sanitize_key($current_panel),
@@ -1531,7 +1521,6 @@ function bbpa_build_admin_localized_payload(
             'supportsXlsxExport' => class_exists('ZipArchive'),
             'exportMaxRows' => max(1, (int) apply_filters('bbpa_export_max_rows', 10000)),
             'fieldVisibilityMatrix' => function_exists('bbpa_get_ui_field_visibility_matrix') ? bbpa_get_ui_field_visibility_matrix() : [],
-            'disabledPanels' => array_values(array_map('sanitize_key', $disabled_panels)),
             'postTypes' => bbpa_get_post_types_for_admin(),
             'flagAssets' => $flag_assets,
         ],
@@ -2224,28 +2213,10 @@ function bbpa_get_flag_assets(): array
     ];
 }
 
-/**
- * Get admin panels configuration.
- */
-function bbpa_get_disablable_admin_panels(array $panels): array
-{
-    $allowed_panel_ids = bbpa_get_allowed_disabled_panel_ids();
-
-    return array_values(
-        array_filter(
-            $panels,
-            static function (array $panel) use ($allowed_panel_ids): bool {
-                $name = isset($panel['name']) ? sanitize_key($panel['name']) : '';
-                return $name !== '' && in_array($name, $allowed_panel_ids, true);
-            }
-        )
-    );
-}
-
 function bbpa_get_admin_panels(bool $include_disabled = false): array
 {
     $settings = bbpa_get_settings();
-    $disabled_panels = bbpa_get_effective_hidden_panels($settings);
+    $hidden_by_policy = bbpa_get_effective_hidden_panels($settings);
 
     $panels = [
         [
@@ -2324,20 +2295,20 @@ function bbpa_get_admin_panels(bool $include_disabled = false): array
         ];
     }
 
-    if ($include_disabled || empty($disabled_panels)) {
+    if ($include_disabled || empty($hidden_by_policy)) {
         return $normalized;
     }
 
     return array_values(
         array_filter(
             $normalized,
-            static function (array $panel) use ($disabled_panels): bool {
+            static function (array $panel) use ($hidden_by_policy): bool {
                 $name = $panel['name'] ?? '';
                 if ($name === 'dashboard') {
                     return true;
                 }
 
-                return !in_array($name, $disabled_panels, true);
+                return !in_array($name, $hidden_by_policy, true);
             }
         )
     );
@@ -2348,7 +2319,8 @@ function bbpa_get_admin_panels(bool $include_disabled = false): array
  */
 function bbpa_get_effective_hidden_panels(array $settings): array
 {
-    $hidden_panels = bbpa_normalize_disabled_panels($settings['disabled_panels'] ?? []);
+    $hidden_panels = apply_filters('bbpa_user_hidden_panels', [], $settings);
+    $hidden_panels = is_array($hidden_panels) ? array_values(array_unique(array_filter(array_map('sanitize_key', $hidden_panels)))) : [];
     $is_advanced_stats_enabled = !isset($settings['advanced_stats_enabled'])
         || rest_sanitize_boolean($settings['advanced_stats_enabled']);
 

@@ -13,17 +13,6 @@ const BBPA_LEGACY_PRIVACY_OPTIONS_CLEANUP_COMPLETED = 'bbpa_legacy_privacy_optio
 const BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_MIN = 300;
 const BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_MAX = 86400;
 const BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_DEFAULT = 1800;
-const BBPA_ALLOWED_DISABLED_PANEL_IDS = [
-    'realtime',
-    'top-pages',
-    'acquisition',
-    'referrers',
-    'search-terms',
-    'geolocation',
-    'visitors',
-    'devices',
-    'events',
-];
 const BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS = [
     'geolocation',
     'visitors',
@@ -106,7 +95,6 @@ function bbpa_get_settings_defaults(): array
         'maxmind_account_id' => '',
         'maxmind_license_key' => '',
         'visit_identifier_window_seconds' => BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_DEFAULT,
-        'disabled_panels' => [],
         'export_async_threshold_rows' => 500,
         'delete_data_on_uninstall' => false,
     ];
@@ -328,10 +316,7 @@ function bbpa_sanitize_settings($settings): array
 
     $settings['post_views_column_post_types'] = [];
     $settings['post_stats_metabox_post_types'] = [];
-    $legacy_hidden_panels = $settings['hidden_panels'] ?? [];
-    $disabled_panels = $settings['disabled_panels'] ?? $legacy_hidden_panels;
-    $settings['disabled_panels'] = bbpa_normalize_disabled_panels($disabled_panels);
-    unset($settings['hidden_panels'], $settings['hidden_dashboard_cards']);
+    unset($settings['hidden_dashboard_cards']);
 
     if (isset($settings['maxmind_api_key'])) {
         unset($settings['maxmind_api_key']);
@@ -340,81 +325,6 @@ function bbpa_sanitize_settings($settings): array
     return $settings;
 }
 
-
-/**
- * Return the server-side source of truth for panel identifiers that may be disabled.
- *
- * Extensions that register custom admin panels with the `bbpa_admin_panels` filter may
- * add their own panel identifiers here. Dashboard and settings are always excluded.
- *
- * @return array<int, string>
- */
-function bbpa_get_allowed_disabled_panel_ids(): array
-{
-    /**
-     * Filter the admin panel identifiers that may be disabled by administrators.
-     *
-     * The filter receives the default BBPA panel identifiers. Return panel names as
-     * registered through `bbpa_admin_panels`; values are sanitized, deduplicated, and
-     * dashboard/settings are removed after filtering.
-     *
-     * @param array<int, string> $panel_ids Allowed disabled panel identifiers.
-     */
-    $filtered = apply_filters('bbpa_allowed_disabled_panel_ids', BBPA_ALLOWED_DISABLED_PANEL_IDS);
-    if (!is_array($filtered)) {
-        $filtered = BBPA_ALLOWED_DISABLED_PANEL_IDS;
-    }
-
-    $non_disablable_ids = array_values(array_unique(array_map('sanitize_key', BBPA_NON_DISABLABLE_PANEL_IDS)));
-
-    return array_values(
-        array_filter(
-            array_unique(array_filter(array_map('sanitize_key', $filtered))),
-            static function (string $panel_id) use ($non_disablable_ids): bool {
-                return !in_array($panel_id, $non_disablable_ids, true);
-            }
-        )
-    );
-}
-
-/**
- * Normalize disabled panel identifiers from modern and legacy settings payloads.
- *
- * @param mixed $panel_ids
- * @param array<int, string> $allowed_panel_ids
- * @return array<int, string>
- */
-function bbpa_normalize_disabled_panels($panel_ids, ?array $allowed_panel_ids = null): array
-{
-    $allowed_panel_ids = $allowed_panel_ids ?? bbpa_get_allowed_disabled_panel_ids();
-    $normalized = bbpa_sanitize_settings_identifier_list($panel_ids, $allowed_panel_ids);
-    if (empty($normalized)) {
-        return [];
-    }
-
-    $allowed_panel_ids = array_values(array_unique(array_map('sanitize_key', $allowed_panel_ids)));
-    $non_disablable_ids = array_values(array_unique(array_map('sanitize_key', BBPA_NON_DISABLABLE_PANEL_IDS)));
-
-    $normalized = array_values(
-        array_filter(
-            $normalized,
-            static function (string $panel_id) use ($non_disablable_ids): bool {
-                return !in_array($panel_id, $non_disablable_ids, true);
-            }
-        )
-    );
-
-    if (empty($normalized)) {
-        return [];
-    }
-
-    $allowed_disable_count = count($allowed_panel_ids);
-    if ($allowed_disable_count > 0 && count($normalized) >= $allowed_disable_count) {
-        return [];
-    }
-
-    return $normalized;
-}
 
 /**
  * Sanitize a role list setting value.
@@ -538,7 +448,9 @@ function bbpa_get_settings(): array
     $settings = get_option('bbpa_settings', []);
     $settings = bbpa_sanitize_settings($settings);
 
-    return $settings;
+    // Only keys owned by the loaded edition are visible at runtime. Module data
+    // remains opaque in the stored option until its owning edition is loaded.
+    return array_intersect_key($settings, bbpa_get_settings_defaults());
 }
 
 /**
@@ -552,7 +464,6 @@ function bbpa_get_settings(): array
 function bbpa_get_deprecated_settings_keys(): array
 {
     $keys = [
-        'hidden_panels',
         'hidden_dashboard_cards',
         'maxmind_api_key',
         'plugin_label',

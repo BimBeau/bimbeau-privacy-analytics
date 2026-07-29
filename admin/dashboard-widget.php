@@ -104,12 +104,11 @@ function bbpa_render_dashboard_widget(): void
     }
 
     $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-    $disabled_panels = isset($settings['disabled_panels']) && is_array($settings['disabled_panels'])
-        ? $settings['disabled_panels']
-        : [];
-    $is_visitors_enabled = !in_array('visitors', $disabled_panels, true);
-    $is_top_pages_enabled = !in_array('top-pages', $disabled_panels, true);
-    $is_referrers_enabled = !in_array('referrers', $disabled_panels, true);
+    $hidden_by_policy = apply_filters('bbpa_user_hidden_panels', [], $settings);
+    $hidden_by_policy = is_array($hidden_by_policy) ? $hidden_by_policy : [];
+    $is_visitors_enabled = !in_array('visitors', $hidden_by_policy, true);
+    $is_top_pages_enabled = !in_array('top-pages', $hidden_by_policy, true);
+    $is_referrers_enabled = !in_array('referrers', $hidden_by_policy, true);
 
     $visits = isset($kpis['visits']) ? (int) $kpis['visits'] : 0;
     $page_views = isset($kpis['pageViews']) ? (int) $kpis['pageViews'] : 0;

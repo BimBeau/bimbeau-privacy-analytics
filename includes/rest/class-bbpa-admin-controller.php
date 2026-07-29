@@ -395,11 +395,10 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         }
 
         $settings = bbpa_get_settings();
-        $disabled_panels = isset($settings['disabled_panels']) && is_array($settings['disabled_panels'])
-            ? $settings['disabled_panels']
-            : [];
+        $hidden_by_policy = apply_filters('bbpa_user_hidden_panels', [], $settings);
+        $hidden_by_policy = is_array($hidden_by_policy) ? $hidden_by_policy : [];
 
-        return in_array($panel, $disabled_panels, true);
+        return in_array($panel, $hidden_by_policy, true);
     }
 
     /**

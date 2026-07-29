@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "@wordpress/element";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 import {
   BaseControl,
@@ -21,13 +27,7 @@ import {
 } from "@wordpress/components";
 import Notice from "../components/BrandNotice";
 
-import {
-  chartBar,
-  cloud,
-  comment,
-  desktop,
-  pages,
-} from "@wordpress/icons";
+import { chartBar, cloud, comment, desktop, pages } from "@wordpress/icons";
 import {
   LuBug,
   LuClock,
@@ -54,12 +54,7 @@ import DataState from "../components/DataState";
 import BpaCard from "../components/BpaCard";
 
 
-import {
-  ADMIN_CONFIG,
-  getDisablablePanelOptions,
-  DEFAULT_SETTINGS,
-  ADVANCED_STATS_DEPENDENT_PANELS,
-} from "../constants";
+import { ADMIN_CONFIG, DEFAULT_SETTINGS } from "../constants";
 import { createLogger, createTraceId } from "../logger";
 
 const DEBUG_FLAG = Boolean(
@@ -72,22 +67,31 @@ const AGGREGATED_RETENTION_PRESETS = [
 const OVERVIEW_TOTALS_RETENTION_PRESETS = [365, 730, 1095, 1825, 3650];
 const AGGREGATED_RETENTION_FREQUENCY_PRESETS = [1, 7, 15, 30, 45, 60, 90];
 const GEOIP_UPDATE_FREQUENCY_OPTIONS = [
-  { value: "disabled", label: __("Manual updates only", "bimbeau-privacy-analytics") },
+  {
+    value: "disabled",
+    label: __("Manual updates only", "bimbeau-privacy-analytics"),
+  },
   { value: "15_days", label: __("Every 15 days", "bimbeau-privacy-analytics") },
   { value: "30_days", label: __("Every 30 days", "bimbeau-privacy-analytics") },
   { value: "45_days", label: __("Every 45 days", "bimbeau-privacy-analytics") },
   { value: "60_days", label: __("Every 60 days", "bimbeau-privacy-analytics") },
-  { value: "3_months", label: __("Every 3 months", "bimbeau-privacy-analytics") },
-  { value: "6_months", label: __("Every 6 months", "bimbeau-privacy-analytics") },
+  {
+    value: "3_months",
+    label: __("Every 3 months", "bimbeau-privacy-analytics"),
+  },
+  {
+    value: "6_months",
+    label: __("Every 6 months", "bimbeau-privacy-analytics"),
+  },
   { value: "1_year", label: __("Every year", "bimbeau-privacy-analytics") },
   { value: "2_years", label: __("Every 2 years", "bimbeau-privacy-analytics") },
 ];
 const formatAggregatedRetentionOptionLabel = (days) => {
   if (days < 365) {
-    return __("Keep report details for %(days)s days", "bimbeau-privacy-analytics").replace(
-      "%(days)s",
-      String(days),
-    );
+    return __(
+      "Keep report details for %(days)s days",
+      "bimbeau-privacy-analytics",
+    ).replace("%(days)s", String(days));
   }
 
   const years = Math.round(days / 365);
@@ -95,10 +99,10 @@ const formatAggregatedRetentionOptionLabel = (days) => {
     return __("Keep report details for 1 year", "bimbeau-privacy-analytics");
   }
 
-  return __("Keep report details for %(years)s years", "bimbeau-privacy-analytics").replace(
-    "%(years)s",
-    String(years),
-  );
+  return __(
+    "Keep report details for %(years)s years",
+    "bimbeau-privacy-analytics",
+  ).replace("%(years)s", String(years));
 };
 
 const formatOverviewTotalsRetentionOptionLabel = (days) => {
@@ -107,10 +111,10 @@ const formatOverviewTotalsRetentionOptionLabel = (days) => {
     return __("Keep totals for 1 year", "bimbeau-privacy-analytics");
   }
 
-  return __("Keep totals for %(years)s years", "bimbeau-privacy-analytics").replace(
-    "%(years)s",
-    String(years),
-  );
+  return __(
+    "Keep totals for %(years)s years",
+    "bimbeau-privacy-analytics",
+  ).replace("%(years)s", String(years));
 };
 
 const formatAggregatedRetentionFrequencyOptionLabel = (days) => {
@@ -145,9 +149,18 @@ const DATA_FEATURE_ICONS = {
 };
 
 const DataFeatureGrid = ({ items = [] }) => (
-  <div className="bbpa-settings-data-feature-grid" role="list" aria-label={__("Data scope list", "bimbeau-privacy-analytics")}>
+  <div
+    className="bbpa-settings-data-feature-grid"
+    role="list"
+    aria-label={__("Data scope list", "bimbeau-privacy-analytics")}
+  >
     {items.map((item) => (
-      <Card key={item} className="bbpa-settings-data-chip" size="small" role="listitem">
+      <Card
+        key={item}
+        className="bbpa-settings-data-chip"
+        size="small"
+        role="listitem"
+      >
         <CardBody>
           <Flex gap={2} align="center" justify="flex-start">
             {(() => {
@@ -163,7 +176,9 @@ const DataFeatureGrid = ({ items = [] }) => (
 
               return <Icon icon={cloud} size={18} />;
             })()}
-            <span className="bbpa-settings-data-chip__label">{__(item, "bimbeau-privacy-analytics")}</span>
+            <span className="bbpa-settings-data-chip__label">
+              {__(item, "bimbeau-privacy-analytics")}
+            </span>
           </Flex>
         </CardBody>
       </Card>
@@ -178,38 +193,29 @@ const normalizeArray = (value) => (Array.isArray(value) ? value : []);
 const normalizeSettings = (settings) => ({
   ...DEFAULT_SETTINGS,
   ...(settings || {}),
-  raw_logs_retention_days: Number.parseInt(
-    settings?.raw_logs_retention_days,
-    10,
-  ) || DEFAULT_SETTINGS.raw_logs_retention_days,
-  aggregated_data_retention_days: Number.parseInt(
-    settings?.aggregated_data_retention_days,
-    10,
-  ) || DEFAULT_SETTINGS.aggregated_data_retention_days,
-  overview_totals_retention_days: Number.parseInt(
-    settings?.overview_totals_retention_days,
-    10,
-  ) || DEFAULT_SETTINGS.overview_totals_retention_days,
-  aggregated_retention_frequency_days: Number.parseInt(
-    settings?.aggregated_retention_frequency_days,
-    10,
-  ) || DEFAULT_SETTINGS.aggregated_retention_frequency_days,
-  visit_identifier_window_seconds: Number.parseInt(
-    settings?.visit_identifier_window_seconds,
-    10,
-  ) || DEFAULT_SETTINGS.visit_identifier_window_seconds,
+  raw_logs_retention_days:
+    Number.parseInt(settings?.raw_logs_retention_days, 10) ||
+    DEFAULT_SETTINGS.raw_logs_retention_days,
+  aggregated_data_retention_days:
+    Number.parseInt(settings?.aggregated_data_retention_days, 10) ||
+    DEFAULT_SETTINGS.aggregated_data_retention_days,
+  overview_totals_retention_days:
+    Number.parseInt(settings?.overview_totals_retention_days, 10) ||
+    DEFAULT_SETTINGS.overview_totals_retention_days,
+  aggregated_retention_frequency_days:
+    Number.parseInt(settings?.aggregated_retention_frequency_days, 10) ||
+    DEFAULT_SETTINGS.aggregated_retention_frequency_days,
+  visit_identifier_window_seconds:
+    Number.parseInt(settings?.visit_identifier_window_seconds, 10) ||
+    DEFAULT_SETTINGS.visit_identifier_window_seconds,
   debug_enabled: Boolean(settings?.debug_enabled),
   geoip_update_frequency:
     typeof settings?.geoip_update_frequency === "string" &&
-      settings.geoip_update_frequency
+    settings.geoip_update_frequency
       ? settings.geoip_update_frequency
       : DEFAULT_SETTINGS.geoip_update_frequency,
   
-  disabled_panels: Array.isArray(settings?.disabled_panels)
-    ? settings.disabled_panels
-    : Array.isArray(settings?.hidden_panels)
-      ? settings.hidden_panels
-      : normalizeArray(DEFAULT_SETTINGS.disabled_panels),
+  
   stats_access_roles: Array.isArray(settings?.stats_access_roles)
     ? settings.stats_access_roles
     : normalizeArray(DEFAULT_SETTINGS.stats_access_roles),
@@ -231,7 +237,10 @@ const normalizeSettings = (settings) => ({
   
 });
 
-const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }) => {
+const SettingsPanel = ({
+  onRestartSetupWizard,
+  isSetupWizardRestarting = false,
+}) => {
   const { data, isLoading, error } = useAdminEndpoint("/admin/settings");
   const [formState, setFormState] = useState(() =>
     normalizeSettings(DEFAULT_SETTINGS),
@@ -301,7 +310,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
       }));
   }, [formState.aggregated_data_retention_days]);
   const overviewTotalsRetentionOptions = useMemo(() => {
-    const current = Number.parseInt(formState.overview_totals_retention_days, 10);
+    const current = Number.parseInt(
+      formState.overview_totals_retention_days,
+      10,
+    );
     const values = new Set(OVERVIEW_TOTALS_RETENTION_PRESETS);
     if (!Number.isNaN(current) && current >= 365 && current <= 3650) {
       values.add(current);
@@ -347,7 +359,8 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
     const accountId = String(nextState.maxmind_account_id || "").trim();
     const licenseKey = String(nextState.maxmind_license_key || "").trim();
     const shouldValidate =
-      lookupMode === "maxmind_api" || (requireFilled && (accountId || licenseKey));
+      lookupMode === "maxmind_api" ||
+      (requireFilled && (accountId || licenseKey));
 
     if (!shouldValidate) {
       return errors;
@@ -400,7 +413,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         status: "error",
         message:
           statusError?.message ||
-          __("Unable to load the GeoIP database status.", "bimbeau-privacy-analytics"),
+          __(
+            "Unable to load the GeoIP database status.",
+            "bimbeau-privacy-analytics",
+          ),
       });
     }
   };
@@ -415,7 +431,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         status: "error",
         message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
       });
-      return { ok: false, message: __("Missing REST configuration.", "bimbeau-privacy-analytics") };
+      return {
+        ok: false,
+        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
+      };
     }
 
     const {
@@ -464,7 +483,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         }
         throw new Error(
           payload?.message ||
-          `${__("API error", "bimbeau-privacy-analytics")} (${response.status})`,
+            `${__("API error", "bimbeau-privacy-analytics")} (${
+              response.status
+            })`,
         );
       }
 
@@ -493,7 +514,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         window.BBPA_DEBUG = Boolean(normalized.debug_enabled);
         setValidationErrors({});
         setAdminCacheVersion(nextAdminCacheVersion);
-        setAvailableGranularities(normalizedPayload?.availableGranularities || []);
+        setAvailableGranularities(
+          normalizedPayload?.availableGranularities || [],
+        );
         if (ADMIN_CONFIG?.settings) {
           ADMIN_CONFIG.settings.adminCacheVersion = nextAdminCacheVersion;
         }
@@ -516,7 +539,8 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
       return { ok: true };
     } catch (saveError) {
       const errorMessage =
-        saveError.message || __("Error while saving.", "bimbeau-privacy-analytics");
+        saveError.message ||
+        __("Error while saving.", "bimbeau-privacy-analytics");
       setSaveNotice({
         status: "error",
         message: errorMessage,
@@ -585,7 +609,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         }
         throw new Error(
           payload?.message ||
-          `${__("API error", "bimbeau-privacy-analytics")} (${response.status})`,
+            `${__("API error", "bimbeau-privacy-analytics")} (${
+              response.status
+            })`,
         );
       }
 
@@ -631,14 +657,20 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         status: payload?.status || "success",
         message:
           payload?.message ||
-          __("GeoIP database updated successfully.", "bimbeau-privacy-analytics"),
+          __(
+            "GeoIP database updated successfully.",
+            "bimbeau-privacy-analytics",
+          ),
       });
     } catch (updateError) {
       setGeoIpDbNotice({
         status: "error",
         message:
           updateError?.message ||
-          __("Unable to update the GeoIP database.", "bimbeau-privacy-analytics"),
+          __(
+            "Unable to update the GeoIP database.",
+            "bimbeau-privacy-analytics",
+          ),
       });
     } finally {
       await refreshGeoIpDbStatus();
@@ -773,7 +805,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
 
       if (!response.ok) {
         throw new Error(
-          `${__("API error", "bimbeau-privacy-analytics")} (${response.status})`,
+          `${__("API error", "bimbeau-privacy-analytics")} (${
+            response.status
+          })`,
         );
       }
 
@@ -789,7 +823,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
     } catch (purgeError) {
       setPurgeNotice({
         status: "error",
-        message: purgeError.message || __("Error while purging.", "bimbeau-privacy-analytics"),
+        message:
+          purgeError.message ||
+          __("Error while purging.", "bimbeau-privacy-analytics"),
       });
       logger.error("Purge error", {
         action: "settings.purge.error",
@@ -821,24 +857,32 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
     });
 
     try {
-      const response = await fetch(buildRestUrl("/admin/purge-aggregated-data"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-WP-Nonce": ADMIN_CONFIG.restNonce,
+      const response = await fetch(
+        buildRestUrl("/admin/purge-aggregated-data"),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-WP-Nonce": ADMIN_CONFIG.restNonce,
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         throw new Error(
-          `${__("API error", "bimbeau-privacy-analytics")} (${response.status})`,
+          `${__("API error", "bimbeau-privacy-analytics")} (${
+            response.status
+          })`,
         );
       }
 
       await response.json();
       setPurgeNotice({
         status: "success",
-        message: __("Aggregated analytics data purged.", "bimbeau-privacy-analytics"),
+        message: __(
+          "Aggregated analytics data purged.",
+          "bimbeau-privacy-analytics",
+        ),
       });
       logger.info("Aggregated analytics data purged", {
         action: "settings.purge.aggregated.success",
@@ -847,7 +891,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
     } catch (purgeError) {
       setPurgeNotice({
         status: "error",
-        message: purgeError.message || __("Error while purging.", "bimbeau-privacy-analytics"),
+        message:
+          purgeError.message ||
+          __("Error while purging.", "bimbeau-privacy-analytics"),
       });
       logger.error("Aggregated purge error", {
         action: "settings.purge.aggregated.error",
@@ -887,7 +933,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
     {
       key: "contact_access_roles",
       title: __("Contact", "bimbeau-privacy-analytics"),
-      description: __("Access to the plugin Contact page.", "bimbeau-privacy-analytics"),
+      description: __(
+        "Access to the plugin Contact page.",
+        "bimbeau-privacy-analytics",
+      ),
     },
   ];
   const postTypes = normalizeArray(ADMIN_CONFIG?.settings?.postTypes);
@@ -912,11 +961,6 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
     },
   ];
   const isApiLookupMode = formState.geoip_lookup_mode === "maxmind_api";
-  const isAdvancedStatsDisabled = !formState.advanced_stats_enabled;
-  const disablablePanelOptions = useMemo(
-    () => getDisablablePanelOptions(ADMIN_CONFIG?.disablablePanels),
-    [],
-  );
   
   let eventsPurgeButton = null;
   let eventsPurgeModal = null;
@@ -927,7 +971,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
   const initialSettingsTabName = useMemo(() => {
     const params = new URLSearchParams(window.location.search || "");
     const requestedTab = params.get("bbpa_settings_tab") || "general";
-    return settingsTabs.some((tab) => tab.name === requestedTab) ? requestedTab : "general";
+    return settingsTabs.some((tab) => tab.name === requestedTab)
+      ? requestedTab
+      : "general";
   }, [settingsTabs]);
 
 
@@ -942,7 +988,11 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
         skeletonRows={6}
       />
       {!isLoading && !error && (
-        <TabPanel className="bbpa-settings-tabs" tabs={settingsTabs} initialTabName={initialSettingsTabName}>
+        <TabPanel
+          className="bbpa-settings-tabs"
+          tabs={settingsTabs}
+          initialTabName={initialSettingsTabName}
+        >
           {(tab) => {
             const activeTab = tab?.name || "general";
             return (
@@ -975,7 +1025,12 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                       </CardHeader>
                       <CardBody>
                         {accessRoles.length === 0 && (
-                          <p>{__("No additional roles available.", "bimbeau-privacy-analytics")}</p>
+                          <p>
+                            {__(
+                              "No additional roles available.",
+                              "bimbeau-privacy-analytics",
+                            )}
+                          </p>
                         )}
                         {accessRoles.length > 0 && (
                           <div className="bbpa-general-settings__access-grid">
@@ -1011,7 +1066,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                                             onChange={(isChecked) => {
                                               setFormState((prev) => {
                                                 const nextRoles = new Set(
-                                                  normalizeArray(prev[permission.key]),
+                                                  normalizeArray(
+                                                    prev[permission.key],
+                                                  ),
                                                 );
                                                 if (isChecked) {
                                                   nextRoles.add(role.key);
@@ -1021,20 +1078,28 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
 
                                                 return {
                                                   ...prev,
-                                                  [permission.key]: Array.from(nextRoles),
+                                                  [permission.key]:
+                                                    Array.from(nextRoles),
                                                 };
                                               });
                                             }}
                                           />
                                           <span
-                                            className={`bbpa-general-settings__status-pill ${isAllowed
-                                              ? "bbpa-general-settings__status-pill--visible"
-                                              : "bbpa-general-settings__status-pill--hidden"
-                                              }`}
+                                            className={`bbpa-general-settings__status-pill ${
+                                              isAllowed
+                                                ? "bbpa-general-settings__status-pill--visible"
+                                                : "bbpa-general-settings__status-pill--hidden"
+                                            }`}
                                           >
                                             {isAllowed
-                                              ? __("Allowed", "bimbeau-privacy-analytics")
-                                              : __("Hidden", "bimbeau-privacy-analytics")}
+                                              ? __(
+                                                  "Allowed",
+                                                  "bimbeau-privacy-analytics",
+                                                )
+                                              : __(
+                                                  "Hidden",
+                                                  "bimbeau-privacy-analytics",
+                                                )}
                                           </span>
                                         </div>
                                       );
@@ -1049,80 +1114,7 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                     </Card>
                     {}
 
-                    <Card className="bbpa-general-settings__card">
-                      <CardHeader>
-                        <Flex gap={2} align="center">
-                          <SettingsSectionTitle icon={LuPanelLeft}>
-                            {__("Enabled panels", "bimbeau-privacy-analytics")}
-                          </SettingsSectionTitle>
-                        </Flex>
-                      </CardHeader>
-                      <CardBody>
-                        <fieldset className="bbpa-general-settings__fieldset">
-                          <div className="bbpa-general-settings__panel-grid">
-                            {disablablePanelOptions.map((panel) => {
-                              const isForcedHidden =
-                                isAdvancedStatsDisabled &&
-                                ADVANCED_STATS_DEPENDENT_PANELS.includes(panel.key);
-                              const isVisibleByUserChoice = !normalizeArray(
-                                formState.disabled_panels,
-                              ).includes(panel.key);
-                              const isVisible = isVisibleByUserChoice && !isForcedHidden;
-                              return (
-                                <Card
-                                  key={`disabled-panel-${panel.key}`}
-                                  className="bbpa-general-settings__panel-card"
-                                >
-                                  <CardBody>
-                                    <CheckboxControl
-                                      label={panel.label}
-                                      checked={isVisibleByUserChoice}
-                                      disabled={isForcedHidden}
-                                      onChange={(isChecked) => {
-                                        setFormState((prev) => {
-                                          const nextDisabled = new Set(
-                                            normalizeArray(prev.disabled_panels),
-                                          );
-                                          if (isChecked) {
-                                            nextDisabled.delete(panel.key);
-                                          } else {
-                                            nextDisabled.add(panel.key);
-                                          }
-
-                                          return {
-                                            ...prev,
-                                            disabled_panels: Array.from(nextDisabled),
-                                          };
-                                        });
-                                      }}
-                                    />
-                                    <span
-                                      className={`bbpa-general-settings__status-pill ${isVisible
-                                        ? "bbpa-general-settings__status-pill--visible"
-                                        : "bbpa-general-settings__status-pill--hidden"
-                                        }`}
-                                    >
-                                      {isVisible
-                                        ? __("Visible", "bimbeau-privacy-analytics")
-                                        : __("Hidden", "bimbeau-privacy-analytics")}
-                                    </span>
-                                    {isForcedHidden && (
-                                      <p className="bbpa-general-settings__helper">
-                                        {__(
-                                          'Hidden while "Enable advanced stats after consent" is disabled.',
-                                          "bimbeau-privacy-analytics",
-                                        )}
-                                      </p>
-                                    )}
-                                  </CardBody>
-                                </Card>
-                              );
-                            })}
-                          </div>
-                        </fieldset>
-                      </CardBody>
-                    </Card>
-
+                    {}
                   </div>
                 )}
 
@@ -1139,40 +1131,59 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                           "bimbeau-privacy-analytics",
                         )}
                       </p>
-                      <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-source-title">
-                      <h3 id="bbpa-geoip-source-title">{__("Geolocation source", "bimbeau-privacy-analytics")}</h3>
-                      <SelectControl
-                        label={__("Geolocation source", "bimbeau-privacy-analytics")}
-                        value={formState.geoip_lookup_mode || "local_database"}
-                        options={[
-                          {
-                            label: __(
-                              "Local GeoLite database — recommended",
-                              "bimbeau-privacy-analytics",
-                            ),
-                            value: "local_database",
-                          },
-                          {
-                            label: __("MaxMind API", "bimbeau-privacy-analytics"),
-                            value: "maxmind_api",
-                          },
-                        ]}
-                        onChange={(value) =>
-                          setFormState((prev) => ({
-                            ...prev,
-                            geoip_lookup_mode: value,
-                          }))
-                        }
-                        help={__(
-                          "The local database works without external requests during tracking. The MaxMind API requires your credentials.",
-                          "bimbeau-privacy-analytics",
-                        )}
-                      />
+                      <section
+                        className="bbpa-geoip-settings__block"
+                        aria-labelledby="bbpa-geoip-source-title"
+                      >
+                        <h3 id="bbpa-geoip-source-title">
+                          {__(
+                            "Geolocation source",
+                            "bimbeau-privacy-analytics",
+                          )}
+                        </h3>
+                        <SelectControl
+                          label={__(
+                            "Geolocation source",
+                            "bimbeau-privacy-analytics",
+                          )}
+                          value={
+                            formState.geoip_lookup_mode || "local_database"
+                          }
+                          options={[
+                            {
+                              label: __(
+                                "Local GeoLite database — recommended",
+                                "bimbeau-privacy-analytics",
+                              ),
+                              value: "local_database",
+                            },
+                            {
+                              label: __(
+                                "MaxMind API",
+                                "bimbeau-privacy-analytics",
+                              ),
+                              value: "maxmind_api",
+                            },
+                          ]}
+                          onChange={(value) =>
+                            setFormState((prev) => ({
+                              ...prev,
+                              geoip_lookup_mode: value,
+                            }))
+                          }
+                          help={__(
+                            "The local database works without external requests during tracking. The MaxMind API requires your credentials.",
+                            "bimbeau-privacy-analytics",
+                          )}
+                        />
                       </section>
                       {isApiLookupMode && (
                         <>
                           <TextControl
-                            label={__("MaxMind Account ID", "bimbeau-privacy-analytics")}
+                            label={__(
+                              "MaxMind Account ID",
+                              "bimbeau-privacy-analytics",
+                            )}
                             type="text"
                             help={
                               validationErrors.maxmind_account_id ||
@@ -1252,47 +1263,206 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                           isBusy={isTestingMaxMind}
                           onClick={onTestMaxMindConnection}
                         >
-                          {__("Test MaxMind connection", "bimbeau-privacy-analytics")}
+                          {__(
+                            "Test MaxMind connection",
+                            "bimbeau-privacy-analytics",
+                          )}
                         </Button>
                       ) : (
                         <div className="bbpa-geoip-settings">
-                          <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-automatic-title">
-                            <h3 id="bbpa-geoip-automatic-title">{__("Automatic updates", "bimbeau-privacy-analytics")}</h3>
+                          <section
+                            className="bbpa-geoip-settings__block"
+                            aria-labelledby="bbpa-geoip-automatic-title"
+                          >
+                            <h3 id="bbpa-geoip-automatic-title">
+                              {__(
+                                "Automatic updates",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </h3>
                             <SelectControl
-                              label={__("Automatic updates", "bimbeau-privacy-analytics")}
+                              label={__(
+                                "Automatic updates",
+                                "bimbeau-privacy-analytics",
+                              )}
                               value={formState.geoip_update_frequency}
                               options={GEOIP_UPDATE_FREQUENCY_OPTIONS}
-                              help={__("GeoLite local database download frequency.", "bimbeau-privacy-analytics")}
-                              onChange={(value) => setFormState((prev) => ({ ...prev, geoip_update_frequency: value }))}
+                              help={__(
+                                "GeoLite local database download frequency.",
+                                "bimbeau-privacy-analytics",
+                              )}
+                              onChange={(value) =>
+                                setFormState((prev) => ({
+                                  ...prev,
+                                  geoip_update_frequency: value,
+                                }))
+                              }
                             />
-                            {formState.geoip_update_frequency === "disabled" && <p className="bbpa-geoip-settings__conditional-help">{__("No automatic download will be performed.", "bimbeau-privacy-analytics")}</p>}
+                            {formState.geoip_update_frequency ===
+                              "disabled" && (
+                              <p className="bbpa-geoip-settings__conditional-help">
+                                {__(
+                                  "No automatic download will be performed.",
+                                  "bimbeau-privacy-analytics",
+                                )}
+                              </p>
+                            )}
                           </section>
-                          <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-manual-title">
-                            <h3 id="bbpa-geoip-manual-title">{__("Manual update", "bimbeau-privacy-analytics")}</h3>
-                            <p>{__("Immediately download the latest GeoLite database.", "bimbeau-privacy-analytics")}</p>
-                            <Button variant={geoIpDatabaseMode === "missing" ? "primary" : "secondary"} isBusy={isUpdatingGeoIpDb} disabled={isUpdatingGeoIpDb} onClick={onUpdateGeoIpDatabase}>
+                          <section
+                            className="bbpa-geoip-settings__block"
+                            aria-labelledby="bbpa-geoip-manual-title"
+                          >
+                            <h3 id="bbpa-geoip-manual-title">
+                              {__("Manual update", "bimbeau-privacy-analytics")}
+                            </h3>
+                            <p>
+                              {__(
+                                "Immediately download the latest GeoLite database.",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </p>
+                            <Button
+                              variant={
+                                geoIpDatabaseMode === "missing"
+                                  ? "primary"
+                                  : "secondary"
+                              }
+                              isBusy={isUpdatingGeoIpDb}
+                              disabled={isUpdatingGeoIpDb}
+                              onClick={onUpdateGeoIpDatabase}
+                            >
                               {__("Update now", "bimbeau-privacy-analytics")}
                             </Button>
                           </section>
-                          <section className="bbpa-geoip-settings__block" aria-labelledby="bbpa-geoip-status-title">
-                            <h3 id="bbpa-geoip-status-title">{__("GeoIP database status", "bimbeau-privacy-analytics")}</h3>
-                            {geoIpHasError && <Notice status="error" isDismissible={false}>{__("The last GeoIP database update failed.", "bimbeau-privacy-analytics")}</Notice>}
+                          <section
+                            className="bbpa-geoip-settings__block"
+                            aria-labelledby="bbpa-geoip-status-title"
+                          >
+                            <h3 id="bbpa-geoip-status-title">
+                              {__(
+                                "GeoIP database status",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </h3>
+                            {geoIpHasError && (
+                              <Notice status="error" isDismissible={false}>
+                                {__(
+                                  "The last GeoIP database update failed.",
+                                  "bimbeau-privacy-analytics",
+                                )}
+                              </Notice>
+                            )}
                             <dl className="bbpa-geoip-status">
-                              <div><dt>{__("Status", "bimbeau-privacy-analytics")}</dt><dd><span className={`bbpa-geoip-status__badge bbpa-geoip-status__badge--${geoIpUiStatus.tone}`}>{geoIpUiStatus.label}</span></dd></div>
-                              <div><dt>{__("Last updated", "bimbeau-privacy-analytics")}</dt><dd>{geoIpLastUpdated}</dd></div>
-                              <div><dt>{__("Next update", "bimbeau-privacy-analytics")}</dt><dd>{geoIpNextRun}</dd></div>
-                              <div><dt>{__("Size", "bimbeau-privacy-analytics")}</dt><dd>{geoIpSizeMb}</dd></div>
+                              <div>
+                                <dt>
+                                  {__("Status", "bimbeau-privacy-analytics")}
+                                </dt>
+                                <dd>
+                                  <span
+                                    className={`bbpa-geoip-status__badge bbpa-geoip-status__badge--${geoIpUiStatus.tone}`}
+                                  >
+                                    {geoIpUiStatus.label}
+                                  </span>
+                                </dd>
+                              </div>
+                              <div>
+                                <dt>
+                                  {__(
+                                    "Last updated",
+                                    "bimbeau-privacy-analytics",
+                                  )}
+                                </dt>
+                                <dd>{geoIpLastUpdated}</dd>
+                              </div>
+                              <div>
+                                <dt>
+                                  {__(
+                                    "Next update",
+                                    "bimbeau-privacy-analytics",
+                                  )}
+                                </dt>
+                                <dd>{geoIpNextRun}</dd>
+                              </div>
+                              <div>
+                                <dt>
+                                  {__("Size", "bimbeau-privacy-analytics")}
+                                </dt>
+                                <dd>{geoIpSizeMb}</dd>
+                              </div>
                             </dl>
-                            <details className="bbpa-geoip-technical" open={geoIpHasError || undefined}>
-                              <summary>{__("Technical details", "bimbeau-privacy-analytics")}</summary>
+                            <details
+                              className="bbpa-geoip-technical"
+                              open={geoIpHasError || undefined}
+                            >
+                              <summary>
+                                {__(
+                                  "Technical details",
+                                  "bimbeau-privacy-analytics",
+                                )}
+                              </summary>
                               <dl className="bbpa-geoip-status">
-                                <div><dt>{__("Last attempt", "bimbeau-privacy-analytics")}</dt><dd>{geoIpLastAttempt}</dd></div>
-                                <div><dt>{__("Retry count", "bimbeau-privacy-analytics")}</dt><dd>{Number(geoIpDbStatus?.retry_count || 0)}</dd></div>
-                                <div><dt>{__("Source or service", "bimbeau-privacy-analytics")}</dt><dd>{__("BimBeau GeoIP Database Service", "bimbeau-privacy-analytics")}</dd></div>
-                                {geoIpDbStatus?.last_error_code && <div><dt>{__("Last error code", "bimbeau-privacy-analytics")}</dt><dd><code>{geoIpDbStatus.last_error_code}</code></dd></div>}
+                                <div>
+                                  <dt>
+                                    {__(
+                                      "Last attempt",
+                                      "bimbeau-privacy-analytics",
+                                    )}
+                                  </dt>
+                                  <dd>{geoIpLastAttempt}</dd>
+                                </div>
+                                <div>
+                                  <dt>
+                                    {__(
+                                      "Retry count",
+                                      "bimbeau-privacy-analytics",
+                                    )}
+                                  </dt>
+                                  <dd>
+                                    {Number(geoIpDbStatus?.retry_count || 0)}
+                                  </dd>
+                                </div>
+                                <div>
+                                  <dt>
+                                    {__(
+                                      "Source or service",
+                                      "bimbeau-privacy-analytics",
+                                    )}
+                                  </dt>
+                                  <dd>
+                                    {__(
+                                      "BimBeau GeoIP Database Service",
+                                      "bimbeau-privacy-analytics",
+                                    )}
+                                  </dd>
+                                </div>
+                                {geoIpDbStatus?.last_error_code && (
+                                  <div>
+                                    <dt>
+                                      {__(
+                                        "Last error code",
+                                        "bimbeau-privacy-analytics",
+                                      )}
+                                    </dt>
+                                    <dd>
+                                      <code>
+                                        {geoIpDbStatus.last_error_code}
+                                      </code>
+                                    </dd>
+                                  </div>
+                                )}
                               </dl>
-                              <p>{__("Downloads contact an external service and store the database in the WordPress uploads directory.", "bimbeau-privacy-analytics")}</p>
-                              <p>{__("Activation remains non-blocking when the local database is temporarily unavailable.", "bimbeau-privacy-analytics")}</p>
+                              <p>
+                                {__(
+                                  "Downloads contact an external service and store the database in the WordPress uploads directory.",
+                                  "bimbeau-privacy-analytics",
+                                )}
+                              </p>
+                              <p>
+                                {__(
+                                  "Activation remains non-blocking when the local database is temporarily unavailable.",
+                                  "bimbeau-privacy-analytics",
+                                )}
+                              </p>
                             </details>
                           </section>
                         </div>
@@ -1312,21 +1482,48 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                           </Flex>
                         </FlexItem>
                         <FlexItem>
-                          <span className={`bbpa-privacy-pill ${formState.advanced_stats_enabled ? "bbpa-privacy-pill--warning" : "bbpa-privacy-pill--success"}`}>
+                          <span
+                            className={`bbpa-privacy-pill ${
+                              formState.advanced_stats_enabled
+                                ? "bbpa-privacy-pill--warning"
+                                : "bbpa-privacy-pill--success"
+                            }`}
+                          >
                             {formState.advanced_stats_enabled
-                              ? __("Advanced stats require consent", "bimbeau-privacy-analytics")
-                              : __("Essential stats only", "bimbeau-privacy-analytics")}
+                              ? __(
+                                  "Advanced stats require consent",
+                                  "bimbeau-privacy-analytics",
+                                )
+                              : __(
+                                  "Essential stats only",
+                                  "bimbeau-privacy-analytics",
+                                )}
                           </span>
                         </FlexItem>
                       </Flex>
                     </CardHeader>
                     <CardBody>
-                      <p>{__("Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.", "bimbeau-privacy-analytics")}</p>
+                      <p>
+                        {__(
+                          "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.",
+                          "bimbeau-privacy-analytics",
+                        )}
+                      </p>
                       <Card className="bbpa-settings-advanced-consent-note">
                         <CardBody>
                           <Flex gap={3} align="center">
-                            <strong>{__("Essential stats", "bimbeau-privacy-analytics")}</strong>
-                            <span className="bbpa-privacy-pill bbpa-privacy-pill--success">{__("No consent required", "bimbeau-privacy-analytics")}</span>
+                            <strong>
+                              {__(
+                                "Essential stats",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </strong>
+                            <span className="bbpa-privacy-pill bbpa-privacy-pill--success">
+                              {__(
+                                "No consent required",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </span>
                           </Flex>
                           <p>
                             {__(
@@ -1334,7 +1531,14 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                               "bimbeau-privacy-analytics",
                             )}
                           </p>
-                          <p><strong>{__("Essential data", "bimbeau-privacy-analytics")}</strong></p>
+                          <p>
+                            <strong>
+                              {__(
+                                "Essential data",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </strong>
+                          </p>
                           <DataFeatureGrid
                             items={[
                               "Page views",
@@ -1343,20 +1547,39 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                             ]}
                           />
                           <p>
-                            {__("Script:", "bimbeau-privacy-analytics")} <code>bbpa-essential-tracker.js</code>
+                            {__("Script:", "bimbeau-privacy-analytics")}{" "}
+                            <code>bbpa-essential-tracker.js</code>
                           </p>
                         </CardBody>
                       </Card>
                       <Card className="bbpa-settings-advanced-consent-note">
                         <CardBody>
                           <Flex gap={3} align="center">
-                            <strong>{__("Advanced stats", "bimbeau-privacy-analytics")}</strong>
-                            <span className="bbpa-privacy-pill bbpa-privacy-pill--warning">{__("Requires consent", "bimbeau-privacy-analytics")}</span>
+                            <strong>
+                              {__(
+                                "Advanced stats",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </strong>
+                            <span className="bbpa-privacy-pill bbpa-privacy-pill--warning">
+                              {__(
+                                "Requires consent",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </span>
                           </Flex>
-                          <p>{__("Adds detailed visit insights after consent.", "bimbeau-privacy-analytics")}</p>
+                          <p>
+                            {__(
+                              "Adds detailed visit insights after consent.",
+                              "bimbeau-privacy-analytics",
+                            )}
+                          </p>
                           <ToggleControl
                             className="bbpa-settings-privacy__advanced-toggle"
-                            label={__("Enable advanced stats after consent", "bimbeau-privacy-analytics")}
+                            label={__(
+                              "Enable advanced stats after consent",
+                              "bimbeau-privacy-analytics",
+                            )}
                             help={__(
                               "Your CMP must block it until Statistics / Analytics consent is given.",
                               "bimbeau-privacy-analytics",
@@ -1371,7 +1594,14 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                           />
                           {formState.advanced_stats_enabled ? (
                             <>
-                              <p><strong>{__("Advanced data", "bimbeau-privacy-analytics")}</strong></p>
+                              <p>
+                                <strong>
+                                  {__(
+                                    "Advanced data",
+                                    "bimbeau-privacy-analytics",
+                                  )}
+                                </strong>
+                              </p>
                               <DataFeatureGrid
                                 items={[
                                   "Visit journey",
@@ -1381,25 +1611,49 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                                   "Location",
                                 ]}
                               />
-                              <p><strong>{__("CMP setup", "bimbeau-privacy-analytics")}</strong></p>
-                              <p>{__("Block the advanced stats script until Statistics / Analytics consent is given.", "bimbeau-privacy-analytics")}</p>
                               <p>
-                                {__("Script to block:", "bimbeau-privacy-analytics")} <code>assets/js/bbpa-advanced-tracker.js</code>
+                                <strong>
+                                  {__("CMP setup", "bimbeau-privacy-analytics")}
+                                </strong>
                               </p>
                               <p>
-                                {__("Alternative selectors:", "bimbeau-privacy-analytics")}
+                                {__(
+                                  "Block the advanced stats script until Statistics / Analytics consent is given.",
+                                  "bimbeau-privacy-analytics",
+                                )}
                               </p>
                               <p>
-                                {__("Script ID:", "bimbeau-privacy-analytics")} <code>bbpa-advanced-tracker-js</code>
+                                {__(
+                                  "Script to block:",
+                                  "bimbeau-privacy-analytics",
+                                )}{" "}
+                                <code>assets/js/bbpa-advanced-tracker.js</code>
                               </p>
                               <p>
-                                {__("WordPress handle:", "bimbeau-privacy-analytics")} <code>bbpa-advanced-tracker</code>
+                                {__(
+                                  "Alternative selectors:",
+                                  "bimbeau-privacy-analytics",
+                                )}
+                              </p>
+                              <p>
+                                {__("Script ID:", "bimbeau-privacy-analytics")}{" "}
+                                <code>bbpa-advanced-tracker-js</code>
+                              </p>
+                              <p>
+                                {__(
+                                  "WordPress handle:",
+                                  "bimbeau-privacy-analytics",
+                                )}{" "}
+                                <code>bbpa-advanced-tracker</code>
                               </p>
                               <Button
                                 variant="link"
                                 onClick={() => setShowCmpHelp((prev) => !prev)}
                               >
-                                {__("What is a CMP?", "bimbeau-privacy-analytics")}
+                                {__(
+                                  "What is a CMP?",
+                                  "bimbeau-privacy-analytics",
+                                )}
                               </Button>
                               {showCmpHelp && (
                                 <Card size="small">
@@ -1411,13 +1665,34 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                                       )}
                                     </p>
                                     <p>
-                                      {__("Examples:", "bimbeau-privacy-analytics")} {" "}
-                                      <ExternalLink href="https://www.didomi.io/">Didomi</ExternalLink>,{" "}
-                                      <ExternalLink href="https://www.axeptio.eu/">Axeptio</ExternalLink>,{" "}
-                                      <ExternalLink href="https://www.cookiebot.com/">Cookiebot</ExternalLink>,{" "}
-                                      <ExternalLink href="https://www.cookieyes.com/">CookieYes</ExternalLink>,{" "}
-                                      <ExternalLink href="https://usercentrics.com/">Usercentrics</ExternalLink>,{" "}
-                                      <ExternalLink href="https://www.onetrust.com/">OneTrust</ExternalLink>.
+                                      {__(
+                                        "Examples:",
+                                        "bimbeau-privacy-analytics",
+                                      )}{" "}
+                                      <ExternalLink href="https://www.didomi.io/">
+                                        Didomi
+                                      </ExternalLink>
+                                      ,{" "}
+                                      <ExternalLink href="https://www.axeptio.eu/">
+                                        Axeptio
+                                      </ExternalLink>
+                                      ,{" "}
+                                      <ExternalLink href="https://www.cookiebot.com/">
+                                        Cookiebot
+                                      </ExternalLink>
+                                      ,{" "}
+                                      <ExternalLink href="https://www.cookieyes.com/">
+                                        CookieYes
+                                      </ExternalLink>
+                                      ,{" "}
+                                      <ExternalLink href="https://usercentrics.com/">
+                                        Usercentrics
+                                      </ExternalLink>
+                                      ,{" "}
+                                      <ExternalLink href="https://www.onetrust.com/">
+                                        OneTrust
+                                      </ExternalLink>
+                                      .
                                     </p>
                                     <p>
                                       {__(
@@ -1430,13 +1705,21 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                               )}
                             </>
                           ) : (
-                            <p>{__("Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.", "bimbeau-privacy-analytics")}</p>
+                            <p>
+                              {__(
+                                "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </p>
                           )}
                         </CardBody>
                       </Card>
                       <div className="bbpa-settings-privacy__toggle">
                         <ToggleControl
-                          label={__("Respect DNT / GPC", "bimbeau-privacy-analytics")}
+                          label={__(
+                            "Respect DNT / GPC",
+                            "bimbeau-privacy-analytics",
+                          )}
                           help={__(
                             "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.",
                             "bimbeau-privacy-analytics",
@@ -1466,12 +1749,17 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                         )}
                       </p>
                       <TextControl
-                        label={__("Visitor activity window", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Visitor activity window",
+                          "bimbeau-privacy-analytics",
+                        )}
                         type="number"
                         min={300}
                         max={86400}
                         step={60}
-                        value={String(formState.visit_identifier_window_seconds)}
+                        value={String(
+                          formState.visit_identifier_window_seconds,
+                        )}
                         help={__(
                           "Defines how long activity from the same visitor can remain grouped into one visitor row. After this period of inactivity, BimBeau Privacy Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 hours).",
                           "bimbeau-privacy-analytics",
@@ -1502,7 +1790,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                         )}
                       </p>
                       <ToggleControl
-                        label={__("Clean URL query parameters", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Clean URL query parameters",
+                          "bimbeau-privacy-analytics",
+                        )}
                         help={__(
                           "Remove query parameters from tracked URLs.",
                           "bimbeau-privacy-analytics",
@@ -1517,7 +1808,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                       />
                       <TextControl
                         className="bbpa-settings-url-allowlist-control"
-                        label={__("Allowed query parameters", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Allowed query parameters",
+                          "bimbeau-privacy-analytics",
+                        )}
                         help={__(
                           "Comma-separated list of allowed query keys (used for URL tracking and UTM aggregation).",
                           "bimbeau-privacy-analytics",
@@ -1551,7 +1845,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                         )}
                       </p>
                       <TextControl
-                        label={__("Temporary detailed events retention (days)", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Temporary detailed events retention (days)",
+                          "bimbeau-privacy-analytics",
+                        )}
                         type="number"
                         min={1}
                         max={365}
@@ -1571,7 +1868,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                         }}
                       />
                       <SelectControl
-                        label={__("Report details retention", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Report details retention",
+                          "bimbeau-privacy-analytics",
+                        )}
                         value={String(formState.aggregated_data_retention_days)}
                         options={aggregatedRetentionOptions}
                         help={__(
@@ -1591,7 +1891,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                         }}
                       />
                       <SelectControl
-                        label={__("Long-term totals retention", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Long-term totals retention",
+                          "bimbeau-privacy-analytics",
+                        )}
                         value={String(formState.overview_totals_retention_days)}
                         options={overviewTotalsRetentionOptions}
                         help={__(
@@ -1617,7 +1920,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                         )}
                       </p>
                       <SelectControl
-                        label={__("Automatic cleanup frequency", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Automatic cleanup frequency",
+                          "bimbeau-privacy-analytics",
+                        )}
                         value={String(
                           formState.aggregated_retention_frequency_days,
                         )}
@@ -1656,15 +1962,20 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                       <div>
                         <div className="bbpa-settings-roles__list">
                           {roles.length === 0 && (
-                            <p>{__("No roles available.", "bimbeau-privacy-analytics")}</p>
+                            <p>
+                              {__(
+                                "No roles available.",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </p>
                           )}
                           {roles.map((role) => (
                             <CheckboxControl
                               key={role.key}
                               label={role.label}
-                              checked={normalizeArray(formState.excluded_roles).includes(
-                                role.key,
-                              )}
+                              checked={normalizeArray(
+                                formState.excluded_roles,
+                              ).includes(role.key)}
                               onChange={(isChecked) => {
                                 setFormState((prev) => {
                                   const nextRoles = new Set(
@@ -1744,7 +2055,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                           {__("Run cleanup now", "bimbeau-privacy-analytics")}
                         </Button>
                         <ToggleControl
-                          label={__("Delete plugin tables on uninstall", "bimbeau-privacy-analytics")}
+                          label={__(
+                            "Delete plugin tables on uninstall",
+                            "bimbeau-privacy-analytics",
+                          )}
                           help={__(
                             "When enabled, uninstalling BimBeau Privacy Analytics drops all plugin analytics tables from the WordPress database.",
                             "bimbeau-privacy-analytics",
@@ -1779,7 +2093,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                               setIsPurgeOpen(true);
                             }}
                           >
-                            {__("Delete all analytics data", "bimbeau-privacy-analytics")}
+                            {__(
+                              "Delete all analytics data",
+                              "bimbeau-privacy-analytics",
+                            )}
                           </Button>
                           {eventsPurgeButton}
                         </Flex>
@@ -1792,17 +2109,36 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                   <Card className="bbpa-settings-section">
                     <CardHeader>
                       <SettingsSectionTitle icon={LuBookmark}>
-                        {__("Referring site icons", "bimbeau-privacy-analytics")}
+                        {__(
+                          "Referring site icons",
+                          "bimbeau-privacy-analytics",
+                        )}
                       </SettingsSectionTitle>
                     </CardHeader>
                     <CardBody>
                       <ToggleControl
-                        label={__("Display referring site favicons", "bimbeau-privacy-analytics")}
-                        help={formState.referrer_favicons_enabled
-                          ? __("Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports.", "bimbeau-privacy-analytics")
-                          : __("When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.", "bimbeau-privacy-analytics")}
+                        label={__(
+                          "Display referring site favicons",
+                          "bimbeau-privacy-analytics",
+                        )}
+                        help={
+                          formState.referrer_favicons_enabled
+                            ? __(
+                                "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports.",
+                                "bimbeau-privacy-analytics",
+                              )
+                            : __(
+                                "When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.",
+                                "bimbeau-privacy-analytics",
+                              )
+                        }
                         checked={Boolean(formState.referrer_favicons_enabled)}
-                        onChange={(value) => setFormState((prev) => ({ ...prev, referrer_favicons_enabled: Boolean(value) }))}
+                        onChange={(value) =>
+                          setFormState((prev) => ({
+                            ...prev,
+                            referrer_favicons_enabled: Boolean(value),
+                          }))
+                        }
                       />
                     </CardBody>
                   </Card>
@@ -1811,13 +2147,31 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                   <Card className="bbpa-settings-section bbpa-settings-section--setup-wizard">
                     <CardHeader>
                       <SettingsSectionTitle icon={LuClipboardCheck}>
-                        {__("Configuration assistant", "bimbeau-privacy-analytics")}
+                        {__(
+                          "Configuration assistant",
+                          "bimbeau-privacy-analytics",
+                        )}
                       </SettingsSectionTitle>
                     </CardHeader>
                     <CardBody>
-                      <p>{__("Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.", "bimbeau-privacy-analytics")}</p>
-                      <Button variant="secondary" isBusy={isSetupWizardRestarting} disabled={isSetupWizardRestarting || !onRestartSetupWizard} onClick={onRestartSetupWizard}>
-                        {__("Restart the assistant", "bimbeau-privacy-analytics")}
+                      <p>
+                        {__(
+                          "Restart the assistant from the first step to review the plugin's main settings. Your current settings are preserved and can be changed during the different steps.",
+                          "bimbeau-privacy-analytics",
+                        )}
+                      </p>
+                      <Button
+                        variant="secondary"
+                        isBusy={isSetupWizardRestarting}
+                        disabled={
+                          isSetupWizardRestarting || !onRestartSetupWizard
+                        }
+                        onClick={onRestartSetupWizard}
+                      >
+                        {__(
+                          "Restart the assistant",
+                          "bimbeau-privacy-analytics",
+                        )}
                       </Button>
                     </CardBody>
                   </Card>
@@ -1836,7 +2190,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                 </Button>
                 {isPurgeOpen && (
                   <Modal
-                    title={__("Confirm data purge", "bimbeau-privacy-analytics")}
+                    title={__(
+                      "Confirm data purge",
+                      "bimbeau-privacy-analytics",
+                    )}
                     onRequestClose={() => setIsPurgeOpen(false)}
                   >
                     <p>
@@ -1878,7 +2235,10 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
                 )}
                 {isAggregatedPurgeOpen && (
                   <Modal
-                    title={__("Confirm aggregated data purge", "bimbeau-privacy-analytics")}
+                    title={__(
+                      "Confirm aggregated data purge",
+                      "bimbeau-privacy-analytics",
+                    )}
                     onRequestClose={() => setIsAggregatedPurgeOpen(false)}
                   >
                     <p>
@@ -1934,7 +2294,9 @@ const SettingsPanel = ({ onRestartSetupWizard, isSetupWizardRestarting = false }
           <span className="bbpa-settings-toast__icon" aria-hidden="true">
             {saveToast.status === "success" ? "✓" : "✕"}
           </span>
-          <span className="bbpa-settings-toast__message">{saveToast.message}</span>
+          <span className="bbpa-settings-toast__message">
+            {saveToast.message}
+          </span>
         </Snackbar>
       ) : null}
     </BpaCard>
