@@ -1380,6 +1380,7 @@ const WorldMap = ({
   errorOverride,
   topLeftOverlay = null,
   controlsSlot = null,
+  showGeolocationHelperMessage = true,
 }) => {
   const mapContainerRef = useRef(null);
   const [mapDimensions, setMapDimensions] = useState({
@@ -2562,7 +2563,8 @@ const WorldMap = ({
   }, [isLoading, error, hasData]);
 
   const mapCursor = isDragging ? "grabbing" : "grab";
-  const shouldShowGeolocationHelperMessage = mapMode !== "realtime-markers";
+  const shouldShowGeolocationHelperMessage =
+    showGeolocationHelperMessage && mapMode !== "realtime-markers";
   const noGeolocatedVisitsLabel = isMarkerMapMode(mapMode)
     ? __(
         "No geolocated visits are available. Check your geolocation settings to start collecting city data.",

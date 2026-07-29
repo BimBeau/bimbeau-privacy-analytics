@@ -822,6 +822,7 @@ const RealtimePanel = () => {
 								</Tooltip>
 							}
 							emptyLabel=""
+							showGeolocationHelperMessage={false}
 						/>
 						<div className="bbpa-realtime-panel__visits">
 							{isEssentialOnlyScope ? (
