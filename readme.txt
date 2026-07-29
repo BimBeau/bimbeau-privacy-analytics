@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.133
+Stable tag: 8.45.134
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -142,14 +142,14 @@ Generate the reproducible WordPress.org Free ZIP with:
 npm run build:wordpress-org-free
 ```
 
-`webpack.config.js` writes intermediate compiled assets to `build/`; the packaging scripts place the distributable files under `assets/` in the ZIP. For `BBPA_PACKAGE_TARGET=free`, the human-readable sources and generation steps are:
+`webpack.config.js` writes intermediate compiled assets to `build/`; the packaging scripts place the distributable files under `assets/` in the ZIP. The WordPress.org ZIP contains the compiled runtime, translations, notices, and runtime dependencies; it does not contain `src/`. Human-readable sources and every referenced build script remain available in the public GitHub repository. For `BBPA_PACKAGE_TARGET=free`, the source entries and generation steps are:
 
 * `assets/js/admin.js` is compiled from the Free entry `src/admin/index.free.js` and its imported modules under `src/admin/`.
 * `assets/js/style-admin.js`, `assets/css/style-admin.css`, and the RTL/admin CSS aliases are Webpack outputs of the Free style entry `src/admin/style.free.scss` and its Sass imports. `style-admin.js` is the JavaScript loader emitted for that style entry, not a hand-authored source file.
 * Free builds resolve edition-sensitive admin imports through the aliases in `webpack.config.js`. Those aliases select the human-readable implementations under `src/admin/free-stubs/` and prevent Premium implementations from entering the Free bundle.
 * `assets/js/bbpa-essential-tracker.js` and `assets/js/bbpa-advanced-tracker.js` are the human-readable tracker sources in the public repository. `scripts/build-plugin-dist.sh` copies them into the staged package and `scripts/minify-trackers.js` minifies the staged copies; the repository source files remain readable.
 
-The `npm run build` command rebuilds intermediate admin and i18n output. The `npm run build:wordpress-org-free` command exports the public Free source tree, compiles it with the Free entries and aliases, stages the runtime files, minifies only the staged tracker copies, validates the package, and writes the ZIP and provenance record to `dist/`.
+The `npm run build` command rebuilds intermediate admin and i18n output. The `npm run build:wordpress-org-free` command exports the public Free source tree, compiles it with the Free entries and aliases, stages only explicitly allowlisted runtime roots and files, minifies only the staged tracker copies, validates the generated ZIP itself, and writes the ZIP and provenance record to `dist/`.
 
 == Installation ==
 
@@ -252,5 +252,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.133 =
-* Preserve valid administration JavaScript when Premium settings logic is removed from the WordPress.org Free package.
+= 8.45.134 =
+* Build the WordPress.org Free archive from an explicit runtime allowlist and reject Pro-only source and assets.
