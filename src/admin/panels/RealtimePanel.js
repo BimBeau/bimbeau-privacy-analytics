@@ -466,6 +466,7 @@ const isFieldVisible = (field, isAdvancedEnabled) => {
 };
 
 const RealtimePanel = () => {
+	const isPro = Boolean(ADMIN_CONFIG?.settings?.isPro);
 	const logger = useMemo(
 		() => createLogger({ debugEnabled: () => Boolean(ADMIN_CONFIG?.settings?.debugEnabled) }),
 		[]
@@ -823,7 +824,7 @@ const RealtimePanel = () => {
 										<thead><tr>
 											<th scope="col">{VISITOR_TABLE_LABELS.visitorId}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.country}</th>
-											<th scope="col">{VISITOR_TABLE_LABELS.city}</th>
+											{isPro ? <th scope="col">{VISITOR_TABLE_LABELS.city}</th> : null}
 											<th scope="col">{VISITOR_TABLE_LABELS.connectionTime}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.currentPage}</th>
 											{isFieldVisible('source_category', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.channel}</th> : null}
@@ -864,7 +865,7 @@ const RealtimePanel = () => {
 															)}
 														</td>
 														<td><span className="bbpa-country-label">{hasCountry ? <span className={`bbpa-country-flag ${flagClass}`} role="img" aria-label={countryLabel} /> : <span className="bbpa-country-flag bbpa-country-flag--unknown" role="img" aria-label={__('Unknown country', 'bimbeau-privacy-analytics')} />}{countryFallbackLabel ? <span className="bbpa-country-flag-fallback" aria-hidden="true">{countryFallbackLabel}</span> : null}<span className={getPlaceholderLabelClassName(countryLabel)}>{countryLabel}</span></span></td>
-														<td><span className={locationLabelClassName}>{locationLabel}</span></td>
+														{isPro ? <td><span className={locationLabelClassName}>{locationLabel}</span></td> : null}
 														<td>{formatConnectionTime(visit?.first_view_at)}</td>
 												<td className="bbpa-realtime-current-page-cell">
 													<PageTitle>{visit?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}</PageTitle>
