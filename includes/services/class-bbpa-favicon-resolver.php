@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v5';
+    private const CACHE_VERSION = 'v6';
     private const CACHE_KEY_PREFIX = 'bbpa_favicon_' . self::CACHE_VERSION . '_';
     private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_' . self::CACHE_VERSION . '_';
     private const MAX_BYTES = 262144;
@@ -186,20 +186,45 @@ class BBPA_Favicon_Resolver {
 
         $elements = ['svg', 'g', 'path', 'circle', 'ellipse', 'rect', 'line', 'polyline', 'polygon', 'defs', 'lineargradient', 'radialgradient', 'stop', 'clippath', 'mask', 'title'];
         $attributes = ['xmlns', 'viewbox', 'width', 'height', 'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'transform', 'd', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'rx', 'ry', 'points', 'offset', 'stop-color', 'stop-opacity', 'gradientunits', 'gradienttransform', 'spreadmethod', 'mask', 'clip-path', 'id', 'preserveaspectratio'];
+        $style_properties = ['fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'stop-color', 'stop-opacity'];
         foreach ($dom->getElementsByTagName('*') as $node) {
             if (!in_array(strtolower($node->localName), $elements, true) || ($node->namespaceURI && $node->namespaceURI !== 'http://www.w3.org/2000/svg')) return '';
             foreach (iterator_to_array($node->attributes) as $attribute) {
                 $name = strtolower($attribute->localName);
                 $value = trim($attribute->value);
-                if (str_starts_with($name, 'on') || !in_array($name, $attributes, true)) return '';
-                if (preg_match('/(?:javascript|vbscript|data)\s*:/i', $value) || preg_match('#(?:https?:)?//#i', $value)) return '';
-                if (preg_match_all('/url\s*\(([^)]*)\)/i', $value, $matches)) {
-                    foreach ($matches[1] as $reference) if (!preg_match('/^["\']?#[A-Za-z_][\w:.-]*["\']?$/', trim($reference))) return '';
+                if ($name === 'style') {
+                    if ($value === '' || str_contains($value, '/*') || str_contains($value, '*/') || str_contains($value, '\\')) return '';
+                    $declarations = explode(';', $value);
+                    foreach ($declarations as $index => $declaration) {
+                        $declaration = trim($declaration);
+                        if ($declaration === '' && $index === count($declarations) - 1) continue;
+                        if ($declaration === '' || substr_count($declaration, ':') < 1) return '';
+                        [$property, $property_value] = array_map('trim', explode(':', $declaration, 2));
+                        $property = strtolower($property);
+                        if (!in_array($property, $style_properties, true) || $property_value === '' || !$this->is_safe_svg_value($property_value)) return '';
+                        // Inline CSS takes precedence over presentation attributes, so overwrite them in declaration order.
+                        $node->setAttribute($property, $property_value);
+                    }
+                    $node->removeAttributeNode($attribute);
+                    continue;
                 }
+                if (str_starts_with($name, 'on') || !in_array($name, $attributes, true)) return '';
+                if (!$this->is_safe_svg_value($value)) return '';
             }
         }
         $svg = $dom->saveXML($dom->documentElement);
         return is_string($svg) && strlen($svg) <= self::MAX_BYTES ? $svg : '';
+    }
+
+    /** Accept only passive values and local url(#id) paint references. */
+    private function is_safe_svg_value(string $value): bool {
+        if (preg_match('/(?:javascript|vbscript|data)\s*:/i', $value) || preg_match('#(?:https?:)?//#i', $value)) return false;
+        $url_count = preg_match_all('/url\s*\(([^)]*)\)/i', $value, $matches);
+        if ($url_count === false || preg_match_all('/url\s*\(/i', $value) !== $url_count) return false;
+        if ($url_count > 0) {
+            foreach ($matches[1] as $reference) if (!preg_match('/^["\']?#[A-Za-z_][\w:.-]*["\']?$/', trim($reference))) return false;
+        }
+        return true;
     }
 
     private function extract_favicons_from_html(string $html, string $base): array {

@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.126
+Stable tag: 8.45.127
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,7 +101,7 @@ BimBeau Privacy Policy: https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy-
 
 Referrer favicons are an optional visual feature. They are disabled until an administrator enables them in the first configuration assistant or General settings. When enabled, the WordPress server can contact a referrer domain to retrieve an icon; the domain can see the server IP address and a generic technical User-Agent. The User-Agent contains no site URL.
 
-The administrator browser never requests a favicon from a referrer domain. The plugin validates and stores only ICO, PNG, JPEG, or WebP files in local WordPress uploads storage and returns only that local URL to the admin interface. SVG and active content are rejected. The feature can be disabled at any time; reports then use a local generic icon and make no favicon requests.
+The administrator browser never requests a favicon from a referrer domain. The plugin validates and stores only ICO, PNG, JPEG, WebP, or strictly sanitized passive SVG files in local WordPress uploads storage and returns only that local URL to the admin interface. Safe static inline SVG styles are converted to direct presentation attributes before storage; active content, unknown style properties, and external resources are rejected. The feature can be disabled at any time; reports then use a local generic icon and make no favicon requests.
 
 = MaxMind =
 
@@ -251,5 +251,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.126 =
-* Validate sanitized SVG favicon behavior without rejecting safe generic MIME declarations in WordPress.org Free packages.
+= 8.45.127 =
+* Accept safe static inline SVG favicon styles by normalizing them to presentation attributes while rejecting unsafe CSS and external resources.
