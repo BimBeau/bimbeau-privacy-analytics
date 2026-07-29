@@ -441,10 +441,8 @@ const VISITOR_TABLE_LABELS = {
 };
 
 
-const fieldVisibilityMatrix =
-	ADMIN_CONFIG?.settings?.fieldVisibilityMatrix?.realtime_visits || {};
-
 const fallbackMatrix = {
+	city: 'advanced_after_consent',
 	referrer_domain: 'advanced_after_consent',
 	source_category: 'advanced_after_consent',
 	operating_system: 'advanced_after_consent',
@@ -455,6 +453,8 @@ const fallbackMatrix = {
 };
 
 const isFieldVisible = (field, isAdvancedEnabled) => {
+	const fieldVisibilityMatrix =
+		ADMIN_CONFIG?.settings?.fieldVisibilityMatrix?.realtime_visits || {};
 	const mode = fieldVisibilityMatrix?.[field] || fallbackMatrix?.[field] || 'essential';
 	if (mode === 'never') {
 		return false;
@@ -593,6 +593,15 @@ const RealtimePanel = () => {
 	const dataScope = typeof data?.dataScope === 'string' ? data.dataScope.trim() : '';
 	const isEssentialOnlyScope = dataScope === 'essential_only';
 	const isAdvancedScope = !isEssentialOnlyScope;
+	const countryMapData = useMemo(() => {
+		const countries = Array.isArray(data?.countries) ? data.countries : [];
+		const totalHits = countries.reduce(
+			(total, country) => total + Math.max(0, Number(country?.hits ?? country?.count ?? 0) || 0),
+			0
+		);
+
+		return { countries, totalHits };
+	}, [data?.countries]);
 	const realtimeMapData = useMemo(
 		() => {
 			if (isEssentialOnlyScope) {
@@ -615,6 +624,11 @@ const RealtimePanel = () => {
 		},
 		[data?.consentedMapPoints, isEssentialOnlyScope, realtimeVisits]
 	);
+	const hasRealtimeMarkers = realtimeMapData.items.some(
+		(item) => buildRealtimeGeoKey(item?.latitude, item?.longitude) !== '' && Number(item?.visits) > 0
+	);
+	const shouldRenderRealtimeMarkers = isPro && isAdvancedScope && hasRealtimeMarkers;
+	const shouldShowCity = isPro && isFieldVisible('city', isAdvancedScope);
 	useEffect(() => {
 		const items = realtimeMapData.items;
 		const validCoordinates = items.filter((item) => {
@@ -771,8 +785,8 @@ const RealtimePanel = () => {
 				{!isLoading && !error ? (
 					<div className="bbpa-realtime-panel__body" style={fullscreenContentStyle}>
 						<WorldMap
-							mapMode="realtime-markers"
-							dataOverride={realtimeMapData}
+							mapMode={shouldRenderRealtimeMarkers ? 'realtime-markers' : 'countries'}
+							dataOverride={shouldRenderRealtimeMarkers ? realtimeMapData : countryMapData}
 							isLoadingOverride={false}
 							errorOverride={null}
 							topLeftOverlay={
@@ -824,7 +838,7 @@ const RealtimePanel = () => {
 										<thead><tr>
 											<th scope="col">{VISITOR_TABLE_LABELS.visitorId}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.country}</th>
-											{isPro ? <th scope="col">{VISITOR_TABLE_LABELS.city}</th> : null}
+											{shouldShowCity ? <th scope="col">{VISITOR_TABLE_LABELS.city}</th> : null}
 											<th scope="col">{VISITOR_TABLE_LABELS.connectionTime}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.currentPage}</th>
 											{isFieldVisible('source_category', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.channel}</th> : null}
@@ -865,7 +879,7 @@ const RealtimePanel = () => {
 															)}
 														</td>
 														<td><span className="bbpa-country-label">{hasCountry ? <span className={`bbpa-country-flag ${flagClass}`} role="img" aria-label={countryLabel} /> : <span className="bbpa-country-flag bbpa-country-flag--unknown" role="img" aria-label={__('Unknown country', 'bimbeau-privacy-analytics')} />}{countryFallbackLabel ? <span className="bbpa-country-flag-fallback" aria-hidden="true">{countryFallbackLabel}</span> : null}<span className={getPlaceholderLabelClassName(countryLabel)}>{countryLabel}</span></span></td>
-														{isPro ? <td><span className={locationLabelClassName}>{locationLabel}</span></td> : null}
+														{shouldShowCity ? <td><span className={locationLabelClassName}>{locationLabel}</span></td> : null}
 														<td>{formatConnectionTime(visit?.first_view_at)}</td>
 												<td className="bbpa-realtime-current-page-cell">
 													<PageTitle>{visit?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}</PageTitle>

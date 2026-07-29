@@ -1335,6 +1335,30 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $this->count_unique_displayable_realtime_visits($visits)
         );
 
+        $country_counts = [];
+        foreach ($visits as $visit) {
+            $country_code = strtoupper(sanitize_text_field((string) ($visit['country_code'] ?? '')));
+            if ($country_code === '') {
+                $country_code = 'ZZ';
+            }
+            $country_label = sanitize_text_field((string) ($visit['country'] ?? ''));
+            if ($country_label === '') {
+                $country_label = __('Unknown country', 'bimbeau-privacy-analytics');
+            }
+            if (!isset($country_counts[$country_code])) {
+                $country_counts[$country_code] = [
+                    'code' => $country_code,
+                    'label' => $country_label,
+                    'hits' => 0,
+                ];
+            }
+            $country_counts[$country_code]['hits']++;
+        }
+        $countries = array_values($country_counts);
+        usort($countries, static function (array $left, array $right): int {
+            return ($right['hits'] ?? 0) <=> ($left['hits'] ?? 0);
+        });
+
         $realtime_poll_iteration = $this->increment_realtime_poll_iteration_counter();
         $this->log_info('Realtime snapshot polling summary.', [
             'iteration' => $realtime_poll_iteration,
@@ -1374,6 +1398,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 'activeVisitorsTotal' => $active_visitors_total,
                 'points' => $points,
                 'consentedMapPoints' => $essential_only_mode ? [] : $points,
+                'countries' => $countries,
                 'visits' => $visits,
                 'generatedAt' => $now,
                 'privacyMode' => 'unknown',
