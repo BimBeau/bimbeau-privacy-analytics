@@ -6,14 +6,11 @@ const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
   ? path.resolve(process.env.BBPA_ADMIN_SOURCE_ROOT)
   : path.resolve(__dirname, 'src/admin');
 const freeOverviewPanelStubPath = path.resolve(adminSourceRoot, 'free-stubs/OverviewPanel.js');
-const freeRealtimePanelStubPath = path.resolve(adminSourceRoot, 'free-stubs/RealtimePanel.js');
 const freeEditionAdminRuntimePath = path.resolve(adminSourceRoot, 'free-stubs/edition-admin-runtime.js');
 const freeAdminUrlsStubPath = path.resolve(adminSourceRoot, 'free-stubs/adminUrls.js');
 const freeAdminAliases = {
   [path.resolve(adminSourceRoot, 'edition-admin-runtime')]: freeEditionAdminRuntimePath,
   [path.resolve(adminSourceRoot, 'edition-admin-runtime.js')]: freeEditionAdminRuntimePath,
-  [path.resolve(adminSourceRoot, 'panels/RealtimePanel')]: freeRealtimePanelStubPath,
-  [path.resolve(adminSourceRoot, 'panels/RealtimePanel.js')]: freeRealtimePanelStubPath,
   [path.resolve(adminSourceRoot, 'lib/adminUrls')]: freeAdminUrlsStubPath,
   [path.resolve(adminSourceRoot, 'lib/adminUrls.js')]: freeAdminUrlsStubPath,
   [path.resolve(adminSourceRoot, 'panels/OverviewPanel')]: freeOverviewPanelStubPath,

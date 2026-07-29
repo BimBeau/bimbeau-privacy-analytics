@@ -10,6 +10,9 @@
         "lang": "sv_SE",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      " (%s)": [
+        " (%s)"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s kl. %2$s — %3$s: %4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% andel"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s: %2$s besök%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -40,9 +46,15 @@
       "%s Visitors": [
         "%s besökare"
       ],
+      "%s of total visitors": [
+        "%s av totala besök"
+      ],
       "%s page view": [
         "%s sidvisning",
         "%s sidvisningar"
+      ],
+      "%s visitors": [
+        "%s besökare"
       ],
       "%s visits": [
         "%s besök"
@@ -161,6 +173,15 @@
       "Analytics data purged.": [
         "Analysdata har rensats."
       ],
+      "Approx. %d km": [
+        "Cirka %d km"
+      ],
+      "Approximate city": [
+        "Ungefärlig stad"
+      ],
+      "Approximate position": [
+        "Ungefärlig position"
+      ],
       "Ascending": [
         "Stigande"
       ],
@@ -247,6 +268,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "Stadsdata finns för den valda perioden, men inga städer har användbara koordinater ännu."
       ],
       "Clean URL query parameters": [
         "Rensa URL-frågeparametrar"
@@ -491,7 +518,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Nödvändig statistik körs utan samtycke. Avancerad statistik körs endast efter samtycke till statistik/analys."
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Endast väsentligt omfång: utökade besöksdetaljer och exakta kartmarkörer är inte tillgängliga."
       ],
       "Every 15 days": [
@@ -713,6 +740,9 @@
       "Loading visitors…": [
         "Laddar besökare…"
       ],
+      "Loading world map": [
+        "Laddar världskarta"
+      ],
       "Loading: %s": [
         "Laddar: %s"
       ],
@@ -739,6 +769,12 @@
       ],
       "Manual updates only": [
         "Endast nödvändig statistik"
+      ],
+      "Map legend": [
+        "Kartförklaring"
+      ],
+      "Map zoom controls": [
+        "Kartans zoomkontroller"
       ],
       "MaxMind API": [
         "MaxMind-konto-ID"
@@ -812,9 +848,6 @@
       "No country data available for the selected period.": [
         "Ingen landsdata är tillgänglig för den valda perioden."
       ],
-      "No country data is available yet.": [
-        "Ingen landsdata tillgänglig."
-      ],
       "No data": [
         "Ingen data"
       ],
@@ -835,6 +868,12 @@
       ],
       "No exit pages available.": [
         "Inga utgångssidor tillgängliga."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "Inga geolokaliserade besök är tillgängliga. Kontrollera dina geolokaliseringsinställningar för att börja samla in stadsdata."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "Inga geolokaliserade besök är tillgängliga. Kontrollera dina geolokaliseringsinställningar för att börja samla in landsdata."
       ],
       "No global hourly data available for this period.": [
         "Ingen global timdata är tillgänglig för den här perioden."
@@ -1048,6 +1087,9 @@
       ],
       "Reset": [
         "Återställ"
+      ],
+      "Reset map zoom": [
+        "Återställ kartzoom"
       ],
       "Resolution": [
         "Upplösning"
@@ -1418,11 +1460,14 @@
       "Your configuration is ready": [
         "Din konfiguration är klar"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "Zooma in kartan"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "Zooma ut kartan"
+      ],
+      "approximate country area": [
+        "ungefärligt landsområde"
       ],
       "items": [
         "objekt"

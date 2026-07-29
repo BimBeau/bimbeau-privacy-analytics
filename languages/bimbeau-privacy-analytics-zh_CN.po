@@ -69,8 +69,7 @@ msgid "Dashboard"
 msgstr "仪表盘"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "实时"
 
@@ -100,7 +99,7 @@ msgid "Geolocation"
 msgstr "地理定位"
 
 #: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -291,7 +290,7 @@ msgid "GeoIP database is not available yet."
 msgstr "GeoIP 数据库尚不可用。"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/deviceClassLabel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -301,8 +300,8 @@ msgid "Unknown"
 msgstr "未知页面"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/components/WorldMap/index.js src/admin/free-stubs/RealtimePanel.js
-#: src/admin/lib/countryNames.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -889,31 +888,79 @@ msgid "Return to the download"
 msgstr "返回下载"
 
 #: src/admin/components/WorldMap/index.js
-msgid "World map"
-msgstr "世界地图"
-
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "Zoom in"
+msgid "Zoom in map"
 msgstr "放大地图"
 
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "Zoom out"
+msgid "Zoom out map"
 msgstr "缩小地图"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "重置"
+msgid "Reset map zoom"
+msgstr "重置地图缩放"
+
+#. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#: src/admin/components/WorldMap/index.js
+msgid "%1$s: %2$s visits%3$s"
+msgstr "%1$s：%2$s 次访问%3$s"
+
+#. translators: %s: approximation scope label.
+#: src/admin/components/WorldMap/index.js
+msgid " (%s)"
+msgstr "（%s）"
+
+#: src/admin/components/WorldMap/index.js
+msgid "approximate country area"
+msgstr "近似国家/地区范围"
+
+#: src/admin/components/WorldMap/index.js
+msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
+msgstr "所选时间段已有城市数据，但尚无城市具备可用坐标。"
+
+#: src/admin/components/WorldMap/index.js
+msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
+msgstr "没有可用的地理定位访问。请检查地理定位设置以开始收集城市数据。"
+
+#: src/admin/components/WorldMap/index.js
+msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
+msgstr "没有可用的地理定位访问。请检查地理定位设置以开始收集国家/地区数据。"
+
+#. translators: %s: visitor count.
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "%s visitors"
+msgstr "%s 位访客"
+
+#. translators: %s: share of total visitors.
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "%s of total visitors"
+msgstr "占总访问量的 %s"
 
 #. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s 次访问"
 
-#: src/admin/components/WorldMap/index.js src/admin/panels/GeoCountriesPanel.js
-msgid "No data"
-msgstr "无数据"
+#: src/admin/components/WorldMap/index.js
+msgid "World map"
+msgstr "世界地图"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Loading world map"
+msgstr "正在加载世界地图"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map zoom controls"
+msgstr "地图缩放控件"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "重置"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map legend"
+msgstr "地图图例"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -1008,112 +1055,6 @@ msgstr "此时间段没有可用的全局小时数据。"
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "全局小时热力图需要页面小时聚合数据。"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#, fuzzy
-msgid "Visitor origin unavailable"
-msgstr "没有可用的访客数据。"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
-
-#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/locationLabel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "No available"
-msgstr "不可用"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "访客 ID 哈希"
-
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr ""
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "连接时间"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Current page"
-msgstr "当前页面"
-
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/AcquisitionPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
-msgid "Channel"
-msgstr "入口页面"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "操作系统"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "浏览器"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "浏览器版本"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "设备"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "分辨率"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Fullscreen is unavailable in this browser context."
-msgstr "当前浏览器上下文不支持全屏。"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Loading real-time data…"
-msgstr "正在加载实时数据…"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Visitor"
-msgstr "访客"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Exit fullscreen"
-msgstr "退出全屏"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Fullscreen"
-msgstr "全屏"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#, fuzzy
-msgid "Essential-only scope: enriched visit details are unavailable."
-msgstr "仅基础范围：增强访问详情和精确地图标记不可用。"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr "表格：实时访客"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Unknown page"
-msgstr "未知页面"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "No visits in the current activity window."
-msgstr "当前活动窗口内没有访问。"
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1229,6 +1170,25 @@ msgstr "小时热力图需要所选来源的页面小时聚合数据。"
 msgid "%1$s at %2$s — %3$s: %4$s"
 msgstr "%1$s %2$s — %3$s：%4$s"
 
+#: src/admin/lib/locationLabel.js
+msgid "Approximate position"
+msgstr "大致位置"
+
+#: src/admin/lib/locationLabel.js
+msgid "Approximate city"
+msgstr "大致城市"
+
+#. translators: %d: geolocation accuracy radius in kilometers.
+#: src/admin/lib/locationLabel.js
+msgid "Approx. %d km"
+msgstr "约 %d 公里"
+
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "No available"
+msgstr "不可用"
+
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
 msgstr ""
@@ -1242,6 +1202,12 @@ msgstr "此时间段没有可用的访客画像数据。"
 #, fuzzy
 msgid "Table: Acquisition channels"
 msgstr "表格：访客"
+
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Channel"
+msgstr "入口页面"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -1269,6 +1235,10 @@ msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
 #: src/admin/panels/GeoCountriesPanel.js
+msgid "No data"
+msgstr "无数据"
+
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "Unknown country flag"
 msgstr "未知国家/地区旗帜"
 
@@ -1281,6 +1251,11 @@ msgstr "%s 的旗帜"
 msgid "Top countries"
 msgstr "热门国家/地区"
 
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
+
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "Legacy visits"
@@ -1288,8 +1263,95 @@ msgstr "每日访客"
 
 #: src/admin/panels/RealtimePanel.js
 #, fuzzy
-msgid "No country data is available yet."
-msgstr "没有可用的国家/地区数据。"
+msgid "Visitor origin unavailable"
+msgstr "没有可用的访客数据。"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
+msgstr ""
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "未知页面"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "访客 ID 哈希"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "City"
+msgstr ""
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "连接时间"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "当前页面"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "操作系统"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "浏览器"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "浏览器版本"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "设备"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "分辨率"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Fullscreen is unavailable in this browser context."
+msgstr "当前浏览器上下文不支持全屏。"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Loading real-time data…"
+msgstr "正在加载实时数据…"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgstr "访客"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Exit fullscreen"
+msgstr "退出全屏"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Fullscreen"
+msgstr "全屏"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
+msgstr "仅基础范围：增强访问详情和精确地图标记不可用。"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Table: Real-time visitors"
+msgstr "表格：实时访客"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "No visits in the current activity window."
+msgstr "当前活动窗口内没有访问。"
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1993,6 +2055,7 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
 msgid "Smartphone"
 msgstr "智能手机"
 

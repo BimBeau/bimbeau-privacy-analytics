@@ -10,6 +10,9 @@
         "lang": "el_GR",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      " (%s)": [
+        " (%s)"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s στις %2$s — %3$s: %4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% μερίδιο"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s: %2$s επισκέψεις%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -40,9 +46,15 @@
       "%s Visitors": [
         "%s επισκέπτες"
       ],
+      "%s of total visitors": [
+        "%s των συνολικών επισκέψεων"
+      ],
       "%s page view": [
         "%s προβολή σελίδας",
         "%s προβολές σελίδας"
+      ],
+      "%s visitors": [
+        "%s επισκέπτες"
       ],
       "%s visits": [
         "%s επισκέψεις"
@@ -161,6 +173,15 @@
       "Analytics data purged.": [
         "Τα δεδομένα αναλυτικών εκκαθαρίστηκαν."
       ],
+      "Approx. %d km": [
+        "Περ. %d χλμ"
+      ],
+      "Approximate city": [
+        "Κατά προσέγγιση πόλη"
+      ],
+      "Approximate position": [
+        "Κατά προσέγγιση θέση"
+      ],
       "Ascending": [
         "Αύξουσα"
       ],
@@ -247,6 +268,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "Τα δεδομένα πόλεων είναι διαθέσιμα για την επιλεγμένη περίοδο, αλλά καμία πόλη δεν έχει ακόμη χρησιμοποιήσιμες συντεταγμένες."
       ],
       "Clean URL query parameters": [
         "Καθαρισμός παραμέτρων query URL"
@@ -491,7 +518,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Τα βασικά στατιστικά λειτουργούν χωρίς συναίνεση. Τα προηγμένα στατιστικά λειτουργούν μόνο μετά από συναίνεση για Στατιστικά / Αναλυτικά."
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Πεδίο μόνο βασικών: οι εμπλουτισμένες λεπτομέρειες επίσκεψης και οι ακριβείς δείκτες χάρτη δεν είναι διαθέσιμα."
       ],
       "Every 15 days": [
@@ -713,6 +740,9 @@
       "Loading visitors…": [
         "Φόρτωση επισκεπτών…"
       ],
+      "Loading world map": [
+        "Φόρτωση παγκόσμιου χάρτη"
+      ],
       "Loading: %s": [
         "Φόρτωση: %s"
       ],
@@ -739,6 +769,12 @@
       ],
       "Manual updates only": [
         "Μόνο βασικά στατιστικά"
+      ],
+      "Map legend": [
+        "Υπόμνημα χάρτη"
+      ],
+      "Map zoom controls": [
+        "Χειριστήρια μεγέθυνσης χάρτη"
       ],
       "MaxMind API": [
         "ID λογαριασμού MaxMind"
@@ -812,9 +848,6 @@
       "No country data available for the selected period.": [
         "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας για την επιλεγμένη περίοδο."
       ],
-      "No country data is available yet.": [
-        "Δεν υπάρχουν διαθέσιμα δεδομένα χώρας."
-      ],
       "No data": [
         "Δεν υπάρχουν δεδομένα"
       ],
@@ -835,6 +868,12 @@
       ],
       "No exit pages available.": [
         "Δεν υπάρχουν διαθέσιμες σελίδες εξόδου."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "Δεν υπάρχουν διαθέσιμες γεωεντοπισμένες επισκέψεις. Ελέγξτε τις ρυθμίσεις γεωεντοπισμού για να ξεκινήσει η συλλογή δεδομένων πόλης."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "Δεν υπάρχουν διαθέσιμες γεωεντοπισμένες επισκέψεις. Ελέγξτε τις ρυθμίσεις γεωεντοπισμού για να ξεκινήσει η συλλογή δεδομένων χώρας."
       ],
       "No global hourly data available for this period.": [
         "Δεν υπάρχουν διαθέσιμα καθολικά ωριαία δεδομένα για αυτήν την περίοδο."
@@ -1048,6 +1087,9 @@
       ],
       "Reset": [
         "Επαναφορά"
+      ],
+      "Reset map zoom": [
+        "Επαναφορά μεγέθυνσης χάρτη"
       ],
       "Resolution": [
         "Ανάλυση"
@@ -1418,11 +1460,14 @@
       "Your configuration is ready": [
         "Η διαμόρφωσή σας είναι έτοιμη"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "Μεγέθυνση χάρτη"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "Σμίκρυνση χάρτη"
+      ],
+      "approximate country area": [
+        "κατά προσέγγιση περιοχή χώρας"
       ],
       "items": [
         "στοιχεία"

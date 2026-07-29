@@ -10,6 +10,9 @@
         "lang": "es_ES",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      " (%s)": [
+        " (%s)"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s a las %2$s — %3$s: %4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% de cuota"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s: %2$s visitas%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -40,9 +46,15 @@
       "%s Visitors": [
         "%s visitantes"
       ],
+      "%s of total visitors": [
+        "%s del total de visitas"
+      ],
       "%s page view": [
         "%s página vista",
         "%s páginas vistas"
+      ],
+      "%s visitors": [
+        "%s visitantes"
       ],
       "%s visits": [
         "%s visitas"
@@ -161,6 +173,15 @@
       "Analytics data purged.": [
         "Datos de analítica purgados."
       ],
+      "Approx. %d km": [
+        "Aprox. %d km"
+      ],
+      "Approximate city": [
+        "Ciudad aproximada"
+      ],
+      "Approximate position": [
+        "Posición aproximada"
+      ],
       "Ascending": [
         "Ascendente"
       ],
@@ -247,6 +268,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "Hay datos de ciudades para el período seleccionado, pero ninguna ciudad tiene aún coordenadas utilizables."
       ],
       "Clean URL query parameters": [
         "Limpiar parámetros de consulta de URL"
@@ -491,7 +518,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Las estadísticas esenciales se ejecutan sin consentimiento. Las estadísticas avanzadas solo se ejecutan tras el consentimiento de Estadísticas / Analítica."
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Ámbito solo esencial: los detalles de visita enriquecidos y los marcadores precisos del mapa no están disponibles."
       ],
       "Every 15 days": [
@@ -713,6 +740,9 @@
       "Loading visitors…": [
         "Cargando visitantes…"
       ],
+      "Loading world map": [
+        "Cargando mapa mundial"
+      ],
       "Loading: %s": [
         "Cargando: %s"
       ],
@@ -739,6 +769,12 @@
       ],
       "Manual updates only": [
         "Solo estadísticas esenciales"
+      ],
+      "Map legend": [
+        "Leyenda del mapa"
+      ],
+      "Map zoom controls": [
+        "Controles de zoom del mapa"
       ],
       "MaxMind API": [
         "ID de cuenta de MaxMind"
@@ -812,9 +848,6 @@
       "No country data available for the selected period.": [
         "No hay datos de país disponibles para el período seleccionado."
       ],
-      "No country data is available yet.": [
-        "No hay datos de país disponibles."
-      ],
       "No data": [
         "Sin datos"
       ],
@@ -835,6 +868,12 @@
       ],
       "No exit pages available.": [
         "No hay páginas de salida disponibles."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "No hay visitas geolocalizadas disponibles. Revisa tus ajustes de geolocalización para empezar a recopilar datos de ciudad."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "No hay visitas geolocalizadas disponibles. Revisa tus ajustes de geolocalización para empezar a recopilar datos de país."
       ],
       "No global hourly data available for this period.": [
         "No hay datos horarios globales disponibles para este período."
@@ -1048,6 +1087,9 @@
       ],
       "Reset": [
         "Restablecer"
+      ],
+      "Reset map zoom": [
+        "Restablecer zoom del mapa"
       ],
       "Resolution": [
         "Resolución"
@@ -1418,11 +1460,14 @@
       "Your configuration is ready": [
         "Tu configuración está lista"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "Acercar mapa"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "Alejar mapa"
+      ],
+      "approximate country area": [
+        "área aproximada del país"
       ],
       "items": [
         "elementos"

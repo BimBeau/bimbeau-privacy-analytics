@@ -10,6 +10,9 @@
         "lang": "da_DK",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      " (%s)": [
+        " (%s)"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s kl. %2$s — %3$s: %4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% andel"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s: %2$s besøg%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -40,9 +46,15 @@
       "%s Visitors": [
         "%s besøgende"
       ],
+      "%s of total visitors": [
+        "%s af samlede besøg"
+      ],
       "%s page view": [
         "%s sidevisning",
         "%s sidevisninger"
+      ],
+      "%s visitors": [
+        "%s besøgende"
       ],
       "%s visits": [
         "%s besøg"
@@ -161,6 +173,15 @@
       "Analytics data purged.": [
         "Analysedata blev slettet."
       ],
+      "Approx. %d km": [
+        "Ca. %d km"
+      ],
+      "Approximate city": [
+        "Omtrentlig by"
+      ],
+      "Approximate position": [
+        "Omtrentlig position"
+      ],
       "Ascending": [
         "Stigende"
       ],
@@ -247,6 +268,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "Bydata er tilgængelige for den valgte periode, men ingen byer har brugbare koordinater endnu."
       ],
       "Clean URL query parameters": [
         "Rens URL-forespørgselsparametre"
@@ -491,7 +518,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Essentiel statistik kører uden samtykke. Avanceret statistik kører kun efter samtykke til Statistik / Analyse."
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Kun essentielt omfang: berigede besøgsdetaljer og præcise kortmarkører er ikke tilgængelige."
       ],
       "Every 15 days": [
@@ -713,6 +740,9 @@
       "Loading visitors…": [
         "Indlæser besøgende…"
       ],
+      "Loading world map": [
+        "Indlæser verdenskort"
+      ],
       "Loading: %s": [
         "Indlæser: %s"
       ],
@@ -739,6 +769,12 @@
       ],
       "Manual updates only": [
         "Kun essentiel statistik"
+      ],
+      "Map legend": [
+        "Kortforklaring"
+      ],
+      "Map zoom controls": [
+        "Kontroller til kortzoom"
       ],
       "MaxMind API": [
         "MaxMind-konto-id"
@@ -812,9 +848,6 @@
       "No country data available for the selected period.": [
         "Ingen landedata tilgængelige for den valgte periode."
       ],
-      "No country data is available yet.": [
-        "Ingen landedata tilgængelige."
-      ],
       "No data": [
         "Ingen data"
       ],
@@ -835,6 +868,12 @@
       ],
       "No exit pages available.": [
         "Ingen udgangssider tilgængelige."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "Der er ingen geolokaliserede besøg tilgængelige. Kontrollér dine geolokaliseringsindstillinger for at begynde at indsamle bydata."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "Der er ingen geolokaliserede besøg tilgængelige. Kontrollér dine geolokaliseringsindstillinger for at begynde at indsamle landedata."
       ],
       "No global hourly data available for this period.": [
         "Ingen globale timedata tilgængelige for denne periode."
@@ -1048,6 +1087,9 @@
       ],
       "Reset": [
         "Nulstil"
+      ],
+      "Reset map zoom": [
+        "Nulstil kortzoom"
       ],
       "Resolution": [
         "Opløsning"
@@ -1418,11 +1460,14 @@
       "Your configuration is ready": [
         "Din konfiguration er klar"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "Zoom ind på kort"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "Zoom ud på kort"
+      ],
+      "approximate country area": [
+        "omtrentligt landområde"
       ],
       "items": [
         "elementer"

@@ -1,0 +1,10 @@
+@keyframes bbpa-world-map-city-marker-pulse {
+  0%, 100% {
+    transform: scale(1);
+    fill-opacity: var(--bbpa-city-marker-opacity);
+  }
+  50% {
+    transform: scale(var(--bbpa-city-marker-pulse-scale));
+    fill-opacity: min(1, calc(var(--bbpa-city-marker-opacity) + 0.12));
+  }
+}

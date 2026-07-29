@@ -10,6 +10,9 @@
         "lang": "zh_CN",
         "plural-forms": "nplurals=1; plural=0;"
       },
+      " (%s)": [
+        "（%s）"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s %2$s — %3$s：%4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% 占比"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s：%2$s 次访问%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s：%2$s，%3$s"
@@ -40,8 +46,14 @@
       "%s Visitors": [
         "%s 位访客"
       ],
+      "%s of total visitors": [
+        "占总访问量的 %s"
+      ],
       "%s page view": [
         "%s 次页面浏览"
+      ],
+      "%s visitors": [
+        "%s 位访客"
       ],
       "%s visits": [
         "%s 次访问"
@@ -160,6 +172,15 @@
       "Analytics data purged.": [
         "分析数据已清除。"
       ],
+      "Approx. %d km": [
+        "约 %d 公里"
+      ],
+      "Approximate city": [
+        "大致城市"
+      ],
+      "Approximate position": [
+        "大致位置"
+      ],
       "Ascending": [
         "升序"
       ],
@@ -246,6 +267,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "所选时间段已有城市数据，但尚无城市具备可用坐标。"
       ],
       "Clean URL query parameters": [
         "清理 URL 查询参数"
@@ -490,7 +517,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "基础统计无需同意即可运行。高级统计仅在统计/分析同意后运行。"
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "仅基础范围：增强访问详情和精确地图标记不可用。"
       ],
       "Every 15 days": [
@@ -712,6 +739,9 @@
       "Loading visitors…": [
         "正在加载访客…"
       ],
+      "Loading world map": [
+        "正在加载世界地图"
+      ],
       "Loading: %s": [
         "正在加载：%s"
       ],
@@ -738,6 +768,12 @@
       ],
       "Manual updates only": [
         "仅基础统计"
+      ],
+      "Map legend": [
+        "地图图例"
+      ],
+      "Map zoom controls": [
+        "地图缩放控件"
       ],
       "MaxMind API": [
         "MaxMind 账户 ID"
@@ -811,9 +847,6 @@
       "No country data available for the selected period.": [
         "所选时间段没有可用的国家/地区数据。"
       ],
-      "No country data is available yet.": [
-        "没有可用的国家/地区数据。"
-      ],
       "No data": [
         "无数据"
       ],
@@ -834,6 +867,12 @@
       ],
       "No exit pages available.": [
         "没有可用的退出页面。"
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "没有可用的地理定位访问。请检查地理定位设置以开始收集城市数据。"
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "没有可用的地理定位访问。请检查地理定位设置以开始收集国家/地区数据。"
       ],
       "No global hourly data available for this period.": [
         "此时间段没有可用的全局小时数据。"
@@ -1047,6 +1086,9 @@
       ],
       "Reset": [
         "重置"
+      ],
+      "Reset map zoom": [
+        "重置地图缩放"
       ],
       "Resolution": [
         "分辨率"
@@ -1417,11 +1459,14 @@
       "Your configuration is ready": [
         "您的配置已准备就绪"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "放大地图"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "缩小地图"
+      ],
+      "approximate country area": [
+        "近似国家/地区范围"
       ],
       "items": [
         "项"

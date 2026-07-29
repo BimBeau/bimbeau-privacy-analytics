@@ -3,9 +3,9 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v4';
-    private const CACHE_KEY_PREFIX = 'bbpa_favicon_v4_';
-    private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_v4_';
+    private const CACHE_VERSION = 'v5';
+    private const CACHE_KEY_PREFIX = 'bbpa_favicon_' . self::CACHE_VERSION . '_';
+    private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_' . self::CACHE_VERSION . '_';
     private const MAX_BYTES = 262144;
     private const MAX_REDIRECTS = 3;
 
@@ -31,7 +31,7 @@ class BBPA_Favicon_Resolver {
      * Return an existing deterministic uploads favicon without DNS or HTTP access.
      *
      * The file is the durable positive cache; the legacy transient is only a
-     * compatibility hint and is repaired when an existing v4 file is found.
+     * compatibility hint and is repaired when an existing file is found.
      */
     public function get_cached_favicon_for_domain(string $domain): array {
         $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
@@ -48,7 +48,7 @@ class BBPA_Favicon_Resolver {
         if (!empty($uploads['error']) || empty($uploads['basedir']) || empty($uploads['baseurl'])) { return []; }
         $directory = trailingslashit($uploads['basedir']) . 'bbpa/favicons';
         $basename = hash('sha256', $host);
-        foreach (['ico', 'png', 'jpg', 'webp'] as $extension) {
+        foreach (['ico', 'png', 'jpg', 'webp', 'svg'] as $extension) {
             $entry = [
                 'path' => trailingslashit($directory) . $basename . '.' . $extension,
                 'url' => trailingslashit($uploads['baseurl']) . 'bbpa/favicons/' . $basename . '.' . $extension,
@@ -144,31 +144,62 @@ class BBPA_Favicon_Resolver {
     }
 
     private function download_and_store(string $url, string $host): array {
-        $response = $this->request($url, 'image/x-icon,image/vnd.microsoft.icon,image/png,image/jpeg,image/webp,application/octet-stream');
+        $response = $this->request($url, 'image/x-icon,image/vnd.microsoft.icon,image/png,image/jpeg,image/webp,image/svg+xml,application/octet-stream');
         if (!$response) return [];
         $this->debug('candidate HTTP response', $this->redact_url($response['url']) . ' [200]');
         $this->debug('candidate Content-Type', $response['content_type']);
-        $format = $this->validate_image((string) $response['body'], (string) $response['content_type']);
-        $this->debug('validation result', $format === '' ? 'rejected' : 'accepted ' . $format);
-        if ($format === '') { $this->set_failure('favicon content validation failed', false); return []; }
+        $validated = $this->validate_image((string) $response['body'], (string) $response['content_type']);
+        $this->debug('validation result', $validated === [] ? 'rejected' : 'accepted ' . $validated['format']);
+        if ($validated === []) { $this->set_failure('favicon content validation failed', false); return []; }
         $uploads = wp_upload_dir(null, false, false);
         if (!empty($uploads['error']) || empty($uploads['basedir']) || empty($uploads['baseurl'])) { $this->set_failure('uploads directory unavailable', true); return []; }
         $directory = trailingslashit($uploads['basedir']) . 'bbpa/favicons';
-        $name = hash('sha256', $host) . '.' . $format;
+        $name = hash('sha256', $host) . '.' . $validated['format'];
         $path = trailingslashit($directory) . $name;
         $service = new BBPA_Filesystem_Service();
-        if (!$service->ensure_directory($directory) || !$service->put_contents($path, (string) $response['body']) || !$service->exists($path) || !is_readable($path)) { $this->set_failure('local favicon write failed', true); return []; }
+        if (!$service->ensure_directory($directory) || !$service->put_contents($path, $validated['body']) || !$service->exists($path) || !is_readable($path)) { $this->set_failure('local favicon write failed', true); return []; }
         return ['path' => $path, 'url' => trailingslashit($uploads['baseurl']) . 'bbpa/favicons/' . $name, 'cache_version' => self::CACHE_VERSION];
     }
 
-    private function validate_image(string $body, string $content_type): string {
-        if ($body === '' || strlen($body) > self::MAX_BYTES || preg_match('/<(?:html|script)/i', substr($body, 0, 512))) return '';
+    /** Return the detected format together with the exact bytes safe to persist. */
+    private function validate_image(string $body, string $content_type): array {
+        if ($body === '' || strlen($body) > self::MAX_BYTES || preg_match('/<html\b/i', substr($body, 0, 512))) return [];
         $media_type = strtolower(trim(explode(';', $content_type, 2)[0]));
-        if ($media_type !== '' && !in_array($media_type, ['image/x-icon', 'image/vnd.microsoft.icon', 'image/png', 'image/jpeg', 'image/webp', 'application/octet-stream'], true)) return '';
-        if (preg_match('/^\s*(?:<\?xml[^>]*>\s*)?<svg\b/i', $body)) return '';
+        if ($media_type !== '' && !in_array($media_type, ['image/x-icon', 'image/vnd.microsoft.icon', 'image/png', 'image/jpeg', 'image/webp', 'image/svg+xml', 'application/octet-stream'], true)) return [];
+        if (preg_match('/^\s*(?:<\?xml[^>]*>\s*)?<svg\b/i', $body)) {
+            $sanitized = $this->sanitize_svg($body);
+            return $sanitized === '' ? [] : ['format' => 'svg', 'body' => $sanitized];
+        }
         $signatures = ['png' => "\x89PNG\r\n\x1a\n", 'jpg' => "\xff\xd8\xff", 'webp' => 'RIFF', 'ico' => "\x00\x00\x01\x00"];
-        foreach ($signatures as $format => $signature) if (str_starts_with($body, $signature) && ($format !== 'webp' || substr($body, 8, 4) === 'WEBP')) return $format;
-        return '';
+        foreach ($signatures as $format => $signature) if (str_starts_with($body, $signature) && ($format !== 'webp' || substr($body, 8, 4) === 'WEBP')) return ['format' => $format, 'body' => $body];
+        return [];
+    }
+
+    /** Parse a small, static SVG vocabulary and reject active or externally loaded content. */
+    private function sanitize_svg(string $body): string {
+        if (!class_exists('DOMDocument') || preg_match('/<!DOCTYPE|<!ENTITY/i', $body)) return '';
+        $previous = libxml_use_internal_errors(true);
+        $dom = new DOMDocument();
+        $loaded = $dom->loadXML($body, LIBXML_NONET | LIBXML_NOBLANKS | LIBXML_NOERROR | LIBXML_NOWARNING);
+        $errors = libxml_get_errors(); libxml_clear_errors(); libxml_use_internal_errors($previous);
+        if (!$loaded || $errors || $dom->doctype || !$dom->documentElement || strtolower($dom->documentElement->localName) !== 'svg') return '';
+
+        $elements = ['svg', 'g', 'path', 'circle', 'ellipse', 'rect', 'line', 'polyline', 'polygon', 'defs', 'lineargradient', 'radialgradient', 'stop', 'clippath', 'mask', 'title'];
+        $attributes = ['xmlns', 'viewbox', 'width', 'height', 'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'transform', 'd', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'rx', 'ry', 'points', 'offset', 'stop-color', 'stop-opacity', 'gradientunits', 'gradienttransform', 'spreadmethod', 'mask', 'clip-path', 'id', 'preserveaspectratio'];
+        foreach ($dom->getElementsByTagName('*') as $node) {
+            if (!in_array(strtolower($node->localName), $elements, true) || ($node->namespaceURI && $node->namespaceURI !== 'http://www.w3.org/2000/svg')) return '';
+            foreach (iterator_to_array($node->attributes) as $attribute) {
+                $name = strtolower($attribute->localName);
+                $value = trim($attribute->value);
+                if (str_starts_with($name, 'on') || !in_array($name, $attributes, true)) return '';
+                if (preg_match('/(?:javascript|vbscript|data)\s*:/i', $value) || preg_match('#(?:https?:)?//#i', $value)) return '';
+                if (preg_match_all('/url\s*\(([^)]*)\)/i', $value, $matches)) {
+                    foreach ($matches[1] as $reference) if (!preg_match('/^["\']?#[A-Za-z_][\w:.-]*["\']?$/', trim($reference))) return '';
+                }
+            }
+        }
+        $svg = $dom->saveXML($dom->documentElement);
+        return is_string($svg) && strlen($svg) <= self::MAX_BYTES ? $svg : '';
     }
 
     private function extract_favicons_from_html(string $html, string $base): array {
@@ -189,7 +220,7 @@ class BBPA_Favicon_Resolver {
             if ($url === '') continue;
             $extension = strtolower((string) pathinfo((string) (wp_parse_url($url, PHP_URL_PATH) ?: ''), PATHINFO_EXTENSION));
             $sizes = strtolower(trim((string) $link->getAttribute('sizes')));
-            $safe_format = in_array($extension, ['ico', 'png', 'webp', 'jpg', 'jpeg'], true);
+            $safe_format = in_array($extension, ['ico', 'png', 'webp', 'jpg', 'jpeg', 'svg'], true);
             $preferred_size = (bool) preg_match('/(?:^|\s)(?:16x16|32x32|48x48|180x180|192x192)(?:\s|$)/', $sizes);
             $priority = $safe_format ? 0 : ($preferred_size ? 1 : ($is_apple ? 2 : 3));
             $candidates[] = ['url' => $url, 'priority' => $priority];
@@ -221,7 +252,11 @@ class BBPA_Favicon_Resolver {
         $uploads = wp_upload_dir(null, false, false);
         $root = !empty($uploads['basedir']) ? realpath(trailingslashit($uploads['basedir']) . 'bbpa/favicons') : false;
         $path = realpath((string) $entry['path']);
-        return $root !== false && $path !== false && str_starts_with($path, trailingslashit($root)) && (new BBPA_Filesystem_Service())->exists($path) && is_readable($path);
+        if ($root === false || $path === false || !str_starts_with($path, trailingslashit($root)) || !(new BBPA_Filesystem_Service())->exists($path) || !is_readable($path)) return false;
+        if (strtolower((string) pathinfo($path, PATHINFO_EXTENSION)) !== 'svg') return true;
+        $body = file_get_contents($path);
+        $validated = is_string($body) ? $this->validate_image($body, 'image/svg+xml') : [];
+        return ($validated['format'] ?? '') === 'svg' && hash_equals($body, $validated['body']);
     }
     public function normalize_observed_host(string $domain): string { $value = strtolower(trim(preg_replace('#^https?://#i', '', $domain))); $value = explode('/', $value)[0] ?? ''; $parts = wp_parse_url('https://' . $value); $value = is_array($parts) ? (string) ($parts['host'] ?? '') : ''; return preg_match('/^[a-z0-9.-]+$/', $value) ? rtrim($value, '.') : ''; }
     private function is_safe_public_host(string $host): bool { if ($host === 'localhost' || str_ends_with($host, '.local')) return false; if (filter_var($host, FILTER_VALIDATE_IP)) return $this->is_public_ip($host); $records = function_exists('dns_get_record') ? dns_get_record($host, DNS_A | DNS_AAAA) : []; $addresses = []; foreach (is_array($records) ? $records : [] as $record) { $ip = $record['ip'] ?? $record['ipv6'] ?? ''; if (is_string($ip) && filter_var($ip, FILTER_VALIDATE_IP)) $addresses[] = $ip; } if (!$addresses) { $ip = gethostbyname($host); if ($ip !== $host && filter_var($ip, FILTER_VALIDATE_IP)) $addresses[] = $ip; } if (!$addresses) return false; foreach (array_unique($addresses) as $ip) if (!$this->is_public_ip($ip)) return false; return true; }

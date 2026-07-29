@@ -69,8 +69,7 @@ msgid "Dashboard"
 msgstr "Instrumentpanel"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Realtid"
 
@@ -100,7 +99,7 @@ msgid "Geolocation"
 msgstr "Geolokalisering"
 
 #: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -291,7 +290,7 @@ msgid "GeoIP database is not available yet."
 msgstr "GeoIP-databasen är inte tillgänglig än."
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/deviceClassLabel.js
+#: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -301,8 +300,8 @@ msgid "Unknown"
 msgstr "Okänd sida"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: src/admin/components/WorldMap/index.js src/admin/free-stubs/RealtimePanel.js
-#: src/admin/lib/countryNames.js src/admin/panels/GeoCountriesPanel.js
+#: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #, fuzzy
 msgid "Unknown country"
@@ -889,31 +888,79 @@ msgid "Return to the download"
 msgstr "Återgå till nedladdningen"
 
 #: src/admin/components/WorldMap/index.js
-msgid "World map"
-msgstr "Världskarta"
-
-#: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "Zoom in"
+msgid "Zoom in map"
 msgstr "Zooma in kartan"
 
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
-msgid "Zoom out"
+msgid "Zoom out map"
 msgstr "Zooma ut kartan"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "Återställ"
+msgid "Reset map zoom"
+msgstr "Återställ kartzoom"
+
+#. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#: src/admin/components/WorldMap/index.js
+msgid "%1$s: %2$s visits%3$s"
+msgstr "%1$s: %2$s besök%3$s"
+
+#. translators: %s: approximation scope label.
+#: src/admin/components/WorldMap/index.js
+msgid " (%s)"
+msgstr " (%s)"
+
+#: src/admin/components/WorldMap/index.js
+msgid "approximate country area"
+msgstr "ungefärligt landsområde"
+
+#: src/admin/components/WorldMap/index.js
+msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
+msgstr "Stadsdata finns för den valda perioden, men inga städer har användbara koordinater ännu."
+
+#: src/admin/components/WorldMap/index.js
+msgid "No geolocated visits are available. Check your geolocation settings to start collecting city data."
+msgstr "Inga geolokaliserade besök är tillgängliga. Kontrollera dina geolokaliseringsinställningar för att börja samla in stadsdata."
+
+#: src/admin/components/WorldMap/index.js
+msgid "No geolocated visits are available. Check your geolocation settings to start collecting country data."
+msgstr "Inga geolokaliserade besök är tillgängliga. Kontrollera dina geolokaliseringsinställningar för att börja samla in landsdata."
+
+#. translators: %s: visitor count.
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "%s visitors"
+msgstr "%s besökare"
+
+#. translators: %s: share of total visitors.
+#: src/admin/components/WorldMap/index.js
+#, fuzzy
+msgid "%s of total visitors"
+msgstr "%s av totala besök"
 
 #. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visits"
 msgstr "%s besök"
 
-#: src/admin/components/WorldMap/index.js src/admin/panels/GeoCountriesPanel.js
-msgid "No data"
-msgstr "Ingen data"
+#: src/admin/components/WorldMap/index.js
+msgid "World map"
+msgstr "Världskarta"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Loading world map"
+msgstr "Laddar världskarta"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map zoom controls"
+msgstr "Kartans zoomkontroller"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "Återställ"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map legend"
+msgstr "Kartförklaring"
 
 #: src/admin/constants/index.js
 msgid "Today"
@@ -1008,112 +1055,6 @@ msgstr "Ingen global timdata är tillgänglig för den här perioden."
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Globala timvisa heatmaps kräver timvis sidaggregeringsdata."
-
-#: src/admin/free-stubs/RealtimePanel.js
-#, fuzzy
-msgid "Visitor origin unavailable"
-msgstr "Ingen besökardata tillgänglig."
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
-
-#: src/admin/free-stubs/RealtimePanel.js src/admin/lib/locationLabel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "No available"
-msgstr "Inte tillgängligt"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Besökar-ID-hash"
-
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr ""
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Anslutningstid"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Current page"
-msgstr "Aktuell sida"
-
-#: src/admin/free-stubs/RealtimePanel.js src/admin/panels/AcquisitionPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
-msgid "Channel"
-msgstr "Ingångssidor"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Operating system"
-msgstr "Operativsystem"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Browser"
-msgstr "Webbläsare"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Webbläsarversion"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
-msgid "Device"
-msgstr "Enheter"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Upplösning"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Fullscreen is unavailable in this browser context."
-msgstr "Helskärm är inte tillgängligt i den här webbläsarkontexten."
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Loading real-time data…"
-msgstr "Laddar realtidsdata…"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Visitor"
-msgstr "Besökare"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Exit fullscreen"
-msgstr "Avsluta helskärm"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Fullscreen"
-msgstr "Helskärm"
-
-#: src/admin/free-stubs/RealtimePanel.js
-#, fuzzy
-msgid "Essential-only scope: enriched visit details are unavailable."
-msgstr "Endast väsentligt omfång: utökade besöksdetaljer och exakta kartmarkörer är inte tillgängliga."
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr "Tabell: Realtidsbesökare"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Okänd sida"
-
-#: src/admin/free-stubs/RealtimePanel.js
-msgid "No visits in the current activity window."
-msgstr "Inga besök i det aktuella aktivitetsfönstret."
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1229,6 +1170,25 @@ msgstr "Timvisa heatmaps kräver timvis sidaggregeringsdata för den valda käll
 msgid "%1$s at %2$s — %3$s: %4$s"
 msgstr "%1$s kl. %2$s — %3$s: %4$s"
 
+#: src/admin/lib/locationLabel.js
+msgid "Approximate position"
+msgstr "Ungefärlig position"
+
+#: src/admin/lib/locationLabel.js
+msgid "Approximate city"
+msgstr "Ungefärlig stad"
+
+#. translators: %d: geolocation accuracy radius in kilometers.
+#: src/admin/lib/locationLabel.js
+msgid "Approx. %d km"
+msgstr "Cirka %d km"
+
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "No available"
+msgstr "Inte tillgängligt"
+
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
 msgstr ""
@@ -1242,6 +1202,12 @@ msgstr "Ingen besökarprofildata är tillgänglig för den här perioden."
 #, fuzzy
 msgid "Table: Acquisition channels"
 msgstr "Tabell: Besökare"
+
+#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#, fuzzy
+msgid "Channel"
+msgstr "Ingångssidor"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -1269,6 +1235,10 @@ msgid "%1$s — %2$s"
 msgstr "%1$s — %2$s"
 
 #: src/admin/panels/GeoCountriesPanel.js
+msgid "No data"
+msgstr "Ingen data"
+
+#: src/admin/panels/GeoCountriesPanel.js
 msgid "Unknown country flag"
 msgstr "Okänd landsflagga"
 
@@ -1281,6 +1251,11 @@ msgstr "Flagga för %s"
 msgid "Top countries"
 msgstr "Toppländer"
 
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Country"
+msgstr ""
+
 #: src/admin/panels/GeoCountriesPanel.js
 #, fuzzy
 msgid "Legacy visits"
@@ -1288,8 +1263,95 @@ msgstr "Dagliga besökare"
 
 #: src/admin/panels/RealtimePanel.js
 #, fuzzy
-msgid "No country data is available yet."
-msgstr "Ingen landsdata tillgänglig."
+msgid "Visitor origin unavailable"
+msgstr "Ingen besökardata tillgänglig."
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
+msgstr ""
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Okänd sida"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Visitor ID hash"
+msgstr "Besökar-ID-hash"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "City"
+msgstr ""
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Connection time"
+msgstr "Anslutningstid"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "Aktuell sida"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Operating system"
+msgstr "Operativsystem"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Browser"
+msgstr "Webbläsare"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Browser version"
+msgstr "Webbläsarversion"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+#, fuzzy
+msgid "Device"
+msgstr "Enheter"
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Resolution"
+msgstr "Upplösning"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Fullscreen is unavailable in this browser context."
+msgstr "Helskärm är inte tillgängligt i den här webbläsarkontexten."
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Loading real-time data…"
+msgstr "Laddar realtidsdata…"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgstr "Besökare"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Exit fullscreen"
+msgstr "Avsluta helskärm"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Fullscreen"
+msgstr "Helskärm"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
+msgstr "Endast väsentligt omfång: utökade besöksdetaljer och exakta kartmarkörer är inte tillgängliga."
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Table: Real-time visitors"
+msgstr "Tabell: Realtidsbesökare"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "No visits in the current activity window."
+msgstr "Inga besök i det aktuella aktivitetsfönstret."
 
 #: src/admin/panels/SearchTermsPanel.js
 msgid "Search terms"
@@ -1992,6 +2054,7 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 

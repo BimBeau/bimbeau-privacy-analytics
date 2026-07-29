@@ -10,6 +10,9 @@
         "lang": "tr_TR",
         "plural-forms": "nplurals=1; plural=0;"
       },
+      " (%s)": [
+        " (%s)"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s, %2$s — %3$s: %4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% pay"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s: %2$s ziyaret%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -40,8 +46,14 @@
       "%s Visitors": [
         "%s ziyaretçi"
       ],
+      "%s of total visitors": [
+        "toplam ziyaretlerin %s kadarı"
+      ],
       "%s page view": [
         "%s sayfa görüntüleme"
+      ],
+      "%s visitors": [
+        "%s ziyaretçi"
       ],
       "%s visits": [
         "%s ziyaret"
@@ -160,6 +172,15 @@
       "Analytics data purged.": [
         "Analiz verileri temizlendi."
       ],
+      "Approx. %d km": [
+        "Yaklaşık %d km"
+      ],
+      "Approximate city": [
+        "Yaklaşık şehir"
+      ],
+      "Approximate position": [
+        "Yaklaşık konum"
+      ],
       "Ascending": [
         "Artan"
       ],
@@ -246,6 +267,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "Seçilen dönem için şehir verileri var, ancak şehirlerin hiçbirinde henüz kullanılabilir koordinat yok."
       ],
       "Clean URL query parameters": [
         "URL sorgu parametrelerini temizle"
@@ -490,7 +517,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Temel istatistikler onay olmadan çalışır. Gelişmiş istatistikler yalnızca İstatistik / Analitik onayından sonra çalışır."
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Yalnızca temel kapsam: zenginleştirilmiş ziyaret ayrıntıları ve hassas harita işaretçileri kullanılamaz."
       ],
       "Every 15 days": [
@@ -712,6 +739,9 @@
       "Loading visitors…": [
         "Ziyaretçiler yükleniyor…"
       ],
+      "Loading world map": [
+        "Dünya haritası yükleniyor"
+      ],
       "Loading: %s": [
         "Yükleniyor: %s"
       ],
@@ -738,6 +768,12 @@
       ],
       "Manual updates only": [
         "Yalnızca temel istatistikler"
+      ],
+      "Map legend": [
+        "Harita açıklaması"
+      ],
+      "Map zoom controls": [
+        "Yakınlaştırma kontrolleri"
       ],
       "MaxMind API": [
         "MaxMind Hesap Kimliği"
@@ -811,9 +847,6 @@
       "No country data available for the selected period.": [
         "Seçilen dönem için ülke verisi mevcut değil."
       ],
-      "No country data is available yet.": [
-        "Ülke verisi mevcut değil."
-      ],
       "No data": [
         "Veri yok"
       ],
@@ -834,6 +867,12 @@
       ],
       "No exit pages available.": [
         "Çıkış sayfası mevcut değil."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "Coğrafi konumlu ziyaret yok. Şehir verisi toplamaya başlamak için coğrafi konum ayarlarınızı kontrol edin."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "Coğrafi konumlu ziyaret yok. Ülke verisi toplamaya başlamak için coğrafi konum ayarlarınızı kontrol edin."
       ],
       "No global hourly data available for this period.": [
         "Bu dönem için genel saatlik veri mevcut değil."
@@ -1047,6 +1086,9 @@
       ],
       "Reset": [
         "Sıfırla"
+      ],
+      "Reset map zoom": [
+        "Yakınlaştırmayı sıfırla"
       ],
       "Resolution": [
         "Çözünürlük"
@@ -1417,11 +1459,14 @@
       "Your configuration is ready": [
         "Yapılandırmanız hazır"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "Haritada yakınlaştır"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "Haritada uzaklaştır"
+      ],
+      "approximate country area": [
+        "yaklaşık ülke alanı"
       ],
       "items": [
         "öğe"

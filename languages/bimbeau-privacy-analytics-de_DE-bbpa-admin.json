@@ -10,6 +10,9 @@
         "lang": "de_DE",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      " (%s)": [
+        " (%s)"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s um %2$s — %3$s: %4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% Anteil"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s: %2$s Besuche%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -40,9 +46,15 @@
       "%s Visitors": [
         "%s Besucher"
       ],
+      "%s of total visitors": [
+        "%s der gesamten Besuche"
+      ],
       "%s page view": [
         "%s Seitenaufruf",
         "%s Seitenaufrufe"
+      ],
+      "%s visitors": [
+        "%s Besucher"
       ],
       "%s visits": [
         "%s Besuche"
@@ -161,6 +173,15 @@
       "Analytics data purged.": [
         "Analysedaten wurden gelöscht."
       ],
+      "Approx. %d km": [
+        "Ca. %d km"
+      ],
+      "Approximate city": [
+        "Ungefähre Stadt"
+      ],
+      "Approximate position": [
+        "Ungefähre Position"
+      ],
       "Ascending": [
         "Aufsteigend"
       ],
@@ -247,6 +268,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "Stadtdaten sind für den ausgewählten Zeitraum verfügbar, aber noch keine Stadt hat nutzbare Koordinaten."
       ],
       "Clean URL query parameters": [
         "URL-Abfrageparameter bereinigen"
@@ -491,7 +518,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Essenzielle Statistiken laufen ohne Einwilligung. Erweiterte Statistiken laufen erst nach Einwilligung für Statistik/Analytics."
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Nur essenzieller Umfang: Erweiterte Besuchsdetails und präzise Kartenmarker sind nicht verfügbar."
       ],
       "Every 15 days": [
@@ -713,6 +740,9 @@
       "Loading visitors…": [
         "Besucher werden geladen…"
       ],
+      "Loading world map": [
+        "Weltkarte wird geladen"
+      ],
       "Loading: %s": [
         "Wird geladen: %s"
       ],
@@ -739,6 +769,12 @@
       ],
       "Manual updates only": [
         "Nur essenzielle Statistiken"
+      ],
+      "Map legend": [
+        "Kartenlegende"
+      ],
+      "Map zoom controls": [
+        "Zoom-Steuerung der Karte"
       ],
       "MaxMind API": [
         "MaxMind-Konto-ID"
@@ -812,9 +848,6 @@
       "No country data available for the selected period.": [
         "Für den ausgewählten Zeitraum sind keine Länderdaten verfügbar."
       ],
-      "No country data is available yet.": [
-        "Keine Länderdaten verfügbar."
-      ],
       "No data": [
         "Keine Daten"
       ],
@@ -835,6 +868,12 @@
       ],
       "No exit pages available.": [
         "Keine Ausstiegsseiten verfügbar."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "Keine geolokalisierten Besuche verfügbar. Prüfen Sie Ihre Geolokalisierungseinstellungen, um Stadtdaten zu erfassen."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "Keine geolokalisierten Besuche verfügbar. Prüfen Sie Ihre Geolokalisierungseinstellungen, um Länderdaten zu erfassen."
       ],
       "No global hourly data available for this period.": [
         "Für diesen Zeitraum sind keine globalen stündlichen Daten verfügbar."
@@ -1048,6 +1087,9 @@
       ],
       "Reset": [
         "Zurücksetzen"
+      ],
+      "Reset map zoom": [
+        "Kartenzoom zurücksetzen"
       ],
       "Resolution": [
         "Auflösung"
@@ -1418,11 +1460,14 @@
       "Your configuration is ready": [
         "Ihre Konfiguration ist bereit"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "Karte vergrößern"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "Karte verkleinern"
+      ],
+      "approximate country area": [
+        "ungefähres Landesgebiet"
       ],
       "items": [
         "Elemente"

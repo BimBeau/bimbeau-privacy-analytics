@@ -10,6 +10,9 @@
         "lang": "nl_NL",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      " (%s)": [
+        " (%s)"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s om %2$s — %3$s: %4$s"
       ],
@@ -24,6 +27,9 @@
       ],
       "%1$s%% share": [
         "%1$s%% aandeel"
+      ],
+      "%1$s: %2$s visits%3$s": [
+        "%1$s: %2$s bezoeken%3$s"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -40,9 +46,15 @@
       "%s Visitors": [
         "%s bezoekers"
       ],
+      "%s of total visitors": [
+        "%s van alle bezoeken"
+      ],
       "%s page view": [
         "%s paginaweergave",
         "%s paginaweergaven"
+      ],
+      "%s visitors": [
+        "%s bezoekers"
       ],
       "%s visits": [
         "%s bezoeken"
@@ -161,6 +173,15 @@
       "Analytics data purged.": [
         "Analyticsgegevens gewist."
       ],
+      "Approx. %d km": [
+        "Ongeveer %d km"
+      ],
+      "Approximate city": [
+        "Geschatte stad"
+      ],
+      "Approximate position": [
+        "Geschatte positie"
+      ],
       "Ascending": [
         "Oplopend"
       ],
@@ -247,6 +268,12 @@
       ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
+      ],
+      "City": [
+        ""
+      ],
+      "City data is available for the selected period, but none of the cities have usable coordinates yet.": [
+        "Stadsgegevens zijn beschikbaar voor de geselecteerde periode, maar nog geen stad heeft bruikbare coördinaten."
       ],
       "Clean URL query parameters": [
         "URL-queryparameters opschonen"
@@ -491,7 +518,7 @@
       "Essential stats run without consent. Advanced stats run only after Statistics / Analytics consent.": [
         "Essentiële statistieken werken zonder toestemming. Geavanceerde statistieken werken alleen na toestemming voor Statistieken / Analytics."
       ],
-      "Essential-only scope: enriched visit details are unavailable.": [
+      "Essential-only scope: enriched visit details and precise map markers are unavailable.": [
         "Alleen essentiële scope: verrijkte bezoekdetails en precieze kaartmarkeringen zijn niet beschikbaar."
       ],
       "Every 15 days": [
@@ -713,6 +740,9 @@
       "Loading visitors…": [
         "Bezoekers laden…"
       ],
+      "Loading world map": [
+        "Wereldkaart laden"
+      ],
       "Loading: %s": [
         "Laden: %s"
       ],
@@ -739,6 +769,12 @@
       ],
       "Manual updates only": [
         "Alleen essentiële statistieken"
+      ],
+      "Map legend": [
+        "Kaartlegenda"
+      ],
+      "Map zoom controls": [
+        "Zoomknoppen voor kaart"
       ],
       "MaxMind API": [
         "MaxMind-account-ID"
@@ -812,9 +848,6 @@
       "No country data available for the selected period.": [
         "Geen landgegevens beschikbaar voor de geselecteerde periode."
       ],
-      "No country data is available yet.": [
-        "Geen landgegevens beschikbaar."
-      ],
       "No data": [
         "Geen gegevens"
       ],
@@ -835,6 +868,12 @@
       ],
       "No exit pages available.": [
         "Geen uitstappagina's beschikbaar."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting city data.": [
+        "Er zijn geen geolokaliseerde bezoeken beschikbaar. Controleer uw geolocatie-instellingen om stadsgegevens te gaan verzamelen."
+      ],
+      "No geolocated visits are available. Check your geolocation settings to start collecting country data.": [
+        "Er zijn geen geolokaliseerde bezoeken beschikbaar. Controleer uw geolocatie-instellingen om landgegevens te gaan verzamelen."
       ],
       "No global hourly data available for this period.": [
         "Geen globale uurlijkse gegevens beschikbaar voor deze periode."
@@ -1048,6 +1087,9 @@
       ],
       "Reset": [
         "Resetten"
+      ],
+      "Reset map zoom": [
+        "Kaartzoom resetten"
       ],
       "Resolution": [
         "Resolutie"
@@ -1418,11 +1460,14 @@
       "Your configuration is ready": [
         "Uw configuratie is klaar"
       ],
-      "Zoom in": [
+      "Zoom in map": [
         "Inzoomen op kaart"
       ],
-      "Zoom out": [
+      "Zoom out map": [
         "Uitzoomen op kaart"
+      ],
+      "approximate country area": [
+        "geschat landgebied"
       ],
       "items": [
         "items"
