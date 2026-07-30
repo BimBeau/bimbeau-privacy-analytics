@@ -381,7 +381,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 						align="center"
 					>
 						<FlexItem>
-							<div className="components-button-group">
+							<div className="bbpa-table-pagination__buttons">
 								<Button
 									variant="secondary"
 									onClick={ () =>

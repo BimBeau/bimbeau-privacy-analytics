@@ -709,7 +709,7 @@ const ReportTableCard = ( {
 					</div>
 					<PaginationWrapper { ...paginationWrapperProps }>
 						<PaginationItem className={ paginationItemClass }>
-							<div className="components-button-group">
+							<div className="bbpa-table-pagination__buttons">
 								<Button
 									variant="secondary"
 									onClick={ () =>
