@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
+import { normalizeAdminReportPayload } from './normalizeReportPayload';
 
 const DEBUG_FLAG = () =>
 	Boolean( window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled );
@@ -246,7 +247,7 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 	}
 
 	const payload = await parseJsonResponse( response );
-	return payload;
+	return normalizeAdminReportPayload( path, payload );
 };
 
 const useAdminEndpoint = ( path, params, options = {} ) => {
@@ -314,7 +315,6 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 				if ( isMounted ) {
 					setIsLoading( false );
 				}
-			}
 		};
 
 		fetchData();
