@@ -1,6 +1,7 @@
 import { __, sprintf } from '@wordpress/i18n';
 
 import useAdminEndpoint from '../api/useAdminEndpoint';
+import { normalizeAdminReportPayload } from '../api/normalizeReportPayload';
 import GeoCountriesStatusNotice from '../components/GeoCountriesStatusNotice';
 import ReportTableCard from '../widgets/ReportTableCard';
 import WorldMap from '../components/WorldMap';
@@ -12,11 +13,11 @@ import {
 } from '../lib/countryNames';
 
 const GeoCountriesPanel = ( { range } ) => {
-	const { data } = useAdminEndpoint(
+	const { data, isLoading, error } = useAdminEndpoint(
 		'/geo-countries',
 		{
 			...range,
-			per_page: 1,
+			per_page: 250,
 			orderby: 'visitors',
 			order: 'desc',
 		},
@@ -24,13 +25,14 @@ const GeoCountriesPanel = ( { range } ) => {
 			namespace: ADMIN_CONFIG?.settings?.restNamespace,
 		}
 	);
+	const mapData = normalizeAdminReportPayload( '/geo-countries', data );
 	const emptyCountryLabel = __(
 		'No country data available for the selected period.',
 		'bimbeau-privacy-analytics'
 	);
 	const unknownCountryLabel = __( 'Unknown country', 'bimbeau-privacy-analytics' );
 	const configStatus = data?.configStatus || null;
-	const hasHits = Number( data?.totalHits || 0 ) > 0;
+	const hasHits = Number( data?.totalVisitors ?? data?.totalHits ?? 0 ) > 0;
 
 	const renderCountryLabel = ( label, item ) => {
 		const countryCode = item?.code || item?.label || '';
@@ -95,6 +97,9 @@ const GeoCountriesPanel = ( { range } ) => {
 					emptyLabel={ emptyCountryLabel }
 					emptyStateNoticeStatus="warning"
 					unknownCountryLabel={ unknownCountryLabel }
+					dataOverride={ mapData }
+					isLoadingOverride={ isLoading }
+					errorOverride={ error }
 				/>
 				<ReportTableCard
 					title={ __( 'Top countries', 'bimbeau-privacy-analytics' ) }
