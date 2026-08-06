@@ -2,3 +2,9 @@
   inline-size: 2ch;
   block-size: 0.85em;
 }
+
+@media (max-width: 782px) {
+  .bbpa-admin-app .bbpa-admin-app__realtime-button.components-button {
+    display: none !important;
+  }
+}
