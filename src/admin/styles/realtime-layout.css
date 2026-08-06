@@ -1,0 +1,29 @@
+.bbpa-realtime-panel,
+.bbpa-realtime-panel__card,
+.bbpa-realtime-panel__body,
+.bbpa-realtime-panel__visits,
+.bbpa-realtime-panel .bbpa-world-map-card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.bbpa-realtime-panel__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--bbpa-gap-sm);
+}
+
+.bbpa-realtime-panel__visits {
+  overflow: hidden;
+}
+
+.bbpa-realtime-panel__visits .bbpa-table-scroll {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}

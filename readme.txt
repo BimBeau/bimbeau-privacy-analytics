@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.143
+Stable tag: 8.45.145
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -252,5 +252,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.143 =
-* Keep PWA footer selector out of Free CSS.
+= 8.45.145 =
+* Allow shared realtime visits CSS in Free package.
