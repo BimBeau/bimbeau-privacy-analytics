@@ -770,9 +770,18 @@ const buildLegendRanges = (roundedDomainMax, bucketCount, roundingStep) => {
           roundedDomainMax,
           Math.max(previousEnd + roundingStep, rawEnd),
         );
+    const start = previousEnd + 1;
 
-    ranges.push([previousEnd + 1, end]);
+    if (start > end) {
+      break;
+    }
+
+    ranges.push([start, end]);
     previousEnd = end;
+
+    if (end >= roundedDomainMax) {
+      break;
+    }
   }
 
   return ranges;
@@ -814,7 +823,7 @@ const buildMapColorBuckets = (
 
   return {
     ranges,
-    colors: sampleLegendColors(MAX_DATA_BUCKETS, colorRange),
+    colors: sampleLegendColors(ranges.length, colorRange),
     openEndedLastLabel: true,
   };
 };
@@ -1216,7 +1225,21 @@ export const WorldChoropleth = ({
   );
   const colorScale = useMemo(() => {
     if (typeof countryColorScale === "function") {
-      return countryColorScale;
+      const copiedScale =
+        typeof countryColorScale.copy === "function"
+          ? countryColorScale.copy()
+          : countryColorScale;
+
+      if (
+        copiedScale !== countryColorScale &&
+        typeof copiedScale.domain === "function"
+      ) {
+        const readDomain = copiedScale.domain.bind(copiedScale);
+        copiedScale.domain = (nextDomain) =>
+          nextDomain === undefined ? readDomain() : copiedScale;
+      }
+
+      return copiedScale;
     }
 
     const domainMax = Math.max(1, sanitizeMapValue(maxDomainValue));

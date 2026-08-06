@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.145
+Stable tag: 8.45.146
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -252,5 +252,8 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.145 =
-* Allow shared realtime visits CSS in Free package.
+= 8.45.146 =
+* preserve the threshold color scale passed to Nivo so its internal domain assignment cannot replace the legend thresholds;.
+* prevent empty or inverted legend ranges such as `301–300`;.
+* derive the sampled palette from the actual number of valid ranges;.
+* keep country fill colors visible on hover and focus, using a stronger outline instead.
