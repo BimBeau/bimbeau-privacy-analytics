@@ -146,3 +146,72 @@ function bbpa_safe_list_files_by_extension(string $base_path, string $relative_d
 
     return $files;
 }
+
+/**
+ * Determine whether a local GeoIP database file is safe and usable.
+ */
+function bbpa_geoip_database_file_is_usable(string $path): bool
+{
+    if ($path === '' || !is_file($path) || is_link($path) || !is_readable($path)) {
+        return false;
+    }
+
+    $file_size = filesize($path);
+
+    return is_int($file_size) && $file_size > 0;
+}
+
+/**
+ * Normalize the historical GeoIP uploads path and migrate an existing database.
+ *
+ * The updater originally supplied uploads/bpa/geoip as its default. Keep that
+ * input recognizable for backward compatibility, while new writes and reads
+ * use the canonical uploads/bbpa/geoip directory. A failed migration keeps the
+ * usable legacy file available until a later request can complete the move.
+ *
+ * @param mixed $path Current filtered GeoIP database path.
+ * @param array $uploads WordPress uploads directory metadata.
+ * @return mixed
+ */
+function bbpa_normalize_geoip_local_mmdb_path($path, array $uploads)
+{
+    if (!is_string($path) || empty($uploads['basedir'])) {
+        return $path;
+    }
+
+    $uploads_base = trailingslashit((string) $uploads['basedir']);
+    $legacy_path = $uploads_base . 'bpa/geoip/GeoLite2-City.mmdb';
+
+    if (wp_normalize_path($path) !== wp_normalize_path($legacy_path)) {
+        return $path;
+    }
+
+    $canonical_path = $uploads_base . 'bbpa/geoip/GeoLite2-City.mmdb';
+
+    if (bbpa_geoip_database_file_is_usable($canonical_path)) {
+        return $canonical_path;
+    }
+
+    if (!bbpa_geoip_database_file_is_usable($legacy_path)) {
+        return $canonical_path;
+    }
+
+    if (!class_exists('BBPA_Filesystem_Service')) {
+        return $legacy_path;
+    }
+
+    $filesystem_service = new BBPA_Filesystem_Service();
+    $canonical_directory = dirname($canonical_path);
+
+    if (
+        $filesystem_service->ensure_directory($canonical_directory)
+        && $filesystem_service->move($legacy_path, $canonical_path, false)
+        && bbpa_geoip_database_file_is_usable($canonical_path)
+    ) {
+        return $canonical_path;
+    }
+
+    return $legacy_path;
+}
+
+add_filter('bbpa_geoip_local_mmdb_path', 'bbpa_normalize_geoip_local_mmdb_path', 5, 2);
