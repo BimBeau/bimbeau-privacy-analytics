@@ -145,8 +145,9 @@ function bbpa_aggregation_table_exists(string $table): bool
     $cache_key = bbpa_cache_key('aggregation_table_exists', [
         'table' => $table,
     ]);
-    $cached = wp_cache_get($cache_key, BBPA_CACHE_GROUP);
-    if (is_bool($cached)) {
+    $found = false;
+    $cached = wp_cache_get($cache_key, BBPA_CACHE_GROUP, false, $found);
+    if ($found && is_bool($cached)) {
         return $cached;
     }
 

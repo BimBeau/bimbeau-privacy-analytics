@@ -134,7 +134,7 @@ const OverviewKpis = ( { range } ) => {
 			comparison: comparisonOverview?.uniqueReferrers,
 			href: getAdminPanelUrl( 'referrers' ),
 		},
-		isPanelEnabled( 'top-pages' ) && {
+		isPanelEnabled( 'visitors' ) && {
 			key: 'avgPagesPerVisit',
 			label: __( 'Pages / visit', 'bimbeau-privacy-analytics' ),
 			tooltip: __(
@@ -157,10 +157,10 @@ const OverviewKpis = ( { range } ) => {
 						) || 0
 				  )
 				: null,
-			href: getAdminPanelUrl( 'top-pages' ),
+			href: getAdminPanelUrl( 'visitors' ),
 			formatValue: formatRatioMetricValue,
 		},
-		isPanelEnabled( 'visitors' ) && {
+		isPanelEnabled( 'top-pages' ) && {
 			key: 'avgTimePerVisit',
 			label: __( 'Avg. duration', 'bimbeau-privacy-analytics' ),
 			tooltip: __(
@@ -170,7 +170,7 @@ const OverviewKpis = ( { range } ) => {
 			value: overview.avgTimePerVisitMs,
 			icon: 'avgTimePerVisit',
 			comparison: comparisonOverview?.avgTimePerVisitMs,
-			href: getAdminPanelUrl( 'visitors' ),
+			href: getAdminPanelUrl( 'top-pages' ),
 			formatValue: formatCompactDurationMetricValue,
 		},
 		isPanelEnabled( 'realtime' ) && {

@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v6';
+    private const CACHE_VERSION = 'v7';
     private const CACHE_KEY_PREFIX = 'bbpa_favicon_' . self::CACHE_VERSION . '_';
     private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_' . self::CACHE_VERSION . '_';
     private const MAX_BYTES = 262144;
@@ -209,6 +209,10 @@ class BBPA_Favicon_Resolver {
                     continue;
                 }
                 if (str_starts_with($name, 'on') || !in_array($name, $attributes, true)) return '';
+                if ($name === 'xmlns') {
+                    if ($node !== $dom->documentElement || $value !== 'http://www.w3.org/2000/svg') return '';
+                    continue;
+                }
                 if (!$this->is_safe_svg_value($value)) return '';
             }
         }
