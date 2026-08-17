@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v7';
+    private const CACHE_VERSION = 'v8';
     private const CACHE_KEY_PREFIX = 'bbpa_favicon_' . self::CACHE_VERSION . '_';
     private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_' . self::CACHE_VERSION . '_';
     private const MAX_BYTES = 262144;
@@ -184,11 +184,18 @@ class BBPA_Favicon_Resolver {
         $errors = libxml_get_errors(); libxml_clear_errors(); libxml_use_internal_errors($previous);
         if (!$loaded || $errors || $dom->doctype || !$dom->documentElement || strtolower($dom->documentElement->localName) !== 'svg') return '';
 
-        $elements = ['svg', 'g', 'path', 'circle', 'ellipse', 'rect', 'line', 'polyline', 'polygon', 'defs', 'lineargradient', 'radialgradient', 'stop', 'clippath', 'mask', 'title'];
-        $attributes = ['xmlns', 'viewbox', 'width', 'height', 'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'transform', 'd', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'rx', 'ry', 'points', 'offset', 'stop-color', 'stop-opacity', 'gradientunits', 'gradienttransform', 'spreadmethod', 'mask', 'clip-path', 'id', 'preserveaspectratio'];
+        $elements = ['svg', 'g', 'path', 'circle', 'ellipse', 'rect', 'line', 'polyline', 'polygon', 'defs', 'lineargradient', 'radialgradient', 'stop', 'clippath', 'mask', 'title', 'desc', 'style', 'symbol', 'use'];
+        $attributes = ['xmlns', 'viewbox', 'width', 'height', 'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'transform', 'd', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'rx', 'ry', 'points', 'offset', 'stop-color', 'stop-opacity', 'gradientunits', 'gradienttransform', 'spreadmethod', 'mask', 'clip-path', 'id', 'class', 'href', 'preserveaspectratio', 'data-name'];
         $style_properties = ['fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'stop-color', 'stop-opacity'];
         foreach ($dom->getElementsByTagName('*') as $node) {
             if (!in_array(strtolower($node->localName), $elements, true) || ($node->namespaceURI && $node->namespaceURI !== 'http://www.w3.org/2000/svg')) return '';
+            if (strtolower($node->localName) === 'style') {
+                if ($node->attributes->length !== 0) return '';
+                $css = $this->sanitize_svg_stylesheet($node->textContent, $style_properties);
+                if ($css === '') return '';
+                $node->nodeValue = $css;
+                continue;
+            }
             foreach (iterator_to_array($node->attributes) as $attribute) {
                 $name = strtolower($attribute->localName);
                 $value = trim($attribute->value);
@@ -213,6 +220,7 @@ class BBPA_Favicon_Resolver {
                     if ($node !== $dom->documentElement || $value !== 'http://www.w3.org/2000/svg') return '';
                     continue;
                 }
+                if ($name === 'href' && !preg_match('/^#[A-Za-z_][\w:.-]*$/', $value)) return '';
                 if (!$this->is_safe_svg_value($value)) return '';
             }
         }
@@ -220,9 +228,38 @@ class BBPA_Favicon_Resolver {
         return is_string($svg) && strlen($svg) <= self::MAX_BYTES ? $svg : '';
     }
 
+    /** Retain only simple local selectors and allowlisted presentation declarations. */
+    private function sanitize_svg_stylesheet(string $css, array $allowed_properties): string {
+        if ($css === '' || preg_match('/[\\@]|\/\*|\*\/|<|>/i', $css)) return '';
+        $offset = 0;
+        $safe_rules = [];
+        if (!preg_match_all('/([^{}]+)\{([^{}]*)\}/', $css, $rules, PREG_SET_ORDER | PREG_OFFSET_CAPTURE)) return '';
+        foreach ($rules as $rule) {
+            if (trim(substr($css, $offset, $rule[0][1] - $offset)) !== '') return '';
+            $selector = trim($rule[1][0]);
+            $declarations = trim($rule[2][0]);
+            if (!preg_match('/^(?:[.#]?[A-Za-z_][\w.-]*)(?:\s*,\s*(?:[.#]?[A-Za-z_][\w.-]*))*$/', $selector)) return '';
+            $safe_declarations = [];
+            foreach (explode(';', $declarations) as $declaration) {
+                $declaration = trim($declaration);
+                if ($declaration === '') continue;
+                if (!str_contains($declaration, ':')) return '';
+                [$property, $value] = array_map('trim', explode(':', $declaration, 2));
+                $property = strtolower($property);
+                if (!in_array($property, $allowed_properties, true) || $value === '' || !$this->is_safe_svg_value($value)) return '';
+                $safe_declarations[] = $property . ':' . $value;
+            }
+            if ($safe_declarations === []) return '';
+            $safe_rules[] = $selector . '{' . implode(';', $safe_declarations) . '}';
+            $offset = $rule[0][1] + strlen($rule[0][0]);
+        }
+        if (trim(substr($css, $offset)) !== '') return '';
+        return implode('', $safe_rules);
+    }
+
     /** Accept only passive values and local url(#id) paint references. */
     private function is_safe_svg_value(string $value): bool {
-        if (preg_match('/(?:javascript|vbscript|data)\s*:/i', $value) || preg_match('#(?:https?:)?//#i', $value)) return false;
+        if (preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F]/', $value) || preg_match('/(?:javascript|vbscript|data)\s*:/i', $value) || preg_match('#(?:https?:)?//#i', $value) || preg_match('/(?:expression|-moz-binding)\s*\(/i', $value)) return false;
         $url_count = preg_match_all('/url\s*\(([^)]*)\)/i', $value, $matches);
         if ($url_count === false || preg_match_all('/url\s*\(/i', $value) !== $url_count) return false;
         if ($url_count > 0) {
