@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.155
+Stable tag: 8.45.156
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -252,5 +252,7 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.155 =
-* Manual release metadata update.
+= 8.45.156 =
+* Add Events dimension filters [Pro].
+* ## Unreleased
+* Add cumulative Channel, Country, and City filters to the Pro Events report and its exports.
