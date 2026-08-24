@@ -263,6 +263,7 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 	);
 	const {
 		enabled = true,
+		keepPreviousData = false,
 		namespace = ADMIN_CONFIG?.settings?.restInternalNamespace,
 		urlOptions,
 	} = options;
@@ -282,7 +283,9 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 		const fetchData = async () => {
 			setIsLoading( true );
 			setError( null );
-			setData( null );
+			if ( ! keepPreviousData ) {
+				setData( null );
+			}
 			try {
 				const payload = await fetchAdminJson( path, {
 					namespace,
@@ -323,7 +326,7 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 			isMounted = false;
 			controller.abort();
 		};
-	}, [ enabled, namespace, path, paramsKey, resolvedParams, urlOptions ] );
+	}, [ enabled, keepPreviousData, namespace, path, paramsKey, resolvedParams, urlOptions ] );
 
 	return { data, isLoading, error };
 };
