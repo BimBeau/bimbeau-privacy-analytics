@@ -34,6 +34,21 @@ import {
 import { getPreviousRange } from '../../lib/date';
 import { normalizePageLabelDisplay } from '../../lib/storage';
 
+export const truncateDisplayedLabel = ( value, maxLength ) => {
+	const text = typeof value === 'string' ? value : String( value || '' );
+	const characters = Array.from( text );
+
+	if ( ! maxLength || characters.length <= maxLength ) {
+		return text;
+	}
+
+	if ( maxLength <= 3 ) {
+		return '.'.repeat( maxLength );
+	}
+
+	return `${ characters.slice( 0, maxLength - 3 ).join( '' ) }...`;
+};
+
 const ReportTableCard = ( {
 	title,
 	labelHeader,
@@ -70,6 +85,7 @@ const ReportTableCard = ( {
 	loadReferrerFavicons = false,
 	tableClassName = '',
 	useAdaptiveLabel = true,
+	maxDisplayedLabelCharacters = null,
 } ) => {
 	const [ page, setPage ] = useState( 1 );
 	const [ perPage, setPerPage ] = useState( 10 );
@@ -509,16 +525,20 @@ const ReportTableCard = ( {
 									>
 										<td>
 											{ ( () => {
-												const baseLabel =
+												const fullLabel =
 													supportsPageLabelToggle &&
 													pageLabelDisplay === 'title'
 																? row.pageTitle ||
 																  row.label
 														: row.label;
+												const visibleLabel = truncateDisplayedLabel(
+													fullLabel,
+													maxDisplayedLabelCharacters
+												);
 												const renderedLabel =
 													renderLabel
 														? renderLabel(
-																baseLabel,
+																visibleLabel,
 																row.item,
 																row.item?.favicon ||
 															referrerFavicons.get(
@@ -527,16 +547,16 @@ const ReportTableCard = ( {
 																	)
 																)
 														  )
-														: baseLabel;
+														: visibleLabel;
 
 												if (
 													! row.isActionable &&
 													! row.href
 												) {
 															return (
-																<PageTitle title={ baseLabel }>
-																	{ renderedLabel }
-																</PageTitle>
+														<PageTitle title={ fullLabel }>
+															{ renderedLabel }
+														</PageTitle>
 															);
 												}
 
@@ -556,7 +576,7 @@ const ReportTableCard = ( {
 																row.item
 															);
 														} }
-														className="bbpa-report-table__row-action"
+														className="bbpa-report-table__row-action bbpa-text-link"
 														aria-label={
 																	`${
 																		rowActionLabel ||
@@ -564,11 +584,13 @@ const ReportTableCard = ( {
 																'Open details',
 																'bimbeau-privacy-analytics'
 																			)
-																	}: ${ baseLabel }`
+																	}: ${ fullLabel }`
 														}
 													>
-														<PageTitle title={ baseLabel }>
-															{ renderedLabel }
+														<PageTitle title={ fullLabel }>
+															<span className="bbpa-text-link__label">
+																{ renderedLabel }
+															</span>
 														</PageTitle>
 													</Button>
 												);

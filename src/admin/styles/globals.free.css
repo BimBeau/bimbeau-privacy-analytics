@@ -1470,9 +1470,64 @@ ul.striped > :nth-child(odd) {
   white-space: nowrap;
 }
 
-.bbpa-report-table__row-action:hover,
-.bbpa-report-table__row-action:focus {
-  text-decoration: underline;
+.bbpa-text-link,
+.bbpa-text-link:hover,
+.bbpa-text-link:focus,
+.bbpa-text-link:focus-visible {
+  color: var(--link);
+  opacity: 1;
+  text-decoration: none;
+}
+
+.bbpa-text-link__label {
+  position: relative;
+  display: inline-block;
+  color: var(--link);
+  opacity: 1;
+}
+
+.bbpa-text-link__label::before,
+.bbpa-text-link__label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.1em;
+  width: 100%;
+  height: 0.1em;
+  background-color: var(--link);
+  pointer-events: none;
+  transition: transform 400ms ease;
+}
+
+.bbpa-text-link__label::before {
+  opacity: 0.4;
+  transform: scaleX(1);
+  transform-origin: right center;
+}
+
+.bbpa-text-link__label::after {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.bbpa-text-link:hover .bbpa-text-link__label::before,
+.bbpa-text-link:focus .bbpa-text-link__label::before,
+.bbpa-text-link:focus-visible .bbpa-text-link__label::before {
+  transform: scaleX(0);
+}
+
+.bbpa-text-link:hover .bbpa-text-link__label::after,
+.bbpa-text-link:focus .bbpa-text-link__label::after,
+.bbpa-text-link:focus-visible .bbpa-text-link__label::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbpa-text-link__label::before,
+  .bbpa-text-link__label::after {
+    transition: none;
+  }
 }
 
 .bbpa-report-table__open-column,
