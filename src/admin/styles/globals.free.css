@@ -31,6 +31,18 @@
 
 
 
+.bbpa-admin-app .components-button:not(.is-primary):not(.is-destructive):not(.is-pressed),
+.bbpa-admin-app .components-button:not(.is-primary):not(.is-destructive):not(.is-pressed):visited,
+.bbpa-admin-app .components-button:not(.is-primary):not(.is-destructive):not(.is-pressed):hover,
+.bbpa-admin-app .components-button:not(.is-primary):not(.is-destructive):not(.is-pressed):focus,
+.bbpa-admin-app .components-button:not(.is-primary):not(.is-destructive):not(.is-pressed):focus-visible {
+  color: var(--color-1);
+}
+
+.bbpa-admin-app .components-button.is-pressed:not(:disabled, [aria-disabled="true"]) {
+  color: var(--wp-components-color-accent-inverted, #fff);
+}
+
 .bbpa-admin-app .components-button.is-primary {
   color: var(--wp-components-color-accent-inverted, #fff) !important;
 }
@@ -107,7 +119,7 @@
 .bbpa-admin-app .bbpa-admin-app__title-link:visited,
 .bbpa-admin-app .bbpa-admin-app__title-link:hover,
 .bbpa-admin-app .bbpa-admin-app__title-link:focus {
-  color: inherit;
+  color: var(--color-1);
   text-decoration: none;
   font-size: 22px;
   font-weight: 600;
@@ -636,7 +648,7 @@
   border: 0;
   background: transparent;
   box-shadow: none;
-  color: #2271b1;
+  color: var(--color-1);
   padding-left: 0;
   padding-right: 0;
   min-height: 36px;
@@ -644,7 +656,7 @@
 
 .bbpa-admin-app .bbpa-settings-modal__actions .bbpa-settings-modal__cancel.components-button:hover:not(:disabled),
 .bbpa-admin-app .bbpa-settings-modal__actions .bbpa-settings-modal__cancel.components-button:focus:not(:disabled) {
-  color: #135e96;
+  color: var(--color-1);
   text-decoration: underline;
 }
 
@@ -1035,7 +1047,7 @@
 .bbpa-geolocation-tabs .components-tab-panel__tabs .components-button.is-active,
 .bbpa-settings-tabs .components-tab-panel__tabs .components-button.is-active {
   box-shadow: inset 0 -2px 0 var(--color-3);
-  color: var(--color-3);
+  color: var(--color-1);
 }
 
 @media (max-width: 782px) {
@@ -1470,64 +1482,14 @@ ul.striped > :nth-child(odd) {
   white-space: nowrap;
 }
 
-.bbpa-text-link,
-.bbpa-text-link:hover,
-.bbpa-text-link:focus,
-.bbpa-text-link:focus-visible {
+.bbpa-admin-app .bbpa-report-table__row-action.components-button.bbpa-text-link,
+.bbpa-admin-app .bbpa-report-table__row-action.components-button.bbpa-text-link:visited,
+.bbpa-admin-app .bbpa-report-table__row-action.components-button.bbpa-text-link:hover,
+.bbpa-admin-app .bbpa-report-table__row-action.components-button.bbpa-text-link:focus,
+.bbpa-admin-app .bbpa-report-table__row-action.components-button.bbpa-text-link:focus-visible {
   color: var(--link);
   opacity: 1;
   text-decoration: none;
-}
-
-.bbpa-text-link__label {
-  position: relative;
-  display: inline-block;
-  color: var(--link);
-  opacity: 1;
-}
-
-.bbpa-text-link__label::before,
-.bbpa-text-link__label::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.1em;
-  width: 100%;
-  height: 0.1em;
-  background-color: var(--link);
-  pointer-events: none;
-  transition: transform 400ms ease;
-}
-
-.bbpa-text-link__label::before {
-  opacity: 0.4;
-  transform: scaleX(1);
-  transform-origin: right center;
-}
-
-.bbpa-text-link__label::after {
-  opacity: 1;
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-.bbpa-text-link:hover .bbpa-text-link__label::before,
-.bbpa-text-link:focus .bbpa-text-link__label::before,
-.bbpa-text-link:focus-visible .bbpa-text-link__label::before {
-  transform: scaleX(0);
-}
-
-.bbpa-text-link:hover .bbpa-text-link__label::after,
-.bbpa-text-link:focus .bbpa-text-link__label::after,
-.bbpa-text-link:focus-visible .bbpa-text-link__label::after {
-  transform: scaleX(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .bbpa-text-link__label::before,
-  .bbpa-text-link__label::after {
-    transition: none;
-  }
 }
 
 .bbpa-report-table__open-column,

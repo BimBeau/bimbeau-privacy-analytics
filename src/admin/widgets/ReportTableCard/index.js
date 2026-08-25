@@ -588,9 +588,7 @@ const ReportTableCard = ( {
 														}
 													>
 														<PageTitle title={ fullLabel }>
-															<span className="bbpa-text-link__label">
-																{ renderedLabel }
-															</span>
+															{ renderedLabel }
 														</PageTitle>
 													</Button>
 												);

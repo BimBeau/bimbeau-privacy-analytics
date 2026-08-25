@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.161
+Stable tag: 8.45.162
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -252,5 +252,5 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.161 =
-* Improve content links (animated underline) and limit Dashboard Pages labels to 50 chars.
+= 8.45.162 =
+* Restrict accent color to listing links.
