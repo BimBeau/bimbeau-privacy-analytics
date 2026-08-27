@@ -119,10 +119,10 @@
         "获取"
       ],
       "Acquisition channels": [
-        ""
+        "获客渠道"
       ],
       "Activation remains non-blocking when the local database is temporarily unavailable.": [
-        ""
+        "本地数据库暂时不可用时，不会阻止启用。"
       ],
       "Active time": [
         "活跃时间"
@@ -184,9 +184,6 @@
       "Ascending": [
         "升序"
       ],
-      "Aucune donnée identifiée disponible pour cette période.": [
-        ""
-      ],
       "Automatic GeoIP updates:": [
         "自动 GeoIP 更新："
       ],
@@ -211,11 +208,11 @@
       "Avg. time on page:": [
         "页面平均停留时间："
       ],
+      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
+        "基于 %1$d 次已识别的页面浏览，占跟踪的 %3$d 次页面浏览的 %2$d%%。"
+      ],
       "Based on %s tracked page views in the selected range.": [
         "基于所选范围内 %s 次已跟踪页面浏览。"
-      ],
-      "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies.": [
-        ""
       ],
       "BimBeau GeoIP Database Service": [
         "本地 GeoLite 数据库不可用。"
@@ -377,7 +374,7 @@
         "数据范围列表"
       ],
       "Database not downloaded": [
-        "GeoIP 数据库下载失败：%s"
+        "数据库尚未下载"
       ],
       "Debug": [
         "调试"
@@ -446,7 +443,7 @@
         "下载数据库需要联系记录的 BimBeau GeoIP 数据库服务。该服务可以接收您的服务器 IP 地址和技术用户代理。访客 IP 地址不会发送到 BimBeau 进行本地查找。"
       ],
       "Downloads contact an external service and store the database in the WordPress uploads directory.": [
-        ""
+        "下载过程会连接外部服务，并将数据库存储在 WordPress 上传目录中。"
       ],
       "Email": [
         "电子邮件"
@@ -494,7 +491,7 @@
         "入口页面（近似）"
       ],
       "Error during last update": [
-        ""
+        "上次更新时出错"
       ],
       "Error while purging.": [
         "清除时出错。"
@@ -593,7 +590,7 @@
         "GeoIP 数据库已成功更新。"
       ],
       "GeoLite local database download frequency.": [
-        "GeoIP 数据库下载失败：%s"
+        "本地 GeoLite 数据库下载频率。"
       ],
       "Geolocation": [
         "地理定位"
@@ -824,10 +821,10 @@
         "没有可用的受众细分。"
       ],
       "No automatic download will be performed.": [
-        ""
+        "不会执行自动下载。"
       ],
       "No automatic update scheduled": [
-        ""
+        "未安排自动更新"
       ],
       "No available": [
         "不可用"
@@ -873,6 +870,9 @@
       ],
       "No hourly details available for this page.": [
         "此页面没有可用的小时详情。"
+      ],
+      "No identified data is available for this period.": [
+        "此时间段没有可用数据。"
       ],
       "No missing pages available.": [
         "没有可用的缺失页面。"
@@ -935,7 +935,7 @@
         "操作系统"
       ],
       "Operational": [
-        ""
+        "运行正常"
       ],
       "Organic Search": [
         "自然搜索"
@@ -1184,7 +1184,7 @@
         "设置已保存。"
       ],
       "Size": [
-        ""
+        "大小"
       ],
       "Smartphone": [
         "智能手机"
@@ -1193,7 +1193,7 @@
         "排序依据"
       ],
       "Source or service": [
-        ""
+        "来源或服务"
       ],
       "Statistics": [
         "统计"
@@ -1259,7 +1259,7 @@
         "本地 GeoIP 数据库允许 Bim​​Beau Privacy Analytics 在 WordPress 安装内执行 IP 查找时显示访问者的地理来源。"
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
-        ""
+        "本地数据库在跟踪期间无需外部请求即可工作。MaxMind API 需要您的凭据。"
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "服务器返回了意外响应。请查看端点响应预览了解详情。"
@@ -1316,7 +1316,7 @@
         "流量数据待处理"
       ],
       "Traffic share": [
-        ""
+        "流量占比"
       ],
       "Tue": [
         "周二"
@@ -1394,7 +1394,7 @@
         "没有可用的访客数据。"
       ],
       "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
-        ""
+        "从插件的地理位置设置中安装本地 GeoIP 数据库后，即可查看访客来源。"
       ],
       "Visitors": [
         "访客"
@@ -1445,7 +1445,7 @@
         "你的 CMP 必须在获得统计/分析同意之前阻止它。"
       ],
       "Your WordPress session has expired. Reload this page.": [
-        ""
+        "您的 WordPress 会话已过期。请重新加载此页面。"
       ],
       "Your configuration is ready": [
         "您的配置已准备就绪"

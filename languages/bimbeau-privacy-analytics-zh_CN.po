@@ -18,7 +18,6 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: bimbeau-privacy-analytics.php src/admin/panels/registry.js
-#, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics 分析"
 
@@ -79,7 +78,6 @@ msgid "Pages"
 msgstr "页面"
 
 #: admin/admin.php src/admin/constants/index.js
-#, fuzzy
 msgid "Acquisition"
 msgstr "获取"
 
@@ -118,21 +116,21 @@ msgstr "设置"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "%s overview"
 msgstr "%s 次页面浏览"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "%s data is not available for this period."
-msgstr "此时间段没有可用数据。"
+msgstr "此期间没有可用的 %s 数据。"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "View %s dashboard"
-msgstr "仪表盘"
+msgstr "查看 %s 仪表盘"
 
 #. translators: 1: Start date, 2: End date for the selected reporting period.
 #: admin/dashboard-widget.php
@@ -178,7 +176,7 @@ msgstr "BimBeau Privacy Analytics Free"
 #: bimbeau-privacy-analytics.php
 #, php-format
 msgid "%1$s is already active. Deactivate it before activating %2$s."
-msgstr ""
+msgstr "%1$s 已处于启用状态。请先将其停用，再启用 %2$s。"
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics activation blocked"
@@ -188,7 +186,7 @@ msgstr "BimBeau Privacy Analytics 启用已被阻止"
 #: bimbeau-privacy-analytics.php
 #, php-format
 msgid "Both %1$s and %2$s are marked active. Only one package can be active at a time; deactivate one of them."
-msgstr ""
+msgstr "%1$s 和 %2$s 均被标记为启用。同一时间只能启用一个软件包；请停用其中一个。"
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -338,32 +336,29 @@ msgstr "GeoIP 数据库下载返回了空响应正文。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database download size does not match the manifest."
-msgstr ""
+msgstr "GeoIP 数据库下载大小与清单不符。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "GeoIP 数据库尚不可用。"
 
 #. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy, php-format
+#, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "GeoIP 数据库下载失败：%s"
 
 #. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy, php-format
+#, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "GeoIP 数据库下载失败，HTTP 状态码 %d。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database manifest is not valid JSON."
 msgstr "GeoIP 数据库文件不可读。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database manifest metadata is invalid."
 msgstr "GeoIP 数据库可用。"
 
@@ -376,7 +371,6 @@ msgid "GeoIP archive file is not readable."
 msgstr "GeoIP 归档文件不可读。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "Server is missing required gzip extraction capabilities."
 msgstr "服务器缺少所需的归档解压能力。"
 
@@ -393,12 +387,10 @@ msgid "GeoIP archive decompression failed."
 msgstr "GeoIP 归档解压失败。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "Unable to write decompressed GeoIP MMDB file."
 msgstr "无法写入已解压的 GeoIP 归档。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP MMDB file is not readable from an allowed temporary directory."
 msgstr "GeoIP MMDB 文件不可读。"
 
@@ -490,10 +482,9 @@ msgstr "缺少管理配置。"
 
 #: src/admin/AdminAppCore.js
 msgid "Your WordPress session has expired. Reload this page."
-msgstr ""
+msgstr "您的 WordPress 会话已过期。请重新加载此页面。"
 
 #: src/admin/AdminAppCore.js
-#, fuzzy
 msgid "Reload page"
 msgstr "地理定位"
 
@@ -670,7 +661,6 @@ msgid "No hourly details available for this page."
 msgstr "此页面没有可用的小时详情。"
 
 #: src/admin/components/HourlyHeatmap/index.js
-#, fuzzy
 msgid "Hourly activity heatmap by day and hour"
 msgstr "按日期和小时显示的全局小时热力图"
 
@@ -913,13 +903,11 @@ msgstr "没有可用的地理定位访问。请检查地理定位设置以开始
 
 #. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
 msgid "%s visitors"
 msgstr "%s 位访客"
 
 #. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
 msgid "%s of total visitors"
 msgstr "占总访问量的 %s"
 
@@ -1139,7 +1127,6 @@ msgid "Hourly heatmaps are unavailable for pages not found (404)."
 msgstr "未找到的页面（404）无法使用小时热力图。"
 
 #: src/admin/lib/hourlyHeatmap.js
-#, fuzzy
 msgid "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
 msgstr "小时热力图已被 bpa_hourly_aggregation_enabled 过滤器禁用。"
 
@@ -1177,15 +1164,13 @@ msgstr "不可用"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
-msgstr ""
+msgstr "获客渠道"
 
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "No acquisition channel data is available for this period."
 msgstr "此时间段没有可用的访客画像数据。"
 
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "Table: Acquisition channels"
 msgstr "表格：访客"
 
@@ -1197,11 +1182,10 @@ msgstr "入口页面"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
-msgstr ""
+msgstr "流量占比"
 
 #. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "Total visits: %s"
 msgstr "占总访问量的 %s"
 
@@ -1211,7 +1195,6 @@ msgstr "所选时间段没有可用的国家/地区数据。"
 
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
-#, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s 次访问"
 
@@ -1243,18 +1226,16 @@ msgid "Country"
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
-#, fuzzy
 msgid "Legacy visits"
 msgstr "每日访客"
 
 #: src/admin/panels/RealtimePanel.js
-#, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "没有可用的访客数据。"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
+msgstr "从插件的地理位置设置中安装本地 GeoIP 数据库后，即可查看访客来源。"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
@@ -1352,12 +1333,10 @@ msgid "No search terms available."
 msgstr "没有可用的搜索词。"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Manual updates only"
 msgstr "仅基础统计"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Every 30 days"
 msgstr "每 60 天"
 
@@ -1415,34 +1394,31 @@ msgstr "无法更新 GeoIP 数据库。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No automatic update scheduled"
-msgstr ""
+msgstr "未安排自动更新"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "计划待处理"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Update in progress"
 msgstr "在 WordPress 中打开"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Error during last update"
-msgstr ""
+msgstr "上次更新时出错"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Operational"
-msgstr ""
+msgstr "运行正常"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Unavailable"
 msgstr "不可用"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Database not downloaded"
-msgstr "GeoIP 数据库下载失败：%s"
+msgstr "数据库尚未下载"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
@@ -1509,7 +1485,6 @@ msgid "Hidden"
 msgstr "隐藏"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configure the geolocation source and GeoIP database updates."
 msgstr "GeoIP 数据库自动更新"
 
@@ -1518,18 +1493,16 @@ msgid "Geolocation source"
 msgstr "地理定位来源"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Local GeoLite database — recommended"
 msgstr "本地 GeoLite 数据库（默认）"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "MaxMind API"
 msgstr "MaxMind 账户 ID"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "The local database works without external requests during tracking. The MaxMind API requires your credentials."
-msgstr ""
+msgstr "本地数据库在跟踪期间无需外部请求即可工作。MaxMind API 需要您的凭据。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
@@ -1552,60 +1525,50 @@ msgid "Test MaxMind connection"
 msgstr "测试 MaxMind 连接"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Automatic updates"
 msgstr "自动 GeoIP 更新："
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "GeoLite local database download frequency."
-msgstr "GeoIP 数据库下载失败：%s"
+msgstr "本地 GeoLite 数据库下载频率。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No automatic download will be performed."
-msgstr ""
+msgstr "不会执行自动下载。"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Manual update"
 msgstr "仅基础统计"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Immediately download the latest GeoLite database."
 msgstr "无法读取本地 GeoLite 数据库。"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Update now"
 msgstr "更新"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "GeoIP database status"
 msgstr "未安装 GeoIP 数据库"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "The last GeoIP database update failed."
 msgstr "GeoIP 数据库自动更新"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Last updated"
 msgstr "上次尝试"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Next update"
 msgstr "下一页"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Size"
-msgstr ""
+msgstr "大小"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Technical details"
 msgstr "设备详情"
 
@@ -1619,10 +1582,9 @@ msgstr "重试次数"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Source or service"
-msgstr ""
+msgstr "来源或服务"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "BimBeau GeoIP Database Service"
 msgstr "本地 GeoLite 数据库不可用。"
 
@@ -1632,11 +1594,11 @@ msgstr "上次错误代码"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Downloads contact an external service and store the database in the WordPress uploads directory."
-msgstr ""
+msgstr "下载过程会连接外部服务，并将数据库存储在 WordPress 上传目录中。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Activation remains non-blocking when the local database is temporarily unavailable."
-msgstr ""
+msgstr "本地数据库暂时不可用时，不会阻止启用。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Privacy"
@@ -1895,17 +1857,14 @@ msgid "Delete all analytics data"
 msgstr "删除所有分析数据"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Referring site icons"
 msgstr "引荐站点"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Display referring site favicons"
 msgstr "显示引荐网站图标"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
 msgstr "允许 Bim​​Beau Privacy Analytics 联系引荐来源网址域，检索服务器端经过验证的图标，并在报告中提供缓存的本地副本。"
 
@@ -2029,7 +1988,6 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Smartphone"
 msgstr "智能手机"
 
@@ -2107,13 +2065,13 @@ msgid "Browser versions"
 msgstr "浏览器版本"
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Aucune donnée identifiée disponible pour cette période."
-msgstr ""
+msgid "No identified data is available for this period."
+msgstr "此时间段没有可用数据。"
 
 #. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 #: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies."
-msgstr ""
+msgid "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views."
+msgstr "基于 %1$d 次已识别的页面浏览，占跟踪的 %3$d 次页面浏览的 %2$d%%。"
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Device details"
@@ -2206,7 +2164,6 @@ msgid "Table: Referring sites"
 msgstr "表格：引荐站点"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
 msgid "Referrer unavailable"
 msgstr "没有可用的引荐来源。"
 
@@ -2441,7 +2398,6 @@ msgid "Active time"
 msgstr "活跃时间"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Entry channel"
 msgstr "入口页面"
 

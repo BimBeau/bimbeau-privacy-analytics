@@ -18,7 +18,6 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: bimbeau-privacy-analytics.php src/admin/panels/registry.js
-#, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics Analitik"
 
@@ -79,7 +78,6 @@ msgid "Pages"
 msgstr "Sayfalar"
 
 #: admin/admin.php src/admin/constants/index.js
-#, fuzzy
 msgid "Acquisition"
 msgstr "Edinme"
 
@@ -118,21 +116,21 @@ msgstr "Ayarlar"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "%s overview"
 msgstr "%s sayfa görüntüleme"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "%s data is not available for this period."
-msgstr "Bu dönem için veri mevcut değil."
+msgstr "%s verileri bu dönem için kullanılamıyor."
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "View %s dashboard"
-msgstr "Gösterge paneli"
+msgstr "%s panosunu görüntüle"
 
 #. translators: 1: Start date, 2: End date for the selected reporting period.
 #: admin/dashboard-widget.php
@@ -178,7 +176,7 @@ msgstr "BimBeau Privacy Analytics Free"
 #: bimbeau-privacy-analytics.php
 #, php-format
 msgid "%1$s is already active. Deactivate it before activating %2$s."
-msgstr ""
+msgstr "%1$s zaten etkin. %2$s paketini etkinleştirmeden önce bunu devre dışı bırakın."
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics activation blocked"
@@ -188,7 +186,7 @@ msgstr "BimBeau Privacy Analytics etkinleştirmesi engellendi"
 #: bimbeau-privacy-analytics.php
 #, php-format
 msgid "Both %1$s and %2$s are marked active. Only one package can be active at a time; deactivate one of them."
-msgstr ""
+msgstr "Hem %1$s hem de %2$s etkin olarak işaretlenmiş. Aynı anda yalnızca bir paket etkin olabilir; bunlardan birini devre dışı bırakın."
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -338,32 +336,29 @@ msgstr "GeoIP veritabanı indirmesi boş bir yanıt gövdesi döndürdü."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database download size does not match the manifest."
-msgstr ""
+msgstr "GeoIP veritabanı indirme boyutu bildirimle eşleşmiyor."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "GeoIP veritabanı henüz mevcut değil."
 
 #. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy, php-format
+#, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "GeoIP veritabanı indirmesi başarısız: %s"
 
 #. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy, php-format
+#, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "GeoIP veritabanı indirmesi HTTP durumu %d ile başarısız oldu."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database manifest is not valid JSON."
 msgstr "GeoIP veritabanı dosyası okunabilir değil."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database manifest metadata is invalid."
 msgstr "GeoIP veritabanı mevcut."
 
@@ -376,7 +371,6 @@ msgid "GeoIP archive file is not readable."
 msgstr "GeoIP arşiv dosyası okunabilir değil."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "Server is missing required gzip extraction capabilities."
 msgstr "Sunucuda gerekli arşiv çıkarma özellikleri eksik."
 
@@ -393,12 +387,10 @@ msgid "GeoIP archive decompression failed."
 msgstr "GeoIP arşivi açma başarısız oldu."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "Unable to write decompressed GeoIP MMDB file."
 msgstr "Açılmış GeoIP arşivi yazılamıyor."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP MMDB file is not readable from an allowed temporary directory."
 msgstr "GeoIP MMDB dosyası okunabilir değil."
 
@@ -490,10 +482,9 @@ msgstr "Yönetici yapılandırması eksik."
 
 #: src/admin/AdminAppCore.js
 msgid "Your WordPress session has expired. Reload this page."
-msgstr ""
+msgstr "WordPress oturumunuzun süresi doldu. Bu sayfayı yeniden yükleyin."
 
 #: src/admin/AdminAppCore.js
-#, fuzzy
 msgid "Reload page"
 msgstr "Coğrafi konum"
 
@@ -670,7 +661,6 @@ msgid "No hourly details available for this page."
 msgstr "Bu sayfa için saatlik ayrıntı mevcut değil."
 
 #: src/admin/components/HourlyHeatmap/index.js
-#, fuzzy
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Gün ve saate göre genel saatlik ısı haritası"
 
@@ -913,13 +903,11 @@ msgstr "Coğrafi konumlu ziyaret yok. Ülke verisi toplamaya başlamak için co�
 
 #. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
 msgid "%s visitors"
 msgstr "%s ziyaretçi"
 
 #. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
 msgid "%s of total visitors"
 msgstr "toplam ziyaretlerin %s kadarı"
 
@@ -1139,7 +1127,6 @@ msgid "Hourly heatmaps are unavailable for pages not found (404)."
 msgstr "Saatlik ısı haritaları bulunamayan sayfalar (404) için kullanılamaz."
 
 #: src/admin/lib/hourlyHeatmap.js
-#, fuzzy
 msgid "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
 msgstr "Saatlik ısı haritaları bpa_hourly_aggregation_enabled filtresi tarafından devre dışı bırakılmış."
 
@@ -1177,15 +1164,13 @@ msgstr "Kullanılabilir değil"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
-msgstr ""
+msgstr "Edinme kanalları"
 
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "No acquisition channel data is available for this period."
 msgstr "Bu dönem için ziyaretçi profili verisi mevcut değil."
 
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "Table: Acquisition channels"
 msgstr "Tablo: Ziyaretçiler"
 
@@ -1197,11 +1182,10 @@ msgstr "Giriş sayfaları"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
-msgstr ""
+msgstr "Trafik payı"
 
 #. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "Total visits: %s"
 msgstr "toplam ziyaretlerin %s kadarı"
 
@@ -1211,7 +1195,6 @@ msgstr "Seçilen dönem için ülke verisi mevcut değil."
 
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
-#, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s ziyaret"
 
@@ -1243,18 +1226,16 @@ msgid "Country"
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
-#, fuzzy
 msgid "Legacy visits"
 msgstr "Günlük ziyaretçiler"
 
 #: src/admin/panels/RealtimePanel.js
-#, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "Ziyaretçi verisi mevcut değil."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
+msgstr "Ziyaretçi kaynağı, yerel GeoIP veritabanı eklentinin coğrafi konum ayarlarından yüklendikten sonra kullanılabilir."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
@@ -1352,12 +1333,10 @@ msgid "No search terms available."
 msgstr "Kullanılabilir arama terimi yok."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Manual updates only"
 msgstr "Yalnızca temel istatistikler"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Every 30 days"
 msgstr "Her 60 günde bir"
 
@@ -1415,34 +1394,31 @@ msgstr "GeoIP veritabanı güncellenemiyor."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No automatic update scheduled"
-msgstr ""
+msgstr "Otomatik güncelleme planlanmadı"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "Bekleyen zamanlama"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Update in progress"
 msgstr "WordPress’te aç"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Error during last update"
-msgstr ""
+msgstr "Son güncelleme sırasında hata"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Operational"
-msgstr ""
+msgstr "Çalışıyor"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Unavailable"
 msgstr "Kullanılabilir değil"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Database not downloaded"
-msgstr "GeoIP veritabanı indirmesi başarısız: %s"
+msgstr "Veritabanı indirilmedi"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
@@ -1509,7 +1485,6 @@ msgid "Hidden"
 msgstr "Gizli"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configure the geolocation source and GeoIP database updates."
 msgstr "Otomatik GeoIP veritabanı güncellemeleri"
 
@@ -1518,18 +1493,16 @@ msgid "Geolocation source"
 msgstr "Coğrafi konum kaynağı"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Local GeoLite database — recommended"
 msgstr "Yerel GeoLite veritabanı (varsayılan)"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "MaxMind API"
 msgstr "MaxMind Hesap Kimliği"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "The local database works without external requests during tracking. The MaxMind API requires your credentials."
-msgstr ""
+msgstr "Yerel veritabanı izleme sırasında harici istekler olmadan çalışır. MaxMind API kimlik bilgilerinizi gerektirir."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
@@ -1552,60 +1525,50 @@ msgid "Test MaxMind connection"
 msgstr "MaxMind bağlantısını test et"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Automatic updates"
 msgstr "Otomatik GeoIP güncellemeleri:"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "GeoLite local database download frequency."
-msgstr "GeoIP veritabanı indirmesi başarısız: %s"
+msgstr "Yerel GeoLite veritabanı indirme sıklığı."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No automatic download will be performed."
-msgstr ""
+msgstr "Otomatik indirme yapılmayacak."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Manual update"
 msgstr "Yalnızca temel istatistikler"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Immediately download the latest GeoLite database."
 msgstr "Yerel GeoLite veritabanı okunamıyor."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Update now"
 msgstr "Güncelle"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "GeoIP database status"
 msgstr "GeoIP veritabanı yüklü değil"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "The last GeoIP database update failed."
 msgstr "Otomatik GeoIP veritabanı güncellemeleri"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Last updated"
 msgstr "Son deneme"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Next update"
 msgstr "Sonraki sayfa"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Size"
-msgstr ""
+msgstr "Boyut"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Technical details"
 msgstr "Cihaz ayrıntıları"
 
@@ -1619,10 +1582,9 @@ msgstr "Yeniden deneme sayısı"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Source or service"
-msgstr ""
+msgstr "Kaynak veya hizmet"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "BimBeau GeoIP Database Service"
 msgstr "Yerel GeoLite veritabanı kullanılamıyor."
 
@@ -1632,11 +1594,11 @@ msgstr "Son hata kodu"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Downloads contact an external service and store the database in the WordPress uploads directory."
-msgstr ""
+msgstr "İndirmeler harici bir hizmetle iletişim kurar ve veritabanını WordPress yüklemeler dizininde saklar."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Activation remains non-blocking when the local database is temporarily unavailable."
-msgstr ""
+msgstr "Yerel veritabanı geçici olarak kullanılamadığında etkinleştirme engellenmez."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Privacy"
@@ -1895,17 +1857,14 @@ msgid "Delete all analytics data"
 msgstr "Tüm analiz verilerini sil"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Referring site icons"
 msgstr "Yönlendiren siteler"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Display referring site favicons"
 msgstr "Yönlendiren favori simgelerini görüntüle"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
 msgstr "BimBeau Privacy Analytics'in yönlendiren alan adlarıyla iletişim kurmasına, sunucu tarafında doğrulanmış simgeler almasına ve raporlarda önbelleğe alınmış yerel kopyalar sunmasına izin verin."
 
@@ -2029,7 +1988,6 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Smartphone"
 msgstr "Akıllı telefon"
 
@@ -2107,13 +2065,13 @@ msgid "Browser versions"
 msgstr "Tarayıcı sürümleri"
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Aucune donnée identifiée disponible pour cette période."
-msgstr ""
+msgid "No identified data is available for this period."
+msgstr "Bu dönem için veri mevcut değil."
 
 #. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 #: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies."
-msgstr ""
+msgid "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views."
+msgstr "%1$d tanımlanmış sayfa görüntülemesine dayanır; bu, izlenen %3$d sayfa görüntülemesinin %2$d%% oranıdır."
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Device details"
@@ -2206,7 +2164,6 @@ msgid "Table: Referring sites"
 msgstr "Tablo: Yönlendiren siteler"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
 msgid "Referrer unavailable"
 msgstr "Yönlendiren mevcut değil."
 
@@ -2441,7 +2398,6 @@ msgid "Active time"
 msgstr "Etkin süre"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Entry channel"
 msgstr "Giriş sayfaları"
 

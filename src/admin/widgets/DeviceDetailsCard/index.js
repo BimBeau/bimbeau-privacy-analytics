@@ -107,7 +107,7 @@ const BreakdownChart = ( { title, items, identifiedTotal, totalTracked } ) => {
 			) : (
 				<p className="bbpa-device-details-card__empty">
 					{ __(
-						'Aucune donnée identifiée disponible pour cette période.',
+						'No identified data is available for this period.',
 						'bimbeau-privacy-analytics'
 					) }
 				</p>
@@ -116,7 +116,7 @@ const BreakdownChart = ( { title, items, identifiedTotal, totalTracked } ) => {
 				{ sprintf(
 					/* translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views. */
 					__(
-						'Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies.',
+						'Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.',
 						'bimbeau-privacy-analytics'
 					),
 					identifiedTotal,

@@ -119,10 +119,10 @@
         "Edinme"
       ],
       "Acquisition channels": [
-        ""
+        "Edinme kanalları"
       ],
       "Activation remains non-blocking when the local database is temporarily unavailable.": [
-        ""
+        "Yerel veritabanı geçici olarak kullanılamadığında etkinleştirme engellenmez."
       ],
       "Active time": [
         "Etkin süre"
@@ -184,9 +184,6 @@
       "Ascending": [
         "Artan"
       ],
-      "Aucune donnée identifiée disponible pour cette période.": [
-        ""
-      ],
       "Automatic GeoIP updates:": [
         "Otomatik GeoIP güncellemeleri:"
       ],
@@ -211,11 +208,11 @@
       "Avg. time on page:": [
         "Sayfada ort. süre:"
       ],
+      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
+        "%1$d tanımlanmış sayfa görüntülemesine dayanır; bu, izlenen %3$d sayfa görüntülemesinin %2$d%% oranıdır."
+      ],
       "Based on %s tracked page views in the selected range.": [
         "Seçilen aralıkta izlenen %s sayfa görüntülemesine göre."
-      ],
-      "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies.": [
-        ""
       ],
       "BimBeau GeoIP Database Service": [
         "Yerel GeoLite veritabanı kullanılamıyor."
@@ -377,7 +374,7 @@
         "Veri kapsamı listesi"
       ],
       "Database not downloaded": [
-        "GeoIP veritabanı indirmesi başarısız: %s"
+        "Veritabanı indirilmedi"
       ],
       "Debug": [
         "Hata ayıklama"
@@ -446,7 +443,7 @@
         "Veritabanının indirilmesi, belgelenen BimBeau GeoIP Veritabanı Hizmeti ile iletişim kurar. Hizmet, sunucunuzun IP adresini ve teknik bir Kullanıcı Aracısını alabilir. Yerel aramalar için ziyaretçi IP adresleri BimBeau'ya gönderilmez."
       ],
       "Downloads contact an external service and store the database in the WordPress uploads directory.": [
-        ""
+        "İndirmeler harici bir hizmetle iletişim kurar ve veritabanını WordPress yüklemeler dizininde saklar."
       ],
       "Email": [
         "E-posta"
@@ -494,7 +491,7 @@
         "Giriş sayfaları (yaklaşık)"
       ],
       "Error during last update": [
-        ""
+        "Son güncelleme sırasında hata"
       ],
       "Error while purging.": [
         "Temizleme sırasında hata."
@@ -593,7 +590,7 @@
         "GeoIP veritabanı başarıyla güncellendi."
       ],
       "GeoLite local database download frequency.": [
-        "GeoIP veritabanı indirmesi başarısız: %s"
+        "Yerel GeoLite veritabanı indirme sıklığı."
       ],
       "Geolocation": [
         "Coğrafi konum"
@@ -824,10 +821,10 @@
         "Kitle kırılımları mevcut değil."
       ],
       "No automatic download will be performed.": [
-        ""
+        "Otomatik indirme yapılmayacak."
       ],
       "No automatic update scheduled": [
-        ""
+        "Otomatik güncelleme planlanmadı"
       ],
       "No available": [
         "Kullanılabilir değil"
@@ -873,6 +870,9 @@
       ],
       "No hourly details available for this page.": [
         "Bu sayfa için saatlik ayrıntı mevcut değil."
+      ],
+      "No identified data is available for this period.": [
+        "Bu dönem için veri mevcut değil."
       ],
       "No missing pages available.": [
         "Eksik sayfa mevcut değil."
@@ -935,7 +935,7 @@
         "İşletim sistemleri"
       ],
       "Operational": [
-        ""
+        "Çalışıyor"
       ],
       "Organic Search": [
         "Organik arama"
@@ -1184,7 +1184,7 @@
         "Ayarlar kaydedildi."
       ],
       "Size": [
-        ""
+        "Boyut"
       ],
       "Smartphone": [
         "Akıllı telefon"
@@ -1193,7 +1193,7 @@
         "Sıralama ölçütü"
       ],
       "Source or service": [
-        ""
+        "Kaynak veya hizmet"
       ],
       "Statistics": [
         "İstatistikler"
@@ -1259,7 +1259,7 @@
         "Yerel GeoIP veritabanı, BimBeau Privacy Analytics'in WordPress kurulumunuzda IP aramaları yaparken ziyaretçilerin coğrafi kökenini görüntülemesine olanak tanır."
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
-        ""
+        "Yerel veritabanı izleme sırasında harici istekler olmadan çalışır. MaxMind API kimlik bilgilerinizi gerektirir."
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "Sunucu beklenmeyen bir yanıt döndürdü. Ayrıntılar için uç nokta yanıt önizlemesini kontrol edin."
@@ -1316,7 +1316,7 @@
         "Trafik verileri beklemede"
       ],
       "Traffic share": [
-        ""
+        "Trafik payı"
       ],
       "Tue": [
         "Sal"
@@ -1394,7 +1394,7 @@
         "Ziyaretçi verisi mevcut değil."
       ],
       "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
-        ""
+        "Ziyaretçi kaynağı, yerel GeoIP veritabanı eklentinin coğrafi konum ayarlarından yüklendikten sonra kullanılabilir."
       ],
       "Visitors": [
         "Ziyaretçiler"
@@ -1445,7 +1445,7 @@
         "CMP’niz, İstatistik / Analitik onayı verilene kadar bunu engellemelidir."
       ],
       "Your WordPress session has expired. Reload this page.": [
-        ""
+        "WordPress oturumunuzun süresi doldu. Bu sayfayı yeniden yükleyin."
       ],
       "Your configuration is ready": [
         "Yapılandırmanız hazır"

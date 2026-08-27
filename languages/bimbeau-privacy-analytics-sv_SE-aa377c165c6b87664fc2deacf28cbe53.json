@@ -120,10 +120,10 @@
         "Förvärv"
       ],
       "Acquisition channels": [
-        ""
+        "Förvärvskanaler"
       ],
       "Activation remains non-blocking when the local database is temporarily unavailable.": [
-        ""
+        "Aktiveringen blockeras inte när den lokala databasen tillfälligt är otillgänglig."
       ],
       "Active time": [
         "Aktiv tid"
@@ -185,9 +185,6 @@
       "Ascending": [
         "Stigande"
       ],
-      "Aucune donnée identifiée disponible pour cette période.": [
-        ""
-      ],
       "Automatic GeoIP updates:": [
         "Automatiska GeoIP-uppdateringar:"
       ],
@@ -212,11 +209,11 @@
       "Avg. time on page:": [
         "Genomsnittlig tid på sida:"
       ],
+      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
+        "Baserat på %1$d identifierade sidvisningar, vilket motsvarar %2$d%% av %3$d spårade sidvisningar."
+      ],
       "Based on %s tracked page views in the selected range.": [
         "Baserat på %s spårade sidvisningar i det valda intervallet."
-      ],
-      "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies.": [
-        ""
       ],
       "BimBeau GeoIP Database Service": [
         "Den lokala GeoLite-databasen är inte tillgänglig."
@@ -378,7 +375,7 @@
         "Lista över dataomfattning"
       ],
       "Database not downloaded": [
-        "Nedladdning av GeoIP-databasen misslyckades: %s"
+        "Databasen har inte hämtats"
       ],
       "Debug": [
         "Felsökning"
@@ -447,7 +444,7 @@
         "Nedladdning av databasen kontaktar den dokumenterade BimBeau GeoIP Database Service. Tjänsten kan ta emot din server IP-adress och en teknisk User-Agent. Besökares IP-adresser skickas inte till BimBeau för lokala sökningar."
       ],
       "Downloads contact an external service and store the database in the WordPress uploads directory.": [
-        ""
+        "Hämtningar kontaktar en extern tjänst och lagrar databasen i WordPress uppladdningskatalog."
       ],
       "Email": [
         "E-post"
@@ -495,7 +492,7 @@
         "Ingångssidor (ca)"
       ],
       "Error during last update": [
-        ""
+        "Fel vid senaste uppdateringen"
       ],
       "Error while purging.": [
         "Fel vid rensning."
@@ -594,7 +591,7 @@
         "GeoIP-databasen uppdaterades."
       ],
       "GeoLite local database download frequency.": [
-        "Nedladdning av GeoIP-databasen misslyckades: %s"
+        "Hämtningsfrekvens för den lokala GeoLite-databasen."
       ],
       "Geolocation": [
         "Geolokalisering"
@@ -825,10 +822,10 @@
         "Inga målgruppsfördelningar tillgängliga."
       ],
       "No automatic download will be performed.": [
-        ""
+        "Ingen automatisk hämtning kommer att utföras."
       ],
       "No automatic update scheduled": [
-        ""
+        "Ingen automatisk uppdatering schemalagd"
       ],
       "No available": [
         "Inte tillgängligt"
@@ -874,6 +871,9 @@
       ],
       "No hourly details available for this page.": [
         "Inga timvisa detaljer är tillgängliga för den här sidan."
+      ],
+      "No identified data is available for this period.": [
+        "Ingen data är tillgänglig för den här perioden."
       ],
       "No missing pages available.": [
         "Inga saknade sidor tillgängliga."
@@ -936,7 +936,7 @@
         "Operativsystem"
       ],
       "Operational": [
-        ""
+        "I drift"
       ],
       "Organic Search": [
         "Organisk sökning"
@@ -1185,7 +1185,7 @@
         "Inställningar sparade."
       ],
       "Size": [
-        ""
+        "Storlek"
       ],
       "Smartphone": [
         "Smartphone"
@@ -1194,7 +1194,7 @@
         "Sortera efter"
       ],
       "Source or service": [
-        ""
+        "Källa eller tjänst"
       ],
       "Statistics": [
         "Statistik"
@@ -1260,7 +1260,7 @@
         "Den lokala GeoIP-databasen tillåter BimBeau Privacy Analytics att visa besökarnas geografiska ursprung medan de utför IP-sökningar i din WordPress-installation."
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
-        ""
+        "Den lokala databasen fungerar utan externa förfrågningar under spårning. MaxMind API kräver dina autentiseringsuppgifter."
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "Servern returnerade ett oväntat svar. Kontrollera förhandsvisningen av endpoint-svaret för detaljer."
@@ -1317,7 +1317,7 @@
         "Trafikdata väntar"
       ],
       "Traffic share": [
-        ""
+        "Trafikandel"
       ],
       "Tue": [
         "Tis"
@@ -1395,7 +1395,7 @@
         "Ingen besökardata tillgänglig."
       ],
       "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
-        ""
+        "Besökarnas ursprung blir tillgängligt när den lokala GeoIP-databasen har installerats via tilläggets geolokaliseringsinställningar."
       ],
       "Visitors": [
         "Besökare"
@@ -1446,7 +1446,7 @@
         "Din CMP måste blockera den tills samtycke till statistik/analys har getts."
       ],
       "Your WordPress session has expired. Reload this page.": [
-        ""
+        "Din WordPress-session har löpt ut. Ladda om sidan."
       ],
       "Your configuration is ready": [
         "Din konfiguration är klar"

@@ -120,10 +120,10 @@
         "Απόκτηση"
       ],
       "Acquisition channels": [
-        ""
+        "Κανάλια απόκτησης"
       ],
       "Activation remains non-blocking when the local database is temporarily unavailable.": [
-        ""
+        "Η ενεργοποίηση δεν αποκλείεται όταν η τοπική βάση δεδομένων δεν είναι προσωρινά διαθέσιμη."
       ],
       "Active time": [
         "Ενεργός χρόνος"
@@ -185,9 +185,6 @@
       "Ascending": [
         "Αύξουσα"
       ],
-      "Aucune donnée identifiée disponible pour cette période.": [
-        ""
-      ],
       "Automatic GeoIP updates:": [
         "Αυτόματες ενημερώσεις GeoIP:"
       ],
@@ -212,11 +209,11 @@
       "Avg. time on page:": [
         "Μέσος χρόνος στη σελίδα:"
       ],
+      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
+        "Βάσει %1$d αναγνωρισμένων προβολών σελίδας, που αντιπροσωπεύουν το %2$d%% από %3$d καταγεγραμμένες προβολές σελίδας."
+      ],
       "Based on %s tracked page views in the selected range.": [
         "Βάσει %s καταγεγραμμένων προβολών σελίδας στο επιλεγμένο εύρος."
-      ],
-      "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies.": [
-        ""
       ],
       "BimBeau GeoIP Database Service": [
         "Η τοπική βάση δεδομένων GeoLite δεν είναι διαθέσιμη."
@@ -378,7 +375,7 @@
         "Λίστα εύρους δεδομένων"
       ],
       "Database not downloaded": [
-        "Η λήψη της βάσης GeoIP απέτυχε: %s"
+        "Η βάση δεδομένων δεν έχει ληφθεί"
       ],
       "Debug": [
         "Αποσφαλμάτωση"
@@ -447,7 +444,7 @@
         "Η λήψη της βάσης δεδομένων έρχεται σε επαφή με την τεκμηριωμένη υπηρεσία βάσης δεδομένων GeoIP BimBeau. Η υπηρεσία μπορεί να λάβει τη διεύθυνση IP του διακομιστή σας και έναν τεχνικό παράγοντα χρήστη. Οι διευθύνσεις IP επισκεπτών δεν αποστέλλονται στο BimBeau για τοπικές αναζητήσεις."
       ],
       "Downloads contact an external service and store the database in the WordPress uploads directory.": [
-        ""
+        "Οι λήψεις επικοινωνούν με εξωτερική υπηρεσία και αποθηκεύουν τη βάση δεδομένων στον κατάλογο μεταφορτώσεων του WordPress."
       ],
       "Email": [
         "Email"
@@ -495,7 +492,7 @@
         "Σελίδες εισόδου (περ.)"
       ],
       "Error during last update": [
-        ""
+        "Σφάλμα κατά την τελευταία ενημέρωση"
       ],
       "Error while purging.": [
         "Σφάλμα κατά την εκκαθάριση."
@@ -594,7 +591,7 @@
         "Η βάση δεδομένων GeoIP ενημερώθηκε με επιτυχία."
       ],
       "GeoLite local database download frequency.": [
-        "Η λήψη της βάσης GeoIP απέτυχε: %s"
+        "Συχνότητα λήψης της τοπικής βάσης δεδομένων GeoLite."
       ],
       "Geolocation": [
         "Γεωεντοπισμός"
@@ -825,10 +822,10 @@
         "Δεν υπάρχουν διαθέσιμες κατανομές κοινού."
       ],
       "No automatic download will be performed.": [
-        ""
+        "Δεν θα πραγματοποιηθεί αυτόματη λήψη."
       ],
       "No automatic update scheduled": [
-        ""
+        "Δεν έχει προγραμματιστεί αυτόματη ενημέρωση"
       ],
       "No available": [
         "Μη διαθέσιμο"
@@ -874,6 +871,9 @@
       ],
       "No hourly details available for this page.": [
         "Δεν υπάρχουν διαθέσιμες ωριαίες λεπτομέρειες για αυτήν τη σελίδα."
+      ],
+      "No identified data is available for this period.": [
+        "Δεν υπάρχουν διαθέσιμα δεδομένα για αυτήν την περίοδο."
       ],
       "No missing pages available.": [
         "Δεν υπάρχουν διαθέσιμες σελίδες που λείπουν."
@@ -936,7 +936,7 @@
         "Λειτουργικά συστήματα"
       ],
       "Operational": [
-        ""
+        "Λειτουργικό"
       ],
       "Organic Search": [
         "Οργανική αναζήτηση"
@@ -1185,7 +1185,7 @@
         "Οι ρυθμίσεις αποθηκεύτηκαν."
       ],
       "Size": [
-        ""
+        "Μέγεθος"
       ],
       "Smartphone": [
         "Smartphone"
@@ -1194,7 +1194,7 @@
         "Ταξινόμηση κατά"
       ],
       "Source or service": [
-        ""
+        "Πηγή ή υπηρεσία"
       ],
       "Statistics": [
         "Στατιστικά"
@@ -1260,7 +1260,7 @@
         "Η τοπική βάση δεδομένων GeoIP επιτρέπει στο BimBeau Privacy Analytics να εμφανίζει τη γεωγραφική προέλευση των επισκεπτών κατά την εκτέλεση αναζητήσεων IP εντός της εγκατάστασης του WordPress."
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
-        ""
+        "Η τοπική βάση δεδομένων λειτουργεί χωρίς εξωτερικά αιτήματα κατά την παρακολούθηση. Το API MaxMind απαιτεί τα διαπιστευτήριά σας."
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "Ο διακομιστής επέστρεψε μη αναμενόμενη απόκριση. Ελέγξτε την προεπισκόπηση απόκρισης του endpoint για λεπτομέρειες."
@@ -1317,7 +1317,7 @@
         "Τα δεδομένα κίνησης εκκρεμούν"
       ],
       "Traffic share": [
-        ""
+        "Μερίδιο επισκεψιμότητας"
       ],
       "Tue": [
         "Τρι"
@@ -1395,7 +1395,7 @@
         "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
       ],
       "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings.": [
-        ""
+        "Η προέλευση των επισκεπτών θα είναι διαθέσιμη μετά την εγκατάσταση της τοπικής βάσης δεδομένων GeoIP από τις ρυθμίσεις γεωεντοπισμού του πρόσθετου."
       ],
       "Visitors": [
         "Επισκέπτες"
@@ -1446,7 +1446,7 @@
         "Το CMP σας πρέπει να το αποκλείει μέχρι να δοθεί συναίνεση για Στατιστικά / Αναλυτικά."
       ],
       "Your WordPress session has expired. Reload this page.": [
-        ""
+        "Η συνεδρία σας στο WordPress έληξε. Επαναφορτώστε αυτήν τη σελίδα."
       ],
       "Your configuration is ready": [
         "Η διαμόρφωσή σας είναι έτοιμη"

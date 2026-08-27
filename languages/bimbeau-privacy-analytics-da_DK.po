@@ -18,7 +18,6 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: bimbeau-privacy-analytics.php src/admin/panels/registry.js
-#, fuzzy
 msgid "BimBeau Privacy Analytics"
 msgstr "BimBeau Privacy Analytics"
 
@@ -79,7 +78,6 @@ msgid "Pages"
 msgstr "Sider"
 
 #: admin/admin.php src/admin/constants/index.js
-#, fuzzy
 msgid "Acquisition"
 msgstr "Anskaffelse"
 
@@ -118,21 +116,21 @@ msgstr "Indstillinger"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "%s overview"
 msgstr "%s sidevisning"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "%s data is not available for this period."
-msgstr "Ingen data tilgængelige for denne periode."
+msgstr "%s-data er ikke tilgængelige for denne periode."
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
-#, fuzzy, php-format
+#, php-format
 msgid "View %s dashboard"
-msgstr "Kontrolpanel"
+msgstr "Vis kontrolpanelet for %s"
 
 #. translators: 1: Start date, 2: End date for the selected reporting period.
 #: admin/dashboard-widget.php
@@ -178,7 +176,7 @@ msgstr "BimBeau Privacy Analytics Free"
 #: bimbeau-privacy-analytics.php
 #, php-format
 msgid "%1$s is already active. Deactivate it before activating %2$s."
-msgstr ""
+msgstr "%1$s er allerede aktiv. Deaktivér den, før du aktiverer %2$s."
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics activation blocked"
@@ -188,7 +186,7 @@ msgstr "BimBeau Privacy Analytics-aktivering blokeret"
 #: bimbeau-privacy-analytics.php
 #, php-format
 msgid "Both %1$s and %2$s are marked active. Only one package can be active at a time; deactivate one of them."
-msgstr ""
+msgstr "Både %1$s og %2$s er markeret som aktive. Kun én pakke kan være aktiv ad gangen; deaktivér en af dem."
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
@@ -338,32 +336,29 @@ msgstr "Download af GeoIP-databasen returnerede en tom svartekst."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database download size does not match the manifest."
-msgstr ""
+msgstr "Downloadstørrelsen for GeoIP-databasen stemmer ikke overens med manifestet."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database checksum does not match the manifest."
 msgstr "GeoIP-databasen er endnu ikke tilgængelig."
 
 #. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy, php-format
+#, php-format
 msgid "GeoIP database manifest request failed: %s"
 msgstr "Download af GeoIP-databasen mislykkedes: %s"
 
 #. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy, php-format
+#, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
 msgstr "Download af GeoIP-databasen mislykkedes med HTTP-status %d."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database manifest is not valid JSON."
 msgstr "GeoIP-databasefilen kan ikke læses."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP database manifest metadata is invalid."
 msgstr "GeoIP-databasen er tilgængelig."
 
@@ -376,7 +371,6 @@ msgid "GeoIP archive file is not readable."
 msgstr "GeoIP-arkivfilen kan ikke læses."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "Server is missing required gzip extraction capabilities."
 msgstr "Serveren mangler de nødvendige funktioner til udpakning af arkiver."
 
@@ -393,12 +387,10 @@ msgid "GeoIP archive decompression failed."
 msgstr "Dekomprimering af GeoIP-arkivet mislykkedes."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "Unable to write decompressed GeoIP MMDB file."
 msgstr "Kan ikke skrive dekomprimeret GeoIP-arkiv."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-#, fuzzy
 msgid "GeoIP MMDB file is not readable from an allowed temporary directory."
 msgstr "GeoIP MMDB-filen kan ikke læses."
 
@@ -490,10 +482,9 @@ msgstr "Manglende admin-konfiguration."
 
 #: src/admin/AdminAppCore.js
 msgid "Your WordPress session has expired. Reload this page."
-msgstr ""
+msgstr "Din WordPress-session er udløbet. Genindlæs siden."
 
 #: src/admin/AdminAppCore.js
-#, fuzzy
 msgid "Reload page"
 msgstr "Geolokalisering"
 
@@ -670,7 +661,6 @@ msgid "No hourly details available for this page."
 msgstr "Ingen timedetaljer tilgængelige for denne side."
 
 #: src/admin/components/HourlyHeatmap/index.js
-#, fuzzy
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Globalt time-heatmap efter dag og time"
 
@@ -913,13 +903,11 @@ msgstr "Der er ingen geolokaliserede besøg tilgængelige. Kontrollér dine geol
 
 #. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
 msgid "%s visitors"
 msgstr "%s besøgende"
 
 #. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
-#, fuzzy
 msgid "%s of total visitors"
 msgstr "%s af samlede besøg"
 
@@ -1139,7 +1127,6 @@ msgid "Hourly heatmaps are unavailable for pages not found (404)."
 msgstr "Timebaserede heatmaps er ikke tilgængelige for sider, der ikke blev fundet (404)."
 
 #: src/admin/lib/hourlyHeatmap.js
-#, fuzzy
 msgid "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
 msgstr "Timebaserede heatmaps er deaktiveret af filteret bpa_hourly_aggregation_enabled."
 
@@ -1177,15 +1164,13 @@ msgstr "Ikke tilgængelig"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
-msgstr ""
+msgstr "Tilgangskanaler"
 
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "No acquisition channel data is available for this period."
 msgstr "Ingen besøgsprofildata tilgængelige for denne periode."
 
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "Table: Acquisition channels"
 msgstr "Tabel: Besøgende"
 
@@ -1197,11 +1182,10 @@ msgstr "Indgangssider"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
-msgstr ""
+msgstr "Andel af trafik"
 
 #. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
-#, fuzzy
 msgid "Total visits: %s"
 msgstr "%s af samlede besøg"
 
@@ -1211,7 +1195,6 @@ msgstr "Ingen landedata tilgængelige for den valgte periode."
 
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
-#, fuzzy
 msgid "%1$s — %2$s visitors"
 msgstr "%1$s — %2$s besøg"
 
@@ -1243,18 +1226,16 @@ msgid "Country"
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
-#, fuzzy
 msgid "Legacy visits"
 msgstr "Daglige besøgende"
 
 #: src/admin/panels/RealtimePanel.js
-#, fuzzy
 msgid "Visitor origin unavailable"
 msgstr "Ingen besøgsdata tilgængelige."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr ""
+msgstr "Besøgendes oprindelse bliver tilgængelig, når den lokale GeoIP-database er installeret via pluginets indstillinger for geoplacering."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
@@ -1352,12 +1333,10 @@ msgid "No search terms available."
 msgstr "Ingen søgetermer tilgængelige."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Manual updates only"
 msgstr "Kun essentiel statistik"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Every 30 days"
 msgstr "Hver 60. dag"
 
@@ -1415,34 +1394,31 @@ msgstr "Kan ikke opdatere GeoIP-databasen."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No automatic update scheduled"
-msgstr ""
+msgstr "Ingen automatisk opdatering planlagt"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "Afventende tidsplan"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Update in progress"
 msgstr "Åbn i WordPress"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Error during last update"
-msgstr ""
+msgstr "Fejl under seneste opdatering"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Operational"
-msgstr ""
+msgstr "I drift"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Unavailable"
 msgstr "Ikke tilgængelig"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Database not downloaded"
-msgstr "Download af GeoIP-databasen mislykkedes: %s"
+msgstr "Databasen er ikke downloadet"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
@@ -1509,7 +1485,6 @@ msgid "Hidden"
 msgstr "Skjult"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Configure the geolocation source and GeoIP database updates."
 msgstr "Automatiske GeoIP-databaseopdateringer"
 
@@ -1518,18 +1493,16 @@ msgid "Geolocation source"
 msgstr "Geolokaliseringskilde"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Local GeoLite database — recommended"
 msgstr "Lokal GeoLite-database (standard)"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "MaxMind API"
 msgstr "MaxMind-konto-id"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "The local database works without external requests during tracking. The MaxMind API requires your credentials."
-msgstr ""
+msgstr "Den lokale database fungerer uden eksterne forespørgsler under sporing. MaxMind API kræver dine legitimationsoplysninger."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
@@ -1552,60 +1525,50 @@ msgid "Test MaxMind connection"
 msgstr "Test MaxMind-forbindelse"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Automatic updates"
 msgstr "Automatiske GeoIP-opdateringer:"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "GeoLite local database download frequency."
-msgstr "Download af GeoIP-databasen mislykkedes: %s"
+msgstr "Downloadfrekvens for den lokale GeoLite-database."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No automatic download will be performed."
-msgstr ""
+msgstr "Der udføres ingen automatisk download."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Manual update"
 msgstr "Kun essentiel statistik"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Immediately download the latest GeoLite database."
 msgstr "Kan ikke læse den lokale GeoLite-database."
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Update now"
 msgstr "Opdater"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "GeoIP database status"
 msgstr "GeoIP-database ikke installeret"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "The last GeoIP database update failed."
 msgstr "Automatiske GeoIP-databaseopdateringer"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Last updated"
 msgstr "Seneste forsøg"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Next update"
 msgstr "Næste side"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Size"
-msgstr ""
+msgstr "Størrelse"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Technical details"
 msgstr "Enhedsdetaljer"
 
@@ -1619,10 +1582,9 @@ msgstr "Antal forsøg"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Source or service"
-msgstr ""
+msgstr "Kilde eller tjeneste"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "BimBeau GeoIP Database Service"
 msgstr "Den lokale GeoLite-database er ikke tilgængelig."
 
@@ -1632,11 +1594,11 @@ msgstr "Seneste fejlkode"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Downloads contact an external service and store the database in the WordPress uploads directory."
-msgstr ""
+msgstr "Downloads kontakter en ekstern tjeneste og gemmer databasen i WordPress-uploadmappen."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Activation remains non-blocking when the local database is temporarily unavailable."
-msgstr ""
+msgstr "Aktiveringen blokeres ikke, når den lokale database midlertidigt er utilgængelig."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Privacy"
@@ -1895,17 +1857,14 @@ msgid "Delete all analytics data"
 msgstr "Slet alle analysedata"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Referring site icons"
 msgstr "Henvisende websteder"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Display referring site favicons"
 msgstr "Vis henvisningsfavikoner"
 
 #: src/admin/panels/SettingsPanel.js
-#, fuzzy
 msgid "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
 msgstr "Tillad BimBeau Privacy Analytics at kontakte henvisningsdomæner, hente validerede ikoner på serversiden og vise cachelagrede lokale kopier i rapporter."
 
@@ -2029,7 +1988,6 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Smartphone"
 msgstr "Smartphone"
 
@@ -2108,13 +2066,13 @@ msgid "Browser versions"
 msgstr "Browserversioner"
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Aucune donnée identifiée disponible pour cette période."
-msgstr ""
+msgid "No identified data is available for this period."
+msgstr "Ingen data tilgængelige for denne periode."
 
 #. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
 #: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Basé sur %1$d pages vues identifiées, soit %2$d%% des %3$d pages vues suivies."
-msgstr ""
+msgid "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views."
+msgstr "Baseret på %1$d identificerede sidevisninger, svarende til %2$d%% af %3$d sporede sidevisninger."
 
 #: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Device details"
@@ -2208,7 +2166,6 @@ msgid "Table: Referring sites"
 msgstr "Tabel: Henvisende websteder"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
 msgid "Referrer unavailable"
 msgstr "Ingen henvisere tilgængelige."
 
@@ -2445,7 +2402,6 @@ msgid "Active time"
 msgstr "Aktiv tid"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Entry channel"
 msgstr "Indgangssider"
 
