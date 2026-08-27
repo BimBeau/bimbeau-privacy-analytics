@@ -435,7 +435,26 @@ function bbpa_remember_visit_attribution(array $hit, array $utm_params = []): vo
         $source_category = bbpa_get_source_category_from_tracking_context($referrer_domain, $utm_params);
     }
 
-    set_transient('bbpa_visit_attr_' . md5($visit_id), [
+    $transient_key = 'bbpa_visit_attr_' . md5($visit_id);
+    $remembered_attribution = get_transient($transient_key);
+    if (is_array($remembered_attribution)) {
+        $remembered_source_category = sanitize_text_field((string) ($remembered_attribution['source_category'] ?? ''));
+
+        // Visit attribution is first-touch. Direct is only the absence of a new
+        // acquisition signal, so it may be upgraded but cannot replace (or be
+        // used to replace) an acquisition already identified for this visit.
+        if ($remembered_source_category !== '' && $remembered_source_category !== 'Direct') {
+            set_transient($transient_key, $remembered_attribution, 2 * DAY_IN_SECONDS);
+            return;
+        }
+
+        if ($remembered_source_category === 'Direct' && $source_category === 'Direct') {
+            set_transient($transient_key, $remembered_attribution, 2 * DAY_IN_SECONDS);
+            return;
+        }
+    }
+
+    set_transient($transient_key, [
         'referrer_domain' => $referrer_domain,
         'source_category' => $source_category,
         'utm_params' => array_filter($utm_params, 'is_scalar'),
