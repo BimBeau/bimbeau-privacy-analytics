@@ -199,16 +199,20 @@ msgstr ""
 msgid "BimBeau Privacy Analytics Free"
 msgstr ""
 
+#. translators: 1: active package name, 2: package whose activation was refused.
 #: bimbeau-privacy-analytics.php
-msgid "Deactivate the other BimBeau Privacy Analytics package first."
+#, php-format
+msgid "%1$s is already active. Deactivate it before activating %2$s."
 msgstr ""
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics activation blocked"
 msgstr ""
 
+#. translators: 1: package loaded first, 2: other package also marked active.
 #: bimbeau-privacy-analytics.php
-msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
+#, php-format
+msgid "Both %1$s and %2$s are marked active. Only one package can be active at a time; deactivate one of them."
 msgstr ""
 
 #: includes/aggregation.php

@@ -174,19 +174,21 @@ msgstr "BimBeau Privacy Analytics Pro"
 msgid "BimBeau Privacy Analytics Free"
 msgstr "BimBeau Privacy Analytics Free"
 
+#. translators: 1: active package name, 2: package whose activation was refused.
 #: bimbeau-privacy-analytics.php
-#, fuzzy
-msgid "Deactivate the other BimBeau Privacy Analytics package first."
-msgstr "Déjalo en blanco para usar \"BimBeau Privacy Analytics\"."
+#, php-format
+msgid "%1$s is already active. Deactivate it before activating %2$s."
+msgstr ""
 
 #: bimbeau-privacy-analytics.php
 msgid "BimBeau Privacy Analytics activation blocked"
 msgstr "Activación de BimBeau Privacy Analytics bloqueada"
 
+#. translators: 1: package loaded first, 2: other package also marked active.
 #: bimbeau-privacy-analytics.php
-#, fuzzy
-msgid "Only one BimBeau Privacy Analytics package can be active at a time. Deactivate the other BimBeau Privacy Analytics package first."
-msgstr "%1$s se desactivó porque solo un paquete de BimBeau Privacy Analytics puede estar activo a la vez. %2$s permanece activo."
+#, php-format
+msgid "Both %1$s and %2$s are marked active. Only one package can be active at a time; deactivate one of them."
+msgstr ""
 
 #: includes/aggregation.php
 msgid "BimBeau Privacy Analytics aggregated retention cleanup"
