@@ -3,11 +3,11 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.165
+Stable tag: 8.45.169
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-A privacy-friendly WordPress analytics plugin you can trust: reliable traffic KPIs by default, richer context when available, and analytics data kept inside your own WordPress installation. Official site: https://bimbeau.fr/bimbeau-privacy-analytics/
+Privacy-friendly, self-hosted WordPress analytics with reliable traffic insights, real-time stats, and data stored on your own site.
 
 == Description ==
 
@@ -111,46 +111,6 @@ MaxMind API mode is disabled until an administrator manually selects it and supp
 MaxMind GeoLite EULA: https://www.maxmind.com/en/geolite/eula
 MaxMind privacy policy: https://www.maxmind.com/en/privacy-policy
 
-= Freemius =
-
-The Free package may load the Freemius SDK for account, pricing, upgrade, support, uninstall, and package identity flows. Free analytics features do not require a license, payment, quota, time-limited evaluation, or remote feature validation.
-
-Freemius communications occur when an administrator opens Freemius-managed account, pricing, upgrade, support, or uninstall screens, opts in to Freemius usage tracking, activates or manages a paid license, submits a support request, or confirms an uninstall reason. Depending on the chosen action, Freemius may receive plugin and SDK versions, WordPress and PHP versions, site URL, site language, administrator account identity and email, license and subscription identifiers, feature usage or diagnostic details included in a support request, and the selected uninstall reason.
-
-Freemius Terms of Service: https://freemius.com/terms/
-Freemius Privacy Policy: https://freemius.com/privacy/
-
-Third-party software and dataset notices distributed with the plugin are listed in `THIRD-PARTY-NOTICES.txt`.
-
-== Source Code and Build Instructions ==
-
-The public source repository for BimBeau Privacy Analytics Free is available at:
-
-https://github.com/BimBeau/bimbeau-privacy-analytics
-
-The complete build requires Node.js 24 (the `package.json` engine is `>=24 <25`), npm, PHP, WP-CLI, gettext with `msgmerge`, `msgfmt`, and `msgattrib`, and the Composer development dependencies used by the validation suite. Install the PHP and JavaScript dependencies, then rebuild generated admin and translation assets from the repository root:
-
-```bash
-composer install --no-interaction --prefer-dist --no-progress
-npm ci --no-audit --fund=false
-npm run build
-```
-
-Generate the reproducible WordPress.org Free ZIP with:
-
-```bash
-npm run build:wordpress-org-free
-```
-
-`webpack.config.js` writes intermediate compiled assets to `build/`; the packaging scripts place the distributable files under `assets/` in the ZIP. The WordPress.org ZIP contains the compiled runtime, translations, notices, and runtime dependencies; it does not contain `src/`. Human-readable sources and every referenced build script remain available in the public GitHub repository. For `BBPA_PACKAGE_TARGET=free`, the source entries and generation steps are:
-
-* `assets/js/admin.js` is compiled from the Free entry `src/admin/index.free.js` and its imported modules under `src/admin/`.
-* `assets/js/style-admin.js`, `assets/css/style-admin.css`, and the RTL/admin CSS aliases are Webpack outputs of the Free style entry `src/admin/style.free.scss` and its Sass imports. `style-admin.js` is the JavaScript loader emitted for that style entry, not a hand-authored source file.
-* Free builds resolve edition-sensitive admin imports through the aliases in `webpack.config.js`. Those aliases select the human-readable implementations under `src/admin/free-stubs/` and prevent Premium implementations from entering the Free bundle.
-* `assets/js/bbpa-essential-tracker.js` and `assets/js/bbpa-advanced-tracker.js` are the human-readable tracker sources in the public repository. `scripts/build-plugin-dist.sh` copies them into the staged package and `scripts/minify-trackers.js` minifies the staged copies; the repository source files remain readable.
-
-The `npm run build` command rebuilds intermediate admin and i18n output. The `npm run build:wordpress-org-free` command exports the public Free source tree, compiles it with the Free entries and aliases, stages only explicitly allowlisted runtime roots and files, minifies only the staged tracker copies, validates the generated ZIP itself, and writes the ZIP and provenance record to `dist/`.
-
 == Installation ==
 
 1. Upload the plugin folder to `/wp-content/plugins/`.
@@ -249,8 +209,16 @@ Basic installation does not require coding. More advanced privacy setups, especi
 12. Geolocation settings screen.
 13. Maintenance settings screen.
 14. Help and contact support screen.
+15. Built-in support contact page with topic selection and FAQ.
+16. Quick stats added directly inside WordPress content lists.
+17. Page-level insights with summaries, charts, and heatmaps.
+18. Manage custom events and actions from a dedicated interface.
+19. Export filtered analytics data to CSV, JSON, or Excel.
+20. Install the standalone PWA Stats App on desktop or mobile.
+21. Customize branding, visible panels, and quick stats options.
+22. Configure and launch the PWA Stats App from plugin settings.
 
 == Changelog ==
 
-= 8.45.165 =
-* Require complete, non-fuzzy translations for all distributed locales.
+= 8.45.169 =
+* Fix Free package validation after Freemius deployment.
