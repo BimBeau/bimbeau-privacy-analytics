@@ -1,6 +1,6 @@
 {
   "name": "bimbeau-privacy-analytics",
-  "version": "8.45.179",
+  "version": "8.45.181",
   "private": true,
   "license": "GPL-3.0-or-later",
   "description": "BimBeau Privacy Analytics WordPress plugin assets.",
@@ -21,6 +21,8 @@
     "test:php": "vendor/bin/phpunit -c phpunit.xml.dist",
     "check:docs": "node scripts/check-docs-consistency.js",
     "check:screenshots": "node scripts/check-wordpress-screenshots.js",
+    "check:wordpress-readme": "node scripts/check-wordpress-readme.js",
+    "check:wordpress-org-listing": "npm run check:wordpress-readme && node scripts/validate-readme-package-disclosures.js && npm run check:screenshots",
     "check:version-alignment": "node scripts/sync-version-sources.js --check",
     "version:bump": "node scripts/bump-version.js",
     "changelog:sync": "node scripts/sync-readme-changelog.js",
@@ -36,7 +38,7 @@
     "check:freemius-premium-zip": "node scripts/audit-freemius-premium-package.js",
     "check:shared-source-boundary": "node scripts/validate-shared-source-boundary.js",
     "check:public-source-export": "node scripts/check-public-source-export.js",
-    "check:free-package:unit": "BBPA_FREE_PACKAGE_TEST_SUITE=unit node --test scripts/__tests__/free-package-unit.test.js scripts/__tests__/free-package-compliance.test.js scripts/__tests__/release-gates.test.js scripts/__tests__/wordpress-org-free-pipeline.test.js scripts/__tests__/wordpress-org-free-realtime-css.test.js",
+    "check:free-package:unit": "BBPA_FREE_PACKAGE_TEST_SUITE=unit node --test scripts/__tests__/free-package-unit.test.js scripts/__tests__/free-package-compliance.test.js scripts/__tests__/readme-package-validation.test.js scripts/__tests__/release-gates.test.js scripts/__tests__/wordpress-org-free-pipeline.test.js scripts/__tests__/wordpress-org-free-realtime-css.test.js",
     "check:free-package:integration": "BBPA_FREE_PACKAGE_TEST_SUITE=integration node --test scripts/__tests__/free-package-compliance.test.js",
     "check:i18n-setup-wizard": "node scripts/check-setup-wizard-translations.js",
     "check:i18n-page-details-back": "node scripts/check-page-details-back-translations.js"

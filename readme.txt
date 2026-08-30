@@ -1,57 +1,51 @@
 === BimBeau Privacy Analytics ===
 Contributors: BimBeau
+Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.179
+Stable tag: 8.45.181
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Privacy-friendly, self-hosted WordPress analytics with reliable traffic insights, real-time stats, and data stored on your own site.
+Self-hosted WordPress analytics with real-time traffic insights, privacy controls, and data stored in your own database.
 
 == Description ==
 
-BimBeau Privacy Analytics provides a fully functional Free, self-hosted analytics plugin for WordPress. It helps site owners follow visits, page views, traffic sources, devices, country-level geolocation, internal searches, 404 errors, visitors, and real-time activity directly from the WordPress dashboard.
+= Self-hosted analytics inside WordPress =
 
-Analytics data is stored in the local WordPress database. The plugin is designed around privacy-conscious analytics workflows, with a base tracker intended for consent-exemption conditions and an enriched tracker that can require prior consent depending on local rules and site configuration.
+Understand your audience without sending analytics data to an external analytics platform. BimBeau Privacy Analytics stores analytics data in your site's own WordPress database and presents clear, real-time reports in the WordPress dashboard.
 
-BimBeau Privacy Analytics does not make a website GDPR-compliant by itself. Site owners remain responsible for their legal basis, privacy policy, CMP configuration, consent records, and any additional compliance requirements that apply to their website.
+See the traffic information that matters at a glance:
 
-Useful links:
+* Visits, page views, recent activity, and active visitors in real time.
+* Top pages, content trends, average time on page, internal searches, and 404 errors.
+* Referring websites and acquisition sources such as search, social, email, campaigns, and AI assistants when the relevant data is available.
+* Devices, browsers, operating systems, and screen sizes when available.
+* Country-level geolocation when a local GeoIP database or the MaxMind API is configured.
 
-* [Official plugin website](https://bimbeau.fr/bimbeau-privacy-analytics/en/)
-* [Getting started guide](https://bimbeau.fr/bimbeau-privacy-analytics/en/getting-started/)
-* [BimBeau website](https://bimbeau.fr/)
+= Included in the Free plugin =
 
-Privacy-oriented analytics:
+The WordPress.org plugin provides its Free analytics features without a license, payment, quota, or time limit. No third-party analytics account is required, and every analytics panel included in the Free edition is available without local locked controls or placeholders.
 
-* Self-hosted analytics data stored in the local WordPress database.
-* No cross-site advertising identifiers.
-* No third-party analytics account required.
-* Configurable retention settings.
-* Respect for Do Not Track and Global Privacy Control settings when enabled.
-* Optional debug logs controlled by the plugin Debug mode.
-* Separate enriched tracker script for CMP-based consent workflows.
+The Free plugin also provides configurable data retention, optional Do Not Track and Global Privacy Control handling, role exclusions, and optional debug logging. The package may load Freemius for account, pricing, upgrade, support, uninstall, and package identity flows. The separate Pro edition replaces the Free plugin when installed.
 
-Reports and insights:
+= Privacy and consent =
 
-* Dashboard overview with page views, visits, top pages, referrer domains, and recent activity.
-* Real-time visitors report.
-* Pages and content performance reports.
-* Acquisition sources, including direct visits, organic search, referrals, social, email, paid search, campaigns, and AI assistants when the relevant data is available.
-* Referring sites report for understanding where visits come from.
-* Device, browser, operating system, and screen context reports when available.
-* Country-level geolocation reporting when a local GeoIP database or MaxMind API is configured.
-* Internal search report.
-* 404 errors report to help identify broken URLs and missing pages.
+BimBeau Privacy Analytics supports two levels of measurement so site owners can match tracking to their configuration and legal context:
 
-Free plugin behavior:
+* Essential statistics use the base tracker, which is intended for conditions where consent exemption applies.
+* Advanced statistics use a separate enriched tracker that may require prior consent depending on local rules and site configuration.
 
-BimBeau Privacy Analytics on WordPress.org is the complete Free plugin. Its Free analytics features run without a license, payment, quota, time-limited evaluation, or remote validation. All analytics panels available to the Free edition appear automatically, with no local locked controls or placeholders. The package may load Freemius for account, pricing, upgrade, support, uninstall, and package identity flows. A separate Pro edition is available from the author outside WordPress.org and replaces the Free plugin when installed.
+For consent-based setups, configure your consent management platform (CMP) to block `bbpa-advanced-tracker` / `assets/js/bbpa-advanced-tracker.js` before consent and release it only after the visitor accepts the Analytics / Statistics category. The plugin does not provide a consent banner, decide whether consent is granted, or store consent records.
 
-Pro edition:
+BimBeau Privacy Analytics does not make a website GDPR-compliant by itself. Site owners remain responsible for their legal basis, privacy policy, CMP configuration, consent records, and any other compliance requirements that apply to their website.
 
-BimBeau Privacy Analytics Pro is a separate edition designed for users who need more detailed analysis, export workflows, event tracking, app-like access to their analytics, or admin customization. It is not required to use the Free plugin.
+BimBeau Privacy Analytics does not use tracking cookies or cross-site advertising identifiers. Essential tracking may use a temporary first-party browser storage identifier to group activity into a bounded visitor row, prevent technical duplicate transport hits, and produce aggregated or anonymized audience statistics. This identifier expires according to the Visitor activity window setting and is not used for advertising, cross-site tracking, or visitor profiling.
+
+= Pro edition =
+
+BimBeau Privacy Analytics Pro is a separate edition for users who need more detailed analysis, export workflows, event tracking, app-like analytics access, or admin customization. It is not required to use the Free plugin.
 
 Depending on the active license, site configuration, consent setup, and available analytics data, Pro can add:
 
@@ -63,29 +57,18 @@ Depending on the active license, site configuration, consent setup, and availabl
 * An installable stats app for site analytics.
 * White-label admin header controls.
 * Panel visibility customization for the analytics navigation.
-* Deeper reporting surfaces when licensed features are active and the required data is available.
+* Additional detailed reports when licensed features are active and the required data is available.
 
 Learn more about Pro:
 
-* [Pro version overview](https://bimbeau.fr/bimbeau-privacy-analytics/pro/overview/)
+* [Pro version overview](https://bimbeau.fr/bimbeau-privacy-analytics/en/pro/overview/)
 * [Pro pricing](https://bimbeau.fr/bimbeau-privacy-analytics/en/pricing/)
 
 The WordPress.org Free package does not embed Pro-only report surfaces as local feature locks or disabled placeholders. Upgrade links point to the separate Pro edition hosted outside WordPress.org.
 
-Consent and enriched tracking:
+= External services =
 
-The enriched tracker is exposed as a CMP-targetable script:
-
-* `bbpa-advanced-tracker`
-* `assets/js/bbpa-advanced-tracker.js`
-
-When enriched analytics require consent, configure your CMP to block this script before consent and release it only after the visitor accepts the Analytics / Statistics category. BimBeau Privacy Analytics does not provide a consent banner, does not decide whether consent is granted, and does not store consent records.
-
-Debug logging:
-
-Debug mode is the authoritative plugin switch for diagnostic logging. BimBeau Privacy Analytics writes diagnostics only when Debug mode is enabled and a WordPress debug log destination (`WP_DEBUG` + `WP_DEBUG_LOG`) or an explicit BimBeau Privacy Analytics safe sink is available.
-
-External services:
+The core analytics reports use data stored in WordPress. The following optional features can contact external services only in the circumstances described below.
 
 = BimBeau GeoIP Database Service =
 
@@ -109,6 +92,15 @@ MaxMind API mode is disabled until an administrator manually selects it and supp
 
 [MaxMind GeoLite EULA](https://www.maxmind.com/en/geolite/eula)
 [MaxMind privacy policy](https://www.maxmind.com/en/privacy-policy)
+
+= Documentation and support =
+
+* [Official plugin website](https://bimbeau.fr/bimbeau-privacy-analytics/en/)
+* [Getting started guide](https://bimbeau.fr/bimbeau-privacy-analytics/en/getting-started/)
+
+= Debug logging =
+
+Debug mode is the authoritative plugin switch for diagnostic logging. BimBeau Privacy Analytics writes diagnostics only when Debug mode is enabled and a WordPress debug log destination (`WP_DEBUG` + `WP_DEBUG_LOG`) or an explicit BimBeau Privacy Analytics safe sink is available.
 
 == Installation ==
 
@@ -136,7 +128,7 @@ Some enriched details depend on the available data, tracking configuration, cons
 
 = Does BimBeau Privacy Analytics use cookies? =
 
-BimBeau Privacy Analytics analytics does not use tracking cookies or cross-site advertising identifiers.
+BimBeau Privacy Analytics does not use tracking cookies or cross-site advertising identifiers.
 
 Essential tracking may use a temporary first-party browser storage identifier to group activity into a bounded visitor row, prevent technical duplicate transport hits, and produce aggregated or anonymized audience statistics. This identifier expires according to the Visitor activity window setting and is not used for advertising, cross-site tracking, or visitor profiling.
 
@@ -194,32 +186,30 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Screenshots ==
 
-1. BimBeau Privacy Analytics dashboard overview with key privacy-friendly traffic metrics.
-2. Real-time visitors report showing current activity on the map.
-3. Pages report with page-view trends and top content.
-4. Consent-aware visitor insights with privacy-conscious visitor details.
-5. Referring sites report for understanding where visits come from.
-6. Devices report for comparing browsers, operating systems, devices, and screen resolutions.
-7. Geolocation report by country.
-8. Pro city geolocation with top cities and interactive map markers.
-9. Internal searches report for discovering what visitors search for on the site.
-10. Top pages listing with page views, trends, and average time on page.
-11. General settings for roles, interface branding, and enabled analytics panels.
-12. Tracking and privacy settings for essential and advanced statistics.
-13. Geolocation settings for local GeoIP and MaxMind configuration.
-14. Maintenance settings for retention cleanup and analytics data management.
-15. Configure and launch the PWA Stats App from plugin settings.
-16. Built-in support contact page with topic selection and FAQ.
-17. Quick Stats added directly inside WordPress content lists.
-18. Page-level insights with summaries, charts, and heatmaps.
-19. Manage custom events and actions from a dedicated interface.
-20. Export filtered analytics data to CSV, JSON, or Excel.
-21. Install and use the standalone PWA Stats App on desktop or mobile.
-22. Customize interface branding, visible panels, and Quick Stats options.
+1. Dashboard overview with visits, page views, top pages, referrers, and recent activity.
+2. See active visitors in real time on an interactive world map.
+3. Analyze page-view trends and identify your best-performing content.
+4. Review visitor activity with privacy-conscious details and consent-aware context.
+5. See which websites and domains send traffic to your site.
+6. Understand visitor devices, browsers, operating systems, and screen sizes.
+7. Explore traffic by country on an interactive geolocation report.
+8. Pro — Analyze city-level traffic with top cities and interactive map markers.
+9. Discover what visitors search for on your website.
+10. Compare top pages with page views, trends, and average time on page.
+11. Configure role access and, with Pro, interface branding and analytics panel visibility.
+12. Configure essential and advanced statistics, privacy, and consent-related tracking settings.
+13. Configure country geolocation with the local GeoIP database or MaxMind.
+14. Manage retention, cleanup, and analytics data maintenance.
+15. Pro — Configure and open the PWA Stats App from plugin settings.
+16. Contact support from WordPress with topic selection and built-in FAQs.
+17. Pro — Add Quick Stats directly to WordPress content lists.
+18. Pro — Open page-level insights with summaries, trends, charts, and heatmaps.
+19. Pro — Configure custom events and actions and inspect tracked activity.
+20. Pro — Export filtered analytics data to CSV, JSON, or Excel.
+21. Pro — Install and use the standalone PWA Stats App on desktop or mobile.
+22. Pro — White-label the interface, choose visible panels, and configure Quick Stats.
 
 == Changelog ==
 
-= 8.45.179 =
-* Use a neutral unified-source marker when selecting runtime translation targets.
-* Keep package-specific translation metadata out of the public Free source.
-* Preserve the all-locale runtime translation audit in each package edition.
+= 8.45.181 =
+* Fixes — Fix Free package readme validation after the WordPress.org listing restructure.
