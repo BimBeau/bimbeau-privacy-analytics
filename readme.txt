@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.170
+Stable tag: 8.45.171
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -198,27 +198,27 @@ Basic installation does not require coding. More advanced privacy setups, especi
 1. BimBeau Privacy Analytics dashboard overview with key privacy-friendly traffic metrics.
 2. Real-time visitors report showing current activity at a glance.
 3. Pages report for identifying top content and page views.
-4. Visitors report with detailed but privacy-conscious visitor insights.
+4. Consent-aware visitor insights with privacy-conscious details.
 5. Referring sites report for understanding where visits come from.
 6. Devices report for comparing desktop, tablet, and mobile traffic.
-7. Geolocation report by country.
-8. Internal searches report for discovering what visitors search for on the site.
-9. 404 errors report for finding missing pages and broken URLs.
-10. General settings screen.
-11. Tracking and privacy settings screen.
-12. Geolocation settings screen.
-13. Maintenance settings screen.
-14. Help and contact support screen.
-15. Built-in support contact page with topic selection and FAQ.
-16. Quick stats added directly inside WordPress content lists.
-17. Page-level insights with summaries, charts, and heatmaps.
-18. Manage custom events and actions from a dedicated interface.
-19. Export filtered analytics data to CSV, JSON, or Excel.
-20. Install the standalone PWA Stats App on desktop or mobile.
-21. Customize branding, visible panels, and quick stats options.
-22. Configure and launch the PWA Stats App from plugin settings.
+7. Geolocation report with a country map and top countries.
+8. City-level geolocation report with interactive map markers.
+9. Internal searches report for discovering what visitors search for.
+10. 404 errors report for finding missing pages and broken URLs.
+11. General settings for roles, branding, and visible panels.
+12. Tracking and privacy settings for consent-aware analytics.
+13. Geolocation settings for local or API-based location data.
+14. Maintenance settings for cleanup and data removal.
+15. PWA Stats App settings with quick access to the standalone app.
+16. Help and contact support screen with topics and FAQs.
+17. Quick stats added directly inside WordPress content lists.
+18. Page-level insights with summaries, charts, and heatmaps.
+19. Manage custom events and actions from a dedicated interface.
+20. Export filtered analytics data to CSV, JSON, or Excel.
+21. Install the standalone PWA Stats App on desktop or mobile.
+22. Customize branding, visible panels, and quick stats options.
 
 == Changelog ==
 
-= 8.45.170 =
-* Exclude THIRD-PARTY-NOTICES.txt from WordPress.org ZIP.
+= 8.45.171 =
+* Fix and sync WordPress.org screenshot captions in readme.txt.
