@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.171
+Stable tag: 8.45.172
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -19,10 +19,9 @@ BimBeau Privacy Analytics does not make a website GDPR-compliant by itself. Site
 
 Useful links:
 
-* Official plugin website: https://bimbeau.fr/bimbeau-privacy-analytics/en/
-* Pricing Pro: https://bimbeau.fr/bimbeau-privacy-analytics/en/pricing/
-* Getting started guide: https://bimbeau.fr/bimbeau-privacy-analytics/en/getting-started/
-* BimBeau website: https://bimbeau.fr/
+* [Official plugin website](https://bimbeau.fr/bimbeau-privacy-analytics/en/)
+* [Getting started guide](https://bimbeau.fr/bimbeau-privacy-analytics/en/getting-started/)
+* [BimBeau website](https://bimbeau.fr/)
 
 Privacy-oriented analytics:
 
@@ -68,8 +67,8 @@ Depending on the active license, site configuration, consent setup, and availabl
 
 Learn more about Pro:
 
-* Official plugin website: https://bimbeau.fr/bimbeau-privacy-analytics/en/
-* Pricing: https://bimbeau.fr/bimbeau-privacy-analytics/en/pricing/
+* [Pro version overview](https://bimbeau.fr/bimbeau-privacy-analytics/pro/overview/)
+* [Pro pricing](https://bimbeau.fr/bimbeau-privacy-analytics/en/pricing/)
 
 The WordPress.org Free package does not embed Pro-only report surfaces as local feature locks or disabled placeholders. Upgrade links point to the separate Pro edition hosted outside WordPress.org.
 
@@ -94,9 +93,9 @@ The optional local GeoIP database provides country-level geolocation reports whi
 
 The service is contacted only after an administrator clicks the manual database install/update action (including the explicit assistant action), or after an administrator later enables an automatic update frequency. It receives the WordPress server IP address as seen by the service and a technical User-Agent. The updater User-Agent does not include the site URL. Local IP lookups do not transmit visitor IP addresses to BimBeau.
 
-GeoIP service: https://github.com/BimBeau/bimbeau-geoip-database
-BimBeau Terms of Use: https://bimbeau.fr/bimbeau-privacy-analytics/en/legal/terms-of-use/
-BimBeau Privacy Policy: https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy-policy/
+[BimBeau GeoIP Database Service](https://github.com/BimBeau/bimbeau-geoip-database)
+[BimBeau Terms of Use](https://bimbeau.fr/bimbeau-privacy-analytics/en/legal/terms-of-use/)
+[BimBeau Privacy Policy](https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy-policy/)
 
 = Referrer favicon retrieval =
 
@@ -108,8 +107,8 @@ The administrator browser never requests a favicon from a referrer domain. The p
 
 MaxMind API mode is disabled until an administrator manually selects it and supplies a MaxMind Account ID and License Key. A lookup is sent only while that configured mode is resolving an IP address. MaxMind receives the IP address being resolved, the account credentials in an Authorization header, and a technical User-Agent containing only the plugin name and version. The User-Agent contains no site URL or domain. Local database mode does not use the MaxMind API and does not send visitor IP addresses to MaxMind. See the MaxMind GeoLite EULA and privacy policy before configuring this service.
 
-MaxMind GeoLite EULA: https://www.maxmind.com/en/geolite/eula
-MaxMind privacy policy: https://www.maxmind.com/en/privacy-policy
+[MaxMind GeoLite EULA](https://www.maxmind.com/en/geolite/eula)
+[MaxMind privacy policy](https://www.maxmind.com/en/privacy-policy)
 
 == Installation ==
 
@@ -196,29 +195,29 @@ Basic installation does not require coding. More advanced privacy setups, especi
 == Screenshots ==
 
 1. BimBeau Privacy Analytics dashboard overview with key privacy-friendly traffic metrics.
-2. Real-time visitors report showing current activity at a glance.
-3. Pages report for identifying top content and page views.
-4. Consent-aware visitor insights with privacy-conscious details.
+2. Real-time visitors report showing current activity on the map.
+3. Pages report with page-view trends and top content.
+4. Consent-aware visitor insights with privacy-conscious visitor details.
 5. Referring sites report for understanding where visits come from.
-6. Devices report for comparing desktop, tablet, and mobile traffic.
-7. Geolocation report with a country map and top countries.
-8. City-level geolocation report with interactive map markers.
-9. Internal searches report for discovering what visitors search for.
-10. 404 errors report for finding missing pages and broken URLs.
-11. General settings for roles, branding, and visible panels.
-12. Tracking and privacy settings for consent-aware analytics.
-13. Geolocation settings for local or API-based location data.
-14. Maintenance settings for cleanup and data removal.
-15. PWA Stats App settings with quick access to the standalone app.
-16. Help and contact support screen with topics and FAQs.
-17. Quick stats added directly inside WordPress content lists.
+6. Devices report for comparing browsers, operating systems, devices, and screen resolutions.
+7. Geolocation report by country.
+8. Pro city geolocation with top cities and interactive map markers.
+9. Internal searches report for discovering what visitors search for on the site.
+10. Top pages listing with page views, trends, and average time on page.
+11. General settings for roles, interface branding, and enabled analytics panels.
+12. Tracking and privacy settings for essential and advanced statistics.
+13. Geolocation settings for local GeoIP and MaxMind configuration.
+14. Maintenance settings for retention cleanup and analytics data management.
+15. Configure and launch the PWA Stats App from plugin settings.
+16. Built-in support contact page with topic selection and FAQ.
+17. Quick Stats added directly inside WordPress content lists.
 18. Page-level insights with summaries, charts, and heatmaps.
 19. Manage custom events and actions from a dedicated interface.
 20. Export filtered analytics data to CSV, JSON, or Excel.
-21. Install the standalone PWA Stats App on desktop or mobile.
-22. Customize branding, visible panels, and quick stats options.
+21. Install and use the standalone PWA Stats App on desktop or mobile.
+22. Customize interface branding, visible panels, and Quick Stats options.
 
 == Changelog ==
 
-= 8.45.171 =
-* Fix and sync WordPress.org screenshot captions in readme.txt.
+= 8.45.172 =
+* Correct WordPress.org screenshot captions and links.
