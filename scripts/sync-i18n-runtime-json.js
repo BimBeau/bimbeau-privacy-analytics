@@ -14,8 +14,10 @@ const {
 const repoRoot = path.resolve(__dirname, '..');
 const languagesDir = path.join(repoRoot, 'languages');
 const generatedBundleTarget = 'assets/js/admin.js';
+const hasUnifiedSourceMarker = fs.existsSync(path.join(repoRoot, 'AGENTS.md'));
 const runtimeTargets = [
   'assets/js/admin.js',
+  ...(hasUnifiedSourceMarker ? ['assets/js/admin-pro.js'] : []),
   'build/admin.js',
   'bbpa-admin',
 ];

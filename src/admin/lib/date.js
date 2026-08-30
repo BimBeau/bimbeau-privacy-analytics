@@ -8,6 +8,37 @@ export const formatDate = (date) => {
 const isDatePart = (part) =>
   part?.type === "day" || part?.type === "month" || part?.type === "year";
 
+const normalizeLocale = (value) => {
+  const locale = String(value || "").trim().replace(/_/g, "-");
+  return locale || undefined;
+};
+
+export const getAdminLocale = () => {
+  const documentLocale =
+    typeof document !== "undefined"
+      ? normalizeLocale(document.documentElement?.lang)
+      : undefined;
+
+  if (documentLocale) {
+    return documentLocale;
+  }
+
+  const configuredLocale =
+    typeof window !== "undefined"
+      ? normalizeLocale(
+          window.BBPAAdmin?.settings?.locale || window.BBPAAdmin?.locale,
+        )
+      : undefined;
+
+  if (configuredLocale) {
+    return configuredLocale;
+  }
+
+  return typeof navigator !== "undefined"
+    ? normalizeLocale(navigator.language)
+    : undefined;
+};
+
 export const formatDateStringForLocale = (
   value,
   { shortYear = false } = {},
@@ -18,7 +49,7 @@ export const formatDateStringForLocale = (
     return value || "";
   }
 
-  const formatter = new Intl.DateTimeFormat(undefined, {
+  const formatter = new Intl.DateTimeFormat(getAdminLocale(), {
     day: "2-digit",
     month: "2-digit",
     year: shortYear ? "2-digit" : "numeric",
@@ -64,7 +95,7 @@ export const formatLogTimestamp = (timestamp) => {
   }
 
   const date = new Date(timestamp * 1000);
-  return date.toLocaleString();
+  return date.toLocaleString(getAdminLocale());
 };
 
 const MIN_REASONABLE_UNIX_SECONDS = 946684800; // 2000-01-01 UTC
@@ -162,7 +193,7 @@ export const formatWpDateTime = (value, fallbackLabel = "") => {
     return window.wp.date.dateI18n(formatPattern, parsedDate);
   }
 
-  return parsedDate.toLocaleString();
+  return parsedDate.toLocaleString(getAdminLocale());
 };
 
 export const getWpDateTimeTimestamp = (value) => {

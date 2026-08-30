@@ -41,7 +41,7 @@ msgstr "Pro"
 
 #: admin/admin.php
 msgid "Upgrade to Pro"
-msgstr ""
+msgstr "Passer à Pro"
 
 #: admin/admin.php src/admin/panels/SettingsPanel.js
 msgid "Contact"
@@ -278,17 +278,15 @@ msgstr "La base de données GeoIP n’est pas encore disponible."
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Unknown"
-msgstr "Page inconnue"
+msgstr "Inconnu"
 
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Unknown country"
-msgstr "Drapeau de pays inconnu"
+msgstr "Pays inconnu"
 
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
@@ -800,12 +798,12 @@ msgid "Other settings use the recommended defaults and can be changed later from
 msgstr "D'autres paramètres utilisent les valeurs par défaut recommandées et peuvent être modifiés ultérieurement à partir des paramètres de BimBeau Privacy Analytics."
 
 #: src/admin/components/SetupWizard/index.js
+#: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Previous"
-msgstr "Précédent %s"
+msgstr "Précédent"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics and continue"
@@ -1158,9 +1156,8 @@ msgstr "Env. %d km"
 
 #: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "No available"
-msgstr "Indisponible"
+msgstr "Non disponible"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -1176,9 +1173,8 @@ msgstr "Tableau : canaux d’acquisition"
 
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#, fuzzy
 msgid "Channel"
-msgstr "Canal d’entrée"
+msgstr "Canal"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -1223,7 +1219,7 @@ msgstr "Principaux pays"
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
@@ -1248,7 +1244,7 @@ msgstr "Hash de l’ID visiteur"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "City"
-msgstr ""
+msgstr "Ville"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1261,15 +1257,13 @@ msgstr "Page actuelle"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Operating system"
-msgstr "Systèmes d’exploitation"
+msgstr "Système d’exploitation"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Browser"
-msgstr "Navigateurs"
+msgstr "Navigateur"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -1278,9 +1272,8 @@ msgstr "Version du navigateur"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Device"
-msgstr "Appareils"
+msgstr "Appareil"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1906,7 +1899,7 @@ msgstr "Je confirme vouloir purger définitivement toutes les données d’analy
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -1985,16 +1978,15 @@ msgstr "Chargement des visiteurs…"
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Desktop"
-msgstr ""
+msgstr "Ordinateur"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "Smartphone"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#, fuzzy
 msgid "Tablet"
-msgstr "Tableau"
+msgstr "Tablette"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -2133,6 +2125,13 @@ msgid "Average active time spent during a visit."
 msgstr "Temps actif moyen passé pendant une visite."
 
 #: src/admin/widgets/PeriodFilter/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Next"
+msgstr "Suivant"
+
+#: src/admin/widgets/PeriodFilter/index.js
 msgid "Custom"
 msgstr "Personnalisé"
 
@@ -2179,21 +2178,19 @@ msgstr "Trier par"
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Rows"
-msgstr ""
+msgstr "Lignes"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Search"
-msgstr "Recherche payante"
+msgstr "Rechercher"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Search…"
-msgstr "Recherche payante"
+msgstr "Recherche…"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
@@ -2205,28 +2202,19 @@ msgstr "Chargement des sites référents…"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#, fuzzy
 msgid "Previous page"
-msgstr "Pages vues précédentes"
+msgstr "Page précédente"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#, fuzzy
 msgid "Next page"
-msgstr "Prochaine mise à jour"
+msgstr "Page suivante"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Next"
-msgstr ""
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-#, fuzzy
 msgid "Page"
-msgstr "Pages"
+msgstr "Page"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js

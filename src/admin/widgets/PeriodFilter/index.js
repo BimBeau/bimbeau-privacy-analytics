@@ -8,6 +8,7 @@ import { PERIOD_PRESET_OPTIONS } from '../../constants';
 import {
 	formatDate,
 	formatDateStringForLocale,
+	getAdminLocale,
 	getRangeFromSelection,
 	MAX_CUSTOM_RANGE_DAYS,
 	parseDateString,
@@ -30,6 +31,41 @@ const PeriodFilter = ( { value, onChange, isCompact = false } ) => {
 
 			return window.matchMedia( '(max-width: 1024px)' ).matches;
 		} );
+	const adminLocale = useMemo( () => getAdminLocale(), [] );
+	const calendarFormatters = useMemo( () => {
+		const captionFormatter = new Intl.DateTimeFormat( adminLocale, {
+			month: 'long',
+			year: 'numeric',
+		} );
+		const monthFormatter = new Intl.DateTimeFormat( adminLocale, {
+			month: 'long',
+		} );
+		const weekdayFormatter = new Intl.DateTimeFormat( adminLocale, {
+			weekday: 'short',
+		} );
+		const yearFormatter = new Intl.DateTimeFormat( adminLocale, {
+			year: 'numeric',
+		} );
+
+		return {
+			formatCaption: ( date ) => captionFormatter.format( date ),
+			formatMonthCaption: ( date ) => monthFormatter.format( date ),
+			formatWeekdayName: ( date ) =>
+				weekdayFormatter.format( date ).replace( /\.$/u, '' ),
+			formatYearCaption: ( date ) => yearFormatter.format( date ),
+		};
+	}, [ adminLocale ] );
+	const calendarLabels = useMemo( () => {
+		const weekdayFormatter = new Intl.DateTimeFormat( adminLocale, {
+			weekday: 'long',
+		} );
+
+		return {
+			labelNext: () => __( 'Next', 'bimbeau-privacy-analytics' ),
+			labelPrevious: () => __( 'Previous', 'bimbeau-privacy-analytics' ),
+			labelWeekday: ( date ) => weekdayFormatter.format( date ),
+		};
+	}, [ adminLocale ] );
 	const range = useMemo( () => getRangeFromSelection( value ), [ value ] );
 	const calendarValue = useMemo(
 		() => ( {
@@ -287,7 +323,10 @@ const PeriodFilter = ( { value, onChange, isCompact = false } ) => {
 							onDayClick={ handleDayClick }
 							disabled={ disabledDays }
 							className="bbpa-period-filter__calendar"
+							lang={ adminLocale }
 							weekStartsOn={ 1 }
+							formatters={ calendarFormatters }
+							labels={ calendarLabels }
 							components={ {
 								IconLeft: CalendarNavIconLeft,
 								IconRight: CalendarNavIconRight,

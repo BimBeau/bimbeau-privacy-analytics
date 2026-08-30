@@ -27,6 +27,40 @@ function bbpa_features(): array
 }
 
 /**
+ * Return the packaged BPA app favicon used for Freemius branding.
+ *
+ * Freemius renders the plugin icon on pricing and upgrade screens from its
+ * plugin_icon filter. Keep this aligned with the app/update favicon instead
+ * of the compact BBPA logo so the branding is consistent across admin flows.
+ */
+function bbpa_get_freemius_app_icon_path(): string
+{
+    return BBPA_PATH . 'assets/images/bpa-favicon-app.svg';
+}
+
+/**
+ * Register the BPA app favicon for Freemius screens after the SDK is loaded.
+ */
+function bbpa_register_freemius_app_icon(): void
+{
+    if (!function_exists('bbpa_fs')) {
+        return;
+    }
+
+    $freemius = bbpa_fs();
+    if (!is_object($freemius) || !method_exists($freemius, 'add_filter')) {
+        return;
+    }
+
+    $freemius->add_filter('plugin_icon', 'bbpa_get_freemius_app_icon_path');
+}
+add_action('bbpa_fs_loaded', 'bbpa_register_freemius_app_icon', 20);
+
+if (function_exists('bbpa_fs')) {
+    bbpa_register_freemius_app_icon();
+}
+
+/**
  * Force the BPA app favicon in WordPress plugin update metadata.
  *
  * WordPress.org and Freemius can both provide their own icon set. Replacing

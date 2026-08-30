@@ -13,10 +13,18 @@ const {
 const repoRoot = path.resolve(__dirname, '..');
 const defaultLanguagesDir = path.join(repoRoot, 'languages');
 const domain = 'bimbeau-privacy-analytics';
+const hasUnifiedSourceMarker = fs.existsSync(path.join(repoRoot, 'AGENTS.md'));
 const runtimeJsonTargets = [
   'assets/js/admin.js',
+  ...(hasUnifiedSourceMarker ? ['assets/js/admin-pro.js'] : []),
   'build/admin.js',
   'bbpa-admin',
+];
+const criticalRuntimeMsgids = [
+  'Previous',
+  'Next',
+  'Rows',
+  'Country',
 ];
 
 const javascriptReferencePattern = /\.(?:m?js|jsx|ts|tsx)(?::\d+)?$/;
@@ -105,13 +113,17 @@ const collectJsMsgids = (poFile) => {
   return [...msgids].sort((a, b) => a.localeCompare(b));
 };
 
+const getJsonDomainData = (jsonFile) => {
+  const parsed = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
+  const localeData = parsed.locale_data || {};
+  return localeData[domain] || localeData.messages || {};
+};
+
 const collectJsonMessages = (jsonFiles) => {
   const messages = new Set();
 
   jsonFiles.forEach((jsonFile) => {
-    const parsed = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
-    const localeData = parsed.locale_data || {};
-    const domainData = localeData[domain] || localeData.messages || {};
+    const domainData = getJsonDomainData(jsonFile);
 
     Object.keys(domainData)
       .filter((msgid) => msgid !== '')
@@ -128,9 +140,45 @@ const collectJsonMessages = (jsonFiles) => {
   return messages;
 };
 
+const getJsonTranslation = (jsonFile, msgid) => {
+  const value = getJsonDomainData(jsonFile)[msgid];
+
+  if (Array.isArray(value)) {
+    return value.find((translation) => typeof translation === 'string' && translation.trim() !== '') || '';
+  }
+
+  return typeof value === 'string' ? value.trim() : '';
+};
+
 const jsonFileNameForTarget = (locale, target) => {
   const suffix = target.endsWith('.js') ? md5(target) : target;
   return `${domain}-${locale}-${suffix}.json`;
+};
+
+const checkCriticalRuntimeTranslations = (locale, runtimeJsonFiles) => {
+  const issues = [];
+
+  runtimeJsonFiles.forEach((jsonFile) => {
+    criticalRuntimeMsgids.forEach((msgid) => {
+      const translation = getJsonTranslation(jsonFile, msgid);
+      const file = toRelativePath(jsonFile);
+
+      if (!translation) {
+        issues.push({ locale, file, msgid, reason: 'missing translation' });
+        return;
+      }
+
+      if (locale !== 'en_US' && translation === msgid) {
+        issues.push({ locale, file, msgid, reason: 'translation falls back to source text' });
+      }
+
+      if ((msgid === 'Previous' || msgid === 'Next') && translation.includes('%')) {
+        issues.push({ locale, file, msgid, reason: `unexpected placeholder in "${translation}"` });
+      }
+    });
+  });
+
+  return issues;
 };
 
 const checkI18nJsonFiles = ({
@@ -144,6 +192,7 @@ const checkI18nJsonFiles = ({
   const missingJsonLocales = [];
   const missingRuntimeJsonFiles = [];
   const missingJsMessages = [];
+  const criticalRuntimeTranslationIssues = [];
   const localeReports = [];
 
   allLocales.forEach((locale) => {
@@ -159,6 +208,7 @@ const checkI18nJsonFiles = ({
     const runtimeJsonFiles = expectedRuntimeFiles.filter((jsonFile) => fs.existsSync(jsonFile));
     const runtimeMessages = collectJsonMessages(runtimeJsonFiles);
     const missingMessages = jsMsgids.filter((msgid) => !runtimeMessages.has(msgid));
+    const criticalIssues = checkCriticalRuntimeTranslations(locale, runtimeJsonFiles);
 
     if (localeJsonFiles.length === 0) {
       missingJsonLocales.push(locale);
@@ -172,12 +222,15 @@ const checkI18nJsonFiles = ({
       missingJsMessages.push({ locale, messages: missingMessages });
     }
 
+    criticalRuntimeTranslationIssues.push(...criticalIssues);
+
     localeReports.push({
       locale,
       jsonFiles: localeJsonFiles.map(toRelativePath).sort((a, b) => a.localeCompare(b)),
       runtimeJsonFiles: runtimeJsonFiles.map(toRelativePath).sort((a, b) => a.localeCompare(b)),
       jsMessageCount: jsMsgids.length,
       missingMessages,
+      criticalIssues,
     });
   });
 
@@ -185,7 +238,8 @@ const checkI18nJsonFiles = ({
     ok: missingPoLocales.length === 0
       && missingJsonLocales.length === 0
       && missingRuntimeJsonFiles.length === 0
-      && missingJsMessages.length === 0,
+      && missingJsMessages.length === 0
+      && criticalRuntimeTranslationIssues.length === 0,
     languagesDir,
     expected,
     poLocales,
@@ -195,6 +249,7 @@ const checkI18nJsonFiles = ({
     missingJsonLocales,
     missingRuntimeJsonFiles: missingRuntimeJsonFiles.sort((a, b) => a.localeCompare(b)),
     missingJsMessages,
+    criticalRuntimeTranslationIssues,
   };
 };
 
@@ -208,7 +263,7 @@ const printReport = (result) => {
   console.log(`i18n: runtime JSON targets ${formatList(result.runtimeTargets)}`);
 
   result.localeReports.forEach((report) => {
-    console.log(`i18n: ${report.locale} JSON files ${report.jsonFiles.length}; runtime JSON files ${report.runtimeJsonFiles.length}; JS strings ${report.jsMessageCount}`);
+    console.log(`i18n: ${report.locale} JSON files ${report.jsonFiles.length}; runtime JSON files ${report.runtimeJsonFiles.length}; JS strings ${report.jsMessageCount}; critical translation issues ${report.criticalIssues.length}`);
   });
 
   if (result.missingPoLocales.length > 0) {
@@ -226,6 +281,10 @@ const printReport = (result) => {
   result.missingJsMessages.forEach(({ locale, messages }) => {
     console.error(`Error: ${locale} runtime JS JSON misses ${messages.length} PO JS string(s): ${formatList(messages.slice(0, 20))}${messages.length > 20 ? ', …' : ''}.`);
   });
+
+  result.criticalRuntimeTranslationIssues.forEach(({ locale, file, msgid, reason }) => {
+    console.error(`Error: ${locale} ${file} has invalid critical runtime translation for "${msgid}": ${reason}.`);
+  });
 };
 
 const run = () => {
@@ -242,9 +301,12 @@ if (require.main === module) {
 }
 
 module.exports = {
+  checkCriticalRuntimeTranslations,
   checkI18nJsonFiles,
   collectJsMsgids,
   collectJsonMessages,
+  criticalRuntimeMsgids,
+  getJsonTranslation,
   jsonFileNameForTarget,
   parsePoEntries,
   runtimeJsonTargets,
