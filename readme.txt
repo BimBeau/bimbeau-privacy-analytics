@@ -3,7 +3,7 @@ Contributors: BimBeau
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 8.45.172
+Stable tag: 8.45.173
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -219,5 +219,6 @@ Basic installation does not require coding. More advanced privacy setups, especi
 
 == Changelog ==
 
-= 8.45.172 =
-* Correct WordPress.org screenshot captions and links.
+= 8.45.173 =
+* Use `bpa-favicon-app.svg` as the BimBeau Privacy Analytics icon on the WordPress plugin updates screen for both Free and Pro packages.
+* Ship the corrected `bbpa-logo-compact.svg` and the new app favicon assets already added to `main` in the next plugin release.
