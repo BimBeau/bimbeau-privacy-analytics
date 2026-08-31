@@ -2,9 +2,9 @@
 Contributors: BimBeau
 Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.182
+Stable tag: 8.45.183
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.182 =
-* Bump @testing-library/react from 16.3.2 to 16.3.3 in the dev-dependencies group.
+= 8.45.183 =
+* Fixes — Prevent Free/Pro activation conflicts from being reported as fatal WordPress errors.
