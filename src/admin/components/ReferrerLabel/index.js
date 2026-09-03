@@ -17,7 +17,13 @@ export const truncateReferrerLabel = (label, maximumLength = 100) => {
     : characters.join("");
 };
 
-const ReferrerLabel = ({ domain, label, faviconsEnabled, favicon }) => {
+const ReferrerLabel = ({
+  domain,
+  label,
+  fullLabel,
+  faviconsEnabled,
+  favicon,
+}) => {
   const normalizedDomain = useMemo(
     () => normalizeReferrerHost(domain),
     [domain],
@@ -33,6 +39,7 @@ const ReferrerLabel = ({ domain, label, faviconsEnabled, favicon }) => {
       ? resolvedFavicon.url
       : "";
   const resolvedLabel = label || __("Direct", "bimbeau-privacy-analytics");
+  const accessibleLabel = fullLabel || resolvedLabel;
   const displayedLabel = truncateReferrerLabel(resolvedLabel);
   const [faviconFailed, setFaviconFailed] = useState(false);
 
@@ -55,7 +62,7 @@ const ReferrerLabel = ({ domain, label, faviconsEnabled, favicon }) => {
         normalizedDomain &&
         resolvedFavicon?.status === "loading" ? (
         <span
-          className="bbpa-referrer-label__favicon-fallback"
+          className="bbpa-referrer-label__favicon-loader"
           aria-hidden="true"
         />
       ) : (
@@ -70,7 +77,7 @@ const ReferrerLabel = ({ domain, label, faviconsEnabled, favicon }) => {
           {isDirect ? <LuArrowRight size={12} /> : <LuGlobe size={12} />}
         </span>
       )}
-      <PageTitle className="bbpa-referrer-label__domain" title={resolvedLabel}>
+      <PageTitle className="bbpa-referrer-label__domain" title={accessibleLabel}>
         {displayedLabel}
       </PageTitle>
     </span>

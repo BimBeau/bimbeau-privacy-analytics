@@ -541,12 +541,13 @@ const ReportTableCard = ( {
 																visibleLabel,
 																row.item,
 																row.item?.favicon ||
-															referrerFavicons.get(
-																	normalizeReferrerHost(
-																		row.item?.label || ''
-																	)
-																)
-														  )
+																	referrerFavicons.get(
+																		normalizeReferrerHost(
+																			row.item?.label || ''
+																		),
+																	),
+																fullLabel
+															  )
 														: visibleLabel;
 
 												if (

@@ -1565,6 +1565,29 @@ ul.striped > :nth-child(odd) {
   flex-shrink: 0;
 }
 
+.bbpa-referrer-label__favicon-loader {
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #dcdcde;
+  border-top-color: #757575;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: bbpa-referrer-favicon-spin 0.8s linear infinite;
+}
+
+@keyframes bbpa-referrer-favicon-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbpa-referrer-label__favicon-loader {
+    animation: none;
+  }
+}
+
 .bbpa-referrer-label__favicon-fallback {
   width: 16px;
   height: 16px;

@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v8';
+    private const CACHE_VERSION = 'v9';
     private const CACHE_KEY_PREFIX = 'bbpa_favicon_' . self::CACHE_VERSION . '_';
     private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_' . self::CACHE_VERSION . '_';
     private const MAX_BYTES = 262144;
@@ -76,21 +76,28 @@ class BBPA_Favicon_Resolver {
         $cache_key = self::CACHE_KEY_PREFIX . md5($host);
         if (get_transient($this->negative_key($host))) { $this->debug('cache', 'negative hit'); return []; }
 
-        $homepage = 'https://' . $host . '/';
+        $original_origin = 'https://' . $host;
+        $homepage = $original_origin . '/';
+        $origins = [$original_origin];
         $this->debug('homepage URL', $this->redact_url($homepage));
         $html = $this->request($homepage, 'text/html,application/xhtml+xml');
         if (!$html) {
             $alternate = str_starts_with($host, 'www.') ? substr($host, 4) : 'www.' . $host;
             if ($this->is_safe_public_host($alternate)) {
                 $homepage = 'https://' . $alternate . '/';
+                $origins[] = 'https://' . $alternate;
                 $html = $this->request($homepage, 'text/html,application/xhtml+xml');
             }
         }
         $base = $html ? (string) $html['url'] : $homepage;
         $candidates = $html ? $this->extract_favicons_from_html((string) $html['body'], $base) : [];
-        $parts = wp_parse_url($base);
-        $origin = (string) ($parts['scheme'] ?? 'https') . '://' . (string) ($parts['host'] ?? $host) . (isset($parts['port']) ? ':' . $parts['port'] : '');
-        foreach (['/favicon.ico', '/favicon.png', '/apple-touch-icon.png'] as $path) $candidates[] = $origin . $path;
+        if ($html) {
+            $parts = wp_parse_url($base);
+            $origins[] = (string) ($parts['scheme'] ?? 'https') . '://' . (string) ($parts['host'] ?? $host) . (isset($parts['port']) ? ':' . $parts['port'] : '');
+        }
+        foreach (array_unique($origins) as $origin) {
+            foreach (['/favicon.ico', '/favicon.png', '/apple-touch-icon.png'] as $path) $candidates[] = $origin . $path;
+        }
         $candidates = array_values(array_unique(array_filter($candidates)));
         $this->debug('candidates', implode(', ', array_map([$this, 'redact_url'], $candidates)));
         $favicon = [];

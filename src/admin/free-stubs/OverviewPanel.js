@@ -62,7 +62,8 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						exportReportKey="referrers"
 						emptyLabel={ __( 'No referrers available.', 'bimbeau-privacy-analytics' ) }
 						labelFallback={ __( 'Direct', 'bimbeau-privacy-analytics' ) }
-						renderLabel={ ( label, item, favicon ) => <ReferrerLabel domain={ item?.label || '' } label={ label } favicon={ favicon } /> }
+						maxDisplayedLabelCharacters={ 50 }
+						renderLabel={ ( label, item, favicon, fullLabel ) => <ReferrerLabel domain={ item?.label || '' } label={ label } fullLabel={ fullLabel } favicon={ favicon } /> }
 						loadReferrerFavicons
 						metricLabel={ __( 'Visits', 'bimbeau-privacy-analytics' ) }
 						enableSearch={ false }

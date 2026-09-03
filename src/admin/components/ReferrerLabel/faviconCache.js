@@ -85,10 +85,16 @@ export const useReferrerFavicons = (domains, enabled, providedFavicons = []) => 
 
   return useMemo(() => {
     const result = new Map();
-    hosts.forEach((host) => result.set(host, cache.get(host)));
+    hosts.forEach((host) => {
+      const cached = cache.get(host);
+      result.set(
+        host,
+        cached || (enabled ? { status: "loading", url: "" } : undefined),
+      );
+    });
     return result;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hostKey, revision]);
+  }, [enabled, hostKey, revision]);
 };
 
 export const clearFaviconMemoryCache = () => {
