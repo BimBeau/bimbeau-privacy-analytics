@@ -3,11 +3,11 @@ if (!defined('ABSPATH')) { exit; }
 
 /** Downloads explicitly enabled referrer favicons into local uploads storage. */
 class BBPA_Favicon_Resolver {
-    private const CACHE_VERSION = 'v9';
+    private const CACHE_VERSION = 'v10';
     private const CACHE_KEY_PREFIX = 'bbpa_favicon_' . self::CACHE_VERSION . '_';
     private const NEGATIVE_KEY_PREFIX = 'bbpa_favicon_negative_' . self::CACHE_VERSION . '_';
     private const MAX_BYTES = 262144;
-    private const MAX_REDIRECTS = 3;
+    private const MAX_REDIRECTS = 5;
 
     /** Invalidate every negative entry without an unbounded transient-table scan. */
     public static function invalidate_negative_cache(): void {
@@ -48,7 +48,7 @@ class BBPA_Favicon_Resolver {
         if (!empty($uploads['error']) || empty($uploads['basedir']) || empty($uploads['baseurl'])) { return []; }
         $directory = trailingslashit($uploads['basedir']) . 'bbpa/favicons';
         $basename = hash('sha256', $host);
-        foreach (['ico', 'png', 'jpg', 'webp', 'svg'] as $extension) {
+        foreach (['ico', 'png', 'jpg', 'webp', 'gif', 'svg'] as $extension) {
             $entry = [
                 'path' => trailingslashit($directory) . $basename . '.' . $extension,
                 'url' => trailingslashit($uploads['baseurl']) . 'bbpa/favicons/' . $basename . '.' . $extension,
@@ -81,16 +81,31 @@ class BBPA_Favicon_Resolver {
         $origins = [$original_origin];
         $this->debug('homepage URL', $this->redact_url($homepage));
         $html = $this->request($homepage, 'text/html,application/xhtml+xml');
+        if (!$html && $this->last_failure === 'network request failed') {
+            $homepage = 'http://' . $host . '/';
+            $origins[] = 'http://' . $host;
+            $html = $this->request($homepage, 'text/html,application/xhtml+xml');
+        }
         if (!$html) {
             $alternate = str_starts_with($host, 'www.') ? substr($host, 4) : 'www.' . $host;
             if ($this->is_safe_public_host($alternate)) {
                 $homepage = 'https://' . $alternate . '/';
                 $origins[] = 'https://' . $alternate;
                 $html = $this->request($homepage, 'text/html,application/xhtml+xml');
+                if (!$html && $this->last_failure === 'network request failed') {
+                    $homepage = 'http://' . $alternate . '/';
+                    $origins[] = 'http://' . $alternate;
+                    $html = $this->request($homepage, 'text/html,application/xhtml+xml');
+                }
             }
         }
         $base = $html ? (string) $html['url'] : $homepage;
-        $candidates = $html ? $this->extract_favicons_from_html((string) $html['body'], $base) : [];
+        $discovered = $html ? $this->extract_favicons_from_html((string) $html['body'], $base) : ['icons' => [], 'manifests' => []];
+        $candidates = $discovered['icons'];
+        foreach ($discovered['manifests'] as $manifest_url) {
+            $manifest = $this->request($manifest_url, 'application/manifest+json,application/json');
+            if ($manifest) $candidates = array_merge($candidates, $this->extract_favicons_from_manifest((string) $manifest['body'], (string) $manifest['url']));
+        }
         if ($html) {
             $parts = wp_parse_url($base);
             $origins[] = (string) ($parts['scheme'] ?? 'https') . '://' . (string) ($parts['host'] ?? $host) . (isset($parts['port']) ? ':' . $parts['port'] : '');
@@ -151,7 +166,7 @@ class BBPA_Favicon_Resolver {
     }
 
     private function download_and_store(string $url, string $host): array {
-        $response = $this->request($url, 'image/x-icon,image/vnd.microsoft.icon,image/png,image/jpeg,image/webp,image/svg+xml,application/octet-stream');
+        $response = $this->request($url, 'image/x-icon,image/vnd.microsoft.icon,image/png,image/jpeg,image/webp,image/gif,image/svg+xml,application/octet-stream');
         if (!$response) return [];
         $this->debug('candidate HTTP response', $this->redact_url($response['url']) . ' [200]');
         $this->debug('candidate Content-Type', $response['content_type']);
@@ -171,14 +186,13 @@ class BBPA_Favicon_Resolver {
     /** Return the detected format together with the exact bytes safe to persist. */
     private function validate_image(string $body, string $content_type): array {
         if ($body === '' || strlen($body) > self::MAX_BYTES || preg_match('/<html\b/i', substr($body, 0, 512))) return [];
-        $media_type = strtolower(trim(explode(';', $content_type, 2)[0]));
-        if ($media_type !== '' && !in_array($media_type, ['image/x-icon', 'image/vnd.microsoft.icon', 'image/png', 'image/jpeg', 'image/webp', 'image/svg+xml', 'application/octet-stream'], true)) return [];
         if (preg_match('/^\s*(?:<\?xml[^>]*>\s*)?<svg\b/i', $body)) {
             $sanitized = $this->sanitize_svg($body);
             return $sanitized === '' ? [] : ['format' => 'svg', 'body' => $sanitized];
         }
-        $signatures = ['png' => "\x89PNG\r\n\x1a\n", 'jpg' => "\xff\xd8\xff", 'webp' => 'RIFF', 'ico' => "\x00\x00\x01\x00"];
+        $signatures = ['png' => "\x89PNG\r\n\x1a\n", 'jpg' => "\xff\xd8\xff", 'webp' => 'RIFF', 'ico' => "\x00\x00\x01\x00", 'gif' => 'GIF87a'];
         foreach ($signatures as $format => $signature) if (str_starts_with($body, $signature) && ($format !== 'webp' || substr($body, 8, 4) === 'WEBP')) return ['format' => $format, 'body' => $body];
+        if (str_starts_with($body, 'GIF89a')) return ['format' => 'gif', 'body' => $body];
         return [];
     }
 
@@ -197,7 +211,10 @@ class BBPA_Favicon_Resolver {
         foreach ($dom->getElementsByTagName('*') as $node) {
             if (!in_array(strtolower($node->localName), $elements, true) || ($node->namespaceURI && $node->namespaceURI !== 'http://www.w3.org/2000/svg')) return '';
             if (strtolower($node->localName) === 'style') {
-                if ($node->attributes->length !== 0) return '';
+                foreach (iterator_to_array($node->attributes) as $attribute) {
+                    if (strtolower($attribute->localName) === 'type' && strtolower(trim($attribute->value)) === 'text/css') $node->removeAttributeNode($attribute);
+                    else return '';
+                }
                 $css = $this->sanitize_svg_stylesheet($node->textContent, $style_properties);
                 if ($css === '') return '';
                 $node->nodeValue = $css;
@@ -215,14 +232,20 @@ class BBPA_Favicon_Resolver {
                         if ($declaration === '' || substr_count($declaration, ':') < 1) return '';
                         [$property, $property_value] = array_map('trim', explode(':', $declaration, 2));
                         $property = strtolower($property);
-                        if (!in_array($property, $style_properties, true) || $property_value === '' || !$this->is_safe_svg_value($property_value)) return '';
+                        if ($property_value === '' || !$this->is_safe_svg_value($property_value)) return '';
+                        if (!in_array($property, $style_properties, true)) continue;
                         // Inline CSS takes precedence over presentation attributes, so overwrite them in declaration order.
                         $node->setAttribute($property, $property_value);
                     }
                     $node->removeAttributeNode($attribute);
                     continue;
                 }
-                if (str_starts_with($name, 'on') || !in_array($name, $attributes, true)) return '';
+                if (str_starts_with($name, 'on')) return '';
+                if (!in_array($name, $attributes, true)) {
+                    // Passive metadata and unsupported presentation hints are unnecessary after storage.
+                    $node->removeAttributeNode($attribute);
+                    continue;
+                }
                 if ($name === 'xmlns') {
                     if ($node !== $dom->documentElement || $value !== 'http://www.w3.org/2000/svg') return '';
                     continue;
@@ -253,7 +276,8 @@ class BBPA_Favicon_Resolver {
                 if (!str_contains($declaration, ':')) return '';
                 [$property, $value] = array_map('trim', explode(':', $declaration, 2));
                 $property = strtolower($property);
-                if (!in_array($property, $allowed_properties, true) || $value === '' || !$this->is_safe_svg_value($value)) return '';
+                if ($value === '' || !$this->is_safe_svg_value($value)) return '';
+                if (!in_array($property, $allowed_properties, true)) continue;
                 $safe_declarations[] = $property . ':' . $value;
             }
             if ($safe_declarations === []) return '';
@@ -276,7 +300,7 @@ class BBPA_Favicon_Resolver {
     }
 
     private function extract_favicons_from_html(string $html, string $base): array {
-        if (!class_exists('DOMDocument')) return [];
+        if (!class_exists('DOMDocument')) return ['icons' => [], 'manifests' => []];
         $dom = new DOMDocument(); libxml_use_internal_errors(true); $dom->loadHTML($html); libxml_clear_errors();
         $base_nodes = $dom->getElementsByTagName('base');
         if ($base_nodes->length > 0) {
@@ -284,22 +308,40 @@ class BBPA_Favicon_Resolver {
             if ($declared_base !== '') $base = $declared_base;
         }
         $candidates = [];
+        $manifests = [];
         foreach ($dom->getElementsByTagName('link') as $link) {
             $rels = preg_split('/\s+/', strtolower(trim((string) $link->getAttribute('rel')))) ?: [];
             $is_icon = in_array('icon', $rels, true);
             $is_apple = in_array('apple-touch-icon', $rels, true) || in_array('apple-touch-icon-precomposed', $rels, true);
+            if (in_array('manifest', $rels, true)) {
+                $manifest = $this->resolve_absolute_url(trim((string) $link->getAttribute('href')), $base);
+                if ($manifest !== '') $manifests[] = $manifest;
+            }
             if (!$is_icon && !$is_apple) continue;
             $url = $this->resolve_absolute_url(trim((string) $link->getAttribute('href')), $base);
             if ($url === '') continue;
             $extension = strtolower((string) pathinfo((string) (wp_parse_url($url, PHP_URL_PATH) ?: ''), PATHINFO_EXTENSION));
             $sizes = strtolower(trim((string) $link->getAttribute('sizes')));
-            $safe_format = in_array($extension, ['ico', 'png', 'webp', 'jpg', 'jpeg', 'svg'], true);
+            $safe_format = in_array($extension, ['ico', 'png', 'webp', 'jpg', 'jpeg', 'gif', 'svg'], true);
             $preferred_size = (bool) preg_match('/(?:^|\s)(?:16x16|32x32|48x48|180x180|192x192)(?:\s|$)/', $sizes);
             $priority = $safe_format ? 0 : ($preferred_size ? 1 : ($is_apple ? 2 : 3));
             $candidates[] = ['url' => $url, 'priority' => $priority];
         }
         usort($candidates, static fn(array $left, array $right): int => $left['priority'] <=> $right['priority']);
-        return array_values(array_unique(array_column($candidates, 'url')));
+        return ['icons' => array_values(array_unique(array_column($candidates, 'url'))), 'manifests' => array_values(array_unique($manifests))];
+    }
+
+    /** Extract manifest icons as lower-priority candidates; downloads still use the normal SSRF validation path. */
+    private function extract_favicons_from_manifest(string $body, string $base): array {
+        $manifest = json_decode($body, true);
+        if (!is_array($manifest) || !isset($manifest['icons']) || !is_array($manifest['icons'])) return [];
+        $icons = [];
+        foreach (array_slice($manifest['icons'], 0, 20) as $icon) {
+            if (!is_array($icon) || !isset($icon['src']) || !is_string($icon['src'])) continue;
+            $url = $this->resolve_absolute_url(trim($icon['src']), $base);
+            if ($url !== '') $icons[] = $url;
+        }
+        return array_values(array_unique($icons));
     }
 
     private function resolve_absolute_url(string $url, string $base): string {

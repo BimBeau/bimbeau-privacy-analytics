@@ -4,6 +4,19 @@ import { fetchAdminJson } from "../../api/useAdminEndpoint";
 
 const cache = new Map();
 const pendingBatches = new Map();
+const MAX_BATCH_SIZE = 20;
+
+const fetchFaviconBatch = (hosts) => {
+  const key = hosts.slice().sort().join(",");
+  let request = pendingBatches.get(key);
+  if (!request) {
+    request = fetchAdminJson("/admin/favicons", {
+      params: { domains: hosts.join(",") },
+    }).finally(() => pendingBatches.delete(key));
+    pendingBatches.set(key, request);
+  }
+  return request;
+};
 
 export const normalizeReferrerHost = (domain) => {
   if (typeof domain !== "string") {
@@ -52,22 +65,25 @@ export const useReferrerFavicons = (domains, enabled, providedFavicons = []) => 
       return undefined;
     }
     missing.forEach((host) => cache.set(host, { status: "loading", url: "" }));
-    const key = missing.slice().sort().join(",");
-    let request = pendingBatches.get(key);
-    if (!request) {
-      request = fetchAdminJson("/admin/favicons", {
-        params: { domains: missing.join(",") },
-      }).finally(() => pendingBatches.delete(key));
-      pendingBatches.set(key, request);
+    const batches = [];
+    for (let index = 0; index < missing.length; index += MAX_BATCH_SIZE) {
+      batches.push(missing.slice(index, index + MAX_BATCH_SIZE));
     }
+    const request = Promise.all(
+      batches.map((batch) =>
+        fetchFaviconBatch(batch).then((payload) => [batch, payload]),
+      ),
+    );
     let active = true;
     request
-      .then((payload) => {
-        missing.forEach((host) => {
-          const item = payload?.favicons?.[host];
-          cache.set(host, {
-            status: item?.is_local && item?.url ? "available" : "unavailable",
-            url: item?.is_local ? item.url || "" : "",
+      .then((responses) => {
+        responses.forEach(([batch, payload]) => {
+          batch.forEach((host) => {
+            const item = payload?.favicons?.[host];
+            cache.set(host, {
+              status: item?.is_local && item?.url ? "available" : "unavailable",
+              url: item?.is_local ? item.url || "" : "",
+            });
           });
         });
       })

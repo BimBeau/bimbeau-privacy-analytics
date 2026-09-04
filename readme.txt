@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.186
+Stable tag: 8.45.187
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,8 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.186 =
-* [Fix] Audit and correct the complete `fr_FR` catalogue for inaccurate or contextually mismatched translations.
-* [Improvement] Align French wording, terminology, button labels, apostrophes, and punctuation spacing with WordPress.org `fr_FR` conventions.
-* [Fix] Preserve placeholders and technical identifiers exactly, including `bbpa_hourly_aggregation_enabled`.
-* [Improvement] Keep the generated French runtime JSON catalogues synchronized with the corrected PO catalogue. Representative fixes include event-configuration errors that previously had unrelated export wording, GeoIP checksum/manifest messages with incorrect meanings, PWA configuration loading text, `visitors` translated as `visites`, and inconsistent WordPress terminology such as `plugin` versus `extension`.
+= 8.45.187 =
+* Improve referrer favicon discovery and compatibility.
