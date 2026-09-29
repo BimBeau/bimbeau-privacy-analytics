@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.187
+Stable tag: 8.45.188
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.187 =
-* Improve referrer favicon discovery and compatibility.
+= 8.45.188 =
+* [Build] Keep maintainer documentation, test suites and quality-tool configuration out of release detection and out of the plugin packages.
