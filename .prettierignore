@@ -1,0 +1,24 @@
+# Prettier ignore list (also read by the `prettier/prettier` rule of
+# `npm run lint:js`).
+
+# Generated, vendored and translation files are never formatted.
+/build/
+/dist/
+/vendor/
+/languages/
+
+# Existing JavaScript that predates the WordPress Prettier style declared in
+# `.prettierrc.cjs`: those areas were written by hand in mixed styles (tabs or
+# spaces, with or without spaces inside parentheses), so Prettier would rewrite
+# most of their lines. They are ignored to keep `npm run lint:js` focused on
+# real problems and to stop editors from reformatting a whole file on save.
+# To bring an area under Prettier, format it in a dedicated commit
+# (`npx wp-scripts format <path>`) and remove its line below.
+/assets/
+/docs/
+/scripts/
+/src/
+/webpack.config.js
+/tests/js/advanced-tracker-click-signal.test.js
+/tests/js/event-dispatcher-snippet-placeholders.test.js
+/tests/js/visit-id-runtime-consistency.test.js

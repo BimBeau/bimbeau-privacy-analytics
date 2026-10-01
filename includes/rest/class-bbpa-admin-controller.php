@@ -478,9 +478,11 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
     /**
      * Return current settings.
+     *
+     * The stored MaxMind license key is never returned: see bbpa_prepare_settings_for_rest_response().
      */
     public function get_settings(WP_REST_Request $request): WP_REST_Response {
-        $settings = bbpa_get_settings();
+        $settings = bbpa_prepare_settings_for_rest_response(bbpa_get_settings());
 
         return $this->build_admin_response(
             [
@@ -496,8 +498,12 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
     /**
      * Update settings.
+     *
+     * Partial update: keys omitted from the JSON body keep their stored value.
+     *
+     * @return WP_REST_Response|WP_Error WP_Error (HTTP 400 with `field_errors`) when validation fails.
      */
-    public function update_settings(WP_REST_Request $request): WP_REST_Response {
+    public function update_settings(WP_REST_Request $request) {
         $payload = $request->get_json_params();
         if (!is_array($payload)) {
             $payload = [];
@@ -510,7 +516,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         return $this->build_admin_response(
             [
-                'settings' => $settings,
+                'settings' => bbpa_prepare_settings_for_rest_response($settings),
                 'availableGranularities' => $this->get_available_granularities(),
                 'cacheVersion' => bbpa_get_admin_cache_version(),
                 'fieldVisibilityMatrix' => function_exists('bbpa_get_ui_field_visibility_matrix') ? bbpa_get_ui_field_visibility_matrix() : [],
@@ -544,12 +550,16 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $payload = [];
         }
 
-        $account_id = isset($payload['maxmind_account_id'])
+        // Omitted credentials (and the masked license key returned by GET /admin/settings)
+        // fall back to the stored values, so the saved key never has to leave the server.
+        $stored_settings = bbpa_get_settings();
+        $account_id = array_key_exists('maxmind_account_id', $payload) && is_scalar($payload['maxmind_account_id'])
             ? trim(sanitize_text_field((string) $payload['maxmind_account_id']))
-            : '';
-        $license_key = isset($payload['maxmind_license_key'])
+            : trim((string) ($stored_settings['maxmind_account_id'] ?? ''));
+        $license_key = array_key_exists('maxmind_license_key', $payload) && is_scalar($payload['maxmind_license_key'])
+            && !bbpa_is_masked_maxmind_license_key($payload['maxmind_license_key'])
             ? trim(sanitize_text_field((string) $payload['maxmind_license_key']))
-            : '';
+            : trim((string) ($stored_settings['maxmind_license_key'] ?? ''));
 
         $errors = bbpa_validate_maxmind_credentials($account_id, $license_key);
         if ($errors) {

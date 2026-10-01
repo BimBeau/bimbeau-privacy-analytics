@@ -190,9 +190,40 @@ const normalizeArray = (value) => (Array.isArray(value) ? value : []);
 
 
 
+/**
+ * Remove the saved MaxMind license key from a request payload unless it changes.
+ *
+ * The REST API never returns the stored license key: it returns a placeholder
+ * and the `maxmind_license_key_set` flag, and the form keeps the field empty.
+ * While a key is saved, an empty field therefore means "keep the saved key" and
+ * the property is omitted. A typed key is sent to replace it, and an empty value
+ * is sent only after the saved key was explicitly removed.
+ *
+ * @param {Object} state Form state or payload.
+ * @return {Object} Payload without the client-only `maxmind_license_key_set` flag.
+ */
+export const prepareMaxMindLicenseKeyPayload = (state) => {
+  const { maxmind_license_key_set: hasSavedLicenseKey, ...payload } =
+    state || {};
+  if (
+    hasSavedLicenseKey &&
+    String(payload.maxmind_license_key || "").trim() === ""
+  ) {
+    delete payload.maxmind_license_key;
+  }
+
+  return payload;
+};
+
 const normalizeSettings = (settings) => ({
   ...DEFAULT_SETTINGS,
   ...(settings || {}),
+  // The stored license key is never exposed: keep the field empty and track the saved state.
+  maxmind_license_key:
+    settings?.maxmind_license_key_set === true
+      ? ""
+      : settings?.maxmind_license_key || "",
+  maxmind_license_key_set: settings?.maxmind_license_key_set === true,
   raw_logs_retention_days:
     Number.parseInt(settings?.raw_logs_retention_days, 10) ||
     DEFAULT_SETTINGS.raw_logs_retention_days,
@@ -378,7 +409,8 @@ const SettingsPanel = ({
       );
     }
 
-    if (!licenseKey) {
+    // A saved license key stays in use while the field is left empty.
+    if (!licenseKey && !nextState.maxmind_license_key_set) {
       errors.maxmind_license_key = __(
         "MaxMind License Key is required.",
         "bimbeau-privacy-analytics",
@@ -472,7 +504,9 @@ const SettingsPanel = ({
           "Content-Type": "application/json",
           "X-WP-Nonce": ADMIN_CONFIG.restNonce,
         },
-        body: JSON.stringify(settingsPayload),
+        body: JSON.stringify(
+          prepareMaxMindLicenseKeyPayload(settingsPayload),
+        ),
       });
 
       const payload = await response.json().catch(() => null);
@@ -595,10 +629,13 @@ const SettingsPanel = ({
           "Content-Type": "application/json",
           "X-WP-Nonce": ADMIN_CONFIG.restNonce,
         },
-        body: JSON.stringify({
-          maxmind_account_id: formState.maxmind_account_id,
-          maxmind_license_key: formState.maxmind_license_key,
-        }),
+        body: JSON.stringify(
+          prepareMaxMindLicenseKeyPayload({
+            maxmind_account_id: formState.maxmind_account_id,
+            maxmind_license_key: formState.maxmind_license_key,
+            maxmind_license_key_set: formState.maxmind_license_key_set,
+          }),
+        ),
       });
 
       const payload = await response.json().catch(() => null);
@@ -1215,12 +1252,23 @@ const SettingsPanel = ({
                               "bimbeau-privacy-analytics",
                             )}
                             type="password"
+                            autoComplete="new-password"
+                            placeholder={
+                              formState.maxmind_license_key_set
+                                ? "••••••••"
+                                : undefined
+                            }
                             help={
                               validationErrors.maxmind_license_key ||
-                              __(
-                                "License Key used for MaxMind API requests.",
-                                "bimbeau-privacy-analytics",
-                              )
+                              (formState.maxmind_license_key_set
+                                ? __(
+                                    "A license key is saved. Leave this field empty to keep it or enter a new key to replace it.",
+                                    "bimbeau-privacy-analytics",
+                                  )
+                                : __(
+                                    "License Key used for MaxMind API requests.",
+                                    "bimbeau-privacy-analytics",
+                                  ))
                             }
                             value={formState.maxmind_license_key}
                             onChange={(value) => {
@@ -1239,6 +1287,24 @@ const SettingsPanel = ({
                               validationErrors.maxmind_license_key,
                             )}
                           />
+                          {formState.maxmind_license_key_set ? (
+                            <Button
+                              variant="link"
+                              isDestructive
+                              onClick={() =>
+                                setFormState((prev) => ({
+                                  ...prev,
+                                  maxmind_license_key: "",
+                                  maxmind_license_key_set: false,
+                                }))
+                              }
+                            >
+                              {__(
+                                "Remove the saved license key",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </Button>
+                          ) : null}
                         </>
                       )}
                       {maxMindTestNotice && (

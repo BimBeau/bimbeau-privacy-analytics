@@ -8,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * REST API routes for BimBeau Privacy Analytics.
  */
 
-defined('ABSPATH') || exit;
-
 /**
  * REST controller files required by this routes bootstrap.
  *

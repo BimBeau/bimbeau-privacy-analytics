@@ -31,6 +31,11 @@ const BBPA_ACCESS_ROLE_KEYS = [
 const BBPA_DEFAULT_STATS_ACCESS_ROLES = [
     'editor',
 ];
+/**
+ * Placeholder returned by the admin REST API instead of a stored MaxMind license key.
+ * Sending it back to POST /admin/settings keeps the stored key.
+ */
+const BBPA_MAXMIND_LICENSE_KEY_MASK = '********';
 
 /**
  * Return roles eligible for delegated access to stats/settings/contact panels.
@@ -314,9 +319,12 @@ function bbpa_sanitize_settings($settings): array
     }
     $settings['excluded_paths'] = array_values(array_unique($normalized_paths));
 
-    $settings['post_views_column_post_types'] = [];
-    $settings['post_stats_metabox_post_types'] = [];
-    unset($settings['hidden_dashboard_cards']);
+    // Retired keys: no module reads them, the post views column and key stats metabox use their own post type setting.
+    unset(
+        $settings['post_views_column_post_types'],
+        $settings['post_stats_metabox_post_types'],
+        $settings['hidden_dashboard_cards']
+    );
 
     if (isset($settings['maxmind_api_key'])) {
         unset($settings['maxmind_api_key']);
@@ -442,15 +450,171 @@ function bbpa_get_plugin_label(): string
 
 /**
  * Get sanitized settings with defaults.
+ *
+ * The sanitized result is memoized for the current request. The memo is reused
+ * only while the raw stored option, the callbacks of the filters used during
+ * sanitization and the site roles are identical to the ones used to build it,
+ * so any write (bbpa_update_settings(), update_option(), an option filter), a
+ * blog switch or a filter registered later in the request rebuilds it.
  */
 function bbpa_get_settings(): array
 {
-    $settings = get_option('bbpa_settings', []);
-    $settings = bbpa_sanitize_settings($settings);
+    $raw_settings = get_option('bbpa_settings', []);
+    $filters_signature = bbpa_get_settings_filters_signature();
+    $roles = bbpa_get_settings_cache_roles();
+    $memo = bbpa_settings_runtime_cache();
+    if (
+        is_array($memo)
+        && $memo['filters'] === $filters_signature
+        && $memo['raw'] === $raw_settings
+        && $memo['roles'] === $roles
+    ) {
+        return $memo['settings'];
+    }
+
+    $settings = bbpa_sanitize_settings($raw_settings);
 
     // Only keys owned by the loaded edition are visible at runtime. Module data
     // remains opaque in the stored option until its owning edition is loaded.
-    return array_intersect_key($settings, bbpa_get_settings_defaults());
+    $settings = array_intersect_key($settings, bbpa_get_settings_defaults());
+
+    bbpa_settings_runtime_cache(
+        false,
+        [
+            'raw' => $raw_settings,
+            'filters' => $filters_signature,
+            'roles' => $roles,
+            'settings' => $settings,
+        ]
+    );
+
+    return $settings;
+}
+
+/**
+ * Read, store or reset the per-request memo used by bbpa_get_settings().
+ *
+ * @internal Read settings with bbpa_get_settings() and reset the memo with bbpa_reset_settings_cache().
+ *
+ * @param bool                      $reset Whether to drop the memoized entry.
+ * @param array<string, mixed>|null $entry Entry to store, or null to only read the current entry.
+ * @return array<string, mixed>|null Current memo entry, or null when nothing is memoized.
+ */
+function bbpa_settings_runtime_cache(bool $reset = false, ?array $entry = null): ?array
+{
+    static $memo = null;
+
+    if ($reset) {
+        $memo = null;
+        return null;
+    }
+
+    if ($entry !== null) {
+        $memo = $entry;
+    }
+
+    return $memo;
+}
+
+/**
+ * Drop the settings memoized for the current request.
+ *
+ * Runs on every write of the `bbpa_settings` option and on blog switches. The
+ * memo also compares the raw option on each read, so these hooks are a safety net.
+ */
+function bbpa_reset_settings_cache(): void
+{
+    bbpa_settings_runtime_cache(true);
+}
+add_action('add_option_bbpa_settings', 'bbpa_reset_settings_cache', 10, 0);
+add_action('update_option_bbpa_settings', 'bbpa_reset_settings_cache', 10, 0);
+add_action('delete_option_bbpa_settings', 'bbpa_reset_settings_cache', 10, 0);
+add_action('switch_blog', 'bbpa_reset_settings_cache', 10, 0);
+
+/**
+ * Build a signature of the filter callbacks that influence settings sanitization.
+ *
+ * @return string Signature that changes when one of these filters gains or loses a callback.
+ */
+function bbpa_get_settings_filters_signature(): string
+{
+    global $wp_filter;
+
+    $hooks = [
+        'bbpa_settings_defaults',
+        'bbpa_sanitized_settings',
+        'bbpa_allowed_disabled_panel_ids',
+        'bbpa_events_kpi_slot_limit',
+        'bbpa_events_registry',
+        'bbpa_event_actions_registry',
+        'bbpa_event_action_payload',
+    ];
+
+    $parts = [];
+    foreach ($hooks as $hook) {
+        if (!isset($wp_filter[$hook]) || !$wp_filter[$hook] instanceof WP_Hook) {
+            continue;
+        }
+
+        foreach ($wp_filter[$hook]->callbacks as $priority => $callbacks) {
+            if (!is_array($callbacks) || $callbacks === []) {
+                continue;
+            }
+
+            $parts[] = $hook . '@' . $priority . ':' . implode(',', array_keys($callbacks));
+        }
+    }
+
+    return implode('|', $parts);
+}
+
+/**
+ * Return the role definitions that settings sanitization depends on.
+ *
+ * @return array<string, mixed>
+ */
+function bbpa_get_settings_cache_roles(): array
+{
+    if (!function_exists('wp_roles')) {
+        return [];
+    }
+
+    $roles = wp_roles();
+
+    return is_array($roles->roles) ? $roles->roles : [];
+}
+
+/**
+ * Determine whether a submitted MaxMind license key is the REST placeholder.
+ *
+ * @param mixed $value Submitted license key.
+ */
+function bbpa_is_masked_maxmind_license_key($value): bool
+{
+    return is_string($value) && trim($value) === BBPA_MAXMIND_LICENSE_KEY_MASK;
+}
+
+/**
+ * Prepare settings for admin REST responses without exposing stored secrets.
+ *
+ * The MaxMind license key keeps its place in the payload but carries
+ * BBPA_MAXMIND_LICENSE_KEY_MASK when a key is stored (an empty string otherwise),
+ * and the additive `maxmind_license_key_set` flag tells clients whether a key is saved.
+ *
+ * @param array<string, mixed> $settings Sanitized settings.
+ * @return array<string, mixed>
+ */
+function bbpa_prepare_settings_for_rest_response(array $settings): array
+{
+    if (!array_key_exists('maxmind_license_key', $settings)) {
+        return $settings;
+    }
+
+    $has_license_key = is_string($settings['maxmind_license_key']) && trim($settings['maxmind_license_key']) !== '';
+    $settings['maxmind_license_key'] = $has_license_key ? BBPA_MAXMIND_LICENSE_KEY_MASK : '';
+    $settings['maxmind_license_key_set'] = $has_license_key;
+
+    return $settings;
 }
 
 /**
@@ -467,6 +631,8 @@ function bbpa_get_deprecated_settings_keys(): array
         'hidden_dashboard_cards',
         'maxmind_api_key',
         'plugin_label',
+        'post_stats_metabox_post_types',
+        'post_views_column_post_types',
         'strict_mode',
     ];
 
@@ -510,18 +676,28 @@ function bbpa_is_debug_mode_enabled(): bool
 
 /**
  * Update settings with sanitization.
+ *
+ * The update is partial: settings keys absent from $settings keep their stored
+ * value, while keys present in $settings are applied, including deliberately
+ * emptied lists. A caller that sends the complete settings object (the settings
+ * screen) therefore replaces every managed value, as before. A MaxMind license
+ * key equal to BBPA_MAXMIND_LICENSE_KEY_MASK is treated as absent.
+ *
+ * @param mixed $settings Settings input (key => value).
+ * @return array<string, mixed>|WP_Error Sanitized settings owned by the loaded edition, or a WP_Error
+ *                                       (HTTP 400 data with `field_errors`) when the MaxMind API mode is
+ *                                       selected with missing or invalid credentials. Nothing is written on error.
  */
-function bbpa_update_settings($settings): array
+function bbpa_update_settings($settings)
 {
-    $requested_lookup_mode = '';
-    if (is_array($settings) && isset($settings['geoip_lookup_mode'])) {
-        $requested_lookup_mode = sanitize_key((string) $settings['geoip_lookup_mode']);
-    }
     $raw_previous = get_option('bbpa_settings', []);
     if (!is_array($raw_previous)) {
         $raw_previous = [];
     }
     $previous = bbpa_get_settings();
+    if (is_array($settings) && array_key_exists('maxmind_license_key', $settings) && bbpa_is_masked_maxmind_license_key($settings['maxmind_license_key'])) {
+        unset($settings['maxmind_license_key']);
+    }
     $settings = apply_filters('bbpa_settings_input_before_sanitize', $settings, $previous);
     if (!is_array($settings)) {
         $settings = [];
@@ -529,7 +705,11 @@ function bbpa_update_settings($settings): array
 
     // Only defaults registered by the loaded runtime define writable keys.
     // Values owned by absent modules remain opaque and cannot enter sanitizers.
-    $managed_input = array_intersect_key($settings, bbpa_get_settings_defaults());
+    $defaults = bbpa_get_settings_defaults();
+    $managed_input = array_intersect_key($settings, $defaults);
+    // Partial update: managed keys omitted from the input keep their current
+    // value instead of falling back to the defaults.
+    $managed_input = array_merge(array_intersect_key($previous, $defaults), $managed_input);
     $sanitized = bbpa_sanitize_settings($managed_input);
     $sanitized = apply_filters('bbpa_settings_before_update', $sanitized);
     $lookup_mode = (string) ($sanitized['geoip_lookup_mode'] ?? 'local_database');
@@ -588,7 +768,8 @@ function bbpa_update_settings($settings): array
         bbpa_schedule_geoip_update($sanitized['geoip_update_frequency'] !== ($previous['geoip_update_frequency'] ?? null));
     }
 
-    return $sanitized;
+    // Same projection as bbpa_get_settings(): only keys owned by the loaded edition.
+    return array_intersect_key($sanitized, $defaults);
 }
 
 /**

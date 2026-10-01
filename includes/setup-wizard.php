@@ -7,6 +7,11 @@ if (!defined('ABSPATH')) {
 const BBPA_SETUP_WIZARD_OPTION = 'bbpa_setup_wizard_state';
 const BBPA_SETUP_WIZARD_SCHEMA_VERSION = 1;
 
+/**
+ * Return the default onboarding wizard state stored in the `bbpa_setup_wizard_state` option.
+ *
+ * @return array<string, mixed>
+ */
 function bbpa_get_setup_wizard_default_state(): array
 {
     return [
@@ -23,6 +28,15 @@ function bbpa_get_setup_wizard_default_state(): array
     ];
 }
 
+/**
+ * Normalize a stored or submitted wizard state against the default state shape.
+ *
+ * Invalid values fall back to their defaults, so a corrupted option is repaired
+ * instead of breaking the onboarding screens.
+ *
+ * @param mixed $state Raw wizard state.
+ * @return array<string, mixed>
+ */
 function bbpa_normalize_setup_wizard_state($state): array
 {
     $default = bbpa_get_setup_wizard_default_state();
@@ -38,10 +52,16 @@ function bbpa_normalize_setup_wizard_state($state): array
     }
     $state['completed_by'] = $state['completed_by'] ? absint($state['completed_by']) : null;
     $choices = is_array($state['choices']) ? $state['choices'] : [];
+    if (!is_array($state['choices'])) {
+        $state['choices'] = [];
+    }
     foreach (array_keys($default['choices']) as $key) {
         $state['choices'][$key] = array_key_exists($key, $choices) && is_bool($choices[$key]) ? $choices[$key] : null;
     }
     $authorizations = is_array($state['authorizations']) ? $state['authorizations'] : [];
+    if (!is_array($state['authorizations'])) {
+        $state['authorizations'] = [];
+    }
     foreach (array_keys($default['authorizations']) as $key) {
         $value = $authorizations[$key] ?? null;
         $state['authorizations'][$key] = str_ends_with($key, '_by') ? ($value ? absint($value) : null) : (is_string($value) && preg_match('/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/', $value) ? $value : null);
@@ -49,11 +69,22 @@ function bbpa_normalize_setup_wizard_state($state): array
     return $state;
 }
 
+/**
+ * Return the normalized wizard state from the `bbpa_setup_wizard_state` option.
+ *
+ * @return array<string, mixed>
+ */
 function bbpa_get_setup_wizard_state(): array
 {
     return bbpa_normalize_setup_wizard_state(get_option(BBPA_SETUP_WIZARD_OPTION, []));
 }
 
+/**
+ * Normalize and persist the wizard state (autoload disabled).
+ *
+ * @param array<string, mixed> $state Wizard state to store.
+ * @return array<string, mixed> Normalized state that was stored.
+ */
 function bbpa_update_setup_wizard_state(array $state): array
 {
     $state = bbpa_normalize_setup_wizard_state($state);
@@ -67,6 +98,11 @@ function bbpa_reset_setup_wizard_state(): array
     return bbpa_update_setup_wizard_state(bbpa_get_setup_wizard_default_state());
 }
 
+/**
+ * Determine whether the wizard may open automatically (never started and never auto-opened).
+ *
+ * @param array<string, mixed> $state Normalized wizard state.
+ */
 function bbpa_setup_wizard_auto_open_allowed(array $state): bool
 {
     return $state['status'] === 'not_started' && !$state['auto_opened'];

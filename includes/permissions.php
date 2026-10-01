@@ -8,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Permissions helpers for BimBeau Privacy Analytics admin panels and app routes.
  */
 
-defined('ABSPATH') || exit;
-
 /**
  * Capability used for analytics panel access.
  */
@@ -122,7 +120,103 @@ function bbpa_current_user_can_access_panel(string $panel): bool
 }
 
 /**
+ * Capabilities WordPress reserves for super admins or grants without storing them in any site role.
+ *
+ * They can never be granted by the plugin role access settings.
+ *
+ * @return array<int, string>
+ */
+function bbpa_get_reserved_wordpress_capabilities(): array
+{
+    return [
+        'create_sites',
+        'delete_sites',
+        'manage_network',
+        'manage_network_options',
+        'manage_network_plugins',
+        'manage_network_themes',
+        'manage_network_users',
+        'manage_sites',
+        'setup_network',
+        'unfiltered_upload',
+        'upgrade_network',
+    ];
+}
+
+/**
+ * Determine whether the role access settings may grant a panel access capability to delegated roles.
+ *
+ * The capability names come from the `bbpa_stats_access_capability`,
+ * `bbpa_settings_access_capability` and `bbpa_contact_access_capability` filters.
+ * Delegated roles only receive dedicated capabilities: the plugin's own `bbpa_*`
+ * names, or a custom name that no site role stores and that WordPress does not
+ * reserve. A capability managed by WordPress or another plugin (for example
+ * `manage_options`) is never granted to them, because the grant would apply to
+ * every capability check of the site, not only to the plugin screens. Users who
+ * hold such a capability through their role keep it. Users with `manage_options`
+ * keep receiving every non-reserved panel capability.
+ *
+ * @param string $capability Capability name.
+ */
+function bbpa_is_grantable_access_capability(string $capability): bool
+{
+    if ($capability === '') {
+        return false;
+    }
+
+    if (strpos($capability, 'bbpa_') === 0) {
+        return true;
+    }
+
+    if (in_array($capability, bbpa_get_reserved_wordpress_capabilities(), true)) {
+        return false;
+    }
+
+    $roles = wp_roles();
+    if (is_array($roles->roles)) {
+        foreach ($roles->roles as $role_config) {
+            if (
+                is_array($role_config)
+                && isset($role_config['capabilities'])
+                && is_array($role_config['capabilities'])
+                && array_key_exists($capability, $role_config['capabilities'])
+            ) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Report, once per request and only in debug mode, a filtered access capability that cannot be granted.
+ *
+ * @param string $capability Capability name returned by an access capability filter.
+ */
+function bbpa_log_ignored_access_capability(string $capability): void
+{
+    static $reported = [];
+
+    if (isset($reported[$capability]) || !function_exists('bbpa_safe_log')) {
+        return;
+    }
+
+    $reported[$capability] = true;
+    bbpa_safe_log(
+        'Admin',
+        'warning',
+        'Role access settings do not grant a capability managed by WordPress or another plugin; use a dedicated bbpa_* capability name.',
+        ['capability' => $capability]
+    );
+}
+
+/**
  * Grant virtual BimBeau Privacy Analytics capabilities from role-based settings.
+ *
+ * Users with `manage_options` receive the panel access capabilities, except the
+ * capabilities WordPress reserves for super admins. Delegated roles only receive
+ * the capabilities accepted by bbpa_is_grantable_access_capability().
  *
  * @param array<string, bool> $allcaps
  * @param array<int, string> $caps
@@ -142,10 +236,36 @@ function bbpa_apply_role_access_capabilities(array $allcaps, array $caps, array 
         return $allcaps;
     }
 
+    $access_capabilities = [$stats_capability, $settings_capability, $contact_capability];
+
+    // Site managers keep every panel capability, except the ones WordPress
+    // reserves for super admins (network capabilities, unfiltered uploads).
     if (isset($allcaps['manage_options']) && $allcaps['manage_options']) {
-        $allcaps[$stats_capability] = true;
-        $allcaps[$settings_capability] = true;
-        $allcaps[$contact_capability] = true;
+        $reserved = bbpa_get_reserved_wordpress_capabilities();
+        foreach ($access_capabilities as $access_capability) {
+            if (in_array($access_capability, $reserved, true)) {
+                if (isset($requested[$access_capability])) {
+                    bbpa_log_ignored_access_capability($access_capability);
+                }
+                continue;
+            }
+            $allcaps[$access_capability] = true;
+        }
+        return $allcaps;
+    }
+
+    // Delegated roles: a capability that WordPress or another plugin manages is
+    // decided by the site roles only, granting it here would apply site-wide.
+    $grantable = [];
+    foreach ($access_capabilities as $access_capability) {
+        if (bbpa_is_grantable_access_capability($access_capability)) {
+            $grantable[$access_capability] = true;
+        } elseif (isset($requested[$access_capability])) {
+            bbpa_log_ignored_access_capability($access_capability);
+        }
+    }
+    $requested = array_intersect_key($requested, $grantable);
+    if ($requested === []) {
         return $allcaps;
     }
 
