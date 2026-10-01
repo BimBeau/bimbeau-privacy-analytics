@@ -160,6 +160,48 @@ function bbpa_aggregation_table_exists(string $table): bool
 }
 
 /**
+ * Delete the rows of a table whose column is lower than a cutoff, in bounded batches.
+ *
+ * Each statement deletes at most `$batch_size` rows, so no single transaction grows with the backlog. With a time
+ * budget, the loop stops when the budget is spent and reports that rows may remain.
+ *
+ * @param string     $table       Full table name.
+ * @param string     $column      Column compared with the cutoff.
+ * @param int|string $cutoff      Rows with `$column < $cutoff` are deleted.
+ * @param string     $format      `%d` or `%s`.
+ * @param float      $time_budget Seconds; 0 runs until no row is left.
+ * @return array{deleted: int, complete: bool}
+ */
+function bbpa_delete_rows_before_cutoff_in_batches(string $table, string $column, $cutoff, string $format = '%s', float $time_budget = 0.0, int $batch_size = 5000): array
+{
+    global $wpdb;
+
+    $batch_size = max(1, $batch_size);
+    $deadline = $time_budget > 0 ? microtime(true) + $time_budget : 0.0;
+    $deleted_total = 0;
+
+    while (true) {
+        $sql = $format === '%d'
+            ? $wpdb->prepare('DELETE FROM %i WHERE %i < %d LIMIT %d', $table, $column, (int) $cutoff, $batch_size)
+            : $wpdb->prepare('DELETE FROM %i WHERE %i < %s LIMIT %d', $table, $column, (string) $cutoff, $batch_size);
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Prepared above with identifier placeholders.
+        $deleted = $wpdb->query($sql);
+        if (!is_int($deleted)) {
+            return ['deleted' => $deleted_total, 'complete' => true];
+        }
+
+        $deleted_total += $deleted;
+        if ($deleted < $batch_size) {
+            return ['deleted' => $deleted_total, 'complete' => true];
+        }
+
+        if ($deadline > 0 && microtime(true) >= $deadline) {
+            return ['deleted' => $deleted_total, 'complete' => false];
+        }
+    }
+}
+
+/**
  * Purge aggregated rows that exceed the configured retention window.
  */
 function bbpa_purge_aggregated_data_by_retention(): void
@@ -180,7 +222,7 @@ function bbpa_purge_aggregated_data_by_retention(): void
         : 730;
     $overview_retention_days = max($retention_days, max(365, min(3650, $overview_retention_days)));
 
-    $current_timestamp = (int) current_time('timestamp');
+    $current_timestamp = time();
     $cutoff_timestamp = $current_timestamp - ($retention_days * DAY_IN_SECONDS);
     $overview_cutoff_timestamp = $current_timestamp - ($overview_retention_days * DAY_IN_SECONDS);
     $cutoff_date = wp_date('Y-m-d', $cutoff_timestamp);
@@ -189,15 +231,30 @@ function bbpa_purge_aggregated_data_by_retention(): void
 
     $deleted_any_rows = false;
 
+    // Rows are deleted in batches within a shared time budget. When the budget runs out, a single follow-up run is
+    // scheduled one minute later; the remaining rows are always older than the cutoff, so the result is unchanged.
+    $deadline = microtime(true) + 20;
+    $complete = true;
+    $delete_batched = static function (string $table, string $column, $cutoff, string $format) use ($deadline, &$complete): int {
+        $remaining_budget = $deadline - microtime(true);
+        if ($remaining_budget <= 0) {
+            $complete = false;
+
+            return 0;
+        }
+
+        $result = bbpa_delete_rows_before_cutoff_in_batches($table, $column, $cutoff, $format, $remaining_budget);
+        if (!$result['complete']) {
+            $complete = false;
+        }
+
+        return (int) $result['deleted'];
+    };
+
     $visitors_table = $wpdb->prefix . 'bbpa_visitors';
     if (bbpa_aggregation_table_exists($visitors_table)) {
-        $deleted_rows = $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM {$visitors_table} WHERE last_view_at < %d",
-                $cutoff_timestamp
-            )
-        );
-        $deleted_any_rows = $deleted_any_rows || (is_int($deleted_rows) && $deleted_rows > 0);
+        $deleted_rows = $delete_batched($visitors_table, 'last_view_at', $cutoff_timestamp, '%d');
+        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
     }
 
     $date_bucket_tables = [
@@ -219,24 +276,14 @@ function bbpa_purge_aggregated_data_by_retention(): void
             continue;
         }
 
-        $deleted_rows = $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM {$table} WHERE {$bucket_column} < %s",
-                $cutoff_date
-            )
-        );
-        $deleted_any_rows = $deleted_any_rows || (is_int($deleted_rows) && $deleted_rows > 0);
+        $deleted_rows = $delete_batched($table, (string) $bucket_column, $cutoff_date, '%s');
+        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
     }
 
     $overview_daily_table = $wpdb->prefix . 'bbpa_overview_daily';
     if (bbpa_aggregation_table_exists($overview_daily_table)) {
-        $deleted_rows = $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM {$overview_daily_table} WHERE date_bucket < %s",
-                $overview_cutoff_date
-            )
-        );
-        $deleted_any_rows = $deleted_any_rows || (is_int($deleted_rows) && $deleted_rows > 0);
+        $deleted_rows = $delete_batched($overview_daily_table, 'date_bucket', $overview_cutoff_date, '%s');
+        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
     }
 
     $datetime_bucket_tables = [
@@ -250,17 +297,16 @@ function bbpa_purge_aggregated_data_by_retention(): void
             continue;
         }
 
-        $deleted_rows = $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM {$table} WHERE {$bucket_column} < %s",
-                $cutoff_datetime
-            )
-        );
-        $deleted_any_rows = $deleted_any_rows || (is_int($deleted_rows) && $deleted_rows > 0);
+        $deleted_rows = $delete_batched($table, (string) $bucket_column, $cutoff_datetime, '%s');
+        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
     }
 
     if ($deleted_any_rows) {
         bbpa_flush_admin_cache();
+    }
+
+    if (!$complete && !wp_next_scheduled(BBPA_AGGREGATED_RETENTION_CRON_HOOK, ['continuation'])) {
+        wp_schedule_single_event(time() + MINUTE_IN_SECONDS, BBPA_AGGREGATED_RETENTION_CRON_HOOK, ['continuation']);
     }
 }
 
@@ -282,9 +328,8 @@ function bbpa_hourly_aggregation_enabled(): bool
 
     global $wpdb;
 
-    $table = $wpdb->prefix . 'bbpa_hourly';
-    $exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
-    $enabled = ($exists === $table);
+    // Reuse the cached table check (object cache, one hour) instead of a SHOW TABLES query on every hit.
+    $enabled = bbpa_aggregation_table_exists($wpdb->prefix . 'bbpa_hourly');
 
     return $enabled;
 }
@@ -497,7 +542,7 @@ function bbpa_build_aggregates_from_hits(array $hits): array
             $hourly[$hourly_key]['hits']++;
         }
 
-        $is_entry = bbpa_is_entry_hit($page_path, $referrer_domain);
+        $is_entry = bbpa_is_entry_hit($page_path, bbpa_get_entry_referrer_domain($hit));
         if ($is_entry) {
             $entry_exit_key = implode('|', [$date_bucket, $page_path]);
             if (!isset($entry_exit[$entry_exit_key])) {
@@ -565,17 +610,8 @@ function bbpa_build_aggregates_from_hits(array $hits): array
             $collect_hourly
         );
 
-        $session_fallback_hits = array_values(array_filter(
-            $session_hits,
-            static function (array $session_hit): bool {
-                return ((string) ($session_hit['visitor_id'] ?? '')) === '';
-            }
-        ));
-        if ($session_fallback_hits !== []) {
-            bbpa_apply_referrer_exit_counts($session_fallback_hits, $entry_exit, $entry_exit_hourly, $collect_hourly);
-        }
-    } else {
-        bbpa_apply_referrer_exit_counts($session_hits, $entry_exit, $entry_exit_hourly, $collect_hourly);
+        // Hits without a visitor_id cannot be grouped into sessions, so they add no exit. They used to be passed to
+        // bbpa_apply_referrer_exit_counts(), a function that does not exist, which made this cron fatal.
     }
 
     return [
@@ -849,7 +885,7 @@ function bbpa_apply_session_exit_tracking_for_hit(string $visitor_id, string $pa
         $entry_exit_table = bbpa_sql_table_name('bbpa_entry_exit_daily');
         $wpdb->query(
             $wpdb->prepare(
-                "UPDATE {$entry_exit_table} SET exits = GREATEST(exits - 1, 0) WHERE date_bucket = %s AND page_path = %s",
+                "UPDATE {$entry_exit_table} SET exits = IF(exits > 0, exits - 1, 0) WHERE date_bucket = %s AND page_path = %s",
                 $previous_date_bucket,
                 $previous_page_path
             )
@@ -859,7 +895,7 @@ function bbpa_apply_session_exit_tracking_for_hit(string $visitor_id, string $pa
             $entry_exit_hourly_table = bbpa_sql_table_name('bbpa_entry_exit_hourly');
             $wpdb->query(
                 $wpdb->prepare(
-                    "UPDATE {$entry_exit_hourly_table} SET exits = GREATEST(exits - 1, 0) WHERE date_bucket = %s AND page_path = %s",
+                    "UPDATE {$entry_exit_hourly_table} SET exits = IF(exits > 0, exits - 1, 0) WHERE date_bucket = %s AND page_path = %s",
                     $previous_hour_bucket,
                     $previous_page_path
                 )
@@ -1001,7 +1037,7 @@ function bbpa_store_aggregate_hit(array $hit, array $utm_params = []): void
     $exit_count = 0;
 
     if ($is_page_view_event) {
-        $entry_count = bbpa_is_entry_hit($page_path, $referrer_domain) ? 1 : 0;
+        $entry_count = bbpa_is_entry_hit($page_path, bbpa_get_entry_referrer_domain($hit)) ? 1 : 0;
         $acquisition_visit_increment = bbpa_claim_acquisition_visit_increment($hit, $date_bucket);
         if ($acquisition_visit_increment < 0) {
             $acquisition_visit_increment = $entry_count;
@@ -1081,7 +1117,7 @@ function bbpa_store_aggregate_hit(array $hit, array $utm_params = []): void
         ]
     );
 
-    bbpa_flush_admin_cache();
+    bbpa_flush_admin_cache_after_tracking_write();
 }
 
 /**
@@ -1172,7 +1208,7 @@ function bbpa_store_geo_aggregate_hit(array $hit): void
     if ($geo === []) return;
 
     $page_path = isset($hit['page_path']) ? wp_unslash((string) $hit['page_path']) : '';
-    $referrer_domain = isset($hit['referrer_domain']) ? sanitize_text_field((string) $hit['referrer_domain']) : '';
+    $referrer_domain = sanitize_text_field(bbpa_get_entry_referrer_domain($hit));
     $row = [
         'date_bucket' => wp_date('Y-m-d', $timestamp),
         'country_code' => $geo['country_code'],

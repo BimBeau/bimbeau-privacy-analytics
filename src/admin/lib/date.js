@@ -206,9 +206,65 @@ export const getWpDateTimeTimestamp = (value) => {
   return Number.isNaN(timestamp) ? null : timestamp;
 };
 
-export const getRangeFromPreset = (preset) => {
-  const now = new Date();
-  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+const getSiteTodayParts = (now) => {
+  const settings =
+    typeof window !== "undefined" ? window.BBPAAdmin?.settings : undefined;
+  const timeZone = String(settings?.timezoneString || "").trim();
+
+  if (timeZone && typeof Intl !== "undefined" && Intl.DateTimeFormat) {
+    try {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).formatToParts(now);
+      const read = (type) =>
+        Number(parts.find((part) => part.type === type)?.value);
+      const year = read("year");
+      const month = read("month");
+      const day = read("day");
+      if (year > 0 && month > 0 && day > 0) {
+        return { year, month, day };
+      }
+    } catch (error) {
+      // Unsupported time zone identifier (e.g. an offset string): fall back to gmtOffset.
+    }
+  }
+
+  const gmtOffset = Number(settings?.gmtOffset);
+  if (
+    settings?.gmtOffset !== undefined &&
+    settings?.gmtOffset !== null &&
+    settings?.gmtOffset !== "" &&
+    Number.isFinite(gmtOffset)
+  ) {
+    const shifted = new Date(now.getTime() + gmtOffset * 60 * 60 * 1000);
+    return {
+      year: shifted.getUTCFullYear(),
+      month: shifted.getUTCMonth() + 1,
+      day: shifted.getUTCDate(),
+    };
+  }
+
+  return {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+    day: now.getDate(),
+  };
+};
+
+/**
+ * Current calendar day of the WordPress site (site timezone, as the server buckets days),
+ * returned as a local-midnight Date suitable for calendar arithmetic and formatDate().
+ */
+export const getSiteToday = (now = new Date()) => {
+  const { year, month, day } = getSiteTodayParts(now);
+  return new Date(year, month - 1, day);
+};
+
+export const getRangeFromPreset = (preset, now = new Date()) => {
+  const end = getSiteToday(now);
   const start = new Date(end);
 
   switch (preset) {
@@ -281,10 +337,11 @@ export const getPreviousRange = (range) => {
     1,
     Math.round((endDate - startDate) / dayInMs) + 1,
   );
-  const previousEnd = new Date(startDate.getTime() - dayInMs);
-  const previousStart = new Date(
-    previousEnd.getTime() - (totalDays - 1) * dayInMs,
-  );
+  // Calendar-day arithmetic (setDate) so DST transitions never shift the comparison range.
+  const previousEnd = new Date(startDate);
+  previousEnd.setDate(previousEnd.getDate() - 1);
+  const previousStart = new Date(previousEnd);
+  previousStart.setDate(previousStart.getDate() - (totalDays - 1));
 
   return {
     start: formatDate(previousStart),

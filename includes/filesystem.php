@@ -208,6 +208,9 @@ function bbpa_normalize_geoip_local_mmdb_path($path, array $uploads)
         && $filesystem_service->move($legacy_path, $canonical_path, false)
         && bbpa_geoip_database_file_is_usable($canonical_path)
     ) {
+        // The migrated database must not be downloadable over HTTP from its new directory.
+        $filesystem_service->write_access_denial_files($canonical_directory);
+
         return $canonical_path;
     }
 

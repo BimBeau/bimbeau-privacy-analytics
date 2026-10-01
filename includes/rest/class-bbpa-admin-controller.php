@@ -11,8 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class BBPA_Admin_Controller extends WP_REST_Controller {
-    private const REALTIME_INFO_LOG_EVERY_N_REQUESTS = 30;
-
     private ?BBPA_Analytics_Repository $analytics_repository = null;
 
     private function analytics_repository(): BBPA_Analytics_Repository {
@@ -671,10 +669,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      */
     public function get_raw_logs(WP_REST_Request $request): WP_REST_Response {
         $limit = $this->normalize_limit($request->get_param('limit'));
-        $hits = get_option('bbpa_hits', []);
-        if (!is_array($hits)) {
-            $hits = [];
-        }
+        $hits = bbpa_get_raw_log_rows(0, $limit);
         $hits = array_values(
             array_filter(
                 $hits,
@@ -733,10 +728,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         $window_start = max(0, $now - $window_seconds);
         $privacy_threshold = 10;
 
-        $hits = get_option('bbpa_hits', []);
-        if (!is_array($hits)) {
-            $hits = [];
-        }
+        $hits = bbpa_get_raw_log_rows((int) $window_start);
         $realtime_visitors = $this->get_realtime_visitor_rows_in_window($window_start, $now);
 
         $has_enriched_granularity = $this->realtime_has_enriched_data($hits, $window_start, $now);
@@ -745,7 +737,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $hits = $realtime_visitors;
         }
 
-        $active_visitors_total = $this->count_active_visitors_from_realtime_source($window_start, $now);
+        $active_visitors_total = $this->count_active_visitors_from_realtime_source($realtime_visitors, $window_start, $now);
 
 
         if (!$has_enriched_granularity) {
@@ -1174,8 +1166,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             }
         }
 
-        $window_realtime_visitors = $this->get_realtime_visitor_rows_in_window($window_start, $now);
-        foreach ($window_realtime_visitors as $visitor_index => $realtime_row) {
+        foreach ($realtime_visitors as $visitor_index => $realtime_row) {
             if (!is_array($realtime_row)) {
                 continue;
             }
@@ -1368,13 +1359,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             return ($right['hits'] ?? 0) <=> ($left['hits'] ?? 0);
         });
 
-        $realtime_poll_iteration = $this->increment_realtime_poll_iteration_counter();
-        $this->log_info('Realtime snapshot polling summary.', [
-            'iteration' => $realtime_poll_iteration,
-            'active_visitors' => $active_visitors_total,
-            'visits_count' => count($visits),
-            'points_count' => count($points),
-        ], self::REALTIME_INFO_LOG_EVERY_N_REQUESTS);
         $this->log_debug('Realtime map point summary.', array_merge([
             'visits_received' => count($visits),
             'raw_coordinates' => 0,
@@ -1553,9 +1537,10 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
     /**
      * Count unique active visitors directly from realtime visitor rows.
+     *
+     * @param array<int, array<string, mixed>> $realtime_visitors Normalized rows from get_realtime_visitor_rows_in_window().
      */
-    private function count_active_visitors_from_realtime_source(int $window_start, int $now): int {
-        $realtime_visitors = $this->get_realtime_visitor_rows_in_window($window_start, $now);
+    private function count_active_visitors_from_realtime_source(array $realtime_visitors, int $window_start, int $now): int {
         $active_keys = [];
 
         foreach ($realtime_visitors as $normalized_row) {
@@ -1627,10 +1612,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Return normalized realtime visitor rows within the active window.
      */
     private function get_realtime_visitor_rows_in_window(int $window_start, int $now): array {
-        $rows = get_option('bbpa_realtime_visitors', []);
-        if (!is_array($rows)) {
-            return [];
-        }
+        $rows = bbpa_get_realtime_log_rows($window_start);
 
         $window_rows = [];
         foreach ($rows as $row) {
@@ -1901,7 +1883,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             ],
         ];
 
-        $this->set_cached_payload($cache_key, $payload);
+        $this->set_cached_payload($cache_key, $payload, $search === '');
 
         return new WP_REST_Response($payload, 200);
     }
@@ -2021,17 +2003,28 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         );
     }
 
-    /** Resolve a bounded, deduplicated set of observed hosts in one authenticated request. */
+    /**
+     * Resolve a bounded, deduplicated set of observed hosts in one authenticated request.
+     *
+     * Network work shares a 20-second budget. Hosts left when the budget is spent
+     * only get their already stored favicon, or the status "pending" so a later
+     * request can resolve them.
+     */
     public function get_favicons(WP_REST_Request $request): WP_REST_Response {
         $domains = array_slice(array_values(array_unique(array_filter(array_map('trim', explode(',', (string) $request->get_param('domains')))))), 0, 20);
         $resolver = new BBPA_Favicon_Resolver();
+        $resolver->set_time_budget(20.0);
         $favicons = [];
         foreach ($domains as $domain) {
             $host = $resolver->normalize_observed_host($domain);
             if ($host === '' || isset($favicons[$host])) continue;
-            $favicon = $resolver->resolve_favicon_for_domain($host);
+            $budget_exhausted = $resolver->is_time_budget_exhausted();
+            $favicon = $budget_exhausted
+                ? $resolver->get_cached_favicon_for_domain($host)
+                : $resolver->resolve_favicon_for_domain($host);
             $is_local = isset($favicon['url'], $favicon['path']);
-            $favicons[$host] = ['url' => $is_local ? (string) $favicon['url'] : '', 'is_local' => $is_local, 'status' => $is_local ? 'available' : 'unavailable'];
+            $status = $is_local ? 'available' : ($budget_exhausted ? 'pending' : 'unavailable');
+            $favicons[$host] = ['url' => $is_local ? (string) $favicon['url'] : '', 'is_local' => $is_local, 'status' => $status];
         }
         return new WP_REST_Response(['favicons' => $favicons], 200);
     }
@@ -2059,14 +2052,51 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         $state = bbpa_get_setup_wizard_state();
         $user_id = get_current_user_id();
         $timestamp = current_time('mysql', true);
-        if ($action === 'start') { $state['status'] = 'in_progress'; $state['started_at'] = $state['started_at'] ?: $timestamp; }
-        elseif ($action === 'set_step') { $step = sanitize_key((string) $request->get_param('step')); if (!in_array($step, ['tracking', 'geolocation', 'referrers', 'complete'], true)) return new WP_Error('bbpa_invalid_setup_wizard_transition', '', ['status' => 400]); $state['current_step'] = $step; }
-        elseif ($action === 'set_choice') { $choice = sanitize_key((string) $request->get_param('choice')); if (!in_array($choice, ['advanced_stats', 'geoip_database', 'referrer_favicons'], true)) return new WP_Error('bbpa_invalid_setup_wizard_choice', '', ['status' => 400]); $state['choices'][$choice] = (bool) rest_sanitize_boolean($request->get_param('value')); }
-        elseif ($action === 'mark_auto_opened') { $state['auto_opened'] = true; }
-        elseif ($action === 'mark_geoip_downloaded') { $state['authorizations']['geoip_downloaded_at'] = $timestamp; $state['authorizations']['geoip_downloaded_by'] = $user_id; }
-        elseif ($action === 'mark_favicons_enabled') { $state['authorizations']['favicons_enabled_at'] = $timestamp; $state['authorizations']['favicons_enabled_by'] = $user_id; }
-        elseif ($action === 'complete') { $state['status'] = 'completed'; $state['current_step'] = 'complete'; $state['completed_at'] = $timestamp; $state['completed_by'] = $user_id; }
-        else return new WP_Error('bbpa_invalid_setup_wizard_action', '', ['status' => 400]);
+
+        if ($action === 'start') {
+            $state['status'] = 'in_progress';
+            $state['started_at'] = $state['started_at'] ?: $timestamp;
+        } elseif ($action === 'set_step') {
+            $step = sanitize_key((string) $request->get_param('step'));
+            if (!in_array($step, ['tracking', 'geolocation', 'referrers', 'complete'], true)) {
+                return new WP_Error(
+                    'bbpa_invalid_setup_wizard_transition',
+                    __('Invalid setup wizard step.', 'bimbeau-privacy-analytics'),
+                    ['status' => 400]
+                );
+            }
+            $state['current_step'] = $step;
+        } elseif ($action === 'set_choice') {
+            $choice = sanitize_key((string) $request->get_param('choice'));
+            if (!in_array($choice, ['advanced_stats', 'geoip_database', 'referrer_favicons'], true)) {
+                return new WP_Error(
+                    'bbpa_invalid_setup_wizard_choice',
+                    __('Invalid setup wizard choice.', 'bimbeau-privacy-analytics'),
+                    ['status' => 400]
+                );
+            }
+            $state['choices'][$choice] = (bool) rest_sanitize_boolean($request->get_param('value'));
+        } elseif ($action === 'mark_auto_opened') {
+            $state['auto_opened'] = true;
+        } elseif ($action === 'mark_geoip_downloaded') {
+            $state['authorizations']['geoip_downloaded_at'] = $timestamp;
+            $state['authorizations']['geoip_downloaded_by'] = $user_id;
+        } elseif ($action === 'mark_favicons_enabled') {
+            $state['authorizations']['favicons_enabled_at'] = $timestamp;
+            $state['authorizations']['favicons_enabled_by'] = $user_id;
+        } elseif ($action === 'complete') {
+            $state['status'] = 'completed';
+            $state['current_step'] = 'complete';
+            $state['completed_at'] = $timestamp;
+            $state['completed_by'] = $user_id;
+        } else {
+            return new WP_Error(
+                'bbpa_invalid_setup_wizard_action',
+                __('Invalid setup wizard action.', 'bimbeau-privacy-analytics'),
+                ['status' => 400]
+            );
+        }
+
         return new WP_REST_Response(['state' => bbpa_update_setup_wizard_state($state)], 200);
     }
 
@@ -2083,6 +2113,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             [
                 'range' => $range,
                 'limit' => $limit,
+                'contract' => 2,
             ]
         );
         $cached = $this->get_cached_payload($cache_key);
@@ -2112,10 +2143,8 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         $items = array_map(
             function (array $row) use ($advanced_enabled): array {
-                $label = $this->normalize_json_text($row['label'] ?? '');
                 $item = [
-                    'label' => $label,
-                    '_series_label' => $label,
+                    'label' => $this->normalize_json_text($row['label'] ?? ''),
                     'hits' => (int) $row['hits'],
                 ];
 
@@ -2317,7 +2346,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $entries = $entries_by_bucket[$bucket] ?? 0;
             $items[] = [
                 'bucket' => $bucket,
-                'pageViews' => $has_canonical_bucket ? ($overview_pageviews_by_bucket[$bucket] ?? 0) : ($pageviews_by_bucket[$bucket] ?? 0),
+                'pageViews' => $pageviews_by_bucket[$bucket] ?? 0,
                 'entries' => $entries,
                 'visits' => $entries,
                 'visitors' => $has_visitor_level_data
@@ -2432,7 +2461,13 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         global $wpdb;
 
         $range = $this->get_day_range($request);
-        $cache_key = $this->get_cache_key('device-split', $range);
+        $cache_key = $this->get_cache_key(
+            'device-split',
+            [
+                'range' => $range,
+                'contract' => 2,
+            ]
+        );
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
             return new WP_REST_Response($cached, 200);
@@ -2457,14 +2492,12 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         $items = array_map(
             function (array $row) use ($advanced_enabled): array {
-                $label = $this->normalize_json_text($row['label'] ?? '');
                 $item = [
-                    'label' => $label,
-                    '_series_label' => $label,
+                    'label' => $this->normalize_json_text($row['label'] ?? ''),
                     'hits' => (int) $row['hits'],
                 ];
 
-                if (function_exists('bbpa_is_ui_field_visible') && !bbpa_is_ui_field_visible('referrers', 'label', $advanced_enabled)) {
+                if (function_exists('bbpa_is_ui_field_visible') && !bbpa_is_ui_field_visible('devices', 'label', $advanced_enabled)) {
                     $item['label'] = '';
                 }
 
@@ -2517,36 +2550,14 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Common date range args for day aggregation.
      */
     protected function get_date_range_args(): array {
-        return [
-            'start' => [
-                'required' => false,
-                'type' => 'string',
-                'sanitize_callback' => 'sanitize_text_field',
-            ],
-            'end' => [
-                'required' => false,
-                'type' => 'string',
-                'sanitize_callback' => 'sanitize_text_field',
-            ],
-        ];
+        return BBPA_REST_Query_Helpers::get_date_range_args();
     }
 
     /**
-     * Common datetime range args for hour aggregation.
+     * Common datetime range args for hour aggregation (same schema as day ranges).
      */
     private function get_datetime_range_args(): array {
-        return [
-            'start' => [
-                'required' => false,
-                'type' => 'string',
-                'sanitize_callback' => 'sanitize_text_field',
-            ],
-            'end' => [
-                'required' => false,
-                'type' => 'string',
-                'sanitize_callback' => 'sanitize_text_field',
-            ],
-        ];
+        return BBPA_REST_Query_Helpers::get_date_range_args();
     }
 
     /**
@@ -2563,86 +2574,19 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
     /**
      * Resolve day range with defaults.
+     *
+     * Delegates to the shared report helper so admin routes apply the same validation and
+     * the same maximum range length as the public report routes.
      */
     protected function get_day_range(WP_REST_Request $request): array {
-        $now = current_time('timestamp');
-        $default_end = wp_date('Y-m-d', $now);
-        $default_start = wp_date('Y-m-d', $now - (29 * DAY_IN_SECONDS));
-
-        $start = sanitize_text_field((string) $request->get_param('start'));
-        $end = sanitize_text_field((string) $request->get_param('end'));
-
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $start) || !$this->is_valid_day_value($start)) {
-            $start = $default_start;
-        }
-
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $end) || !$this->is_valid_day_value($end)) {
-            $end = $default_end;
-        }
-
-        if (strtotime($start) > strtotime($end)) {
-            $start = $default_start;
-            $end = $default_end;
-        }
-
-        return [
-            'start' => $start,
-            'end' => $end,
-        ];
+        return BBPA_REST_Query_Helpers::normalize_day_range($request);
     }
 
     /**
      * Resolve hour range with defaults.
      */
     private function get_hour_range(WP_REST_Request $request): array {
-        $now = current_time('timestamp');
-        $default_end = wp_date('Y-m-d H:00:00', $now);
-        $default_start = wp_date('Y-m-d H:00:00', $now - (23 * HOUR_IN_SECONDS));
-
-        $start = sanitize_text_field((string) $request->get_param('start'));
-        $end = sanitize_text_field((string) $request->get_param('end'));
-
-        if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $start) || !$this->is_valid_hour_value($start)) {
-            $start = $default_start;
-        }
-
-        if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $end) || !$this->is_valid_hour_value($end)) {
-            $end = $default_end;
-        }
-
-        if (strtotime($start) > strtotime($end)) {
-            $start = $default_start;
-            $end = $default_end;
-        }
-
-        return [
-            'start' => $start,
-            'end' => $end,
-        ];
-    }
-
-    /**
-     * Check whether a day value is a valid calendar date.
-     */
-    private function is_valid_day_value(string $value): bool {
-        $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value, wp_timezone());
-        $errors = DateTimeImmutable::getLastErrors();
-
-        return $date instanceof DateTimeImmutable
-            && $date->format('Y-m-d') === $value
-            && (!is_array($errors) || ($errors['warning_count'] === 0 && $errors['error_count'] === 0));
-    }
-
-    /**
-     * Check whether a datetime value is valid.
-     */
-    private function is_valid_hour_value(string $value): bool {
-        $date = DateTimeImmutable::createFromFormat('!Y-m-d H:i:s', $value, wp_timezone());
-        $errors = DateTimeImmutable::getLastErrors();
-
-        return $date instanceof DateTimeImmutable
-            && $date->format('Y-m-d H:i:s') === $value
-            && (!is_array($errors) || ($errors['warning_count'] === 0 && $errors['error_count'] === 0));
+        return BBPA_REST_Query_Helpers::normalize_hour_range($request);
     }
 
 
@@ -2675,8 +2619,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             return null;
         }
 
-        $overview_pageviews_by_bucket = [];
-        $overview_visits_by_bucket = [];
         $visitors_by_bucket = [];
         $counted_visitors = [];
         foreach ($rows as $row) {
@@ -2794,15 +2736,21 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
     /**
      * Store cached response payload.
+     *
+     * @param bool $persist Whether the payload is also stored as a transient. Free-text
+     *                      searches only use the object cache, so they cannot fill the
+     *                      options table with one transient per typed term.
      */
-    protected function set_cached_payload(string $cache_key, array $payload): void {
+    protected function set_cached_payload(string $cache_key, array $payload, bool $persist = true): void {
         $ttl = $this->get_cache_ttl();
         if ($ttl <= 0) {
             return;
         }
 
         wp_cache_set($cache_key, $payload, 'bbpa_admin', $ttl);
-        set_transient($cache_key, $payload, $ttl);
+        if ($persist) {
+            set_transient($cache_key, $payload, $ttl);
+        }
     }
 
     /**
@@ -2853,85 +2801,6 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         return !empty($settings['debug_enabled']);
     }
 
-
-    /**
-     * Resolve runtime log level for admin endpoints.
-     */
-    private function get_log_level(): string {
-        return $this->is_debug_mode_enabled() ? 'debug' : 'info';
-    }
-
-    /**
-     * Determine whether strict debug logging is enabled for the current request.
-     */
-    private function is_strict_debug_mode_enabled(WP_REST_Request $request): bool {
-        if ($this->get_log_level() !== 'debug') {
-            return false;
-        }
-
-        $debug_header = sanitize_text_field((string) $request->get_header('X-BBPA-Debug'));
-        return $debug_header === '1';
-    }
-
-    /**
-     * Increment polling counter used by periodic aggregated logs.
-     */
-    private function increment_realtime_poll_iteration_counter(): int {
-        $cache_key = 'bbpa_realtime_poll_iteration';
-        $iteration = wp_cache_get($cache_key, 'bbpa_admin');
-        if (!is_int($iteration) || $iteration <= 0) {
-            $iteration = (int) get_transient($cache_key);
-        }
-
-        $iteration = max(0, $iteration) + 1;
-        wp_cache_set($cache_key, $iteration, 'bbpa_admin', HOUR_IN_SECONDS);
-        set_transient($cache_key, $iteration, HOUR_IN_SECONDS);
-
-        return $iteration;
-    }
-
-
-    /**
-     * Control repetitive debug logs for identical realtime contexts.
-     */
-    private function should_emit_debug_log(string $log_key, int $ttl): bool {
-        $ttl = max(1, $ttl);
-        $hashed_key = md5($log_key);
-        $cache_key = 'bbpa_admin_debug_log_' . $hashed_key;
-        $cached = wp_cache_get($cache_key, 'bbpa_admin');
-        if ($cached === 1) {
-            return false;
-        }
-
-        if (get_transient($cache_key) === '1') {
-            wp_cache_set($cache_key, 1, 'bbpa_admin', $ttl);
-            return false;
-        }
-
-        wp_cache_set($cache_key, 1, 'bbpa_admin', $ttl);
-        set_transient($cache_key, '1', $ttl);
-
-        return true;
-    }
-
-
-    /**
-     * Write compact info logs for actionable production monitoring.
-     */
-    private function log_info(string $message, array $context = [], int $every_n_iterations = 1): void {
-        if ($this->get_log_level() !== 'info') {
-            return;
-        }
-
-        $iteration = isset($context['iteration']) ? (int) $context['iteration'] : 0;
-        $period = max(1, $every_n_iterations);
-        if ($iteration <= 0 || ($iteration % $period) !== 0) {
-            return;
-        }
-
-        BBPA_Logger::channel('Admin')->info($message, $context);
-    }
-
     /**
      * Write structured debug logs for admin analytics endpoints.
      */
@@ -2942,13 +2811,18 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         BBPA_Logger::channel('Admin')->info($message, $context);
     }
-    /** Add durable local favicons to the visible top-referrer rows only. */
+    /**
+     * Add durable local favicons to the visible top-referrer rows only.
+     *
+     * Rows whose label is masked by the field visibility matrix keep no favicon, so the
+     * favicon cannot reveal the hidden referrer domain.
+     */
     private function add_cached_referrer_favicons(array $items): array {
         $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
         if (empty($settings['referrer_favicons_enabled'])) { return $items; }
         $resolver = new BBPA_Favicon_Resolver();
         foreach ($items as &$item) {
-            $domain = trim((string) ($item['_series_label'] ?? $item['label'] ?? ''));
+            $domain = trim((string) ($item['label'] ?? ''));
             if ($domain === '') { continue; }
             $favicon = $resolver->get_cached_favicon_for_domain($domain);
             if (!empty($favicon['url']) && !empty($favicon['path'])) {

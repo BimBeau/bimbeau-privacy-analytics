@@ -73,6 +73,9 @@ function bbpa_get_panel_capability_map(): array
         'realtime' => $admin_capability,
         'settings' => $settings_capability,
         'contact' => $contact_capability,
+        // Freemius requires manage_options for its pricing page, so the plugin
+        // upgrade menu entry uses the same capability by default.
+        'pricing' => 'manage_options',
     ];
 
     $map = apply_filters('bbpa_panel_capability_map', $default_map, $admin_capability);

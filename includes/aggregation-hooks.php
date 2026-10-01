@@ -18,6 +18,7 @@ add_filter('cron_schedules', 'bbpa_register_raw_logs_cron_schedule');
 add_filter('cron_schedules', 'bbpa_register_aggregated_retention_cron_schedule');
 add_filter('cron_schedules', 'bbpa_register_geoip_update_cron_schedule');
 add_action(BBPA_RAW_LOGS_CRON_HOOK, 'bbpa_purge_raw_logs');
+add_action('init', 'bbpa_ensure_raw_log_cleanup_schedule');
 add_action('init', 'bbpa_ensure_geoip_update_schedule');
 add_action(BBPA_GEOIP_UPDATE_CRON_HOOK, 'bbpa_run_monthly_geoip_update');
 add_action('bbpa_geoip_initial_update', 'bbpa_run_monthly_geoip_update');
@@ -55,6 +56,13 @@ function bbpa_track_request_after_canonical_redirects(): void {
  */
 function bbpa_request_has_pending_canonical_redirect(): bool {
 	if (!function_exists('redirect_canonical')) {
+		return false;
+	}
+
+	// When core runs redirect_canonical() on template_redirect (priority 10), a possible redirect has already been
+	// sent and the request has exited before this point. Running it again would only repeat its costly
+	// redirect_guess_404_permalink() query for every 404.
+	if (has_action('template_redirect', 'redirect_canonical') !== false) {
 		return false;
 	}
 

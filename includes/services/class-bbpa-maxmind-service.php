@@ -14,8 +14,13 @@ class BBPA_MaxMind_Service {
 
     /**
      * Look up geolocation data using the MaxMind API.
+     *
+     * @param string $ip          Visitor address; it is sent to MaxMind but never logged.
+     * @param string $account_id  MaxMind account identifier.
+     * @param string $license_key MaxMind license key.
+     * @param int    $timeout     Request timeout in seconds (1 to 10).
      */
-    public function lookup(string $ip, string $account_id, string $license_key): array {
+    public function lookup(string $ip, string $account_id, string $license_key, int $timeout = 5): array {
         $url = sprintf('%s/city/%s', self::GEOLITE_BASE_URL, rawurlencode($ip));
         $auth = base64_encode($account_id . ':' . $license_key);
         $version = defined('BBPA_VERSION') ? BBPA_VERSION : 'unknown';
@@ -28,17 +33,22 @@ class BBPA_MaxMind_Service {
                     'Accept' => 'application/json',
                     'User-Agent' => $user_agent,
                 ],
-                'timeout' => 5,
+                'timeout' => max(1, min(10, $timeout)),
             ]
         );
 
         if (is_wp_error($response)) {
             return [
                 'error' => $response->get_error_message(),
+                'details' => [
+                    'status' => 0,
+                ],
+                'source' => 'maxmind-api',
             ];
         }
 
-        $code = wp_remote_retrieve_response_code($response);
+        // A response forged by a third-party HTTP filter may lack a status code.
+        $code = (int) wp_remote_retrieve_response_code($response);
         $body = wp_remote_retrieve_body($response);
 
         if ($code !== 200) {
@@ -71,7 +81,7 @@ class BBPA_MaxMind_Service {
                 $details['response_excerpt'] = mb_substr(trim(wp_strip_all_tags($body)), 0, 200);
             }
 
-            $this->log_maxmind_error($url, $code, $error_code);
+            $this->log_maxmind_error($code, $error_code);
 
             return [
                 'error' => $detail
@@ -107,8 +117,10 @@ class BBPA_MaxMind_Service {
 
     /**
      * Log MaxMind API errors when debug mode is enabled.
+     *
+     * The request URL is never logged because it contains the visitor address.
      */
-    private function log_maxmind_error(string $url, int $status, string $error_code): void {
+    private function log_maxmind_error(int $status, string $error_code): void {
         if (
             function_exists('bbpa_is_debug_mode_enabled')
             && !bbpa_is_debug_mode_enabled()
@@ -124,12 +136,18 @@ class BBPA_MaxMind_Service {
         }
 
         $message = sprintf(
-            '[BPA][Geo] MaxMind API request failed. url=%s status=%d error_code=%s',
-            esc_url_raw($url),
+            'MaxMind API request failed. endpoint=city status=%d error_code=%s',
             $status,
-            $error_code !== '' ? $error_code : 'unknown'
+            $error_code !== '' ? sanitize_key($error_code) : 'unknown'
         );
 
+        $this->write_log($message);
+    }
+
+    /**
+     * Send one diagnostic line to the plugin logger.
+     */
+    protected function write_log(string $message): void {
         BBPA_Logger::channel('Geo')->info($message);
     }
 }

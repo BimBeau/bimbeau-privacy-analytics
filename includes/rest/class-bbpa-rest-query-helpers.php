@@ -9,7 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class BBPA_REST_Query_Helpers {
     private const ALLOWED_SORT_DIRECTIONS = ['ASC', 'DESC'];
-    private const MAX_DAY_RANGE_DAYS = 730;
+
+    /**
+     * Longest accepted inclusive day range.
+     *
+     * The admin UI caps custom ranges at 730 days; its 24-month preset spans 731 days when the
+     * window contains February 29, so one extra day is accepted for that preset.
+     */
+    private const MAX_DAY_RANGE_DAYS = 731;
 
     public static function get_date_range_args(): array {
         return [
@@ -74,9 +81,8 @@ class BBPA_REST_Query_Helpers {
     }
 
     public static function normalize_day_range(WP_REST_Request $request): array {
-        $now = current_time('timestamp');
-        $default_end = wp_date('Y-m-d', $now);
-        $default_start = wp_date('Y-m-d', $now - (29 * DAY_IN_SECONDS));
+        $default_end = bbpa_get_site_date();
+        $default_start = bbpa_get_site_date(-29);
 
         $start = sanitize_text_field((string) $request->get_param('start'));
         $end = sanitize_text_field((string) $request->get_param('end'));
@@ -103,6 +109,44 @@ class BBPA_REST_Query_Helpers {
         ];
     }
 
+    /**
+     * Resolve an hourly datetime range (`Y-m-d H:i:s`) with the last 24 hours as default.
+     *
+     * Invalid values, reversed bounds and ranges longer than the day-range cap fall back to
+     * the default range, like normalize_day_range().
+     *
+     * @return array{start: string, end: string}
+     */
+    public static function normalize_hour_range(WP_REST_Request $request): array {
+        $now = time();
+        $default_end = wp_date('Y-m-d H:00:00', $now);
+        $default_start = wp_date('Y-m-d H:00:00', $now - (23 * HOUR_IN_SECONDS));
+
+        $start = sanitize_text_field((string) $request->get_param('start'));
+        $end = sanitize_text_field((string) $request->get_param('end'));
+
+        if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $start) || !self::is_valid_hour_value($start)) {
+            $start = $default_start;
+        }
+
+        if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $end) || !self::is_valid_hour_value($end)) {
+            $end = $default_end;
+        }
+
+        if (
+            strtotime($start) > strtotime($end)
+            || (strtotime($end) - strtotime($start)) > (self::MAX_DAY_RANGE_DAYS * DAY_IN_SECONDS)
+        ) {
+            $start = $default_start;
+            $end = $default_end;
+        }
+
+        return [
+            'start' => $start,
+            'end' => $end,
+        ];
+    }
+
     public static function normalize_search_term(WP_REST_Request $request): string {
         return trim(sanitize_text_field((string) $request->get_param('search')));
     }
@@ -117,6 +161,15 @@ class BBPA_REST_Query_Helpers {
 
         return $date instanceof DateTimeImmutable
             && $date->format('Y-m-d') === $value
+            && (!is_array($errors) || ($errors['warning_count'] === 0 && $errors['error_count'] === 0));
+    }
+
+    private static function is_valid_hour_value(string $value): bool {
+        $date = DateTimeImmutable::createFromFormat('!Y-m-d H:i:s', $value, wp_timezone());
+        $errors = DateTimeImmutable::getLastErrors();
+
+        return $date instanceof DateTimeImmutable
+            && $date->format('Y-m-d H:i:s') === $value
             && (!is_array($errors) || ($errors['warning_count'] === 0 && $errors['error_count'] === 0));
     }
 
@@ -152,6 +205,11 @@ class BBPA_REST_Query_Helpers {
         $orderby_key = sanitize_key((string) $request->get_param('orderby'));
         if (!isset($allowed_orderby[$orderby_key])) {
             $orderby_key = $default;
+        }
+
+        // Never build an ORDER BY clause from a default key that the allowlist does not map.
+        if (!isset($allowed_orderby[$orderby_key])) {
+            $orderby_key = (string) array_key_first($allowed_orderby);
         }
 
         $order = strtoupper(sanitize_key((string) $request->get_param('order')));

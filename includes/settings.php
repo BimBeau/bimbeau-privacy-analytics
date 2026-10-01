@@ -651,10 +651,14 @@ function bbpa_get_deprecated_settings_keys(): array
 
 /**
  * Resolve the session window used for visit identifiers.
+ *
+ * @param array<string, mixed>|null $settings Already sanitized settings, to avoid reading the option again.
  */
-function bbpa_get_visit_identifier_window_seconds(): int
+function bbpa_get_visit_identifier_window_seconds(?array $settings = null): int
 {
-    $settings = bbpa_get_settings();
+    if ($settings === null) {
+        $settings = bbpa_get_settings();
+    }
     $window_seconds = isset($settings['visit_identifier_window_seconds'])
         ? (int) $settings['visit_identifier_window_seconds']
         : BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_DEFAULT;

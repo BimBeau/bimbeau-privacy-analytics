@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.189
+Stable tag: 8.45.203
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,14 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.189 =
-* [Fix] Finishing the setup assistant no longer resets other settings. Before this fix, finishing (or relaunching) the assistant on an already configured site reset access roles, excluded roles and paths, data retention, the query allowlist, uninstall cleanup and the Pro panel, white-label and app settings to their defaults, which could let the next retention cleanup delete older statistics. Settings saves now only change the settings that are sent. Administrators who finished the assistant on a configured site with an earlier version should check Settings → General, Tracking & privacy and Maintenance.
-* [Fix] Saving settings with incomplete MaxMind API credentials now shows the field errors instead of failing with a critical error (HTTP 500), including when the setup assistant is finished on a site that uses the MaxMind API.
-* [Security] The MaxMind license key is no longer sent back to the browser. The Geolocation settings show that a key is saved; leave the field empty to keep it, type a new key to replace it, or use "Remove the saved license key". The connection test uses the saved key.
-* [Security] When a site points the plugin access capabilities to a capability already assigned to a role (for example `manage_options`, or a custom capability managed with a role editor), the role access settings no longer grant it to delegated roles. Site administrators keep full access to the statistics.
-* [Security] A failed app-session check in the analytics app no longer leaves the browser's logged-in user active for the rest of the request. [Pro].
-* [Performance] Plugin settings are sanitized once per request instead of on every read.
-* [Performance] Saving unrelated settings no longer regenerates the eight PWA icons when the app icon did not change. [Pro].
-* [Improvement] A damaged setup-assistant state is repaired instead of causing a PHP error on the onboarding screens.
-* [Improvement] The Events registry is no longer read from the generic `events_config` WordPress option, which the plugin never wrote and may belong to another plugin. [Pro].
-* [Docs] Documented the partial-update and secret-masking contract of the settings REST endpoint, the access capability filters and the REST field naming convention.
+= 8.45.203 =
+* [Fix] Releases are published to Freemius again: two release notes copied into `readme.txt` used a word that the Free package validation forbids, so the 8.45.202 package was refused. This release ships every fix of 8.45.190 to 8.45.202 to Free and Pro sites.

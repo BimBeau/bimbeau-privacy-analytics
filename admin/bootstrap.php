@@ -8,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Admin bootstrap for BimBeau Privacy Analytics.
  */
 
-defined('ABSPATH') || exit;
-
 if (!function_exists('bbpa_place_free_upgrade_submenu_last')) {
     /**
      * Ensure the Free pricing submenu item remains last.
@@ -57,7 +55,8 @@ add_action('admin_head', 'bbpa_normalize_free_upgrade_submenu', 1);
 add_action('admin_head', 'bbpa_place_free_upgrade_submenu_last', 2);
 add_action('admin_init', 'bbpa_redirect_disabled_admin_page');
 add_action('admin_enqueue_scripts', 'bbpa_enqueue_admin_assets');
-add_action('admin_head', 'bbpa_add_admin_menu_icon_styles');
-add_action('admin_head', 'bbpa_add_admin_color_scheme_styles');
+// Enqueue the menu icon before admin_print_styles so it is printed in <head>.
+// Color scheme variables are attached by bbpa_enqueue_admin_app_assets().
+add_action('admin_enqueue_scripts', 'bbpa_add_admin_menu_icon_styles');
 add_action('wp_dashboard_setup', 'bbpa_register_dashboard_widget');
 add_filter('rest_url', 'bbpa_filter_rest_url_for_admin_pages', 10, 4);

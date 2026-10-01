@@ -12,6 +12,9 @@ const BBPA_GEOIP_UPDATE_CRON_HOOK = 'bbpa_monthly_geoip_update';
 const BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK = 'bbpa_geoip_retry_update';
 const BBPA_GEOIP_RETRY_STATE_OPTION = 'bbpa_geoip_update_retry_state';
 const BBPA_GEOIP_RETRY_LOCK_TRANSIENT = 'bbpa_geoip_update_retry_lock';
+const BBPA_MAXMIND_API_CIRCUIT_TRANSIENT = 'bbpa_geo_api_circuit';
+const BBPA_MAXMIND_API_RATE_TRANSIENT = 'bbpa_geo_api_rate';
+const BBPA_MAXMIND_API_LOOKUP_TIMEOUT = 3;
 
 /**
  * Return the available GeoIP update frequencies.
@@ -77,10 +80,14 @@ function bbpa_get_geoip_update_frequency(): string
  */
 function bbpa_register_geoip_update_cron_schedule(array $schedules): array
 {
-    $schedules['monthly'] = [
-        'interval' => 30 * DAY_IN_SECONDS,
-        'display' => __('Once Monthly', 'bimbeau-privacy-analytics'),
-    ];
+    // The generic "monthly" name is kept for already scheduled events, but a
+    // definition provided by WordPress core or another plugin is never overridden.
+    if (!isset($schedules['monthly'])) {
+        $schedules['monthly'] = [
+            'interval' => 30 * DAY_IN_SECONDS,
+            'display' => __('Once Monthly', 'bimbeau-privacy-analytics'),
+        ];
+    }
     $schedules['bbpa_geoip_15_days'] = [
         'interval' => 15 * DAY_IN_SECONDS,
         'display' => __('Every 15 days', 'bimbeau-privacy-analytics'),
@@ -116,6 +123,10 @@ function bbpa_register_geoip_update_cron_schedule(array $schedules): array
 
 /**
  * Clear every GeoIP database update hook, including legacy one-time hooks.
+ *
+ * This runs on every request while updates are disabled (the default), so it
+ * only touches the database when a GeoIP event was actually scheduled: the
+ * retry state and the update lock can only be pending while an event exists.
  */
 function bbpa_clear_geoip_update_schedule(): void
 {
@@ -128,8 +139,18 @@ function bbpa_clear_geoip_update_schedule(): void
         'bpa_geoip_initial_update',
     ];
 
+    $had_scheduled_event = false;
     foreach ($hooks as $hook) {
+        if (wp_next_scheduled($hook) === false) {
+            continue;
+        }
+
+        $had_scheduled_event = true;
         wp_clear_scheduled_hook($hook);
+    }
+
+    if (!$had_scheduled_event) {
+        return;
     }
 
     bbpa_geoip_reset_retry_state();
@@ -281,6 +302,17 @@ function bbpa_geoip_schedule_retry(): void
 function bbpa_geoip_reset_retry_state(): void
 {
     wp_clear_scheduled_hook(BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK);
+
+    $state = get_option(BBPA_GEOIP_RETRY_STATE_OPTION, null);
+    if (
+        is_array($state)
+        && (int) ($state['level'] ?? 0) === 0
+        && (int) ($state['next_retry_at'] ?? 0) === 0
+    ) {
+        // Already neutral: do not rewrite the option only to refresh its timestamp.
+        return;
+    }
+
     update_option(
         BBPA_GEOIP_RETRY_STATE_OPTION,
         [
@@ -326,6 +358,15 @@ function bbpa_get_geoip_database_updater(): BBPA_GeoIP_Database_Updater
 
 /**
  * Determine the client IP address from the request.
+ *
+ * Default mode (unchanged trust order): the proxy headers of `bbpa_client_ip_header_order`
+ * (CF-Connecting-IP, X-Forwarded-For, X-Real-IP) are read before REMOTE_ADDR and the first public address wins, so
+ * sites behind Cloudflare or a reverse proxy keep working without configuration. Header values are bounded and
+ * normalized (port, brackets, IPv4-mapped IPv6, canonical IPv6 notation).
+ *
+ * Strict mode (opt-in, filter `bbpa_client_ip_strict_proxy_mode`): proxy headers are honored only when REMOTE_ADDR
+ * is a loopback/private address or matches `bbpa_trusted_proxies`; X-Forwarded-For is then read from right to left
+ * and the first address that is not a trusted proxy is used. Otherwise REMOTE_ADDR is used.
  */
 function bbpa_get_client_ip(): string
 {
@@ -341,6 +382,12 @@ function bbpa_get_client_ip(): string
 
     $allow_private_fallback = (bool) apply_filters('bbpa_allow_private_client_ip_fallback', true);
 
+    if (bbpa_client_ip_strict_proxy_mode()) {
+        $ip = bbpa_get_client_ip_strict($candidates);
+
+        return ($ip !== '' && ($allow_private_fallback || bbpa_is_public_ip($ip))) ? $ip : '';
+    }
+
     $fallback_ip = '';
 
     foreach ($candidates as $key) {
@@ -348,22 +395,13 @@ function bbpa_get_client_ip(): string
             continue;
         }
 
-        if (empty($_SERVER[$key])) {
-            continue;
-        }
+        foreach (bbpa_get_client_ip_header_addresses($key) as $ip) {
+            if (bbpa_is_public_ip($ip)) {
+                return $ip;
+            }
 
-        $value = sanitize_text_field(wp_unslash($_SERVER[$key]));
-        $parts = $key === 'HTTP_X_FORWARDED_FOR' ? array_map('trim', explode(',', $value)) : [$value];
-        foreach ($parts as $part) {
-            $ip = bbpa_extract_ip_from_header_value((string) $part);
-            if ($ip !== '') {
-                if (bbpa_is_public_ip($ip)) {
-                    return $ip;
-                }
-
-                if ($fallback_ip === '') {
-                    $fallback_ip = $ip;
-                }
+            if ($fallback_ip === '') {
+                $fallback_ip = $ip;
             }
         }
     }
@@ -373,6 +411,162 @@ function bbpa_get_client_ip(): string
     }
 
     return $fallback_ip;
+}
+
+/**
+ * Whether the opt-in strict proxy mode is enabled.
+ */
+function bbpa_client_ip_strict_proxy_mode(): bool
+{
+    /**
+     * Filter whether proxy headers are honored only from trusted proxies.
+     *
+     * @param bool $strict Default false (proxy headers are read from any client, as in previous versions).
+     */
+    return (bool) apply_filters('bbpa_client_ip_strict_proxy_mode', false);
+}
+
+/**
+ * Resolve the client IP in strict proxy mode.
+ *
+ * @param array<int, mixed> $candidates Server keys in trust order.
+ */
+function bbpa_get_client_ip_strict(array $candidates): string
+{
+    $remote_addresses = bbpa_get_client_ip_header_addresses('REMOTE_ADDR');
+    $remote_addr = $remote_addresses[0] ?? '';
+    if ($remote_addr === '' || !bbpa_is_trusted_proxy_ip($remote_addr)) {
+        return $remote_addr;
+    }
+
+    foreach ($candidates as $key) {
+        if (!is_string($key) || $key === '' || $key === 'REMOTE_ADDR') {
+            continue;
+        }
+
+        $addresses = bbpa_get_client_ip_header_addresses($key);
+        if ($addresses === []) {
+            continue;
+        }
+
+        // The right-most entries were appended by the proxies closest to the server.
+        foreach (array_reverse($addresses) as $ip) {
+            if (!bbpa_is_trusted_proxy_ip($ip)) {
+                return $ip;
+            }
+        }
+
+        return $addresses[0];
+    }
+
+    return $remote_addr;
+}
+
+/**
+ * Whether an address belongs to a trusted proxy (strict mode).
+ *
+ * Loopback and private addresses (a reverse proxy on the same host or network) are trusted, plus every IP or CIDR
+ * range returned by the `bbpa_trusted_proxies` filter (for example the published Cloudflare ranges).
+ */
+function bbpa_is_trusted_proxy_ip(string $ip): bool
+{
+    if ($ip === '') {
+        return false;
+    }
+
+    if (!bbpa_is_public_ip($ip)) {
+        return true;
+    }
+
+    /**
+     * Filter the trusted proxy addresses used by the strict proxy mode.
+     *
+     * @param array<int, string> $proxies IP addresses or CIDR ranges (IPv4 or IPv6). Default empty.
+     */
+    $proxies = apply_filters('bbpa_trusted_proxies', []);
+    if (!is_array($proxies)) {
+        return false;
+    }
+
+    foreach ($proxies as $proxy) {
+        if (is_string($proxy) && bbpa_ip_matches_range($ip, trim($proxy))) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Check whether an IP matches an address or a CIDR range of the same family.
+ */
+function bbpa_ip_matches_range(string $ip, string $range): bool
+{
+    if ($range === '') {
+        return false;
+    }
+
+    $prefix_length = null;
+    if (strpos($range, '/') !== false) {
+        [$range, $prefix] = explode('/', $range, 2);
+        if (!preg_match('/^\d{1,3}$/', $prefix)) {
+            return false;
+        }
+        $prefix_length = (int) $prefix;
+    }
+
+    $ip_binary = @inet_pton($ip); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Invalid input returns false.
+    $range_binary = @inet_pton($range); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Invalid input returns false.
+    if ($ip_binary === false || $range_binary === false || strlen($ip_binary) !== strlen($range_binary)) {
+        return false;
+    }
+
+    $total_bits = strlen($ip_binary) * 8;
+    $prefix_length = $prefix_length === null ? $total_bits : $prefix_length;
+    if ($prefix_length > $total_bits) {
+        return false;
+    }
+
+    $full_bytes = intdiv($prefix_length, 8);
+    if (substr($ip_binary, 0, $full_bytes) !== substr($range_binary, 0, $full_bytes)) {
+        return false;
+    }
+
+    $remaining_bits = $prefix_length % 8;
+    if ($remaining_bits === 0) {
+        return true;
+    }
+
+    $mask = (0xFF << (8 - $remaining_bits)) & 0xFF;
+
+    return (ord($ip_binary[$full_bytes]) & $mask) === (ord($range_binary[$full_bytes]) & $mask);
+}
+
+/**
+ * Read the valid, normalized IP addresses of one server variable, in header order.
+ *
+ * Header values are bounded (1024 bytes, 20 entries) so an oversized forged header costs nothing.
+ *
+ * @return array<int, string>
+ */
+function bbpa_get_client_ip_header_addresses(string $key): array
+{
+    if (empty($_SERVER[$key]) || !is_string($_SERVER[$key])) {
+        return [];
+    }
+
+    $value = substr(sanitize_text_field(wp_unslash($_SERVER[$key])), 0, 1024);
+    $parts = $key === 'HTTP_X_FORWARDED_FOR' ? array_slice(explode(',', $value), 0, 20) : [$value];
+
+    $addresses = [];
+    foreach ($parts as $part) {
+        $ip = bbpa_extract_ip_from_header_value((string) $part);
+        if ($ip !== '') {
+            $addresses[] = $ip;
+        }
+    }
+
+    return $addresses;
 }
 
 /**
@@ -412,6 +606,20 @@ function bbpa_extract_ip_from_header_value(string $value): string
 
     if (!filter_var($candidate, FILTER_VALIDATE_IP)) {
         return '';
+    }
+
+    // One canonical spelling per address, so the same client cannot obtain fresh rate-limit counters by writing an
+    // IPv6 address differently or as an IPv4-mapped IPv6 address.
+    if (strpos($candidate, ':') !== false) {
+        $packed = @inet_pton($candidate); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Validated above.
+        $normalized = $packed !== false ? inet_ntop($packed) : false;
+        if (is_string($normalized) && $normalized !== '') {
+            $candidate = $normalized;
+        }
+
+        if (stripos($candidate, '::ffff:') === 0 && filter_var(substr($candidate, 7), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            $candidate = substr($candidate, 7);
+        }
     }
 
     return $candidate;
@@ -707,9 +915,17 @@ function bbpa_require_maxmind_db_reader(): void
 
 /**
  * Resolve one country-level geolocation payload using the local GeoLite MMDB database.
+ *
+ * The MaxMind reader is opened once per request and per database file, and the
+ * raw record of an address is memoized for the request, so an enriched hit
+ * that resolves the same visitor more than once does not reopen and re-scan
+ * the database. Filters still run on every call.
  */
 function bbpa_lookup_local_geoip_location(string $ip): array
 {
+    static $readers = [];
+    static $records = [];
+
     $updater = bbpa_get_geoip_database_updater();
     $database_path = $updater->get_local_database_path();
 
@@ -722,11 +938,38 @@ function bbpa_lookup_local_geoip_location(string $ip): array
 
     bbpa_require_maxmind_db_reader();
 
+    clearstatcache(true, $database_path);
+    $database_signature = implode(
+        '|',
+        [
+            $database_path,
+            (string) filemtime($database_path),
+            (string) filesize($database_path),
+            (string) fileinode($database_path),
+        ]
+    );
+    $record_key = hash('sha256', $database_signature . '|' . $ip);
+
     try {
-        $reader = new \MaxMind\Db\Reader($database_path);
-        $record = $reader->get($ip);
-        $reader->close();
+        if (!array_key_exists($record_key, $records)) {
+            if (!isset($readers[$database_signature])) {
+                foreach ($readers as $stale_reader) {
+                    $stale_reader->close();
+                }
+                $readers = [];
+                $records = [];
+                $readers[$database_signature] = new \MaxMind\Db\Reader($database_path);
+            }
+
+            if (count($records) >= 64) {
+                $records = [];
+            }
+            $records[$record_key] = $readers[$database_signature]->get($ip);
+        }
+        $record = $records[$record_key];
     } catch (\Throwable $exception) {
+        unset($readers[$database_signature], $records[$record_key]);
+
         return [
             'error' => __('Unable to read the local GeoLite database.', 'bimbeau-privacy-analytics'),
             'details' => ['message' => sanitize_text_field($exception->getMessage())],
@@ -751,7 +994,167 @@ function bbpa_lookup_local_geoip_location(string $ip): array
 }
 
 /**
- * Look up a MaxMind location with a short-lived in-memory cache.
+ * Build the persistent cache key of a MaxMind API lookup.
+ *
+ * The address is never stored: the key is an HMAC of the address, the account
+ * and the current UTC day, so keys cannot be linked across days.
+ */
+function bbpa_get_maxmind_lookup_cache_key(string $ip, string $account_id): string
+{
+    $digest = hash_hmac(
+        'sha256',
+        'maxmind-api|' . $ip . '|' . $account_id . '|' . gmdate('Y-m-d'),
+        wp_salt('bbpa_visit_identifier_ip')
+    );
+
+    return 'bbpa_geo_api_' . substr($digest, 0, 40);
+}
+
+/**
+ * Return how long a successful MaxMind API lookup is reused, in seconds.
+ */
+function bbpa_get_maxmind_lookup_cache_ttl(): int
+{
+    $ttl = (int) apply_filters('bbpa_maxmind_lookup_cache_ttl', 6 * HOUR_IN_SECONDS);
+
+    return max(5 * MINUTE_IN_SECONDS, min(DAY_IN_SECONDS, $ttl));
+}
+
+/**
+ * Return why outbound MaxMind API lookups are currently paused, or an empty string.
+ *
+ * Lookups pause after an authentication, quota or availability error (circuit
+ * breaker) and when the per-minute request budget is spent.
+ */
+function bbpa_get_maxmind_api_pause_reason(): string
+{
+    $circuit = get_transient(BBPA_MAXMIND_API_CIRCUIT_TRANSIENT);
+    if (is_array($circuit) && (int) ($circuit['until'] ?? 0) > time()) {
+        return 'circuit_open';
+    }
+
+    $max_requests = (int) apply_filters('bbpa_maxmind_api_max_requests_per_minute', 120);
+    $max_requests = max(1, min(10000, $max_requests));
+    $window = (int) floor(time() / MINUTE_IN_SECONDS);
+    $rate = get_transient(BBPA_MAXMIND_API_RATE_TRANSIENT);
+    $count = is_array($rate) && (int) ($rate['window'] ?? -1) === $window ? (int) ($rate['count'] ?? 0) : 0;
+
+    return $count >= $max_requests ? 'rate_limited' : '';
+}
+
+/**
+ * Count one outbound MaxMind API request in the current one-minute window.
+ */
+function bbpa_count_maxmind_api_request(): void
+{
+    $window = (int) floor(time() / MINUTE_IN_SECONDS);
+    $rate = get_transient(BBPA_MAXMIND_API_RATE_TRANSIENT);
+    $count = is_array($rate) && (int) ($rate['window'] ?? -1) === $window ? (int) ($rate['count'] ?? 0) : 0;
+
+    set_transient(
+        BBPA_MAXMIND_API_RATE_TRANSIENT,
+        [
+            'window' => $window,
+            'count' => $count + 1,
+        ],
+        2 * MINUTE_IN_SECONDS
+    );
+}
+
+/**
+ * Pause outbound MaxMind API lookups after an error that would repeat for every visitor.
+ */
+function bbpa_maybe_open_maxmind_api_circuit(array $location): void
+{
+    if (empty($location['error'])) {
+        return;
+    }
+
+    $status = isset($location['details']['status']) ? (int) $location['details']['status'] : 0;
+    if (in_array($status, [402, 429], true)) {
+        $pause = HOUR_IN_SECONDS;
+    } elseif (in_array($status, [401, 403], true)) {
+        $pause = 15 * MINUTE_IN_SECONDS;
+    } elseif ($status === 0 || $status >= 500) {
+        $pause = 2 * MINUTE_IN_SECONDS;
+    } else {
+        // Other client errors (reserved or unknown address) only concern this visitor.
+        return;
+    }
+
+    set_transient(
+        BBPA_MAXMIND_API_CIRCUIT_TRANSIENT,
+        [
+            'until' => time() + $pause,
+            'status' => $status,
+        ],
+        $pause
+    );
+}
+
+/**
+ * Lift the MaxMind API pause when the lookup mode or the credentials change.
+ *
+ * Hooked on `bbpa_settings_before_update`: a pause opened by an authentication
+ * or quota error must not keep blocking lookups once the administrator saved
+ * new credentials. Address-specific cached errors do not depend on the
+ * credentials and are kept.
+ *
+ * @param mixed $settings Sanitized settings about to be stored.
+ * @return mixed Unchanged settings.
+ */
+function bbpa_reset_maxmind_api_pause_on_credentials_change($settings)
+{
+    if (!is_array($settings) || !function_exists('bbpa_get_settings')) {
+        return $settings;
+    }
+
+    $previous = bbpa_get_settings();
+    foreach (['geoip_lookup_mode', 'maxmind_account_id', 'maxmind_license_key'] as $key) {
+        if ((string) ($previous[$key] ?? '') !== (string) ($settings[$key] ?? '')) {
+            delete_transient(BBPA_MAXMIND_API_CIRCUIT_TRANSIENT);
+            break;
+        }
+    }
+
+    return $settings;
+}
+add_filter('bbpa_settings_before_update', 'bbpa_reset_maxmind_api_pause_on_credentials_change', 5);
+
+/**
+ * Build the address-free error payload returned for a cached MaxMind client error.
+ *
+ * @param int    $status     MaxMind HTTP status code.
+ * @param string $error_code MaxMind error code, already sanitized.
+ */
+function bbpa_build_maxmind_cached_error_payload(int $status, string $error_code): array
+{
+    $details = ['status' => $status];
+    $error_code = sanitize_key($error_code);
+    if ($error_code !== '') {
+        $details['error_code'] = $error_code;
+    }
+
+    return [
+        'error' => sprintf(
+            /* translators: %s: MaxMind API response code. */
+            __('MaxMind API error (%s).', 'bimbeau-privacy-analytics'),
+            $status
+        ),
+        'details' => $details,
+        'source' => 'maxmind-api',
+    ];
+}
+
+/**
+ * Look up a MaxMind location with request, persistent and failure-aware caching.
+ *
+ * Successful answers are reused for a few hours per visitor address (hashed),
+ * so heartbeats and page views of the same visit do not call the API again.
+ * Address-specific errors are cached briefly; authentication, quota and
+ * availability errors pause every lookup for a while; a per-minute budget caps
+ * outbound calls. A paused lookup returns an error payload, which callers
+ * already treat as "country unknown".
  */
 function bbpa_lookup_maxmind_location(
     string $ip,
@@ -773,6 +1176,35 @@ function bbpa_lookup_maxmind_location(
         }
     }
 
+    $persistent_key = bbpa_get_maxmind_lookup_cache_key($ip, $account_id);
+    $persisted = get_transient($persistent_key);
+    $persisted_payload = null;
+    if (is_array($persisted) && isset($persisted['payload']) && is_array($persisted['payload'])) {
+        $persisted_payload = $persisted['payload'];
+    } elseif (is_array($persisted) && isset($persisted['error_status'])) {
+        $persisted_payload = bbpa_build_maxmind_cached_error_payload(
+            (int) $persisted['error_status'],
+            (string) ($persisted['error_code'] ?? '')
+        );
+    }
+    if ($persisted_payload !== null) {
+        $cache[$key] = [
+            'timestamp' => $now,
+            'payload' => $persisted_payload,
+        ];
+
+        return $persisted_payload;
+    }
+
+    $pause_reason = bbpa_get_maxmind_api_pause_reason();
+    if ($pause_reason !== '') {
+        return [
+            'error' => __('Unable to connect to MaxMind.', 'bimbeau-privacy-analytics'),
+            'details' => ['reason' => $pause_reason],
+            'source' => 'maxmind-api',
+        ];
+    }
+
     if ($throttle) {
         $throttle_ttl = (int) apply_filters('bbpa_geo_lookup_throttle_seconds', 2);
         $throttle_ttl = max(1, min(60, $throttle_ttl));
@@ -785,8 +1217,28 @@ function bbpa_lookup_maxmind_location(
         set_transient($throttle_key, 1, $throttle_ttl);
     }
 
+    bbpa_count_maxmind_api_request();
     $service = bbpa_get_maxmind_service();
-    $location = $service->lookup($ip, $account_id, $license_key);
+    $location = $service->lookup($ip, $account_id, $license_key, BBPA_MAXMIND_API_LOOKUP_TIMEOUT);
+
+    if (empty($location['error'])) {
+        set_transient($persistent_key, ['payload' => $location], bbpa_get_maxmind_lookup_cache_ttl());
+    } else {
+        $status = isset($location['details']['status']) ? (int) $location['details']['status'] : 0;
+        if ($status >= 400 && $status < 500 && !in_array($status, [401, 402, 403, 429], true)) {
+            // MaxMind error messages repeat the queried address: only the status and the
+            // error code are stored, the message is rebuilt when the entry is read.
+            set_transient(
+                $persistent_key,
+                [
+                    'error_status' => $status,
+                    'error_code' => sanitize_key((string) ($location['details']['error_code'] ?? '')),
+                ],
+                15 * MINUTE_IN_SECONDS
+            );
+        }
+        bbpa_maybe_open_maxmind_api_circuit($location);
+    }
 
     $cache[$key] = [
         'timestamp' => $now,

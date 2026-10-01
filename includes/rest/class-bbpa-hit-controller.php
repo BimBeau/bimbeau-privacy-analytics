@@ -189,7 +189,7 @@ class BBPA_Hit_Controller {
                 'tracked' => $tracked,
             ]);
             if ($tracked) {
-                bbpa_flush_admin_cache();
+                bbpa_flush_admin_cache_after_tracking_write();
             }
             return new WP_REST_Response(['tracked' => $tracked], $tracked ? 201 : 204);
         }
@@ -212,7 +212,7 @@ class BBPA_Hit_Controller {
         $this->log_event_debug('Hit persistence completed.', $hit, [
             'tracked' => true,
         ]);
-        bbpa_flush_admin_cache();
+        bbpa_flush_admin_cache_after_tracking_write();
 
         return new WP_REST_Response(['tracked' => true], 201);
     }
@@ -231,7 +231,13 @@ class BBPA_Hit_Controller {
     }
 
     /**
-     * Apply a short request limit window for public hit ingestion.
+     * Apply a fixed-window request limit to public hit ingestion.
+     *
+     * The per-client budget (`bbpa_hit_rate_limit_max_requests` per `bbpa_hit_rate_limit_window_seconds`) resets at
+     * the end of each window. Heartbeats use a separate budget of the same size, so a long reading session cannot
+     * starve page views. Clients seen through a private address (NAT, unrecognized proxy) are also keyed by their
+     * visit identifier, so they do not all share one budget. An optional site-wide budget is available through
+     * `bbpa_hit_rate_limit_global_max` (disabled by default).
      */
     private function is_rate_limited(WP_REST_Request $request): bool {
         $window = (int) apply_filters('bbpa_hit_rate_limit_window_seconds', 60);
@@ -242,28 +248,34 @@ class BBPA_Hit_Controller {
 
         $ip = bbpa_get_client_ip();
         $user_agent = sanitize_text_field((string) $request->get_header('User-Agent'));
-        $fingerprint_source = $ip !== '' ? $ip : $user_agent;
+        $fingerprint_source = $ip !== '' ? bbpa_get_rate_limit_ip_fingerprint($ip) : $user_agent;
         if ($fingerprint_source === '') {
             $fingerprint_source = 'unknown';
         }
 
-        $cache_key = 'bbpa_rate_limit_' . md5($fingerprint_source);
-
-        $count = wp_cache_get($cache_key, 'bbpa_rate_limit');
-        if ($count === false) {
-            $count = get_transient($cache_key);
+        if ($ip === '' || !bbpa_is_public_ip($ip)) {
+            $visit_id = $request->get_param('visit_id');
+            if (($visit_id === null || $visit_id === '') && $request->get_param('visitId') !== null) {
+                $visit_id = $request->get_param('visitId');
+            }
+            $visit_id = $this->clean_visit_id($visit_id);
+            if (is_string($visit_id) && $visit_id !== '') {
+                $fingerprint_source .= '|visit:' . $visit_id;
+            }
         }
 
-        $count = is_numeric($count) ? (int) $count : 0;
-        if ($count >= $max_requests) {
+        $event_name = sanitize_key((string) $request->get_param('event_name'));
+        $scope = $event_name === 'heartbeat' ? 'heartbeat' : 'hits';
+        if ($scope === 'heartbeat') {
+            $fingerprint_source = 'heartbeat|' . $fingerprint_source;
+        }
+
+        $global_max = (int) apply_filters('bbpa_hit_rate_limit_global_max', 0, $window);
+        if ($global_max > 0 && bbpa_rate_limit_exceeded('global', $window, $global_max, 'hits_global')) {
             return true;
         }
 
-        $count++;
-        wp_cache_set($cache_key, $count, 'bbpa_rate_limit', $window);
-        set_transient($cache_key, $count, $window);
-
-        return false;
+        return bbpa_rate_limit_exceeded($fingerprint_source, $window, $max_requests, $scope);
     }
 
     /**
@@ -336,6 +348,25 @@ class BBPA_Hit_Controller {
             return $now;
         }
 
+        /**
+         * Filter how far in the past a client timestamp_bucket is accepted, in seconds.
+         *
+         * The trackers send the current time (rounded down to 5 minutes) and never replay old hits, so older values
+         * come from a wrong client clock or a forged request. They are stored at the reception time instead, like
+         * timestamps more than one day in the future. Integrations that replay an offline queue can raise the limit.
+         *
+         * @param int $max_past_seconds Default one day.
+         */
+        $max_past_seconds = (int) apply_filters('bbpa_hit_max_past_seconds', DAY_IN_SECONDS);
+        if ($max_past_seconds > 0 && $timestamp < ($now - $max_past_seconds)) {
+            $this->log_debug('Hit timestamp_bucket older than the accepted window replaced by the reception time.', [
+                'timestamp_bucket' => $timestamp,
+                'max_past_seconds' => $max_past_seconds,
+            ]);
+
+            return $now;
+        }
+
         return $timestamp;
     }
 
@@ -352,10 +383,36 @@ class BBPA_Hit_Controller {
             return new WP_Error('bbpa_page_path_too_long', __('Page path exceeds maximum length.', 'bimbeau-privacy-analytics'));
         }
 
+        /**
+         * Filter whether a page path posted to /hits may be recorded.
+         *
+         * Each new path creates rows in several daily tables. Sites can restrict ingestion to their own routes
+         * (for example paths that resolve to content) to bound table growth from forged requests.
+         *
+         * @param bool            $allowed   Default true.
+         * @param string          $page_path Normalized page path.
+         * @param WP_REST_Request $request   Hit request.
+         */
+        if (!(bool) apply_filters('bbpa_hit_allowed_page_path', true, $page_path, $request)) {
+            return new WP_Error('bbpa_page_path_not_allowed', __('Invalid page path.', 'bimbeau-privacy-analytics'));
+        }
+
         $post_id = $request->get_param('post_id');
         $post_id = $post_id !== null ? absint($post_id) : null;
 
         $referrer_domain = $this->clean_referrer_domain($request->get_param('referrer_domain'));
+        // Entry classification needs to know that the visitor navigated from another page of the
+        // site before the referrer is rewritten to Direct (internal) or scrubbed (essential scope).
+        // Only the site's own host is kept, never an external domain.
+        $internal_referrer_domain = '';
+        if (
+            $referrer_domain !== null
+            && function_exists('bbpa_is_internal_referrer_domain')
+            && bbpa_is_internal_referrer_domain($referrer_domain)
+            && !$this->exceeds_max_length($referrer_domain, self::MAX_REFERRER_DOMAIN_LENGTH)
+        ) {
+            $internal_referrer_domain = $referrer_domain;
+        }
         if ($referrer_domain !== null && function_exists('bbpa_normalize_external_referrer_domain')) {
             $referrer_domain = bbpa_normalize_external_referrer_domain($referrer_domain);
         }
@@ -363,9 +420,13 @@ class BBPA_Hit_Controller {
             return new WP_Error('bbpa_referrer_domain_too_long', __('Referrer domain exceeds maximum length.', 'bimbeau-privacy-analytics'));
         }
 
+        // The User-Agent is always checked for crawlers: trackers always send a viewport-based
+        // device class, so JavaScript-rendering bots would otherwise be counted as humans.
+        $user_agent = sanitize_text_field((string) $request->get_header('User-Agent'));
         $device_class = $this->clean_device_class($request->get_param('device_class'));
-        if ($device_class === '') {
-            $user_agent = sanitize_text_field((string) $request->get_header('User-Agent'));
+        if (function_exists('bbpa_is_bot_user_agent') && bbpa_is_bot_user_agent($user_agent)) {
+            $device_class = 'bot';
+        } elseif ($device_class === '') {
             $device_class = $this->detect_device_class_from_user_agent($user_agent);
         }
 
@@ -444,6 +505,7 @@ class BBPA_Hit_Controller {
             'page_path' => $page_path,
             'post_id' => $post_id ?: null,
             'referrer_domain' => $referrer_domain,
+            'internal_referrer_domain' => $internal_referrer_domain,
             'device_class' => $device_class,
             'timestamp_bucket' => $timestamp_bucket,
             'visit_id' => $visit_id,
@@ -795,7 +857,8 @@ class BBPA_Hit_Controller {
         $settings = bbpa_get_settings();
 
         if (function_exists('bbpa_is_frontend_collection_context') && !bbpa_is_frontend_collection_context($settings, true)) {
-            return 'non_front_context';
+            // Outside a collection context, keep the path without its query string (never a reason code).
+            return $path;
         }
         $query_args = [];
         wp_parse_str($query, $query_args);
@@ -896,7 +959,10 @@ class BBPA_Hit_Controller {
             return 'unknown';
         }
 
-        if (preg_match('/bot|crawl|spider|slurp|bingpreview|headless/i', $normalized_user_agent) === 1) {
+        $is_bot = function_exists('bbpa_is_bot_user_agent')
+            ? bbpa_is_bot_user_agent($user_agent)
+            : preg_match('/bot|crawl|spider|slurp|bingpreview|headless/i', $normalized_user_agent) === 1;
+        if ($is_bot) {
             return 'bot';
         }
 
@@ -1183,11 +1249,19 @@ class BBPA_Hit_Controller {
                 return false;
             }
 
-            $dedupe_marker = md5(implode('|', [
+            $marker_parts = [
                 (string) $timestamp,
                 $visit_id,
                 $idempotency_key,
-            ]));
+            ];
+            if ($idempotency_key === '') {
+                // Without an idempotency key, distinct pages and events of one visit in the same 5-minute bucket must
+                // not collapse into one. The marker is unchanged when the key is sent (official trackers).
+                $marker_parts[] = isset($hit['page_path']) ? (string) $hit['page_path'] : '';
+                $marker_parts[] = isset($hit['event_name']) ? (string) $hit['event_name'] : '';
+            }
+
+            $dedupe_marker = md5(implode('|', $marker_parts));
         }
 
         $cache_key = 'bbpa_dedupe_' . $dedupe_marker;
@@ -1239,6 +1313,7 @@ class BBPA_Hit_Controller {
             $base_hit = [
                 'page_path' => $hit['page_path'] ?? '',
                 'referrer_domain' => $hit['referrer_domain'] ?? '',
+                'internal_referrer_domain' => $hit['internal_referrer_domain'] ?? '',
                 'device_class' => $hit['device_class'] ?? '',
                 'timestamp_bucket' => $hit['timestamp_bucket'] ?? 0,
                 'active_ms_delta' => $hit['active_ms_delta'] ?? 0,
@@ -1268,7 +1343,7 @@ class BBPA_Hit_Controller {
                     'country_code' => (string) ($hit['country_code'] ?? ''),
                 ]);
             }
-        } elseif ($is_enriched_event_upgrade) {
+        } elseif ($is_enriched_event_upgrade && !$is_bot_hit) {
             if ($is_enriched_hit) {
                 bbpa_store_geo_aggregate_hit($hit);
             }
@@ -1290,7 +1365,9 @@ class BBPA_Hit_Controller {
             $visitor_write_succeeded = !empty($visitor_store_result['stored']);
             $is_new_visitor = !empty($visitor_store_result['is_new_visitor']);
             $is_existing_hit_enrichment = $this->is_existing_hit_enrichment($hit);
-            if ($is_new_visitor && !$is_existing_hit_enrichment) {
+            // Bot visitor rows stay available for the bot visitors filter, but they must
+            // not increment the human visit and visitor aggregates.
+            if ($is_new_visitor && !$is_existing_hit_enrichment && !$is_bot_hit) {
                 $date_bucket = wp_date('Y-m-d', absint($hit['timestamp_bucket'] ?? current_time('timestamp')));
                 bbpa_increment_visits_daily(
                     $date_bucket,
@@ -1352,21 +1429,9 @@ class BBPA_Hit_Controller {
             return;
         }
 
-        $hits = get_option('bbpa_hits', []);
-        if (!is_array($hits)) {
-            $hits = [];
-        }
-
         $hit['aggregated'] = true;
         $hit['aggregated_at'] = current_time('timestamp');
-        $hits[] = $hit;
-
-        $max_hits = apply_filters('bbpa_max_hits', 1000);
-        if (count($hits) > $max_hits) {
-            $hits = array_slice($hits, -$max_hits);
-        }
-
-        update_option('bbpa_hits', $hits, false);
+        bbpa_append_hit_log_row('raw', $hit);
         $raw_enriched_log_written = true;
 
         $this->maybe_persist_enriched_granularity(
@@ -1448,11 +1513,6 @@ class BBPA_Hit_Controller {
 
         $granularity = (($hit['granularity'] ?? 'base') === 'enriched') ? 'enriched' : 'base';
 
-        $realtime_hits = get_option('bbpa_realtime_visitors', []);
-        if (!is_array($realtime_hits)) {
-            $realtime_hits = [];
-        }
-
         $row = [
             'timestamp_bucket' => $timestamp_bucket,
             'granularity' => $granularity,
@@ -1497,14 +1557,7 @@ class BBPA_Hit_Controller {
             }
         }
 
-        $realtime_hits[] = $row;
-
-        $max_hits = apply_filters('bbpa_max_hits', 1000);
-        if (count($realtime_hits) > $max_hits) {
-            $realtime_hits = array_slice($realtime_hits, -$max_hits);
-        }
-
-        return update_option('bbpa_realtime_visitors', $realtime_hits, false) !== false;
+        return bbpa_append_hit_log_row('realtime', $row);
     }
 
 
@@ -1634,51 +1687,24 @@ class BBPA_Hit_Controller {
         $merged = false;
 
         if ($raw_logs_enabled) {
-            $hits = get_option('bbpa_hits', []);
-            if (is_array($hits) && $hits !== []) {
-                $candidate_keys = [
+            $changes = [
+                'enriched_upgrade' => true,
+                'enriched_upgrade_at' => current_time('timestamp'),
+            ];
+            foreach (['visit_id', 'visitor_id', 'browser_version', 'screen_resolution'] as $field) {
+                if (!empty($hit[$field])) {
+                    $changes[$field] = sanitize_text_field((string) $hit[$field]);
+                }
+            }
+
+            $merged = bbpa_merge_raw_log_row(
+                [
                     'page_path' => (string) ($existing_context['page_path'] ?? ''),
                     'timestamp_bucket' => absint($existing_context['timestamp_bucket'] ?? 0),
                     'device_class' => (string) ($existing_context['device_class'] ?? ''),
-                ];
-
-                foreach ($hits as &$stored_hit) {
-                    if (!is_array($stored_hit)) {
-                        continue;
-                    }
-
-                    if (
-                        ((string) ($stored_hit['page_path'] ?? '')) !== $candidate_keys['page_path']
-                        || absint($stored_hit['timestamp_bucket'] ?? 0) !== $candidate_keys['timestamp_bucket']
-                        || ((string) ($stored_hit['device_class'] ?? '')) !== $candidate_keys['device_class']
-                    ) {
-                        continue;
-                    }
-
-                    $stored_hit['enriched_upgrade'] = true;
-                    $stored_hit['enriched_upgrade_at'] = current_time('timestamp');
-                    if (!empty($hit['visit_id'])) {
-                        $stored_hit['visit_id'] = sanitize_text_field((string) $hit['visit_id']);
-                    }
-                    if (!empty($hit['visitor_id'])) {
-                        $stored_hit['visitor_id'] = sanitize_text_field((string) $hit['visitor_id']);
-                    }
-                    if (!empty($hit['browser_version'])) {
-                        $stored_hit['browser_version'] = sanitize_text_field((string) $hit['browser_version']);
-                    }
-                    if (!empty($hit['screen_resolution'])) {
-                        $stored_hit['screen_resolution'] = sanitize_text_field((string) $hit['screen_resolution']);
-                    }
-
-                    $merged = true;
-                    break;
-                }
-                unset($stored_hit);
-
-                if ($merged) {
-                    update_option('bbpa_hits', $hits, false);
-                }
-            }
+                ],
+                $changes
+            );
         }
 
         $upgrade_persisted = $visitor_write_succeeded || ($raw_logs_enabled && $merged);

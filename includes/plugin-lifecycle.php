@@ -43,7 +43,8 @@ function bbpa_get_legacy_prefix_migration_map(): array
             'bpa_marketing_query_allowlist_backfill_completed' => 'bbpa_marketing_query_allowlist_backfill_completed',
             'bpa_legacy_privacy_options_cleanup_completed' => 'bbpa_legacy_privacy_options_cleanup_completed',
             'bpa_assets_updated_at' => 'bbpa_assets_updated_at',
-            'bpa_geoip_retry_state' => 'bbpa_geoip_retry_state',
+            'bpa_geoip_update_retry_state' => 'bbpa_geoip_update_retry_state',
+            'bpa_geoip_retry_state' => 'bbpa_geoip_update_retry_state',
             'bpa_aggregation_interval' => 'bbpa_aggregation_interval',
         ],
         'cron_hooks' => [
@@ -61,10 +62,13 @@ function bbpa_get_legacy_prefix_migration_map(): array
 
 
 
+/**
+ * Log a legacy prefix migration diagnostic through the plugin logger (written only in debug mode).
+ */
 function bbpa_log_prefix_migration(string $message, array $context = []): void
 {
-    if (function_exists('error_log')) {
-        error_log('[BBPA prefix migration] ' . $message . ($context ? ' ' . wp_json_encode($context) : ''));
+    if (function_exists('bbpa_safe_log')) {
+        bbpa_safe_log('Storage', 'warning', '[BBPA prefix migration] ' . $message, $context);
     }
 }
 
@@ -144,6 +148,9 @@ function bbpa_run_legacy_prefix_migration(): void
         wp_clear_scheduled_hook($old_hook);
     }
 
+    // Earlier releases copied `bpa_geoip_retry_state` to this orphan option, which the runtime never reads.
+    delete_option('bbpa_geoip_retry_state');
+
     update_option('bbpa_prefix_migration_completed', true, false);
 }
 
@@ -214,9 +221,144 @@ function bbpa_migrate_existing_settings_for_setup_wizard(): void
 }
 
 /**
+ * Return the ids of the sites of the current network that lifecycle tasks should run on.
+ *
+ * Returns an empty list on single-site installs. When `$capped` is true and the network has more sites than the
+ * `bbpa_network_lifecycle_max_sites` limit (default 50), or on large networks (see `wp_is_large_network()`), only
+ * the current site is returned: the other sites install their tables on their next request (`plugins_loaded`
+ * upgrade routine) and their cron events on `init`, which keeps network activation within the request time limit.
+ *
+ * @param bool $capped Whether to apply the per-request site limit (used by network activation).
+ * @return int[]
+ */
+function bbpa_get_network_site_ids_for_lifecycle(bool $capped = false): array
+{
+    if (!is_multisite() || !function_exists('get_sites')) {
+        return [];
+    }
+
+    if (function_exists('wp_is_large_network') && wp_is_large_network('sites')) {
+        return [(int) get_current_blog_id()];
+    }
+
+    $network_id = function_exists('get_current_network_id') ? get_current_network_id() : null;
+
+    if ($capped) {
+        /**
+         * Filters the maximum number of sites set up synchronously during a network activation.
+         *
+         * Above this number only the current site is set up during the request; the other sites set themselves up
+         * on their next request.
+         *
+         * @param int $max_sites Maximum number of sites. Default 50.
+         */
+        $max_sites = (int) apply_filters('bbpa_network_lifecycle_max_sites', 50);
+        $site_count = (int) get_sites(['count' => true, 'number' => 0, 'network_id' => $network_id]);
+        if ($max_sites < 1 || $site_count > $max_sites) {
+            return [(int) get_current_blog_id()];
+        }
+    }
+
+    $site_ids = get_sites([
+        'fields' => 'ids',
+        'number' => 0,
+        'network_id' => $network_id,
+    ]);
+
+    return is_array($site_ids) ? array_values(array_map('intval', $site_ids)) : [];
+}
+
+/**
+ * Run a lifecycle callback on every site of the current network, or on the current site only on single-site installs.
+ *
+ * @param callable $callback Called without arguments while the target site is the current blog.
+ * @param bool     $capped   Whether to apply the `bbpa_network_lifecycle_max_sites` limit.
+ */
+function bbpa_run_on_each_network_site(callable $callback, bool $capped = false): void
+{
+    $site_ids = bbpa_get_network_site_ids_for_lifecycle($capped);
+    if ($site_ids === []) {
+        $callback();
+        return;
+    }
+
+    foreach ($site_ids as $site_id) {
+        switch_to_blog($site_id);
+        try {
+            $callback();
+        } finally {
+            restore_current_blog();
+        }
+    }
+}
+
+/**
+ * Refresh rewrite rules after a lifecycle change.
+ *
+ * `flush_rewrite_rules()` would store the current site's rules into a switched site, so a switched site only gets
+ * its stored rules deleted: WordPress rebuilds them on that site's next request.
+ */
+function bbpa_refresh_rewrite_rules_for_lifecycle(): void
+{
+    if (function_exists('ms_is_switched') && ms_is_switched()) {
+        delete_option('rewrite_rules');
+        return;
+    }
+
+    flush_rewrite_rules();
+}
+
+/**
  * Plugin activation tasks.
+ *
+ * A network activation runs the activation tasks on every site of the network.
  */
 function bbpa_activate(bool $network_wide = false, bool $allow_redirect = true): void
+{
+    if ($network_wide && is_multisite()) {
+        // Capped: sites beyond the limit set themselves up on their next request.
+        bbpa_run_on_each_network_site(static function (): void {
+            bbpa_activate_site(true, false);
+        }, true);
+        return;
+    }
+
+    bbpa_activate_site($network_wide, $allow_redirect);
+}
+
+/**
+ * Network-activated plugin: run the activation tasks on a site created after the network activation.
+ *
+ * Hooked on `wp_initialize_site` after WordPress has created the site tables and options.
+ *
+ * @param WP_Site|mixed $site New site.
+ */
+function bbpa_initialize_new_network_site($site): void
+{
+    if (!($site instanceof WP_Site) || !is_multisite() || !defined('BBPA_PATH')) {
+        return;
+    }
+
+    $basename = plugin_basename(BBPA_PATH . 'bimbeau-privacy-analytics.php');
+    $network_active_plugins = get_site_option('active_sitewide_plugins', []);
+    if (!is_array($network_active_plugins) || !isset($network_active_plugins[$basename])) {
+        return;
+    }
+
+    switch_to_blog((int) $site->blog_id);
+    try {
+        bbpa_activate_site(true, false);
+    } finally {
+        restore_current_blog();
+    }
+}
+
+add_action('wp_initialize_site', 'bbpa_initialize_new_network_site', 200);
+
+/**
+ * Activation tasks for the current site.
+ */
+function bbpa_activate_site(bool $network_wide = false, bool $allow_redirect = true): void
 {
     bbpa_run_legacy_prefix_migration();
     bbpa_with_suppressed_db_errors(static function (): void {
@@ -224,6 +366,7 @@ function bbpa_activate(bool $network_wide = false, bool $allow_redirect = true):
     });
     bbpa_register_raw_logs_option();
     bbpa_register_settings_option();
+    bbpa_migrate_existing_settings_for_setup_wizard();
     bbpa_backfill_marketing_query_allowlist();
     bbpa_run_legacy_privacy_options_cleanup();
 
@@ -264,7 +407,7 @@ function bbpa_activate(bool $network_wide = false, bool $allow_redirect = true):
 
     do_action('bbpa_register_premium_rewrite_rules_for_activation');
 
-    flush_rewrite_rules();
+    bbpa_refresh_rewrite_rules_for_lifecycle();
 }
 
 /** Decide whether this request represents a normal, single-site admin activation. */
@@ -323,35 +466,140 @@ function bbpa_maybe_redirect_after_activation(): void
 add_action('admin_init', 'bbpa_maybe_redirect_after_activation', 999);
 
 /**
- * Run one-time upgrade migrations.
+ * Run the upgrade routine when the stored schema or migration version is older than the code.
+ *
+ * Hooked on `plugins_loaded` (priority 20). With up-to-date versions this returns after reading two autoloaded
+ * options. `bbpa_maybe_install_schema()` (priority 10) runs first and also handles schema signature changes.
  */
 function bbpa_maybe_run_upgrades(): void
 {
+    if (!bbpa_is_upgrade_required()) {
+        return;
+    }
+
+    bbpa_run_locked_upgrade_routine();
+}
+
+/**
+ * Run the upgrade routine under the schema maintenance lock.
+ *
+ * A single request runs it; concurrent requests skip it and continue. An incomplete run keeps the lock for a short
+ * delay so that it is retried later instead of on every request.
+ */
+function bbpa_run_locked_upgrade_routine(): void
+{
+    if (!bbpa_acquire_schema_maintenance_lock()) {
+        return;
+    }
+
+    $completed = false;
+    try {
+        $completed = bbpa_run_upgrade_routine();
+    } finally {
+        if ($completed) {
+            bbpa_release_schema_maintenance_lock();
+        } else {
+            bbpa_release_schema_maintenance_lock(bbpa_is_critical_schema_missing() ? 10 * MINUTE_IN_SECONDS : MINUTE_IN_SECONDS);
+        }
+    }
+}
+
+/**
+ * Run the upgrade tasks once: legacy option migration, schema installation, settings backfills, and data
+ * migrations, then fire `bbpa_after_plugin_upgrade`.
+ *
+ * Callers are expected to hold the schema maintenance lock (see `bbpa_maybe_run_upgrades()`).
+ *
+ * @return bool True when the stored schema and migration versions match the code afterwards.
+ */
+function bbpa_run_upgrade_routine(): bool
+{
     bbpa_run_legacy_prefix_migration();
-    bbpa_maybe_install_schema();
+
+    bbpa_with_suppressed_db_errors(static function (): void {
+        if (bbpa_is_schema_install_required()) {
+            bbpa_install_schema();
+            return;
+        }
+
+        bbpa_ensure_critical_schema_tables();
+    });
+
     bbpa_register_settings_option();
     bbpa_migrate_existing_settings_for_setup_wizard();
     bbpa_backfill_marketing_query_allowlist();
     bbpa_run_legacy_privacy_options_cleanup();
-    bbpa_with_suppressed_db_errors(static function (): void {
-        bbpa_run_db_migrations();
-    });
+
+    if (version_compare((string) get_option('bbpa_db_migration_version', '0.0.0'), BBPA_DB_MIGRATION_VERSION, '<')) {
+        bbpa_with_suppressed_db_errors(static function (): void {
+            bbpa_run_db_migrations();
+        });
+    }
 
     if (function_exists('bbpa_get_geoip_update_frequency') && bbpa_get_geoip_update_frequency() === 'disabled' && function_exists('bbpa_clear_geoip_update_schedule')) {
         bbpa_clear_geoip_update_schedule();
     }
 
+    if (bbpa_is_upgrade_required() || bbpa_is_schema_install_required()) {
+        return false;
+    }
+
     /**
-     * Fires after core plugin upgrade tasks complete so edition-specific runtime can attach lifecycle work.
+     * Fires once after the core upgrade tasks complete, so edition-specific runtime can attach lifecycle work.
+     *
+     * Runs only when the stored schema or migration version was older than the code or the schema signature
+     * changed (Free/Pro edition switch), not on every request.
      */
     do_action('bbpa_after_plugin_upgrade');
+
+    return true;
 }
 
 
 /**
  * Cleanup plugin data after Freemius uninstall when explicitly enabled in settings.
+ *
+ * On multisite every site of the network is processed, and each site is cleaned only when its own
+ * `delete_data_on_uninstall` setting is enabled. Nothing is deleted when the setting is disabled.
  */
 function bbpa_after_uninstall_cleanup(): void
+{
+    // Deleting the old Free package after moving to Pro (or the reverse) must not wipe the data the other package uses.
+    if (bbpa_is_other_package_installed()) {
+        return;
+    }
+
+    bbpa_run_on_each_network_site('bbpa_uninstall_cleanup_current_site');
+}
+
+/**
+ * Whether the other BimBeau Privacy Analytics package (Free or Pro) is still installed.
+ */
+function bbpa_is_other_package_installed(): bool
+{
+    if (!defined('BBPA_PATH') || !function_exists('bbpa_get_conflicting_package_basename')) {
+        return false;
+    }
+
+    if (!function_exists('get_plugins') && function_exists('bbpa_load_plugin_api')) {
+        bbpa_load_plugin_api();
+    }
+    if (!function_exists('get_plugins')) {
+        return false;
+    }
+
+    $current_basename = plugin_basename(BBPA_PATH . 'bimbeau-privacy-analytics.php');
+    $other_basename = bbpa_get_conflicting_package_basename($current_basename);
+    $installed_plugins = get_plugins();
+
+    return is_array($installed_plugins) && isset($installed_plugins[$other_basename]);
+}
+
+/**
+ * Delete the current site's plugin data (tables, options, transients, cron events and files) when the
+ * `delete_data_on_uninstall` setting is enabled.
+ */
+function bbpa_uninstall_cleanup_current_site(): void
 {
     $settings = get_option('bbpa_settings', []);
     $delete_data_on_uninstall = is_array($settings)
@@ -368,6 +616,17 @@ function bbpa_after_uninstall_cleanup(): void
         return;
     }
 
+    bbpa_uninstall_drop_tables($wpdb);
+    bbpa_uninstall_clear_cron_events();
+    bbpa_uninstall_delete_files();
+    bbpa_uninstall_delete_options($wpdb);
+}
+
+/**
+ * Drop the plugin tables of the current site.
+ */
+function bbpa_uninstall_drop_tables(wpdb $wpdb): void
+{
     $table_suffixes = [
         'bbpa_daily',
         'bbpa_hourly',
@@ -385,12 +644,144 @@ function bbpa_after_uninstall_cleanup(): void
         'bbpa_time_daily',
         'bbpa_page_time_daily',
         'bbpa_overview_daily',
+        'bbpa_raw_logs',
+        'bbpa_realtime_log',
     ];
     $table_suffixes = apply_filters('bbpa_uninstall_table_suffixes', $table_suffixes);
+    $table_suffixes = is_array($table_suffixes) ? $table_suffixes : [];
 
+    $table_names = [];
     foreach ($table_suffixes as $table_suffix) {
-        $table_name = $wpdb->prefix . $table_suffix;
-        $wpdb->query("DROP TABLE IF EXISTS `{$table_name}`"); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table names are from a static allowlist.
+        // Filtered values are identifiers: keep only plugin table suffixes.
+        if (!is_string($table_suffix) || !preg_match('/^bbpa_[a-z0-9_]{1,60}$/', $table_suffix)) {
+            continue;
+        }
+        $table_names[] = $wpdb->prefix . $table_suffix;
+    }
+
+    // Also drop any other `{prefix}bbpa_*` table (tables added by later versions or by the other edition).
+    $pattern = $wpdb->esc_like($wpdb->prefix . 'bbpa_') . '%';
+    $existing_tables = $wpdb->get_col($wpdb->prepare('SHOW TABLES LIKE %s', $pattern)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup.
+    if (is_array($existing_tables)) {
+        foreach ($existing_tables as $existing_table) {
+            if (is_string($existing_table) && preg_match('/^[A-Za-z0-9_]+$/', $existing_table)) {
+                $table_names[] = $existing_table;
+            }
+        }
+    }
+
+    foreach (array_unique($table_names) as $table_name) {
+        $wpdb->query($wpdb->prepare('DROP TABLE IF EXISTS %i', $table_name)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange -- Explicit uninstall cleanup of plugin tables.
+    }
+}
+
+/**
+ * Remove every plugin cron event of the current site, whatever its arguments.
+ */
+function bbpa_uninstall_clear_cron_events(): void
+{
+    $hooks = [
+        BBPA_RAW_LOGS_CRON_HOOK,
+        BBPA_AGGREGATION_CRON_HOOK,
+        BBPA_AGGREGATED_RETENTION_CRON_HOOK,
+    ];
+
+    // Every `bbpa_*` event of either edition, including events scheduled with arguments.
+    $cron = function_exists('_get_cron_array') ? _get_cron_array() : [];
+    if (is_array($cron)) {
+        foreach ($cron as $events) {
+            if (!is_array($events)) {
+                continue;
+            }
+            foreach (array_keys($events) as $hook) {
+                if (is_string($hook) && strpos($hook, 'bbpa_') === 0) {
+                    $hooks[] = $hook;
+                }
+            }
+        }
+    }
+
+    // Legacy hook names are an explicit list so that other plugins' `bpa_*` events are never touched.
+    $legacy_map = bbpa_get_legacy_prefix_migration_map();
+    $hooks = array_merge($hooks, $legacy_map['cron_hooks']);
+
+    foreach (array_unique($hooks) as $hook) {
+        wp_unschedule_hook($hook);
+    }
+}
+
+/**
+ * Delete the plugin files stored in the current site's uploads directory: GeoIP database, favicon cache,
+ * export files and generated PWA icons.
+ */
+function bbpa_uninstall_delete_files(): void
+{
+    if (!class_exists('BBPA_Filesystem_Service')) {
+        return;
+    }
+
+    $uploads = wp_upload_dir(null, false, false);
+    if (!empty($uploads['error']) || empty($uploads['basedir']) || !is_string($uploads['basedir'])) {
+        return;
+    }
+
+    $base = trailingslashit($uploads['basedir']);
+    $filesystem_service = new BBPA_Filesystem_Service();
+
+    // `uploads/bpa/` is the legacy directory name: only the plugin's own sub-directories and file are removed.
+    foreach (['bbpa', 'bpa/exports', 'bpa/pwa-icons', 'bpa/geoip'] as $directory) {
+        $path = $base . $directory;
+        if ($directory === 'bpa/geoip') {
+            $filesystem_service->delete_file($path . '/GeoLite2-City.mmdb');
+            continue;
+        }
+        if ($filesystem_service->exists($path)) {
+            $filesystem_service->delete_directory($path);
+        }
+    }
+}
+
+/**
+ * Delete the plugin options and transients of the current site.
+ *
+ * Every `bbpa_*` option and `bbpa_*` transient is removed, plus the legacy `bpa_*` option names the plugin used to
+ * store (explicit list, so other plugins' `bpa_*` options are never touched). Licensing SDK options are kept.
+ */
+function bbpa_uninstall_delete_options(wpdb $wpdb): void
+{
+    $option_names = [];
+    $patterns = [
+        $wpdb->esc_like('bbpa_') . '%',
+        $wpdb->esc_like('_transient_bbpa_') . '%',
+        $wpdb->esc_like('_transient_timeout_bbpa_') . '%',
+    ];
+
+    foreach ($patterns as $pattern) {
+        $names = $wpdb->get_col($wpdb->prepare("SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s", $pattern)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup.
+        if (is_array($names)) {
+            $option_names = array_merge($option_names, $names);
+        }
+    }
+
+    $legacy_map = bbpa_get_legacy_prefix_migration_map();
+    $option_names = array_merge($option_names, array_keys($legacy_map['options']));
+
+    foreach (array_unique(array_map('strval', $option_names)) as $option_name) {
+        if (strpos($option_name, '_transient_timeout_') === 0) {
+            continue;
+        }
+        if (strpos($option_name, '_transient_') === 0) {
+            delete_transient(substr($option_name, strlen('_transient_')));
+            continue;
+        }
+        delete_option($option_name);
+    }
+
+    // Transients kept in a persistent object cache never reach the options table.
+    foreach (['bbpa', 'bbpa_metrics'] as $cache_group) {
+        if (function_exists('wp_cache_supports') && wp_cache_supports('flush_group')) {
+            wp_cache_flush_group($cache_group);
+        }
     }
 }
 
@@ -413,8 +804,23 @@ function bbpa_register_freemius_uninstall_hook(): void
 
 /**
  * Plugin deactivation tasks.
+ *
+ * A network deactivation runs the deactivation tasks on every site of the network.
  */
-function bbpa_deactivate(): void
+function bbpa_deactivate(bool $network_wide = false): void
+{
+    if ($network_wide && is_multisite()) {
+        bbpa_run_on_each_network_site('bbpa_deactivate_site');
+        return;
+    }
+
+    bbpa_deactivate_site();
+}
+
+/**
+ * Deactivation tasks for the current site.
+ */
+function bbpa_deactivate_site(): void
 {
     wp_clear_scheduled_hook(BBPA_RAW_LOGS_CRON_HOOK);
     wp_clear_scheduled_hook(BBPA_AGGREGATION_CRON_HOOK);
@@ -433,5 +839,5 @@ function bbpa_deactivate(): void
     delete_option(BBPA_AGGREGATION_INTERVAL_OPTION);
     delete_option(BBPA_GEOIP_RETRY_STATE_OPTION);
     delete_transient(BBPA_GEOIP_RETRY_LOCK_TRANSIENT);
-    flush_rewrite_rules();
+    bbpa_refresh_rewrite_rules_for_lifecycle();
 }

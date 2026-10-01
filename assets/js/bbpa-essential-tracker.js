@@ -78,6 +78,20 @@
     }
 
     function readRuntimeConfig() {
+        // `__bbpaRuntimeConfig` is the global injected by PHP before this script.
+        // `__bpaRuntimeConfig` is the historical global kept as a read alias and mirror.
+        const injectedConfig = root.__bbpaRuntimeConfig;
+        if (injectedConfig && typeof injectedConfig === 'object') {
+            if (!root.__bpaRuntimeConfig || typeof root.__bpaRuntimeConfig !== 'object') {
+                root.__bpaRuntimeConfig = injectedConfig;
+            }
+            if (!root.BBPATracker && injectedConfig.BBPATracker && typeof injectedConfig.BBPATracker === 'object') {
+                root.BBPATracker = injectedConfig.BBPATracker;
+            }
+
+            return freezeRuntimeConfig(injectedConfig);
+        }
+
         if (root.__bpaRuntimeConfig && typeof root.__bpaRuntimeConfig === 'object') {
             return freezeRuntimeConfig(root.__bpaRuntimeConfig);
         }
@@ -126,13 +140,71 @@
         callback();
     }
 
+    function getLocationHref() {
+        return root.location && typeof root.location.href === 'string' && root.location.href !== ''
+            ? root.location.href
+            : undefined;
+    }
+
+    // Build a REST route URL from the WordPress REST base URL. Plain permalinks expose the
+    // REST base as `index.php?rest_route=/`: the route then goes into the `rest_route` query
+    // argument, because resolving a relative path against that base would drop the query.
+    function buildRestRouteUrl(restUrl, restNamespace, routePath) {
+        if (typeof restUrl !== 'string' || restUrl.trim() === '' || typeof restNamespace !== 'string') {
+            return null;
+        }
+
+        const namespace = restNamespace.replace(/^\/+|\/+$/g, '');
+        if (namespace === '') {
+            return null;
+        }
+        const path = String(routePath || '').replace(/^\/+/, '');
+        const relativeRoute = namespace + (path !== '' ? '/' + path : '');
+
+        try {
+            const base = new URL(restUrl.trim(), getLocationHref());
+            const queryParts = base.search ? base.search.substring(1).split('&') : [];
+            let hasRestRoute = false;
+            const rewrittenQuery = queryParts.map(function (part) {
+                if (part.split('=')[0] === 'rest_route') {
+                    hasRestRoute = true;
+                    return 'rest_route=/' + relativeRoute;
+                }
+                return part;
+            });
+
+            if (hasRestRoute) {
+                base.search = '?' + rewrittenQuery.join('&');
+                return base.toString();
+            }
+
+            if (base.pathname.charAt(base.pathname.length - 1) !== '/') {
+                base.pathname += '/';
+            }
+
+            return new URL(relativeRoute, base.toString()).toString();
+        } catch (error) {
+            return null;
+        }
+    }
+
     function getEndpointUrl(settings) {
         const data = settings || root.BBPATracker || resolveRuntimeObject('BBPATracker') || {};
+
+        // Prefer the ready-to-use endpoint computed server-side with rest_url().
+        if (typeof data.hitsEndpoint === 'string' && data.hitsEndpoint.trim() !== '') {
+            try {
+                return new URL(data.hitsEndpoint.trim(), getLocationHref()).toString();
+            } catch (error) {
+                // Fall back to the REST base URL below.
+            }
+        }
+
         if (!data.restUrl || !data.restNamespace) {
             return null;
         }
 
-        return new URL(data.restNamespace.replace(/^\/+/, '') + '/hits', data.restUrl).toString();
+        return buildRestRouteUrl(data.restUrl, data.restNamespace, 'hits');
     }
 
     function isDebugEnabled(settings) {
@@ -262,6 +334,44 @@
         return isExcludedTrackerPath(resolvePagePath(source), source);
     }
 
+    function hasActiveDntOrGpc() {
+        const nav = root.navigator || {};
+        const dntRaw = nav.doNotTrack || root.doNotTrack || (root.document && root.document.doNotTrack) || null;
+
+        return {
+            dnt: dntRaw === '1' || dntRaw === 'yes' || dntRaw === 1,
+            gpc: nav.globalPrivacyControl === true,
+        };
+    }
+
+    // Client-side counterpart of the server privacy rules. The server cannot see the
+    // logged-in user on the anonymous /hits request, so the role exclusion computed by PHP
+    // at render time (`isUserExcludedByRole`) is enforced here. DNT/GPC hits are rejected
+    // by the server anyway; skipping them here also avoids writing a visit identifier.
+    function resolveEssentialSkipReason(settings) {
+        const source = settings || root.BBPATracker || {};
+
+        if (source.isUserExcludedByRole === true) {
+            return 'excluded_role';
+        }
+
+        if (source.respectDntGpc === true) {
+            const privacySignals = hasActiveDntOrGpc();
+            if (privacySignals.dnt) {
+                return 'dnt_enabled';
+            }
+            if (privacySignals.gpc) {
+                return 'gpc_enabled';
+            }
+        }
+
+        if (shouldSkipTrackingForFrontAppShell(source)) {
+            return 'front_app_shell';
+        }
+
+        return null;
+    }
+
     function getTimestampBucket(now, bucketSizeSeconds) {
         const size = typeof bucketSizeSeconds === 'number' && bucketSizeSeconds > 0 ? bucketSizeSeconds : 300;
         const ts = typeof now === 'number' && Number.isFinite(now) ? now : Date.now();
@@ -312,18 +422,6 @@
             createdAt: storedCreatedAt,
             lastSeenAt: storedLastSeenAt,
         };
-    }
-
-    function removeVisitIdentityFromStorage(storageArea) {
-        if (!storageArea || typeof storageArea.removeItem !== 'function') {
-            return;
-        }
-
-        try {
-            storageArea.removeItem(ENRICHED_VISIT_ID_STORAGE_KEY);
-        } catch (error) {
-            // Ignore storage cleanup failures and continue with a fresh identity.
-        }
     }
 
     function readVisitIdentityFromStorage(storageArea, windowSeconds, nowSeconds) {
@@ -387,7 +485,7 @@
                     persistVisitIdentity(root.sessionStorage, identity.visitId, identity.createdAt, identity.lastSeenAt);
                 }
             } catch (error) {
-                return;
+                // Ignore malformed identities written by another tab.
             }
         });
     }
@@ -509,7 +607,7 @@
         try {
             root.sessionStorage.setItem(ENRICHED_STORAGE_KEY, JSON.stringify(state || {}));
         } catch (error) {
-            return;
+            // Storage can be full or disabled: tracking continues statelessly.
         }
     }
 
@@ -617,7 +715,14 @@
         const source = settings || root.BBPATracker || {};
         const pagePath = resolvePagePath(source);
         const referrer = root.document && root.document.referrer ? root.document.referrer : '';
-        const referrerDomain = referrer ? new URL(referrer, 'https://example.com').hostname : null;
+        let referrerDomain = null;
+        if (referrer) {
+            try {
+                referrerDomain = new URL(referrer, 'https://example.com').hostname || null;
+            } catch (error) {
+                referrerDomain = null;
+            }
+        }
         const width = Number(root.innerWidth || 0);
         const bucket = getTimestampBucket(Date.now(), 300);
         let deviceClass = 'desktop';
@@ -678,9 +783,16 @@
             hasSettings: !!root.BBPATracker,
         });
         whenReady(function () {
-            if (shouldSkipTrackingForFrontAppShell(settings)) {
+            const skipReason = resolveEssentialSkipReason(settings);
+            if (skipReason === 'front_app_shell') {
                 debugLog(settings, 'Essential tracking skipped on front app shell', {
                     pagePath: resolvePagePath(settings),
+                });
+                return;
+            }
+            if (skipReason) {
+                debugLog(settings, 'Essential tracking skipped by privacy rule', {
+                    reason: skipReason,
                 });
                 return;
             }
@@ -764,6 +876,9 @@
         createHitCorrelationSeed: createHitCorrelationSeed,
         isExcludedTrackerPath: isExcludedTrackerPath,
         shouldSkipTrackingForFrontAppShell: shouldSkipTrackingForFrontAppShell,
+        buildRestRouteUrl: buildRestRouteUrl,
+        getEndpointUrl: getEndpointUrl,
+        resolveEssentialSkipReason: resolveEssentialSkipReason,
     };
 
     root.BPAEssentialTracker = publicApi;

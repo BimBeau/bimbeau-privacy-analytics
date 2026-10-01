@@ -31,6 +31,8 @@ function bbpa_get_allowed_sql_table_suffixes(): array
         'bbpa_page_time_daily',
         'bbpa_visitors',
         'bbpa_visitor_activity_daily',
+        'bbpa_raw_logs',
+        'bbpa_realtime_log',
     ];
 
     return apply_filters('bbpa_allowed_sql_table_suffixes', $tables);

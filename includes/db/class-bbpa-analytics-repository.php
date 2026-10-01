@@ -116,7 +116,7 @@ class BBPA_Analytics_Repository {
      * Check if the daily dataset contains any row.
      *
      * Security: table name is internal-only and no user input is interpolated.
-     * Performance: COUNT(*) is used once to resolve available granularities.
+     * Performance: a single-row probe (`SELECT 1 … LIMIT 1`) instead of counting every row.
      */
     public function has_daily_data(): bool {
         global $wpdb;
@@ -131,8 +131,7 @@ class BBPA_Analytics_Repository {
             return $cached;
         }
 
-        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$daily_table}"); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Internal table name only.
-        $has_daily_data = $count > 0;
+        $has_daily_data = $wpdb->get_var("SELECT 1 FROM {$daily_table} LIMIT 1") !== null; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Internal table name only.
 
         wp_cache_set($cache_key, $has_daily_data, BBPA_CACHE_GROUP, 60);
 

@@ -55,7 +55,7 @@ class BBPA_Logger
             $line .= ' ' . wp_json_encode($safe_context);
         }
 
-        self::write_to_error_log($line);
+        self::write_to_error_log($line, self::normalize_level($level));
     }
 
     public function debug(string $message, array $context = []): void
@@ -63,9 +63,12 @@ class BBPA_Logger
         $this->log('debug', $message, $context);
     }
 
+    /**
+     * Log an informational diagnostic. Like `debug`, it is written only when debug mode is enabled.
+     */
     public function info(string $message, array $context = []): void
     {
-        $this->log('debug', $message, $context);
+        $this->log('info', $message, $context);
     }
 
     public function warning(string $message, array $context = []): void
@@ -79,15 +82,22 @@ class BBPA_Logger
     }
 
 
+    /**
+     * Decide whether a level can be written.
+     *
+     * `debug` and `info` diagnostics require the plugin debug mode and a log sink. `warning` and `error` entries are
+     * real problems: they are written whenever a log sink is configured (`WP_DEBUG_LOG` or `BBPA_DEBUG_LOG_SINK`),
+     * even when the plugin debug mode is off.
+     */
     private static function should_log(string $level): bool
     {
         $normalized_level = self::normalize_level($level);
 
-        if ($normalized_level === 'debug') {
+        if ($normalized_level === 'debug' || $normalized_level === 'info') {
             return self::is_debug_logging_enabled();
         }
 
-        return true;
+        return self::is_wp_debug_log_enabled() || self::has_explicit_safe_sink();
     }
 
     private static function is_debug_logging_enabled(): bool
@@ -133,9 +143,9 @@ class BBPA_Logger
         return $sink !== '' ? $sink : null;
     }
 
-    private static function write_to_error_log(string $line): void
+    private static function write_to_error_log(string $line, string $level = 'debug'): void
     {
-        if (!self::is_debug_logging_enabled()) {
+        if (!self::should_log($level)) {
             return;
         }
 
@@ -157,7 +167,7 @@ class BBPA_Logger
     {
         $normalized = strtolower(trim($level));
 
-        if (!in_array($normalized, ['debug', 'warning', 'error'], true)) {
+        if (!in_array($normalized, ['debug', 'info', 'warning', 'error'], true)) {
             return 'debug';
         }
 
@@ -167,7 +177,10 @@ class BBPA_Logger
     private static function sanitize_context(array $context): array
     {
         $sanitized = [];
-        $sensitive_keys = ['password', 'passwd', 'pass', 'token', 'secret', 'authorization', 'auth', 'cookie', 'nonce', 'email', 'ip', 'user_agent', 'session'];
+        // Long patterns match anywhere in the key; short ones match a whole `_`-separated segment only, so keys such
+        // as `description`, `skip_reason`, `zip_path` or `author_id` stay readable.
+        $sensitive_substrings = ['password', 'passwd', 'passphrase', 'ipaddress', 'token', 'secret', 'authorization', 'cookie', 'nonce', 'email', 'user_agent', 'session'];
+        $sensitive_segments = ['pass', 'pwd', 'auth', 'ip', 'ips', 'ua'];
 
         foreach ($context as $key => $value) {
             $safe_key = sanitize_key((string) $key);
@@ -175,11 +188,17 @@ class BBPA_Logger
                 continue;
             }
 
-            foreach ($sensitive_keys as $sensitive_key) {
+            foreach ($sensitive_substrings as $sensitive_key) {
                 if (str_contains($safe_key, $sensitive_key)) {
                     $sanitized[$safe_key] = '[redacted]';
                     continue 2;
                 }
+            }
+
+            $key_segments = preg_split('/[_\-]+/', $safe_key);
+            if (is_array($key_segments) && array_intersect($key_segments, $sensitive_segments) !== []) {
+                $sanitized[$safe_key] = '[redacted]';
+                continue;
             }
 
             if (is_scalar($value) || $value === null) {

@@ -25,6 +25,10 @@ function bbpa_purge_analytics_data(): array
             bbpa_safe_log('Storage', 'warning', 'SQL guard blocked unknown table in analytics purge', ['table_suffix' => $table]);
             continue;
         }
+        // The allowlist also names legacy tables that are no longer created; skip the ones that do not exist.
+        if (function_exists('bbpa_aggregation_table_exists') && !bbpa_aggregation_table_exists($table_name)) {
+            continue;
+        }
         $results[$table] = (int) $wpdb->query("TRUNCATE TABLE `{$table_name}`"); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name is allowlisted via bbpa_resolve_sql_table().
     }
 
@@ -54,7 +58,7 @@ function bbpa_purge_aggregated_data(): array
         : 365;
     $retention_days = max(30, min((int) ($retention_limits['max'] ?? 3650), $retention_days));
 
-    $current_timestamp = (int) current_time('timestamp');
+    $current_timestamp = time();
     $cutoff_timestamp = $current_timestamp - ($retention_days * DAY_IN_SECONDS);
     $cutoff_date = wp_date('Y-m-d', $cutoff_timestamp);
     $cutoff_datetime = wp_date('Y-m-d H:i:s', $cutoff_timestamp);
@@ -141,18 +145,13 @@ function bbpa_delete_by_retention_cutoff(string $table_suffix, string $column, $
         return 0;
     }
 
-    if ($format === '%d') {
-        $query = $wpdb->prepare(
-            "DELETE FROM `{$table}` WHERE `{$resolved_column}` < %d",
-            (int) $cutoff_value
-        );
-    } else {
-        $query = $wpdb->prepare(
-            "DELETE FROM `{$table}` WHERE `{$resolved_column}` < %s",
-            (string) $cutoff_value
-        );
-    }
-    $deleted_rows = $wpdb->query($query);
+    // Batched deletes keep each transaction small; the total is the same as a single DELETE.
+    $result = bbpa_delete_rows_before_cutoff_in_batches(
+        $table,
+        $resolved_column,
+        $format === '%d' ? (int) $cutoff_value : (string) $cutoff_value,
+        $format === '%d' ? '%d' : '%s'
+    );
 
-    return is_int($deleted_rows) ? $deleted_rows : 0;
+    return (int) $result['deleted'];
 }

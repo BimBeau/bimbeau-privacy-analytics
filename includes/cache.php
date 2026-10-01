@@ -77,9 +77,36 @@ function bbpa_invalidate_metrics_cache(): void
  */
 function bbpa_get_admin_cache_version(): int
 {
+    // A reader may cache data under this version, so the next tracking write must bump it again.
+    bbpa_admin_cache_bump_pending(false);
+
+    return bbpa_read_admin_cache_version();
+}
+
+/**
+ * Read the stored admin cache version.
+ */
+function bbpa_read_admin_cache_version(): int
+{
     $version = (int) get_option('bbpa_admin_cache_version', 1);
 
     return $version > 0 ? $version : 1;
+}
+
+/**
+ * Track whether the admin cache version was bumped and not read since, in this request.
+ *
+ * @param bool|null $set New state, or null to read the current state.
+ */
+function bbpa_admin_cache_bump_pending(?bool $set = null): bool
+{
+    static $bumped_since_last_read = false;
+
+    if ($set !== null) {
+        $bumped_since_last_read = $set;
+    }
+
+    return $bumped_since_last_read;
 }
 
 /**
@@ -87,8 +114,8 @@ function bbpa_get_admin_cache_version(): int
  */
 function bbpa_bump_admin_cache_version(): void
 {
-    $version = bbpa_get_admin_cache_version();
-    update_option('bbpa_admin_cache_version', $version + 1, false);
+    update_option('bbpa_admin_cache_version', bbpa_read_admin_cache_version() + 1, false);
+    bbpa_admin_cache_bump_pending(true);
 }
 
 /**
@@ -106,6 +133,24 @@ function bbpa_flush_admin_cache(): void
 {
     bbpa_bump_admin_cache_version();
     bbpa_invalidate_metrics_cache();
+}
+
+/**
+ * Flush cached admin analytics after an ingestion write.
+ *
+ * One tracked hit performs several counter UPSERTs. The admin cache version (a wp_options row) is bumped only when
+ * nothing has read it since the previous bump of this request, so a hit costs one options UPDATE instead of one per
+ * UPSERT. Data cached by a reader after the last bump is still invalidated by the next write.
+ */
+function bbpa_flush_admin_cache_after_tracking_write(): void
+{
+    if (bbpa_admin_cache_bump_pending()) {
+        bbpa_invalidate_metrics_cache();
+
+        return;
+    }
+
+    bbpa_flush_admin_cache();
 }
 
 /**

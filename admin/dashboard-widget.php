@@ -8,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WordPress Dashboard widget integration for BimBeau Privacy Analytics KPIs.
  */
 
-defined('ABSPATH') || exit;
-
 /**
  * Register the BimBeau Privacy Analytics WordPress Dashboard widget.
  */
@@ -75,6 +73,29 @@ function bbpa_get_dashboard_widget_payload(): array
 }
 
 /**
+ * Format a `Y-m-d` reporting day with the site date format.
+ *
+ * The day is interpreted in the site timezone, so the displayed date is the same
+ * calendar day. Values that are not valid `Y-m-d` dates are returned unchanged.
+ */
+function bbpa_format_dashboard_widget_date(string $date): string
+{
+    $day = DateTimeImmutable::createFromFormat('!Y-m-d', $date, wp_timezone());
+    if (!$day instanceof DateTimeImmutable || $day->format('Y-m-d') !== $date) {
+        return $date;
+    }
+
+    $date_format = get_option('date_format');
+    if (!is_string($date_format) || $date_format === '') {
+        $date_format = 'Y-m-d';
+    }
+
+    $formatted = wp_date($date_format, $day->getTimestamp(), wp_timezone());
+
+    return is_string($formatted) && $formatted !== '' ? $formatted : $date;
+}
+
+/**
  * Render the BimBeau Privacy Analytics WordPress Dashboard widget content.
  */
 function bbpa_render_dashboard_widget(): void
@@ -121,8 +142,8 @@ function bbpa_render_dashboard_widget(): void
         $period_label = sprintf(
             /* translators: 1: Start date, 2: End date for the selected reporting period. */
             __('Period: %1$s to %2$s', 'bimbeau-privacy-analytics'),
-            $start,
-            $end
+            bbpa_format_dashboard_widget_date($start),
+            bbpa_format_dashboard_widget_date($end)
         );
     } else {
         $period_label = __('Period: last 30 days', 'bimbeau-privacy-analytics');

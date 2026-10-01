@@ -3,7 +3,7 @@
 /**
  * Plugin Name: BimBeau Privacy Analytics
  * Description: Privacy-friendly, self-hosted analytics for WordPress.
- * Version: 8.45.189
+ * Version: 8.45.203
  * Author: BimBeau
  * Text Domain: bimbeau-privacy-analytics
  * Domain Path: /languages
@@ -258,7 +258,14 @@ register_activation_hook(
 add_action('admin_notices', 'bbpa_show_activation_conflict_notice');
 add_action('network_admin_notices', 'bbpa_show_activation_conflict_notice');
 
-bbpa_resolve_package_activation_conflict(__FILE__);
+// Detect a Free/Pro double activation in wp-admin only, after `init`: the notice is shown there, and front-end
+// requests no longer load the admin plugin API. Running after `init` also keeps the notice translatable.
+add_action(
+    'admin_init',
+    static function (): void {
+        bbpa_resolve_package_activation_conflict(__FILE__);
+    }
+);
 
 
 if (!defined('BBPA_VERSION')) {
@@ -366,6 +373,7 @@ if (!defined('BBPA_VERSION')) {
     require_once __DIR__ . '/includes/filesystem.php';
 
     bbpa_safe_require_once(BBPA_PATH, 'includes/helpers/output.php');
+    bbpa_safe_require_once(BBPA_PATH, 'includes/helpers/datetime.php');
     bbpa_safe_require_once(BBPA_PATH, 'includes/request.php');
     bbpa_safe_require_once(BBPA_PATH, 'includes/features.php');
     bbpa_safe_require_once(BBPA_PATH, 'includes/permissions.php');
@@ -426,8 +434,18 @@ if (!defined('BBPA_VERSION')) {
     register_activation_hook(__FILE__, 'bbpa_activate');
     register_deactivation_hook(__FILE__, 'bbpa_deactivate');
 
-    if (get_option('bbpa_pending_activation_after_package_switch') === bbpa_get_current_package_basename(__FILE__)) {
-        delete_option('bbpa_pending_activation_after_package_switch');
-        bbpa_activate(false, false);
+    // Deferred activation after a Free/Pro package switch. It runs in wp-admin on `init`, once rewrite rules and
+    // translations are available, and front-end requests no longer read the option.
+    if (is_admin()) {
+        add_action(
+            'init',
+            static function (): void {
+                if (get_option('bbpa_pending_activation_after_package_switch') === bbpa_get_current_package_basename(__FILE__)) {
+                    delete_option('bbpa_pending_activation_after_package_switch');
+                    bbpa_activate(false, false);
+                }
+            },
+            1
+        );
     }
 }

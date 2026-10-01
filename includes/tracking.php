@@ -65,7 +65,7 @@ function bbpa_tracking_upsert_counter(string $table_suffix, array $columns, arra
     $wpdb->query($prepared_sql);
 
     if ($wpdb->last_error === '') {
-        bbpa_flush_admin_cache();
+        bbpa_flush_admin_cache_after_tracking_write();
     }
 }
 
@@ -129,8 +129,12 @@ function bbpa_track_request(): void
         return;
     }
 
-    $timestamp = current_time('timestamp');
+    $timestamp = time();
     $date_bucket = wp_date('Y-m-d', $timestamp);
+
+    if ((is_404() || is_search()) && bbpa_should_skip_server_request_tracking()) {
+        return;
+    }
 
     if (is_404()) {
         bbpa_increment_404s_daily($date_bucket, $path);
@@ -443,13 +447,13 @@ function bbpa_remember_visit_attribution(array $hit, array $utm_params = []): vo
         // Visit attribution is first-touch. Direct is only the absence of a new
         // acquisition signal, so it may be upgraded but cannot replace (or be
         // used to replace) an acquisition already identified for this visit.
+        // The remembered value is kept as is: rewriting an unchanged transient on every page view cost two options
+        // writes per hit. Its two-day lifetime already exceeds the longest visit window (one day).
         if ($remembered_source_category !== '' && $remembered_source_category !== 'Direct') {
-            set_transient($transient_key, $remembered_attribution, 2 * DAY_IN_SECONDS);
             return;
         }
 
         if ($remembered_source_category === 'Direct' && $source_category === 'Direct') {
-            set_transient($transient_key, $remembered_attribution, 2 * DAY_IN_SECONDS);
             return;
         }
     }
@@ -480,6 +484,186 @@ function bbpa_is_entry_hit(string $page_path, ?string $referrer_domain): bool
     $is_entry = !bbpa_is_internal_referrer_domain($referrer_domain);
 
     return (bool) apply_filters('bbpa_is_entry_hit', $is_entry, $page_path, $referrer_domain);
+}
+
+/**
+ * Resolve the referrer domain used to classify a stored hit as an entry.
+ *
+ * Hit ingestion rewrites internal referrers to an empty string so acquisition
+ * reports classify internal navigation as Direct, and the essential scope scrubs
+ * referrers entirely. Both rewrites would turn every internal navigation into an
+ * entry, so ingestion keeps the internal referrer host (the site's own domain,
+ * never an external domain) in `internal_referrer_domain` for this purpose only.
+ * Hits stored by older versions do not carry that key and keep the previous
+ * classification.
+ */
+function bbpa_get_entry_referrer_domain(array $hit): string
+{
+    $referrer_domain = isset($hit['referrer_domain']) && is_scalar($hit['referrer_domain'])
+        ? trim((string) $hit['referrer_domain'])
+        : '';
+    if ($referrer_domain !== '') {
+        return $referrer_domain;
+    }
+
+    $internal_referrer_domain = isset($hit['internal_referrer_domain']) && is_scalar($hit['internal_referrer_domain'])
+        ? trim((string) $hit['internal_referrer_domain'])
+        : '';
+    if ($internal_referrer_domain === '' || !bbpa_is_internal_referrer_domain($internal_referrer_domain)) {
+        return '';
+    }
+
+    return $internal_referrer_domain;
+}
+
+/**
+ * Determine whether a User-Agent belongs to a crawler, a headless browser or an automated client.
+ *
+ * The match is applied to every hit, even when the tracker already sent a device class,
+ * because crawlers that execute JavaScript (Googlebot rendering, SEO audit tools, headless
+ * monitoring probes) otherwise report a desktop or mobile viewport. The `bot` token is only
+ * matched when it is not followed by a letter and not preceded by `cu`, so phone models such
+ * as "CUBOT" keep their device class.
+ */
+function bbpa_is_bot_user_agent(string $user_agent): bool
+{
+    $user_agent = trim($user_agent);
+    $is_bot = false;
+
+    if ($user_agent !== '') {
+        $is_bot = preg_match(
+            '/(?<!cu)bot(?![a-z])|crawl|spider|slurp|bingpreview|headless|lighthouse|phantomjs|facebookexternalhit|inspectiontool|mediapartners-google|gtmetrix|pingdom|ptst\/|python-requests|python-urllib|curl\/|wget\/|go-http-client|libwww-perl|scrapy|node-fetch|axios\/|okhttp|apache-httpclient/i',
+            $user_agent
+        ) === 1;
+    }
+
+    /**
+     * Filter whether a /hits request User-Agent is classified as a bot.
+     *
+     * Bot hits are stored with `device_class = 'bot'` and stay out of human page-view,
+     * visit and visitor aggregates.
+     *
+     * @param bool   $is_bot     Whether the built-in patterns matched.
+     * @param string $user_agent Request User-Agent.
+     */
+    return (bool) apply_filters('bbpa_is_bot_user_agent', $is_bot, $user_agent);
+}
+
+/**
+ * Count one request against a fixed-window rate limit and report whether it is over the limit.
+ *
+ * The window is aligned on `floor(time() / $window_seconds)`: the counter starts at the first request of a window
+ * and resets when the next window starts, whatever the traffic (a sliding expiry would never reset under a steady
+ * flow). With a persistent object cache the counter is an atomic `wp_cache_incr()`; otherwise it is stored in the
+ * `bbpa_rate_limit_{md5(fingerprint)}` transient together with its window number.
+ *
+ * @param string $fingerprint    Client key (IP, network, ...). Never logged.
+ * @param int    $window_seconds Window length.
+ * @param int    $max_requests   Requests allowed per window.
+ * @param string $scope          Short label used in the debug log.
+ * @return bool True when the request exceeds the limit.
+ */
+function bbpa_rate_limit_exceeded(string $fingerprint, int $window_seconds, int $max_requests, string $scope = 'hits'): bool
+{
+    $window_seconds = max(1, $window_seconds);
+    $max_requests = max(1, $max_requests);
+    $window_index = (int) floor(time() / $window_seconds);
+    $cache_key = 'bbpa_rate_limit_' . md5($fingerprint);
+    $limited = false;
+    $first_block = false;
+
+    if (wp_using_ext_object_cache()) {
+        $window_key = $cache_key . '_' . $window_index;
+        wp_cache_add($window_key, 0, 'bbpa_rate_limit', $window_seconds);
+        $count = wp_cache_incr($window_key, 1, 'bbpa_rate_limit');
+        if ($count !== false) {
+            $limited = (int) $count > $max_requests;
+            $first_block = (int) $count === $max_requests + 1;
+        }
+    } else {
+        $state = get_transient($cache_key);
+        if (!is_array($state) || (int) ($state['window'] ?? -1) !== $window_index) {
+            $state = ['window' => $window_index, 'count' => 0];
+        }
+
+        $count = (int) ($state['count'] ?? 0);
+        if ($count >= $max_requests) {
+            $limited = true;
+            if (empty($state['logged'])) {
+                $first_block = true;
+                $state['logged'] = 1;
+                set_transient($cache_key, $state, $window_seconds);
+            }
+        } else {
+            $state['count'] = $count + 1;
+            set_transient($cache_key, $state, $window_seconds);
+        }
+    }
+
+    if ($first_block && function_exists('bbpa_safe_log')) {
+        bbpa_safe_log('Ingestion', 'warning', 'Request rate limit reached; further requests are skipped until the window ends.', [
+            'scope' => $scope,
+            'window_seconds' => $window_seconds,
+            'max_requests' => $max_requests,
+        ]);
+    }
+
+    return $limited;
+}
+
+/**
+ * Build the rate-limit fingerprint of a client IP.
+ *
+ * IPv6 clients are keyed by their /64 network (one subscriber), so rotating addresses inside it does not grant
+ * fresh counters.
+ */
+function bbpa_get_rate_limit_ip_fingerprint(string $ip): string
+{
+    if ($ip === '' || strpos($ip, ':') === false) {
+        return $ip;
+    }
+
+    $packed = @inet_pton($ip); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Invalid input returns false.
+    if ($packed === false || strlen($packed) !== 16) {
+        return $ip;
+    }
+
+    $network = inet_ntop(substr($packed, 0, 8) . str_repeat("\0", 8));
+
+    return is_string($network) ? $network . '/64' : $ip;
+}
+
+/**
+ * Whether server-side 404 and search tracking should skip the current request.
+ *
+ * Crawlers and vulnerability scanners request many missing URLs and random searches. Requests with a bot or empty
+ * User-Agent are not recorded, and each client may record at most `bbpa_server_tracking_rate_limit_max_requests`
+ * 404/search rows per minute (default 30).
+ */
+function bbpa_should_skip_server_request_tracking(): bool
+{
+    $user_agent = bbpa_request_get_string($_SERVER, 'HTTP_USER_AGENT');
+    $is_bot = trim($user_agent) === '' || bbpa_is_bot_user_agent($user_agent);
+
+    /**
+     * Filter whether a bot request is excluded from the server-side 404 and search reports.
+     *
+     * @param bool   $skip       Default true for bot or empty User-Agents.
+     * @param string $user_agent Request User-Agent.
+     */
+    if ((bool) apply_filters('bbpa_skip_bot_server_request_tracking', $is_bot, $user_agent)) {
+        return true;
+    }
+
+    $max_requests = (int) apply_filters('bbpa_server_tracking_rate_limit_max_requests', 30);
+    if ($max_requests <= 0) {
+        return false;
+    }
+
+    $ip = function_exists('bbpa_get_client_ip') ? bbpa_get_client_ip() : '';
+    $fingerprint = 'server|' . ($ip !== '' ? bbpa_get_rate_limit_ip_fingerprint($ip) : $user_agent);
+
+    return bbpa_rate_limit_exceeded($fingerprint, MINUTE_IN_SECONDS, $max_requests, 'server_tracking');
 }
 
 /**
@@ -848,10 +1032,12 @@ function bbpa_increment_page_time_daily(string $date_bucket, string $page_path, 
         ['active_ms_total', 'visits_with_time']
     );
 
-    $rows_written = (int) get_option('bbpa_page_time_daily_rows_written', 0);
-    update_option('bbpa_page_time_daily_rows_written', $rows_written + 1, false);
-
+    // The `bbpa_page_time_daily_rows_written` diagnostic counter is only maintained in debug mode: it is read by
+    // nothing else and cost one options read and write per active-time ping.
     if (bbpa_is_debug_mode_enabled()) {
+        $rows_written = (int) get_option('bbpa_page_time_daily_rows_written', 0);
+        update_option('bbpa_page_time_daily_rows_written', $rows_written + 1, false);
+
         bbpa_safe_log('Storage', 'debug', 'Page-time daily row upserted (forward-only)', [
             'date_bucket' => $date_bucket,
             'page_path' => $page_path,

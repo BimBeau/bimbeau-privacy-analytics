@@ -31,13 +31,13 @@ msgstr "Datenschutzfreundliche, selbst gehostete Analysen für WordPress."
 msgid "BimBeau"
 msgstr "BimBeau"
 
+#. translators: %s: Number of visitors currently active on the site.
 #: admin/admin.php
-msgid "Update"
-msgstr "Aktualisieren"
-
-#: admin/admin.php
-msgid "Pro"
-msgstr "Pro"
+#, php-format
+msgid "%s active visitor"
+msgid_plural "%s active visitors"
+msgstr[0] "%s aktiver Besucher"
+msgstr[1] "%s aktive Besucher"
 
 #: admin/admin.php
 msgid "Upgrade to Pro"
@@ -232,6 +232,16 @@ msgstr "Die lokale GeoLite-Datenbank kann nicht gelesen werden."
 msgid "No geolocation record found for this IP."
 msgstr "Für diese IP wurde kein Geolokalisierungsdatensatz gefunden."
 
+#. translators: %s: MaxMind API response code.
+#: includes/geolocation.php includes/services/class-bbpa-maxmind-service.php
+#, php-format
+msgid "MaxMind API error (%s)."
+msgstr "MaxMind-API-Fehler (%s)."
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Unable to connect to MaxMind."
+msgstr "Verbindung zu MaxMind kann nicht hergestellt werden."
+
 #: includes/geolocation.php
 msgid "Unable to determine the visitor IP."
 msgstr "Die IP-Adresse des Besuchers kann nicht ermittelt werden."
@@ -284,6 +294,18 @@ msgstr "Unbekannt"
 msgid "Unknown country"
 msgstr "Unbekanntes Land"
 
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard step."
+msgstr "Ungültiger Schritt im Einrichtungsassistenten."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard choice."
+msgstr "Ungültige Auswahl im Einrichtungsassistenten."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard action."
+msgstr "Ungültige Aktion im Einrichtungsassistenten."
+
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
 msgstr "Ungültiger Seitenpfad."
@@ -307,6 +329,10 @@ msgstr "Ungültige Besuchskennung."
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
 msgstr "Zum Aktualisieren der GeoIP-Datenbank ist der lokale Datenbankmodus erforderlich."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "WordPress cannot write files directly in the uploads directory, so the GeoIP database cannot be stored. Make the uploads directory writable by PHP or define FS_METHOD as \"direct\" in wp-config.php."
+msgstr "WordPress kann keine Dateien direkt in das Upload-Verzeichnis schreiben, daher kann die GeoIP-Datenbank nicht gespeichert werden. Machen Sie das Upload-Verzeichnis für PHP beschreibbar oder setzen Sie FS_METHOD in wp-config.php auf \"direct\"."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to create a temporary file for the GeoIP database download."
@@ -397,10 +423,6 @@ msgid "Unable to create GeoIP destination directory."
 msgstr "Das GeoIP-Zielverzeichnis kann nicht erstellt werden."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-msgid "Unable to read GeoIP MMDB file before storage."
-msgstr "Die GeoIP-MMDB-Datei kann vor dem Speichern nicht gelesen werden."
-
-#: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to write GeoIP database temporary file."
 msgstr "Die temporäre Datei der GeoIP-Datenbank kann nicht geschrieben werden."
 
@@ -416,17 +438,16 @@ msgstr "Für GeoIP-Vorgänge kann keine temporäre Datei erstellt werden."
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "Für die GeoIP-Extraktion kann kein temporärer Arbeitsbereich erstellt werden."
 
+#: includes/services/class-bbpa-geoip-database-updater.php
+#: src/admin/panels/SettingsPanel.js
+msgid "The last GeoIP database update failed."
+msgstr "Automatische GeoIP-Datenbankaktualisierungen"
+
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "MaxMind-API-Fehler (%1$s): %2$s."
-
-#. translators: %s: MaxMind API response code.
-#: includes/services/class-bbpa-maxmind-service.php
-#, php-format
-msgid "MaxMind API error (%s)."
-msgstr "MaxMind-API-Fehler (%s)."
 
 #: includes/services/class-bbpa-maxmind-service.php
 msgid "Invalid MaxMind API response."
@@ -1374,10 +1395,6 @@ msgid "Error while saving."
 msgstr "Fehler beim Speichern."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Unable to connect to MaxMind."
-msgstr "Verbindung zu MaxMind kann nicht hergestellt werden."
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Unable to update the GeoIP database."
 msgstr "Die GeoIP-Datenbank kann nicht aktualisiert werden."
 
@@ -1548,10 +1565,6 @@ msgstr "Jetzt aktualisieren"
 #: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database status"
 msgstr "GeoIP-Datenbank nicht installiert"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "The last GeoIP database update failed."
-msgstr "Automatische GeoIP-Datenbankaktualisierungen"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last updated"

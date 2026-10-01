@@ -23,10 +23,19 @@ import {
 } from '../../lib/formatters';
 import { getChannelLabel } from '../../lib/channelLabels';
 
+/**
+ * Visits of a referrer-source row. `hits` holds page views; it is only used for payloads
+ * that predate the separate `visits` key.
+ */
+const getRowVisits = ( item ) =>
+	item?.visits !== undefined && item?.visits !== null
+		? Number( item.visits )
+		: Number( item?.hits || 0 );
+
 const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 	const [ page, setPage ] = useState( 1 );
 	const [ perPage, setPerPage ] = useState( 10 );
-	const [ orderBy, setOrderBy ] = useState( 'hits' );
+	const [ orderBy, setOrderBy ] = useState( 'visits' );
 	const [ order, setOrder ] = useState( 'desc' );
 	const [ searchInput, setSearchInput ] = useState( '' );
 	const [ searchTerm, setSearchTerm ] = useState( '' );
@@ -69,7 +78,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 				...requestParams,
 				page: 1,
 				per_page: 100,
-				orderby: 'hits',
+				orderby: 'visits',
 				order: 'desc',
 				search: searchTerm,
 			},
@@ -135,7 +144,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 			referrerDomain: item.referrer_domain || '',
 			favicon: item.favicon || favicons.get( normalizeReferrerHost( item.referrer_domain || '' ) ),
 			category,
-			hits: item.hits,
+			visits: getRowVisits( item ),
 			comparisonKey: `${
 				item.referrer_domain || ''
 			}::${ sourceCategory }`,
@@ -146,7 +155,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 			const key = `${ item?.referrer_domain || '' }::${
 				item?.source_category || ''
 			}`;
-			accumulator.set( key, Number( item?.hits || 0 ) );
+			accumulator.set( key, getRowVisits( item ) );
 			return accumulator;
 		},
 		new Map()
@@ -176,7 +185,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 									'Visits',
 									'bimbeau-privacy-analytics'
 								),
-								value: 'hits',
+								value: 'visits',
 							},
 							{
 								label: __(
@@ -303,7 +312,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 										<td>{ row.category }</td>
 										<td>
 											<div className="bbpa-report-table__metric">
-												<span>{ row.hits }</span>
+												<span>{ row.visits }</span>
 												{ ! isComparisonLoading &&
 													( () => {
 														const previousValue =
@@ -313,7 +322,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 														const change =
 															calculateChangePercent(
 																Number(
-																	row.hits
+																	row.visits
 																),
 																previousValue
 															);

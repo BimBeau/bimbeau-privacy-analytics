@@ -5,8 +5,21 @@
         root.BPAAdvancedTracker = factory(root, root.BPAEssentialTracker);
     }
 })(typeof globalThis !== 'undefined' ? globalThis : this, function (root, essentialTracker) {
-    const HEARTBEAT_INTERVAL_MS = 12000;
+    // Active time is measured locally and flushed on an adaptive cadence: every 15 s during
+    // the first minute, then every 30 s (minus up to 10 % jitter), and always when the page
+    // is hidden or unloaded. A cheap local tick checks whether a flush is due.
+    const HEARTBEAT_TICK_MS = 5000;
+    const HEARTBEAT_INITIAL_INTERVAL_MS = 15000;
+    const HEARTBEAT_INITIAL_PHASE_MS = 60000;
+    const HEARTBEAT_STEADY_INTERVAL_MS = 30000;
+    const HEARTBEAT_MIN_INTERVAL_MS = 5000;
+    const HEARTBEAT_JITTER_RATIO = 0.1;
     const ACTIVITY_WINDOW_MS = 30000;
+    // Mirrors the server cap per heartbeat (MAX_ACTIVE_MS_DELTA_PER_PING); larger pending
+    // amounts are sent in several heartbeats instead of being truncated server-side.
+    const MAX_ACTIVE_MS_PER_HEARTBEAT = 30000;
+    const MAX_FORCED_FLUSH_CHUNKS = 4;
+    const INTERACTION_THROTTLE_MS = 1000;
     const ADVANCED_TRACKER_STATE = {
         NOT_STARTED: 'not_started',
         WAITING: 'waiting_for_external_cmp',
@@ -15,24 +28,6 @@
     };
     const RETRY_DELAY_MS = 250;
     const MAX_START_RETRIES = 20;
-
-
-    function readRuntimeConfig() {
-        if (root.__bpaRuntimeConfig && typeof root.__bpaRuntimeConfig === 'object') {
-            return root.__bpaRuntimeConfig;
-        }
-
-        return null;
-    }
-
-    function resolveRuntimeObject(key) {
-        const runtimeConfig = readRuntimeConfig();
-        if (!runtimeConfig || typeof runtimeConfig[key] !== 'object' || runtimeConfig[key] === null) {
-            return null;
-        }
-
-        return runtimeConfig[key];
-    }
 
     const BOOTSTRAP_EVENTS = [
         'bpa:tracker:bootstrap',
@@ -342,47 +337,116 @@
         return !root.document || root.document.visibilityState === 'visible';
     }
 
+    function resolveHeartbeatSteadyIntervalMs(settings) {
+        // Sites can tune the steady cadence through the `heartbeatIntervalMs` key of the
+        // `bbpa_tracker_localized_settings` filter (for example 12000 for the former cadence).
+        const configured = Number(settings && settings.heartbeatIntervalMs);
+        if (!Number.isFinite(configured) || configured <= 0) {
+            return HEARTBEAT_STEADY_INTERVAL_MS;
+        }
+
+        return Math.max(HEARTBEAT_MIN_INTERVAL_MS, Math.min(MAX_ACTIVE_MS_PER_HEARTBEAT, Math.round(configured)));
+    }
+
     function initActiveDurationTracking(settings) {
         if (activeDurationTrackingStarted) {
             return;
         }
         activeDurationTrackingStarted = true;
-        let lastInteractionAt = Date.now();
-        let lastActiveSentAt = Date.now();
 
-        function markInteraction() {
-            lastInteractionAt = Date.now();
+        const steadyIntervalMs = resolveHeartbeatSteadyIntervalMs(settings);
+        const initialIntervalMs = Math.min(HEARTBEAT_INITIAL_INTERVAL_MS, steadyIntervalMs);
+        const trackingStartedAt = Date.now();
+        let lastInteractionAt = trackingStartedAt;
+        // Start of the current active segment, or null while the page is hidden or the user idle.
+        let activeSegmentStartedAt = isDocumentVisible() ? trackingStartedAt : null;
+        let pendingActiveMs = 0;
+        let nextFlushAt = trackingStartedAt + computeFlushInterval(trackingStartedAt);
+
+        function computeFlushInterval(now) {
+            const baseInterval = now - trackingStartedAt < HEARTBEAT_INITIAL_PHASE_MS
+                ? initialIntervalMs
+                : steadyIntervalMs;
+
+            return Math.round(baseInterval * (1 - (HEARTBEAT_JITTER_RATIO * Math.random())));
         }
 
-        function isUserActive() {
-            return Date.now() - lastInteractionAt <= ACTIVITY_WINDOW_MS;
+        function isUserActive(now) {
+            return now - lastInteractionAt <= ACTIVITY_WINDOW_MS;
         }
 
-        function sendActivePing(forceBeacon) {
-            if (!isDocumentVisible() || !isUserActive()) {
+        // Move the elapsed active time of the open segment into the pending total. Time after
+        // the activity window (idle) or while hidden is never counted.
+        function collectActiveTime(now) {
+            if (activeSegmentStartedAt === null) {
                 return;
             }
 
+            const activeUntil = Math.min(now, lastInteractionAt + ACTIVITY_WINDOW_MS);
+            if (activeUntil > activeSegmentStartedAt) {
+                pendingActiveMs += activeUntil - activeSegmentStartedAt;
+            }
+
+            activeSegmentStartedAt = isDocumentVisible() && isUserActive(now) ? now : null;
+        }
+
+        function markInteraction() {
+            const now = Date.now();
+            if (activeSegmentStartedAt === null) {
+                // Resume after a hidden or idle period without counting the gap.
+                if (isDocumentVisible()) {
+                    activeSegmentStartedAt = now;
+                }
+                lastInteractionAt = now;
+                return;
+            }
+
+            if (now - lastInteractionAt < INTERACTION_THROTTLE_MS) {
+                return;
+            }
+
+            if (!isUserActive(now)) {
+                // The user was idle since the last tick: close the counted part first.
+                collectActiveTime(now);
+                activeSegmentStartedAt = isDocumentVisible() ? now : null;
+            }
+            lastInteractionAt = now;
+        }
+
+        // `flushAll` sends the whole pending amount (page hidden or unloaded); periodic
+        // flushes send one heartbeat and keep any remainder for the next one.
+        function flushActiveTime(flushAll, forceBeacon) {
+            collectActiveTime(Date.now());
+
             const externalCmpExecutionState = resolveExternalCmpExecutionState();
             if (!externalCmpExecutionState.allowed) {
+                // Never report time measured while the CMP blocks enriched tracking.
+                pendingActiveMs = 0;
                 markAdvancedWaitingForExternalCmp(externalCmpExecutionState);
                 return;
             }
 
-            const now = Date.now();
             const trackerCore = getTrackerCore();
             if (!trackerCore) {
                 return;
             }
 
-            const delta = trackerCore.cleanActiveMsDelta(now - lastActiveSentAt);
-            lastActiveSentAt = now;
-            if (delta <= 0) {
-                return;
+            const maxChunks = flushAll ? MAX_FORCED_FLUSH_CHUNKS : 1;
+            for (let chunk = 0; chunk < maxChunks; chunk += 1) {
+                const delta = trackerCore.cleanActiveMsDelta(Math.min(pendingActiveMs, MAX_ACTIVE_MS_PER_HEARTBEAT));
+                if (delta <= 0) {
+                    pendingActiveMs = 0;
+                    return;
+                }
+
+                pendingActiveMs = Math.max(0, pendingActiveMs - delta);
+                const visitId = trackerCore.resolveOrCreateEnrichedVisitId(settings);
+                sendAdvancedPayload(settings, visitId, delta, 'heartbeat', { forceBeacon: !!forceBeacon });
             }
 
-            const visitId = trackerCore.resolveOrCreateEnrichedVisitId(settings);
-            sendAdvancedPayload(settings, visitId, delta, 'heartbeat', { forceBeacon: !!forceBeacon });
+            if (flushAll) {
+                pendingActiveMs = 0;
+            }
         }
 
         ['scroll', 'click', 'mousemove', 'keydown', 'touchstart'].forEach(function (eventName) {
@@ -391,18 +455,34 @@
 
         root.document.addEventListener('visibilitychange', function () {
             if (!isDocumentVisible()) {
-                sendActivePing(true);
+                // Flush the last active segment even though the page is no longer visible.
+                flushActiveTime(true, false);
+                activeSegmentStartedAt = null;
             } else {
+                activeSegmentStartedAt = null;
                 markInteraction();
             }
         });
         root.addEventListener('pagehide', function () {
-            sendActivePing(true);
+            flushActiveTime(true, true);
+            activeSegmentStartedAt = null;
+        });
+        root.addEventListener('pageshow', function (event) {
+            if (event && event.persisted) {
+                activeSegmentStartedAt = null;
+                markInteraction();
+            }
         });
 
         root.setInterval(function () {
-            sendActivePing(false);
-        }, HEARTBEAT_INTERVAL_MS);
+            const now = Date.now();
+            if (now < nextFlushAt) {
+                return;
+            }
+
+            nextFlushAt = now + computeFlushInterval(now);
+            flushActiveTime(false, false);
+        }, HEARTBEAT_TICK_MS);
     }
 
     function finishAdvancedStartup(settings) {

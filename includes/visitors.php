@@ -28,7 +28,7 @@ function bbpa_upsert_visitor_activity_daily(array $hit): bool
 
     $timestamp = isset($hit['timestamp_bucket']) ? absint($hit['timestamp_bucket']) : 0;
     if ($timestamp <= 0) {
-        $timestamp = current_time('timestamp');
+        $timestamp = time();
     }
 
     $table = bbpa_resolve_sql_table('bbpa_visitor_activity_daily');
@@ -93,22 +93,41 @@ function bbpa_upsert_visitor_activity_daily(array $hit): bool
  */
 function bbpa_store_visitor_hit(array $hit): bool
 {
+    $outcome = bbpa_write_visitor_hit($hit);
+
+    return $outcome['stored'];
+}
+
+/**
+ * Upsert a visitor row and report whether the UPSERT inserted a new row.
+ *
+ * The insertion flag comes from the affected-rows count of the single
+ * `INSERT ... ON DUPLICATE KEY UPDATE` statement (1 = inserted, 2 = existing row
+ * updated), so two concurrent hits for the same visitor cannot both be reported as
+ * a new visitor, unlike a `SELECT COUNT(*)` issued before the write.
+ *
+ * @return array{stored:bool,inserted:bool}
+ */
+function bbpa_write_visitor_hit(array $hit): array
+{
     global $wpdb;
+
+    $not_stored = ['stored' => false, 'inserted' => false];
 
     $visitor_id = isset($hit['visitor_id']) ? sanitize_text_field((string) $hit['visitor_id']) : '';
     $visit_id = isset($hit['visit_id']) ? sanitize_text_field((string) $hit['visit_id']) : '';
     if ($visitor_id === '' || $visit_id === '') {
-        return false;
+        return $not_stored;
     }
 
     $timestamp = isset($hit['timestamp_bucket']) ? absint($hit['timestamp_bucket']) : 0;
     if ($timestamp <= 0) {
-        $timestamp = current_time('timestamp');
+        $timestamp = time();
     }
 
     $table = bbpa_resolve_sql_table('bbpa_visitors');
     if ($table === null) {
-        return false;
+        return $not_stored;
     }
 
     $event_name = isset($hit['event_name']) ? sanitize_key((string) $hit['event_name']) : 'page_view';
@@ -119,7 +138,7 @@ function bbpa_store_visitor_hit(array $hit): bool
             $wpdb->prepare("SELECT COUNT(*) FROM `{$table}` WHERE visitor_id = %s", $visitor_id)
         );
         if ($existing_visitor === 0) {
-            return false;
+            return $not_stored;
         }
     }
 
@@ -165,8 +184,8 @@ function bbpa_store_visitor_hit(array $hit): bool
             ON DUPLICATE KEY UPDATE
                 total_views = total_views + VALUES(total_views),
                 active_time_ms = active_time_ms + VALUES(active_time_ms),
-                last_view_at = VALUES(last_view_at),
-                exit_page = VALUES(exit_page),
+                exit_page = CASE WHEN VALUES(last_view_at) >= last_view_at THEN VALUES(exit_page) ELSE exit_page END,
+                last_view_at = GREATEST(last_view_at, VALUES(last_view_at)),
                 country_code = CASE WHEN VALUES(country_code) <> '' THEN VALUES(country_code) ELSE country_code END,
                 country = CASE WHEN VALUES(country) <> '' THEN VALUES(country) ELSE country END,
                 referrer_domain = CASE WHEN referrer_domain = '' AND VALUES(referrer_domain) <> '' THEN VALUES(referrer_domain) ELSE referrer_domain END,
@@ -197,11 +216,19 @@ function bbpa_store_visitor_hit(array $hit): bool
         )
     );
 
-    if ($result !== false) {
-        do_action('bbpa_after_store_visitor_hit', $hit, $visitor_id, $timestamp);
+    if ($result === false) {
+        return $not_stored;
     }
 
-    return $result !== false;
+    // Read the affected-rows count before extension callbacks run their own queries.
+    $inserted = (int) $result === 1;
+
+    do_action('bbpa_after_store_visitor_hit', $hit, $visitor_id, $timestamp);
+
+    return [
+        'stored' => true,
+        'inserted' => $inserted,
+    ];
 }
 
 
@@ -212,8 +239,6 @@ function bbpa_store_visitor_hit(array $hit): bool
  */
 function bbpa_store_visitor_hit_with_outcome(array $hit): array
 {
-    global $wpdb;
-
     $visitor_id = isset($hit['visitor_id']) ? sanitize_text_field((string) $hit['visitor_id']) : '';
     $visit_id = isset($hit['visit_id']) ? sanitize_text_field((string) $hit['visit_id']) : '';
     if ($visitor_id === '' || $visit_id === '') {
@@ -225,22 +250,17 @@ function bbpa_store_visitor_hit_with_outcome(array $hit): array
         return ['stored' => false, 'is_new_visitor' => false];
     }
 
-    $existing_visitor = (int) $wpdb->get_var(
-        $wpdb->prepare("SELECT COUNT(*) FROM `{$table}` WHERE visitor_id = %s", $visitor_id)
-    ) > 0;
-
+    // Non page-view events only update an existing visitor row: bbpa_write_visitor_hit()
+    // refuses to create one, so only a page view can report a new visitor.
     $event_name = isset($hit['event_name']) ? sanitize_key((string) $hit['event_name']) : 'page_view';
-    if ($event_name !== 'page_view' && !$existing_visitor) {
-        return ['stored' => false, 'is_new_visitor' => false];
-    }
-
-    $stored = bbpa_store_visitor_hit($hit);
+    $outcome = bbpa_write_visitor_hit($hit);
+    $stored = $outcome['stored'];
     if ($stored) {
         bbpa_upsert_visitor_activity_daily($hit);
     }
 
     return [
         'stored' => $stored,
-        'is_new_visitor' => $stored && !$existing_visitor,
+        'is_new_visitor' => $stored && $event_name === 'page_view' && $outcome['inserted'],
     ];
 }

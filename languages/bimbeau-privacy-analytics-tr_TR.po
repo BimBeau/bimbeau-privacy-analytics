@@ -31,13 +31,12 @@ msgstr "WordPress için gizlilik dostu, kendi sunucunuzda barındırılan analiz
 msgid "BimBeau"
 msgstr "BimBeau"
 
+#. translators: %s: Number of visitors currently active on the site.
 #: admin/admin.php
-msgid "Update"
-msgstr "Güncelle"
-
-#: admin/admin.php
-msgid "Pro"
-msgstr "Pro"
+#, php-format
+msgid "%s active visitor"
+msgid_plural "%s active visitors"
+msgstr[0] "%s etkin ziyaretçi"
 
 #: admin/admin.php
 msgid "Upgrade to Pro"
@@ -232,6 +231,16 @@ msgstr "Yerel GeoLite veritabanı okunamıyor."
 msgid "No geolocation record found for this IP."
 msgstr "Bu IP için coğrafi konum kaydı bulunamadı."
 
+#. translators: %s: MaxMind API response code.
+#: includes/geolocation.php includes/services/class-bbpa-maxmind-service.php
+#, php-format
+msgid "MaxMind API error (%s)."
+msgstr "MaxMind API hatası (%s)."
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Unable to connect to MaxMind."
+msgstr "MaxMind’e bağlanılamıyor."
+
 #: includes/geolocation.php
 msgid "Unable to determine the visitor IP."
 msgstr "Ziyaretçi IP’si belirlenemiyor."
@@ -284,6 +293,18 @@ msgstr "Bilinmiyor"
 msgid "Unknown country"
 msgstr "Bilinmeyen ülke"
 
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard step."
+msgstr "Geçersiz kurulum sihirbazı adımı."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard choice."
+msgstr "Geçersiz kurulum sihirbazı seçimi."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard action."
+msgstr "Geçersiz kurulum sihirbazı eylemi."
+
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
 msgstr "Geçersiz sayfa yolu."
@@ -307,6 +328,10 @@ msgstr "Geçersiz ziyaret tanımlayıcısı."
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
 msgstr "GeoIP veritabanını güncellemek için yerel veritabanı modu gereklidir."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "WordPress cannot write files directly in the uploads directory, so the GeoIP database cannot be stored. Make the uploads directory writable by PHP or define FS_METHOD as \"direct\" in wp-config.php."
+msgstr "WordPress yüklemeler dizinine doğrudan dosya yazamadığı için GeoIP veritabanı kaydedilemiyor. Yüklemeler dizinini PHP için yazılabilir yapın veya wp-config.php dosyasında FS_METHOD değerini \"direct\" olarak tanımlayın."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to create a temporary file for the GeoIP database download."
@@ -397,10 +422,6 @@ msgid "Unable to create GeoIP destination directory."
 msgstr "GeoIP hedef dizini oluşturulamıyor."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-msgid "Unable to read GeoIP MMDB file before storage."
-msgstr "Depolamadan önce GeoIP MMDB dosyası okunamıyor."
-
-#: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to write GeoIP database temporary file."
 msgstr "GeoIP veritabanı geçici dosyası yazılamıyor."
 
@@ -416,17 +437,16 @@ msgstr "GeoIP işlemleri için geçici dosya oluşturulamıyor."
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "GeoIP çıkarma için geçici çalışma alanı oluşturulamıyor."
 
+#: includes/services/class-bbpa-geoip-database-updater.php
+#: src/admin/panels/SettingsPanel.js
+msgid "The last GeoIP database update failed."
+msgstr "Otomatik GeoIP veritabanı güncellemeleri"
+
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "MaxMind API hatası (%1$s): %2$s."
-
-#. translators: %s: MaxMind API response code.
-#: includes/services/class-bbpa-maxmind-service.php
-#, php-format
-msgid "MaxMind API error (%s)."
-msgstr "MaxMind API hatası (%s)."
 
 #: includes/services/class-bbpa-maxmind-service.php
 msgid "Invalid MaxMind API response."
@@ -1374,10 +1394,6 @@ msgid "Error while saving."
 msgstr "Kaydetme sırasında hata."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Unable to connect to MaxMind."
-msgstr "MaxMind’e bağlanılamıyor."
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Unable to update the GeoIP database."
 msgstr "GeoIP veritabanı güncellenemiyor."
 
@@ -1548,10 +1564,6 @@ msgstr "Güncelle"
 #: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database status"
 msgstr "GeoIP veritabanı yüklü değil"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "The last GeoIP database update failed."
-msgstr "Otomatik GeoIP veritabanı güncellemeleri"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last updated"

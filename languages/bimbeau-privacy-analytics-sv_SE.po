@@ -31,13 +31,13 @@ msgstr "Integritetsvänlig, självhostad statistik för WordPress."
 msgid "BimBeau"
 msgstr "BimBeau"
 
+#. translators: %s: Number of visitors currently active on the site.
 #: admin/admin.php
-msgid "Update"
-msgstr "Uppdatera"
-
-#: admin/admin.php
-msgid "Pro"
-msgstr "Pro"
+#, php-format
+msgid "%s active visitor"
+msgid_plural "%s active visitors"
+msgstr[0] "%s aktiv besökare"
+msgstr[1] "%s aktiva besökare"
 
 #: admin/admin.php
 msgid "Upgrade to Pro"
@@ -232,6 +232,16 @@ msgstr "Det går inte att läsa den lokala GeoLite-databasen."
 msgid "No geolocation record found for this IP."
 msgstr "Ingen geolokaliseringspost hittades för denna IP-adress."
 
+#. translators: %s: MaxMind API response code.
+#: includes/geolocation.php includes/services/class-bbpa-maxmind-service.php
+#, php-format
+msgid "MaxMind API error (%s)."
+msgstr "MaxMind API-fel (%s)."
+
+#: includes/geolocation.php src/admin/panels/SettingsPanel.js
+msgid "Unable to connect to MaxMind."
+msgstr "Det går inte att ansluta till MaxMind."
+
 #: includes/geolocation.php
 msgid "Unable to determine the visitor IP."
 msgstr "Det går inte att fastställa besökarens IP-adress."
@@ -284,6 +294,18 @@ msgstr "Okänd"
 msgid "Unknown country"
 msgstr "Okänt land"
 
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard step."
+msgstr "Ogiltigt steg i installationsguiden."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard choice."
+msgstr "Ogiltigt val i installationsguiden."
+
+#: includes/rest/class-bbpa-admin-controller.php
+msgid "Invalid setup wizard action."
+msgstr "Ogiltig åtgärd i installationsguiden."
+
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid page path."
 msgstr "Ogiltig sid-sökväg."
@@ -307,6 +329,10 @@ msgstr "Ogiltig besöksidentifierare."
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
 msgstr "Lokalt databasläge krävs för att uppdatera GeoIP-databasen."
+
+#: includes/services/class-bbpa-geoip-database-updater.php
+msgid "WordPress cannot write files directly in the uploads directory, so the GeoIP database cannot be stored. Make the uploads directory writable by PHP or define FS_METHOD as \"direct\" in wp-config.php."
+msgstr "WordPress kan inte skriva filer direkt i uppladdningskatalogen, så GeoIP-databasen kan inte sparas. Gör uppladdningskatalogen skrivbar för PHP eller sätt FS_METHOD till \"direct\" i wp-config.php."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to create a temporary file for the GeoIP database download."
@@ -397,10 +423,6 @@ msgid "Unable to create GeoIP destination directory."
 msgstr "Det går inte att skapa GeoIP-målkatalogen."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
-msgid "Unable to read GeoIP MMDB file before storage."
-msgstr "Det går inte att läsa GeoIP MMDB-filen före lagring."
-
-#: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to write GeoIP database temporary file."
 msgstr "Det går inte att skriva den tillfälliga GeoIP-databasfilen."
 
@@ -416,17 +438,16 @@ msgstr "Det går inte att skapa en tillfällig fil för GeoIP-åtgärder."
 msgid "Unable to create temporary workspace for GeoIP extraction."
 msgstr "Det går inte att skapa en tillfällig arbetsyta för GeoIP-extrahering."
 
+#: includes/services/class-bbpa-geoip-database-updater.php
+#: src/admin/panels/SettingsPanel.js
+msgid "The last GeoIP database update failed."
+msgstr "Automatiska uppdateringar av GeoIP-databasen"
+
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
 msgstr "MaxMind API-fel (%1$s): %2$s."
-
-#. translators: %s: MaxMind API response code.
-#: includes/services/class-bbpa-maxmind-service.php
-#, php-format
-msgid "MaxMind API error (%s)."
-msgstr "MaxMind API-fel (%s)."
 
 #: includes/services/class-bbpa-maxmind-service.php
 msgid "Invalid MaxMind API response."
@@ -1374,10 +1395,6 @@ msgid "Error while saving."
 msgstr "Fel vid sparning."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Unable to connect to MaxMind."
-msgstr "Det går inte att ansluta till MaxMind."
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Unable to update the GeoIP database."
 msgstr "Det går inte att uppdatera GeoIP-databasen."
 
@@ -1548,10 +1565,6 @@ msgstr "Uppdatera nu"
 #: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database status"
 msgstr "GeoIP-databas inte installerad"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "The last GeoIP database update failed."
-msgstr "Automatiska uppdateringar av GeoIP-databasen"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last updated"

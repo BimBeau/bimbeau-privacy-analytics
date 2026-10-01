@@ -3,7 +3,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 /**
  * Admin hooks for BimBeau Privacy Analytics.
@@ -109,16 +108,28 @@ function bbpa_register_admin_menu(): void
  */
 function bbpa_get_realtime_menu_title(string $panel_title): string
 {
-    $active_visitors = bbpa_get_realtime_active_visitors_count();
+    // The badge is only useful to users who can open the realtime panel; skip
+    // reading the realtime buffer for everyone else.
+    if (!bbpa_current_user_can_access_panel('realtime')) {
+        return $panel_title;
+    }
+
+    $active_visitors = bbpa_get_cached_realtime_active_visitors_count();
     if ($active_visitors < 1) {
         return $panel_title;
     }
 
     $count = number_format_i18n($active_visitors);
+    $screen_reader_text = sprintf(
+        /* translators: %s: Number of visitors currently active on the site. */
+        _n('%s active visitor', '%s active visitors', $active_visitors, 'bimbeau-privacy-analytics'),
+        $count
+    );
     $badge = sprintf(
-        '<span class="update-plugins count-%1$d"><span class="bbpa-menu-count">%2$s</span></span>',
+        '<span class="update-plugins count-%1$d"><span class="bbpa-menu-count" aria-hidden="true">%2$s</span><span class="screen-reader-text">%3$s</span></span>',
         $active_visitors,
-        esc_html($count)
+        esc_html($count),
+        esc_html($screen_reader_text)
     );
 
     return sprintf(
@@ -130,6 +141,9 @@ function bbpa_get_realtime_menu_title(string $panel_title): string
 
 /**
  * Count active realtime visitors from the in-memory hit window.
+ *
+ * Uses the same identity rules as the realtime panel: rows without a visitor
+ * id, visitor bucket or visit id (essential "base" rows) are not counted.
  */
 function bbpa_get_realtime_active_visitors_count(): int
 {
@@ -137,13 +151,15 @@ function bbpa_get_realtime_active_visitors_count(): int
     $now = (int) current_time('timestamp', true);
     $window_start = max(0, $now - $window_seconds);
 
-    $realtime_rows = get_option('bbpa_realtime_visitors', []);
+    $realtime_rows = function_exists('bbpa_get_realtime_log_rows')
+        ? bbpa_get_realtime_log_rows($window_start)
+        : get_option('bbpa_realtime_visitors', []);
     if (!is_array($realtime_rows)) {
         $realtime_rows = [];
     }
 
-    $active_visitor_ids = [];
-    foreach ($realtime_rows as $index => $row) {
+    $active_visitor_keys = [];
+    foreach ($realtime_rows as $row) {
         if (is_string($row)) {
             $decoded_row = json_decode($row, true);
             if (!is_array($decoded_row)) {
@@ -158,21 +174,67 @@ function bbpa_get_realtime_active_visitors_count(): int
         }
 
         $timestamp = bbpa_normalize_realtime_row_timestamp($row);
-        if ($timestamp < $window_start || $timestamp > $now) {
+        if ($timestamp <= 0 || $timestamp < $window_start || $timestamp > $now) {
             continue;
         }
 
-        $visitor_bucket = isset($row['visitor_bucket'])
-            ? sanitize_text_field((string) $row['visitor_bucket'])
-            : '';
-        $active_visitor_id = $visitor_bucket !== ''
-            ? $visitor_bucket
-            : sprintf('row-%d', (int) $index);
+        $active_visitor_key = bbpa_resolve_realtime_visitor_key($row);
+        if ($active_visitor_key === '') {
+            continue;
+        }
 
-        $active_visitor_ids[$active_visitor_id] = true;
+        $active_visitor_keys[$active_visitor_key] = true;
     }
 
-    return count($active_visitor_ids);
+    return count($active_visitor_keys);
+}
+
+/**
+ * Return the realtime menu badge count from a short-lived cache.
+ *
+ * The admin menu is built on every wp-admin screen, so the realtime buffer is
+ * read at most once per cache lifetime instead of on each page load.
+ */
+function bbpa_get_cached_realtime_active_visitors_count(): int
+{
+    $cache_key = 'bbpa_realtime_menu_badge_count';
+    $cached = get_transient($cache_key);
+    if ($cached !== false && is_numeric($cached)) {
+        return max(0, (int) $cached);
+    }
+
+    $count = bbpa_get_realtime_active_visitors_count();
+    set_transient($cache_key, $count, 30);
+
+    return $count;
+}
+
+/**
+ * Resolve the identity used to count a realtime row as one active visitor.
+ *
+ * Mirrors the realtime panel preference order: visitor id, visitor bucket, then
+ * visit id. Returns an empty string for rows without any identity.
+ *
+ * @param array<string, mixed> $row Realtime visitor row.
+ */
+function bbpa_resolve_realtime_visitor_key(array $row): string
+{
+    $identity_fields = [
+        'visitor_id' => 'visitor:',
+        'visitor_bucket' => 'bucket:',
+        'visit_id' => 'visit:',
+    ];
+
+    foreach ($identity_fields as $field => $prefix) {
+        $value = isset($row[$field]) && is_scalar($row[$field])
+            ? sanitize_text_field((string) $row[$field])
+            : '';
+        if ($value !== '') {
+            return $prefix . $value;
+        }
+    }
+
+    return '';
 }
 
 
@@ -223,6 +285,10 @@ function bbpa_normalize_realtime_row_timestamp(array $row): int
 
 /**
  * Add the Freemius pricing submenu item under BimBeau Privacy Analytics in Free environments.
+ *
+ * The page uses the `pricing` panel capability (`manage_options` by default), the
+ * capability Freemius requires for the same page slug, so users who cannot open
+ * the pricing page never see a menu entry that leads to an access error.
  */
 function bbpa_register_free_upgrade_submenu(): void
 {
@@ -230,41 +296,93 @@ function bbpa_register_free_upgrade_submenu(): void
         return;
     }
 
-    add_submenu_page(
+    $hook_suffix = add_submenu_page(
         BBPA_SLUG,
-        __('Update', 'bimbeau-privacy-analytics'),
+        __('Upgrade to Pro', 'bimbeau-privacy-analytics'),
         bbpa_get_upgrade_menu_title(),
-        bbpa_get_panel_capability('dashboard'),
+        bbpa_get_panel_capability('pricing'),
         BBPA_SLUG . '-pricing',
         'bbpa_render_freemius_pricing_page'
     );
+
+    if (is_string($hook_suffix) && $hook_suffix !== '') {
+        add_action('load-' . $hook_suffix, 'bbpa_prevent_duplicate_freemius_pricing_render');
+    }
 }
 
+/**
+ * Keep a single renderer on the pricing page.
+ *
+ * Freemius registers its own pricing page under the same parent and slug when it
+ * shows the pricing menu item, which attaches a second render callback to the
+ * same page hook. The plugin renderer already delegates to Freemius, so the
+ * Freemius callback is detached before the page is rendered.
+ *
+ * @param string $page_hook Page hook name. Defaults to the hook of the current `load-{$page_hook}` action.
+ */
+function bbpa_prevent_duplicate_freemius_pricing_render(string $page_hook = ''): void
+{
+    if ($page_hook === '') {
+        $current_action = (string) current_action();
+        if (strpos($current_action, 'load-') !== 0) {
+            return;
+        }
+
+        $page_hook = substr($current_action, strlen('load-'));
+    }
+
+    if ($page_hook === '' || false === has_action($page_hook, 'bbpa_render_freemius_pricing_page')) {
+        return;
+    }
+
+    $freemius = function_exists('bbpa_fs') ? bbpa_fs() : null;
+    if (!is_object($freemius)) {
+        return;
+    }
+
+    $freemius_callback = [$freemius, '_pricing_page_render'];
+    $priority = has_action($page_hook, $freemius_callback);
+    if (false !== $priority) {
+        remove_action($page_hook, $freemius_callback, $priority);
+    }
+}
 
 /**
  * Build admin submenu label for the upgrade entry.
  */
 function bbpa_get_upgrade_menu_title(): string
 {
-    $badge_text = __('Pro', 'bimbeau-privacy-analytics');
-    $label_text = __('Update', 'bimbeau-privacy-analytics');
-    $label_text = preg_replace(
-        '/(?:\s|\x{00A0})+' . preg_quote($badge_text, '/') . '$/iu',
-        '',
-        $label_text
-    );
+    return esc_html__('Upgrade to Pro', 'bimbeau-privacy-analytics');
+}
 
-    if (!is_string($label_text) || '' === trim($label_text)) {
-        $label_text = __('Update', 'bimbeau-privacy-analytics');
+/**
+ * Check whether a plugin submenu item is the pricing/upgrade entry.
+ *
+ * Entries are identified by their page slug and by the CSS classes Freemius adds
+ * to its own submenu titles, never by translated label text.
+ *
+ * @param array<int, mixed> $submenu_item WordPress submenu item.
+ */
+function bbpa_submenu_item_is_upgrade_entry(array $submenu_item): bool
+{
+    $upgrade_slug = BBPA_SLUG . '-pricing';
+    $submenu_slug = isset($submenu_item[2]) && is_scalar($submenu_item[2]) ? (string) $submenu_item[2] : '';
+    if ($submenu_slug === $upgrade_slug || strpos($submenu_slug, $upgrade_slug . '&') === 0) {
+        return true;
     }
 
-    $label = esc_html($label_text);
-    $badge = sprintf(
-        '<span class="update-plugins count-1"><span class="plugin-count">%s</span></span>',
-        esc_html($badge_text)
+    $markup = strtolower(
+        (isset($submenu_item[0]) && is_scalar($submenu_item[0]) ? (string) $submenu_item[0] : '')
+        . ' '
+        . (isset($submenu_item[4]) && is_scalar($submenu_item[4]) ? (string) $submenu_item[4] : '')
     );
 
-    return sprintf('%1$s %2$s', $label, $badge);
+    if (strpos($markup, 'fs-submenu-item-pricing') !== false || strpos($markup, 'fs-upgrade') !== false) {
+        return true;
+    }
+
+    return strpos($markup, 'fs-submenu-item') !== false
+        && preg_match('/\b(?:pricing|upgrade-mode)\b/', $markup) === 1;
 }
 
 /**
@@ -288,10 +406,6 @@ function bbpa_normalize_free_upgrade_submenu(): void
         }
 
         $submenu_slug = isset($submenu_item[2]) ? (string) $submenu_item[2] : '';
-        $submenu_label_raw = isset($submenu_item[0]) ? (string) $submenu_item[0] : '';
-        $submenu_label = wp_strip_all_tags($submenu_label_raw);
-        $submenu_css_classes = isset($submenu_item[4]) ? strtolower((string) $submenu_item[4]) : '';
-        $candidate_haystack = strtolower($submenu_label_raw . ' ' . $submenu_label . ' ' . $submenu_slug . ' ' . $submenu_css_classes);
 
         if ($submenu_slug === $upgrade_slug) {
             if (null === $upgrade_item) {
@@ -305,13 +419,7 @@ function bbpa_normalize_free_upgrade_submenu(): void
             continue;
         }
 
-        $looks_like_upgrade = preg_match('/\b(mise\s*à\s*jour|mettre\s*à\s*jour|upgrade|updates?)\b/ui', $submenu_label) === 1
-            || strpos($candidate_haystack, 'pricing') !== false
-            || strpos($candidate_haystack, 'upgrade') !== false
-            || strpos($candidate_haystack, 'fs-upgrade') !== false
-            || strpos($candidate_haystack, 'fs-submenu-item-pricing') !== false;
-
-        if ($looks_like_upgrade) {
+        if (bbpa_submenu_item_is_upgrade_entry($submenu_item)) {
             continue;
         }
 
@@ -321,9 +429,9 @@ function bbpa_normalize_free_upgrade_submenu(): void
     if (null === $upgrade_item) {
         $upgrade_item = [
             bbpa_get_upgrade_menu_title(),
-            bbpa_get_panel_capability('dashboard'),
+            bbpa_get_panel_capability('pricing'),
             $upgrade_slug,
-            __('Upgrade to Pro', 'bimbeau-privacy-analytics'),
+            wp_specialchars_decode(bbpa_get_upgrade_menu_title(), ENT_QUOTES),
         ];
     }
 
@@ -517,14 +625,8 @@ function bbpa_add_admin_color_scheme_styles(): void
 
     $inline_css = 'body.wp-admin #bbpa-admin, body.bbpa-admin-app-shell #bbpa-admin-app{' . implode('; ', $declarations) . ';}';
 
+    // The flag assets base URL variable is added once by bbpa_enqueue_admin_app_assets().
     if (wp_style_is('bbpa-admin', 'enqueued')) {
-        $flag_assets_base_url = trailingslashit(BBPA_URL . 'assets/images/flags/4x3');
-        $flag_assets_base_url = esc_url(set_url_scheme($flag_assets_base_url));
-
-        wp_add_inline_style(
-            'bbpa-admin',
-            ':root{--bbpa-flag-assets-base-url:url("' . $flag_assets_base_url . '");}'
-        );
         wp_add_inline_style('bbpa-admin', $inline_css);
         return;
     }
@@ -558,9 +660,8 @@ function bbpa_is_plugin_admin_page(): bool
  */
 function bbpa_get_requested_admin_page_slug(): string
 {
-    $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $page = is_string($page) ? sanitize_text_field(wp_unslash($page)) : '';
-    if (!is_string($page) || $page === '') {
+    $page = bbpa_get_admin_request_scalar(INPUT_GET, 'page');
+    if ($page === '') {
         return '';
     }
 
@@ -807,7 +908,7 @@ function bbpa_get_js_rest_config(): array
  */
 function bbpa_filter_rest_url_for_admin_pages(string $url, string $path, ?int $blog_id = null, string $scheme = 'rest'): string
 {
-    unset($blog_id); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only callback parameter is intentionally unused.
+    unset($blog_id); // Filter callback parameter is intentionally unused.
 
     if (!bbpa_is_plugin_admin_page()) {
         return $url;
@@ -822,7 +923,7 @@ function bbpa_filter_rest_url_for_admin_pages(string $url, string $path, ?int $b
 function bbpa_enqueue_admin_assets(string $hook_suffix): void
 {
     $registered_pages = $GLOBALS['bbpa_admin_pages'] ?? [];
-    $current_page = sanitize_key((string) filter_input(INPUT_GET, 'page', FILTER_UNSAFE_RAW));
+    $current_page = bbpa_get_requested_admin_page_slug();
     if ($current_page === '') {
         $current_page = BBPA_SLUG;
     }
@@ -837,6 +938,51 @@ function bbpa_enqueue_admin_assets(string $hook_suffix): void
     $current_panel = $panel_map[$current_page] ?? 'dashboard';
 
     bbpa_enqueue_admin_app_assets($current_panel);
+}
+
+/**
+ * Script dependencies of the admin bundle when no asset manifest ships with it.
+ *
+ * Distributed packages ship the bundle without its `*.asset.php` manifest, so this
+ * list must include every WordPress script the bundle reads as an external
+ * (see build/admin.asset.php), including the automatic JSX runtime.
+ *
+ * @return string[]
+ */
+function bbpa_get_admin_app_default_script_dependencies(): array
+{
+    return [
+        'react',
+        'react-dom',
+        'react-jsx-runtime',
+        'wp-components',
+        'wp-element',
+        'wp-i18n',
+        'wp-primitives',
+    ];
+}
+
+/**
+ * Register a `react-jsx-runtime` fallback when WordPress does not provide it.
+ *
+ * WordPress core registers the `react-jsx-runtime` script (window.ReactJSXRuntime)
+ * since 6.6. The admin bundle needs it and the plugin supports WordPress 6.4, so
+ * older versions get a small shim built on the core `react` script. A handle
+ * already registered by core or by another plugin is never replaced.
+ */
+function bbpa_register_react_jsx_runtime_fallback(): void
+{
+    if (wp_script_is('react-jsx-runtime', 'registered')) {
+        return;
+    }
+
+    wp_register_script(
+        'react-jsx-runtime',
+        BBPA_URL . 'admin/js/react-jsx-runtime-shim.js',
+        ['react'],
+        BBPA_VERSION,
+        true
+    );
 }
 
 /**
@@ -869,7 +1015,7 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
     }
     $hidden_by_policy = bbpa_get_effective_hidden_panels($settings);
     $asset_data = [
-        'dependencies' => ['wp-element', 'wp-components', 'wp-i18n'],
+        'dependencies' => bbpa_get_admin_app_default_script_dependencies(),
         'version' => BBPA_VERSION,
     ];
     $admin_js_relative_path = 'assets/js/admin.js';
@@ -922,6 +1068,8 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
     $asset_data['version'] = bbpa_normalize_asset_version($asset_data['version'] ?? '');
     $admin_js_url = BBPA_URL . $admin_js_relative_path;
 
+    bbpa_register_react_jsx_runtime_fallback();
+
     wp_register_script(
         'bbpa-admin',
         $admin_js_url,
@@ -953,10 +1101,6 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
         ]
     );
     wp_enqueue_script('bbpa-admin-boot-fallback');
-
-
-
-    wp_enqueue_media();
 
     if (function_exists('wp_set_script_translations')) {
         wp_set_script_translations(
@@ -1426,6 +1570,13 @@ function bbpa_get_asset_file_version(string $relative_path): string
         : BBPA_VERSION;
 }
 
+/**
+ * Summarize the local GeoIP database status for the admin runtime payload.
+ *
+ * Reads the stored updater status only; it never schedules or starts a download.
+ *
+ * @return array<string, bool|int|string>
+ */
 function bbpa_get_admin_geoip_database_status_for_payload(): array
 {
     if (!class_exists('BBPA_GeoIP_Database_Updater')) {
@@ -1915,8 +2066,10 @@ JS;
 /**
  * Provide a resilient settings/geolocation fallback for GeoIP database actions.
  *
- * This inline fallback keeps the settings geolocation controls operational without
- * requiring a fresh JavaScript build (`npm run build`) when bundled assets lag behind.
+ * This inline fallback keeps the GeoIP database status and update action reachable
+ * from the settings screen when the packaged admin bundle does not render them.
+ * It reuses translation strings shipped with the admin bundle, loads the status
+ * once per mounted notice and never refetches from DOM mutation callbacks.
  */
 function bbpa_get_settings_geolocation_admin_fallback_script(): string
 {
@@ -1935,6 +2088,38 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
     if (!isSettingsPage) {
         return;
     }
+
+    var textDomain = 'bimbeau-privacy-analytics';
+    var translate = function (text) {
+        if (window.wp && window.wp.i18n && typeof window.wp.i18n.__ === 'function') {
+            return window.wp.i18n.__(text, textDomain);
+        }
+
+        return text;
+    };
+
+    var formatTimestamp = function (timestamp) {
+        var milliseconds = Number(timestamp || 0) * 1000;
+        if (!milliseconds) {
+            return '';
+        }
+
+        var format = String(settings.dateFormat || 'F j, Y') + ' ' + String(settings.timeFormat || 'g:i a');
+        if (window.wp && window.wp.date && typeof window.wp.date.dateI18n === 'function') {
+            try {
+                return window.wp.date.dateI18n(format, milliseconds);
+            } catch (error) {
+                // Fall back to the browser formatter below.
+            }
+        }
+
+        var locale = String(settings.locale || '').replace('_', '-');
+        try {
+            return new Date(milliseconds).toLocaleString(locale || undefined);
+        } catch (error) {
+            return new Date(milliseconds).toLocaleString();
+        }
+    };
 
     var matchesGeolocationContext = function () {
         var tab = String(currentParams.get('bbpa_tab') || '').toLowerCase();
@@ -1975,13 +2160,9 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
 
         var title = document.createElement('p');
         title.style.marginBottom = '8px';
-        title.textContent = 'GeoIP database fallback';
-
-        var description = document.createElement('p');
-        description.style.marginTop = '0';
-        description.style.marginBottom = '8px';
-        description.textContent =
-            'This fallback keeps geolocation settings operational when admin bundles are stale, without requiring npm run build.';
+        var titleText = document.createElement('strong');
+        titleText.textContent = translate('GeoIP database status');
+        title.appendChild(titleText);
 
         var controls = document.createElement('div');
         controls.style.display = 'flex';
@@ -1992,7 +2173,7 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
         var button = document.createElement('button');
         button.type = 'button';
         button.className = 'button button-secondary';
-        button.textContent = 'Update GeoIP database';
+        button.textContent = translate('Update now');
         button.setAttribute('data-bbpa-geoip-update-button', 'true');
 
         var status = document.createElement('p');
@@ -2000,16 +2181,18 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
         status.style.fontSize = '13px';
         status.style.lineHeight = '1.5';
         status.setAttribute('data-bbpa-geoip-status', 'true');
-        status.textContent = 'Loading GeoIP database status…';
+        status.setAttribute('role', 'status');
+        status.setAttribute('aria-live', 'polite');
+        status.textContent = translate('Loading…');
 
         var notice = document.createElement('div');
         notice.style.marginTop = '8px';
         notice.setAttribute('data-bbpa-geoip-notice', 'true');
+        notice.setAttribute('aria-live', 'polite');
 
         controls.appendChild(button);
         controls.appendChild(status);
         shell.appendChild(title);
-        shell.appendChild(description);
         shell.appendChild(controls);
         shell.appendChild(notice);
 
@@ -2058,14 +2241,21 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
 
         var database = payload && payload.database ? payload.database : {};
         var installed = Boolean(database.exists);
-        var state = database.status ? String(database.status) : (installed ? 'ready' : 'not_installed');
-        var updated = Number(database.last_updated || 0);
-        var updatedLabel = updated ? new Date(updated * 1000).toLocaleString() : '—';
-        var nextScheduled = Number(database.next_scheduled || 0);
-        var nextScheduledLabel = nextScheduled ? new Date(nextScheduled * 1000).toLocaleString() : '—';
+        var parts = [installed ? translate('Installed') : translate('GeoIP database not installed')];
 
-        statusNode.textContent =
-            'Status: ' + state + ' · Installed: ' + (installed ? 'yes' : 'no') + ' · Last update: ' + updatedLabel + ' · Next run: ' + nextScheduledLabel;
+        var updatedLabel = formatTimestamp(database.last_updated);
+        if (updatedLabel) {
+            parts.push(translate('Last updated') + ' ' + updatedLabel);
+        }
+
+        var nextScheduledLabel = formatTimestamp(database.next_scheduled);
+        parts.push(
+            nextScheduledLabel
+                ? translate('Next update') + ' ' + nextScheduledLabel
+                : translate('No automatic update scheduled')
+        );
+
+        statusNode.textContent = parts.join(' · ');
     };
 
     var fetchJson = function (path, options) {
@@ -2081,8 +2271,7 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
                     })
                     .then(function (payload) {
                         if (!response.ok) {
-                            var message = payload && payload.message ? payload.message : 'GeoIP request failed.';
-                            throw new Error(message);
+                            throw new Error(payload && payload.message ? String(payload.message) : '');
                         }
 
                         return payload;
@@ -2097,7 +2286,11 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
                 return payload;
             })
             .catch(function (error) {
-                renderNotice(shell, 'error', error && error.message ? error.message : 'Unable to load GeoIP database status.');
+                renderNotice(
+                    shell,
+                    'error',
+                    error && error.message ? error.message : translate('Unable to load the GeoIP database status.')
+                );
             });
     };
 
@@ -2113,7 +2306,7 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
 
         button.addEventListener('click', function () {
             button.disabled = true;
-            renderNotice(shell, 'info', 'GeoIP database update in progress…');
+            renderNotice(shell, 'info', translate('Update in progress'));
 
             fetchJson('/admin/geoip-database/update', {
                 method: 'POST',
@@ -2123,13 +2316,17 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
             })
                 .then(function (payload) {
                     var message = payload && payload.message
-                        ? payload.message
-                        : 'GeoIP database update completed.';
+                        ? String(payload.message)
+                        : translate('GeoIP database updated successfully.');
                     renderNotice(shell, 'success', message);
                     return refreshStatus(shell);
                 })
                 .catch(function (error) {
-                    renderNotice(shell, 'error', error && error.message ? error.message : 'Unable to update the GeoIP database.');
+                    renderNotice(
+                        shell,
+                        'error',
+                        error && error.message ? error.message : translate('Unable to update the GeoIP database.')
+                    );
                 })
                 .finally(function () {
                     button.disabled = false;
@@ -2139,33 +2336,48 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
         shell.setAttribute('data-bbpa-geoip-bound', 'true');
     };
 
+    // The React root may replace the notice once while it mounts: allow a few
+    // remounts, then stop observing so the fallback can never loop.
+    var maxMounts = 3;
+    var mountCount = 0;
+    var observer = null;
+
     var mountFallback = function () {
         if (!matchesGeolocationContext()) {
             return;
         }
 
         var container = getFallbackContainer();
-        if (!container) {
+        if (!container || container.querySelector('[data-bbpa-geoip-fallback="true"]')) {
+            // Already mounted: status and notice updates must not trigger new requests.
             return;
         }
 
-        var shell =
-            container.querySelector('[data-bbpa-geoip-fallback="true"]') ||
-            createFallbackShell(container);
+        if (mountCount >= maxMounts) {
+            if (observer) {
+                observer.disconnect();
+            }
+            return;
+        }
 
+        var shell = createFallbackShell(container);
         if (!shell) {
             return;
         }
 
+        mountCount += 1;
         wireActions(shell);
         refreshStatus(shell);
     };
 
-    var observer = new MutationObserver(function () {
-        mountFallback();
-    });
+    if (typeof window.MutationObserver === 'function') {
+        observer = new window.MutationObserver(function () {
+            mountFallback();
+        });
 
-    observer.observe(document.body, { childList: true, subtree: true });
+        observer.observe(document.getElementById('bbpa-admin') || document.body, { childList: true, subtree: true });
+    }
+
     mountFallback();
 })();
 JS;
@@ -2214,6 +2426,12 @@ function bbpa_get_flag_assets(): array
     ];
 }
 
+/**
+ * Resolve the admin panels exposed to the current request.
+ *
+ * @param bool $include_disabled Whether panels hidden by the effective panel policy are kept.
+ * @return array<int, array<string, string>>
+ */
 function bbpa_get_admin_panels(bool $include_disabled = false): array
 {
     $settings = bbpa_get_settings();

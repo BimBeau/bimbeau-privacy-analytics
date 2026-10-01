@@ -46,13 +46,17 @@ function bbpa_build_tracker_localized_settings(?int $post_id, bool $auto_track, 
 
     $is_user_excluded_by_role = !empty(array_intersect($excluded_roles, $current_user_roles));
 
+    // Reuse the settings loaded above instead of reading and sanitizing the option again.
     $visit_identifier_window_seconds = function_exists('bbpa_get_visit_identifier_window_seconds')
-        ? bbpa_get_visit_identifier_window_seconds()
+        ? bbpa_get_visit_identifier_window_seconds($settings)
         : 1800;
 
     $tracker_settings = [
         'restUrl' => esc_url_raw(rest_url()),
         'restNamespace' => BBPA_REST_NAMESPACE,
+        // Ready-to-use ingestion URL. rest_url() builds the `?rest_route=` form when the site
+        // uses plain permalinks, which a relative path resolved against `restUrl` would drop.
+        'hitsEndpoint' => esc_url_raw(rest_url(BBPA_REST_NAMESPACE . '/hits')),
         'postId' => $post_id,
         'autoTrack' => $auto_track,
         'pagePathOverride' => $page_path_override,

@@ -16,6 +16,13 @@ License: Apache License, version 2.0
 Copyright: Copyright 2014-2025 MaxMind, Inc.
 The complete upstream license is distributed at includes/maxmind-db/LICENSE.
 
+GeoLite2 data (downloaded at runtime, not bundled)
+This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com.
+Database: GeoLite2 City, downloaded on demand from the BimBeau GeoIP Database Service (https://github.com/BimBeau/bimbeau-geoip-database) or queried through the MaxMind GeoLite web service with the site owner's credentials.
+License: GeoLite2 End User License Agreement, https://www.maxmind.com/en/geolite2/eula
+Copyright: Copyright MaxMind, Inc.
+The downloaded database is stored in wp-content/uploads/bbpa/geoip/ and is protected against direct HTTP download.
+
 flag-icons 7.5.0
 Source: https://github.com/lipis/flag-icons
 License: MIT

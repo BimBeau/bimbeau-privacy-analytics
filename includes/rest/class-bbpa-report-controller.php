@@ -3,6 +3,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+/*
+ * Report queries interpolate table names from get_allowed_table()/bbpa_sql_table_name()
+ * (closed allowlist), column names from closed allowlists (normalize_sorting(),
+ * bbpa_sql_allowlisted_identifier()) and fixed SQL expressions built in this class; every
+ * user value goes through $wpdb->prepare() placeholders. The sniffs below are disabled for
+ * this class only and re-enabled at the end of the file.
+ */
 // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 /**
@@ -11,6 +18,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class BBPA_Report_Controller {
+    /**
+     * Default maximum number of url_to_postid() lookups for one page-path report response.
+     */
+    private const DEFAULT_PAGE_TITLE_LOOKUP_LIMIT = 5000;
+
+    /**
+     * Largest per_page value whose payload is also persisted as a transient.
+     */
+    private const MAX_PERSISTED_PER_PAGE = 100;
+
+    /**
+     * Remaining page-title lookups for the page-path report being built; null means unlimited.
+     */
+    private ?int $page_title_lookups_remaining = null;
+
+    /**
+     * Per-request memo of table existence checks, keyed by table name.
+     *
+     * @var array<string, bool>
+     */
+    private array $table_exists_memo = [];
+
+    /**
+     * Per-request memo of column existence checks, keyed by "table|column".
+     *
+     * @var array<string, bool>
+     */
+    private array $table_column_memo = [];
+
     /**
      * Register routes for report data.
      */
@@ -42,7 +78,17 @@ class BBPA_Report_Controller {
                 'permission_callback' => function (WP_REST_Request $request) {
                     return $this->check_permissions_for_panel($request, 'top-pages');
                 },
-                'args' => $list_args,
+                'args' => array_merge(
+                    $list_args,
+                    [
+                        'include_avg_time' => [
+                            'required' => false,
+                            'type' => 'boolean',
+                            'default' => true,
+                            'sanitize_callback' => 'rest_sanitize_boolean',
+                        ],
+                    ]
+                ),
             ]
         );
 
@@ -156,29 +202,27 @@ class BBPA_Report_Controller {
             ]
         );
 
-        if ($this->is_visitors_feature_enabled()) {
-            register_rest_route(
-                BBPA_REST_NAMESPACE,
-                '/visitors',
-                [
-                    'methods' => 'GET',
-                    'callback' => [$this, 'get_visitors'],
-                    'permission_callback' => function (WP_REST_Request $request) {
-                        return $this->check_permissions_for_panel($request, 'visitors');
-                    },
-                    'args' => array_merge(
-                        $list_args,
-                        [
-                            'visitor_type' => [
-                                'type' => 'string',
-                                'required' => false,
-                                'sanitize_callback' => 'sanitize_key',
-                            ],
-                        ]
-                    ),
-                ]
-            );
-        }
+        register_rest_route(
+            BBPA_REST_NAMESPACE,
+            '/visitors',
+            [
+                'methods' => 'GET',
+                'callback' => [$this, 'get_visitors'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'visitors');
+                },
+                'args' => array_merge(
+                    $list_args,
+                    [
+                        'visitor_type' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'sanitize_callback' => 'sanitize_key',
+                        ],
+                    ]
+                ),
+            ]
+        );
 
         register_rest_route(
             BBPA_REST_NAMESPACE,
@@ -202,8 +246,11 @@ class BBPA_Report_Controller {
 
     /**
      * Permission check for panel-scoped report endpoints.
+     *
+     * Protected so report controllers extending this class can scope their
+     * routes to the panel that displays them.
      */
-    private function check_permissions_for_panel(WP_REST_Request $request, string $panel) {
+    protected function check_permissions_for_panel(WP_REST_Request $request, string $panel) {
         if (!$this->has_valid_request_nonce($request)) {
             return $this->build_authentication_error();
         }
@@ -312,6 +359,16 @@ class BBPA_Report_Controller {
         $table = $this->get_allowed_table('daily');
         $response = $this->build_list_response($request, $table, 'page_path', 'top-pages');
         $payload = $response->get_data();
+
+        // Raw stored path variants of the returned rows travel with the cached payload for the
+        // average-time lookup below; they are never part of the REST response.
+        $page_path_variants = [];
+        if (is_array($payload) && array_key_exists('_page_path_variants', $payload)) {
+            $page_path_variants = is_array($payload['_page_path_variants']) ? $payload['_page_path_variants'] : [];
+            unset($payload['_page_path_variants']);
+            $response->set_data($payload);
+        }
+
         if (!is_array($payload) || !isset($payload['items']) || !is_array($payload['items']) || $payload['items'] === []) {
             return $response;
         }
@@ -323,7 +380,7 @@ class BBPA_Report_Controller {
         }
 
         $range = $this->get_day_range($request);
-        $payload['items'] = $this->append_top_pages_average_time($payload['items'], $range);
+        $payload['items'] = $this->append_top_pages_average_time($payload['items'], $range, $page_path_variants);
         $response->set_data($payload);
 
         return $response;
@@ -335,17 +392,26 @@ class BBPA_Report_Controller {
     public function get_referrers(WP_REST_Request $request): WP_REST_Response {
         $range = $this->get_day_range($request);
         $page_path = $this->get_page_path_filter($request);
+
+        // The cache is read before the source-table detection queries run.
+        $cache_key = $this->get_source_report_cache_key('referrers', $request, $range, $page_path);
+        $cached = $this->get_cached_payload($cache_key);
+        if ($cached !== null) {
+            $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'label');
+            return new WP_REST_Response($cached, 200);
+        }
+
         $source_category_table = $this->get_allowed_table('daily_source_category');
         if ($this->aggregate_table_has_rows_for_range($source_category_table, $range, $page_path)) {
-            return $this->build_referrers_response($request, $source_category_table, true);
+            return $this->build_referrers_response($request, $source_category_table, true, $cache_key);
         }
 
         $daily_table = $this->get_allowed_table('daily');
         if ($this->aggregate_table_has_rows_for_range($daily_table, $range, $page_path)) {
-            return $this->build_referrers_response($request, $daily_table, true);
+            return $this->build_referrers_response($request, $daily_table, true, $cache_key);
         }
 
-        return $this->build_referrers_response($request, $this->get_allowed_table('visitors'), false);
+        return $this->build_referrers_response($request, $this->get_allowed_table('visitors'), false, $cache_key);
     }
 
     /**
@@ -354,17 +420,26 @@ class BBPA_Report_Controller {
     public function get_referrer_sources(WP_REST_Request $request): WP_REST_Response {
         $range = $this->get_day_range($request);
         $page_path = $this->get_page_path_filter($request);
+
+        // The cache is read before the source-table detection queries run.
+        $cache_key = $this->get_source_report_cache_key('referrer-sources', $request, $range, $page_path);
+        $cached = $this->get_cached_payload($cache_key);
+        if ($cached !== null) {
+            $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'referrer_domain');
+            return new WP_REST_Response($cached, 200);
+        }
+
         $source_category_table = $this->get_allowed_table('daily_source_category');
         if ($this->aggregate_table_has_rows_for_range($source_category_table, $range, $page_path)) {
-            return $this->build_referrer_sources_response($request, $source_category_table, true, true);
+            return $this->build_referrer_sources_response($request, $source_category_table, true, true, $cache_key);
         }
 
         $daily_table = $this->get_allowed_table('daily');
         if ($this->aggregate_table_has_rows_for_range($daily_table, $range, $page_path)) {
-            return $this->build_referrer_sources_response($request, $daily_table, true, false);
+            return $this->build_referrer_sources_response($request, $daily_table, true, false, $cache_key);
         }
 
-        return $this->build_referrer_sources_response($request, $this->get_allowed_table('visitors'), false);
+        return $this->build_referrer_sources_response($request, $this->get_allowed_table('visitors'), false, true, $cache_key);
     }
 
     /**
@@ -372,12 +447,46 @@ class BBPA_Report_Controller {
      */
     public function get_acquisition_channels(WP_REST_Request $request): WP_REST_Response {
         $range = $this->get_day_range($request);
-        $source_category_table = $this->get_allowed_table('daily_source_category');
-        if ($this->aggregate_table_has_rows_for_range($source_category_table, $range)) {
-            return $this->build_acquisition_channels_response($request, $source_category_table, true, true);
+
+        // The cache is read before the source-table detection queries run.
+        $cache_key = $this->get_cache_key(
+            'acquisition-channels',
+            [
+                'range' => $range,
+                'contract' => 2,
+            ]
+        );
+        $cached = $this->get_cached_payload($cache_key);
+        if ($cached !== null) {
+            return new WP_REST_Response($cached, 200);
         }
 
-        return $this->build_acquisition_channels_response($request, $this->get_allowed_table('visitors'), false);
+        $source_category_table = $this->get_allowed_table('daily_source_category');
+        if ($this->aggregate_table_has_rows_for_range($source_category_table, $range)) {
+            return $this->build_acquisition_channels_response($request, $source_category_table, true, true, $cache_key);
+        }
+
+        return $this->build_acquisition_channels_response($request, $this->get_allowed_table('visitors'), false, true, $cache_key);
+    }
+
+    /**
+     * Build the response cache key of a referrer report before its source table is detected.
+     *
+     * The key only depends on request parameters, so a cache hit skips the table detection.
+     */
+    private function get_source_report_cache_key(string $cache_id, WP_REST_Request $request, array $range, string $page_path): string {
+        return $this->get_cache_key(
+            $cache_id,
+            [
+                'range' => $range,
+                'pagination' => $this->normalize_pagination($request),
+                'orderby' => sanitize_key((string) $request->get_param('orderby')),
+                'order' => strtoupper(sanitize_key((string) $request->get_param('order'))) === 'ASC' ? 'ASC' : 'DESC',
+                'search' => $this->get_search_term($request),
+                'pagePath' => $page_path,
+                'contract' => 2,
+            ]
+        );
     }
 
     /**
@@ -503,10 +612,29 @@ class BBPA_Report_Controller {
             $visitor_type = 'human';
         }
 
+        $cache_key = $this->get_cache_key(
+            'visitors',
+            [
+                'range' => $range,
+                'pagination' => $pagination,
+                'sorting' => $sorting,
+                'search' => $search_term,
+                'pagePath' => $page_path,
+                'visitorType' => $visitor_type,
+            ]
+        );
+        $cached = $this->get_cached_payload($cache_key);
+        if ($cached !== null) {
+            $cached['rawLogsEnabled'] = bbpa_raw_logs_enabled();
+            $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'referrer_domain');
+
+            return new WP_REST_Response($cached, 200);
+        }
+
         $where = ['last_view_at BETWEEN %d AND %d'];
         $params = [
-            strtotime($range['start'] . ' 00:00:00'),
-            strtotime($range['end'] . ' 23:59:59'),
+            bbpa_get_site_day_bounds($range['start'], $range['end'])[0],
+            bbpa_get_site_day_bounds($range['start'], $range['end'])[1],
         ];
         if ($visitor_type === 'bot') {
             $where[] = 'device_class = %s';
@@ -608,23 +736,29 @@ class BBPA_Report_Controller {
 
         $items = $this->add_cached_favicons($items, 'referrer_domain');
 
-        return new WP_REST_Response(
-            [
-                'rawLogsEnabled' => bbpa_raw_logs_enabled(),
-                'visitorType' => $visitor_type,
-                'range' => $range,
-                'pagination' => [
-                    'page' => $pagination['page'],
-                    'perPage' => $pagination['per_page'],
-                    'totalItems' => $total_items,
-                    'totalPages' => $pagination['per_page'] > 0
-                        ? (int) ceil($total_items / $pagination['per_page'])
-                        : 0,
-                ],
-                'items' => $items,
+        $payload = [
+            'rawLogsEnabled' => bbpa_raw_logs_enabled(),
+            'visitorType' => $visitor_type,
+            'range' => $range,
+            'pagination' => [
+                'page' => $pagination['page'],
+                'perPage' => $pagination['per_page'],
+                'totalItems' => $total_items,
+                'totalPages' => $pagination['per_page'] > 0
+                    ? (int) ceil($total_items / $pagination['per_page'])
+                    : 0,
             ],
-            200
+            'items' => $items,
+        ];
+
+        $this->set_cached_payload(
+            $cache_key,
+            $payload,
+            'visitors',
+            $this->should_persist_cached_payload($search_term, $pagination)
         );
+
+        return new WP_REST_Response($payload, 200);
     }
 
     /**
@@ -735,8 +869,9 @@ class BBPA_Report_Controller {
         $previous_start = $previous_end - (($day_span - 1) * DAY_IN_SECONDS);
 
         return [
-            'start' => wp_date('Y-m-d', $previous_start),
-            'end' => wp_date('Y-m-d', $previous_end),
+            // Pure calendar arithmetic: strtotime() parses the days at UTC midnight, so format them in UTC too.
+            'start' => gmdate('Y-m-d', $previous_start),
+            'end' => gmdate('Y-m-d', $previous_end),
         ];
     }
 
@@ -757,11 +892,7 @@ class BBPA_Report_Controller {
         // Source priority: canonical overview_daily aggregate table, then legacy fallback.
         global $wpdb;
         $overview_daily_table = bbpa_sql_table_name('bbpa_overview_daily');
-        $overview_daily_exists = $wpdb->get_var(
-            $wpdb->prepare('SHOW TABLES LIKE %s', $overview_daily_table)
-        );
-
-        if ($overview_daily_exists === $overview_daily_table) {
+        if ($this->table_exists($overview_daily_table)) {
             $overview_daily_query = $wpdb->prepare(
                 "SELECT
                     COALESCE(SUM(page_views), 0) AS page_views,
@@ -802,9 +933,9 @@ class BBPA_Report_Controller {
     private function build_overview_totals_from_overview_daily(array $range, array $overview_daily_row): array {
         global $wpdb;
 
-        $daily_table = $wpdb->prefix . 'bbpa_daily';
-        $not_found_table = $wpdb->prefix . 'bbpa_404s_daily';
-        $search_terms_table = $wpdb->prefix . 'bbpa_search_terms_daily';
+        $daily_table = $this->get_allowed_table('daily');
+        $not_found_table = $this->get_allowed_table('not_found');
+        $search_terms_table = $this->get_allowed_table('search_terms');
 
         $secondary_overview_query = $wpdb->prepare(
             "SELECT
@@ -893,11 +1024,11 @@ class BBPA_Report_Controller {
     private function build_overview_totals_legacy_fallback(array $range): array {
         global $wpdb;
 
-        $daily_table = $wpdb->prefix . 'bbpa_daily';
-        $entry_exit_table = $wpdb->prefix . 'bbpa_entry_exit_daily';
-        $not_found_table = $wpdb->prefix . 'bbpa_404s_daily';
-        $search_terms_table = $wpdb->prefix . 'bbpa_search_terms_daily';
-        $time_daily_table = $wpdb->prefix . 'bbpa_time_daily';
+        $daily_table = $this->get_allowed_table('daily');
+        $entry_exit_table = $this->get_allowed_table('entry_exit');
+        $not_found_table = $this->get_allowed_table('not_found');
+        $search_terms_table = $this->get_allowed_table('search_terms');
+        $time_daily_table = $this->get_allowed_table('time_daily');
 
         $overview_query = $wpdb->prepare(
             "SELECT
@@ -997,10 +1128,6 @@ class BBPA_Report_Controller {
      * Count active human visitors from visitor records for the requested range.
      */
     private function get_active_human_visitors_count(array $range): ?int {
-        if (!$this->is_visitors_feature_enabled()) {
-            return null;
-        }
-
         global $wpdb;
         $activity_table = bbpa_sql_table_name('bbpa_visitor_activity_daily');
         if ($this->table_exists($activity_table)) {
@@ -1022,8 +1149,8 @@ class BBPA_Report_Controller {
             return null;
         }
 
-        $start_timestamp = (int) strtotime($range['start'] . ' 00:00:00');
-        $end_timestamp = (int) strtotime($range['end'] . ' 23:59:59');
+        $start_timestamp = (int) bbpa_get_site_day_bounds($range['start'], $range['end'])[0];
+        $end_timestamp = (int) bbpa_get_site_day_bounds($range['start'], $range['end'])[1];
 
         return (int) $wpdb->get_var(
             $wpdb->prepare(
@@ -1042,18 +1169,14 @@ class BBPA_Report_Controller {
      * Return average active time from visitor rows when visitor-level reporting is available.
      */
     private function get_average_active_time_from_visitors(array $range): ?int {
-        if (!$this->is_visitors_feature_enabled()) {
-            return null;
-        }
-
         global $wpdb;
         $visitors_table = bbpa_sql_table_name('bbpa_visitors');
         if (!$this->table_exists($visitors_table)) {
             return null;
         }
 
-        $start_timestamp = (int) strtotime($range['start'] . ' 00:00:00');
-        $end_timestamp = (int) strtotime($range['end'] . ' 23:59:59');
+        $start_timestamp = (int) bbpa_get_site_day_bounds($range['start'], $range['end'])[0];
+        $end_timestamp = (int) bbpa_get_site_day_bounds($range['start'], $range['end'])[1];
         $row = $wpdb->get_row(
             $wpdb->prepare(
                 "SELECT
@@ -1099,7 +1222,7 @@ class BBPA_Report_Controller {
             && bbpa_hourly_aggregation_enabled();
 
         if ($use_hourly) {
-            $table = $wpdb->prefix . 'bbpa_hourly';
+            $table = $this->get_allowed_table('hourly');
             $hour_range = $this->get_hour_range($range);
             $query = $wpdb->prepare(
                 "SELECT date_bucket AS bucket, SUM(hits) AS hits
@@ -1111,8 +1234,8 @@ class BBPA_Report_Controller {
                 $hour_range['end']
             );
         } else {
-            $overview_table = $wpdb->prefix . 'bbpa_overview_daily';
-            $overview_exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $overview_table)) === $overview_table;
+            $overview_table = $this->get_allowed_table('overview_daily');
+            $overview_exists = $this->table_exists($overview_table);
             if ($overview_exists) {
                 $query = $wpdb->prepare(
                     "SELECT date_bucket AS bucket, SUM(page_views) AS hits
@@ -1124,7 +1247,7 @@ class BBPA_Report_Controller {
                     $range['end']
                 );
             } else {
-                $table = $wpdb->prefix . 'bbpa_daily';
+                $table = $this->get_allowed_table('daily');
                 $query = $wpdb->prepare(
                     "SELECT date_bucket AS bucket, SUM(hits) AS hits
                     FROM {$table}
@@ -1194,12 +1317,16 @@ class BBPA_Report_Controller {
      * Append average active time metrics for top-pages rows.
      *
      * Data source: bbpa_page_time_daily.active_ms_total / visits_with_time.
-     * Semantic: avg_time_on_page_ms is the average active time spent on each page.
+     * Semantic: avg_time_on_page_ms is the average active time spent on each page, summed over
+     * every stored variant of the row path (query-string, trailing-slash and absolute URL
+     * variants merged into the row), like the row `hits`.
+     *
+     * @param array<int, string> $page_path_variants Stored page_path values of the returned rows.
      */
-    private function append_top_pages_average_time(array $items, array $range): array {
+    private function append_top_pages_average_time(array $items, array $range, array $page_path_variants = []): array {
         global $wpdb;
 
-        $labels = [];
+        $lookup_paths = [];
         foreach ($items as $item) {
             if (!is_array($item)) {
                 continue;
@@ -1210,46 +1337,58 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $labels[$label] = $label;
+            $lookup_paths[$label] = true;
         }
 
-        if ($labels === []) {
+        if ($lookup_paths === []) {
             return $items;
         }
 
-        $page_time_table = bbpa_sql_table_name('bbpa_page_time_daily');
-        $in_clause = bbpa_build_in_clause(array_values($labels), 'string');
-        if ($in_clause['empty']) {
-            return $items;
+        foreach ($page_path_variants as $variant) {
+            if (is_scalar($variant) && (string) $variant !== '') {
+                $lookup_paths[(string) $variant] = true;
+            }
         }
+        $lookup_paths = array_map('strval', array_keys($lookup_paths));
 
-
-        $in_placeholders = $in_clause['placeholders'];
+        $page_time_table = $this->get_allowed_table('page_time_daily');
         $query = $wpdb->prepare(
             "SELECT page_path, SUM(active_ms_total) AS total_active_time_ms, SUM(visits_with_time) AS visits_count
             FROM {$page_time_table}
             WHERE date_bucket BETWEEN %s AND %s
-                AND page_path IN ({$in_placeholders})
+                AND page_path IN (" . $this->build_string_placeholders($lookup_paths) . ")
             GROUP BY page_path",
-            ...array_merge([$range['start'], $range['end']], $in_clause['args'])
+            array_merge([$range['start'], $range['end']], $lookup_paths)
         );
 
         $rows = $wpdb->get_results($query, ARRAY_A);
-        $average_time_by_label = [];
+        $totals_by_label = [];
         foreach ($rows ?: [] as $row) {
-            $label = isset($row['page_path']) ? sanitize_text_field((string) $row['page_path']) : '';
-            if ($label === '') {
+            $stored_path = isset($row['page_path']) ? sanitize_text_field((string) $row['page_path']) : '';
+            if ($stored_path === '') {
                 continue;
             }
 
-            $visits_count = isset($row['visits_count']) ? max(1, (int) $row['visits_count']) : 1;
-            $total_active_time = isset($row['total_active_time_ms']) ? (int) $row['total_active_time_ms'] : 0;
-            $average_time_by_label[$label] = (int) floor($total_active_time / $visits_count);
+            $label = $this->normalize_report_page_path($stored_path);
+            if (!isset($totals_by_label[$label])) {
+                $totals_by_label[$label] = [
+                    'active_ms' => 0,
+                    'visits' => 0,
+                ];
+            }
+
+            $totals_by_label[$label]['active_ms'] += isset($row['total_active_time_ms']) ? (int) $row['total_active_time_ms'] : 0;
+            $totals_by_label[$label]['visits'] += isset($row['visits_count']) ? (int) $row['visits_count'] : 0;
+        }
+
+        $average_time_by_label = [];
+        foreach ($totals_by_label as $label => $totals) {
+            $average_time_by_label[$label] = (int) floor($totals['active_ms'] / max(1, $totals['visits']));
         }
 
         return array_map(
-            static function (array $item) use ($average_time_by_label): array {
-                $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+            function (array $item) use ($average_time_by_label): array {
+                $label = isset($item['label']) ? $this->normalize_report_page_path(sanitize_text_field((string) $item['label'])) : '';
                 $average_time_ms = $average_time_by_label[$label] ?? 0;
                 $item['avg_time_on_page_ms'] = $average_time_ms;
                 $item['avg_time_on_page_seconds'] = $average_time_ms / 1000;
@@ -1273,6 +1412,11 @@ class BBPA_Report_Controller {
             'not_found' => 'bbpa_404s_daily',
             'search_terms' => 'bbpa_search_terms_daily',
             'geo_daily' => 'bbpa_geo_daily',
+            'hourly' => 'bbpa_hourly',
+            'overview_daily' => 'bbpa_overview_daily',
+            'time_daily' => 'bbpa_time_daily',
+            'page_time_daily' => 'bbpa_page_time_daily',
+            'visitor_activity_daily' => 'bbpa_visitor_activity_daily',
         ];
 
         $suffix = $table_suffixes[$key] ?? 'bbpa_daily';
@@ -1339,7 +1483,7 @@ class BBPA_Report_Controller {
                 'excludeZero' => $exclude_zero,
                 'pagePath' => $page_path,
                 'includeViewsSeries' => $cache_id === 'top-pages',
-                'sortVersion' => $cache_id === 'top-pages' ? 4 : 1,
+                'sortVersion' => $cache_id === 'top-pages' ? 5 : 1,
             ]
         );
         $cached = $this->get_cached_payload($cache_key);
@@ -1347,6 +1491,7 @@ class BBPA_Report_Controller {
             return new WP_REST_Response($cached, 200);
         }
 
+        $page_path_variants = [];
         if ($is_page_path_table) {
             $all_rows_sql = "SELECT {$label_column} AS label, SUM({$metric_column}) AS metric
                 FROM {$table}
@@ -1365,30 +1510,31 @@ class BBPA_Report_Controller {
 
             $all_rows_query = $wpdb->prepare($all_rows_sql, ...$all_rows_args);
             $all_rows = $wpdb->get_results($all_rows_query, ARRAY_A) ?: [];
-            $items = array_map(
-                function (array $row) use ($metric_column): array {
-                    $label = isset($row['label']) ? sanitize_text_field((string) $row['label']) : '';
 
-                    return [
-                        'label' => $label,
-                        'page_title' => $this->resolve_page_title_from_path($label),
-                        $metric_column => isset($row['metric']) ? (int) $row['metric'] : 0,
-                    ];
-                },
-                $all_rows
-            );
+            // Without a page_path filter or SQL search, $all_rows lists every stored path of the range.
+            $all_rows_cover_range = $page_path === ''
+                && ($search_term === '' || $sorting['orderby_key'] === 'page_title');
 
-            if ($search_term !== '' && $sorting['orderby_key'] === 'page_title') {
-                $items = array_values(
-                    array_filter(
-                        $items,
-                        function (array $item) use ($search_term): bool {
-                            return $this->string_contains_search((string) ($item['label'] ?? ''), $search_term)
-                                || $this->string_contains_search((string) ($item['page_title'] ?? ''), $search_term);
-                        }
-                    )
+            $this->page_title_lookups_remaining = $this->get_page_title_lookup_limit($cache_id);
+            try {
+                $page_path_result = $this->build_page_path_report_rows(
+                    $all_rows,
+                    $table,
+                    $cache_id,
+                    $metric_column,
+                    $sorting,
+                    $pagination,
+                    $range,
+                    $search_term,
+                    $all_rows_cover_range
                 );
+            } finally {
+                $this->page_title_lookups_remaining = null;
             }
+
+            $items = $page_path_result['items'];
+            $total_items = $page_path_result['total'];
+            $page_path_variants = $page_path_result['variants'];
         } else {
             $search_sql = '';
             $search_args = [];
@@ -1444,40 +1590,6 @@ class BBPA_Report_Controller {
             );
         }
 
-        if ($is_page_path_table) {
-            $items = $this->merge_page_path_items($items, $metric_column);
-
-            if ($cache_id !== 'not-found') {
-                $items = $this->exclude_not_found_page_path_items($items, $range);
-            }
-
-            if ($cache_id === 'top-pages') {
-                $items = array_values(
-                    array_filter(
-                        $items,
-                        function (array $item): bool {
-                            $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
-                            if ($label === '/') {
-                                return true;
-                            }
-
-                            return $this->resolve_page_title_from_path($label) !== '';
-                        }
-                    )
-                );
-            }
-
-            $items = $this->sort_page_path_report_items($items, $metric_column, $sorting);
-
-            $total_items = count($items);
-            $items = array_slice($items, $pagination['offset'], $pagination['per_page']);
-
-            if ($cache_id === 'top-pages') {
-                $items = $this->append_top_pages_views_series($items, $range);
-            }
-        }
-
-
         $payload = [
             'range' => $range,
             'pagination' => [
@@ -1491,15 +1603,377 @@ class BBPA_Report_Controller {
             'items' => $items,
         ];
 
-        $this->set_cached_payload($cache_key, $payload, $cache_id);
+        if ($cache_id === 'top-pages') {
+            // Internal key consumed and removed by get_top_pages(); cached with the payload.
+            $payload['_page_path_variants'] = $page_path_variants;
+        }
+
+        $this->set_cached_payload(
+            $cache_key,
+            $payload,
+            $cache_id,
+            $this->should_persist_cached_payload($search_term, $pagination)
+        );
 
         return new WP_REST_Response($payload, 200);
     }
 
     /**
-     * Append compact daily page-view series to top-pages rows.
+     * Merge, filter, sort and paginate page-path report rows.
+     *
+     * Page titles are resolved lazily, only for rows whose title decides filtering, ordering
+     * or display, instead of one url_to_postid() lookup per distinct stored path. The result
+     * is identical to resolving every title up front.
+     *
+     * @param array<int, array<string, mixed>> $all_rows Grouped rows (`label`, `metric`) of the range.
+     * @param bool $all_rows_cover_range Whether $all_rows lists every stored path of the range.
+     * @return array{items: array<int, array<string, mixed>>, total: int, variants: array<int, string>}
      */
-    private function append_top_pages_views_series(array $items, array $range): array {
+    private function build_page_path_report_rows(
+        array $all_rows,
+        string $table,
+        string $cache_id,
+        string $metric_column,
+        array $sorting,
+        array $pagination,
+        array $range,
+        string $search_term,
+        bool $all_rows_cover_range
+    ): array {
+        $items = array_map(
+            static function (array $row) use ($metric_column): array {
+                $label = isset($row['label']) ? sanitize_text_field((string) $row['label']) : '';
+
+                return [
+                    'label' => $label,
+                    // Resolved on demand from the stored path of the first merged variant.
+                    'page_title' => null,
+                    $metric_column => isset($row['metric']) ? (int) $row['metric'] : 0,
+                    '_title_path' => $label,
+                ];
+            },
+            $all_rows
+        );
+
+        if ($search_term !== '' && $sorting['orderby_key'] === 'page_title') {
+            $matching_items = [];
+            foreach ($items as $item) {
+                if ($this->string_contains_search((string) $item['label'], $search_term)) {
+                    $matching_items[] = $item;
+                    continue;
+                }
+
+                $item['page_title'] = $this->resolve_page_title_from_path((string) $item['_title_path']);
+                if ($this->string_contains_search($item['page_title'], $search_term)) {
+                    $matching_items[] = $item;
+                }
+            }
+            $items = $matching_items;
+        }
+
+        $items = $this->merge_page_path_items($items, $metric_column);
+
+        if ($cache_id === 'top-pages') {
+            // Top pages keep only the homepage and rows resolving to a WordPress post. That rule
+            // already drops every unresolved path tracked as a 404, so the 404 exclusion of the
+            // other page reports would not change the result.
+            $items = $this->filter_resolved_page_path_items($items, $metric_column);
+        } elseif ($cache_id !== 'not-found') {
+            $items = $this->exclude_not_found_page_path_items($items, $range, $metric_column);
+        }
+
+        $total_items = count($items);
+        $items = $this->sort_and_slice_page_path_items(
+            $items,
+            $metric_column,
+            $sorting,
+            (int) $pagination['offset'],
+            (int) $pagination['per_page']
+        );
+
+        foreach ($items as $index => $item) {
+            if ($item['page_title'] === null) {
+                $item['page_title'] = $this->resolve_page_title_from_path((string) $item['_title_path']);
+            }
+            unset($item['_title_path']);
+            $items[$index] = $item;
+        }
+
+        $variants = [];
+        if ($cache_id === 'top-pages') {
+            $variants = $this->get_page_path_variants_for_items($items, $table, $range, $all_rows_cover_range ? $all_rows : null);
+            $items = $this->append_top_pages_views_series($items, $range, $variants);
+        }
+
+        return [
+            'items' => $items,
+            'total' => $total_items,
+            'variants' => $variants,
+        ];
+    }
+
+    /**
+     * Keep the homepage and the page-path rows that resolve to a WordPress post (top pages).
+     */
+    private function filter_resolved_page_path_items(array $items, string $metric_column): array {
+        $candidates = [];
+        foreach ($items as $item) {
+            $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+            if (!$this->is_home_page_path($label)) {
+                $candidates[] = [
+                    'path' => $label,
+                    'metric' => (int) ($item[$metric_column] ?? 0),
+                ];
+            }
+        }
+        $this->prime_page_titles($candidates);
+
+        return array_values(
+            array_filter(
+                $items,
+                function (array $item): bool {
+                    $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+                    if ($this->is_home_page_path($label)) {
+                        return true;
+                    }
+
+                    return $this->resolve_page_title_from_path($label) !== '';
+                }
+            )
+        );
+    }
+
+    /**
+     * Sort page-path rows and return the requested page.
+     *
+     * Rows are ordered like sort_page_path_report_items(). For metric sorts, titles are only
+     * resolved for the groups of equal metric values that overlap the requested page, because
+     * titles only break ties inside such groups.
+     */
+    private function sort_and_slice_page_path_items(array $items, string $metric_column, array $sorting, int $offset, int $length): array {
+        $items = array_values($items);
+        $orderby_key = isset($sorting['orderby_key']) ? (string) $sorting['orderby_key'] : $metric_column;
+
+        if ($orderby_key === 'page_title') {
+            $items = $this->resolve_page_path_item_titles($items, $metric_column);
+
+            return array_slice($this->sort_page_path_report_items($items, $metric_column, $sorting), $offset, $length);
+        }
+
+        if ($orderby_key === 'label') {
+            return array_slice($this->sort_page_path_report_items($items, $metric_column, $sorting), $offset, $length);
+        }
+
+        $sort_direction = ($sorting['order'] ?? 'DESC') === 'DESC' ? -1 : 1;
+        $positions = array_keys($items);
+        usort(
+            $positions,
+            static function (int $left, int $right) use ($items, $metric_column, $sort_direction): int {
+                $left_metric = (int) ($items[$left][$metric_column] ?? 0);
+                $right_metric = (int) ($items[$right][$metric_column] ?? 0);
+                if ($left_metric !== $right_metric) {
+                    return ($left_metric <=> $right_metric) * $sort_direction;
+                }
+
+                return $left <=> $right;
+            }
+        );
+
+        $ordered = [];
+        foreach ($positions as $position) {
+            $ordered[] = $items[$position];
+        }
+
+        $count = count($ordered);
+        $slice_end = $offset + $length;
+        $group_start = 0;
+        while ($group_start < $count && $group_start < $slice_end) {
+            $group_metric = (int) ($ordered[$group_start][$metric_column] ?? 0);
+            $group_end = $group_start;
+            while ($group_end + 1 < $count && (int) ($ordered[$group_end + 1][$metric_column] ?? 0) === $group_metric) {
+                $group_end++;
+            }
+
+            if ($group_end >= $offset && $group_end > $group_start) {
+                $group = array_slice($ordered, $group_start, $group_end - $group_start + 1);
+                $group = $this->resolve_page_path_item_titles($group, $metric_column);
+                $group = $this->sort_page_path_report_items($group, $metric_column, $sorting);
+                foreach ($group as $group_index => $group_item) {
+                    $ordered[$group_start + $group_index] = $group_item;
+                }
+            }
+
+            $group_start = $group_end + 1;
+        }
+
+        return array_slice($ordered, $offset, $length);
+    }
+
+    /**
+     * Resolve the display title of page-path rows whose title is still unknown.
+     *
+     * Rows are resolved by descending metric so the lookup limit keeps the busiest rows.
+     */
+    private function resolve_page_path_item_titles(array $items, string $metric_column): array {
+        $pending = [];
+        foreach ($items as $index => $item) {
+            if (array_key_exists('page_title', $item) && $item['page_title'] === null) {
+                $pending[] = $index;
+            }
+        }
+
+        usort(
+            $pending,
+            static function ($left, $right) use ($items, $metric_column): int {
+                $left_metric = (int) ($items[$left][$metric_column] ?? 0);
+                $right_metric = (int) ($items[$right][$metric_column] ?? 0);
+                if ($left_metric !== $right_metric) {
+                    return $right_metric <=> $left_metric;
+                }
+
+                return $left <=> $right;
+            }
+        );
+
+        foreach ($pending as $index) {
+            $title_path = (string) ($items[$index]['_title_path'] ?? ($items[$index]['label'] ?? ''));
+            $items[$index]['page_title'] = $this->resolve_page_title_from_path($title_path);
+        }
+
+        return $items;
+    }
+
+    /**
+     * Resolve page titles for candidate paths, busiest first, before a filter reads them.
+     *
+     * With a lookup limit in place this decides which paths get a url_to_postid() lookup.
+     *
+     * @param array<int, array{path: string, metric: int}> $candidates
+     */
+    private function prime_page_titles(array $candidates): void {
+        if ($this->page_title_lookups_remaining === null || $candidates === []) {
+            return;
+        }
+
+        usort(
+            $candidates,
+            static function (array $left, array $right): int {
+                if ($left['metric'] !== $right['metric']) {
+                    return $right['metric'] <=> $left['metric'];
+                }
+
+                return strcmp($left['path'], $right['path']);
+            }
+        );
+
+        foreach ($candidates as $candidate) {
+            if ($this->page_title_lookups_remaining !== null && $this->page_title_lookups_remaining <= 0) {
+                return;
+            }
+
+            $this->resolve_page_title_from_path($candidate['path']);
+        }
+    }
+
+    /**
+     * Resolve the page-title lookup limit for one page-path report response.
+     */
+    private function get_page_title_lookup_limit(string $endpoint): ?int {
+        /**
+         * Filters the maximum number of page-title lookups (url_to_postid()) performed to build
+         * one page-path report response (top pages, entry pages, exit pages, 404s).
+         *
+         * Rows beyond the limit are handled as rows without a WordPress post title. Return 0 or
+         * a negative value to remove the limit.
+         *
+         * @param int    $limit    Default 5000.
+         * @param string $endpoint Report identifier: top-pages, entry-pages, exit-pages or not-found.
+         */
+        $limit = (int) apply_filters('bbpa_report_page_title_lookup_limit', self::DEFAULT_PAGE_TITLE_LOOKUP_LIMIT, $endpoint);
+
+        return $limit > 0 ? $limit : null;
+    }
+
+    /**
+     * Collect the stored page_path values of the range that normalize to the given rows.
+     *
+     * @param array<int, array<string, mixed>>|null $all_rows Grouped rows covering every stored
+     *                                                        path of the range, or null to query them.
+     * @return array<int, string>
+     */
+    private function get_page_path_variants_for_items(array $items, string $table, array $range, ?array $all_rows): array {
+        global $wpdb;
+
+        $labels = [];
+        foreach ($items as $item) {
+            $label = $this->normalize_report_page_path(sanitize_text_field((string) ($item['label'] ?? '')));
+            if ($label !== '') {
+                $labels[$label] = true;
+            }
+        }
+
+        if ($labels === []) {
+            return [];
+        }
+
+        if ($all_rows === null) {
+            $stored_paths = $wpdb->get_col(
+                $wpdb->prepare(
+                    "SELECT DISTINCT page_path
+                    FROM {$table}
+                    WHERE date_bucket BETWEEN %s AND %s",
+                    $range['start'],
+                    $range['end']
+                )
+            ) ?: [];
+        } else {
+            $stored_paths = array_map(
+                static function (array $row): string {
+                    return (string) ($row['label'] ?? '');
+                },
+                $all_rows
+            );
+        }
+
+        $variants = [];
+        foreach ($stored_paths as $stored_path) {
+            $stored_path = (string) $stored_path;
+            if (isset($variants[$stored_path])) {
+                continue;
+            }
+
+            $label = $this->normalize_report_page_path(sanitize_text_field($stored_path));
+            if (isset($labels[$label])) {
+                $variants[$stored_path] = true;
+            }
+        }
+
+        return array_map('strval', array_keys($variants));
+    }
+
+    /**
+     * Build a prepared-statement placeholder list for raw string values.
+     */
+    private function build_string_placeholders(array $values): string {
+        return implode(', ', array_fill(0, count($values), '%s'));
+    }
+
+    /**
+     * Whether a response payload is also persisted as a transient.
+     *
+     * Free-text searches and large pages are cached in the object cache only, so they cannot
+     * fill the options table with one transient per typed term.
+     */
+    private function should_persist_cached_payload(string $search_term, array $pagination): bool {
+        return $search_term === '' && (int) ($pagination['per_page'] ?? 0) <= self::MAX_PERSISTED_PER_PAGE;
+    }
+
+    /**
+     * Append compact daily page-view series to top-pages rows.
+     *
+     * @param array<int, string> $page_path_variants Stored page_path values of the returned rows.
+     */
+    private function append_top_pages_views_series(array $items, array $range, array $page_path_variants = []): array {
         global $wpdb;
 
         if ($items === []) {
@@ -1535,15 +2009,19 @@ class BBPA_Report_Controller {
             $series_by_label[$label] = $empty_series;
         }
 
-        $query = $wpdb->prepare(
-            "SELECT date_bucket, page_path, SUM(hits) AS hits
-            FROM {$table}
-            WHERE date_bucket BETWEEN %s AND %s
-            GROUP BY date_bucket, page_path",
-            $range['start'],
-            $range['end']
-        );
-        $rows = $wpdb->get_results($query, ARRAY_A) ?: [];
+        // Only the stored variants of the returned rows are read, instead of every path of the range.
+        $rows = [];
+        if ($page_path_variants !== []) {
+            $query = $wpdb->prepare(
+                "SELECT date_bucket, page_path, SUM(hits) AS hits
+                FROM {$table}
+                WHERE date_bucket BETWEEN %s AND %s
+                    AND page_path IN (" . $this->build_string_placeholders($page_path_variants) . ")
+                GROUP BY date_bucket, page_path",
+                array_merge([$range['start'], $range['end']], array_values($page_path_variants))
+            );
+            $rows = $wpdb->get_results($query, ARRAY_A) ?: [];
+        }
 
         foreach ($rows as $row) {
             $bucket = isset($row['date_bucket']) ? (string) $row['date_bucket'] : '';
@@ -1654,26 +2132,14 @@ class BBPA_Report_Controller {
         WP_REST_Request $request,
         string $table,
         bool $is_aggregate_table,
-        bool $aggregate_has_source_category = true
+        bool $aggregate_has_source_category = true,
+        string $cache_key = ''
     ): WP_REST_Response {
         global $wpdb;
 
         $range = $this->get_day_range($request);
         $cache_id = 'acquisition-channels';
         $source_category_sql = $this->resolve_source_category_sql_expression($is_aggregate_table, $aggregate_has_source_category);
-        $cache_key = $this->get_cache_key(
-            $cache_id,
-            [
-                'range' => $range,
-                'table' => $table,
-                'aggregate' => $is_aggregate_table,
-                'aggregateHasSourceCategory' => $aggregate_has_source_category,
-            ]
-        );
-        $cached = $this->get_cached_payload($cache_key);
-        if ($cached !== null) {
-            return new WP_REST_Response($cached, 200);
-        }
 
         if ($is_aggregate_table) {
             $range_start = gmdate('Y-m-d', strtotime($range['start'] . ' 00:00:00'));
@@ -1694,8 +2160,8 @@ class BBPA_Report_Controller {
                 $range_end
             );
         } else {
-            $range_start = strtotime($range['start'] . ' 00:00:00');
-            $range_end = strtotime($range['end'] . ' 23:59:59');
+            $range_start = bbpa_get_site_day_bounds($range['start'], $range['end'])[0];
+            $range_end = bbpa_get_site_day_bounds($range['start'], $range['end'])[1];
             $query = $wpdb->prepare(
                 "SELECT {$source_category_sql} AS channel, COUNT(*) AS visits
                 FROM {$table}
@@ -1745,7 +2211,9 @@ class BBPA_Report_Controller {
             'total' => $total,
         ];
 
-        $this->set_cached_payload($cache_key, $payload, $cache_id);
+        if ($cache_key !== '') {
+            $this->set_cached_payload($cache_key, $payload, $cache_id);
+        }
 
         return new WP_REST_Response($payload, 200);
     }
@@ -1757,7 +2225,8 @@ class BBPA_Report_Controller {
         WP_REST_Request $request,
         string $table,
         bool $is_aggregate_table,
-        bool $aggregate_has_source_category = true
+        bool $aggregate_has_source_category = true,
+        string $cache_key = ''
     ): WP_REST_Response {
         global $wpdb;
 
@@ -1769,30 +2238,13 @@ class BBPA_Report_Controller {
             $request,
             [
                 'hits' => $is_aggregate_table ? 'hits' : 'visits',
+                'visits' => 'visits',
                 'referrer' => 'referrer_domain',
                 'category' => 'source_category',
             ],
             'visits'
         );
         $cache_id = 'referrer-sources';
-        $cache_key = $this->get_cache_key(
-            $cache_id,
-            [
-                'range' => $range,
-                'table' => $table,
-                'aggregate' => $is_aggregate_table,
-                'aggregateHasSourceCategory' => $aggregate_has_source_category,
-                'pagination' => $pagination,
-                'sorting' => $sorting,
-                'search' => $search_term,
-                'pagePath' => $page_path,
-            ]
-        );
-        $cached = $this->get_cached_payload($cache_key);
-        if ($cached !== null) {
-            $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'referrer_domain');
-            return new WP_REST_Response($cached, 200);
-        }
 
         $source_category_sql = $this->resolve_source_category_sql_expression(
             $is_aggregate_table,
@@ -1835,6 +2287,7 @@ class BBPA_Report_Controller {
                 $search_args,
                 [$pagination['per_page'], $pagination['offset']]
             );
+            // `hits` reports page views and `visits` reports visits when the table stores both.
             $visits_sql = $this->table_has_column($table, 'visits') ? 'SUM(visits)' : 'SUM(hits)';
             $hits_sql = $this->table_has_column($table, 'hits') ? 'SUM(hits)' : $visits_sql;
             $list_query = $wpdb->prepare(
@@ -1851,8 +2304,8 @@ class BBPA_Report_Controller {
                 $list_query_args
             );
         } else {
-            $range_start = strtotime($range['start'] . ' 00:00:00');
-            $range_end = strtotime($range['end'] . ' 23:59:59');
+            $range_start = bbpa_get_site_day_bounds($range['start'], $range['end'])[0];
+            $range_end = bbpa_get_site_day_bounds($range['start'], $range['end'])[1];
             $page_sql = '';
             $page_args = [];
 
@@ -1884,7 +2337,7 @@ class BBPA_Report_Controller {
                     COUNT(*) AS visits
                 FROM {$table}
                 WHERE first_view_at BETWEEN %d AND %d{$page_sql}{$search_sql}
-                GROUP BY referrer_domain, source_category
+                GROUP BY referrer_domain, {$source_category_sql}
                 ORDER BY {$sorting['orderby']} {$sorting['order']}
                 LIMIT %d OFFSET %d",
                 $list_query_args
@@ -1923,7 +2376,14 @@ class BBPA_Report_Controller {
             'items' => $items,
         ];
 
-        $this->set_cached_payload($cache_key, $payload, $cache_id);
+        if ($cache_key !== '') {
+            $this->set_cached_payload(
+                $cache_key,
+                $payload,
+                $cache_id,
+                $this->should_persist_cached_payload($search_term, $pagination)
+            );
+        }
 
         return new WP_REST_Response($payload, 200);
     }
@@ -1931,7 +2391,7 @@ class BBPA_Report_Controller {
     /**
      * Build paginated visit totals by referrer domain.
      */
-    private function build_referrers_response(WP_REST_Request $request, string $table, bool $is_aggregate_table): WP_REST_Response {
+    private function build_referrers_response(WP_REST_Request $request, string $table, bool $is_aggregate_table, string $cache_key = ''): WP_REST_Response {
         global $wpdb;
 
         $range = $this->get_day_range($request);
@@ -1942,31 +2402,15 @@ class BBPA_Report_Controller {
             $request,
             [
                 'hits' => $is_aggregate_table ? 'hits' : 'visits',
+                'visits' => $is_aggregate_table ? 'hits' : 'visits',
                 'label' => 'referrer_domain',
             ],
             'visits'
         );
         $cache_id = 'referrers';
-        $cache_key = $this->get_cache_key(
-            $cache_id,
-            [
-                'range' => $range,
-                'table' => $table,
-                'aggregate' => $is_aggregate_table,
-                'pagination' => $pagination,
-                'sorting' => $sorting,
-                'search' => $search_term,
-                'pagePath' => $page_path,
-            ]
-        );
-        $cached = $this->get_cached_payload($cache_key);
-        if ($cached !== null) {
-            $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'label');
-            return new WP_REST_Response($cached, 200);
-        }
 
-        $range_start = strtotime($range['start'] . ' 00:00:00');
-        $range_end = strtotime($range['end'] . ' 23:59:59');
+        $range_start = bbpa_get_site_day_bounds($range['start'], $range['end'])[0];
+        $range_end = bbpa_get_site_day_bounds($range['start'], $range['end'])[1];
         $search_sql = '';
         $search_args = [];
 
@@ -1976,8 +2420,8 @@ class BBPA_Report_Controller {
         }
 
         if ($is_aggregate_table) {
-            $range_start_day = gmdate('Y-m-d', $range_start);
-            $range_end_day = gmdate('Y-m-d', $range_end);
+            $range_start_day = $range['start'];
+            $range_end_day = $range['end'];
             $date_column = $this->resolve_date_bucket_column($table);
             $page_sql = '';
             $page_args = [];
@@ -2100,7 +2544,14 @@ class BBPA_Report_Controller {
             'items' => $items,
         ];
 
-        $this->set_cached_payload($cache_key, $payload, $cache_id);
+        if ($cache_key !== '') {
+            $this->set_cached_payload(
+                $cache_key,
+                $payload,
+                $cache_id,
+                $this->should_persist_cached_payload($search_term, $pagination)
+            );
+        }
 
         return new WP_REST_Response($payload, 200);
     }
@@ -2240,7 +2691,7 @@ class BBPA_Report_Controller {
     private function query_geo_countries_from_activity(array $range, array $pagination, array $sorting): array {
         global $wpdb;
 
-        $activity_table = $wpdb->prefix . 'bbpa_visitor_activity_daily';
+        $activity_table = $this->get_allowed_table('visitor_activity_daily');
         if (!$this->table_exists($activity_table)) {
             return ['totalItems' => 0, 'rows' => [], 'summary' => []];
         }
@@ -2310,13 +2761,13 @@ class BBPA_Report_Controller {
     private function query_geo_countries_from_visitors(array $range, array $pagination, array $sorting, string $page_path = ''): array {
         global $wpdb;
 
-        $visitors_table = $wpdb->prefix . 'bbpa_visitors';
+        $visitors_table = $this->get_allowed_table('visitors');
         if (!$this->table_exists($visitors_table)) {
             return ['totalItems' => 0, 'rows' => [], 'summary' => []];
         }
 
-        $range_start = strtotime($range['start'] . ' 00:00:00');
-        $range_end = strtotime($range['end'] . ' 23:59:59');
+        $range_start = bbpa_get_site_day_bounds($range['start'], $range['end'])[0];
+        $range_end = bbpa_get_site_day_bounds($range['start'], $range['end'])[1];
         $known_country_condition = $this->get_known_country_code_condition();
         $page_path_sql = '';
         $page_path_args = [];
@@ -2482,55 +2933,12 @@ class BBPA_Report_Controller {
 
         $row_count = (int) $wpdb->get_var(
             $wpdb->prepare(
-                "SELECT COUNT(*) FROM {$table} {$where_sql} LIMIT 1",
+                "SELECT 1 FROM {$table} {$where_sql} LIMIT 1",
                 $query_args
             )
         );
 
         return $row_count > 0;
-    }
-
-    /**
-     * Resolve available granularities for a requested date range.
-     */
-    private function get_available_granularities(array $range): array {
-        global $wpdb;
-
-        $granularities = [];
-
-        $daily_table = $wpdb->prefix . 'bbpa_daily';
-        $daily_hits = (int) $wpdb->get_var(
-            $wpdb->prepare(
-                "SELECT COALESCE(SUM(hits), 0) FROM {$daily_table} WHERE date_bucket BETWEEN %s AND %s",
-                $range['start'],
-                $range['end']
-            )
-        );
-        if ($daily_hits > 0) {
-            $granularities[] = 'base';
-        }
-
-        $visitors_table = $wpdb->prefix . 'bbpa_visitors';
-        if ($this->table_exists($visitors_table) && $this->table_has_column($visitors_table, 'first_view_at')) {
-            $range_start = strtotime($range['start'] . ' 00:00:00');
-            $range_end = strtotime($range['end'] . ' 23:59:59');
-            $enriched_hits = (int) $wpdb->get_var(
-                $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$visitors_table} WHERE first_view_at BETWEEN %d AND %d",
-                    $range_start,
-                    $range_end
-                )
-            );
-            if ($enriched_hits > 0) {
-                $granularities[] = 'enriched';
-            }
-        }
-
-        if ($granularities === []) {
-            return ['unknown'];
-        }
-
-        return array_values(array_unique($granularities));
     }
 
     /**
@@ -2654,15 +3062,19 @@ class BBPA_Report_Controller {
             $wpdb->prefix . 'bbpa_visitors',
         ];
 
-        $allowed_columns = ['date_bucket', 'bucket_date', 'last_triggered_at', 'first_view_at', 'visits', 'source_category'];
+        $allowed_columns = ['date_bucket', 'bucket_date', 'last_triggered_at', 'first_view_at', 'hits', 'visits', 'source_category'];
 
         if (!in_array($table, $allowed_tables, true) || !in_array($column, $allowed_columns, true)) {
             return false;
         }
 
-        $exists = $wpdb->get_var($wpdb->prepare('SHOW COLUMNS FROM `' . $table . '` LIKE %s', $column));
+        $memo_key = $table . '|' . $column;
+        if (!isset($this->table_column_memo[$memo_key])) {
+            $exists = $wpdb->get_var($wpdb->prepare('SHOW COLUMNS FROM %i LIKE %s', $table, $column));
+            $this->table_column_memo[$memo_key] = is_string($exists) && $exists !== '';
+        }
 
-        return is_string($exists) && $exists !== '';
+        return $this->table_column_memo[$memo_key];
     }
 
     /**
@@ -2675,9 +3087,12 @@ class BBPA_Report_Controller {
             return false;
         }
 
-        $result = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
+        if (!isset($this->table_exists_memo[$table])) {
+            $result = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
+            $this->table_exists_memo[$table] = is_string($result) && $result === $table;
+        }
 
-        return is_string($result) && $result === $table;
+        return $this->table_exists_memo[$table];
     }
 
     /**
@@ -2769,9 +3184,12 @@ class BBPA_Report_Controller {
             if (!isset($merged_items[$merge_key])) {
                 $item['label'] = $merge_key;
                 $item[$metric_column] = (int) ($item[$metric_column] ?? 0);
-                $item['page_title'] = isset($item['page_title'])
-                    ? (string) $item['page_title']
-                    : $this->resolve_page_title_from_path($merge_key);
+                if (!array_key_exists('page_title', $item)) {
+                    $item['page_title'] = $this->resolve_page_title_from_path($merge_key);
+                } elseif ($item['page_title'] !== null) {
+                    // A null title is resolved later, only when the row needs it.
+                    $item['page_title'] = (string) $item['page_title'];
+                }
                 $merged_items[$merge_key] = $item;
                 continue;
             }
@@ -2784,12 +3202,27 @@ class BBPA_Report_Controller {
 
     /**
      * Remove paths that are tracked as 404 pages for the requested range.
+     *
+     * A row is removed when its path is a tracked 404 path and does not resolve to a
+     * WordPress post. Titles are only looked up for rows matching a tracked 404 path.
      */
-    private function exclude_not_found_page_path_items(array $items, array $range): array {
+    private function exclude_not_found_page_path_items(array $items, array $range, string $metric_column = 'hits'): array {
         $not_found_paths = $this->get_not_found_page_paths_for_range($range);
         if ($not_found_paths === []) {
             return $items;
         }
+
+        $candidates = [];
+        foreach ($items as $item) {
+            $normalized_label = $this->normalize_report_page_path(isset($item['label']) ? sanitize_text_field((string) $item['label']) : '');
+            if ($normalized_label !== '' && !$this->is_home_page_path($normalized_label) && isset($not_found_paths[$normalized_label])) {
+                $candidates[] = [
+                    'path' => $normalized_label,
+                    'metric' => (int) ($item[$metric_column] ?? 0),
+                ];
+            }
+        }
+        $this->prime_page_titles($candidates);
 
         return array_values(
             array_filter(
@@ -2798,15 +3231,15 @@ class BBPA_Report_Controller {
                     $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
                     $normalized_label = $this->normalize_report_page_path($label);
 
-                    if ($normalized_label === '' || $normalized_label === '/') {
+                    if ($normalized_label === '' || $this->is_home_page_path($normalized_label)) {
                         return true;
                     }
 
-                    if ($this->resolve_page_title_from_path($normalized_label) !== '') {
+                    if (!isset($not_found_paths[$normalized_label])) {
                         return true;
                     }
 
-                    return !isset($not_found_paths[$normalized_label]);
+                    return $this->resolve_page_title_from_path($normalized_label) !== '';
                 }
             )
         );
@@ -2814,6 +3247,9 @@ class BBPA_Report_Controller {
 
     /**
      * Return normalized 404 page paths keyed by path for fast report exclusion.
+     *
+     * Titles are not resolved here: the caller only checks titles of report rows matching
+     * one of these paths, which gives the same result without one lookup per 404 path.
      */
     private function get_not_found_page_paths_for_range(array $range): array {
         global $wpdb;
@@ -2842,11 +3278,7 @@ class BBPA_Report_Controller {
             }
 
             $path = $this->normalize_report_page_path($raw_path);
-            if ($path === '' || $path === '/') {
-                continue;
-            }
-
-            if ($this->resolve_page_title_from_path($path) !== '') {
+            if ($path === '' || $this->is_home_page_path($path)) {
                 continue;
             }
 
@@ -2903,12 +3335,70 @@ class BBPA_Report_Controller {
         return $normalized;
     }
 
+    /**
+     * Return the path of the WordPress home URL without trailing slash ('' at the domain root).
+     *
+     * Subdirectory installs and multisite subfolder sites return their directory (`/blog`).
+     */
+    private function get_home_path_prefix(): string {
+        $home_path = wp_parse_url(home_url('/'), PHP_URL_PATH);
+        if (!is_string($home_path)) {
+            return '';
+        }
+
+        return untrailingslashit($home_path);
+    }
+
+    /**
+     * Whether a normalized report path is the site homepage ('/' or the install directory).
+     */
+    private function is_home_page_path(string $path): bool {
+        if ($path === '/') {
+            return true;
+        }
+
+        $home_path = $this->get_home_path_prefix();
+
+        return $home_path !== '' && $path === $home_path;
+    }
+
+    /**
+     * Convert a stored request path into a path relative to the WordPress home URL.
+     *
+     * Stored paths keep the install directory (`/blog/about` for a site installed in `/blog`),
+     * while home_url() already contains it. Stored history is not rewritten; the prefix is
+     * only removed to look up the post.
+     */
+    private function strip_home_path_prefix(string $path, string $home_path): string {
+        if ($home_path === '' || $path === '' || strpos($path, $home_path) !== 0) {
+            return $path;
+        }
+
+        $rest = (string) substr($path, strlen($home_path));
+        if ($rest === '') {
+            return '/';
+        }
+
+        if ($rest[0] === '/') {
+            return $rest;
+        }
+
+        if ($rest[0] === '?' || $rest[0] === '#') {
+            return '/' . $rest;
+        }
+
+        // `/blogger` does not belong to the `/blog` install.
+        return $path;
+    }
+
     private function resolve_page_title_from_path(string $page_path): string {
         static $title_cache = [];
 
         $normalized_path = trim($page_path);
-        $cache_key = $normalized_path;
-        if ($normalized_path === '/') {
+        $home_path = $this->get_home_path_prefix();
+        $lookup_path = $this->strip_home_path_prefix($normalized_path, $home_path);
+        $cache_key = $home_path === '' ? $normalized_path : $home_path . '|' . $normalized_path;
+        if ($lookup_path === '/') {
             $cache_key .= '|front:' . (int) get_option('page_on_front');
         }
 
@@ -2922,7 +3412,7 @@ class BBPA_Report_Controller {
             return '';
         }
 
-        if ($normalized_path === '/') {
+        if ($lookup_path === '/') {
             $front_page_id = (int) get_option('page_on_front');
             if ($front_page_id > 0) {
                 $front_title = get_the_title($front_page_id);
@@ -2932,7 +3422,16 @@ class BBPA_Report_Controller {
             }
         }
 
-        $post_id = url_to_postid(home_url($normalized_path));
+        if ($this->page_title_lookups_remaining !== null) {
+            if ($this->page_title_lookups_remaining <= 0) {
+                // Lookup limit reached: handled as untitled and not cached.
+                return '';
+            }
+
+            $this->page_title_lookups_remaining--;
+        }
+
+        $post_id = url_to_postid(home_url($lookup_path));
         if ($post_id <= 0) {
             $title_cache[$cache_key] = '';
 
@@ -2994,13 +3493,6 @@ class BBPA_Report_Controller {
     }
 
     /**
-     * Check whether visitor-level reporting is available.
-     */
-    private function is_visitors_feature_enabled(): bool {
-        return true;
-    }
-
-    /**
      * Resolve cache TTL for report analytics.
      */
     private function get_cache_ttl(string $endpoint): int {
@@ -3039,24 +3531,35 @@ class BBPA_Report_Controller {
     /**
      * Store cached response payload.
      */
-    protected function set_cached_payload(string $cache_key, array $payload, string $endpoint = ''): void {
+    protected function set_cached_payload(string $cache_key, array $payload, string $endpoint = '', bool $persist = true): void {
         $ttl = $this->get_cache_ttl($endpoint);
         if ($ttl <= 0) {
             return;
         }
 
         wp_cache_set($cache_key, $payload, 'bbpa_report', $ttl);
-        set_transient($cache_key, $payload, $ttl);
+        if ($persist) {
+            set_transient($cache_key, $payload, $ttl);
+        }
     }
-    /** Add only already-local favicons to visible response rows without network access. */
+    /**
+     * Add only already-local favicons to visible response rows without network access.
+     *
+     * One resolver lists the favicon directory once and each distinct domain is
+     * looked up once, whatever the number of rows.
+     */
     private function add_cached_favicons(array $items, string $domain_key): array {
         $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
         if (empty($settings['referrer_favicons_enabled'])) { return $items; }
         $resolver = new BBPA_Favicon_Resolver();
+        $favicons_by_domain = [];
         foreach ($items as &$item) {
             $domain = trim((string) ($item[$domain_key] ?? ''));
             if ($domain === '') { continue; }
-            $favicon = $resolver->get_cached_favicon_for_domain($domain);
+            if (!array_key_exists($domain, $favicons_by_domain)) {
+                $favicons_by_domain[$domain] = $resolver->get_cached_favicon_for_domain($domain);
+            }
+            $favicon = $favicons_by_domain[$domain];
             if (!empty($favicon['url']) && !empty($favicon['path'])) {
                 $item['favicon'] = ['status' => 'available', 'url' => (string) $favicon['url'], 'is_local' => true];
             }
@@ -3066,3 +3569,4 @@ class BBPA_Report_Controller {
     }
 
 }
+// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
