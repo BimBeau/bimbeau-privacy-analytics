@@ -61,7 +61,24 @@ function bbpa_sanitize_rest_page_path_arg($value): string
         return '';
     }
 
-    $value = wp_check_invalid_utf8((string) wp_unslash($value));
+    return bbpa_sanitize_page_path_value((string) wp_unslash($value));
+}
+
+/**
+ * Sanitize an already unslashed page path without altering encoded URL octets.
+ *
+ * Unlike sanitize_text_field(), percent-encoded octets such as `%C3%A9` are kept
+ * so the path matches the value stored in the aggregate tables.
+ *
+ * @param mixed $value Page path value.
+ */
+function bbpa_sanitize_page_path_value($value): string
+{
+    if (!is_scalar($value)) {
+        return '';
+    }
+
+    $value = wp_check_invalid_utf8((string) $value);
     $value = trim($value);
 
     return preg_replace('/[\x00-\x1F\x7F]+/', '', $value) ?? '';

@@ -975,7 +975,7 @@ function bbpa_apply_session_exit_tracking_for_hit(string $visitor_id, string $pa
     }
 
     $visitor_id = sanitize_text_field($visitor_id);
-    $page_path = sanitize_text_field($page_path);
+    $page_path = bbpa_sanitize_page_path_value($page_path);
     if ($visitor_id === '' || $page_path === '') {
         return;
     }
@@ -989,7 +989,7 @@ function bbpa_apply_session_exit_tracking_for_hit(string $visitor_id, string $pa
         $state = [];
     }
 
-    $previous_page_path = isset($state['page_path']) ? sanitize_text_field((string) $state['page_path']) : '';
+    $previous_page_path = isset($state['page_path']) ? bbpa_sanitize_page_path_value((string) $state['page_path']) : '';
     $previous_timestamp = isset($state['timestamp']) ? absint($state['timestamp']) : 0;
     $timeout = bbpa_get_exit_session_timeout();
 

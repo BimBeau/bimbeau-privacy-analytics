@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.46.0
+Stable tag: 8.46.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,6 +213,10 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.46.0 =
-* [Fix] Pages listed in the excluded paths setting are now also ignored when the tracking scripts record a visit, so they no longer add page views, visitors, real-time activity, time on page or entry and exit pages. Matching ignores letter case, a trailing slash and the query string ("/Contact/" and "/contact?utm_source=newsletter" match "/contact"), but not other pages ("/contact-us" or "/contact/team"). If your site already lists paths, those pages stop being counted after the update; past statistics are unchanged. This setting has no field in the settings screen.
-* [Docs] Document the excluded paths setting.
+= 8.46.1 =
+* [Fix] Store the same page path in aggregates, `bbpa_visitors` (`entry_page` / `exit_page`), `bbpa_realtime_visitors` rows and entry/exit exit tracking. `sanitize_text_field()` stripped percent-encoded octets (`/caf%C3%A9` → `/caf`, `/Contact%2F` → `/Contact`), which affected every site with non-Latin slugs.
+* [Fix] Session exit tracking now increments and decrements `exits` on the same `page_path` row that holds `entries`, instead of creating a mangled duplicate row.
+* [Fix] The visitors report and realtime snapshot return intact paths, and the shared `page_path` report filter no longer strips the encoding, so filtering by an encoded path matches stored rows.
+* [Feature] Add `bbpa_sanitize_page_path_value()` (UTF-8 check, trim, control-character strip; no unslash). `bbpa_sanitize_rest_page_path_arg()` now delegates to it. No public function, hook or column was renamed.
+* Historical rows are not rewritten.
+* [Test] Add `tests/phpunit/test-hit-encoded-page-path-consistency.php`: posts a `/caf%C3%A9` hit and asserts the same path in `bbpa_daily`, `bbpa_visitors`, realtime rows, entry/exit tables, the visitors report (filter and search) and the realtime snapshot. All 4 tests fail without the fix. Follow-up (separate PR): other report readers still apply `sanitize_text_field()` to aggregate page paths (top pages sparkline, average time by page, Page Details [Pro], events stats).

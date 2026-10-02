@@ -157,7 +157,7 @@ class BBPA_REST_Query_Helpers {
     }
 
     public static function normalize_page_path_filter(WP_REST_Request $request): string {
-        return trim(sanitize_text_field((string) $request->get_param('page_path')));
+        return bbpa_sanitize_page_path_value((string) $request->get_param('page_path'));
     }
 
     private static function is_valid_day_value(string $value): bool {

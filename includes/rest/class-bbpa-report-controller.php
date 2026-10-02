@@ -646,8 +646,8 @@ class BBPA_Report_Controller {
                         sanitize_text_field((string) ($row['screen_resolution'] ?? ''))
                     ),
                     'has_enriched_data' => !empty($row['has_enriched_data']),
-                    'entry_page' => sanitize_text_field((string) ($row['entry_page'] ?? '')),
-                    'exit_page' => sanitize_text_field((string) ($row['exit_page'] ?? '')),
+                    'entry_page' => bbpa_sanitize_page_path_value((string) ($row['entry_page'] ?? '')),
+                    'exit_page' => bbpa_sanitize_page_path_value((string) ($row['exit_page'] ?? '')),
                     'first_view_at' => absint($row['first_view_at'] ?? 0),
                     'last_view_at' => absint($row['last_view_at'] ?? 0),
                 ];

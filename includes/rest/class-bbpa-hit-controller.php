@@ -1477,7 +1477,7 @@ class BBPA_Hit_Controller {
                 $row['visit_id'] = $visit_id;
             }
 
-            $page_path = isset($hit['page_path']) ? sanitize_text_field((string) $hit['page_path']) : '';
+            $page_path = isset($hit['page_path']) ? bbpa_sanitize_page_path_value((string) $hit['page_path']) : '';
             if ($page_path !== '') {
                 $row['page_path'] = $page_path;
             }

@@ -633,7 +633,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
                 return [
                     'timestamp_bucket' => $timestamp,
-                    'page_path' => isset($hit['page_path']) ? sanitize_text_field((string) $hit['page_path']) : '',
+                    'page_path' => isset($hit['page_path']) ? bbpa_sanitize_page_path_value((string) $hit['page_path']) : '',
                     'referrer_domain' => isset($hit['referrer_domain'])
                         ? sanitize_text_field((string) $hit['referrer_domain'])
                         : '',
@@ -770,7 +770,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 }
 
                 $page_path = isset($hit['page_path'])
-                    ? sanitize_text_field((string) $hit['page_path'])
+                    ? bbpa_sanitize_page_path_value((string) $hit['page_path'])
                     : '';
                 if ($page_path !== '') {
                     if (!isset($page_counts[$page_path])) {
@@ -1013,7 +1013,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 ? $this->normalize_screen_resolution_for_reports(sanitize_text_field((string) $hit['screen_resolution']))
                 : '';
             $page_path = isset($hit['page_path'])
-                ? sanitize_text_field((string) $hit['page_path'])
+                ? bbpa_sanitize_page_path_value((string) $hit['page_path'])
                 : '';
             $extension_fields = apply_filters('bbpa_realtime_visit_extension_fields', [], $hit);
             if (!is_array($extension_fields)) {
@@ -1137,7 +1137,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 'visitor_id' => $fallback_visitor_id,
                 'country_code' => isset($realtime_row['country_code']) ? strtoupper(sanitize_text_field((string) $realtime_row['country_code'])) : '',
                 'country' => isset($realtime_row['country']) ? sanitize_text_field((string) $realtime_row['country']) : '',
-                'current_page' => isset($realtime_row['page_path']) ? sanitize_text_field((string) $realtime_row['page_path']) : '',
+                'current_page' => isset($realtime_row['page_path']) ? bbpa_sanitize_page_path_value((string) $realtime_row['page_path']) : '',
                 'page_views' => 1,
                 'referrer_domain' => isset($realtime_row['referrer_domain']) ? sanitize_text_field((string) $realtime_row['referrer_domain']) : '',
                 'source_category' => isset($realtime_row['source_category']) ? sanitize_text_field((string) $realtime_row['source_category']) : '',
