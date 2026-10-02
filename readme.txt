@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.208
+Stable tag: 8.45.209
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.208 =
-* [Fix] The Real-time visitor table lists every active visitor again. When the country cannot be determined (for example before the local GeoIP database is installed, or for a private IP address), the row shows "Unknown country". The table no longer says "No visits in the current activity window" next to a non-zero visitor count.
+= 8.45.209 =
+* [Fix] Saving the settings after opening the Events tab no longer empties an events configuration saved by an older version of the plugin: the events shown on screen are the ones saved. [Pro].
+* [Fix] When two active events share a KPI slot, saving the settings after opening the Events tab renumbers their slots in display order, as editing an event already did. [Pro].
