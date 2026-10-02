@@ -84,3 +84,26 @@ function bbpa_sanitize_page_path_value($value): string
     return preg_replace('/[\x00-\x1F\x7F]+/', '', $value) ?? '';
 }
 
+/**
+ * Uppercase the hexadecimal digits of the percent-encoded octets of a page path.
+ *
+ * `/caf%c3%a9` (WordPress permalinks emit lowercase digits) and `/caf%C3%A9` (typed or shared URLs) encode
+ * the same octets, and the default case-insensitive collations of the page_path columns treat them as
+ * equal. The rest of the path is kept as is. Use the result only as a comparison key: stored page paths
+ * and the labels returned by reports keep their original spelling.
+ */
+function bbpa_normalize_percent_encoding_case(string $page_path): string
+{
+    if (strpos($page_path, '%') === false) {
+        return $page_path;
+    }
+
+    return preg_replace_callback(
+        '/%[0-9a-fA-F]{2}/',
+        static function (array $matches): string {
+            return strtoupper($matches[0]);
+        },
+        $page_path
+    ) ?? $page_path;
+}
+

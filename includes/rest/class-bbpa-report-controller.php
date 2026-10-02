@@ -1255,7 +1255,7 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $label = $this->normalize_report_page_path($stored_path);
+            $label = $this->get_report_page_path_key($stored_path);
             if (!isset($totals_by_label[$label])) {
                 $totals_by_label[$label] = [
                     'active_ms' => 0,
@@ -1274,7 +1274,7 @@ class BBPA_Report_Controller {
 
         return array_map(
             function (array $item) use ($average_time_by_label): array {
-                $label = isset($item['label']) ? $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'])) : '';
+                $label = isset($item['label']) ? $this->get_report_page_path_key(bbpa_sanitize_page_path_value($item['label'])) : '';
                 $average_time_ms = $average_time_by_label[$label] ?? 0;
                 $item['avg_time_on_page_ms'] = $average_time_ms;
                 $item['avg_time_on_page_seconds'] = $average_time_ms / 1000;
@@ -1792,7 +1792,7 @@ class BBPA_Report_Controller {
 
         $labels = [];
         foreach ($items as $item) {
-            $label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'] ?? ''));
+            $label = $this->get_report_page_path_key(bbpa_sanitize_page_path_value($item['label'] ?? ''));
             if ($label !== '') {
                 $labels[$label] = true;
             }
@@ -1828,7 +1828,7 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($stored_path));
+            $label = $this->get_report_page_path_key(bbpa_sanitize_page_path_value($stored_path));
             if (isset($labels[$label])) {
                 $variants[$stored_path] = true;
             }
@@ -1871,10 +1871,9 @@ class BBPA_Report_Controller {
         $bucket_indexes = array_flip($buckets);
         $labels = [];
         foreach ($items as $item) {
-            $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
-            $normalized_label = $this->normalize_report_page_path($label);
-            if ($normalized_label !== '') {
-                $labels[$normalized_label] = true;
+            $label_key = $this->get_report_page_path_key(bbpa_sanitize_page_path_value($item['label'] ?? ''));
+            if ($label_key !== '') {
+                $labels[$label_key] = true;
             }
         }
 
@@ -1915,7 +1914,7 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($row['page_path'] ?? ''));
+            $label = $this->get_report_page_path_key(bbpa_sanitize_page_path_value($row['page_path'] ?? ''));
             if ($label === '' || !isset($series_by_label[$label])) {
                 continue;
             }
@@ -1925,7 +1924,7 @@ class BBPA_Report_Controller {
 
         return array_map(
             function (array $item) use ($series_by_label, $empty_series): array {
-                $label = isset($item['label']) ? $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'])) : '';
+                $label = isset($item['label']) ? $this->get_report_page_path_key(bbpa_sanitize_page_path_value($item['label'])) : '';
                 $item['views_series'] = $series_by_label[$label] ?? $empty_series;
 
                 return $item;
@@ -3037,6 +3036,11 @@ class BBPA_Report_Controller {
 
     /**
      * Merge page-path rows that map to the same normalized URL path.
+     *
+     * Rows are grouped by get_report_page_path_key(), so spellings that only differ by the letter
+     * case of their percent-encoded octets (`/caf%c3%a9`, `/caf%C3%A9/`) share one row. The first
+     * row of a group, in input order, gives the merged row its label (its normalized path, spelled
+     * as stored) and its title; the next rows only add their metric.
      */
     private function merge_page_path_items(array $items, string $metric_column): array {
         $merged_items = [];
@@ -3044,17 +3048,18 @@ class BBPA_Report_Controller {
         foreach ($items as $item) {
             $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
             $normalized_label = $this->normalize_report_page_path($label);
-            $merge_key = $normalized_label !== '' ? $normalized_label : $label;
+            $merged_label = $normalized_label !== '' ? $normalized_label : $label;
+            $merge_key = bbpa_normalize_percent_encoding_case($merged_label);
 
             if ($merge_key === '') {
                 continue;
             }
 
             if (!isset($merged_items[$merge_key])) {
-                $item['label'] = $merge_key;
+                $item['label'] = $merged_label;
                 $item[$metric_column] = (int) ($item[$metric_column] ?? 0);
                 if (!array_key_exists('page_title', $item)) {
-                    $item['page_title'] = $this->resolve_page_title_from_path($merge_key);
+                    $item['page_title'] = $this->resolve_page_title_from_path($merged_label);
                 } elseif ($item['page_title'] !== null) {
                     // A null title is resolved later, only when the row needs it.
                     $item['page_title'] = (string) $item['page_title'];
@@ -3084,7 +3089,7 @@ class BBPA_Report_Controller {
         $candidates = [];
         foreach ($items as $item) {
             $normalized_label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'] ?? ''));
-            if ($normalized_label !== '' && !$this->is_home_page_path($normalized_label) && isset($not_found_paths[$normalized_label])) {
+            if ($normalized_label !== '' && !$this->is_home_page_path($normalized_label) && isset($not_found_paths[bbpa_normalize_percent_encoding_case($normalized_label)])) {
                 $candidates[] = [
                     'path' => $normalized_label,
                     'metric' => (int) ($item[$metric_column] ?? 0),
@@ -3104,7 +3109,7 @@ class BBPA_Report_Controller {
                         return true;
                     }
 
-                    if (!isset($not_found_paths[$normalized_label])) {
+                    if (!isset($not_found_paths[bbpa_normalize_percent_encoding_case($normalized_label)])) {
                         return true;
                     }
 
@@ -3115,7 +3120,7 @@ class BBPA_Report_Controller {
     }
 
     /**
-     * Return normalized 404 page paths keyed by path for fast report exclusion.
+     * Return normalized 404 page paths keyed by get_report_page_path_key() for fast report exclusion.
      *
      * Titles are not resolved here: the caller only checks titles of report rows matching
      * one of these paths, which gives the same result without one lookup per 404 path.
@@ -3151,10 +3156,22 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $paths[$path] = true;
+            $paths[bbpa_normalize_percent_encoding_case($path)] = true;
         }
 
         return $paths;
+    }
+
+    /**
+     * Build the key that compares and groups report page paths.
+     *
+     * The normalized path with the hexadecimal digits of its percent-encoded octets uppercased:
+     * `/caf%c3%a9` and `/caf%C3%A9/` share one key, as the case-insensitive collations of the
+     * page_path columns already treat both spellings as equal in SQL. Labels returned by the
+     * reports keep the spelling of normalize_report_page_path().
+     */
+    private function get_report_page_path_key(string $page_path): string {
+        return bbpa_normalize_percent_encoding_case($this->normalize_report_page_path($page_path));
     }
 
     /**

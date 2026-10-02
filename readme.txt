@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.47.2
+Stable tag: 8.47.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,6 +213,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.47.2 =
-* [Fix] Excluded paths: paths separated by commas ("/contact, /thank-you") are now saved as separate pages, and an address typed without "https://" ("example.com/contact") is now refused like a full address.
-* [Improvement] Settings: the Excluded paths and MaxMind fields now tell screen readers when they show an error.
+= 8.47.3 =
+* [Fix] Pages with accents or other non-Latin characters in their address now appear as one row in Top pages, Entry pages, Exit pages and 404 pages, even when visitors arrived through links that write the same address differently (for example the permalink and a link shared elsewhere). Their views, daily trend and average time on page now include all of these visits, and Entry pages and Exit pages leave out such an address when it was recorded as a 404 error.
+* [Fix] Events coming from campaign links whose UTM values contain encoded characters are now attributed to the right acquisition channel. [Pro].

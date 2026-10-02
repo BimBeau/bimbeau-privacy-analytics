@@ -879,7 +879,10 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                     }
 
                     $items[] = [
-                        $label_key => sanitize_text_field((string) $label),
+                        // Page paths keep their percent-encoded octets (`/caf%C3%A9`), which sanitize_text_field() strips.
+                        $label_key => $label_key === 'url'
+                            ? bbpa_sanitize_page_path_value((string) $label)
+                            : sanitize_text_field((string) $label),
                         'count' => $count,
                     ];
                 }
@@ -1873,8 +1876,13 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         $table = bbpa_sql_table_name('bbpa_daily');
         $series_by_label = [];
+        $label_by_key = [];
         foreach (array_keys($labels) as $label) {
             $series_by_label[$label] = $empty_series;
+            $label_key = bbpa_normalize_percent_encoding_case((string) $label);
+            if (!isset($label_by_key[$label_key])) {
+                $label_by_key[$label_key] = (string) $label;
+            }
         }
 
         $query = $wpdb->prepare(
@@ -1890,6 +1898,11 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         foreach ($rows as $row) {
             $bucket = isset($row['date_bucket']) ? (string) $row['date_bucket'] : '';
             $label = bbpa_sanitize_page_path_value($row['page_path'] ?? '');
+            if (!isset($series_by_label[$label])) {
+                // Case-insensitive collations match and group `/caf%c3%a9` with a `/caf%C3%A9` row, and
+                // return either spelling: such a row belongs to the row of the other spelling.
+                $label = $label_by_key[bbpa_normalize_percent_encoding_case($label)] ?? '';
+            }
             if (!isset($bucket_indexes[$bucket]) || !isset($series_by_label[$label])) {
                 continue;
             }
