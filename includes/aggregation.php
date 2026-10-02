@@ -206,12 +206,36 @@ function bbpa_delete_rows_before_cutoff_in_batches(string $table, string $column
  */
 function bbpa_purge_aggregated_data_by_retention(): void
 {
-    global $wpdb;
+    // Rows are deleted in batches within a shared time budget. When the budget runs out, a single follow-up run is
+    // scheduled one minute later; the remaining rows are always older than the cutoff, so the result is unchanged.
+    $result = bbpa_apply_aggregated_retention_targets(
+        bbpa_get_aggregated_retention_targets(bbpa_get_aggregated_retention_window()),
+        20.0
+    );
 
-    $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-    $retention_limits = function_exists('bbpa_get_aggregated_retention_limits')
-        ? bbpa_get_aggregated_retention_limits()
-        : ['max' => 3650];
+    if ($result['deleted'] > 0) {
+        bbpa_flush_admin_cache();
+    }
+
+    if (!$result['complete'] && !wp_next_scheduled(BBPA_AGGREGATED_RETENTION_CRON_HOOK, ['continuation'])) {
+        wp_schedule_single_event(time() + MINUTE_IN_SECONDS, BBPA_AGGREGATED_RETENTION_CRON_HOOK, ['continuation']);
+    }
+}
+
+/**
+ * Resolve the aggregated retention windows from the stored settings.
+ *
+ * Shared by the retention cron and the manual cleanup action (`POST /admin/purge-aggregated-data`), so both apply
+ * the same cutoffs. Report details follow `aggregated_data_retention_days` (30 days to the configured maximum);
+ * daily overview totals follow `overview_totals_retention_days` (365 to 3650 days, never shorter than the details).
+ *
+ * @param int|null $now Reference Unix timestamp; defaults to the current time.
+ * @return array{retention_days: int, overview_retention_days: int, cutoff_timestamp: int, cutoff_date: string, cutoff_datetime: string, overview_cutoff_date: string}
+ */
+function bbpa_get_aggregated_retention_window(?int $now = null): array
+{
+    $settings = bbpa_get_settings();
+    $retention_limits = bbpa_get_aggregated_retention_limits();
     $retention_days = isset($settings['aggregated_data_retention_days'])
         ? absint($settings['aggregated_data_retention_days'])
         : 365;
@@ -222,42 +246,42 @@ function bbpa_purge_aggregated_data_by_retention(): void
         : 730;
     $overview_retention_days = max($retention_days, max(365, min(3650, $overview_retention_days)));
 
-    $current_timestamp = time();
+    $current_timestamp = $now ?? time();
     $cutoff_timestamp = $current_timestamp - ($retention_days * DAY_IN_SECONDS);
     $overview_cutoff_timestamp = $current_timestamp - ($overview_retention_days * DAY_IN_SECONDS);
-    $cutoff_date = wp_date('Y-m-d', $cutoff_timestamp);
-    $overview_cutoff_date = wp_date('Y-m-d', $overview_cutoff_timestamp);
-    $cutoff_datetime = wp_date('Y-m-d H:i:s', $cutoff_timestamp);
 
-    $deleted_any_rows = false;
+    return [
+        'retention_days' => $retention_days,
+        'overview_retention_days' => $overview_retention_days,
+        'cutoff_timestamp' => $cutoff_timestamp,
+        'cutoff_date' => wp_date('Y-m-d', $cutoff_timestamp),
+        'cutoff_datetime' => wp_date('Y-m-d H:i:s', $cutoff_timestamp),
+        'overview_cutoff_date' => wp_date('Y-m-d', $overview_cutoff_timestamp),
+    ];
+}
 
-    // Rows are deleted in batches within a shared time budget. When the budget runs out, a single follow-up run is
-    // scheduled one minute later; the remaining rows are always older than the cutoff, so the result is unchanged.
-    $deadline = microtime(true) + 20;
-    $complete = true;
-    $delete_batched = static function (string $table, string $column, $cutoff, string $format) use ($deadline, &$complete): int {
-        $remaining_budget = $deadline - microtime(true);
-        if ($remaining_budget <= 0) {
-            $complete = false;
+/**
+ * List the tables purged by the aggregated retention policy, in purge order, with the cutoff of each.
+ *
+ * The filters `bbpa_retention_date_bucket_tables` and `bbpa_retention_datetime_bucket_tables` add tables
+ * (suffix => bucket column). A table added this way must also be declared through `bbpa_allowed_sql_table_suffixes`
+ * and its column through `bbpa_allowed_sql_columns`, otherwise it is skipped (and logged).
+ *
+ * @param array<string, mixed> $window Result of bbpa_get_aggregated_retention_window().
+ * @return array<int, array{table: string, column: string, cutoff: int|string, format: string}>
+ */
+function bbpa_get_aggregated_retention_targets(array $window): array
+{
+    $targets = [
+        [
+            'table' => 'bbpa_visitors',
+            'column' => 'last_view_at',
+            'cutoff' => (int) $window['cutoff_timestamp'],
+            'format' => '%d',
+        ],
+    ];
 
-            return 0;
-        }
-
-        $result = bbpa_delete_rows_before_cutoff_in_batches($table, $column, $cutoff, $format, $remaining_budget);
-        if (!$result['complete']) {
-            $complete = false;
-        }
-
-        return (int) $result['deleted'];
-    };
-
-    $visitors_table = $wpdb->prefix . 'bbpa_visitors';
-    if (bbpa_aggregation_table_exists($visitors_table)) {
-        $deleted_rows = $delete_batched($visitors_table, 'last_view_at', $cutoff_timestamp, '%d');
-        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
-    }
-
-    $date_bucket_tables = [
+    $date_bucket_tables = apply_filters('bbpa_retention_date_bucket_tables', [
         'bbpa_daily' => 'date_bucket',
         'bbpa_hits_daily' => 'date_bucket',
         'bbpa_daily_source_category' => 'date_bucket',
@@ -268,46 +292,141 @@ function bbpa_purge_aggregated_data_by_retention(): void
         'bbpa_time_daily' => 'date_bucket',
         'bbpa_page_time_daily' => 'date_bucket',
         'bbpa_visitor_activity_daily' => 'date_bucket',
+    ]);
+    foreach (is_array($date_bucket_tables) ? $date_bucket_tables : [] as $table_suffix => $bucket_column) {
+        $targets[] = [
+            'table' => (string) $table_suffix,
+            'column' => (string) $bucket_column,
+            'cutoff' => (string) $window['cutoff_date'],
+            'format' => '%s',
+        ];
+    }
+
+    $targets[] = [
+        'table' => 'bbpa_overview_daily',
+        'column' => 'date_bucket',
+        'cutoff' => (string) $window['overview_cutoff_date'],
+        'format' => '%s',
     ];
-    $date_bucket_tables = apply_filters('bbpa_retention_date_bucket_tables', $date_bucket_tables);
-    foreach ($date_bucket_tables as $table_suffix => $bucket_column) {
-        $table = $wpdb->prefix . $table_suffix;
-        if (!bbpa_aggregation_table_exists($table)) {
-            continue;
-        }
 
-        $deleted_rows = $delete_batched($table, (string) $bucket_column, $cutoff_date, '%s');
-        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
-    }
-
-    $overview_daily_table = $wpdb->prefix . 'bbpa_overview_daily';
-    if (bbpa_aggregation_table_exists($overview_daily_table)) {
-        $deleted_rows = $delete_batched($overview_daily_table, 'date_bucket', $overview_cutoff_date, '%s');
-        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
-    }
-
-    $datetime_bucket_tables = [
+    $datetime_bucket_tables = apply_filters('bbpa_retention_datetime_bucket_tables', [
         'bbpa_hourly' => 'date_bucket',
         'bbpa_entry_exit_hourly' => 'date_bucket',
-    ];
-    $datetime_bucket_tables = apply_filters('bbpa_retention_datetime_bucket_tables', $datetime_bucket_tables);
-    foreach ($datetime_bucket_tables as $table_suffix => $bucket_column) {
-        $table = $wpdb->prefix . $table_suffix;
-        if (!bbpa_aggregation_table_exists($table)) {
-            continue;
+    ]);
+    foreach (is_array($datetime_bucket_tables) ? $datetime_bucket_tables : [] as $table_suffix => $bucket_column) {
+        $targets[] = [
+            'table' => (string) $table_suffix,
+            'column' => (string) $bucket_column,
+            'cutoff' => (string) $window['cutoff_datetime'],
+            'format' => '%s',
+        ];
+    }
+
+    return $targets;
+}
+
+/**
+ * Delete the rows older than the cutoff of each retention target.
+ *
+ * @param array<int, array{table: string, column: string, cutoff: int|string, format: string}> $targets
+ *     Targets from bbpa_get_aggregated_retention_targets().
+ * @param float $time_budget Seconds shared by every target; 0 runs until every target is purged.
+ * @return array{tables: array<string, int>, deleted: int, complete: bool} Deleted rows per table suffix, total, and
+ *     whether every target was fully purged within the budget.
+ */
+function bbpa_apply_aggregated_retention_targets(array $targets, float $time_budget = 0.0): array
+{
+    $deadline = $time_budget > 0 ? microtime(true) + $time_budget : 0.0;
+    $tables = [];
+    $deleted_total = 0;
+    $complete = true;
+
+    foreach ($targets as $target) {
+        $table_suffix = (string) ($target['table'] ?? '');
+        $remaining_budget = 0.0;
+        if ($deadline > 0) {
+            $remaining_budget = $deadline - microtime(true);
+            if ($remaining_budget <= 0) {
+                $complete = false;
+                $tables[$table_suffix] = 0;
+                continue;
+            }
         }
 
-        $deleted_rows = $delete_batched($table, (string) $bucket_column, $cutoff_datetime, '%s');
-        $deleted_any_rows = $deleted_any_rows || $deleted_rows > 0;
+        $result = bbpa_delete_rows_by_retention_cutoff(
+            $table_suffix,
+            (string) ($target['column'] ?? ''),
+            $target['cutoff'] ?? '',
+            (string) ($target['format'] ?? '%s'),
+            $remaining_budget
+        );
+
+        $tables[$table_suffix] = $result['deleted'];
+        $deleted_total += $result['deleted'];
+        if (!$result['complete']) {
+            $complete = false;
+        }
     }
 
-    if ($deleted_any_rows) {
-        bbpa_flush_admin_cache();
+    return [
+        'tables' => $tables,
+        'deleted' => $deleted_total,
+        'complete' => $complete,
+    ];
+}
+
+/**
+ * Delete the rows of an allowlisted plugin table whose column is lower than a retention cutoff.
+ *
+ * The table and the column go through the SQL allowlists (bbpa_resolve_sql_table() and bbpa_resolve_sql_column());
+ * unknown entries are logged and skipped, missing tables and columns are skipped.
+ *
+ * @param int|string $cutoff_value Rows with `$column < $cutoff_value` are deleted.
+ * @param string     $format       `%d` or `%s`.
+ * @param float      $time_budget  Seconds; 0 runs until no row is left.
+ * @return array{deleted: int, complete: bool}
+ */
+function bbpa_delete_rows_by_retention_cutoff(string $table_suffix, string $column, $cutoff_value, string $format, float $time_budget = 0.0): array
+{
+    global $wpdb;
+
+    $nothing_deleted = ['deleted' => 0, 'complete' => true];
+
+    $table = bbpa_resolve_sql_table($table_suffix);
+    if ($table === null) {
+        bbpa_safe_log('Storage', 'warning', 'SQL guard blocked unknown table in retention purge', ['table_suffix' => $table_suffix]);
+        return $nothing_deleted;
     }
 
-    if (!$complete && !wp_next_scheduled(BBPA_AGGREGATED_RETENTION_CRON_HOOK, ['continuation'])) {
-        wp_schedule_single_event(time() + MINUTE_IN_SECONDS, BBPA_AGGREGATED_RETENTION_CRON_HOOK, ['continuation']);
+    $resolved_column = bbpa_resolve_sql_column($table_suffix, $column);
+    if ($resolved_column === null) {
+        bbpa_safe_log('Storage', 'warning', 'SQL guard blocked unknown column in retention purge', ['table_suffix' => $table_suffix, 'column' => $column]);
+        return $nothing_deleted;
     }
+
+    if (!bbpa_aggregation_table_exists($table)) {
+        return $nothing_deleted;
+    }
+
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Schema check before a retention delete, once per table and cleanup run.
+    $column_exists = $wpdb->get_var($wpdb->prepare('SHOW COLUMNS FROM %i LIKE %s', $table, $resolved_column));
+    if ($column_exists !== $resolved_column) {
+        return $nothing_deleted;
+    }
+
+    // Batched deletes keep each transaction small; the total is the same as a single DELETE.
+    $result = bbpa_delete_rows_before_cutoff_in_batches(
+        $table,
+        $resolved_column,
+        $format === '%d' ? (int) $cutoff_value : (string) $cutoff_value,
+        $format === '%d' ? '%d' : '%s',
+        $time_budget
+    );
+
+    return [
+        'deleted' => (int) $result['deleted'],
+        'complete' => (bool) $result['complete'],
+    ];
 }
 
 /**

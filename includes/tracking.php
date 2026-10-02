@@ -3,7 +3,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 /**
  * Front-end tracking helpers for BimBeau Privacy Analytics.
@@ -22,10 +21,6 @@ function bbpa_tracking_upsert_counter(string $table_suffix, array $columns, arra
     $table = bbpa_resolve_sql_table($table_suffix);
     if ($table === null) {
         bbpa_safe_log('Storage', 'warning', 'SQL guard blocked unknown tracking table', ['table_suffix' => $table_suffix]);
-        return;
-    }
-
-    if (function_exists('bbpa_is_table_write_allowed') && !bbpa_is_table_write_allowed($table)) {
         return;
     }
 
@@ -56,12 +51,14 @@ function bbpa_tracking_upsert_counter(string $table_suffix, array $columns, arra
     $sql = "INSERT INTO `{$table}` (" . implode(', ', $validated_columns) . ') VALUES ('
         . implode(', ', $placeholders) . ') ON DUPLICATE KEY UPDATE ' . implode(', ', $updates);
 
+    // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table from bbpa_resolve_sql_table(), columns validated above, values bound to placeholders.
     $prepared_sql = $wpdb->prepare($sql, ...$values);
     if ($prepared_sql === false) {
         bbpa_safe_log('Storage', 'error', 'Failed to prepare tracking UPSERT query', ['table_suffix' => $table_suffix]);
         return;
     }
 
+    // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Prepared above.
     $wpdb->query($prepared_sql);
 
     if ($wpdb->last_error === '') {
@@ -170,30 +167,47 @@ function bbpa_track_request(): void
  */
 function bbpa_should_skip_tracking(array $settings): bool
 {
+    $dnt = isset($_SERVER['HTTP_DNT']) ? bbpa_request_get_string($_SERVER, 'HTTP_DNT') : null;
+    $gpc = isset($_SERVER['HTTP_SEC_GPC']) ? bbpa_request_get_string($_SERVER, 'HTTP_SEC_GPC') : null;
+
+    return bbpa_get_tracking_privacy_skip_reason($settings, $dnt, $gpc) !== '';
+}
+
+/**
+ * Apply the role exclusion and Do Not Track / Global Privacy Control rules shared by every collection path.
+ *
+ * Used by server-side request tracking (headers read from `$_SERVER`) and by the `/hits` route (headers read
+ * from the REST request), so both apply the same rules in the same order.
+ *
+ * @param array<string, mixed> $settings Plugin settings (`excluded_roles`, `respect_dnt_gpc`).
+ * @param mixed                $dnt      `DNT` request header value, null when absent.
+ * @param mixed                $gpc      `Sec-GPC` request header value, null when absent.
+ * @return string `excluded_role`, `dnt_enabled`, `gpc_enabled`, or an empty string when tracking may proceed.
+ */
+function bbpa_get_tracking_privacy_skip_reason(array $settings, $dnt = null, $gpc = null): string
+{
     if (!empty($settings['excluded_roles']) && is_user_logged_in()) {
         $user = wp_get_current_user();
         if (!empty($user->roles)) {
             foreach ($user->roles as $role) {
                 if (in_array($role, $settings['excluded_roles'], true)) {
-                    return true;
+                    return 'excluded_role';
                 }
             }
         }
     }
 
     if (!empty($settings['respect_dnt_gpc'])) {
-        $dnt = isset($_SERVER['HTTP_DNT']) ? bbpa_request_get_string($_SERVER, 'HTTP_DNT') : null;
         if ($dnt !== null && (string) $dnt === '1') {
-            return true;
+            return 'dnt_enabled';
         }
 
-        $gpc = isset($_SERVER['HTTP_SEC_GPC']) ? bbpa_request_get_string($_SERVER, 'HTTP_SEC_GPC') : null;
         if ($gpc !== null && (string) $gpc === '1') {
-            return true;
+            return 'gpc_enabled';
         }
     }
 
-    return false;
+    return '';
 }
 
 /**
@@ -229,6 +243,34 @@ function bbpa_get_request_path(array $settings): string
         return bbpa_trim_value($path, BBPA_MAX_PATH_LENGTH);
     }
 
+    // Unlike the /hits route, server-side tracking lowercases the path, truncates it and always applies the
+    // query allowlist. Both keep their rule so that stored page paths do not change.
+    $sanitized_args = bbpa_filter_tracking_query_args_by_allowlist(
+        bbpa_sanitize_tracking_query_args($query_args),
+        $settings['url_query_allowlist'] ?? []
+    );
+
+    if ($sanitized_args === []) {
+        return bbpa_trim_value($path, BBPA_MAX_PATH_LENGTH);
+    }
+
+    $query_string = http_build_query($sanitized_args, '', '&', PHP_QUERY_RFC3986);
+    $full_path = $query_string !== '' ? $path . '?' . $query_string : $path;
+
+    return bbpa_trim_value($full_path, BBPA_MAX_PATH_LENGTH);
+}
+
+/**
+ * Sanitize parsed query arguments of a tracked URL.
+ *
+ * Keys go through sanitize_key() (empty keys are dropped), the first item of an array value is kept and values go
+ * through sanitize_text_field().
+ *
+ * @param array<mixed, mixed> $query_args Arguments parsed by wp_parse_str().
+ * @return array<string, string>
+ */
+function bbpa_sanitize_tracking_query_args(array $query_args): array
+{
     $sanitized_args = [];
     foreach ($query_args as $key => $value) {
         $key = sanitize_key($key);
@@ -243,22 +285,23 @@ function bbpa_get_request_path(array $settings): string
         $sanitized_args[$key] = sanitize_text_field((string) $value);
     }
 
-    $allowlist = $settings['url_query_allowlist'] ?? [];
-    if ($allowlist) {
-        $allowlist = array_fill_keys($allowlist, true);
-        $sanitized_args = array_intersect_key($sanitized_args, $allowlist);
-    } else {
-        $sanitized_args = [];
+    return $sanitized_args;
+}
+
+/**
+ * Keep only the query arguments listed in the URL query allowlist.
+ *
+ * @param array<string, string> $sanitized_args Arguments from bbpa_sanitize_tracking_query_args().
+ * @param mixed                 $allowlist      The `url_query_allowlist` setting; an empty value keeps no argument.
+ * @return array<string, string>
+ */
+function bbpa_filter_tracking_query_args_by_allowlist(array $sanitized_args, $allowlist): array
+{
+    if (!$allowlist) {
+        return [];
     }
 
-    if ($sanitized_args === []) {
-        return bbpa_trim_value($path, BBPA_MAX_PATH_LENGTH);
-    }
-
-    $query_string = http_build_query($sanitized_args, '', '&', PHP_QUERY_RFC3986);
-    $full_path = $query_string !== '' ? $path . '?' . $query_string : $path;
-
-    return bbpa_trim_value($full_path, BBPA_MAX_PATH_LENGTH);
+    return array_intersect_key($sanitized_args, array_fill_keys($allowlist, true));
 }
 
 /**
@@ -313,19 +356,15 @@ function bbpa_get_referrer_info(): array
         ];
     }
 
-    $candidate = trim($referrer);
-    if (!str_contains($candidate, '://')) {
-        $candidate = 'https://' . $candidate;
-    }
-    $parsed = wp_parse_url($candidate);
-    if (empty($parsed['host'])) {
+    $host = bbpa_extract_referrer_host($referrer);
+    if ($host === '') {
         return [
             'domain' => '',
             'category' => 'Unknown',
         ];
     }
 
-    $domain = sanitize_text_field(bbpa_lowercase($parsed['host']));
+    $domain = sanitize_text_field(bbpa_lowercase($host));
     $domain = bbpa_trim_value($domain, BBPA_MAX_REFERRER_LENGTH);
 
     if (bbpa_is_internal_referrer_domain($domain)) {
@@ -339,6 +378,33 @@ function bbpa_get_referrer_info(): array
         'domain' => $domain,
         'category' => bbpa_get_source_category_from_referrer($domain),
     ];
+}
+
+/**
+ * Extract the host of a referrer URL or of a scheme-less referrer value.
+ *
+ * Shared by server-side request tracking and the /hits route. The host is returned as parsed: each caller keeps
+ * its own lowercasing, sanitization and length rules.
+ *
+ * @return string The host, or an empty string when the value is empty or has no usable host.
+ */
+function bbpa_extract_referrer_host(string $referrer): string
+{
+    $candidate = trim($referrer);
+    if ($candidate === '') {
+        return '';
+    }
+
+    if (!str_contains($candidate, '://')) {
+        $candidate = 'https://' . $candidate;
+    }
+
+    $parsed = wp_parse_url($candidate);
+    if (!is_array($parsed) || empty($parsed['host'])) {
+        return '';
+    }
+
+    return (string) $parsed['host'];
 }
 
 /**
@@ -547,6 +613,39 @@ function bbpa_is_bot_user_agent(string $user_agent): bool
      * @param string $user_agent Request User-Agent.
      */
     return (bool) apply_filters('bbpa_is_bot_user_agent', $is_bot, $user_agent);
+}
+
+/**
+ * Classify a User-Agent as `bot`, `tablet`, `mobile` or `desktop` (`unknown` when it is empty).
+ *
+ * Used when a hit or an event signal carries no valid device class. The /hits route recognizes crawlers with
+ * bbpa_is_bot_user_agent() (signature list and `bbpa_is_bot_user_agent` filter). Event signals pass
+ * `$use_bot_signatures = false` to keep their shorter built-in crawler pattern, so the device classes they store
+ * do not change.
+ */
+function bbpa_detect_device_class_from_user_agent(string $user_agent, bool $use_bot_signatures = true): string
+{
+    $normalized_user_agent = strtolower($user_agent);
+    if ($normalized_user_agent === '') {
+        return 'unknown';
+    }
+
+    $is_bot = $use_bot_signatures
+        ? bbpa_is_bot_user_agent($user_agent)
+        : preg_match('/bot|crawl|spider|slurp|bingpreview|headless/i', $normalized_user_agent) === 1;
+    if ($is_bot) {
+        return 'bot';
+    }
+
+    if (preg_match('/ipad|tablet|kindle|silk|playbook/i', $normalized_user_agent) === 1) {
+        return 'tablet';
+    }
+
+    if (preg_match('/mobile|iphone|android|phone|opera mini|iemobile/i', $normalized_user_agent) === 1) {
+        return 'mobile';
+    }
+
+    return 'desktop';
 }
 
 /**

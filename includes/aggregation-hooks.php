@@ -27,7 +27,6 @@ add_action('template_redirect', 'bbpa_track_request_after_canonical_redirects', 
 add_action('shutdown', 'bbpa_track_final_not_found_request', 1);
 add_filter('wp_redirect', 'bbpa_mark_runtime_redirect', 10, 2);
 add_filter('wp_redirect_status', 'bbpa_mark_runtime_redirect_status', 10, 2);
-add_filter('rest_post_dispatch', 'bbpa_filter_not_found_report_technical_paths', 10, 3);
 
 /**
  * Track requests after WordPress canonical redirects have had a chance to run.
@@ -166,6 +165,10 @@ function bbpa_track_final_not_found_request(): void {
 
 /**
  * Keep technical well-known endpoints out of the human-facing 404 report.
+ *
+ * No longer hooked: the 404 report query excludes `/.well-known` paths before counting and pagination, so the
+ * totals and pages are exact and exports match the screen. Kept for backward compatibility with direct callers;
+ * on a current report response it finds nothing to remove.
  */
 function bbpa_filter_not_found_report_technical_paths($response, $server, $request) {
 	if (!$response instanceof WP_REST_Response || !$request instanceof WP_REST_Request) {

@@ -4,16 +4,24 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Resolve the full name of an allowlisted plugin table.
+ *
+ * A suffix outside the allowlist (`bbpa_allowed_sql_table_suffixes`) falls back to `bbpa_daily`, as it always did;
+ * the fallback is now logged so that a typo or a table missing from the allowlist does not go unnoticed. Prefer
+ * bbpa_resolve_sql_table(), which returns null instead, in new code.
+ */
 function bbpa_sql_table_name(string $suffix): string
 {
     global $wpdb;
 
     $default_suffix = 'bbpa_daily';
-    $allowed_suffixes = function_exists('bbpa_get_allowed_sql_table_suffixes')
-        ? bbpa_get_allowed_sql_table_suffixes()
-        : [$default_suffix];
 
-    if (!in_array($suffix, $allowed_suffixes, true)) {
+    if (!in_array($suffix, bbpa_get_allowed_sql_table_suffixes(), true)) {
+        bbpa_safe_log('Storage', 'warning', 'SQL guard replaced an unknown table suffix with the default table', [
+            'table_suffix' => $suffix,
+            'default_suffix' => $default_suffix,
+        ]);
         $suffix = $default_suffix;
     }
 

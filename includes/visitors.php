@@ -89,6 +89,29 @@ function bbpa_upsert_visitor_activity_daily(array $hit): bool
 }
 
 /**
+ * Determine whether a visitor row exists for a visitor identifier.
+ *
+ * Used by the visitor upsert (non page-view events never create a row) and by the /hits enrichment upgrade.
+ */
+function bbpa_visitor_row_exists(string $visitor_id): bool
+{
+    global $wpdb;
+
+    if ($visitor_id === '') {
+        return false;
+    }
+
+    $table = bbpa_resolve_sql_table('bbpa_visitors');
+    if ($table === null) {
+        return false;
+    }
+
+    return (int) $wpdb->get_var(
+        $wpdb->prepare('SELECT COUNT(*) FROM %i WHERE visitor_id = %s', $table, $visitor_id)
+    ) > 0;
+}
+
+/**
  * Upsert a visitor row from a hit payload.
  */
 function bbpa_store_visitor_hit(array $hit): bool
@@ -133,13 +156,8 @@ function bbpa_write_visitor_hit(array $hit): array
     $event_name = isset($hit['event_name']) ? sanitize_key((string) $hit['event_name']) : 'page_view';
     $view_increment = $event_name === 'page_view' ? 1 : 0;
 
-    if ($view_increment === 0) {
-        $existing_visitor = (int) $wpdb->get_var(
-            $wpdb->prepare("SELECT COUNT(*) FROM `{$table}` WHERE visitor_id = %s", $visitor_id)
-        );
-        if ($existing_visitor === 0) {
-            return $not_stored;
-        }
+    if ($view_increment === 0 && !bbpa_visitor_row_exists($visitor_id)) {
+        return $not_stored;
     }
 
     $granularity = (($hit['granularity'] ?? 'base') === 'enriched') ? 'enriched' : 'base';

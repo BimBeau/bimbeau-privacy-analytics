@@ -1989,6 +1989,15 @@ class BBPA_Report_Controller {
             $arguments[] = $pattern;
         }
 
+        // Technical /.well-known endpoints (with or without a sub-path or query string) are excluded before
+        // counting and pagination, so totals, pages and exports stay consistent.
+        $conditions[] = "LOWER({$label_column}) <> %s";
+        $arguments[] = '/.well-known';
+        foreach (['/.well-known/%', '/.well-known?%', '/.well-known#%'] as $pattern) {
+            $conditions[] = "LOWER({$label_column}) NOT LIKE %s";
+            $arguments[] = $pattern;
+        }
+
         return [
             'sql' => ' AND ' . implode(' AND ', $conditions),
             'args' => $arguments,

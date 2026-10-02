@@ -254,11 +254,7 @@ class BBPA_Hit_Controller {
         }
 
         if ($ip === '' || !bbpa_is_public_ip($ip)) {
-            $visit_id = $request->get_param('visit_id');
-            if (($visit_id === null || $visit_id === '') && $request->get_param('visitId') !== null) {
-                $visit_id = $request->get_param('visitId');
-            }
-            $visit_id = $this->clean_visit_id($visit_id);
+            $visit_id = $this->clean_visit_id($this->get_param_with_legacy_alias($request, 'visit_id', 'visitId', true));
             if (is_string($visit_id) && $visit_id !== '') {
                 $fingerprint_source .= '|visit:' . $visit_id;
             }
@@ -279,39 +275,39 @@ class BBPA_Hit_Controller {
     }
 
     /**
-     * Respect DNT/GPC headers when present.
+     * Apply the collection context, role exclusion and DNT/GPC rules.
+     *
+     * The role and DNT/GPC rules are shared with server-side request tracking
+     * (bbpa_get_tracking_privacy_skip_reason()).
      */
     private function get_skip_tracking_reason(WP_REST_Request $request): string {
         $settings = bbpa_get_settings();
 
-        if (function_exists('bbpa_is_frontend_collection_context') && !bbpa_is_frontend_collection_context($settings, true)) {
+        if (!bbpa_is_frontend_collection_context($settings, true)) {
             return 'non_front_context';
         }
 
-        if (!empty($settings['excluded_roles']) && is_user_logged_in()) {
-            $user = wp_get_current_user();
-            if (!empty($user->roles)) {
-                foreach ($user->roles as $role) {
-                    if (in_array($role, $settings['excluded_roles'], true)) {
-                        return 'excluded_role';
-                    }
-                }
-            }
+        return bbpa_get_tracking_privacy_skip_reason(
+            $settings,
+            $request->get_header('DNT'),
+            $request->get_header('Sec-GPC')
+        );
+    }
+
+    /**
+     * Read a request parameter, falling back to its legacy camelCase alias.
+     *
+     * @param bool $empty_string_uses_alias Whether an empty string also falls back to the alias (otherwise only a
+     *                                      missing parameter does).
+     * @return mixed
+     */
+    private function get_param_with_legacy_alias(WP_REST_Request $request, string $name, string $alias, bool $empty_string_uses_alias) {
+        $value = $request->get_param($name);
+        if (($value === null || ($empty_string_uses_alias && $value === '')) && $request->get_param($alias) !== null) {
+            $value = $request->get_param($alias);
         }
 
-        if (!empty($settings['respect_dnt_gpc'])) {
-            $dnt = $request->get_header('DNT');
-            if ($dnt !== null && (string) $dnt === '1') {
-                return 'dnt_enabled';
-            }
-
-            $gpc = $request->get_header('Sec-GPC');
-            if ($gpc !== null && (string) $gpc === '1') {
-                return 'gpc_enabled';
-            }
-        }
-
-        return '';
+        return $value;
     }
 
 
@@ -407,13 +403,12 @@ class BBPA_Hit_Controller {
         $internal_referrer_domain = '';
         if (
             $referrer_domain !== null
-            && function_exists('bbpa_is_internal_referrer_domain')
             && bbpa_is_internal_referrer_domain($referrer_domain)
             && !$this->exceeds_max_length($referrer_domain, self::MAX_REFERRER_DOMAIN_LENGTH)
         ) {
             $internal_referrer_domain = $referrer_domain;
         }
-        if ($referrer_domain !== null && function_exists('bbpa_normalize_external_referrer_domain')) {
+        if ($referrer_domain !== null) {
             $referrer_domain = bbpa_normalize_external_referrer_domain($referrer_domain);
         }
         if ($referrer_domain !== null && $this->exceeds_max_length($referrer_domain, self::MAX_REFERRER_DOMAIN_LENGTH)) {
@@ -424,10 +419,10 @@ class BBPA_Hit_Controller {
         // device class, so JavaScript-rendering bots would otherwise be counted as humans.
         $user_agent = sanitize_text_field((string) $request->get_header('User-Agent'));
         $device_class = $this->clean_device_class($request->get_param('device_class'));
-        if (function_exists('bbpa_is_bot_user_agent') && bbpa_is_bot_user_agent($user_agent)) {
+        if (bbpa_is_bot_user_agent($user_agent)) {
             $device_class = 'bot';
         } elseif ($device_class === '') {
-            $device_class = $this->detect_device_class_from_user_agent($user_agent);
+            $device_class = bbpa_detect_device_class_from_user_agent($user_agent);
         }
 
         $timestamp_bucket = $this->normalize_timestamp_bucket($request->get_param('timestamp_bucket'));
@@ -435,11 +430,7 @@ class BBPA_Hit_Controller {
             return new WP_Error('bbpa_invalid_timestamp_bucket', __('Invalid timestamp bucket.', 'bimbeau-privacy-analytics'));
         }
 
-        $visit_id_param = $request->get_param('visit_id');
-        if (($visit_id_param === null || $visit_id_param === '') && $request->get_param('visitId') !== null) {
-            $visit_id_param = $request->get_param('visitId');
-        }
-        $visit_id = $this->clean_visit_id($visit_id_param);
+        $visit_id = $this->clean_visit_id($this->get_param_with_legacy_alias($request, 'visit_id', 'visitId', true));
         $client_provided_visit_id = ($visit_id !== '');
         if ($visit_id === false) {
             return new WP_Error('bbpa_invalid_visit_id', __('Invalid visit identifier.', 'bimbeau-privacy-analytics'));
@@ -464,7 +455,6 @@ class BBPA_Hit_Controller {
         if (
             $visit_id === ''
             && ($tracker_scope === 'base' || $tracker_scope === '')
-            && function_exists('bbpa_get_visit_identifier')
         ) {
             $visit_id = bbpa_get_visit_identifier($timestamp_bucket);
 
@@ -478,11 +468,9 @@ class BBPA_Hit_Controller {
         $active_ms_delta = absint($request->get_param('active_ms_delta'));
         $active_ms_delta = min($active_ms_delta, self::MAX_ACTIVE_MS_DELTA_PER_PING);
         $event_name = $this->clean_event_name($request->get_param('event_name'));
-        $granularity_enrichment_param = $request->get_param('granularity_enrichment');
-        if ($granularity_enrichment_param === null && $request->get_param('granularityEnrichment') !== null) {
-            $granularity_enrichment_param = $request->get_param('granularityEnrichment');
-        }
-        $granularity_enrichment = rest_sanitize_boolean($granularity_enrichment_param);
+        $granularity_enrichment = rest_sanitize_boolean(
+            $this->get_param_with_legacy_alias($request, 'granularity_enrichment', 'granularityEnrichment', false)
+        );
         // Legacy alias kept for backward compatibility (deprecated: use granularity_enrichment).
         $upgrade_existing_hit = rest_sanitize_boolean($request->get_param('upgrade_existing_hit'));
         if (!$granularity_enrichment && $upgrade_existing_hit) {
@@ -613,7 +601,7 @@ class BBPA_Hit_Controller {
             return $this->advanced_stats_enabled;
         }
 
-        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+        $settings = bbpa_get_settings();
         $this->advanced_stats_enabled = !isset($settings['advanced_stats_enabled'])
             || rest_sanitize_boolean($settings['advanced_stats_enabled']);
 
@@ -627,12 +615,7 @@ class BBPA_Hit_Controller {
      * server-side fallbacks, User-Agent derived metadata, or IP geolocation.
      */
     private function normalize_tracker_scope(WP_REST_Request $request): string {
-        $tracker_scope_param = $request->get_param('tracker_scope');
-        if (($tracker_scope_param === null || $tracker_scope_param === '') && $request->get_param('trackerScope') !== null) {
-            $tracker_scope_param = $request->get_param('trackerScope');
-        }
-
-        $tracker_scope = sanitize_key((string) $tracker_scope_param);
+        $tracker_scope = sanitize_key((string) $this->get_param_with_legacy_alias($request, 'tracker_scope', 'trackerScope', true));
         if ($tracker_scope === 'essential') {
             return 'base';
         }
@@ -706,12 +689,9 @@ class BBPA_Hit_Controller {
             return false;
         }
 
-        $granularity_enrichment_param = $request->get_param('granularity_enrichment');
-        if ($granularity_enrichment_param === null && $request->get_param('granularityEnrichment') !== null) {
-            $granularity_enrichment_param = $request->get_param('granularityEnrichment');
-        }
-
-        $granularity_enrichment = rest_sanitize_boolean($granularity_enrichment_param);
+        $granularity_enrichment = rest_sanitize_boolean(
+            $this->get_param_with_legacy_alias($request, 'granularity_enrichment', 'granularityEnrichment', false)
+        );
         $upgrade_existing_hit = rest_sanitize_boolean($request->get_param('upgrade_existing_hit'));
 
         return $granularity_enrichment || $upgrade_existing_hit;
@@ -719,23 +699,6 @@ class BBPA_Hit_Controller {
 
     private function has_enriched_identifier(array $hit): bool {
         return !empty($hit['visit_id']) || !empty($hit['visitor_id']);
-    }
-
-    private function visitor_row_exists(string $visitor_id): bool {
-        global $wpdb;
-
-        if ($visitor_id === '') {
-            return false;
-        }
-
-        $table = bbpa_resolve_sql_table('bbpa_visitors');
-        if ($table === null) {
-            return false;
-        }
-
-        return (int) $wpdb->get_var(
-            $wpdb->prepare("SELECT COUNT(*) FROM `{$table}` WHERE visitor_id = %s", $visitor_id)
-        ) > 0;
     }
 
     /**
@@ -856,7 +819,7 @@ class BBPA_Hit_Controller {
 
         $settings = bbpa_get_settings();
 
-        if (function_exists('bbpa_is_frontend_collection_context') && !bbpa_is_frontend_collection_context($settings, true)) {
+        if (!bbpa_is_frontend_collection_context($settings, true)) {
             // Outside a collection context, keep the path without its query string (never a reason code).
             return $path;
         }
@@ -866,29 +829,16 @@ class BBPA_Hit_Controller {
             return $path;
         }
 
-        $sanitized_args = [];
-        foreach ($query_args as $key => $value) {
-            $key = sanitize_key($key);
-            if ($key === '') {
-                continue;
-            }
-
-            if (is_array($value)) {
-                $value = reset($value);
-            }
-
-            $sanitized_args[$key] = sanitize_text_field((string) $value);
-        }
+        // Unlike server-side request tracking (bbpa_get_request_path()), the /hits route keeps the path case and
+        // applies the query allowlist only when url_strip_query is enabled, so stored page paths do not change.
+        $sanitized_args = bbpa_sanitize_tracking_query_args($query_args);
 
         $strip_query = !empty($settings['url_strip_query']);
         if ($strip_query) {
-            $allowlist = $settings['url_query_allowlist'] ?? [];
-            if ($allowlist) {
-                $allowlist = array_fill_keys($allowlist, true);
-                $sanitized_args = array_intersect_key($sanitized_args, $allowlist);
-            } else {
-                $sanitized_args = [];
-            }
+            $sanitized_args = bbpa_filter_tracking_query_args_by_allowlist(
+                $sanitized_args,
+                $settings['url_query_allowlist'] ?? []
+            );
 
             if ($path === '/wp-admin/admin.php' && isset($query_args['page'])) {
                 $admin_page = sanitize_key((string) $query_args['page']);
@@ -915,22 +865,12 @@ class BBPA_Hit_Controller {
             return null;
         }
 
-        $referrer_domain = trim($referrer_domain);
-        if ($referrer_domain === '') {
+        $host = bbpa_extract_referrer_host($referrer_domain);
+        if ($host === '') {
             return null;
         }
 
-        $candidate = $referrer_domain;
-        if (!str_contains($candidate, '://')) {
-            $candidate = 'https://' . $candidate;
-        }
-
-        $parsed = wp_parse_url($candidate);
-        if (empty($parsed['host'])) {
-            return null;
-        }
-
-        return bbpa_lowercase(sanitize_text_field($parsed['host']));
+        return bbpa_lowercase(sanitize_text_field($host));
     }
 
     /**
@@ -952,30 +892,6 @@ class BBPA_Hit_Controller {
         return in_array($device_class, $allowed, true) ? $device_class : '';
     }
 
-
-    private function detect_device_class_from_user_agent(string $user_agent): string {
-        $normalized_user_agent = strtolower($user_agent);
-        if ($normalized_user_agent === '') {
-            return 'unknown';
-        }
-
-        $is_bot = function_exists('bbpa_is_bot_user_agent')
-            ? bbpa_is_bot_user_agent($user_agent)
-            : preg_match('/bot|crawl|spider|slurp|bingpreview|headless/i', $normalized_user_agent) === 1;
-        if ($is_bot) {
-            return 'bot';
-        }
-
-        if (preg_match('/ipad|tablet|kindle|silk|playbook/i', $normalized_user_agent) === 1) {
-            return 'tablet';
-        }
-
-        if (preg_match('/mobile|iphone|android|phone|opera mini|iemobile/i', $normalized_user_agent) === 1) {
-            return 'mobile';
-        }
-
-        return 'desktop';
-    }
 
     /**
      * Validate a client-side visit identifier.
@@ -1024,7 +940,7 @@ class BBPA_Hit_Controller {
             );
         }
 
-        if ($granularity === 'base' && function_exists('bbpa_get_visit_identifier')) {
+        if ($granularity === 'base') {
             return sanitize_text_field((string) bbpa_get_visit_identifier($timestamp_bucket));
         }
 
@@ -1105,13 +1021,7 @@ class BBPA_Hit_Controller {
      * Determine whether plugin debug mode is enabled.
      */
     private function is_debug_mode_enabled(): bool {
-        if (function_exists('bbpa_is_debug_mode_enabled')) {
-            return bbpa_is_debug_mode_enabled();
-        }
-
-        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-
-        return !empty($settings['debug_enabled']);
+        return bbpa_is_debug_mode_enabled();
     }
 
     /**
@@ -1324,7 +1234,7 @@ class BBPA_Hit_Controller {
                 'idempotency_key' => $hit['idempotency_key'] ?? '',
             ];
             bbpa_store_aggregate_hit($base_hit, $utm_params);
-            if ($is_page_view_event && function_exists('bbpa_remember_visit_attribution')) {
+            if ($is_page_view_event) {
                 bbpa_remember_visit_attribution($hit, $utm_params);
             }
             $this->log_debug('Aggregate hit persisted.', [
@@ -1630,7 +1540,7 @@ class BBPA_Hit_Controller {
         }
         if (!isset($visitor_hit['source_category']) || (string) $visitor_hit['source_category'] === '') {
             $visitor_hit['source_category'] = (string) ($existing_context['source_category'] ?? '');
-            if ((string) $visitor_hit['source_category'] === '' && function_exists('bbpa_get_source_category_from_tracking_context')) {
+            if ((string) $visitor_hit['source_category'] === '') {
                 $context_url = (string) ($existing_context['page_path'] ?? $visitor_hit['page_path'] ?? '');
                 $utm_params = $this->extract_utm_params($context_url, $visitor_hit);
                 $visitor_hit['source_category'] = bbpa_get_source_category_from_tracking_context(
@@ -1645,7 +1555,7 @@ class BBPA_Hit_Controller {
         if (absint($visitor_hit['timestamp_bucket'] ?? 0) <= 0) {
             $visitor_hit['timestamp_bucket'] = absint($existing_context['timestamp_bucket'] ?? 0);
         }
-        $visitor_exists = $this->visitor_row_exists((string) ($visitor_hit['visitor_id'] ?? ''));
+        $visitor_exists = bbpa_visitor_row_exists((string) ($visitor_hit['visitor_id'] ?? ''));
         $creates_upgraded_visitor_row = false;
         $base_visitor_id = '';
         if (($visitor_hit['event_name'] ?? '') === 'page_view') {
@@ -1659,7 +1569,7 @@ class BBPA_Hit_Controller {
                 $base_visitor_id = $has_stored_base_context ? (string) ($existing_context['visitor_id'] ?? '') : '';
                 $creates_upgraded_visitor_row = $base_visitor_id !== ''
                     && $base_visitor_id !== (string) ($visitor_hit['visitor_id'] ?? '')
-                    && $this->visitor_row_exists($base_visitor_id);
+                    && bbpa_visitor_row_exists($base_visitor_id);
             }
         }
         if ($creates_upgraded_visitor_row) {
@@ -1840,7 +1750,7 @@ class BBPA_Hit_Controller {
     private function extract_utm_params($page_path, array $hit = []): array {
         $settings = bbpa_get_settings();
 
-        if (function_exists('bbpa_is_frontend_collection_context') && !bbpa_is_frontend_collection_context($settings, true)) {
+        if (!bbpa_is_frontend_collection_context($settings, true)) {
             return [];
         }
 

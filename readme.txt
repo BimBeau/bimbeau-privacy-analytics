@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.212
+Stable tag: 8.45.213
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,8 +213,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.212 =
-* [Improvement] Analytics REST endpoints share one set of permission, cache and table-check helpers instead of separate copies in each controller. Responses, routes, permissions and cache keys are unchanged.
-* [Fix] Reports now detect the plugin tables on database servers that store table names in lowercase while the site table prefix contains uppercase letters.
-* [Improvement] REST startup failures (missing controller file) are now logged with the plugin prefix when WordPress debug logging (`WP_DEBUG_LOG`) or the plugin log file (`BBPA_DEBUG_LOG_SINK`) is enabled, instead of always going to the PHP error log.
-* [Docs] Document the visitors report extension filters, the hidden panels filter, the plugin log channels and levels, and which reports the AI referrer domains filter affects.
+= 8.45.213 =
+* [Fix] "Run cleanup now" now applies the same rules as the automatic retention cleanup. It also removes daily visitor activity rows older than the report details retention, and overview totals older than their own, longer retention. Before, those rows stayed until the next scheduled cleanup.
+* [Fix] The Pages not found report now leaves out technical `/.well-known` addresses before it counts and paginates rows. Totals and page counts stay the same from page to page, and no row becomes unreachable.
+* [Improvement] The automatic retention cleanup now only deletes from the plugin tables and columns on the SQL allowlist, the same safeguard the manual cleanup already used.
+* [Improvement] Hit ingestion and server-side tracking now share one copy of each rule: privacy exclusions, referrer parsing, query parameter filtering, device detection, and the visitor lookup. Page views, visits, visitors and stored values do not change.
+* [Improvement] The database setup for the city-level visitor columns now resists formatting changes and logs an error if it cannot apply them. The tables it creates are unchanged. [Pro].
