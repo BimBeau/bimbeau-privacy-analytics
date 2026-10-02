@@ -169,7 +169,7 @@ function bbpa_get_realtime_active_visitors_count(): int
             $row = $decoded_row;
         }
 
-        if (!is_array($row)) {
+        if (!is_array($row) || bbpa_is_bot_realtime_row($row)) {
             continue;
         }
 
@@ -235,6 +235,23 @@ function bbpa_resolve_realtime_visitor_key(array $row): string
     }
 
     return '';
+}
+
+/**
+ * Tell whether a realtime or raw log row was recorded for a bot.
+ *
+ * Bot hits keep a visitor row but stay out of visitor totals (see bbpa_is_bot_user_agent()), so the realtime
+ * counter, its rows and the menu badge skip them, like the dashboard visitor total.
+ *
+ * @param array<string, mixed> $row Realtime visitor row or raw log row.
+ */
+function bbpa_is_bot_realtime_row(array $row): bool
+{
+    $device_class = isset($row['device_class']) && is_scalar($row['device_class'])
+        ? strtolower(trim((string) $row['device_class']))
+        : '';
+
+    return $device_class === 'bot';
 }
 
 

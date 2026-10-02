@@ -733,8 +733,9 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         $window_start = max(0, $now - $window_seconds);
         $privacy_threshold = 10;
 
-        $hits = bbpa_get_raw_log_rows((int) $window_start);
-        $realtime_visitors = $this->get_realtime_visitor_rows_in_window($window_start, $now);
+        // Bot hits stay out of visitor totals: the counter, the visit rows and the map only show human visits.
+        $hits = $this->exclude_bot_realtime_rows(bbpa_get_raw_log_rows((int) $window_start));
+        $realtime_visitors = $this->exclude_bot_realtime_rows($this->get_realtime_visitor_rows_in_window($window_start, $now));
 
         $has_enriched_granularity = $this->realtime_has_enriched_data($hits, $window_start, $now);
         if (!$has_enriched_granularity && $this->realtime_has_enriched_data($realtime_visitors, $window_start, $now)) {
@@ -1629,6 +1630,18 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         }
 
         return count($active_keys);
+    }
+
+    /**
+     * Remove the rows recorded for bots (see bbpa_is_bot_realtime_row()).
+     *
+     * @param array<int|string, mixed> $rows Realtime visitor rows or raw log rows.
+     * @return array<int, mixed>
+     */
+    private function exclude_bot_realtime_rows(array $rows): array {
+        return array_values(array_filter($rows, static function ($row): bool {
+            return !is_array($row) || !bbpa_is_bot_realtime_row($row);
+        }));
     }
 
     /**
