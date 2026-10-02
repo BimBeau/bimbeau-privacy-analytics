@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.47.0
+Stable tag: 8.47.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.47.0 =
-* [Feature] New Excluded paths field in Settings → Tracking & privacy → Exclusions: list the pages you do not want counted, one path per line (for example /contact). It applies to statistics recorded after you save.
+= 8.47.1 =
+* [Fix] Pages whose address contains accents or other non-Latin characters now appear in the Top pages lists with their own title, sparkline and average time, instead of being left out or showing the trend of another page.
+* [Fix] These pages are no longer merged with similar addresses in the Top pages, Entry pages, Exit pages and 404 lists, nor counted under the home page when their address uses only non-Latin characters. The home page row can therefore show fewer views than before.
+* [Fix] The Entry pages and Exit pages lists no longer hide a page because a similar address was recorded as a 404 error.
+* [Fix] Page details opened from the Entry pages and Exit pages lists now show the selected page when its address contains accents or other non-Latin characters. [Pro].
+* [Fix] Event triggers now record the full address of pages with accents or other non-Latin characters. [Pro].

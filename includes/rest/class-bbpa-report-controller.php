@@ -1218,7 +1218,7 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+            $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
             if ($label === '') {
                 continue;
             }
@@ -1250,7 +1250,7 @@ class BBPA_Report_Controller {
         $rows = $wpdb->get_results($query, ARRAY_A);
         $totals_by_label = [];
         foreach ($rows ?: [] as $row) {
-            $stored_path = isset($row['page_path']) ? sanitize_text_field((string) $row['page_path']) : '';
+            $stored_path = bbpa_sanitize_page_path_value($row['page_path'] ?? '');
             if ($stored_path === '') {
                 continue;
             }
@@ -1274,7 +1274,7 @@ class BBPA_Report_Controller {
 
         return array_map(
             function (array $item) use ($average_time_by_label): array {
-                $label = isset($item['label']) ? $this->normalize_report_page_path(sanitize_text_field((string) $item['label'])) : '';
+                $label = isset($item['label']) ? $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'])) : '';
                 $average_time_ms = $average_time_by_label[$label] ?? 0;
                 $item['avg_time_on_page_ms'] = $average_time_ms;
                 $item['avg_time_on_page_seconds'] = $average_time_ms / 1000;
@@ -1528,7 +1528,7 @@ class BBPA_Report_Controller {
     ): array {
         $items = array_map(
             static function (array $row) use ($metric_column): array {
-                $label = isset($row['label']) ? sanitize_text_field((string) $row['label']) : '';
+                $label = bbpa_sanitize_page_path_value($row['label'] ?? '');
 
                 return [
                     'label' => $label,
@@ -1604,7 +1604,7 @@ class BBPA_Report_Controller {
     private function filter_resolved_page_path_items(array $items, string $metric_column): array {
         $candidates = [];
         foreach ($items as $item) {
-            $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+            $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
             if (!$this->is_home_page_path($label)) {
                 $candidates[] = [
                     'path' => $label,
@@ -1618,7 +1618,7 @@ class BBPA_Report_Controller {
             array_filter(
                 $items,
                 function (array $item): bool {
-                    $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+                    $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
                     if ($this->is_home_page_path($label)) {
                         return true;
                     }
@@ -1792,7 +1792,7 @@ class BBPA_Report_Controller {
 
         $labels = [];
         foreach ($items as $item) {
-            $label = $this->normalize_report_page_path(sanitize_text_field((string) ($item['label'] ?? '')));
+            $label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'] ?? ''));
             if ($label !== '') {
                 $labels[$label] = true;
             }
@@ -1828,7 +1828,7 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $label = $this->normalize_report_page_path(sanitize_text_field($stored_path));
+            $label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($stored_path));
             if (isset($labels[$label])) {
                 $variants[$stored_path] = true;
             }
@@ -1871,7 +1871,7 @@ class BBPA_Report_Controller {
         $bucket_indexes = array_flip($buckets);
         $labels = [];
         foreach ($items as $item) {
-            $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+            $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
             $normalized_label = $this->normalize_report_page_path($label);
             if ($normalized_label !== '') {
                 $labels[$normalized_label] = true;
@@ -1915,7 +1915,7 @@ class BBPA_Report_Controller {
                 continue;
             }
 
-            $label = $this->normalize_report_page_path(sanitize_text_field((string) ($row['page_path'] ?? '')));
+            $label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($row['page_path'] ?? ''));
             if ($label === '' || !isset($series_by_label[$label])) {
                 continue;
             }
@@ -1925,7 +1925,7 @@ class BBPA_Report_Controller {
 
         return array_map(
             function (array $item) use ($series_by_label, $empty_series): array {
-                $label = isset($item['label']) ? $this->normalize_report_page_path(sanitize_text_field((string) $item['label'])) : '';
+                $label = isset($item['label']) ? $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'])) : '';
                 $item['views_series'] = $series_by_label[$label] ?? $empty_series;
 
                 return $item;
@@ -3042,7 +3042,7 @@ class BBPA_Report_Controller {
         $merged_items = [];
 
         foreach ($items as $item) {
-            $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+            $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
             $normalized_label = $this->normalize_report_page_path($label);
             $merge_key = $normalized_label !== '' ? $normalized_label : $label;
 
@@ -3083,7 +3083,7 @@ class BBPA_Report_Controller {
 
         $candidates = [];
         foreach ($items as $item) {
-            $normalized_label = $this->normalize_report_page_path(isset($item['label']) ? sanitize_text_field((string) $item['label']) : '');
+            $normalized_label = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($item['label'] ?? ''));
             if ($normalized_label !== '' && !$this->is_home_page_path($normalized_label) && isset($not_found_paths[$normalized_label])) {
                 $candidates[] = [
                     'path' => $normalized_label,
@@ -3097,7 +3097,7 @@ class BBPA_Report_Controller {
             array_filter(
                 $items,
                 function (array $item) use ($not_found_paths): bool {
-                    $label = isset($item['label']) ? sanitize_text_field((string) $item['label']) : '';
+                    $label = bbpa_sanitize_page_path_value($item['label'] ?? '');
                     $normalized_label = $this->normalize_report_page_path($label);
 
                     if ($normalized_label === '' || $this->is_home_page_path($normalized_label)) {
@@ -3141,7 +3141,7 @@ class BBPA_Report_Controller {
         $paths = [];
 
         foreach ($rows as $row) {
-            $raw_path = sanitize_text_field((string) $row);
+            $raw_path = bbpa_sanitize_page_path_value($row);
             if (trim($raw_path) === '') {
                 continue;
             }

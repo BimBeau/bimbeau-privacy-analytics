@@ -1839,7 +1839,8 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         $bucket_indexes = array_flip($buckets);
         $labels = [];
         foreach ($items as $item) {
-            $label = isset($item['_series_label']) ? sanitize_text_field((string) $item['_series_label']) : sanitize_text_field((string) ($item['label'] ?? ''));
+            // Page paths keep their percent-encoded octets, which sanitize_text_field() would strip.
+            $label = bbpa_sanitize_page_path_value($item['_series_label'] ?? ($item['label'] ?? ''));
             if ($label !== '') {
                 $labels[$label] = true;
             }
@@ -1857,7 +1858,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             );
         }
 
-        $in_clause = bbpa_build_in_clause(array_keys($labels), 'string');
+        $in_clause = bbpa_build_in_clause(array_keys($labels), 'page_path');
         if (!empty($in_clause['empty'])) {
             return array_map(
                 static function (array $item) use ($empty_series): array {
@@ -1888,7 +1889,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         foreach ($rows as $row) {
             $bucket = isset($row['date_bucket']) ? (string) $row['date_bucket'] : '';
-            $label = isset($row['page_path']) ? sanitize_text_field((string) $row['page_path']) : '';
+            $label = bbpa_sanitize_page_path_value($row['page_path'] ?? '');
             if (!isset($bucket_indexes[$bucket]) || !isset($series_by_label[$label])) {
                 continue;
             }
@@ -1898,7 +1899,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         return array_map(
             static function (array $item) use ($series_by_label, $empty_series): array {
-                $label = isset($item['_series_label']) ? sanitize_text_field((string) $item['_series_label']) : sanitize_text_field((string) ($item['label'] ?? ''));
+                $label = bbpa_sanitize_page_path_value($item['_series_label'] ?? ($item['label'] ?? ''));
                 $item['views_series'] = $series_by_label[$label] ?? $empty_series;
                 unset($item['_series_label']);
 
