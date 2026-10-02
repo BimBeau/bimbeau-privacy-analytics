@@ -1255,6 +1255,10 @@ function bbpa_get_missing_critical_schema_tables(): array
 
 /**
  * Determine whether critical schema tables are missing.
+ *
+ * The result depends on the live database, so it can change between two calls.
+ *
+ * @phpstan-impure
  */
 function bbpa_is_critical_schema_missing(): bool
 {

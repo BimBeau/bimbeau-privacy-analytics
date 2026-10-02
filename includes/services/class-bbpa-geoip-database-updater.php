@@ -848,7 +848,7 @@ class BBPA_GeoIP_Database_Updater {
         $this->update_in_progress = false;
         $last_error = error_get_last();
         $fatal_types = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR];
-        if (!is_array($last_error) || !in_array((int) ($last_error['type'] ?? 0), $fatal_types, true)) {
+        if (!is_array($last_error) || !in_array((int) $last_error['type'], $fatal_types, true)) {
             return;
         }
 
