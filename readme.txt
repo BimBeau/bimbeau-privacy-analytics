@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.46.2
+Stable tag: 8.46.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.46.2 =
-* [Fix] Events: the execution time sent with a custom event signal or an incoming webhook (format YYYY-MM-DD HH:MM:SS) is now saved with each occurrence instead of being left empty. Missing or invalid times are ignored, and earlier occurrences are not changed. [Pro].
+= 8.46.3 =
+* [Fix] Correct the world map pan limits: `clampViewportToMapBounds` and the measured content bounds used a `translate + x * scale` model while the Nivo projection scales around the map center. At any zoom above 1 the allowed range was shifted by `(scale - 1) * width / 2`, so the map could not pan west/north of its center, double-click zoom did not stay anchored on the left half, and realtime auto-focus drifted away from the markers (a visitor in France was framed on the Middle East). Pan limits are now symmetric around the center and every part of the map stays reachable.
+* [Fix] Realtime marker auto-focus now follows the markers: it refits whenever marker positions or the map size change (previously it ran once, possibly against fallback dimensions), pauses as soon as the user zooms or pans, resumes on **Reset**, and returns to the world view when the last marker disappears.
+* [Test] Update three viewport tests that asserted the previous asymmetric limits, make the mocked `projectionById.mercator` honor scale/translate, and add coverage for marker following and zoomed clamping.

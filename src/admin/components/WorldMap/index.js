@@ -141,14 +141,20 @@ export const clampViewportToMapBounds = (
     Number.isFinite(mapContentBounds.top) &&
     Number.isFinite(mapContentBounds.bottom);
 
-  const minTranslateX = hasMeasuredBounds
-    ? width - mapContentBounds.right * scale
-    : width - width * scale;
-  const maxTranslateX = hasMeasuredBounds ? -mapContentBounds.left * scale : 0;
-  const minTranslateY = hasMeasuredBounds
-    ? height - mapContentBounds.bottom * scale
-    : height - height * scale;
-  const maxTranslateY = hasMeasuredBounds ? -mapContentBounds.top * scale : 0;
+  /*
+   * Bounds are expressed in unzoomed map coordinates. The projection scales
+   * around the map center and then applies the translation, so a point at
+   * `x` is rendered at `width / 2 + translateX + (x - width / 2) * scale`.
+   */
+  const bounds = hasMeasuredBounds
+    ? mapContentBounds
+    : { left: 0, right: width, top: 0, bottom: height };
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const minTranslateX = width - centerX - (bounds.right - centerX) * scale;
+  const maxTranslateX = -centerX - (bounds.left - centerX) * scale;
+  const minTranslateY = height - centerY - (bounds.bottom - centerY) * scale;
+  const maxTranslateY = -centerY - (bounds.top - centerY) * scale;
 
   return {
     scale,
@@ -1419,7 +1425,9 @@ const WorldMap = ({
   const mapLayerRef = useRef(null);
   const mapContentBoundsRef = useRef(null);
   const hasAppliedInitialResetRef = useRef(false);
-  const hasAppliedRealtimeAutoFocusRef = useRef(false);
+  const lastRealtimeAutoFocusKeyRef = useRef("");
+  const hasUserMovedViewportRef = useRef(false);
+  const [realtimeAutoFocusRequest, setRealtimeAutoFocusRequest] = useState(0);
   const unresolvedCountryCodeCountsRef = useRef(new Map());
   const lastCityMarkerDiagnosticRef = useRef("");
   const dragStateRef = useRef(null);
@@ -1480,18 +1488,23 @@ const WorldMap = ({
     );
     const translateX = Number(viewport.translateX) || 0;
     const translateY = Number(viewport.translateY) || 0;
+    const centerX = svgRect.width / 2;
+    const centerY = svgRect.height / 2;
+    // Convert the rendered layer box back to unzoomed map coordinates.
+    const toMapX = (clientX) =>
+      centerX + (clientX - svgRect.left - centerX - translateX) / scale;
+    const toMapY = (clientY) =>
+      centerY + (clientY - svgRect.top - centerY - translateY) / scale;
     const rawBounds = {
-      left: (layerRect.left - svgRect.left - translateX) / scale,
-      right: (layerRect.right - svgRect.left - translateX) / scale,
-      top: (layerRect.top - svgRect.top - translateY) / scale,
-      bottom: (layerRect.bottom - svgRect.top - translateY) / scale,
+      left: toMapX(layerRect.left),
+      right: toMapX(layerRect.right),
+      top: toMapY(layerRect.top),
+      bottom: toMapY(layerRect.bottom),
     };
-    const rawCenterX = (rawBounds.left + rawBounds.right) / 2;
-    const rawCenterY = (rawBounds.top + rawBounds.bottom) / 2;
-    const viewportCenterX = (svgRect.width / 2 - translateX) / scale;
-    const viewportCenterY = (svgRect.height / 2 - translateY) / scale;
-    const centerOffsetX = rawCenterX - viewportCenterX;
-    const centerOffsetY = rawCenterY - viewportCenterY;
+    // Keep the content box centered on the map so the bounds stay stable
+    // regardless of the current pan position.
+    const centerOffsetX = (rawBounds.left + rawBounds.right) / 2 - centerX;
+    const centerOffsetY = (rawBounds.top + rawBounds.bottom) / 2 - centerY;
 
     mapContentBoundsRef.current = {
       left: rawBounds.left - centerOffsetX,
@@ -1523,6 +1536,7 @@ const WorldMap = ({
           return previousViewport;
         }
 
+        hasUserMovedViewportRef.current = true;
         const anchorX = Number(pointX) || 0;
         const anchorY = Number(pointY) || 0;
         const previousTranslateX = Number(previousViewport?.translateX) || 0;
@@ -1579,6 +1593,9 @@ const WorldMap = ({
   }, [applyZoomAtPoint, choroplethHeight, choroplethWidth, viewport.scale]);
 
   const handleResetViewport = useCallback(() => {
+    hasUserMovedViewportRef.current = false;
+    lastRealtimeAutoFocusKeyRef.current = "";
+    setRealtimeAutoFocusRequest((request) => request + 1);
     setViewport({
       scale: VIEWPORT_ZOOM_MIN,
       translateX: 0,
@@ -1716,6 +1733,10 @@ const WorldMap = ({
         lastClientX: nextClientX,
         lastClientY: nextClientY,
       };
+
+      if (deltaX !== 0 || deltaY !== 0) {
+        hasUserMovedViewportRef.current = true;
+      }
 
       setViewport((previousViewport) =>
         clampViewport({
@@ -2465,21 +2486,46 @@ const WorldMap = ({
 
   useEffect(() => {
     if (mapMode !== "realtime-markers") {
-      hasAppliedRealtimeAutoFocusRef.current = false;
+      lastRealtimeAutoFocusKeyRef.current = "";
       return;
     }
 
-    if (
-      isLoading ||
-      error ||
-      hasAppliedRealtimeAutoFocusRef.current ||
-      cityMarkers.length <= 0
-    ) {
+    if (isLoading || error || hasUserMovedViewportRef.current) {
       return;
     }
 
     const width = Math.max(choroplethWidth, 1);
     const height = Math.max(choroplethHeight, 1);
+    // Follow the live markers: refocus whenever their positions or the map
+    // size change, until the user pans or zooms manually.
+    const autoFocusKey = [
+      width,
+      height,
+      ...cityMarkers
+        .map(
+          (marker) =>
+            `${Number(marker.latitude).toFixed(2)},${Number(
+              marker.longitude,
+            ).toFixed(2)}`,
+        )
+        .sort(),
+    ].join("|");
+
+    if (lastRealtimeAutoFocusKeyRef.current === autoFocusKey) {
+      return;
+    }
+
+    if (cityMarkers.length <= 0) {
+      if (lastRealtimeAutoFocusKeyRef.current !== "") {
+        lastRealtimeAutoFocusKeyRef.current = autoFocusKey;
+        setViewport({
+          scale: VIEWPORT_ZOOM_MIN,
+          translateX: 0,
+          translateY: 0,
+        });
+      }
+      return;
+    }
     const baseScale = getBaseProjectionScale(width, height);
     const defaultProjection = projectionById
       .mercator()
@@ -2536,7 +2582,7 @@ const WorldMap = ({
     const centerX = (minX + maxX) / 2;
     const centerY = (minY + maxY) / 2;
 
-    hasAppliedRealtimeAutoFocusRef.current = true;
+    lastRealtimeAutoFocusKeyRef.current = autoFocusKey;
     setViewport(() =>
       clampViewport({
         scale: targetScale,
@@ -2552,6 +2598,7 @@ const WorldMap = ({
     error,
     isLoading,
     mapMode,
+    realtimeAutoFocusRequest,
   ]);
 
   useEffect(() => stopDrag, [stopDrag]);
