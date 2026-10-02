@@ -126,8 +126,10 @@ class BBPA_Analytics_Repository {
             'version' => bbpa_get_admin_cache_version(),
             'table' => $daily_table,
         ]);
-        $cached = wp_cache_get($cache_key, BBPA_CACHE_GROUP);
-        if (is_bool($cached)) {
+        // wp_cache_get() also returns false on a miss: only trust a value the cache reports as found.
+        $found = false;
+        $cached = wp_cache_get($cache_key, BBPA_CACHE_GROUP, false, $found);
+        if ($found && is_bool($cached)) {
             return $cached;
         }
 

@@ -1646,6 +1646,8 @@ class BBPA_Hit_Controller {
             $visitor_hit['timestamp_bucket'] = absint($existing_context['timestamp_bucket'] ?? 0);
         }
         $visitor_exists = $this->visitor_row_exists((string) ($visitor_hit['visitor_id'] ?? ''));
+        $creates_upgraded_visitor_row = false;
+        $base_visitor_id = '';
         if (($visitor_hit['event_name'] ?? '') === 'page_view') {
             if ($has_stored_base_context && $visitor_exists) {
                 $visitor_hit['event_name'] = 'enrichment_update';
@@ -1654,9 +1656,32 @@ class BBPA_Hit_Controller {
             $visitor_hit['upgrade_existing_hit'] = true;
             if (!$visitor_exists) {
                 $visitor_hit['event_name'] = 'page_view';
+                $base_visitor_id = $has_stored_base_context ? (string) ($existing_context['visitor_id'] ?? '') : '';
+                $creates_upgraded_visitor_row = $base_visitor_id !== ''
+                    && $base_visitor_id !== (string) ($visitor_hit['visitor_id'] ?? '')
+                    && $this->visitor_row_exists($base_visitor_id);
             }
         }
-        $visitor_store_result = bbpa_store_visitor_hit_with_outcome($visitor_hit);
+        if ($creates_upgraded_visitor_row) {
+            // The stored base hit already counted this page view and its visitor (under the identity it had before
+            // consent). Writing the enriched visitor row without a daily activity row keeps the unique visitor count
+            // at one.
+            $visitor_write_outcome = bbpa_write_visitor_hit($visitor_hit);
+            if (!empty($visitor_write_outcome['stored'])) {
+                // Carry the consented details (country, enriched flag, Pro city through the activity hook) to the
+                // base visitor's activity row of the day; a non page-view event adds no page view to it.
+                bbpa_upsert_visitor_activity_daily(array_merge($visitor_hit, [
+                    'visitor_id' => $base_visitor_id,
+                    'event_name' => 'enrichment_update',
+                ]));
+            }
+            $visitor_store_result = [
+                'stored' => !empty($visitor_write_outcome['stored']),
+                'is_new_visitor' => !empty($visitor_write_outcome['stored']) && !empty($visitor_write_outcome['inserted']),
+            ];
+        } else {
+            $visitor_store_result = bbpa_store_visitor_hit_with_outcome($visitor_hit);
+        }
         $visitor_write_succeeded = !empty($visitor_store_result['stored']);
         $is_new_visitor = !empty($visitor_store_result['is_new_visitor']);
         if ($is_new_visitor) {

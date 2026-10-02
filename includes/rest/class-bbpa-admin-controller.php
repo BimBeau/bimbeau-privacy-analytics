@@ -433,7 +433,12 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         $rows = $this->analytics_repository()->get_kpis_rows($range['start'], $range['end']);
         $page_views = (int) $rows['page_views'];
-        $visits = isset($rows['aggregated_visits']) ? (int) $rows['aggregated_visits'] : 0;
+        // Canonical visits when overview rows exist, otherwise the entry totals used by the overview and the daily
+        // timeseries, and only then the per-page visits of bbpa_daily.
+        $visits = isset($rows['entries']) ? (int) $rows['entries'] : 0;
+        if ($visits <= 0) {
+            $visits = isset($rows['aggregated_visits']) ? (int) $rows['aggregated_visits'] : 0;
+        }
 
         $data = [
             'entries' => $visits,
@@ -1141,7 +1146,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 $visits[$visitor_bucket_id]['country'] = $country_name;
             }
             if ($extension_fields !== []) {
-                $visits[$visitor_bucket_id] = array_merge($visits[$visitor_bucket_id], $extension_fields);
+                $visits[$visitor_bucket_id] = $this->merge_known_realtime_extension_fields($visits[$visitor_bucket_id], $extension_fields);
             }
             if ($referrer_domain !== '') {
                 $visits[$visitor_bucket_id]['referrer_domain'] = $referrer_domain;
@@ -1255,9 +1260,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                     }
                 }
 
-                foreach ($fallback_extension_fields as $field => $value) {
-                    $visits[$visitor_bucket][$field] = $value;
-                }
+                $visits[$visitor_bucket] = $this->merge_known_realtime_extension_fields($visits[$visitor_bucket], $fallback_extension_fields);
             }
         }
 
@@ -1402,6 +1405,26 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
         );
     }
 
+    /**
+     * Merge realtime extension fields into a visit without letting an empty value erase a known one.
+     *
+     * A later row of the same visit may lack geolocation (for example a hit sent before the lookup finished): its
+     * empty city or null coordinates must not remove the values of an earlier row, or the map marker disappears.
+     *
+     * @param array<string, mixed> $visit  Visit being built.
+     * @param array<string, mixed> $fields Extension fields of the current row.
+     * @return array<string, mixed>
+     */
+    private function merge_known_realtime_extension_fields(array $visit, array $fields): array {
+        foreach ($fields as $field => $value) {
+            if (($value === null || $value === '') && array_key_exists($field, $visit)) {
+                continue;
+            }
+            $visit[$field] = $value;
+        }
+
+        return $visit;
+    }
 
     /**
      * Resolve a stable realtime visitor bucket identifier from accepted hit fields.

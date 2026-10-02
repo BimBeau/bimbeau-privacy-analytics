@@ -145,15 +145,15 @@ function bbpa_log_event_debug(string $message, array $context = []): void
  */
 function bbpa_enqueue_front_assets(): void
 {
-    static $did_enqueue = false;
-    if ($did_enqueue) {
+    $essential_handle = 'bbpa-essential-tracker';
+    $advanced_handle = 'bbpa-advanced-tracker';
+
+    // Run once per request: the essential tracker is only registered here. Unlike a static flag, this guard follows
+    // the WP_Scripts instance, so a reset script registry (tests, isolated renders) enqueues the trackers again.
+    if (wp_script_is($essential_handle, 'registered')) {
         return;
     }
 
-    $did_enqueue = true;
-
-    $essential_handle = 'bbpa-essential-tracker';
-    $advanced_handle = 'bbpa-advanced-tracker';
     wp_register_script(
         $essential_handle,
         BBPA_URL . 'assets/js/bbpa-essential-tracker.js',

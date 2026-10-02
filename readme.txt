@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.204
+Stable tag: 8.45.205
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,13 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.204 =
-* [Build] Internal code cleanup reported by static analysis (database schema check, GeoIP update error handling, posts list views column, Events statistics controller); no change in behaviour.
+= 8.45.205 =
+* [Fix] The real-time map no longer loses a visitor's city marker when a later hit of the same visit arrives without location data, and a marker shared by several visitors now shows the page viewed most recently. [Pro].
+* [Fix] Visitors who give consent after their first page view are no longer counted twice in the Visitors totals, and their country is kept in the country reports.
+* [Fix] The Visits key indicator matches the overview chart for date ranges recorded before the daily overview data existed.
+* [Fix] The "base" granularity is offered again in the settings when daily data exists; a caching error hid it.
+* [Fix] Panels hidden with versions older than 2.19.0 are hidden again on sites whose settings were never saved since then (they had reappeared). [Pro].
+* [Fix] A custom city coordinates file no longer raises a PHP warning for each row. [Pro].
+* [Fix] The city report returns the documented marker diagnostics. [Pro].
+* [Fix] The opt-in referrer favicon downloads treat "no" and "off" as disabled when settings are sent to the REST API, like the settings screen does.
+* [Improvement] The `bbpa_sanitized_settings` filter receives the settings as stored, before defaults are applied, as a third argument.

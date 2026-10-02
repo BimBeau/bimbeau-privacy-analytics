@@ -176,11 +176,12 @@ function bbpa_sanitize_settings($settings): array
         $settings = [];
     }
 
+    $input = $settings;
     $settings = wp_parse_args($settings, $defaults);
 
     unset($settings['plugin_label']);
     $settings['advanced_stats_enabled'] = (bool) rest_sanitize_boolean($settings['advanced_stats_enabled']);
-    $settings['referrer_favicons_enabled'] = (bool) rest_sanitize_boolean($settings['referrer_favicons_enabled'] ?? false);
+    $settings['referrer_favicons_enabled'] = bbpa_sanitize_opt_in_boolean_setting($settings['referrer_favicons_enabled'] ?? false);
     $settings['respect_dnt_gpc'] = (bool) rest_sanitize_boolean($settings['respect_dnt_gpc']);
     $settings['url_strip_query'] = (bool) rest_sanitize_boolean($settings['url_strip_query']);
     $settings['maxmind_account_id'] = trim(sanitize_text_field($settings['maxmind_account_id']));
@@ -222,8 +223,10 @@ function bbpa_sanitize_settings($settings): array
      *
      * @param array<string, mixed> $settings Sanitized settings.
      * @param array<string, mixed> $defaults Settings defaults.
+     * @param array<string, mixed> $input    Settings as received, before the defaults were merged in. Lets a
+     *                                       callback tell a stored value from a default.
      */
-    $settings = apply_filters('bbpa_sanitized_settings', $settings, $defaults);
+    $settings = apply_filters('bbpa_sanitized_settings', $settings, $defaults, $input);
 
     $allowlist = $settings['url_query_allowlist'];
     if (is_string($allowlist)) {
@@ -333,6 +336,29 @@ function bbpa_sanitize_settings($settings): array
     return $settings;
 }
 
+
+/**
+ * Sanitize an opt-in boolean setting with the same rules as the admin settings screen.
+ *
+ * rest_sanitize_boolean() turns every string except "false" and "0" into true, so "no" or "off" would enable an
+ * opt-in feature. Strings "0", "false", "off", "no" (any case) are false, "1", "true", "on", "yes" are true.
+ *
+ * @param mixed $value Raw setting value.
+ */
+function bbpa_sanitize_opt_in_boolean_setting($value): bool
+{
+    if (is_string($value)) {
+        $normalized = strtolower(trim($value));
+        if (in_array($normalized, ['', '0', 'false', 'off', 'no'], true)) {
+            return false;
+        }
+        if (in_array($normalized, ['1', 'true', 'on', 'yes'], true)) {
+            return true;
+        }
+    }
+
+    return (bool) $value;
+}
 
 /**
  * Sanitize a role list setting value.
