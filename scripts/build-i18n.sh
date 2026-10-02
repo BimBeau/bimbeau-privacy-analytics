@@ -10,7 +10,7 @@ languages_dir="${repo_root}/languages"
 pot_file="${languages_dir}/bimbeau-privacy-analytics.pot"
 exclude_paths="node_modules,build,dist,package-tmp,vendor,tests,docs,assets,assets/js/__tests__"
 pot_headers='{"POT-Creation-Date":"","Project-Id-Version":"BimBeau Privacy Analytics","Report-Msgid-Bugs-To":"https://wordpress.org/support/plugin/bimbeau-privacy-analytics"}'
-required_commands=(php wp msgmerge msgfmt msgattrib)
+required_commands=(php wp msgmerge msgfmt msgattrib python3)
 missing_commands=()
 
 for required_command in "${required_commands[@]}"; do
@@ -21,7 +21,7 @@ done
 
 if [ "${#missing_commands[@]}" -gt 0 ]; then
   echo "Error: missing required i18n command(s): ${missing_commands[*]}." >&2
-  echo "Install npm dependencies with 'npm ci', install WP-CLI so 'wp' is on PATH, and install gettext for msgmerge, msgfmt, and msgattrib." >&2
+  echo "Install npm dependencies with 'npm ci', install WP-CLI so 'wp' is on PATH, install gettext for msgmerge, msgfmt, and msgattrib, and install Python 3 for python3." >&2
   exit 1
 fi
 
@@ -38,26 +38,6 @@ wp_cmd=(php -d xdebug.mode=off -d xdebug.max_nesting_level=2048 "${wp_binary}")
 if [ "$(id -u)" -eq 0 ]; then
   wp_cmd+=(--allow-root)
 fi
-
-po_backup_dir="$(mktemp -d)"
-po_files_to_restore=()
-
-cleanup_i18n_po_backups() {
-  local po_file
-  local backup_file
-
-  for po_file in "${po_files_to_restore[@]}"; do
-    backup_file="${po_backup_dir}/$(basename "${po_file}")"
-    if [ -f "${backup_file}" ]; then
-      cp "${backup_file}" "${po_file}"
-    fi
-  done
-
-  find "${languages_dir}" -maxdepth 1 -type f -name '*.po.i18n-backup' -delete
-  rm -rf "${po_backup_dir}"
-}
-
-trap cleanup_i18n_po_backups EXIT
 
 normalize_po_header_escapes() {
   local po_file="$1"
@@ -110,19 +90,12 @@ path.write_text(content, encoding="utf-8")
 PY
 }
 
+# The header normalization is a legitimate fix of the catalog and is kept: the
+# merged and cleaned PO file written below is the result to commit, and the MO
+# file is compiled from it. Restoring the original PO file afterwards would
+# discard msgmerge/msgattrib and leave the PO and MO files out of sync.
 prepare_po_for_gettext() {
-  local po_file="$1"
-  local before_hash
-  local after_hash
-
-  before_hash="$(sha256sum "${po_file}" | awk '{print $1}')"
-  normalize_po_header_escapes "${po_file}"
-  after_hash="$(sha256sum "${po_file}" | awk '{print $1}')"
-
-  if [ "${before_hash}" != "${after_hash}" ]; then
-    cp "${po_backup_dir}/$(basename "${po_file}")" "${po_file}.i18n-backup" 2>/dev/null || true
-    po_files_to_restore+=("${po_file}")
-  fi
+  normalize_po_header_escapes "$1"
 }
 
 assert_pot_has_source_references() {
@@ -191,7 +164,6 @@ assert_pot_has_source_references
 
 for po_file in "${languages_dir}"/bimbeau-privacy-analytics-*.po; do
   if [ -f "${po_file}" ]; then
-    cp "${po_file}" "${po_backup_dir}/$(basename "${po_file}")"
     prepare_po_for_gettext "${po_file}"
     msgmerge --update --backup=none --no-wrap "${po_file}" "${pot_file}"
     clean_po_file="${po_file}.clean"

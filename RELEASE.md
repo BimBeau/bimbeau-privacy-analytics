@@ -30,6 +30,7 @@ Role: GitHub Release metadata publication and Freemius deployment in one workflo
 Behavior:
 - Runs on tag pushes matching `v*.*.*` and manual `workflow_dispatch`.
 - Manual dispatch accepts one input: `release_mode` (`pending` or `beta`).
+- Only stable `X.Y.Z` versions can be released. `scripts/release-context.js` accepts `X.Y.Z-beta.N` and `X.Y.Z-rc.N`, but `scripts/sync-version-sources.js`, `scripts/bump-version.js` (including the readme `Stable tag`) and `scripts/verify-plugin-zip-entrypoint.js` reject pre-release versions, so a pre-release version or tag stops the workflow at "Validate synchronized version sources". A manual dispatch with `release_mode=beta` publishes the current stable version number to Freemius in beta mode, while its Git tag and the readme `Stable tag` still present that version as stable.
 - Resolves release context via `scripts/release-context.js`.
 - Validates synchronized version sources with `node scripts/sync-version-sources.js --check`.
 - Creates or updates GitHub Release metadata on tag-triggered runs before Freemius deploy steps.
@@ -40,7 +41,7 @@ Behavior:
 - Verifies Freemius version uniqueness before `npm ci` and before plugin ZIP build/deploy.
 - Runs `npm ci --no-audit --fund=false` only after deployability checks pass.
 - Builds `dist/bimbeau-privacy-analytics.zip` with `bash bin/build.sh`.
-- Deploys through `php scripts/ci/freemius-release.php deploy`.
+- Deploys through `php scripts/ci/freemius-release.php deploy`. When a tag creation attempt returns a transient or empty response, the script lists the Freemius tags before uploading again and reuses a tag that already carries the release version, so a lost response does not create a duplicate tag. A failed package download stops the job with the download error instead of an empty ZIP.
 - Verifies deployed Freemius tag with `php scripts/ci/freemius-release.php verify`.
 - Validates generated package archives returned by Freemius:
   - the Free package contains `bimbeau-privacy-analytics/bimbeau-privacy-analytics.php`
