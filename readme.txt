@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.209
+Stable tag: 8.45.210
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,6 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.209 =
-* [Fix] Saving the settings after opening the Events tab no longer empties an events configuration saved by an older version of the plugin: the events shown on screen are the ones saved. [Pro].
-* [Fix] When two active events share a KPI slot, saving the settings after opening the Events tab renumbers their slots in display order, as editing an event already did. [Pro].
+= 8.45.210 =
+* [Improvement] Events configured with an older version of the plugin are now stored where the settings screen reads them, once, during the update. Tracking is unchanged and the older stored values are kept. [Pro].

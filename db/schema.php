@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 const BBPA_SCHEMA_VERSION = '30';
-const BBPA_DB_MIGRATION_VERSION = '1.6.0';
+const BBPA_DB_MIGRATION_VERSION = '1.7.0';
 
 /**
  * Option used as an atomic lock around schema installation, repairs, and data migrations.
