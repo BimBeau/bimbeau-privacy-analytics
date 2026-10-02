@@ -1,3 +1,5 @@
+import { getAdminConfig } from "./runtimeConfig";
+
 export const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -23,12 +25,10 @@ export const getAdminLocale = () => {
     return documentLocale;
   }
 
-  const configuredLocale =
-    typeof window !== "undefined"
-      ? normalizeLocale(
-          window.BBPAAdmin?.settings?.locale || window.BBPAAdmin?.locale,
-        )
-      : undefined;
+  const adminConfig = getAdminConfig();
+  const configuredLocale = normalizeLocale(
+    adminConfig?.settings?.locale || adminConfig?.locale,
+  );
 
   if (configuredLocale) {
     return configuredLocale;
@@ -87,15 +87,6 @@ export const isRangeWithinMaxDays = (start, end, maxDays = MAX_CUSTOM_RANGE_DAYS
   const totalDays = Math.round((endDate - startDate) / dayInMs) + 1;
 
   return totalDays >= 1 && totalDays <= maxDays;
-};
-
-export const formatLogTimestamp = (timestamp) => {
-  if (!timestamp) {
-    return "";
-  }
-
-  const date = new Date(timestamp * 1000);
-  return date.toLocaleString(getAdminLocale());
 };
 
 const MIN_REASONABLE_UNIX_SECONDS = 946684800; // 2000-01-01 UTC
@@ -185,8 +176,9 @@ export const formatWpDateTime = (value, fallbackLabel = "") => {
     return fallbackLabel || String(value || "");
   }
 
-  const wpDateFormat = String( window?.BBPAAdmin?.settings?.dateFormat || "" ).trim();
-  const wpTimeFormat = String( window?.BBPAAdmin?.settings?.timeFormat || "" ).trim();
+  const adminSettings = getAdminConfig()?.settings;
+  const wpDateFormat = String( adminSettings?.dateFormat || "" ).trim();
+  const wpTimeFormat = String( adminSettings?.timeFormat || "" ).trim();
 
   const formatPattern = [wpDateFormat, wpTimeFormat].filter(Boolean).join(" ");
   if (window?.wp?.date?.dateI18n && formatPattern) {
@@ -207,8 +199,7 @@ export const getWpDateTimeTimestamp = (value) => {
 };
 
 const getSiteTodayParts = (now) => {
-  const settings =
-    typeof window !== "undefined" ? window.BBPAAdmin?.settings : undefined;
+  const settings = getAdminConfig()?.settings;
   const timeZone = String(settings?.timezoneString || "").trim();
 
   if (timeZone && typeof Intl !== "undefined" && Intl.DateTimeFormat) {

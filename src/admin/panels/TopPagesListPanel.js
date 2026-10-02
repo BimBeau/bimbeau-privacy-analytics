@@ -3,6 +3,7 @@ import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
+import { isAdvancedStatsEnabled } from '../lib/adminConstants';
 import { getRangeFromSelection } from '../lib/date';
 import { formatDurationMetricValue } from '../lib/formatters';
 import BpaCard from '../components/BpaCard';
@@ -26,23 +27,22 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		metricSeriesKey="views_series"
 		exportReportKey="top-pages"
 		requestParams={ {
-			include_avg_time:
-				ADMIN_CONFIG?.settings?.advanced_stats_enabled !== false
-					? 1
-					: 0,
+			include_avg_time: isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
+				? 1
+				: 0,
 		} }
 		extraMetricLabel={
-			ADMIN_CONFIG?.settings?.advanced_stats_enabled !== false
+			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
 				? __( 'Avg. time on page:', 'bimbeau-privacy-analytics' )
 				: ''
 		}
 		extraMetricValueKey={
-			ADMIN_CONFIG?.settings?.advanced_stats_enabled !== false
+			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
 				? 'avg_time_on_page_ms'
 				: ''
 		}
 		formatExtraMetricValue={
-			ADMIN_CONFIG?.settings?.advanced_stats_enabled !== false
+			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
 				? formatDurationMetricValue
 				: undefined
 		}

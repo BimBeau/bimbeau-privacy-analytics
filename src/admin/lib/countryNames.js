@@ -1,6 +1,7 @@
 import { __ } from "@wordpress/i18n";
 
 import countryNamesFr from "../data/country-names-fr.json";
+import { getAdminLocale as getSharedAdminLocale } from "./date";
 
 const UNKNOWN_CODES = new Set(["", "XX", "ZZ", "UNKNOWN"]);
 
@@ -117,17 +118,8 @@ export const resolveCountryCode = (value) => {
   return "";
 };
 
-const getAdminLocale = () => {
-  if (typeof document !== "undefined" && document.documentElement?.lang) {
-    return document.documentElement.lang;
-  }
-
-  if (typeof navigator !== "undefined" && navigator.language) {
-    return navigator.language;
-  }
-
-  return "en";
-};
+// Country names follow the admin locale, like dates and numbers.
+const getAdminLocale = () => getSharedAdminLocale() || "en";
 
 // Country labels are resolved for every table row: build one Intl.DisplayNames
 // instance per locale instead of one per call.

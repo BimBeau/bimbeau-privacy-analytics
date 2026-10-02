@@ -16,8 +16,10 @@ import {
 import { fetchGeoIpDatabaseStatus } from './api/geoipDatabaseStatus';
 import useRealtimeSnapshot from './hooks/useRealtimeSnapshot';
 import useSharedRangeSelection from './hooks/useSharedRangePreset';
+import { isAdvancedStatsEnabled } from './lib/adminConstants';
 import { getAdminPanelUrl } from './lib/adminUrls';
 import { formatNumber } from './lib/formatters';
+import { isAdminDebugEnabled } from './lib/runtimeConfig';
 import {
 	createLogger,
 	createTraceId,
@@ -45,9 +47,7 @@ const HEADING_NOTICE_SELECTOR = [
 ].join( ', ' );
 
 const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderBrand = null, Navigation = null, extensionNotices = null } ) => {
-	const debugEnabled = Boolean(
-		window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled
-	);
+	const debugEnabled = isAdminDebugEnabled( ADMIN_CONFIG );
 	const logger = useMemo(
 		() => createLogger( { debugEnabled } ),
 		[ debugEnabled ]
@@ -87,10 +87,9 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 	const isSetupWizardMountedRef = useRef( true );
 	const [ isGeoIpStatusLoading, setIsGeoIpStatusLoading ] = useState( true );
 	const { isAuthRequired, error: authRequiredError } = useAuthRequiredState();
-	const isAdvancedStatsEnabled =
-		ADMIN_CONFIG?.settings?.advanced_stats_enabled !== false;
 	const isRealtimeEnabled =
-		isAdvancedStatsEnabled && isPanelEnabled( 'realtime' );
+		isAdvancedStatsEnabled( ADMIN_CONFIG?.settings ) &&
+		isPanelEnabled( 'realtime' );
 	// The header counter is only polled while its real-time button is shown.
 	const { data: realtimeData, isLoading: isRealtimeLoading } =
 		useRealtimeSnapshot( {

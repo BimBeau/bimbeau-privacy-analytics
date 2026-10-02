@@ -72,15 +72,24 @@ const getLocalStorage = () => {
   }
 };
 
-export const normalizePageLabelDisplay = (mode) =>
-  PAGE_LABEL_DISPLAY_OPTIONS.includes(mode) ? mode : null;
-
-export const getRangePresetStorageKey = () => {
+/**
+ * Build a browser storage key for the current WordPress user.
+ *
+ * @param {string} prefix Storage key prefix.
+ * @return {string} `{prefix}:{userId}`, or `{prefix}:default` without user.
+ */
+export const getUserScopedStorageKey = (prefix) => {
   const userId = ADMIN_CONFIG?.currentUserId
     ? String(ADMIN_CONFIG.currentUserId)
     : "default";
-  return `${RANGE_PRESET_STORAGE_PREFIX}:${userId}`;
+  return `${prefix}:${userId}`;
 };
+
+export const normalizePageLabelDisplay = (mode) =>
+  PAGE_LABEL_DISPLAY_OPTIONS.includes(mode) ? mode : null;
+
+export const getRangePresetStorageKey = () =>
+  getUserScopedStorageKey(RANGE_PRESET_STORAGE_PREFIX);
 
 export const getRangeSelectionFromUrl = () => {
   if (typeof window === "undefined") {
@@ -136,12 +145,8 @@ export const storeRangeSelection = (selection) => {
 export const isValidRangeSelection = (selection) =>
   Boolean(normalizeRangeSelection(selection));
 
-export const getPageLabelDisplayStorageKey = () => {
-  const userId = ADMIN_CONFIG?.currentUserId
-    ? String(ADMIN_CONFIG.currentUserId)
-    : "default";
-  return `${PAGE_LABEL_DISPLAY_STORAGE_PREFIX}:${userId}`;
-};
+export const getPageLabelDisplayStorageKey = () =>
+  getUserScopedStorageKey(PAGE_LABEL_DISPLAY_STORAGE_PREFIX);
 
 export const getStoredPageLabelDisplay = () => {
   const storage = getLocalStorage();
@@ -174,12 +179,8 @@ export const storePageLabelDisplay = (mode) => {
 export const isValidPageLabelDisplay = (mode) =>
   Boolean(normalizePageLabelDisplay(mode));
 
-export const getAdvancedConsentLastTestStorageKey = () => {
-  const userId = ADMIN_CONFIG?.currentUserId
-    ? String(ADMIN_CONFIG.currentUserId)
-    : "default";
-  return `${ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX}:${userId}`;
-};
+export const getAdvancedConsentLastTestStorageKey = () =>
+  getUserScopedStorageKey(ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX);
 
 export const getStoredAdvancedConsentLastTestAt = () => {
   const storage = getLocalStorage();
@@ -224,12 +225,8 @@ export const storeAdvancedConsentLastTestAt = (value) => {
   }
 };
 
-export const getAdvancedConsentLastDiagnosticStorageKey = () => {
-  const userId = ADMIN_CONFIG?.currentUserId
-    ? String(ADMIN_CONFIG.currentUserId)
-    : "default";
-  return `${ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX}:${userId}`;
-};
+export const getAdvancedConsentLastDiagnosticStorageKey = () =>
+  getUserScopedStorageKey(ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX);
 
 const normalizeStoredAdvancedConsentDiagnostic = (value) => {
   if (!value || typeof value !== "object") {

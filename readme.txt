@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.218
+Stable tag: 8.45.219
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,17 +213,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.218 =
-* [Security] On the page details screen, the "View" button only opens pages of your own site. A forged page address recorded by a visitor, or a crafted link to the details screen, can no longer send you to another domain. [Pro].
-* [Fix] The Stats App now works on sites installed in a subdirectory: the side menu, the dashboard cards and the page details links stay inside the app instead of leading to a missing page. [Pro].
-* [Fix] Reports can be exported from the Stats App: the CSV, JSON and Excel exports no longer fail with "Export access is refused". [Pro].
-* [Fix] On the page details screen, "Open in WordPress" now opens the post editor on sites installed in a subdirectory or with a custom admin address. [Pro].
-* [Fix] The Devices screen and the page details breakdowns now say when they are based only on the 500 most active visitors of the period, instead of presenting the sample as complete.
-* [Performance] The page details screen sends fewer duplicate requests: one visitors request instead of two, and on a single day one hourly request instead of two. [Pro].
-* [Performance] The Real-time and Countries maps no longer send their own country request when the screen already provides the map data.
-* [Fix] When the browser blocks site storage, the Stats App shows the "session expired" screen instead of reloading again and again. [Pro].
-* [Fix] "Finish later" and the Escape key now close the setup assistant even when the server does not answer.
-* [Improvement] The help icons of the dashboard cards and table headers work with the keyboard and screen readers: screen readers announce each dashboard card by its name and read its help as a description. Clicking a card's help icon shows the help instead of opening the card's screen.
-* [Improvement] Translation fixes: table pagination, row counts, assistant steps, chart and map tooltips, table labels and export row counts are now full translatable sentences, and the home page label is now in English ("Home page") with translations in every language.
-* [Improvement] Internal cleanup: the header logo is no longer rebuilt on every screen update, an unused admin widget was removed, and an admin request helper can no longer loop on repeated requests.
-* [Docs] Devices and Page details user documentation, admin architecture, REST export access and app payload documentation updated.
+= 8.45.219 =
+* [Fix] Events statistics keep the current rows and totals on screen while the next page or filter loads, instead of showing an empty table for a moment; they are cleared when loading fails, as before. [Pro].
+* [Improvement] Device types in the Real-time and Visitors tables (Desktop, Mobile, Tablet, Bot) are shown in the language of the site.
+* [Improvement] Saving the settings, testing the MaxMind connection and purging data use the same request handling as the reports: an expired login shows the "reload the page" screen, purge errors show the message returned by the server, and debug mode adds its diagnostic header.
+* [Improvement] Turning debug mode on or off in Settings applies to the logs of the Settings screen without reloading the page.
+* [Build] Internal restructuring of the admin app: one request client and one set of constants shared by both editions, shared heatmap and number formatting helpers, removal of unused code, and new checks that keep the free admin code complete when the edition-specific blocks are removed.

@@ -47,8 +47,8 @@ import {
 } from "react-icons/lu";
 
 import useAdminEndpoint, {
-  buildRestUrl,
   fetchAdminJson,
+  updateAdminCacheVersion,
 } from "../api/useAdminEndpoint";
 import { fetchGeoIpDatabaseStatus } from "../api/geoipDatabaseStatus";
 import DataState from "../components/DataState";
@@ -58,11 +58,48 @@ import BpaCard from "../components/BpaCard";
 import { ADMIN_CONFIG, DEFAULT_SETTINGS } from "../constants";
 import { getAdminLocale } from "../lib/date";
 import { formatNumber } from "../lib/formatters";
+import { isAdminDebugEnabled } from "../lib/runtimeConfig";
 import { createLogger, createTraceId } from "../logger";
 
-const DEBUG_FLAG = Boolean(
-  window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled,
-);
+// Read at log time: saving the debug setting takes effect without a reload.
+const isDebugLoggingEnabled = () => isAdminDebugEnabled(ADMIN_CONFIG);
+
+const getMissingRestConfigNotice = () =>
+  ADMIN_CONFIG?.restNonce && ADMIN_CONFIG?.restUrl
+    ? null
+    : {
+        status: "error",
+        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
+      };
+
+/**
+ * Send a Settings request through the admin REST client.
+ *
+ * A success response whose body is not valid JSON (for example a PHP notice
+ * printed before the JSON) still applied the change: it resolves to null, and
+ * the screen reloads the saved state when it needs it.
+ *
+ * @param {string} path    REST route below the internal namespace.
+ * @param {Object} options fetchAdminJson() options.
+ * @return {Promise<Object|null>} Response payload, or null.
+ */
+const requestSettingsChange = async (path, options) => {
+  try {
+    return await fetchAdminJson(path, options);
+  } catch (requestError) {
+    const isSuccessWithInvalidJson =
+      requestError?.code === "bbpa_invalid_json" &&
+      requestError?.status >= 200 &&
+      requestError?.status < 300;
+    if (isSuccessWithInvalidJson) {
+      return null;
+    }
+
+    throw requestError;
+  }
+};
+
+const JSON_REQUEST_HEADERS = { "Content-Type": "application/json" };
 
 const AGGREGATED_RETENTION_PRESETS = [
   30, 60, 90, 180, 365, 730, 1095, 1825, 3650,
@@ -333,7 +370,7 @@ const SettingsPanel = ({
   const [isUpdatingGeoIpDb, setIsUpdatingGeoIpDb] = useState(false);
   const [geoIpDbNotice, setGeoIpDbNotice] = useState(null);
   const [geoIpDbStatus, setGeoIpDbStatus] = useState(null);
-
+  
   const [availableGranularities, setAvailableGranularities] = useState(
     Array.isArray(data?.availableGranularities)
       ? data.availableGranularities
@@ -391,7 +428,10 @@ const SettingsPanel = ({
         value: String(days),
       }));
   }, [formState.overview_totals_retention_days]);
-  const logger = useMemo(() => createLogger({ debugEnabled: DEBUG_FLAG }), []);
+  const logger = useMemo(
+    () => createLogger({ debugEnabled: isDebugLoggingEnabled }),
+    [],
+  );
   const aggregatedRetentionFrequencyOptions = useMemo(() => {
     const current = Number.parseInt(
       formState.aggregated_retention_frequency_days,
@@ -494,15 +534,10 @@ const SettingsPanel = ({
   }, []);
 
   const persistSettings = async (nextState, options = {}) => {
-    if (!ADMIN_CONFIG?.restNonce || !ADMIN_CONFIG?.restUrl) {
-      setSaveNotice({
-        status: "error",
-        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
-      });
-      return {
-        ok: false,
-        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
-      };
+    const missingRestConfigNotice = getMissingRestConfigNotice();
+    if (missingRestConfigNotice) {
+      setSaveNotice(missingRestConfigNotice);
+      return { ok: false, message: missingRestConfigNotice.message };
     }
 
     const {
@@ -533,30 +568,20 @@ const SettingsPanel = ({
     try {
       let settingsPayload = nextState;
       
-      const response = await fetch(buildRestUrl("/admin/settings"), {
-        method: "POST",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-          "X-WP-Nonce": ADMIN_CONFIG.restNonce,
-        },
-        body: JSON.stringify(
-          prepareMaxMindLicenseKeyPayload(settingsPayload),
-        ),
-      });
-
-      const payload = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        if (payload?.data?.field_errors) {
-          setValidationErrors(payload.data.field_errors);
+      let payload = null;
+      try {
+        payload = await requestSettingsChange("/admin/settings", {
+          method: "POST",
+          headers: JSON_REQUEST_HEADERS,
+          body: JSON.stringify(
+            prepareMaxMindLicenseKeyPayload(settingsPayload),
+          ),
+        });
+      } catch (requestError) {
+        if (requestError?.data?.field_errors) {
+          setValidationErrors(requestError.data.field_errors);
         }
-        throw new Error(
-          payload?.message ||
-            `${__("API error", "bimbeau-privacy-analytics")} (${
-              response.status
-            })`,
-        );
+        throw requestError;
       }
 
       // Set when the general settings are saved but a second request fails.
@@ -590,9 +615,7 @@ const SettingsPanel = ({
         setAvailableGranularities(
           normalizedPayload?.availableGranularities || [],
         );
-        if (ADMIN_CONFIG?.settings) {
-          ADMIN_CONFIG.settings.adminCacheVersion = nextAdminCacheVersion;
-        }
+        updateAdminCacheVersion(nextAdminCacheVersion);
       }
 
       if (partialSaveMessage) {
@@ -657,11 +680,9 @@ const SettingsPanel = ({
   };
 
   const onTestMaxMindConnection = async () => {
-    if (!ADMIN_CONFIG?.restNonce || !ADMIN_CONFIG?.restUrl) {
-      setMaxMindTestNotice({
-        status: "error",
-        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
-      });
+    const missingRestConfigNotice = getMissingRestConfigNotice();
+    if (missingRestConfigNotice) {
+      setMaxMindTestNotice(missingRestConfigNotice);
       return;
     }
 
@@ -679,33 +700,24 @@ const SettingsPanel = ({
     setMaxMindTestNotice(null);
 
     try {
-      const response = await fetch(buildRestUrl("/admin/maxmind-test"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-WP-Nonce": ADMIN_CONFIG.restNonce,
-        },
-        body: JSON.stringify(
-          prepareMaxMindLicenseKeyPayload({
-            maxmind_account_id: formState.maxmind_account_id,
-            maxmind_license_key: formState.maxmind_license_key,
-            maxmind_license_key_set: formState.maxmind_license_key_set,
-          }),
-        ),
-      });
-
-      const payload = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        if (payload?.data?.field_errors) {
-          setValidationErrors(payload.data.field_errors);
+      let payload = null;
+      try {
+        payload = await requestSettingsChange("/admin/maxmind-test", {
+          method: "POST",
+          headers: JSON_REQUEST_HEADERS,
+          body: JSON.stringify(
+            prepareMaxMindLicenseKeyPayload({
+              maxmind_account_id: formState.maxmind_account_id,
+              maxmind_license_key: formState.maxmind_license_key,
+              maxmind_license_key_set: formState.maxmind_license_key_set,
+            }),
+          ),
+        });
+      } catch (requestError) {
+        if (requestError?.data?.field_errors) {
+          setValidationErrors(requestError.data.field_errors);
         }
-        throw new Error(
-          payload?.message ||
-            `${__("API error", "bimbeau-privacy-analytics")} (${
-              response.status
-            })`,
-        );
+        throw requestError;
       }
 
       setMaxMindTestNotice({
@@ -727,11 +739,9 @@ const SettingsPanel = ({
   };
 
   const onUpdateGeoIpDatabase = async () => {
-    if (!ADMIN_CONFIG?.restNonce || !ADMIN_CONFIG?.restUrl) {
-      setGeoIpDbNotice({
-        status: "error",
-        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
-      });
+    const missingRestConfigNotice = getMissingRestConfigNotice();
+    if (missingRestConfigNotice) {
+      setGeoIpDbNotice(missingRestConfigNotice);
       return;
     }
 
@@ -741,9 +751,7 @@ const SettingsPanel = ({
     try {
       const payload = await fetchAdminJson("/admin/geoip-database/update", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: JSON_REQUEST_HEADERS,
       });
 
       setGeoIpDbNotice({
@@ -875,11 +883,9 @@ const SettingsPanel = ({
   const geoIpHasError = geoIpUiStatus.tone === "error";
 
   const onPurge = async () => {
-    if (!ADMIN_CONFIG?.restNonce || !ADMIN_CONFIG?.restUrl) {
-      setPurgeNotice({
-        status: "error",
-        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
-      });
+    const missingRestConfigNotice = getMissingRestConfigNotice();
+    if (missingRestConfigNotice) {
+      setPurgeNotice(missingRestConfigNotice);
       return;
     }
 
@@ -892,23 +898,10 @@ const SettingsPanel = ({
     });
 
     try {
-      const response = await fetch(buildRestUrl("/admin/purge-data"), {
+      await fetchAdminJson("/admin/purge-data", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-WP-Nonce": ADMIN_CONFIG.restNonce,
-        },
+        headers: JSON_REQUEST_HEADERS,
       });
-
-      if (!response.ok) {
-        throw new Error(
-          `${__("API error", "bimbeau-privacy-analytics")} (${
-            response.status
-          })`,
-        );
-      }
-
-      await response.json();
       setPurgeNotice({
         status: "success",
         message: __("Analytics data purged.", "bimbeau-privacy-analytics"),
@@ -937,11 +930,9 @@ const SettingsPanel = ({
   };
 
   const onPurgeAggregatedData = async () => {
-    if (!ADMIN_CONFIG?.restNonce || !ADMIN_CONFIG?.restUrl) {
-      setPurgeNotice({
-        status: "error",
-        message: __("Missing REST configuration.", "bimbeau-privacy-analytics"),
-      });
+    const missingRestConfigNotice = getMissingRestConfigNotice();
+    if (missingRestConfigNotice) {
+      setPurgeNotice(missingRestConfigNotice);
       return;
     }
 
@@ -954,26 +945,10 @@ const SettingsPanel = ({
     });
 
     try {
-      const response = await fetch(
-        buildRestUrl("/admin/purge-aggregated-data"),
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-WP-Nonce": ADMIN_CONFIG.restNonce,
-          },
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `${__("API error", "bimbeau-privacy-analytics")} (${
-            response.status
-          })`,
-        );
-      }
-
-      await response.json();
+      await fetchAdminJson("/admin/purge-aggregated-data", {
+        method: "POST",
+        headers: JSON_REQUEST_HEADERS,
+      });
       setPurgeNotice({
         status: "success",
         message: __(
@@ -1064,7 +1039,6 @@ const SettingsPanel = ({
 
   
 
-
   const initialSettingsTabName = useMemo(() => {
     const params = new URLSearchParams(window.location.search || "");
     const requestedTab = params.get("bbpa_settings_tab") || "general";
@@ -1072,7 +1046,6 @@ const SettingsPanel = ({
       ? requestedTab
       : "general";
   }, [settingsTabs]);
-
 
   return (
     <BpaCard title={__("Settings", "bimbeau-privacy-analytics")}>

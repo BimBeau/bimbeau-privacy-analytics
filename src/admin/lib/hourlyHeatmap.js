@@ -1,4 +1,4 @@
-import { __, sprintf } from "@wordpress/i18n";
+import { __ } from "@wordpress/i18n";
 
 export const HOURLY_HEATMAP_HOURS = Array.from(
   { length: 24 },
@@ -163,22 +163,6 @@ export const getHourlyHeatmapEmptyLabel = (
     "bimbeau-privacy-analytics",
   );
 };
-
-export const formatHourlyHeatmapTooltip = ({
-  day,
-  hour,
-  metricLabel,
-  value,
-  numberFormatter,
-}) =>
-  sprintf(
-    /* translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count */
-    __("%1$s at %2$s — %3$s: %4$s", "bimbeau-privacy-analytics"),
-    day,
-    formatHourlyHeatmapHour(hour),
-    metricLabel,
-    numberFormatter.format(value),
-  );
 
 export {
   DEFAULT_HEATMAP_THEME_COLOR,

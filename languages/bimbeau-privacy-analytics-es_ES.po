@@ -63,40 +63,40 @@ msgstr "Estado actual de ejecución"
 msgid "Technical diagnostics are indicative and remain limited to script attributes and CMP markers."
 msgstr "Los diagnósticos técnicos son orientativos y se limitan a los atributos de los scripts y a los marcadores de la CMP."
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Dashboard"
 msgstr "Panel de control"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Tiempo real"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/lib/adminConstants.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Páginas"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Acquisition"
 msgstr "Adquisición"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Sitios de referencia"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Internal searches"
 msgstr "Búsquedas internas"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Geolocalización"
 
-#: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
+#: admin/admin.php src/admin/AdminAppCore.js src/admin/lib/adminConstants.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -104,11 +104,11 @@ msgstr "Geolocalización"
 msgid "Visitors"
 msgstr "Visitantes"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Ajustes"
@@ -525,39 +525,39 @@ msgstr "Los informes de ubicación no están disponibles hasta que se haya desca
 msgid "Open geolocation settings"
 msgstr "Abrir configuración de geolocalización"
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
-msgid "API error"
-msgstr "Error de API"
-
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown endpoint"
 msgstr "endpoint desconocido"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown status"
 msgstr "estado desconocido"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned invalid JSON. Check the endpoint response preview for details."
 msgstr "El servidor devolvió JSON no válido. Consulta la vista previa de la respuesta del endpoint para más detalles."
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned an unexpected response. Check the endpoint response preview for details."
 msgstr "El servidor devolvió una respuesta inesperada. Consulta la vista previa de la respuesta del endpoint para más detalles."
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Parser error:"
 msgstr "Error de análisis:"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Empty response body."
 msgstr "Cuerpo de respuesta vacío."
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
+#: src/admin/api/adminEndpointClient.js
+msgid "API error"
+msgstr "Error de API"
+
+#: src/admin/api/adminEndpointClient.js src/admin/panels/SettingsPanel.js
 msgid "Missing REST configuration."
 msgstr "Falta la configuración REST."
 
-#: src/admin/api/useAdminEndpoint.js src/admin/hooks/useRealtimeSnapshot.js
+#: src/admin/api/adminEndpointClient.js src/admin/hooks/useRealtimeSnapshot.js
 msgid "Loading error."
 msgstr "Error de carga."
 
@@ -939,62 +939,6 @@ msgstr "Restablecer"
 msgid "Map legend"
 msgstr "Leyenda del mapa"
 
-#: src/admin/constants/index.js
-msgid "Today"
-msgstr "Hoy"
-
-#: src/admin/constants/index.js
-msgid "Yesterday"
-msgstr "Ayer"
-
-#: src/admin/constants/index.js
-msgid "7d"
-msgstr "7d"
-
-#: src/admin/constants/index.js
-msgid "7 days"
-msgstr "7 días"
-
-#: src/admin/constants/index.js
-msgid "30d"
-msgstr "30d"
-
-#: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 días"
-
-#: src/admin/constants/index.js
-msgid "90d"
-msgstr "90d"
-
-#: src/admin/constants/index.js
-msgid "90 days"
-msgstr "90 días"
-
-#: src/admin/constants/index.js
-msgid "6m"
-msgstr "6m"
-
-#: src/admin/constants/index.js
-msgid "6 months"
-msgstr "6 meses"
-
-#: src/admin/constants/index.js
-msgid "12m"
-msgstr "12m"
-
-#: src/admin/constants/index.js
-msgid "12 months"
-msgstr "12 meses"
-
-#: src/admin/constants/index.js
-msgid "24m"
-msgstr "24m"
-
-#: src/admin/constants/index.js
-msgid "24 months"
-msgstr "24 meses"
-
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "URL"
@@ -1033,6 +977,62 @@ msgstr "No hay datos horarios globales disponibles para este período."
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Los mapas de calor horarios globales requieren datos de agregación horaria de páginas."
 
+#: src/admin/lib/adminConstants.js
+msgid "Today"
+msgstr "Hoy"
+
+#: src/admin/lib/adminConstants.js
+msgid "Yesterday"
+msgstr "Ayer"
+
+#: src/admin/lib/adminConstants.js
+msgid "7d"
+msgstr "7d"
+
+#: src/admin/lib/adminConstants.js
+msgid "7 days"
+msgstr "7 días"
+
+#: src/admin/lib/adminConstants.js
+msgid "30d"
+msgstr "30d"
+
+#: src/admin/lib/adminConstants.js
+msgid "30 days"
+msgstr "30 días"
+
+#: src/admin/lib/adminConstants.js
+msgid "90d"
+msgstr "90d"
+
+#: src/admin/lib/adminConstants.js
+msgid "90 days"
+msgstr "90 días"
+
+#: src/admin/lib/adminConstants.js
+msgid "6m"
+msgstr "6m"
+
+#: src/admin/lib/adminConstants.js
+msgid "6 months"
+msgstr "6 meses"
+
+#: src/admin/lib/adminConstants.js
+msgid "12m"
+msgstr "12m"
+
+#: src/admin/lib/adminConstants.js
+msgid "12 months"
+msgstr "12 meses"
+
+#: src/admin/lib/adminConstants.js
+msgid "24m"
+msgstr "24m"
+
+#: src/admin/lib/adminConstants.js
+msgid "24 months"
+msgstr "24 meses"
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Búsqueda orgánica"
@@ -1068,6 +1068,25 @@ msgstr "Asistentes de IA"
 #: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Otro"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "Escritorio"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Mobile"
+msgstr "Móvil"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "Tableta"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Bot"
+msgstr "Bot"
 
 #. translators: %d: Number of seconds.
 #: src/admin/lib/formatters.js
@@ -1155,11 +1174,6 @@ msgstr "Los mapas de calor por hora no están disponibles porque falta la tabla 
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Los mapas de calor por hora requieren datos de agregación horaria de páginas para la fuente seleccionada."
-
-#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
-#: src/admin/lib/hourlyHeatmap.js
-msgid "%1$s at %2$s — %3$s: %4$s"
-msgstr "%1$s a las %2$s — %3$s: %4$s"
 
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
@@ -2047,17 +2061,8 @@ msgid "Loading visitors…"
 msgstr "Cargando visitantes…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Escritorio"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "Smartphone"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Tableta"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

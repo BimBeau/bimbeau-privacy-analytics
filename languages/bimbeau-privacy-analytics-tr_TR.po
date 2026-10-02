@@ -62,40 +62,40 @@ msgstr "Geçerli çalışma zamanı durumu"
 msgid "Technical diagnostics are indicative and remain limited to script attributes and CMP markers."
 msgstr "Teknik tanılama göstergedir ve betik öznitelikleri ile CMP işaretleriyle sınırlı kalır."
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Dashboard"
 msgstr "Gösterge paneli"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Gerçek zamanlı"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/lib/adminConstants.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Sayfalar"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Acquisition"
 msgstr "Edinme"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Yönlendiren siteler"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Internal searches"
 msgstr "Dahili aramalar"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Coğrafi konum"
 
-#: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
+#: admin/admin.php src/admin/AdminAppCore.js src/admin/lib/adminConstants.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -103,11 +103,11 @@ msgstr "Coğrafi konum"
 msgid "Visitors"
 msgstr "Ziyaretçiler"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Devices"
 msgstr "Cihazlar"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Ayarlar"
@@ -523,39 +523,39 @@ msgstr "Yerel GeoIP veritabanı indirilene kadar konum raporları kullanılamaz.
 msgid "Open geolocation settings"
 msgstr "Coğrafi konum ayarlarını aç"
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
-msgid "API error"
-msgstr "API hatası"
-
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown endpoint"
 msgstr "bilinmeyen uç nokta"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown status"
 msgstr "bilinmeyen durum"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned invalid JSON. Check the endpoint response preview for details."
 msgstr "Sunucu geçersiz JSON döndürdü. Ayrıntılar için uç nokta yanıt önizlemesini kontrol edin."
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned an unexpected response. Check the endpoint response preview for details."
 msgstr "Sunucu beklenmeyen bir yanıt döndürdü. Ayrıntılar için uç nokta yanıt önizlemesini kontrol edin."
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Parser error:"
 msgstr "Ayrıştırıcı hatası:"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Empty response body."
 msgstr "Boş yanıt gövdesi."
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
+#: src/admin/api/adminEndpointClient.js
+msgid "API error"
+msgstr "API hatası"
+
+#: src/admin/api/adminEndpointClient.js src/admin/panels/SettingsPanel.js
 msgid "Missing REST configuration."
 msgstr "REST yapılandırması eksik."
 
-#: src/admin/api/useAdminEndpoint.js src/admin/hooks/useRealtimeSnapshot.js
+#: src/admin/api/adminEndpointClient.js src/admin/hooks/useRealtimeSnapshot.js
 msgid "Loading error."
 msgstr "Yükleme hatası."
 
@@ -937,62 +937,6 @@ msgstr "Sıfırla"
 msgid "Map legend"
 msgstr "Harita açıklaması"
 
-#: src/admin/constants/index.js
-msgid "Today"
-msgstr "Bugün"
-
-#: src/admin/constants/index.js
-msgid "Yesterday"
-msgstr "Dün"
-
-#: src/admin/constants/index.js
-msgid "7d"
-msgstr "7g"
-
-#: src/admin/constants/index.js
-msgid "7 days"
-msgstr "7 gün"
-
-#: src/admin/constants/index.js
-msgid "30d"
-msgstr "30g"
-
-#: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 gün"
-
-#: src/admin/constants/index.js
-msgid "90d"
-msgstr "90g"
-
-#: src/admin/constants/index.js
-msgid "90 days"
-msgstr "90 gün"
-
-#: src/admin/constants/index.js
-msgid "6m"
-msgstr "6a"
-
-#: src/admin/constants/index.js
-msgid "6 months"
-msgstr "6 ay"
-
-#: src/admin/constants/index.js
-msgid "12m"
-msgstr "12a"
-
-#: src/admin/constants/index.js
-msgid "12 months"
-msgstr "12 ay"
-
-#: src/admin/constants/index.js
-msgid "24m"
-msgstr "24a"
-
-#: src/admin/constants/index.js
-msgid "24 months"
-msgstr "24 ay"
-
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "Url"
@@ -1031,6 +975,62 @@ msgstr "Bu dönem için genel saatlik veri mevcut değil."
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Genel saatlik ısı haritaları saatlik sayfa toplama verisi gerektirir."
 
+#: src/admin/lib/adminConstants.js
+msgid "Today"
+msgstr "Bugün"
+
+#: src/admin/lib/adminConstants.js
+msgid "Yesterday"
+msgstr "Dün"
+
+#: src/admin/lib/adminConstants.js
+msgid "7d"
+msgstr "7g"
+
+#: src/admin/lib/adminConstants.js
+msgid "7 days"
+msgstr "7 gün"
+
+#: src/admin/lib/adminConstants.js
+msgid "30d"
+msgstr "30g"
+
+#: src/admin/lib/adminConstants.js
+msgid "30 days"
+msgstr "30 gün"
+
+#: src/admin/lib/adminConstants.js
+msgid "90d"
+msgstr "90g"
+
+#: src/admin/lib/adminConstants.js
+msgid "90 days"
+msgstr "90 gün"
+
+#: src/admin/lib/adminConstants.js
+msgid "6m"
+msgstr "6a"
+
+#: src/admin/lib/adminConstants.js
+msgid "6 months"
+msgstr "6 ay"
+
+#: src/admin/lib/adminConstants.js
+msgid "12m"
+msgstr "12a"
+
+#: src/admin/lib/adminConstants.js
+msgid "12 months"
+msgstr "12 ay"
+
+#: src/admin/lib/adminConstants.js
+msgid "24m"
+msgstr "24a"
+
+#: src/admin/lib/adminConstants.js
+msgid "24 months"
+msgstr "24 ay"
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Organik arama"
@@ -1066,6 +1066,25 @@ msgstr "Yapay zekâ asistanları"
 #: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Diğer"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "Masaüstü"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Mobile"
+msgstr "Mobil"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Bot"
+msgstr "Bot"
 
 #. translators: %d: Number of seconds.
 #: src/admin/lib/formatters.js
@@ -1153,11 +1172,6 @@ msgstr "Saatlik toplama tablosu eksik olduğu için saatlik ısı haritaları ku
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Saatlik ısı haritaları seçilen kaynak için saatlik sayfa toplama verisi gerektirir."
-
-#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
-#: src/admin/lib/hourlyHeatmap.js
-msgid "%1$s at %2$s — %3$s: %4$s"
-msgstr "%1$s, %2$s — %3$s: %4$s"
 
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
@@ -2043,17 +2057,8 @@ msgid "Loading visitors…"
 msgstr "Ziyaretçiler yükleniyor…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Masaüstü"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "Akıllı telefon"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Tablet"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

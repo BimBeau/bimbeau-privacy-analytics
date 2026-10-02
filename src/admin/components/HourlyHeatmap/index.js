@@ -46,12 +46,14 @@ const resolveHeatmapThemeColor = () => {
 
 const HourlyHeatmap = ({
   ariaLabel,
+  className = "bbpa-hourly-heatmap",
   emptyDataLabel,
   items,
   hourlyAvailable,
   hourlyUnavailableReason,
   metricLabel,
   source,
+  tooltipClassName = "bbpa-hourly-heatmap__tooltip",
   unavailableLabel,
   useShortDayLabels = false,
 }) => {
@@ -151,7 +153,7 @@ const HourlyHeatmap = ({
     __("Hourly activity heatmap by day and hour", "bimbeau-privacy-analytics");
 
   return (
-    <div className="bbpa-hourly-heatmap">
+    <div className={className}>
       <ChartFrame height={HEATMAP_HEIGHT} ariaLabel={resolvedAriaLabel}>
         <ResponsiveHeatMapCanvas
           data={data}
@@ -220,7 +222,7 @@ const HourlyHeatmap = ({
             const value = Number(cell?.value) || 0;
 
             return (
-              <div className="bbpa-world-map__tooltip bbpa-hourly-heatmap__tooltip">
+              <div className={`bbpa-world-map__tooltip ${tooltipClassName}`}>
                 <div className="bbpa-world-map__tooltip-title">
                   <strong>{`${dayLabel} • ${formatHourlyHeatmapHour(
                     hour,

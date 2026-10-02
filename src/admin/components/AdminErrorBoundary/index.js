@@ -1,6 +1,7 @@
 import { Component } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import Notice from '../BrandNotice';
+import { getAdminConfig } from '../../lib/runtimeConfig';
 
 class AdminErrorBoundary extends Component {
     state = {
@@ -35,8 +36,7 @@ class AdminErrorBoundary extends Component {
             const globalsList = (details?.checkedGlobals || checkedGlobals).filter(Boolean);
             const detailMessage =
                 details?.reason || details?.message || (typeof details === 'string' ? details : '');
-            const adminConfig =
-                typeof window !== 'undefined' ? window.BBPAAdmin || null : null;
+            const adminConfig = getAdminConfig();
             const queryParams =
                 typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
             const currentPanel =

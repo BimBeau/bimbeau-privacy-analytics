@@ -50,6 +50,55 @@ export const getNumberFormatter = ( options = {} ) => {
 export const formatNumber = ( value, options = {} ) =>
 	getNumberFormatter( options ).format( value );
 
+const COMPACT_NUMBER_SUFFIXES = [
+	{ divisor: 1000, suffix: 'k' },
+	{ divisor: 1000000, suffix: 'M' },
+	{ divisor: 1000000000, suffix: 'B' },
+];
+
+/**
+ * Format an absolute value of 1,000 or more with a k, M or B suffix.
+ *
+ * Values below 10 units of the suffix keep one decimal (1.5k, 9.9M); a value
+ * that rounds to 1,000 units moves to the next suffix (999,500 is 1M).
+ *
+ * @param {number} absoluteValue Value of 1,000 or more.
+ * @return {string} Formatted value with its suffix, without sign.
+ */
+const formatCompactNumber = ( absoluteValue ) => {
+	let { divisor, suffix } = COMPACT_NUMBER_SUFFIXES[ 0 ];
+	COMPACT_NUMBER_SUFFIXES.forEach( ( candidate ) => {
+		if ( absoluteValue >= candidate.divisor ) {
+			divisor = candidate.divisor;
+			suffix = candidate.suffix;
+		}
+	} );
+
+	let scaled = absoluteValue / divisor;
+	let decimals = scaled < 10 ? 1 : 0;
+	scaled = Number( scaled.toFixed( decimals ) );
+
+	if ( scaled >= 1000 && divisor < 1000000000 ) {
+		divisor *= 1000;
+		suffix = divisor === 1000000 ? 'M' : 'B';
+		scaled = absoluteValue / divisor;
+		decimals = scaled < 10 ? 1 : 0;
+		scaled = Number( scaled.toFixed( decimals ) );
+	}
+
+	if ( Math.abs( scaled - Math.round( scaled ) ) < 0.00001 ) {
+		decimals = 0;
+		scaled = Math.round( scaled );
+	}
+
+	return (
+		formatNumber( scaled, {
+			minimumFractionDigits: decimals,
+			maximumFractionDigits: decimals,
+		} ) + suffix
+	);
+};
+
 export const decodeHtmlEntities = ( value ) => {
 	if ( typeof value !== 'string' ) {
 		return '';
@@ -88,37 +137,6 @@ export const formatChangePercent = ( value ) => {
 	const absoluteValue = Math.abs( safeValue );
 
 	if ( absoluteValue >= 1000 ) {
-		const compactSuffixes = [
-			{ divisor: 1000, suffix: 'k' },
-			{ divisor: 1000000, suffix: 'M' },
-			{ divisor: 1000000000, suffix: 'B' },
-		];
-
-		let { divisor, suffix } = compactSuffixes[ 0 ];
-		compactSuffixes.forEach( ( candidate ) => {
-			if ( absoluteValue >= candidate.divisor ) {
-				divisor = candidate.divisor;
-				suffix = candidate.suffix;
-			}
-		} );
-
-		let scaled = absoluteValue / divisor;
-		let decimals = scaled < 10 ? 1 : 0;
-		scaled = Number( scaled.toFixed( decimals ) );
-
-		if ( scaled >= 1000 && divisor < 1000000000 ) {
-			divisor *= 1000;
-			suffix = divisor === 1000000 ? 'M' : 'B';
-			scaled = absoluteValue / divisor;
-			decimals = scaled < 10 ? 1 : 0;
-			scaled = Number( scaled.toFixed( decimals ) );
-		}
-
-		if ( Math.abs( scaled - Math.round( scaled ) ) < 0.00001 ) {
-			decimals = 0;
-			scaled = Math.round( scaled );
-		}
-
 		let sign = '';
 		if ( safeValue > 0 ) {
 			sign = '+';
@@ -126,15 +144,7 @@ export const formatChangePercent = ( value ) => {
 			sign = '-';
 		}
 
-		return (
-			sign +
-			formatNumber( scaled, {
-				minimumFractionDigits: decimals,
-				maximumFractionDigits: decimals,
-			} ) +
-			suffix +
-			'%'
-		);
+		return `${ sign }${ formatCompactNumber( absoluteValue ) }%`;
 	}
 
 	const formatter = getNumberFormatter( {
@@ -163,43 +173,7 @@ export const formatCompactMetricValue = ( value ) => {
 		} );
 	}
 
-	const suffixes = [
-		{ divisor: 1000, suffix: 'k' },
-		{ divisor: 1000000, suffix: 'M' },
-		{ divisor: 1000000000, suffix: 'B' },
-	];
-
-	let { divisor, suffix } = suffixes[ 0 ];
-	suffixes.forEach( ( candidate ) => {
-		if ( safeValue >= candidate.divisor ) {
-			divisor = candidate.divisor;
-			suffix = candidate.suffix;
-		}
-	} );
-
-	let scaled = safeValue / divisor;
-	let decimals = scaled < 10 ? 1 : 0;
-	scaled = Number( scaled.toFixed( decimals ) );
-
-	if ( scaled >= 1000 && divisor < 1000000000 ) {
-		divisor *= 1000;
-		suffix = divisor === 1000000 ? 'M' : 'B';
-		scaled = safeValue / divisor;
-		decimals = scaled < 10 ? 1 : 0;
-		scaled = Number( scaled.toFixed( decimals ) );
-	}
-
-	if ( Math.abs( scaled - Math.round( scaled ) ) < 0.00001 ) {
-		decimals = 0;
-		scaled = Math.round( scaled );
-	}
-
-	return (
-		formatNumber( scaled, {
-			minimumFractionDigits: decimals,
-			maximumFractionDigits: decimals,
-		} ) + suffix
-	);
+	return formatCompactNumber( safeValue );
 };
 
 export const formatRatioMetricValue = ( value ) => {

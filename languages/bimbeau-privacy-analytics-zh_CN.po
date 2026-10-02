@@ -62,40 +62,40 @@ msgstr "当前运行状态"
 msgid "Technical diagnostics are indicative and remain limited to script attributes and CMP markers."
 msgstr "技术诊断仅供参考，并且仅限于脚本属性和 CMP 标记。"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "实时"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/lib/adminConstants.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "页面"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Acquisition"
 msgstr "获取"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "引荐站点"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Internal searches"
 msgstr "站内搜索"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "地理定位"
 
-#: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
+#: admin/admin.php src/admin/AdminAppCore.js src/admin/lib/adminConstants.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -103,11 +103,11 @@ msgstr "地理定位"
 msgid "Visitors"
 msgstr "访客"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Devices"
 msgstr "设备"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "设置"
@@ -523,39 +523,39 @@ msgstr "在下载本地 GeoIP 数据库之前，位置报告不可用。从地�
 msgid "Open geolocation settings"
 msgstr "打开地理位置设置"
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
-msgid "API error"
-msgstr "API 错误"
-
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown endpoint"
 msgstr "未知端点"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown status"
 msgstr "未知状态"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned invalid JSON. Check the endpoint response preview for details."
 msgstr "服务器返回了无效 JSON。请查看端点响应预览了解详情。"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned an unexpected response. Check the endpoint response preview for details."
 msgstr "服务器返回了意外响应。请查看端点响应预览了解详情。"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Parser error:"
 msgstr "解析器错误："
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Empty response body."
 msgstr "响应正文为空。"
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
+#: src/admin/api/adminEndpointClient.js
+msgid "API error"
+msgstr "API 错误"
+
+#: src/admin/api/adminEndpointClient.js src/admin/panels/SettingsPanel.js
 msgid "Missing REST configuration."
 msgstr "缺少 REST 配置。"
 
-#: src/admin/api/useAdminEndpoint.js src/admin/hooks/useRealtimeSnapshot.js
+#: src/admin/api/adminEndpointClient.js src/admin/hooks/useRealtimeSnapshot.js
 msgid "Loading error."
 msgstr "加载错误。"
 
@@ -937,62 +937,6 @@ msgstr "重置"
 msgid "Map legend"
 msgstr "地图图例"
 
-#: src/admin/constants/index.js
-msgid "Today"
-msgstr "今天"
-
-#: src/admin/constants/index.js
-msgid "Yesterday"
-msgstr "昨天"
-
-#: src/admin/constants/index.js
-msgid "7d"
-msgstr "7天"
-
-#: src/admin/constants/index.js
-msgid "7 days"
-msgstr "7 天"
-
-#: src/admin/constants/index.js
-msgid "30d"
-msgstr "30天"
-
-#: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 天"
-
-#: src/admin/constants/index.js
-msgid "90d"
-msgstr "90天"
-
-#: src/admin/constants/index.js
-msgid "90 days"
-msgstr "90 天"
-
-#: src/admin/constants/index.js
-msgid "6m"
-msgstr "6个月"
-
-#: src/admin/constants/index.js
-msgid "6 months"
-msgstr "6 个月"
-
-#: src/admin/constants/index.js
-msgid "12m"
-msgstr "12个月"
-
-#: src/admin/constants/index.js
-msgid "12 months"
-msgstr "12 个月"
-
-#: src/admin/constants/index.js
-msgid "24m"
-msgstr "24个月"
-
-#: src/admin/constants/index.js
-msgid "24 months"
-msgstr "24 个月"
-
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "网址"
@@ -1031,6 +975,62 @@ msgstr "此时间段没有可用的全局小时数据。"
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "全局小时热力图需要页面小时聚合数据。"
 
+#: src/admin/lib/adminConstants.js
+msgid "Today"
+msgstr "今天"
+
+#: src/admin/lib/adminConstants.js
+msgid "Yesterday"
+msgstr "昨天"
+
+#: src/admin/lib/adminConstants.js
+msgid "7d"
+msgstr "7天"
+
+#: src/admin/lib/adminConstants.js
+msgid "7 days"
+msgstr "7 天"
+
+#: src/admin/lib/adminConstants.js
+msgid "30d"
+msgstr "30天"
+
+#: src/admin/lib/adminConstants.js
+msgid "30 days"
+msgstr "30 天"
+
+#: src/admin/lib/adminConstants.js
+msgid "90d"
+msgstr "90天"
+
+#: src/admin/lib/adminConstants.js
+msgid "90 days"
+msgstr "90 天"
+
+#: src/admin/lib/adminConstants.js
+msgid "6m"
+msgstr "6个月"
+
+#: src/admin/lib/adminConstants.js
+msgid "6 months"
+msgstr "6 个月"
+
+#: src/admin/lib/adminConstants.js
+msgid "12m"
+msgstr "12个月"
+
+#: src/admin/lib/adminConstants.js
+msgid "12 months"
+msgstr "12 个月"
+
+#: src/admin/lib/adminConstants.js
+msgid "24m"
+msgstr "24个月"
+
+#: src/admin/lib/adminConstants.js
+msgid "24 months"
+msgstr "24 个月"
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "自然搜索"
@@ -1066,6 +1066,25 @@ msgstr "AI 助手"
 #: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "其他"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "桌面设备"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Mobile"
+msgstr "移动设备"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "平板设备"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Bot"
+msgstr "机器人"
 
 #. translators: %d: Number of seconds.
 #: src/admin/lib/formatters.js
@@ -1153,11 +1172,6 @@ msgstr "由于缺少小时聚合表，小时热力图不可用。"
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "小时热力图需要所选来源的页面小时聚合数据。"
-
-#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
-#: src/admin/lib/hourlyHeatmap.js
-msgid "%1$s at %2$s — %3$s: %4$s"
-msgstr "%1$s %2$s — %3$s：%4$s"
 
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
@@ -2043,17 +2057,8 @@ msgid "Loading visitors…"
 msgstr "正在加载访客…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "桌面设备"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "智能手机"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "平板设备"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js

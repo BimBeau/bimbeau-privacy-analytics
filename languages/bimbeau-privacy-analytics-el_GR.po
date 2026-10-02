@@ -63,40 +63,40 @@ msgstr "Τρέχουσα κατάσταση εκτέλεσης"
 msgid "Technical diagnostics are indicative and remain limited to script attributes and CMP markers."
 msgstr "Τα τεχνικά διαγνωστικά είναι ενδεικτικά και περιορίζονται στα χαρακτηριστικά των scripts και στους δείκτες CMP."
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Dashboard"
 msgstr "Πίνακας ελέγχου"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
 msgid "Real-time"
 msgstr "Πραγματικός χρόνος"
 
-#: admin/admin.php src/admin/constants/index.js
-#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
+#: admin/admin.php src/admin/free-stubs/OverviewPanel.js
+#: src/admin/lib/adminConstants.js src/admin/panels/TopPagesListPanel.js
 msgid "Pages"
 msgstr "Σελίδες"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Acquisition"
 msgstr "Απόκτηση"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Ιστότοποι παραπομπής"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Internal searches"
 msgstr "Εσωτερικές αναζητήσεις"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation"
 msgstr "Γεωεντοπισμός"
 
-#: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
+#: admin/admin.php src/admin/AdminAppCore.js src/admin/lib/adminConstants.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -104,11 +104,11 @@ msgstr "Γεωεντοπισμός"
 msgid "Visitors"
 msgstr "Επισκέπτες"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Devices"
 msgstr "Συσκευές"
 
-#: admin/admin.php src/admin/constants/index.js
+#: admin/admin.php src/admin/lib/adminConstants.js
 #: src/admin/panels/SettingsPanel.js
 msgid "Settings"
 msgstr "Ρυθμίσεις"
@@ -525,39 +525,39 @@ msgstr "Οι αναφορές τοποθεσίας δεν είναι διαθέ�
 msgid "Open geolocation settings"
 msgstr "Ανοίξτε τις ρυθμίσεις γεωγραφικής θέσης"
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
-msgid "API error"
-msgstr "Σφάλμα API"
-
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown endpoint"
 msgstr "άγνωστο endpoint"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "unknown status"
 msgstr "άγνωστη κατάσταση"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned invalid JSON. Check the endpoint response preview for details."
 msgstr "Ο διακομιστής επέστρεψε μη έγκυρο JSON. Ελέγξτε την προεπισκόπηση απόκρισης του endpoint για λεπτομέρειες."
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "The server returned an unexpected response. Check the endpoint response preview for details."
 msgstr "Ο διακομιστής επέστρεψε μη αναμενόμενη απόκριση. Ελέγξτε την προεπισκόπηση απόκρισης του endpoint για λεπτομέρειες."
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Parser error:"
 msgstr "Σφάλμα αναλυτή:"
 
-#: src/admin/api/useAdminEndpoint.js
+#: src/admin/api/adminEndpointClient.js
 msgid "Empty response body."
 msgstr "Κενό σώμα απόκρισης."
 
-#: src/admin/api/useAdminEndpoint.js src/admin/panels/SettingsPanel.js
+#: src/admin/api/adminEndpointClient.js
+msgid "API error"
+msgstr "Σφάλμα API"
+
+#: src/admin/api/adminEndpointClient.js src/admin/panels/SettingsPanel.js
 msgid "Missing REST configuration."
 msgstr "Λείπει ρύθμιση REST."
 
-#: src/admin/api/useAdminEndpoint.js src/admin/hooks/useRealtimeSnapshot.js
+#: src/admin/api/adminEndpointClient.js src/admin/hooks/useRealtimeSnapshot.js
 msgid "Loading error."
 msgstr "Σφάλμα φόρτωσης."
 
@@ -939,62 +939,6 @@ msgstr "Επαναφορά"
 msgid "Map legend"
 msgstr "Υπόμνημα χάρτη"
 
-#: src/admin/constants/index.js
-msgid "Today"
-msgstr "Σήμερα"
-
-#: src/admin/constants/index.js
-msgid "Yesterday"
-msgstr "Χθες"
-
-#: src/admin/constants/index.js
-msgid "7d"
-msgstr "7η"
-
-#: src/admin/constants/index.js
-msgid "7 days"
-msgstr "7 ημέρες"
-
-#: src/admin/constants/index.js
-msgid "30d"
-msgstr "30η"
-
-#: src/admin/constants/index.js
-msgid "30 days"
-msgstr "30 ημέρες"
-
-#: src/admin/constants/index.js
-msgid "90d"
-msgstr "90η"
-
-#: src/admin/constants/index.js
-msgid "90 days"
-msgstr "90 ημέρες"
-
-#: src/admin/constants/index.js
-msgid "6m"
-msgstr "6μ"
-
-#: src/admin/constants/index.js
-msgid "6 months"
-msgstr "6 μήνες"
-
-#: src/admin/constants/index.js
-msgid "12m"
-msgstr "12μ"
-
-#: src/admin/constants/index.js
-msgid "12 months"
-msgstr "12 μήνες"
-
-#: src/admin/constants/index.js
-msgid "24m"
-msgstr "24μ"
-
-#: src/admin/constants/index.js
-msgid "24 months"
-msgstr "24 μήνες"
-
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/TopPagesListPanel.js
 msgid "Url"
 msgstr "URL"
@@ -1033,6 +977,62 @@ msgstr "Δεν υπάρχουν διαθέσιμα καθολικά ωριαία
 msgid "Global hourly heatmaps require hourly page aggregation data."
 msgstr "Οι καθολικοί ωριαίοι heatmaps απαιτούν δεδομένα ωριαίας συγκέντρωσης σελίδων."
 
+#: src/admin/lib/adminConstants.js
+msgid "Today"
+msgstr "Σήμερα"
+
+#: src/admin/lib/adminConstants.js
+msgid "Yesterday"
+msgstr "Χθες"
+
+#: src/admin/lib/adminConstants.js
+msgid "7d"
+msgstr "7η"
+
+#: src/admin/lib/adminConstants.js
+msgid "7 days"
+msgstr "7 ημέρες"
+
+#: src/admin/lib/adminConstants.js
+msgid "30d"
+msgstr "30η"
+
+#: src/admin/lib/adminConstants.js
+msgid "30 days"
+msgstr "30 ημέρες"
+
+#: src/admin/lib/adminConstants.js
+msgid "90d"
+msgstr "90η"
+
+#: src/admin/lib/adminConstants.js
+msgid "90 days"
+msgstr "90 ημέρες"
+
+#: src/admin/lib/adminConstants.js
+msgid "6m"
+msgstr "6μ"
+
+#: src/admin/lib/adminConstants.js
+msgid "6 months"
+msgstr "6 μήνες"
+
+#: src/admin/lib/adminConstants.js
+msgid "12m"
+msgstr "12μ"
+
+#: src/admin/lib/adminConstants.js
+msgid "12 months"
+msgstr "12 μήνες"
+
+#: src/admin/lib/adminConstants.js
+msgid "24m"
+msgstr "24μ"
+
+#: src/admin/lib/adminConstants.js
+msgid "24 months"
+msgstr "24 μήνες"
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Οργανική αναζήτηση"
@@ -1068,6 +1068,25 @@ msgstr "Βοηθοί ΤΝ"
 #: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Άλλο"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+msgid "Desktop"
+msgstr "Επιτραπέζιος υπολογιστής"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Mobile"
+msgstr "Κινητό"
+
+#: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/admin/lib/deviceClassLabel.js
+msgid "Bot"
+msgstr "Bot"
 
 #. translators: %d: Number of seconds.
 #: src/admin/lib/formatters.js
@@ -1155,11 +1174,6 @@ msgstr "Οι ωριαίοι heatmaps δεν είναι διαθέσιμοι επ
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Οι ωριαίοι heatmaps απαιτούν δεδομένα ωριαίας συγκέντρωσης σελίδων για την επιλεγμένη πηγή."
-
-#. translators: 1: calendar day, 2: hour label, 3: metric label, 4: metric count
-#: src/admin/lib/hourlyHeatmap.js
-msgid "%1$s at %2$s — %3$s: %4$s"
-msgstr "%1$s στις %2$s — %3$s: %4$s"
 
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
@@ -2047,17 +2061,8 @@ msgid "Loading visitors…"
 msgstr "Φόρτωση επισκεπτών…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "Desktop"
-msgstr "Επιτραπέζιος υπολογιστής"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
 msgstr "Smartphone"
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Tablet"
-msgstr "Tablet"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
