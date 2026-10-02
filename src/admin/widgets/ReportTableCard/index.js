@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
 	Button,
 	Flex,
@@ -31,6 +31,7 @@ import {
 	formatChangePercent,
 	decodeHtmlEntities,
 } from '../../lib/formatters';
+import { formatItemCount, formatPageOfTotal } from '../../lib/paginationLabels';
 import { getPreviousRange } from '../../lib/date';
 import { normalizePageLabelDisplay } from '../../lib/storage';
 
@@ -232,18 +233,21 @@ const ReportTableCard = ( {
 		order === 'asc'
 			? __( 'Ascending', 'bimbeau-privacy-analytics' )
 			: __( 'Descending', 'bimbeau-privacy-analytics' );
-	/* translators: %s: active first-column label. */
-	const labelSortLabel = `${ activeLabelHeader } ${ __(
-		'label',
-		'bimbeau-privacy-analytics'
-	) }`;
-	/* translators: %s: current sort order label. */
-	const orderToggleLabel = `${ __(
-		'Toggle sort order',
-		'bimbeau-privacy-analytics'
-	) }: ${ orderLabel }`;
-	/* translators: %s: table title. */
-	const tableLabel = `${ __( 'Table', 'bimbeau-privacy-analytics' ) }: ${ title }`;
+	const labelSortLabel = sprintf(
+		/* translators: %s: header of the first column, for example "Page". */
+		__( '%s label', 'bimbeau-privacy-analytics' ),
+		activeLabelHeader
+	);
+	const orderToggleLabel = sprintf(
+		/* translators: %s: current sort order, "Ascending" or "Descending". */
+		__( 'Toggle sort order: %s', 'bimbeau-privacy-analytics' ),
+		orderLabel
+	);
+	const tableLabel = sprintf(
+		/* translators: %s: table title. */
+		__( 'Table: %s', 'bimbeau-privacy-analytics' ),
+		title
+	);
 
 	const exportParams = {
 		...range,
@@ -440,10 +444,11 @@ const ReportTableCard = ( {
 				emptyLabel={ emptyLabel }
 				emptyAsNotice={ Boolean( emptyStateNoticeStatus ) }
 				emptyNoticeStatus={ emptyStateNoticeStatus || 'warning' }
-				loadingLabel={ `${ __(
-					'Loading',
-					'bimbeau-privacy-analytics'
-				) }: ${ title }` }
+				loadingLabel={ sprintf(
+					/* translators: %s: card title. */
+					__( 'Loading: %s', 'bimbeau-privacy-analytics' ),
+					title
+				) }
 			/>
 			{ ! isLoading && ! error && rows.length > 0 && (
 				<>
@@ -470,6 +475,8 @@ const ReportTableCard = ( {
 												>
 													<span
 														className="dashicons dashicons-editor-help"
+														role="img"
+														tabIndex={ 0 }
 														aria-label={
 															metricHelpText
 														}
@@ -492,6 +499,8 @@ const ReportTableCard = ( {
 													>
 														<span
 															className="dashicons dashicons-editor-help"
+															role="img"
+															tabIndex={ 0 }
 															aria-label={
 																extraMetricHelpText
 															}
@@ -764,16 +773,10 @@ const ReportTableCard = ( {
 							</div>
 						</PaginationItem>
 						<PaginationItem className={ paginationMetaClass }>
-							{ `${ __( 'Page', 'bimbeau-privacy-analytics' ) } ${ page } ${ __(
-								'of',
-								'bimbeau-privacy-analytics'
-							) } ${ totalPages }` }
+							{ formatPageOfTotal( page, totalPages ) }
 						</PaginationItem>
 						<PaginationItem className={ paginationMetaClass }>
-							{ `${ totalItems } ${ __(
-								'items',
-								'bimbeau-privacy-analytics'
-							) }` }
+							{ formatItemCount( totalItems ) }
 						</PaginationItem>
 					</PaginationWrapper>
 				</>

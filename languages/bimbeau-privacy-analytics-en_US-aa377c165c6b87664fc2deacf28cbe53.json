@@ -10,9 +10,6 @@
         "lang": "en_US",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
-      " (%s)": [
-        " (%s)"
-      ],
       "%1$dh %2$dm": [
         "%1$dh %2$dm"
       ],
@@ -34,8 +31,11 @@
       "%1$s%% share": [
         "%1$s%% share"
       ],
-      "%1$s: %2$s visits%3$s": [
-        "%1$s: %2$s visits%3$s"
+      "%1$s: %2$s visits": [
+        "%1$s: %2$s visits"
+      ],
+      "%1$s: %2$s visits (approximate country area)": [
+        "%1$s: %2$s visits (approximate country area)"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -56,12 +56,23 @@
         "%s Visitor",
         "%s Visitors"
       ],
+      "%s item": [
+        "%s item",
+        "%s items"
+      ],
+      "%s label": [
+        "%s label"
+      ],
       "%s of total visitors": [
         "%s of total visits"
       ],
       "%s page view": [
         "%s page view",
         "%s page views"
+      ],
+      "%s visitor": [
+        "%s visitor",
+        "%s visitors"
       ],
       "%s visitors": [
         "%s Visitors"
@@ -222,8 +233,8 @@
       "Avg. time on page:": [
         "Avg. time on page:"
       ],
-      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
-        "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views."
+      "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.": [
+        "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range."
       ],
       "Based on %s tracked page views in the selected range.": [
         "Based on %s tracked page views in the selected range."
@@ -257,12 +268,6 @@
       ],
       "Browser version": [
         "Browser version"
-      ],
-      "Browser versions": [
-        "Browser versions"
-      ],
-      "Browsers": [
-        "Browsers"
       ],
       "CMP markers": [
         "CMP markers"
@@ -422,9 +427,6 @@
       ],
       "Device": [
         "Device"
-      ],
-      "Device details": [
-        "Device details"
       ],
       "Device page views": [
         "Device page views"
@@ -723,9 +725,6 @@
       "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
         "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse."
       ],
-      "Loading": [
-        "Loading"
-      ],
       "Loading KPIs…": [
         "Loading KPIs…"
       ],
@@ -737,9 +736,6 @@
       ],
       "Loading device breakdown…": [
         "Loading device breakdown…"
-      ],
-      "Loading device details…": [
-        "Loading device details…"
       ],
       "Loading error.": [
         "Loading error."
@@ -876,9 +872,6 @@
       "No device data available.": [
         "No device data available."
       ],
-      "No device details available.": [
-        "No device details available."
-      ],
       "No device usage available.": [
         "No device usage available."
       ],
@@ -899,9 +892,6 @@
       ],
       "No hourly details available for this page.": [
         "No hourly details available for this page."
-      ],
-      "No identified data is available for this period.": [
-        "No data available for this period."
       ],
       "No missing pages available.": [
         "No missing pages available."
@@ -960,9 +950,6 @@
       "Operating system": [
         "Operating system"
       ],
-      "Operating systems": [
-        "Operating systems"
-      ],
       "Operational": [
         "Operational"
       ],
@@ -981,8 +968,8 @@
       "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.": [
         "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
       ],
-      "Page": [
-        "Page"
+      "Page %1$d of %2$d": [
+        "Page %1$d of %2$d"
       ],
       "Page views": [
         "Page views"
@@ -1179,9 +1166,6 @@
       "Save settings": [
         "Save settings"
       ],
-      "Screen resolutions": [
-        "Screen resolutions"
-      ],
       "Script ID:": [
         "Script ID:"
       ],
@@ -1239,8 +1223,8 @@
       "Status": [
         "Status"
       ],
-      "Step": [
-        "Step"
+      "Step %1$d of %2$d": [
+        "Step %1$d of %2$d"
       ],
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal."
@@ -1251,8 +1235,8 @@
       "Sunday": [
         "Sunday"
       ],
-      "Table": [
-        "Table"
+      "Table: %s": [
+        "Table: %s"
       ],
       "Table: Acquisition channels": [
         "Table: Visitors"
@@ -1326,8 +1310,8 @@
       "Today": [
         "Today"
       ],
-      "Toggle sort order": [
-        "Toggle sort order"
+      "Toggle sort order: %s": [
+        "Toggle sort order: %s"
       ],
       "Top 404s": [
         "Top 404s"
@@ -1495,38 +1479,11 @@
       "Zoom out map": [
         "Zoom out map"
       ],
-      "approximate country area": [
-        "approximate country area"
-      ],
-      "items": [
-        "items"
-      ],
-      "label": [
-        "label"
-      ],
-      "of": [
-        "of"
-      ],
-      "of 4": [
-        "of 4"
-      ],
-      "page view": [
-        "page view",
-        "page views"
-      ],
       "unknown endpoint": [
         "unknown endpoint"
       ],
       "unknown status": [
         "unknown status"
-      ],
-      "view": [
-        "view",
-        "views"
-      ],
-      "visitor": [
-        "visitor",
-        "visitors"
       ]
     }
   }

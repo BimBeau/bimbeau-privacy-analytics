@@ -35,6 +35,17 @@ const navigateToCardLink = ( href ) => {
 	window.location.assign( href );
 };
 
+// The help icon sits inside a card that is a link: a click on it must show the
+// help, not open the panel of the card. The handler runs in the capture phase:
+// React's root capture listener stops the native event before it reaches the
+// card, so neither the React card handler nor a native listener on the card
+// can navigate.
+const stopCardNavigation = ( event ) => {
+	event.stopPropagation();
+};
+
+const getCardHelpId = ( cardKey ) => `bbpa-kpi-card-help-${ cardKey }`;
+
 const OverviewKpis = ( { range } ) => {
 	// The active visitors card is only rendered when the Real-time panel is enabled.
 	const { data: realtimeData } = useRealtimeSnapshot( {
@@ -227,6 +238,9 @@ const OverviewKpis = ( { range } ) => {
 							navigateToCardLink( card.href );
 						} }
 						aria-label={ card.label }
+						aria-describedby={
+							card.tooltip ? getCardHelpId( card.key ) : undefined
+						}
 					>
 						<CardBody className="bbpa-kpi-card__body">
 							<div className="bbpa-kpi-card__content">
@@ -236,11 +250,23 @@ const OverviewKpis = ( { range } ) => {
 										<Tooltip text={ card.tooltip }>
 											<span
 												className="dashicons dashicons-editor-help bbpa-kpi-card__tooltip-button"
-												aria-label={ card.tooltip }
+												aria-hidden="true"
+												onClickCapture={ stopCardNavigation }
 											/>
 										</Tooltip>
 									) : null }
 								</p>
+								{ card.tooltip ? (
+									// Keyboard and screen reader users get the help as the
+									// description of the card link; it stays outside the
+									// label so the card name is the label only.
+									<span
+										id={ getCardHelpId( card.key ) }
+										className="screen-reader-text"
+									>
+										{ card.tooltip }
+									</span>
+								) : null }
 								<p className="bbpa-kpi-card__value-row">
 									<span className="bbpa-kpi-card__value">
 										{ (

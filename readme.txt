@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.217
+Stable tag: 8.45.218
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,19 +213,17 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.217 =
-* [Fix] When the security token of an admin page expires (tab left open overnight), the plugin screens now show the "session expired" notice with a reload button instead of failing cards, and stop querying the server in the background.
-* [Fix] The real-time visitor counter no longer starts overlapping requests on slow servers, so counts no longer jump backwards; after server errors it retries less and less often (up to every five minutes) until the server answers again, and a request that never answers is abandoned after 30 seconds.
-* [Performance] The plugin screens no longer query the real-time endpoint when the Real-time panel is disabled, and pause it in background tabs outside the Real-time panel.
-* [Performance] Lighter admin screens: notices are watched in the header only, number and country formatters are reused, and the GeoIP database status is loaded once on the Settings screen.
-* [Fix] The admin screens keep working when the browser blocks site storage (the selected period is then simply not remembered).
-* [Fix] The Free admin header shows the text title instead of an error screen when its logo address is missing.
-* [Fix] The Real-time table keeps its columns aligned when a site hides some visit details through the visibility matrix filter.
-* [Improvement] Numbers, percentages and dates in the admin follow the WordPress admin language instead of the browser language; durations and file sizes use translated units.
-* [Improvement] Translation fixes: correct plural forms for visitor counts and results, translatable data scope labels in Settings › Tracking & privacy, and translatable retention labels.
-* [Fix] Saving the settings now says when the general settings were saved but the events configuration was not, keeps the edited events for the next attempt, and no longer sends back the previous events on a second save. [Pro].
-* [Improvement] Events settings can be used with the keyboard: Enter or Space opens an event or an action, and the arrow keys move an event up or down; the triggered events table has proper column headers. [Pro].
-* [Fix] The copied webhook URL now works on sites without pretty permalinks, with a custom REST prefix or installed in a subdirectory; URLs copied earlier keep working. [Pro].
-* [Security] Webhook tokens are only generated with the browser cryptographic generator. [Pro].
-* [Fix] The snippet syntax check explains when the site security policy blocks it instead of reporting a false syntax error, and its messages are translatable. [Pro].
-* [Docs] Admin real-time polling, settings save and Events settings documentation updated.
+= 8.45.218 =
+* [Security] On the page details screen, the "View" button only opens pages of your own site. A forged page address recorded by a visitor, or a crafted link to the details screen, can no longer send you to another domain. [Pro].
+* [Fix] The Stats App now works on sites installed in a subdirectory: the side menu, the dashboard cards and the page details links stay inside the app instead of leading to a missing page. [Pro].
+* [Fix] Reports can be exported from the Stats App: the CSV, JSON and Excel exports no longer fail with "Export access is refused". [Pro].
+* [Fix] On the page details screen, "Open in WordPress" now opens the post editor on sites installed in a subdirectory or with a custom admin address. [Pro].
+* [Fix] The Devices screen and the page details breakdowns now say when they are based only on the 500 most active visitors of the period, instead of presenting the sample as complete.
+* [Performance] The page details screen sends fewer duplicate requests: one visitors request instead of two, and on a single day one hourly request instead of two. [Pro].
+* [Performance] The Real-time and Countries maps no longer send their own country request when the screen already provides the map data.
+* [Fix] When the browser blocks site storage, the Stats App shows the "session expired" screen instead of reloading again and again. [Pro].
+* [Fix] "Finish later" and the Escape key now close the setup assistant even when the server does not answer.
+* [Improvement] The help icons of the dashboard cards and table headers work with the keyboard and screen readers: screen readers announce each dashboard card by its name and read its help as a description. Clicking a card's help icon shows the help instead of opening the card's screen.
+* [Improvement] Translation fixes: table pagination, row counts, assistant steps, chart and map tooltips, table labels and export row counts are now full translatable sentences, and the home page label is now in English ("Home page") with translations in every language.
+* [Improvement] Internal cleanup: the header logo is no longer rebuilt on every screen update, an unused admin widget was removed, and an admin request helper can no longer loop on repeated requests.
+* [Docs] Devices and Page details user documentation, admin architecture, REST export access and app payload documentation updated.

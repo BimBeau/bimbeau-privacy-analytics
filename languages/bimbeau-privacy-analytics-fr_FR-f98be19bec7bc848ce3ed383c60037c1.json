@@ -10,9 +10,6 @@
         "lang": "fr_FR",
         "plural-forms": "nplurals=2; plural=(n > 1);"
       },
-      " (%s)": [
-        " (%s)"
-      ],
       "%1$dh %2$dm": [
         "%1$d h %2$d min"
       ],
@@ -34,8 +31,11 @@
       "%1$s%% share": [
         "Part : %1$s%%"
       ],
-      "%1$s: %2$s visits%3$s": [
-        "%1$s : %2$s visites%3$s"
+      "%1$s: %2$s visits": [
+        "%1$s : %2$s visites"
+      ],
+      "%1$s: %2$s visits (approximate country area)": [
+        "%1$s : %2$s visites (zone approximative du pays)"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s : %2$s, %3$s"
@@ -56,12 +56,23 @@
         "%s visiteur",
         "%s visiteurs"
       ],
+      "%s item": [
+        "%s élément",
+        "%s éléments"
+      ],
+      "%s label": [
+        "Libellé (%s)"
+      ],
       "%s of total visitors": [
         "%s du total des visiteurs"
       ],
       "%s page view": [
         "%s vue de page",
         "%s vues de page"
+      ],
+      "%s visitor": [
+        "%s visiteur",
+        "%s visiteurs"
       ],
       "%s visitors": [
         "%s visiteurs"
@@ -222,8 +233,8 @@
       "Avg. time on page:": [
         "Temps moyen sur la page :"
       ],
-      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
-        "D’après %1$d vues de page identifiées, soit %2$d%% des %3$d vues de page suivies."
+      "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.": [
+        "D’après %1$s vues de page des %2$s visiteurs les plus actifs, sur %3$s visiteurs de la période sélectionnée."
       ],
       "Based on %s tracked page views in the selected range.": [
         "D’après %s vues de page suivies sur la période sélectionnée."
@@ -257,12 +268,6 @@
       ],
       "Browser version": [
         "Version du navigateur"
-      ],
-      "Browser versions": [
-        "Versions des navigateurs"
-      ],
-      "Browsers": [
-        "Navigateurs"
       ],
       "CMP markers": [
         "Marqueurs CMP"
@@ -422,9 +427,6 @@
       ],
       "Device": [
         "Appareil"
-      ],
-      "Device details": [
-        "Détails des appareils"
       ],
       "Device page views": [
         "Pages vues par appareil"
@@ -723,9 +725,6 @@
       "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
         "Statistiques d’audience limitées. Aucune publicité, aucun suivi intersite et aucune réutilisation par des tiers."
       ],
-      "Loading": [
-        "Chargement"
-      ],
       "Loading KPIs…": [
         "Chargement des KPI…"
       ],
@@ -737,9 +736,6 @@
       ],
       "Loading device breakdown…": [
         "Chargement de la répartition des appareils…"
-      ],
-      "Loading device details…": [
-        "Chargement des détails des appareils…"
       ],
       "Loading error.": [
         "Erreur de chargement."
@@ -876,9 +872,6 @@
       "No device data available.": [
         "Aucune donnée d’appareil disponible."
       ],
-      "No device details available.": [
-        "Aucun détail sur les appareils n’est disponible."
-      ],
       "No device usage available.": [
         "Aucune donnée d’utilisation des appareils disponible."
       ],
@@ -899,9 +892,6 @@
       ],
       "No hourly details available for this page.": [
         "Aucun détail horaire disponible pour cette page."
-      ],
-      "No identified data is available for this period.": [
-        "Aucune donnée identifiée n’est disponible pour cette période."
       ],
       "No missing pages available.": [
         "Aucune page manquante disponible."
@@ -960,9 +950,6 @@
       "Operating system": [
         "Système d’exploitation"
       ],
-      "Operating systems": [
-        "Systèmes d’exploitation"
-      ],
       "Operational": [
         "Opérationnelle"
       ],
@@ -981,8 +968,8 @@
       "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.": [
         "Les autres réglages conservent les valeurs recommandées par défaut et pourront être modifiés ultérieurement dans les réglages de BimBeau Privacy Analytics."
       ],
-      "Page": [
-        "Page"
+      "Page %1$d of %2$d": [
+        "Page %1$d sur %2$d"
       ],
       "Page views": [
         "Pages vues"
@@ -1179,9 +1166,6 @@
       "Save settings": [
         "Enregistrer les réglages"
       ],
-      "Screen resolutions": [
-        "Résolutions d’écran"
-      ],
       "Script ID:": [
         "ID du script :"
       ],
@@ -1239,8 +1223,8 @@
       "Status": [
         "État"
       ],
-      "Step": [
-        "Étape"
+      "Step %1$d of %2$d": [
+        "Étape %1$d sur %2$d"
       ],
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Arrêter la mesure lorsque le navigateur du visiteur envoie un signal Do Not Track ou Global Privacy Control."
@@ -1251,8 +1235,8 @@
       "Sunday": [
         "Dimanche"
       ],
-      "Table": [
-        "Tableau"
+      "Table: %s": [
+        "Tableau : %s"
       ],
       "Table: Acquisition channels": [
         "Tableau : canaux d’acquisition"
@@ -1326,8 +1310,8 @@
       "Today": [
         "Aujourd’hui"
       ],
-      "Toggle sort order": [
-        "Inverser l’ordre de tri"
+      "Toggle sort order: %s": [
+        "Inverser l’ordre de tri : %s"
       ],
       "Top 404s": [
         "Principales erreurs 404"
@@ -1495,38 +1479,11 @@
       "Zoom out map": [
         "Dézoomer la carte"
       ],
-      "approximate country area": [
-        "zone approximative du pays"
-      ],
-      "items": [
-        "éléments"
-      ],
-      "label": [
-        "libellé"
-      ],
-      "of": [
-        "sur"
-      ],
-      "of 4": [
-        "de 4"
-      ],
-      "page view": [
-        "vue de page",
-        "vues de page"
-      ],
       "unknown endpoint": [
         "point de terminaison inconnu"
       ],
       "unknown status": [
         "statut inconnu"
-      ],
-      "view": [
-        "vue",
-        "vues"
-      ],
-      "visitor": [
-        "visiteur",
-        "visiteurs"
       ]
     }
   }

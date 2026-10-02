@@ -1,5 +1,13 @@
 import { formatScreenResolution } from './formatScreenResolution';
 
+/**
+ * Number of visitors read from /visitors to build the browser, system, device
+ * and resolution breakdowns. The rows are the most active visitors of the
+ * range (sorted by page views), so the breakdowns are a sample when the range
+ * has more visitors.
+ */
+export const DEVICE_DETAILS_VISITOR_SAMPLE_SIZE = 500;
+
 const UNKNOWN_LABELS = new Set( [
 	'unknown',
 	'null',

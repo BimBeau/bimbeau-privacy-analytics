@@ -105,7 +105,6 @@ msgid "Visitors"
 msgstr "Επισκέπτες"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "Συσκευές"
 
@@ -651,6 +650,7 @@ msgstr "Προεπισκόπηση απόκρισης:"
 
 #. translators: %s: card title.
 #: src/admin/components/DataTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Loading: %s"
 msgstr "Φόρτωση: %s"
 
@@ -725,13 +725,10 @@ msgstr "Εμφάνιση favicon παραπομπής"
 msgid "Your configuration is ready"
 msgstr "Η διαμόρφωσή σας είναι έτοιμη"
 
+#. translators: 1: current step number, 2: number of steps.
 #: src/admin/components/SetupWizard/index.js
-msgid "Step"
-msgstr "Βήμα"
-
-#: src/admin/components/SetupWizard/index.js
-msgid "of 4"
-msgstr "από 4"
+msgid "Step %1$d of %2$d"
+msgstr "Βήμα %1$d από %2$d"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them."
@@ -885,19 +882,15 @@ msgstr "Σμίκρυνση χάρτη"
 msgid "Reset map zoom"
 msgstr "Επαναφορά μεγέθυνσης χάρτη"
 
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#. translators: 1: location label, 2: visit count.
 #: src/admin/components/WorldMap/index.js
-msgid "%1$s: %2$s visits%3$s"
-msgstr "%1$s: %2$s επισκέψεις%3$s"
+msgid "%1$s: %2$s visits (approximate country area)"
+msgstr "%1$s: %2$s επισκέψεις (κατά προσέγγιση περιοχή χώρας)"
 
-#. translators: %s: approximation scope label.
+#. translators: 1: location label, 2: visit count.
 #: src/admin/components/WorldMap/index.js
-msgid " (%s)"
-msgstr " (%s)"
-
-#: src/admin/components/WorldMap/index.js
-msgid "approximate country area"
-msgstr "κατά προσέγγιση περιοχή χώρας"
+msgid "%1$s: %2$s visits"
+msgstr "%1$s: %2$s επισκέψεις"
 
 #: src/admin/components/WorldMap/index.js
 msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
@@ -1185,6 +1178,18 @@ msgstr "Περ. %d χλμ"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "Μη διαθέσιμο"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: src/admin/lib/paginationLabels.js
+msgid "Page %1$d of %2$d"
+msgstr "Σελίδα %1$d από %2$d"
+
+#. translators: %s: number of rows in the table.
+#: src/admin/lib/paginationLabels.js
+msgid "%s item"
+msgid_plural "%s items"
+msgstr[0] "%s στοιχείο"
+msgstr[1] "%s στοιχεία"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -2056,15 +2061,22 @@ msgstr "Tablet"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s προβολή σελίδας"
 msgstr[1] "%s προβολές σελίδας"
 
-#. translators: %s: percentage value.
+#. translators: %1$s: percentage value, without the percent sign.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%1$s%% share"
 msgstr "%1$s%% μερίδιο"
+
+#. translators: 1: page views counted in the breakdown, 2: number of visitors read, 3: number of visitors in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range."
+msgstr "Βάσει %1$s προβολών σελίδας των %2$s πιο ενεργών επισκεπτών, από σύνολο %3$s επισκεπτών στο επιλεγμένο εύρος."
 
 #. translators: %s: total page views in the selected range.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -2107,43 +2119,6 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα χρήσης
 msgid "No resolution data available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα ανάλυσης."
 
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Operating systems"
-msgstr "Λειτουργικά συστήματα"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Browsers"
-msgstr "Περιηγητές"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Screen resolutions"
-msgstr "Αναλύσεις οθόνης"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Browser versions"
-msgstr "Εκδόσεις περιηγητή"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "No identified data is available for this period."
-msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα για αυτήν την περίοδο."
-
-#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views."
-msgstr "Βάσει %1$d αναγνωρισμένων προβολών σελίδας, που αντιπροσωπεύουν το %2$d%% από %3$d καταγεγραμμένες προβολές σελίδας."
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Device details"
-msgstr "Λεπτομέρειες συσκευής"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "No device details available."
-msgstr "Δεν υπάρχουν διαθέσιμες λεπτομέρειες συσκευής."
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Loading device details…"
-msgstr "Φόρτωση λεπτομερειών συσκευής…"
-
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Device page views"
 msgstr "Προβολές σελίδας ανά συσκευή"
@@ -2155,12 +2130,6 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα συσκευ
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Loading device breakdown…"
 msgstr "Φόρτωση κατανομής συσκευών…"
-
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "view"
-msgid_plural "views"
-msgstr[0] "προβολή"
-msgstr[1] "προβολές"
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "No overview metrics available."
@@ -2220,11 +2189,11 @@ msgstr "Αύξουσα"
 msgid "Descending"
 msgstr "Φθίνουσα"
 
-#. translators: %s: current sort order label.
+#. translators: %s: current sort order, "Ascending" or "Descending".
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-msgid "Toggle sort order"
-msgstr "Εναλλαγή σειράς ταξινόμησης"
+msgid "Toggle sort order: %s"
+msgstr "Εναλλαγή σειράς ταξινόμησης: %s"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Table: Referring sites"
@@ -2276,37 +2245,19 @@ msgstr "Προηγούμενη σελίδα"
 msgid "Next page"
 msgstr "Επόμενη σελίδα"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "Σελίδα"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "από"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "στοιχεία"
-
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "Τίτλος"
 
-#. translators: %s: active first-column label.
+#. translators: %s: header of the first column, for example "Page".
 #: src/admin/widgets/ReportTableCard/index.js
-msgid "label"
-msgstr "ετικέτα"
+msgid "%s label"
+msgstr "Ετικέτα (%s)"
 
 #. translators: %s: table title.
 #: src/admin/widgets/ReportTableCard/index.js
-msgid "Table"
-msgstr "Πίνακας"
+msgid "Table: %s"
+msgstr "Πίνακας: %s"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Display"
@@ -2315,10 +2266,6 @@ msgstr "Εμφάνιση"
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "URL"
 msgstr "URL"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Loading"
-msgstr "Φόρτωση"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Open row"
@@ -2365,12 +2312,6 @@ msgid "Daily page views line chart"
 msgstr "Γραμμικό γράφημα ημερήσιων προβολών σελίδας"
 
 #: src/admin/widgets/TimeseriesChart/index.js
-msgid "page view"
-msgid_plural "page views"
-msgstr[0] "προβολή σελίδας"
-msgstr[1] "προβολές σελίδας"
-
-#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily visitors"
 msgstr "Ημερήσιοι επισκέπτες"
 
@@ -2378,11 +2319,12 @@ msgstr "Ημερήσιοι επισκέπτες"
 msgid "Daily visitors line chart"
 msgstr "Γραμμικό γράφημα ημερήσιων επισκεπτών"
 
+#. translators: %s: visitors count.
 #: src/admin/widgets/TimeseriesChart/index.js
-msgid "visitor"
-msgid_plural "visitors"
-msgstr[0] "Επισκέπτης"
-msgstr[1] "Επισκέπτες"
+msgid "%s visitor"
+msgid_plural "%s visitors"
+msgstr[0] "%s επισκέπτης"
+msgstr[1] "%s επισκέπτες"
 
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 #: src/admin/widgets/TimeseriesChart/index.js

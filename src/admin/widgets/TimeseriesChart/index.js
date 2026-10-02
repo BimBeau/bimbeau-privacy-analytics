@@ -46,12 +46,16 @@ const metricConfig = {
 		title: __( 'Daily page views', 'bimbeau-privacy-analytics' ),
 		ariaLabel: __( 'Daily page views line chart', 'bimbeau-privacy-analytics' ),
 		tooltipLabel: ( value ) =>
-			`${ new Intl.NumberFormat().format( value ) } ${ _n(
-				'page view',
-				'page views',
-				value,
-				'bimbeau-privacy-analytics'
-			) }`,
+			sprintf(
+				/* translators: %s: page views count. */
+				_n(
+					'%s page view',
+					'%s page views',
+					value,
+					'bimbeau-privacy-analytics'
+				),
+				new Intl.NumberFormat().format( value )
+			),
 	},
 	visits: {
 		key: 'visits',
@@ -59,12 +63,16 @@ const metricConfig = {
 		title: __( 'Daily visitors', 'bimbeau-privacy-analytics' ),
 		ariaLabel: __( 'Daily visitors line chart', 'bimbeau-privacy-analytics' ),
 		tooltipLabel: ( value ) =>
-			`${ new Intl.NumberFormat().format( value ) } ${ _n(
-				'visitor',
-				'visitors',
-				value,
-				'bimbeau-privacy-analytics'
-			) }`,
+			sprintf(
+				/* translators: %s: visitors count. */
+				_n(
+					'%s visitor',
+					'%s visitors',
+					value,
+					'bimbeau-privacy-analytics'
+				),
+				new Intl.NumberFormat().format( value )
+			),
 		comparePreviousRange: true,
 	},
 };
@@ -358,12 +366,28 @@ const TimeseriesChart = ( { range, metric = 'pageViews' } ) => {
 	const formatMetricLabel = useCallback(
 		( value ) => {
 			const formattedValue = numberFormatter.format( value );
-			const metricUnit =
-				config.key === 'visits'
-					? _n( 'visitor', 'visitors', value, 'bimbeau-privacy-analytics' )
-					: _n( 'page view', 'page views', value, 'bimbeau-privacy-analytics' );
 
-			return `${ formattedValue } ${ metricUnit }`;
+			return config.key === 'visits'
+				? sprintf(
+						/* translators: %s: visitors count. */
+						_n(
+							'%s visitor',
+							'%s visitors',
+							value,
+							'bimbeau-privacy-analytics'
+						),
+						formattedValue
+				  )
+				: sprintf(
+						/* translators: %s: page views count. */
+						_n(
+							'%s page view',
+							'%s page views',
+							value,
+							'bimbeau-privacy-analytics'
+						),
+						formattedValue
+				  );
 		},
 		[ config.key, numberFormatter ]
 	);

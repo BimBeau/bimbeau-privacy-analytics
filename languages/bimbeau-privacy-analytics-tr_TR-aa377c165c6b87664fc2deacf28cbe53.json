@@ -10,9 +10,6 @@
         "lang": "tr_TR",
         "plural-forms": "nplurals=1; plural=0;"
       },
-      " (%s)": [
-        " (%s)"
-      ],
       "%1$dh %2$dm": [
         "%1$dsa %2$ddk"
       ],
@@ -34,8 +31,11 @@
       "%1$s%% share": [
         "%1$s%% pay"
       ],
-      "%1$s: %2$s visits%3$s": [
-        "%1$s: %2$s ziyaret%3$s"
+      "%1$s: %2$s visits": [
+        "%1$s: %2$s ziyaret"
+      ],
+      "%1$s: %2$s visits (approximate country area)": [
+        "%1$s: %2$s ziyaret (yaklaşık ülke alanı)"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -55,11 +55,20 @@
       "%s Visitor": [
         "%s ziyaretçi"
       ],
+      "%s item": [
+        "%s öğe"
+      ],
+      "%s label": [
+        "Etiket (%s)"
+      ],
       "%s of total visitors": [
         "toplam ziyaretlerin %s kadarı"
       ],
       "%s page view": [
         "%s sayfa görüntüleme"
+      ],
+      "%s visitor": [
+        "%s ziyaretçi"
       ],
       "%s visitors": [
         "%s ziyaretçi"
@@ -220,8 +229,8 @@
       "Avg. time on page:": [
         "Sayfada ort. süre:"
       ],
-      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
-        "%1$d tanımlanmış sayfa görüntülemesine dayanır; bu, izlenen %3$d sayfa görüntülemesinin %2$d%% oranıdır."
+      "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.": [
+        "Seçilen aralıktaki toplam %3$s ziyaretçiden en etkin %2$s ziyaretçinin %1$s sayfa görüntülemesine göre."
       ],
       "Based on %s tracked page views in the selected range.": [
         "Seçilen aralıkta izlenen %s sayfa görüntülemesine göre."
@@ -255,12 +264,6 @@
       ],
       "Browser version": [
         "Tarayıcı sürümü"
-      ],
-      "Browser versions": [
-        "Tarayıcı sürümleri"
-      ],
-      "Browsers": [
-        "Tarayıcılar"
       ],
       "CMP markers": [
         "CMP işaretleri"
@@ -420,9 +423,6 @@
       ],
       "Device": [
         "Cihaz"
-      ],
-      "Device details": [
-        "Cihaz ayrıntıları"
       ],
       "Device page views": [
         "Cihaz sayfa görüntülemeleri"
@@ -721,9 +721,6 @@
       "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
         "Yalnızca sınırlı kitle istatistikleri. Reklam yok, siteler arası izleme yok, üçüncü taraf yeniden kullanımı yok."
       ],
-      "Loading": [
-        "Yükleniyor"
-      ],
       "Loading KPIs…": [
         "KPI’lar yükleniyor…"
       ],
@@ -735,9 +732,6 @@
       ],
       "Loading device breakdown…": [
         "Cihaz dağılımı yükleniyor…"
-      ],
-      "Loading device details…": [
-        "Cihaz ayrıntıları yükleniyor…"
       ],
       "Loading error.": [
         "Yükleme hatası."
@@ -874,9 +868,6 @@
       "No device data available.": [
         "Cihaz verisi mevcut değil."
       ],
-      "No device details available.": [
-        "Cihaz ayrıntısı mevcut değil."
-      ],
       "No device usage available.": [
         "Cihaz kullanımı mevcut değil."
       ],
@@ -897,9 +888,6 @@
       ],
       "No hourly details available for this page.": [
         "Bu sayfa için saatlik ayrıntı mevcut değil."
-      ],
-      "No identified data is available for this period.": [
-        "Bu dönem için veri mevcut değil."
       ],
       "No missing pages available.": [
         "Eksik sayfa mevcut değil."
@@ -958,9 +946,6 @@
       "Operating system": [
         "İşletim sistemi"
       ],
-      "Operating systems": [
-        "İşletim sistemleri"
-      ],
       "Operational": [
         "Çalışıyor"
       ],
@@ -979,8 +964,8 @@
       "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.": [
         "Diğer ayarlar önerilen varsayılanları kullanır ve daha sonra BimBeau Gizlilik Analizi ayarlarından değiştirilebilir."
       ],
-      "Page": [
-        "Sayfa"
+      "Page %1$d of %2$d": [
+        "Sayfa %1$d / %2$d"
       ],
       "Page views": [
         "Sayfa görüntülemeleri"
@@ -1177,9 +1162,6 @@
       "Save settings": [
         "Ayarları kaydet"
       ],
-      "Screen resolutions": [
-        "Ekran çözünürlükleri"
-      ],
       "Script ID:": [
         "Betik kimliği:"
       ],
@@ -1237,8 +1219,8 @@
       "Status": [
         "Durum"
       ],
-      "Step": [
-        "Adım"
+      "Step %1$d of %2$d": [
+        "Adım %1$d / %2$d"
       ],
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Ziyaretçinin tarayıcısı Do Not Track veya Global Privacy Control sinyali gönderdiğinde ölçümü durdur."
@@ -1249,8 +1231,8 @@
       "Sunday": [
         "Pazar"
       ],
-      "Table": [
-        "Tablo"
+      "Table: %s": [
+        "Tablo: %s"
       ],
       "Table: Acquisition channels": [
         "Tablo: Ziyaretçiler"
@@ -1324,8 +1306,8 @@
       "Today": [
         "Bugün"
       ],
-      "Toggle sort order": [
-        "Sıralama yönünü değiştir"
+      "Toggle sort order: %s": [
+        "Sıralama yönünü değiştir: %s"
       ],
       "Top 404s": [
         "En çok 404"
@@ -1492,35 +1474,11 @@
       "Zoom out map": [
         "Haritada uzaklaştır"
       ],
-      "approximate country area": [
-        "yaklaşık ülke alanı"
-      ],
-      "items": [
-        "öğe"
-      ],
-      "label": [
-        "etiket"
-      ],
-      "of": [
-        "/"
-      ],
-      "of 4": [
-        "4'ten"
-      ],
-      "page view": [
-        "sayfa görüntüleme"
-      ],
       "unknown endpoint": [
         "bilinmeyen uç nokta"
       ],
       "unknown status": [
         "bilinmeyen durum"
-      ],
-      "view": [
-        "görüntülenme"
-      ],
-      "visitor": [
-        "ziyaretçi"
       ]
     }
   }

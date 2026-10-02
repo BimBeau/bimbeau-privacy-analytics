@@ -1,4 +1,4 @@
-import { __, _n } from "@wordpress/i18n";
+import { __, _n, sprintf } from "@wordpress/i18n";
 
 import useAdminEndpoint from "../../api/useAdminEndpoint";
 import DataState from "../../components/DataState";
@@ -57,12 +57,16 @@ const DeviceSplit = ({ range }) => {
                   />
                 </div>
                 <div className="bbpa-device-breakdown__value">
-                  {`${entry.hits} ${_n(
-                    "view",
-                    "views",
+                  {sprintf(
+                    /* translators: %s: page views count. */
+                    _n(
+                      "%s page view",
+                      "%s page views",
+                      entry.hits,
+                      "bimbeau-privacy-analytics",
+                    ),
                     entry.hits,
-                    "bimbeau-privacy-analytics",
-                  )}`}
+                  )}
                 </div>
               </div>
             );

@@ -86,8 +86,8 @@ class AdminErrorBoundary extends Component {
                     {undefinedComponent && (
                         <p>
                             {sprintf(
+                                /* translators: %s: React component name detected as undefined. */
                                 __(
-                                    /* translators: %s: React component name detected as undefined. */
                                     'Possible Gutenberg/@wordpress/components mismatch: %s undefined',
                                     'bimbeau-privacy-analytics'
                                 ),

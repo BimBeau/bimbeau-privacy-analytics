@@ -1615,6 +1615,8 @@ const WorldMap = ({
     },
     {
       namespace: ADMIN_CONFIG?.settings?.restNamespace,
+      // The parent provides the data (Real-time, countries): no own request.
+      enabled: dataOverride === undefined,
     },
   );
   const hasDataOverride = dataOverride !== undefined;
@@ -1971,19 +1973,22 @@ const WorldMap = ({
             city.currentPageLabel.trim() !== ""
               ? city.currentPageLabel.trim()
               : "",
-          tooltipLabel: sprintf(
-            /* translators: 1: location label, 2: visit count, 3: approximation suffix. */
-            __("%1$s: %2$s visits%3$s", "bimbeau-privacy-analytics"),
-            formattedDisplayLabel,
-            new Intl.NumberFormat().format(hits),
-            resolvedCoordinates.usedCountryFallback
-              ? sprintf(
-                  /* translators: %s: approximation scope label. */
-                  __(" (%s)", "bimbeau-privacy-analytics"),
-                  __("approximate country area", "bimbeau-privacy-analytics"),
-                )
-              : "",
-          ),
+          tooltipLabel: resolvedCoordinates.usedCountryFallback
+            ? sprintf(
+                /* translators: 1: location label, 2: visit count. */
+                __(
+                  "%1$s: %2$s visits (approximate country area)",
+                  "bimbeau-privacy-analytics",
+                ),
+                formattedDisplayLabel,
+                new Intl.NumberFormat().format(hits),
+              )
+            : sprintf(
+                /* translators: 1: location label, 2: visit count. */
+                __("%1$s: %2$s visits", "bimbeau-privacy-analytics"),
+                formattedDisplayLabel,
+                new Intl.NumberFormat().format(hits),
+              ),
         };
       })
       .filter(Boolean);

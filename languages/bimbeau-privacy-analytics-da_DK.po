@@ -105,7 +105,6 @@ msgid "Visitors"
 msgstr "Besøgende"
 
 #: admin/admin.php src/admin/constants/index.js
-#: src/admin/widgets/DeviceDetailsCard/index.js
 msgid "Devices"
 msgstr "Enheder"
 
@@ -651,6 +650,7 @@ msgstr "Forhåndsvisning af svar:"
 
 #. translators: %s: card title.
 #: src/admin/components/DataTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
 msgid "Loading: %s"
 msgstr "Indlæser: %s"
 
@@ -725,13 +725,10 @@ msgstr "Vis henvisningsfavikoner"
 msgid "Your configuration is ready"
 msgstr "Din konfiguration er klar"
 
+#. translators: 1: current step number, 2: number of steps.
 #: src/admin/components/SetupWizard/index.js
-msgid "Step"
-msgstr "Trin"
-
-#: src/admin/components/SetupWizard/index.js
-msgid "of 4"
-msgstr "af 4"
+msgid "Step %1$d of %2$d"
+msgstr "Trin %1$d af %2$d"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them."
@@ -885,19 +882,15 @@ msgstr "Zoom ud på kort"
 msgid "Reset map zoom"
 msgstr "Nulstil kortzoom"
 
-#. translators: 1: location label, 2: visit count, 3: approximation suffix.
+#. translators: 1: location label, 2: visit count.
 #: src/admin/components/WorldMap/index.js
-msgid "%1$s: %2$s visits%3$s"
-msgstr "%1$s: %2$s besøg%3$s"
+msgid "%1$s: %2$s visits (approximate country area)"
+msgstr "%1$s: %2$s besøg (omtrentligt landområde)"
 
-#. translators: %s: approximation scope label.
+#. translators: 1: location label, 2: visit count.
 #: src/admin/components/WorldMap/index.js
-msgid " (%s)"
-msgstr " (%s)"
-
-#: src/admin/components/WorldMap/index.js
-msgid "approximate country area"
-msgstr "omtrentligt landområde"
+msgid "%1$s: %2$s visits"
+msgstr "%1$s: %2$s besøg"
 
 #: src/admin/components/WorldMap/index.js
 msgid "City data is available for the selected period, but none of the cities have usable coordinates yet."
@@ -1185,6 +1178,18 @@ msgstr "Ca. %d km"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No available"
 msgstr "Ikke tilgængelig"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: src/admin/lib/paginationLabels.js
+msgid "Page %1$d of %2$d"
+msgstr "Side %1$d af %2$d"
+
+#. translators: %s: number of rows in the table.
+#: src/admin/lib/paginationLabels.js
+msgid "%s item"
+msgid_plural "%s items"
+msgstr[0] "%s element"
+msgstr[1] "%s elementer"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Acquisition channels"
@@ -2056,15 +2061,22 @@ msgstr "Tablet"
 
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+#: src/admin/widgets/DeviceSplit/index.js
+#: src/admin/widgets/TimeseriesChart/index.js
 msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s sidevisning"
 msgstr[1] "%s sidevisninger"
 
-#. translators: %s: percentage value.
+#. translators: %1$s: percentage value, without the percent sign.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "%1$s%% share"
 msgstr "%1$s%% andel"
+
+#. translators: 1: page views counted in the breakdown, 2: number of visitors read, 3: number of visitors in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range."
+msgstr "Baseret på %1$s sidevisninger fra de %2$s mest aktive besøgende ud af %3$s besøgende i det valgte interval."
 
 #. translators: %s: total page views in the selected range.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -2107,43 +2119,6 @@ msgstr "Ingen enhedsbrug tilgængelig."
 msgid "No resolution data available."
 msgstr "Ingen opløsningsdata tilgængelige."
 
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Operating systems"
-msgstr "Operativsystemer"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Browsers"
-msgstr "Browsere"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Screen resolutions"
-msgstr "Skærmopløsninger"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Browser versions"
-msgstr "Browserversioner"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "No identified data is available for this period."
-msgstr "Ingen data tilgængelige for denne periode."
-
-#. translators: 1: identified page views, 2: coverage percentage, 3: total tracked page views.
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views."
-msgstr "Baseret på %1$d identificerede sidevisninger, svarende til %2$d%% af %3$d sporede sidevisninger."
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Device details"
-msgstr "Enhedsdetaljer"
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "No device details available."
-msgstr "Ingen enhedsdetaljer tilgængelige."
-
-#: src/admin/widgets/DeviceDetailsCard/index.js
-msgid "Loading device details…"
-msgstr "Indlæser enhedsdetaljer…"
-
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Device page views"
 msgstr "Sidevisninger pr. enhed"
@@ -2155,12 +2130,6 @@ msgstr "Ingen enhedsdata tilgængelige."
 #: src/admin/widgets/DeviceSplit/index.js
 msgid "Loading device breakdown…"
 msgstr "Indlæser enhedsfordeling…"
-
-#: src/admin/widgets/DeviceSplit/index.js
-msgid "view"
-msgid_plural "views"
-msgstr[0] "visning"
-msgstr[1] "visninger"
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "No overview metrics available."
@@ -2220,11 +2189,11 @@ msgstr "Stigende"
 msgid "Descending"
 msgstr "Faldende"
 
-#. translators: %s: current sort order label.
+#. translators: %s: current sort order, "Ascending" or "Descending".
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-msgid "Toggle sort order"
-msgstr "Skift sorteringsrækkefølge"
+msgid "Toggle sort order: %s"
+msgstr "Skift sorteringsrækkefølge: %s"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Table: Referring sites"
@@ -2276,37 +2245,19 @@ msgstr "Forrige side"
 msgid "Next page"
 msgstr "Næste side"
 
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Page"
-msgstr "Side"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "of"
-msgstr "af"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "items"
-msgstr "elementer"
-
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
 msgstr "Titel"
 
-#. translators: %s: active first-column label.
+#. translators: %s: header of the first column, for example "Page".
 #: src/admin/widgets/ReportTableCard/index.js
-msgid "label"
-msgstr "etiket"
+msgid "%s label"
+msgstr "Etiket (%s)"
 
 #. translators: %s: table title.
 #: src/admin/widgets/ReportTableCard/index.js
-msgid "Table"
-msgstr "Tabel"
+msgid "Table: %s"
+msgstr "Tabel: %s"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Display"
@@ -2315,10 +2266,6 @@ msgstr "Vis"
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "URL"
 msgstr "URL"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Loading"
-msgstr "Indlæser"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Open row"
@@ -2365,12 +2312,6 @@ msgid "Daily page views line chart"
 msgstr "Linjediagram over daglige sidevisninger"
 
 #: src/admin/widgets/TimeseriesChart/index.js
-msgid "page view"
-msgid_plural "page views"
-msgstr[0] "sidevisning"
-msgstr[1] "sidevisninger"
-
-#: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily visitors"
 msgstr "Daglige besøgende"
 
@@ -2378,11 +2319,12 @@ msgstr "Daglige besøgende"
 msgid "Daily visitors line chart"
 msgstr "Linjediagram over daglige besøgende"
 
+#. translators: %s: visitors count.
 #: src/admin/widgets/TimeseriesChart/index.js
-msgid "visitor"
-msgid_plural "visitors"
-msgstr[0] "besøgende"
-msgstr[1] "besøgende"
+msgid "%s visitor"
+msgid_plural "%s visitors"
+msgstr[0] "%s besøgende"
+msgstr[1] "%s besøgende"
 
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 #: src/admin/widgets/TimeseriesChart/index.js

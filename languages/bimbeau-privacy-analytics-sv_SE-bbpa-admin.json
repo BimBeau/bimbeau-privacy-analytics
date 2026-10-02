@@ -10,9 +10,6 @@
         "lang": "sv_SE",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
-      " (%s)": [
-        " (%s)"
-      ],
       "%1$dh %2$dm": [
         "%1$dh %2$dm"
       ],
@@ -34,8 +31,11 @@
       "%1$s%% share": [
         "%1$s%% andel"
       ],
-      "%1$s: %2$s visits%3$s": [
-        "%1$s: %2$s besök%3$s"
+      "%1$s: %2$s visits": [
+        "%1$s: %2$s besök"
+      ],
+      "%1$s: %2$s visits (approximate country area)": [
+        "%1$s: %2$s besök (ungefärligt landsområde)"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -56,12 +56,23 @@
         "%s besökare",
         "%s besökare"
       ],
+      "%s item": [
+        "%s objekt",
+        "%s objekt"
+      ],
+      "%s label": [
+        "Etikett (%s)"
+      ],
       "%s of total visitors": [
         "%s av totala besök"
       ],
       "%s page view": [
         "%s sidvisning",
         "%s sidvisningar"
+      ],
+      "%s visitor": [
+        "%s besökare",
+        "%s besökare"
       ],
       "%s visitors": [
         "%s besökare"
@@ -222,8 +233,8 @@
       "Avg. time on page:": [
         "Genomsnittlig tid på sida:"
       ],
-      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
-        "Baserat på %1$d identifierade sidvisningar, vilket motsvarar %2$d%% av %3$d spårade sidvisningar."
+      "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.": [
+        "Baserat på %1$s sidvisningar från de %2$s mest aktiva besökarna, av totalt %3$s besökare i det valda intervallet."
       ],
       "Based on %s tracked page views in the selected range.": [
         "Baserat på %s spårade sidvisningar i det valda intervallet."
@@ -257,12 +268,6 @@
       ],
       "Browser version": [
         "Webbläsarversion"
-      ],
-      "Browser versions": [
-        "Webbläsarversioner"
-      ],
-      "Browsers": [
-        "Webbläsare"
       ],
       "CMP markers": [
         "CMP-markörer"
@@ -422,9 +427,6 @@
       ],
       "Device": [
         "Enhet"
-      ],
-      "Device details": [
-        "Enhetsinformation"
       ],
       "Device page views": [
         "Sidvisningar per enhet"
@@ -723,9 +725,6 @@
       "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
         "Endast begränsad målgruppsstatistik. Inga annonser, ingen spårning mellan webbplatser och ingen återanvändning av tredje part."
       ],
-      "Loading": [
-        "Laddar"
-      ],
       "Loading KPIs…": [
         "Laddar KPI:er…"
       ],
@@ -737,9 +736,6 @@
       ],
       "Loading device breakdown…": [
         "Laddar enhetsfördelning…"
-      ],
-      "Loading device details…": [
-        "Laddar enhetsinformation…"
       ],
       "Loading error.": [
         "Laddningsfel."
@@ -876,9 +872,6 @@
       "No device data available.": [
         "Ingen enhetsdata tillgänglig."
       ],
-      "No device details available.": [
-        "Ingen enhetsinformation tillgänglig."
-      ],
       "No device usage available.": [
         "Ingen enhetsanvändning tillgänglig."
       ],
@@ -899,9 +892,6 @@
       ],
       "No hourly details available for this page.": [
         "Inga timvisa detaljer är tillgängliga för den här sidan."
-      ],
-      "No identified data is available for this period.": [
-        "Ingen data är tillgänglig för den här perioden."
       ],
       "No missing pages available.": [
         "Inga saknade sidor tillgängliga."
@@ -960,9 +950,6 @@
       "Operating system": [
         "Operativsystem"
       ],
-      "Operating systems": [
-        "Operativsystem"
-      ],
       "Operational": [
         "I drift"
       ],
@@ -981,8 +968,8 @@
       "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.": [
         "Andra inställningar använder de rekommenderade standardinställningarna och kan ändras senare från BimBeau Privacy Analytics-inställningarna."
       ],
-      "Page": [
-        "Sida"
+      "Page %1$d of %2$d": [
+        "Sida %1$d av %2$d"
       ],
       "Page views": [
         "Sidvisningar"
@@ -1179,9 +1166,6 @@
       "Save settings": [
         "Spara inställningar"
       ],
-      "Screen resolutions": [
-        "Skärmupplösningar"
-      ],
       "Script ID:": [
         "Skript-ID:"
       ],
@@ -1239,8 +1223,8 @@
       "Status": [
         "Status"
       ],
-      "Step": [
-        "Steg"
+      "Step %1$d of %2$d": [
+        "Steg %1$d av %2$d"
       ],
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Stoppa mätning när besökarens webbläsare skickar en Do Not Track- eller Global Privacy Control-signal."
@@ -1251,8 +1235,8 @@
       "Sunday": [
         "Söndag"
       ],
-      "Table": [
-        "Tabell"
+      "Table: %s": [
+        "Tabell: %s"
       ],
       "Table: Acquisition channels": [
         "Tabell: Besökare"
@@ -1326,8 +1310,8 @@
       "Today": [
         "I dag"
       ],
-      "Toggle sort order": [
-        "Växla sorteringsordning"
+      "Toggle sort order: %s": [
+        "Växla sorteringsordning: %s"
       ],
       "Top 404s": [
         "Topp 404:or"
@@ -1495,38 +1479,11 @@
       "Zoom out map": [
         "Zooma ut kartan"
       ],
-      "approximate country area": [
-        "ungefärligt landsområde"
-      ],
-      "items": [
-        "objekt"
-      ],
-      "label": [
-        "etikett"
-      ],
-      "of": [
-        "av"
-      ],
-      "of 4": [
-        "av 4"
-      ],
-      "page view": [
-        "sidvisning",
-        "sidvisningar"
-      ],
       "unknown endpoint": [
         "okänd endpoint"
       ],
       "unknown status": [
         "okänd status"
-      ],
-      "view": [
-        "visning",
-        "visningar"
-      ],
-      "visitor": [
-        "besökare",
-        "besökare"
       ]
     }
   }

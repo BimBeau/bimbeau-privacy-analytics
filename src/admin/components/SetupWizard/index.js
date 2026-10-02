@@ -1,5 +1,5 @@
-import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 import { Button, Card, CardBody, CardFooter, CardHeader, Modal, Notice, Spinner } from '@wordpress/components';
 import { fetchAdminJson } from '../../api/useAdminEndpoint';
 
@@ -55,7 +55,19 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 	const skipGeoIp = async () => { setBusy( true ); try { setDraftChoices( ( current ) => ( { ...current, geoip_database: false } ) ); await moveTo( 'referrers' ); setSkipOpen( false ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
 	const chooseFavicons = async ( enabled ) => { setBusy( true ); setError( '' ); try { setDraftSettings( ( current ) => ( { ...current, referrer_favicons_enabled: enabled } ) ); setDraftChoices( ( current ) => ( { ...current, referrer_favicons: enabled } ) ); await moveTo( 'complete' ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
 	const finish = async () => { setBusy( true ); try { const result = await saveSettings( settings ); syncSavedSettings( result ); for ( const [ choice, value ] of Object.entries( draftChoices ) ) await update( 'set_choice', { choice, value } ); if ( draftChoices.referrer_favicons ) await update( 'mark_favicons_enabled' ); await update( 'complete' ); onComplete?.(); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to finish configuration. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
-	const finishLater = async () => { setBusy( true ); try { await update( 'start' ); onClose?.(); } finally { setBusy( false ); } };
+	// "Finish later" needs no saved state to be honoured: close the assistant
+	// even when the request fails (it opens again on the next visit).
+	const finishLater = async () => {
+		setBusy( true );
+		try {
+			await update( 'start' );
+		} catch {
+			// The assistant state stays unchanged on the server.
+		} finally {
+			setBusy( false );
+		}
+		onClose?.();
+	};
 	const back = async () => {
 		setBusy( true );
 		setError( '' );
@@ -70,7 +82,12 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 	const labels = { tracking: __( 'Configure analytics tracking', 'bimbeau-privacy-analytics' ), geolocation: __( 'Install the local GeoIP database', 'bimbeau-privacy-analytics' ), referrers: __( 'Display referrer favicons', 'bimbeau-privacy-analytics' ), complete: __( 'Your configuration is ready', 'bimbeau-privacy-analytics' ) };
 	return <Modal className="bbpa-setup-wizard__modal" overlayClassName="bbpa-setup-wizard__overlay" title={ labels[ step ] } onRequestClose={ finishLater } shouldReturnFocusAfterClose>
 		<div className="bbpa-setup-wizard">
-			<p aria-live="polite">{ __( 'Step', 'bimbeau-privacy-analytics' ) } { stepNumber( step ) } { __( 'of 4', 'bimbeau-privacy-analytics' ) }</p>
+			<p aria-live="polite">{ sprintf(
+				/* translators: 1: current step number, 2: number of steps. */
+				__( 'Step %1$d of %2$d', 'bimbeau-privacy-analytics' ),
+				stepNumber( step ),
+				STEPS.length
+			) }</p>
 			{ error ? <Notice status="error" isDismissible={ false }>{ error }</Notice> : null }
 			<Card><CardHeader><strong>{ labels[ step ] }</strong></CardHeader><CardBody>
 				{ step === 'tracking' && <><p>{ __( 'BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them.', 'bimbeau-privacy-analytics' ) }</p><h3>{ __( 'Enable advanced statistics', 'bimbeau-privacy-analytics' ) }</h3><p>{ __( 'Advanced statistics add device details, screen resolution, active time, and other enriched information when available.', 'bimbeau-privacy-analytics' ) }</p><Notice status="info" isDismissible={ false }>{ __( 'If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent.', 'bimbeau-privacy-analytics' ) } <a href={ getCmpDocumentationUrl() } target="_blank" rel="noopener noreferrer">{ __( 'Read the CMP documentation.', 'bimbeau-privacy-analytics' ) }</a></Notice></> }

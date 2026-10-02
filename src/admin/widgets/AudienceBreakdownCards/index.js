@@ -7,7 +7,11 @@ import BrandIcon from '../../components/icons/BrandIcon';
 import BpaCard from '../../components/BpaCard';
 import { ADMIN_CONFIG } from '../../constants';
 import { buildAudienceBreakdownSections } from '../../lib/audienceBreakdowns';
-import { buildDeviceDetailsBreakdowns } from '../../lib/deviceDetails';
+import {
+	DEVICE_DETAILS_VISITOR_SAMPLE_SIZE,
+	buildDeviceDetailsBreakdowns,
+} from '../../lib/deviceDetails';
+import { formatNumber } from '../../lib/formatters';
 import './styles.css';
 
 const formatBreakdownLabel = ( label, fallbackLabel ) => {
@@ -33,7 +37,14 @@ const formatBreakdownLabel = ( label, fallbackLabel ) => {
 	return normalizedLabel;
 };
 
-const BreakdownCard = ( { kind, title, items, emptyLabel, totalHits } ) => {
+const BreakdownCard = ( {
+	kind,
+	title,
+	items,
+	emptyLabel,
+	totalHits,
+	sample,
+} ) => {
 	const breakdownItems = items.map( ( item ) => ( {
 		rawLabel: item.label,
 		label: formatBreakdownLabel(
@@ -89,7 +100,7 @@ const BreakdownCard = ( { kind, title, items, emptyLabel, totalHits } ) => {
 						<div
 							className="bbpa-audience-breakdown-card__share"
 							aria-label={ sprintf(
-								/* translators: %s: percentage value. */
+								/* translators: %1$s: percentage value, without the percent sign. */
 								__( '%1$s%% share', 'bimbeau-privacy-analytics' ),
 								item.share
 							) }
@@ -107,42 +118,92 @@ const BreakdownCard = ( { kind, title, items, emptyLabel, totalHits } ) => {
 				) ) }
 			</ul>
 			<p className="bbpa-audience-breakdown-card__summary">
-				{ sprintf(
-					/* translators: %s: total page views in the selected range. */
-					__(
-						'Based on %s tracked page views in the selected range.',
-						'bimbeau-privacy-analytics'
-					),
-					totalHits
-				) }
+				{ sample
+					? sprintf(
+							/* translators: 1: page views counted in the breakdown, 2: number of visitors read, 3: number of visitors in the selected range. */
+							__(
+								'Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.',
+								'bimbeau-privacy-analytics'
+							),
+							formatNumber( totalHits ),
+							formatNumber( sample.readVisitors ),
+							formatNumber( sample.totalVisitors )
+					  )
+					: sprintf(
+							/* translators: %s: total page views in the selected range. */
+							__(
+								'Based on %s tracked page views in the selected range.',
+								'bimbeau-privacy-analytics'
+							),
+							totalHits
+					  ) }
 			</p>
 		</BpaCard>
 	);
 };
 
+/**
+ * Visitors read versus visitors of the range, when /visitors returned only the
+ * most active visitors of the range.
+ *
+ * @param {Object|null} data /visitors response.
+ * @return {{readVisitors: number, totalVisitors: number}|null} Sample sizes, or null when every visitor was read.
+ */
+const getVisitorSample = ( data ) => {
+	const readVisitors = Array.isArray( data?.items ) ? data.items.length : 0;
+	const totalVisitors = Number( data?.pagination?.totalItems );
+
+	if ( ! Number.isFinite( totalVisitors ) || totalVisitors <= readVisitors ) {
+		return null;
+	}
+
+	return { readVisitors, totalVisitors };
+};
+
+/**
+ * Browser, operating system, device and resolution breakdowns.
+ *
+ * The breakdowns are built from the most active visitors of the range (one
+ * /visitors page of DEVICE_DETAILS_VISITOR_SAMPLE_SIZE rows); the summary says
+ * so when the range has more visitors.
+ *
+ * @param {Object}  props                    Component props.
+ * @param {Object}  props.range              Selected range.
+ * @param {Object}  props.requestParams      Extra /visitors parameters.
+ * @param {boolean} props.includeResolutions Whether to render the resolution card.
+ * @param {Object}  props.visitorsState      Optional { data, isLoading, error } of the same
+ *                                           /visitors request made by the parent: no request is sent then.
+ */
 const AudienceBreakdownCards = ( {
 	range,
 	requestParams = {},
 	includeResolutions = false,
+	visitorsState,
 } ) => {
-	const { data, isLoading, error } = useAdminEndpoint(
+	const hasVisitorsState = Boolean( visitorsState );
+	const endpointState = useAdminEndpoint(
 		'/visitors',
 		{
 			...range,
 			...requestParams,
 			page: 1,
-			per_page: 500,
+			per_page: DEVICE_DETAILS_VISITOR_SAMPLE_SIZE,
 			orderby: 'pages',
 			order: 'desc',
 		},
 		{
 			namespace: ADMIN_CONFIG?.settings?.restNamespace,
+			enabled: ! hasVisitorsState,
 		}
 	);
+	const { data, isLoading, error } = hasVisitorsState
+		? visitorsState
+		: endpointState;
 	const stats = useMemo(
 		() => buildDeviceDetailsBreakdowns( data?.items || [] ),
 		[ data ]
 	);
+	const sample = useMemo( () => getVisitorSample( data ), [ data ] );
 	const sections = useMemo(
 		() => buildAudienceBreakdownSections( stats ),
 		[ stats ]
@@ -175,6 +236,7 @@ const AudienceBreakdownCards = ( {
 						title={ __( 'Browser usage', 'bimbeau-privacy-analytics' ) }
 						items={ sections.browsers }
 						totalHits={ stats.totalHits }
+						sample={ sample }
 						emptyLabel={ __(
 							'No browser usage available.',
 							'bimbeau-privacy-analytics'
@@ -188,6 +250,7 @@ const AudienceBreakdownCards = ( {
 						) }
 						items={ sections.operatingSystems }
 						totalHits={ stats.totalHits }
+						sample={ sample }
 						emptyLabel={ __(
 							'No operating system usage available.',
 							'bimbeau-privacy-analytics'
@@ -198,6 +261,7 @@ const AudienceBreakdownCards = ( {
 						title={ __( 'Device usage breakdown', 'bimbeau-privacy-analytics' ) }
 						items={ sections.devices }
 						totalHits={ stats.totalHits }
+						sample={ sample }
 						emptyLabel={ __(
 							'No device usage available.',
 							'bimbeau-privacy-analytics'
@@ -209,6 +273,7 @@ const AudienceBreakdownCards = ( {
 							title={ __( 'Resolution', 'bimbeau-privacy-analytics' ) }
 							items={ sections.resolutions }
 							totalHits={ stats.totalHits }
+							sample={ sample }
 							emptyLabel={ __(
 								'No resolution data available.',
 								'bimbeau-privacy-analytics'

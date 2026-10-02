@@ -10,9 +10,6 @@
         "lang": "de_DE",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
-      " (%s)": [
-        " (%s)"
-      ],
       "%1$dh %2$dm": [
         "%1$dh %2$dm"
       ],
@@ -34,8 +31,11 @@
       "%1$s%% share": [
         "%1$s%% Anteil"
       ],
-      "%1$s: %2$s visits%3$s": [
-        "%1$s: %2$s Besuche%3$s"
+      "%1$s: %2$s visits": [
+        "%1$s: %2$s Besuche"
+      ],
+      "%1$s: %2$s visits (approximate country area)": [
+        "%1$s: %2$s Besuche (ungefähres Landesgebiet)"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -56,12 +56,23 @@
         "%s Besucher",
         "%s Besucher"
       ],
+      "%s item": [
+        "%s Element",
+        "%s Elemente"
+      ],
+      "%s label": [
+        "Bezeichnung (%s)"
+      ],
       "%s of total visitors": [
         "%s der gesamten Besuche"
       ],
       "%s page view": [
         "%s Seitenaufruf",
         "%s Seitenaufrufe"
+      ],
+      "%s visitor": [
+        "%s Besucher",
+        "%s Besucher"
       ],
       "%s visitors": [
         "%s Besucher"
@@ -222,8 +233,8 @@
       "Avg. time on page:": [
         "Durchschn. Zeit auf Seite:"
       ],
-      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
-        "Basierend auf %1$d identifizierten Seitenaufrufen, entsprechend %2$d%% von %3$d erfassten Seitenaufrufen."
+      "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.": [
+        "Basierend auf %1$s Seitenaufrufen der %2$s aktivsten Besucher von insgesamt %3$s Besuchern im ausgewählten Bereich."
       ],
       "Based on %s tracked page views in the selected range.": [
         "Basierend auf %s erfassten Seitenaufrufen im ausgewählten Bereich."
@@ -257,12 +268,6 @@
       ],
       "Browser version": [
         "Browser-Version"
-      ],
-      "Browser versions": [
-        "Browser-Versionen"
-      ],
-      "Browsers": [
-        "Browser"
       ],
       "CMP markers": [
         "CMP-Marker"
@@ -422,9 +427,6 @@
       ],
       "Device": [
         "Gerät"
-      ],
-      "Device details": [
-        "Gerätedetails"
       ],
       "Device page views": [
         "Seitenaufrufe nach Gerät"
@@ -723,9 +725,6 @@
       "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
         "Nur begrenzte Zielgruppenstatistiken. Keine Werbung, kein Cross-Site-Tracking, keine Wiederverwendung durch Dritte."
       ],
-      "Loading": [
-        "Wird geladen"
-      ],
       "Loading KPIs…": [
         "KPIs werden geladen…"
       ],
@@ -737,9 +736,6 @@
       ],
       "Loading device breakdown…": [
         "Geräteaufschlüsselung wird geladen…"
-      ],
-      "Loading device details…": [
-        "Gerätedetails werden geladen…"
       ],
       "Loading error.": [
         "Ladefehler."
@@ -876,9 +872,6 @@
       "No device data available.": [
         "Keine Gerätedaten verfügbar."
       ],
-      "No device details available.": [
-        "Keine Gerätedetails verfügbar."
-      ],
       "No device usage available.": [
         "Keine Gerätenutzung verfügbar."
       ],
@@ -899,9 +892,6 @@
       ],
       "No hourly details available for this page.": [
         "Für diese Seite sind keine stündlichen Details verfügbar."
-      ],
-      "No identified data is available for this period.": [
-        "Für diesen Zeitraum sind keine Daten verfügbar."
       ],
       "No missing pages available.": [
         "Keine fehlenden Seiten verfügbar."
@@ -960,9 +950,6 @@
       "Operating system": [
         "Betriebssystem"
       ],
-      "Operating systems": [
-        "Betriebssysteme"
-      ],
       "Operational": [
         "Betriebsbereit"
       ],
@@ -981,8 +968,8 @@
       "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.": [
         "Andere Einstellungen verwenden die empfohlenen Standardeinstellungen und können später in den BimBeau Privacy Analytics-Einstellungen geändert werden."
       ],
-      "Page": [
-        "Seite"
+      "Page %1$d of %2$d": [
+        "Seite %1$d von %2$d"
       ],
       "Page views": [
         "Seitenaufrufe"
@@ -1179,9 +1166,6 @@
       "Save settings": [
         "Einstellungen speichern"
       ],
-      "Screen resolutions": [
-        "Bildschirmauflösungen"
-      ],
       "Script ID:": [
         "Skript-ID:"
       ],
@@ -1239,8 +1223,8 @@
       "Status": [
         "Status"
       ],
-      "Step": [
-        "Schritt"
+      "Step %1$d of %2$d": [
+        "Schritt %1$d von %2$d"
       ],
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Messung stoppen, wenn der Browser des Besuchers ein Do-Not-Track- oder Global-Privacy-Control-Signal sendet."
@@ -1251,8 +1235,8 @@
       "Sunday": [
         "Sonntag"
       ],
-      "Table": [
-        "Tabelle"
+      "Table: %s": [
+        "Tabelle: %s"
       ],
       "Table: Acquisition channels": [
         "Tabelle: Besucher"
@@ -1326,8 +1310,8 @@
       "Today": [
         "Heute"
       ],
-      "Toggle sort order": [
-        "Sortierreihenfolge umschalten"
+      "Toggle sort order: %s": [
+        "Sortierreihenfolge umschalten: %s"
       ],
       "Top 404s": [
         "Top-404er"
@@ -1495,38 +1479,11 @@
       "Zoom out map": [
         "Karte verkleinern"
       ],
-      "approximate country area": [
-        "ungefähres Landesgebiet"
-      ],
-      "items": [
-        "Elemente"
-      ],
-      "label": [
-        "Bezeichnung"
-      ],
-      "of": [
-        "von"
-      ],
-      "of 4": [
-        "von 4"
-      ],
-      "page view": [
-        "Seitenaufruf",
-        "Seitenaufrufe"
-      ],
       "unknown endpoint": [
         "unbekannter Endpunkt"
       ],
       "unknown status": [
         "unbekannter Status"
-      ],
-      "view": [
-        "Ansicht",
-        "Ansichten"
-      ],
-      "visitor": [
-        "Besucher",
-        "Besucher"
       ]
     }
   }

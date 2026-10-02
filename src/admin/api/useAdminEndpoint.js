@@ -197,6 +197,16 @@ export const parseJsonResponse = async ( response ) => {
 	}
 };
 
+/**
+ * Authentication headers of admin REST requests (never an empty nonce header).
+ *
+ * @return {Object} Request headers.
+ */
+export const getAdminAuthHeaders = () => {
+	const restNonce = ADMIN_CONFIG?.restNonce;
+	return restNonce ? { 'X-WP-Nonce': restNonce } : {};
+};
+
 export const fetchAdminJson = async ( path, options = {} ) => {
 	const {
 		body,
@@ -209,9 +219,7 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 	} = options;
 
 	const restNonce = ADMIN_CONFIG?.restNonce;
-	const authHeaders = {
-		...( restNonce ? { 'X-WP-Nonce': restNonce } : {} ),
-	};
+	const authHeaders = getAdminAuthHeaders();
 
 	if ( ! ADMIN_CONFIG?.restUrl || ! restNonce ) {
 		throw {
@@ -275,6 +283,16 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 		namespace = ADMIN_CONFIG?.settings?.restInternalNamespace,
 		urlOptions,
 	} = options;
+	// Compared by value like params: an inline urlOptions object must not
+	// restart the request on every render.
+	const urlOptionsKey = useMemo(
+		() => JSON.stringify( urlOptions ?? null ),
+		[ urlOptions ]
+	);
+	const resolvedUrlOptions = useMemo(
+		() => JSON.parse( urlOptionsKey ) ?? undefined,
+		[ urlOptionsKey ]
+	);
 
 	useEffect( () => {
 
@@ -299,7 +317,7 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 					namespace,
 					params: resolvedParams,
 					signal: controller.signal,
-					urlOptions,
+					urlOptions: resolvedUrlOptions,
 				} );
 
 				if ( isMounted ) {
@@ -334,7 +352,7 @@ const useAdminEndpoint = ( path, params, options = {} ) => {
 			isMounted = false;
 			controller.abort();
 		};
-	}, [ enabled, keepPreviousData, namespace, path, paramsKey, resolvedParams, urlOptions ] );
+	}, [ enabled, keepPreviousData, namespace, path, paramsKey, resolvedParams, resolvedUrlOptions ] );
 
 	return { data, isLoading, error };
 };

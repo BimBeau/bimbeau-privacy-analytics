@@ -10,9 +10,6 @@
         "lang": "it_IT",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
-      " (%s)": [
-        " (%s)"
-      ],
       "%1$dh %2$dm": [
         "%1$dh %2$dm"
       ],
@@ -34,8 +31,11 @@
       "%1$s%% share": [
         "%1$s%% quota"
       ],
-      "%1$s: %2$s visits%3$s": [
-        "%1$s: %2$s visite%3$s"
+      "%1$s: %2$s visits": [
+        "%1$s: %2$s visite"
+      ],
+      "%1$s: %2$s visits (approximate country area)": [
+        "%1$s: %2$s visite (area approssimativa del paese)"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -56,12 +56,23 @@
         "%s visitatore",
         "%s visitatori"
       ],
+      "%s item": [
+        "%s elemento",
+        "%s elementi"
+      ],
+      "%s label": [
+        "Etichetta (%s)"
+      ],
       "%s of total visitors": [
         "%s delle visite totali"
       ],
       "%s page view": [
         "%s visualizzazione pagina",
         "%s visualizzazioni pagina"
+      ],
+      "%s visitor": [
+        "%s visitatore",
+        "%s visitatori"
       ],
       "%s visitors": [
         "%s visitatori"
@@ -222,8 +233,8 @@
       "Avg. time on page:": [
         "Tempo medio sulla pagina:"
       ],
-      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
-        "Basato su %1$d visualizzazioni di pagina identificate, pari al %2$d%% di %3$d visualizzazioni di pagina monitorate."
+      "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.": [
+        "Basato su %1$s visualizzazioni pagina dei %2$s visitatori più attivi, su un totale di %3$s visitatori nell'intervallo selezionato."
       ],
       "Based on %s tracked page views in the selected range.": [
         "Basato su %s visualizzazioni pagina tracciate nell'intervallo selezionato."
@@ -257,12 +268,6 @@
       ],
       "Browser version": [
         "Versione browser"
-      ],
-      "Browser versions": [
-        "Versioni browser"
-      ],
-      "Browsers": [
-        "Browser"
       ],
       "CMP markers": [
         "Marker CMP"
@@ -422,9 +427,6 @@
       ],
       "Device": [
         "Dispositivo"
-      ],
-      "Device details": [
-        "Dettagli dispositivo"
       ],
       "Device page views": [
         "Visualizzazioni per dispositivo"
@@ -723,9 +725,6 @@
       "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
         "Solo statistiche pubblico limitate. Nessuna pubblicità, nessun tracciamento cross-site, nessun riutilizzo da terze parti."
       ],
-      "Loading": [
-        "Caricamento"
-      ],
       "Loading KPIs…": [
         "Caricamento KPI…"
       ],
@@ -737,9 +736,6 @@
       ],
       "Loading device breakdown…": [
         "Caricamento ripartizione dispositivi…"
-      ],
-      "Loading device details…": [
-        "Caricamento dettagli dispositivo…"
       ],
       "Loading error.": [
         "Errore di caricamento."
@@ -876,9 +872,6 @@
       "No device data available.": [
         "Nessun dato dispositivo disponibile."
       ],
-      "No device details available.": [
-        "Nessun dettaglio dispositivo disponibile."
-      ],
       "No device usage available.": [
         "Nessun dato di utilizzo dispositivi disponibile."
       ],
@@ -899,9 +892,6 @@
       ],
       "No hourly details available for this page.": [
         "Nessun dettaglio orario disponibile per questa pagina."
-      ],
-      "No identified data is available for this period.": [
-        "Nessun dato disponibile per questo periodo."
       ],
       "No missing pages available.": [
         "Nessuna pagina mancante disponibile."
@@ -960,9 +950,6 @@
       "Operating system": [
         "Sistema operativo"
       ],
-      "Operating systems": [
-        "Sistemi operativi"
-      ],
       "Operational": [
         "Operativo"
       ],
@@ -981,8 +968,8 @@
       "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.": [
         "Altre impostazioni utilizzano le impostazioni predefinite consigliate e possono essere modificate in seguito dalle impostazioni di BimBeau Privacy Analytics."
       ],
-      "Page": [
-        "Pagina"
+      "Page %1$d of %2$d": [
+        "Pagina %1$d di %2$d"
       ],
       "Page views": [
         "Pagine viste"
@@ -1179,9 +1166,6 @@
       "Save settings": [
         "Salva impostazioni"
       ],
-      "Screen resolutions": [
-        "Risoluzioni schermo"
-      ],
       "Script ID:": [
         "ID script:"
       ],
@@ -1239,8 +1223,8 @@
       "Status": [
         "Stato"
       ],
-      "Step": [
-        "Fare un passo"
+      "Step %1$d of %2$d": [
+        "Passaggio %1$d di %2$d"
       ],
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Interrompi la misurazione quando il browser del visitatore invia un segnale Do Not Track o Global Privacy Control."
@@ -1251,8 +1235,8 @@
       "Sunday": [
         "Domenica"
       ],
-      "Table": [
-        "Tabella"
+      "Table: %s": [
+        "Tabella: %s"
       ],
       "Table: Acquisition channels": [
         "Tabella: visitatori"
@@ -1326,8 +1310,8 @@
       "Today": [
         "Oggi"
       ],
-      "Toggle sort order": [
-        "Alterna ordine di ordinamento"
+      "Toggle sort order: %s": [
+        "Alterna ordine di ordinamento: %s"
       ],
       "Top 404s": [
         "404 principali"
@@ -1495,38 +1479,11 @@
       "Zoom out map": [
         "Riduci mappa"
       ],
-      "approximate country area": [
-        "area approssimativa del paese"
-      ],
-      "items": [
-        "elementi"
-      ],
-      "label": [
-        "etichetta"
-      ],
-      "of": [
-        "di"
-      ],
-      "of 4": [
-        "di 4"
-      ],
-      "page view": [
-        "visualizzazione pagina",
-        "visualizzazioni pagina"
-      ],
       "unknown endpoint": [
         "endpoint sconosciuto"
       ],
       "unknown status": [
         "stato sconosciuto"
-      ],
-      "view": [
-        "visualizzazione",
-        "visualizzazioni"
-      ],
-      "visitor": [
-        "visitatore",
-        "visitatori"
       ]
     }
   }

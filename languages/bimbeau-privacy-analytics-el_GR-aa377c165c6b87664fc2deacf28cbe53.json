@@ -10,9 +10,6 @@
         "lang": "el_GR",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
-      " (%s)": [
-        " (%s)"
-      ],
       "%1$dh %2$dm": [
         "%1$dω %2$dλ"
       ],
@@ -34,8 +31,11 @@
       "%1$s%% share": [
         "%1$s%% μερίδιο"
       ],
-      "%1$s: %2$s visits%3$s": [
-        "%1$s: %2$s επισκέψεις%3$s"
+      "%1$s: %2$s visits": [
+        "%1$s: %2$s επισκέψεις"
+      ],
+      "%1$s: %2$s visits (approximate country area)": [
+        "%1$s: %2$s επισκέψεις (κατά προσέγγιση περιοχή χώρας)"
       ],
       "%1$s: %2$s, %3$s": [
         "%1$s: %2$s, %3$s"
@@ -56,12 +56,23 @@
         "%s επισκέπτης",
         "%s επισκέπτες"
       ],
+      "%s item": [
+        "%s στοιχείο",
+        "%s στοιχεία"
+      ],
+      "%s label": [
+        "Ετικέτα (%s)"
+      ],
       "%s of total visitors": [
         "%s των συνολικών επισκέψεων"
       ],
       "%s page view": [
         "%s προβολή σελίδας",
         "%s προβολές σελίδας"
+      ],
+      "%s visitor": [
+        "%s επισκέπτης",
+        "%s επισκέπτες"
       ],
       "%s visitors": [
         "%s επισκέπτες"
@@ -222,8 +233,8 @@
       "Avg. time on page:": [
         "Μέσος χρόνος στη σελίδα:"
       ],
-      "Based on %1$d identified page views, representing %2$d%% of %3$d tracked page views.": [
-        "Βάσει %1$d αναγνωρισμένων προβολών σελίδας, που αντιπροσωπεύουν το %2$d%% από %3$d καταγεγραμμένες προβολές σελίδας."
+      "Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.": [
+        "Βάσει %1$s προβολών σελίδας των %2$s πιο ενεργών επισκεπτών, από σύνολο %3$s επισκεπτών στο επιλεγμένο εύρος."
       ],
       "Based on %s tracked page views in the selected range.": [
         "Βάσει %s καταγεγραμμένων προβολών σελίδας στο επιλεγμένο εύρος."
@@ -257,12 +268,6 @@
       ],
       "Browser version": [
         "Έκδοση περιηγητή"
-      ],
-      "Browser versions": [
-        "Εκδόσεις περιηγητή"
-      ],
-      "Browsers": [
-        "Περιηγητές"
       ],
       "CMP markers": [
         "Δείκτες CMP"
@@ -422,9 +427,6 @@
       ],
       "Device": [
         "Συσκευή"
-      ],
-      "Device details": [
-        "Λεπτομέρειες συσκευής"
       ],
       "Device page views": [
         "Προβολές σελίδας ανά συσκευή"
@@ -723,9 +725,6 @@
       "Limited audience stats only. No ads, no cross-site tracking, no third-party reuse.": [
         "Μόνο περιορισμένα στατιστικά κοινού. Χωρίς διαφημίσεις, χωρίς παρακολούθηση μεταξύ ιστότοπων, χωρίς επαναχρησιμοποίηση από τρίτους."
       ],
-      "Loading": [
-        "Φόρτωση"
-      ],
       "Loading KPIs…": [
         "Φόρτωση KPI…"
       ],
@@ -737,9 +736,6 @@
       ],
       "Loading device breakdown…": [
         "Φόρτωση κατανομής συσκευών…"
-      ],
-      "Loading device details…": [
-        "Φόρτωση λεπτομερειών συσκευής…"
       ],
       "Loading error.": [
         "Σφάλμα φόρτωσης."
@@ -876,9 +872,6 @@
       "No device data available.": [
         "Δεν υπάρχουν διαθέσιμα δεδομένα συσκευών."
       ],
-      "No device details available.": [
-        "Δεν υπάρχουν διαθέσιμες λεπτομέρειες συσκευής."
-      ],
       "No device usage available.": [
         "Δεν υπάρχουν διαθέσιμα δεδομένα χρήσης συσκευών."
       ],
@@ -899,9 +892,6 @@
       ],
       "No hourly details available for this page.": [
         "Δεν υπάρχουν διαθέσιμες ωριαίες λεπτομέρειες για αυτήν τη σελίδα."
-      ],
-      "No identified data is available for this period.": [
-        "Δεν υπάρχουν διαθέσιμα δεδομένα για αυτήν την περίοδο."
       ],
       "No missing pages available.": [
         "Δεν υπάρχουν διαθέσιμες σελίδες που λείπουν."
@@ -960,9 +950,6 @@
       "Operating system": [
         "Λειτουργικό σύστημα"
       ],
-      "Operating systems": [
-        "Λειτουργικά συστήματα"
-      ],
       "Operational": [
         "Λειτουργικό"
       ],
@@ -981,8 +968,8 @@
       "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings.": [
         "Άλλες ρυθμίσεις χρησιμοποιούν τις προτεινόμενες προεπιλογές και μπορούν να αλλάξουν αργότερα από τις ρυθμίσεις του BimBeau Privacy Analytics."
       ],
-      "Page": [
-        "Σελίδα"
+      "Page %1$d of %2$d": [
+        "Σελίδα %1$d από %2$d"
       ],
       "Page views": [
         "Προβολές σελίδας"
@@ -1179,9 +1166,6 @@
       "Save settings": [
         "Αποθήκευση ρυθμίσεων"
       ],
-      "Screen resolutions": [
-        "Αναλύσεις οθόνης"
-      ],
       "Script ID:": [
         "ID script:"
       ],
@@ -1239,8 +1223,8 @@
       "Status": [
         "Κατάσταση"
       ],
-      "Step": [
-        "Βήμα"
+      "Step %1$d of %2$d": [
+        "Βήμα %1$d από %2$d"
       ],
       "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal.": [
         "Διακόψτε τη μέτρηση όταν ο περιηγητής του επισκέπτη στέλνει σήμα Do Not Track ή Global Privacy Control."
@@ -1251,8 +1235,8 @@
       "Sunday": [
         "Κυριακή"
       ],
-      "Table": [
-        "Πίνακας"
+      "Table: %s": [
+        "Πίνακας: %s"
       ],
       "Table: Acquisition channels": [
         "Πίνακας: Επισκέπτες"
@@ -1326,8 +1310,8 @@
       "Today": [
         "Σήμερα"
       ],
-      "Toggle sort order": [
-        "Εναλλαγή σειράς ταξινόμησης"
+      "Toggle sort order: %s": [
+        "Εναλλαγή σειράς ταξινόμησης: %s"
       ],
       "Top 404s": [
         "Κορυφαία 404"
@@ -1495,38 +1479,11 @@
       "Zoom out map": [
         "Σμίκρυνση χάρτη"
       ],
-      "approximate country area": [
-        "κατά προσέγγιση περιοχή χώρας"
-      ],
-      "items": [
-        "στοιχεία"
-      ],
-      "label": [
-        "ετικέτα"
-      ],
-      "of": [
-        "από"
-      ],
-      "of 4": [
-        "από 4"
-      ],
-      "page view": [
-        "προβολή σελίδας",
-        "προβολές σελίδας"
-      ],
       "unknown endpoint": [
         "άγνωστο endpoint"
       ],
       "unknown status": [
         "άγνωστη κατάσταση"
-      ],
-      "view": [
-        "προβολή",
-        "προβολές"
-      ],
-      "visitor": [
-        "Επισκέπτης",
-        "Επισκέπτες"
       ]
     }
   }

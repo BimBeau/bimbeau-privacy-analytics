@@ -29,6 +29,7 @@ import {
 import { getLocationLabel } from '../../lib/locationLabel';
 import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
 import { getChannelLabel } from '../../lib/channelLabels';
+import { formatItemCount, formatPageOfTotal } from '../../lib/paginationLabels';
 
 const formatVisitTime = (timestamp) => {
 	const parsedTimestamp = Number(timestamp);
@@ -636,17 +637,12 @@ const VisitorsTableCard = ({
 								</Button>
 							</div>
 						</FlexItem>
-						<FlexItem className="bbpa-table-pagination__meta">{`${__(
-							'Page',
-							'bimbeau-privacy-analytics'
-						)} ${page} ${__(
-							'of',
-							'bimbeau-privacy-analytics'
-						)} ${totalPages}`}</FlexItem>
-						<FlexItem className="bbpa-table-pagination__meta">{`${totalItems} ${__(
-							'items',
-							'bimbeau-privacy-analytics'
-						)}`}</FlexItem>
+						<FlexItem className="bbpa-table-pagination__meta">
+							{formatPageOfTotal(page, totalPages)}
+						</FlexItem>
+						<FlexItem className="bbpa-table-pagination__meta">
+							{formatItemCount(totalItems)}
+						</FlexItem>
 					</Flex>
 				</>
 			)}

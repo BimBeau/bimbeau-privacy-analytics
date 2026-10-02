@@ -1,5 +1,5 @@
 import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
 	Button,
 	Flex,
@@ -21,6 +21,7 @@ import {
 	calculateChangePercent,
 	formatChangePercent,
 } from '../../lib/formatters';
+import { formatItemCount, formatPageOfTotal } from '../../lib/paginationLabels';
 import { getChannelLabel } from '../../lib/channelLabels';
 
 /**
@@ -107,11 +108,11 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 		order === 'asc'
 			? __( 'Ascending', 'bimbeau-privacy-analytics' )
 			: __( 'Descending', 'bimbeau-privacy-analytics' );
-	/* translators: %s: current sort order label. */
-	const orderToggleLabel = `${ __(
-		'Toggle sort order',
-		'bimbeau-privacy-analytics'
-	) }: ${ orderLabel }`;
+	const orderToggleLabel = sprintf(
+		/* translators: %s: current sort order, "Ascending" or "Descending". */
+		__( 'Toggle sort order: %s', 'bimbeau-privacy-analytics' ),
+		orderLabel
+	);
 	const tableLabel = __(
 		'Table: Referring sites',
 		'bimbeau-privacy-analytics'
@@ -430,19 +431,10 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 							</div>
 						</FlexItem>
 						<FlexItem className="bbpa-table-pagination__meta">
-							{ `${ __(
-								'Page',
-								'bimbeau-privacy-analytics'
-							) } ${ page } ${ __(
-								'of',
-								'bimbeau-privacy-analytics'
-							) } ${ totalPages }` }
+							{ formatPageOfTotal( page, totalPages ) }
 						</FlexItem>
 						<FlexItem className="bbpa-table-pagination__meta">
-							{ `${ totalItems } ${ __(
-								'items',
-								'bimbeau-privacy-analytics'
-							) }` }
+							{ formatItemCount( totalItems ) }
 						</FlexItem>
 					</Flex>
 				</>
