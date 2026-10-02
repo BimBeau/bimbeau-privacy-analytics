@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.207
+Stable tag: 8.45.208
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.207 =
-* [Fix] The city report counts visitors on the site's local days (time zone setting), like the country and Visitors reports: visits recorded shortly before or after midnight no longer appear on the wrong day. [Pro].
+= 8.45.208 =
+* [Fix] The Real-time visitor table lists every active visitor again. When the country cannot be determined (for example before the local GeoIP database is installed, or for a private IP address), the row shows "Unknown country". The table no longer says "No visits in the current activity window" next to a non-zero visitor count.

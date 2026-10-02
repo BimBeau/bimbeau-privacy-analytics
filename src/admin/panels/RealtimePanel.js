@@ -352,30 +352,6 @@ const mergeRealtimeVisitWithConsentedPoint = (visit, mapPointByCoordinates) => {
 	};
 };
 
-const hasResolvedRealtimeCountry = (visit) => {
-	const countryCode = getRealtimeVisitField(visit, ['country_code', 'countryCode']);
-	if (countryCode && !isUnknownCountryCode(countryCode)) {
-		return true;
-	}
-
-	const country = getRealtimeVisitField(visit, ['country', 'country_name', 'countryName']);
-	if (country && country.toLowerCase() !== 'unknown country') {
-		return true;
-	}
-
-	return false;
-};
-
-const shouldDisplayRealtimeVisitRow = (visit) => {
-	const visitorId = getRealtimeVisitField(visit, ['visitor_id']);
-
-	if (!visitorId) {
-		return true;
-	}
-
-	return hasResolvedRealtimeCountry(visit);
-};
-
 const formatVisitorHashForTable = (hash) => {
 	if (typeof hash !== 'string') {
 		return '';
@@ -688,8 +664,9 @@ const RealtimePanel = () => {
 				});
 			}
 
+			// Every active visit gets a row, like the active visitor count. The country is resolved when the hit is
+			// recorded, so a visit without one (no GeoIP database, unknown or private IP) shows "Unknown country".
 			return realtimeVisits
-				.filter((visit) => shouldDisplayRealtimeVisitRow(visit))
 				.map((visit) => {
 					const mergedVisit = mergeRealtimeVisitWithConsentedPoint(visit, consentedPointByCoordinates);
 
