@@ -251,16 +251,6 @@ msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "Limpieza de registros sin procesar de BimBeau Privacy Analytics"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
-msgid "This analytics panel is disabled for navigation."
-msgstr "Este panel de analítica está desactivado para la navegación."
-
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
-msgid "Authentication is required to access analytics data."
-msgstr "Se requiere autenticación para acceder a los datos de analítica."
-
-#: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "Conexión con MaxMind realizada correctamente."
@@ -325,6 +315,14 @@ msgstr "Intervalo de tiempo no válido."
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid visit identifier."
 msgstr "Identificador de visita no válido."
+
+#: includes/rest/class-bbpa-rest-query-helpers.php
+msgid "This analytics panel is disabled for navigation."
+msgstr "Este panel de analítica está desactivado para la navegación."
+
+#: includes/rest/class-bbpa-rest-query-helpers.php
+msgid "Authentication is required to access analytics data."
+msgstr "Se requiere autenticación para acceder a los datos de analítica."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."

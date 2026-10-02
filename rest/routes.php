@@ -51,12 +51,16 @@ function bbpa_load_rest_controller(string $class): bool
         $controller_file = bbpa_safe_existing_file(BBPA_PATH, $controller_files[$class]);
         require $controller_file;
     } catch (Throwable $exception) {
-        if (function_exists('error_log')) {
-            error_log(
-                'BimBeau Privacy Analytics REST bootstrap could not load controller file for class '
-                . $class
-                . ': '
-                . $exception->getMessage()
+        // Error entries are written whenever a log sink is configured, even without the plugin debug mode.
+        if (function_exists('bbpa_safe_log')) {
+            bbpa_safe_log(
+                'API',
+                'error',
+                'REST bootstrap could not load controller file.',
+                [
+                    'class' => $class,
+                    'error' => $exception->getMessage(),
+                ]
             );
         }
 
@@ -67,8 +71,8 @@ function bbpa_load_rest_controller(string $class): bool
         return true;
     }
 
-    if (function_exists('error_log')) {
-        error_log('BimBeau Privacy Analytics REST bootstrap could not load controller class: ' . $class);
+    if (function_exists('bbpa_safe_log')) {
+        bbpa_safe_log('API', 'error', 'REST bootstrap could not load controller class.', ['class' => $class]);
     }
 
     return false;
@@ -100,8 +104,8 @@ do_action('bbpa_rest_controllers_loaded');
 
 add_action('rest_api_init', static function (): void {
     if (!bbpa_load_rest_controller('BBPA_REST_Query_Helpers')) {
-        if (function_exists('error_log')) {
-            error_log('BimBeau Privacy Analytics REST bootstrap could not load required helper class: BBPA_REST_Query_Helpers');
+        if (function_exists('bbpa_safe_log')) {
+            bbpa_safe_log('API', 'error', 'REST bootstrap could not load required helper class.', ['class' => 'BBPA_REST_Query_Helpers']);
         }
 
         return;

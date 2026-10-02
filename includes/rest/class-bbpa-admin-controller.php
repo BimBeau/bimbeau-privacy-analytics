@@ -349,75 +349,11 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
     /**
      * Permission check for panel-scoped admin analytics endpoints.
+     *
+     * @return true|WP_Error
      */
     private function check_permissions_for_panel(WP_REST_Request $request, string $panel) {
-        if (!$this->has_valid_request_nonce($request)) {
-            return $this->build_authentication_error();
-        }
-
-        if (!is_user_logged_in()) {
-            return $this->build_authentication_error();
-        }
-
-        if ($this->is_panel_endpoint_blocked($panel)) {
-            return new WP_Error(
-                'bbpa_admin_panel_disabled',
-                __('This analytics panel is disabled for navigation.', 'bimbeau-privacy-analytics'),
-                ['status' => 403]
-            );
-        }
-
-        if (!$this->current_user_can_access_panel($panel)) {
-            return $this->build_authentication_error();
-        }
-
-        return true;
-    }
-
-    /**
-     * Determine whether requests should be blocked for disabled panel routes.
-     */
-    private function is_panel_endpoint_blocked(string $panel): bool {
-        if ($panel === '' || $panel === 'dashboard') {
-            return false;
-        }
-
-        $should_block = (bool) apply_filters(
-            'bbpa_block_disabled_panel_endpoints',
-            false,
-            $panel
-        );
-
-        if (!$should_block || !function_exists('bbpa_get_settings')) {
-            return false;
-        }
-
-        $settings = bbpa_get_settings();
-        $hidden_by_policy = apply_filters('bbpa_user_hidden_panels', [], $settings);
-        $hidden_by_policy = is_array($hidden_by_policy) ? $hidden_by_policy : [];
-
-        return in_array($panel, $hidden_by_policy, true);
-    }
-
-    /**
-     * Validate request nonce for REST or app-session context.
-     */
-    private function has_valid_request_nonce(WP_REST_Request $request): bool {
-        return bbpa_rest_request_has_valid_nonce($request);
-    }
-
-    /**
-     * Build a normalized authentication response used by app clients.
-     */
-    private function build_authentication_error(): WP_Error {
-        return new WP_Error(
-            'bbpa_auth_required',
-            __('Authentication is required to access analytics data.', 'bimbeau-privacy-analytics'),
-            [
-                'status' => 401,
-                'auth' => 'required',
-            ]
-        );
+        return BBPA_REST_Query_Helpers::check_panel_permissions($request, $panel);
     }
 
     /**
@@ -1744,45 +1680,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Normalize legacy exact viewport values into coarse viewport buckets.
      */
     private function normalize_screen_resolution_for_reports(string $screen_resolution): string {
-        $screen_resolution = trim($screen_resolution);
-        if ($screen_resolution === '') {
-            return '';
-        }
-
-        $allowed_buckets = [
-            '0-480px',
-            '481-768px',
-            '769-1024px',
-            '1025-1440px',
-            '1441px+',
-        ];
-        if (in_array($screen_resolution, $allowed_buckets, true)) {
-            return $screen_resolution;
-        }
-
-        if (!preg_match('/^(\d{1,5})x(\d{1,5})$/', $screen_resolution, $matches)) {
-            return $screen_resolution;
-        }
-
-        $width = absint($matches[1]);
-        if ($width <= 0) {
-            return '';
-        }
-
-        if ($width <= 480) {
-            return '0-480px';
-        }
-        if ($width <= 768) {
-            return '481-768px';
-        }
-        if ($width <= 1024) {
-            return '769-1024px';
-        }
-        if ($width <= 1440) {
-            return '1025-1440px';
-        }
-
-        return '1441px+';
+        return BBPA_REST_Query_Helpers::normalize_screen_resolution_bucket($screen_resolution);
     }
 
     /**
@@ -2684,22 +2582,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Build an array of daily buckets for a range.
      */
     protected function get_day_buckets(string $start, string $end): array {
-        $timezone = wp_timezone();
-        $start_date = new DateTimeImmutable($start, $timezone);
-        $end_date = new DateTimeImmutable($end, $timezone);
-
-        $period = new DatePeriod(
-            $start_date,
-            new DateInterval('P1D'),
-            $end_date->modify('+1 day')
-        );
-
-        $buckets = [];
-        foreach ($period as $date) {
-            $buckets[] = $date->format('Y-m-d');
-        }
-
-        return $buckets;
+        return BBPA_REST_Query_Helpers::get_day_buckets($start, $end);
     }
 
     /**
@@ -2728,11 +2611,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Determine if a database table exists.
      */
     protected function table_exists(string $table): bool {
-        global $wpdb;
-
-        $result = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
-
-        return $result === $table;
+        return BBPA_REST_Query_Helpers::table_exists($table);
     }
 
     /**
@@ -2760,14 +2639,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Fetch cached response payload.
      */
     protected function get_cached_payload(string $cache_key): ?array {
-        $cached = wp_cache_get($cache_key, 'bbpa_admin');
-        if (is_array($cached)) {
-            return $cached;
-        }
-
-        $cached = get_transient($cache_key);
-
-        return is_array($cached) ? $cached : null;
+        return BBPA_REST_Query_Helpers::get_cached_payload($cache_key, 'bbpa_admin');
     }
 
     /**
@@ -2778,39 +2650,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      *                      options table with one transient per typed term.
      */
     protected function set_cached_payload(string $cache_key, array $payload, bool $persist = true): void {
-        $ttl = $this->get_cache_ttl();
-        if ($ttl <= 0) {
-            return;
-        }
-
-        wp_cache_set($cache_key, $payload, 'bbpa_admin', $ttl);
-        if ($persist) {
-            set_transient($cache_key, $payload, $ttl);
-        }
-    }
-
-    /**
-     * Resolve required capability.
-     */
-    private function get_required_capability(string $panel = 'dashboard'): string {
-        if (function_exists('bbpa_get_panel_capability')) {
-            $capability = bbpa_get_panel_capability($panel);
-        } else {
-            $capability = apply_filters('bbpa_admin_capability', 'manage_options');
-        }
-
-        return is_string($capability) && $capability !== '' ? $capability : 'manage_options';
-    }
-
-    /**
-     * Check current user access against global + panel capability policy.
-     */
-    private function current_user_can_access_panel(string $panel): bool {
-        if (function_exists('bbpa_current_user_can_access_panel')) {
-            return bbpa_current_user_can_access_panel($panel);
-        }
-
-        return current_user_can($this->get_required_capability($panel));
+        BBPA_REST_Query_Helpers::set_cached_payload($cache_key, $payload, 'bbpa_admin', $this->get_cache_ttl(), $persist);
     }
 
     /**
@@ -2828,24 +2668,18 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Determine whether plugin debug mode is enabled.
      */
     private function is_debug_mode_enabled(): bool {
-        if (function_exists('bbpa_is_debug_mode_enabled')) {
-            return bbpa_is_debug_mode_enabled();
-        }
-
-        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-
-        return !empty($settings['debug_enabled']);
+        return BBPA_REST_Query_Helpers::is_debug_mode_enabled();
     }
 
     /**
-     * Write structured debug logs for admin analytics endpoints.
+     * Write structured debug logs for admin analytics endpoints (debug level, written only in debug mode).
      */
     protected function log_debug(string $message, array $context = []): void {
         if (!$this->is_debug_mode_enabled()) {
             return;
         }
 
-        BBPA_Logger::channel('Admin')->info($message, $context);
+        BBPA_Logger::channel('Admin')->debug($message, $context);
     }
     /**
      * Add durable local favicons to the visible top-referrer rows only.

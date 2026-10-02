@@ -238,7 +238,10 @@ class BBPA_Report_Controller {
     }
 
     /**
-     * Permission check for report endpoints.
+     * Permission check for report endpoints, scoped to the dashboard panel.
+     *
+     * The report routes use panel-scoped checks; this method is kept for backward
+     * compatibility and for controllers extending this class.
      */
     public function check_permissions(WP_REST_Request $request) {
         return $this->check_permissions_for_panel($request, 'dashboard');
@@ -249,75 +252,11 @@ class BBPA_Report_Controller {
      *
      * Protected so report controllers extending this class can scope their
      * routes to the panel that displays them.
+     *
+     * @return true|WP_Error
      */
     protected function check_permissions_for_panel(WP_REST_Request $request, string $panel) {
-        if (!$this->has_valid_request_nonce($request)) {
-            return $this->build_authentication_error();
-        }
-
-        if (!is_user_logged_in()) {
-            return $this->build_authentication_error();
-        }
-
-        if ($this->is_panel_endpoint_blocked($panel)) {
-            return new WP_Error(
-                'bbpa_admin_panel_disabled',
-                __('This analytics panel is disabled for navigation.', 'bimbeau-privacy-analytics'),
-                ['status' => 403]
-            );
-        }
-
-        if (!$this->current_user_can_access_panel($panel)) {
-            return $this->build_authentication_error();
-        }
-
-        return true;
-    }
-
-    /**
-     * Determine whether requests should be blocked for disabled panel routes.
-     */
-    private function is_panel_endpoint_blocked(string $panel): bool {
-        if ($panel === '' || $panel === 'dashboard') {
-            return false;
-        }
-
-        $should_block = (bool) apply_filters(
-            'bbpa_block_disabled_panel_endpoints',
-            false,
-            $panel
-        );
-
-        if (!$should_block || !function_exists('bbpa_get_settings')) {
-            return false;
-        }
-
-        $settings = bbpa_get_settings();
-        $hidden_by_policy = apply_filters('bbpa_user_hidden_panels', [], $settings);
-        $hidden_by_policy = is_array($hidden_by_policy) ? $hidden_by_policy : [];
-
-        return in_array($panel, $hidden_by_policy, true);
-    }
-
-    /**
-     * Validate request nonce for REST or app-session context.
-     */
-    private function has_valid_request_nonce(WP_REST_Request $request): bool {
-        return bbpa_rest_request_has_valid_nonce($request);
-    }
-
-    /**
-     * Build a normalized authentication response used by app clients.
-     */
-    private function build_authentication_error(): WP_Error {
-        return new WP_Error(
-            'bbpa_auth_required',
-            __('Authentication is required to access analytics data.', 'bimbeau-privacy-analytics'),
-            [
-                'status' => 401,
-                'auth' => 'required',
-            ]
-        );
+        return BBPA_REST_Query_Helpers::check_panel_permissions($request, $panel);
     }
 
     /**
@@ -587,24 +526,22 @@ class BBPA_Report_Controller {
         $pagination = $this->normalize_pagination($request);
         $search_term = $this->get_search_term($request);
         $page_path = $this->get_page_path_filter($request);
-        $sorting = $this->normalize_sorting(
-            $request,
-            apply_filters('bbpa_visitors_sorting_columns', [
-                'pages' => 'total_views',
-                'time_spent' => 'active_time_ms',
-                'visitor' => 'visitor_id',
-                'country' => 'country',
-                'referrer' => 'referrer_domain',
-                'source_category' => 'source_category',
-                'browser' => 'browser',
-                'device' => 'device_class',
-                'os' => 'operating_system',
-                'resolution' => 'screen_resolution',
-                'first_view' => 'first_view_at',
-                'last_view' => 'last_view_at',
-            ]),
-            'first_view'
-        );
+        // The filter runs once per request: the same map validates the sort key and resolves its column.
+        $sorting_columns = apply_filters('bbpa_visitors_sorting_columns', [
+            'pages' => 'total_views',
+            'time_spent' => 'active_time_ms',
+            'visitor' => 'visitor_id',
+            'country' => 'country',
+            'referrer' => 'referrer_domain',
+            'source_category' => 'source_category',
+            'browser' => 'browser',
+            'device' => 'device_class',
+            'os' => 'operating_system',
+            'resolution' => 'screen_resolution',
+            'first_view' => 'first_view_at',
+            'last_view' => 'last_view_at',
+        ]);
+        $sorting = $this->normalize_sorting($request, $sorting_columns, 'first_view');
 
         $table = bbpa_sql_table_name('bbpa_visitors');
         $visitor_type = sanitize_key((string) $request->get_param('visitor_type'));
@@ -674,20 +611,7 @@ class BBPA_Report_Controller {
         $count_sql = "SELECT COUNT(*) FROM {$table} WHERE {$where_sql}";
         $total_items = (int) $wpdb->get_var($wpdb->prepare($count_sql, $params));
 
-        $order_column = bbpa_sql_allowlisted_identifier((string) $sorting['orderby_key'], apply_filters('bbpa_visitors_sorting_columns', [
-            'pages' => 'total_views',
-            'time_spent' => 'active_time_ms',
-            'visitor' => 'visitor_id',
-            'country' => 'country',
-            'referrer' => 'referrer_domain',
-            'source_category' => 'source_category',
-            'browser' => 'browser',
-            'device' => 'device_class',
-            'os' => 'operating_system',
-            'resolution' => 'screen_resolution',
-            'first_view' => 'first_view_at',
-            'last_view' => 'last_view_at',
-        ]), 'first_view');
+        $order_column = bbpa_sql_allowlisted_identifier((string) $sorting['orderby_key'], $sorting_columns, 'first_view');
         $order_direction = strtoupper($sorting['order']) === 'ASC' ? 'ASC' : 'DESC';
 
         $source_category_select = $this->table_has_column($table, 'source_category') ? 'source_category' : "'' AS source_category";
@@ -765,45 +689,7 @@ class BBPA_Report_Controller {
      * Normalize exact viewport values into coarse viewport buckets.
      */
     private function normalize_screen_resolution_for_reports(string $screen_resolution): string {
-        $screen_resolution = trim($screen_resolution);
-        if ($screen_resolution === '') {
-            return '';
-        }
-
-        $allowed_buckets = [
-            '0-480px',
-            '481-768px',
-            '769-1024px',
-            '1025-1440px',
-            '1441px+',
-        ];
-        if (in_array($screen_resolution, $allowed_buckets, true)) {
-            return $screen_resolution;
-        }
-
-        if (!preg_match('/^(\d{1,5})x(\d{1,5})$/', $screen_resolution, $matches)) {
-            return $screen_resolution;
-        }
-
-        $width = absint($matches[1]);
-        if ($width <= 0) {
-            return '';
-        }
-
-        if ($width <= 480) {
-            return '0-480px';
-        }
-        if ($width <= 768) {
-            return '481-768px';
-        }
-        if ($width <= 1024) {
-            return '769-1024px';
-        }
-        if ($width <= 1440) {
-            return '1025-1440px';
-        }
-
-        return '1441px+';
+        return BBPA_REST_Query_Helpers::normalize_screen_resolution_bucket($screen_resolution);
     }
 
     /**
@@ -2052,27 +1938,8 @@ class BBPA_Report_Controller {
      * Build an array of daily buckets for a range.
      */
     private function get_day_buckets(string $start, string $end): array {
-        $timezone = wp_timezone();
-        $start_date = new DateTimeImmutable($start, $timezone);
-        $end_date = new DateTimeImmutable($end, $timezone);
-
-        $period = new DatePeriod(
-            $start_date,
-            new DateInterval('P1D'),
-            $end_date->modify('+1 day')
-        );
-
-        $buckets = [];
-        foreach ($period as $date) {
-            $buckets[] = $date->format('Y-m-d');
-        }
-
-        return $buckets;
+        return BBPA_REST_Query_Helpers::get_day_buckets($start, $end);
     }
-
-    /**
-     * Build SQL filters that keep only page-like 404 paths in the report.
-     */
 
     /**
      * Build SQL filters that keep only front-end page paths.
@@ -2084,6 +1951,9 @@ class BBPA_Report_Controller {
         ];
     }
 
+    /**
+     * Build SQL filters that keep only page-like 404 paths in the report.
+     */
     private function get_not_found_page_filter_sql(string $label_column): array {
         $asset_like_patterns = [
             '/wp-content/%',
@@ -2844,10 +2714,6 @@ class BBPA_Report_Controller {
         }
 
         $known_country_condition = $this->get_known_country_code_condition();
-        $legacy_sorting = $sorting;
-        if ($legacy_sorting['orderby'] === 'visitors') {
-            $legacy_sorting['orderby'] = 'visitors';
-        }
 
         $total_items = (int) $wpdb->get_var(
             $wpdb->prepare(
@@ -2870,7 +2736,7 @@ class BBPA_Report_Controller {
                     AND {$known_country_condition}
                 GROUP BY country_code
                 HAVING SUM(visits) > 0
-                ORDER BY {$legacy_sorting['orderby']} {$legacy_sorting['order']}
+                ORDER BY {$sorting['orderby']} {$sorting['order']}
                 LIMIT %d OFFSET %d",
                 $range['start'],
                 $range['end'],
@@ -3053,9 +2919,6 @@ class BBPA_Report_Controller {
         $allowed_tables = [
             $wpdb->prefix . 'bbpa_daily',
             $wpdb->prefix . 'bbpa_daily_source_category',
-            $wpdb->prefix . 'bbpa_daily_referrers',
-            $wpdb->prefix . 'bbpa_daily_browsers',
-            $wpdb->prefix . 'bbpa_daily_pages',
             $wpdb->prefix . 'bbpa_geo_daily',
             $wpdb->prefix . 'bbpa_entry_exit_daily',
             $wpdb->prefix . 'bbpa_entry_exit_hourly',
@@ -3081,15 +2944,12 @@ class BBPA_Report_Controller {
      * Check whether a table exists.
      */
     protected function table_exists(string $table): bool {
-        global $wpdb;
-
         if ($table === '') {
             return false;
         }
 
         if (!isset($this->table_exists_memo[$table])) {
-            $result = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table));
-            $this->table_exists_memo[$table] = is_string($result) && $result === $table;
+            $this->table_exists_memo[$table] = BBPA_REST_Query_Helpers::table_exists($table);
         }
 
         return $this->table_exists_memo[$table];
@@ -3459,37 +3319,7 @@ class BBPA_Report_Controller {
      * Determine whether plugin debug mode is enabled.
      */
     protected function is_debug_mode_enabled(): bool {
-        if (function_exists('bbpa_is_debug_mode_enabled')) {
-            return bbpa_is_debug_mode_enabled();
-        }
-
-        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-
-        return !empty($settings['debug_enabled']);
-    }
-
-    /**
-     * Resolve required capability.
-     */
-    private function get_required_capability(string $panel = 'dashboard'): string {
-        if (function_exists('bbpa_get_panel_capability')) {
-            $capability = bbpa_get_panel_capability($panel);
-        } else {
-            $capability = apply_filters('bbpa_admin_capability', 'manage_options');
-        }
-
-        return is_string($capability) && $capability !== '' ? $capability : 'manage_options';
-    }
-
-    /**
-     * Check current user access against global + dashboard capability policy.
-     */
-    private function current_user_can_access_panel(string $panel): bool {
-        if (function_exists('bbpa_current_user_can_access_panel')) {
-            return bbpa_current_user_can_access_panel($panel);
-        }
-
-        return current_user_can($this->get_required_capability($panel));
+        return BBPA_REST_Query_Helpers::is_debug_mode_enabled();
     }
 
     /**
@@ -3518,29 +3348,14 @@ class BBPA_Report_Controller {
      * Fetch cached response payload.
      */
     protected function get_cached_payload(string $cache_key): ?array {
-        $cached = wp_cache_get($cache_key, 'bbpa_report');
-        if (is_array($cached)) {
-            return $cached;
-        }
-
-        $cached = get_transient($cache_key);
-
-        return is_array($cached) ? $cached : null;
+        return BBPA_REST_Query_Helpers::get_cached_payload($cache_key, 'bbpa_report');
     }
 
     /**
      * Store cached response payload.
      */
     protected function set_cached_payload(string $cache_key, array $payload, string $endpoint = '', bool $persist = true): void {
-        $ttl = $this->get_cache_ttl($endpoint);
-        if ($ttl <= 0) {
-            return;
-        }
-
-        wp_cache_set($cache_key, $payload, 'bbpa_report', $ttl);
-        if ($persist) {
-            set_transient($cache_key, $payload, $ttl);
-        }
+        BBPA_REST_Query_Helpers::set_cached_payload($cache_key, $payload, 'bbpa_report', $this->get_cache_ttl($endpoint), $persist);
     }
     /**
      * Add only already-local favicons to visible response rows without network access.

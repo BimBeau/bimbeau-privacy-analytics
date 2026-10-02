@@ -250,16 +250,6 @@ msgid "BimBeau Privacy Analytics raw log cleanup"
 msgstr "BimBeau Privacy Analytics 原始日志清理"
 
 #: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
-msgid "This analytics panel is disabled for navigation."
-msgstr "此分析面板已从导航中禁用。"
-
-#: includes/rest/class-bbpa-admin-controller.php
-#: includes/rest/class-bbpa-report-controller.php
-msgid "Authentication is required to access analytics data."
-msgstr "访问分析数据需要身份验证。"
-
-#: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind connection succeeded."
 msgstr "MaxMind 连接成功。"
@@ -324,6 +314,14 @@ msgstr "时间戳分组无效。"
 #: includes/rest/class-bbpa-hit-controller.php
 msgid "Invalid visit identifier."
 msgstr "访问标识符无效。"
+
+#: includes/rest/class-bbpa-rest-query-helpers.php
+msgid "This analytics panel is disabled for navigation."
+msgstr "此分析面板已从导航中禁用。"
+
+#: includes/rest/class-bbpa-rest-query-helpers.php
+msgid "Authentication is required to access analytics data."
+msgstr "访问分析数据需要身份验证。"
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."

@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.211
+Stable tag: 8.45.212
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,8 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.211 =
-* [Fix] Real-time no longer counts or lists bot visits, such as search engine crawlers that run JavaScript, as active visitors. The Real-time counter and the menu badge now match the visitor totals of the other reports, which already left bots out. Bot traffic stays visible in the Devices report and in the Visitors report bot filter.
+= 8.45.212 =
+* [Improvement] Analytics REST endpoints share one set of permission, cache and table-check helpers instead of separate copies in each controller. Responses, routes, permissions and cache keys are unchanged.
+* [Fix] Reports now detect the plugin tables on database servers that store table names in lowercase while the site table prefix contains uppercase letters.
+* [Improvement] REST startup failures (missing controller file) are now logged with the plugin prefix when WordPress debug logging (`WP_DEBUG_LOG`) or the plugin log file (`BBPA_DEBUG_LOG_SINK`) is enabled, instead of always going to the PHP error log.
+* [Docs] Document the visitors report extension filters, the hidden panels filter, the plugin log channels and levels, and which reports the AI referrer domains filter affects.

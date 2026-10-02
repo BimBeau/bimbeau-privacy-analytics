@@ -5,7 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shared helpers for REST query normalization and cache key generation.
+ * Shared helpers for the REST controllers.
+ *
+ * Query normalization (date ranges, pagination, sorting), cache keys and payload caching,
+ * panel permission checks, schema probes and small formatting helpers used by several
+ * controllers. Controllers keep their own methods as thin wrappers, so their public and
+ * protected methods stay available to extending classes.
  */
 class BBPA_REST_Query_Helpers {
     private const ALLOWED_SORT_DIRECTIONS = ['ASC', 'DESC'];
@@ -236,5 +241,237 @@ class BBPA_REST_Query_Helpers {
 
     public static function build_limit_offset_sql(int $per_page, int $offset): string {
         return ' LIMIT ' . (int) $per_page . ' OFFSET ' . (int) $offset;
+    }
+
+    /**
+     * Permission check of a panel-scoped analytics route.
+     *
+     * Order: request nonce, logged-in user, opt-in disabled-panel policy, then panel capability.
+     *
+     * @return true|WP_Error
+     */
+    public static function check_panel_permissions(WP_REST_Request $request, string $panel) {
+        if (!bbpa_rest_request_has_valid_nonce($request)) {
+            return self::build_authentication_error();
+        }
+
+        if (!is_user_logged_in()) {
+            return self::build_authentication_error();
+        }
+
+        if (self::is_panel_endpoint_blocked($panel)) {
+            return new WP_Error(
+                'bbpa_admin_panel_disabled',
+                __('This analytics panel is disabled for navigation.', 'bimbeau-privacy-analytics'),
+                ['status' => 403]
+            );
+        }
+
+        if (!self::current_user_can_access_panel($panel)) {
+            return self::build_authentication_error();
+        }
+
+        return true;
+    }
+
+    /**
+     * Whether the routes of a panel hidden by `bbpa_user_hidden_panels` are blocked.
+     *
+     * Blocking is opt-in through `bbpa_block_disabled_panel_endpoints`; the dashboard is never blocked.
+     */
+    public static function is_panel_endpoint_blocked(string $panel): bool {
+        if ($panel === '' || $panel === 'dashboard') {
+            return false;
+        }
+
+        $should_block = (bool) apply_filters(
+            'bbpa_block_disabled_panel_endpoints',
+            false,
+            $panel
+        );
+
+        if (!$should_block || !function_exists('bbpa_get_settings')) {
+            return false;
+        }
+
+        $settings = bbpa_get_settings();
+        $hidden_by_policy = apply_filters('bbpa_user_hidden_panels', [], $settings);
+        $hidden_by_policy = is_array($hidden_by_policy) ? $hidden_by_policy : [];
+
+        return in_array($panel, $hidden_by_policy, true);
+    }
+
+    /**
+     * Normalized authentication error used by the admin and app clients.
+     */
+    public static function build_authentication_error(): WP_Error {
+        return new WP_Error(
+            'bbpa_auth_required',
+            __('Authentication is required to access analytics data.', 'bimbeau-privacy-analytics'),
+            [
+                'status' => 401,
+                'auth' => 'required',
+            ]
+        );
+    }
+
+    /**
+     * Whether the current user can open a panel (global access and panel capability).
+     */
+    public static function current_user_can_access_panel(string $panel): bool {
+        if (function_exists('bbpa_current_user_can_access_panel')) {
+            return bbpa_current_user_can_access_panel($panel);
+        }
+
+        return current_user_can(self::get_panel_capability($panel));
+    }
+
+    /**
+     * Capability required by a panel, `manage_options` when none resolves.
+     */
+    public static function get_panel_capability(string $panel = 'dashboard'): string {
+        if (function_exists('bbpa_get_panel_capability')) {
+            $capability = bbpa_get_panel_capability($panel);
+        } else {
+            $capability = apply_filters('bbpa_admin_capability', 'manage_options');
+        }
+
+        return is_string($capability) && $capability !== '' ? $capability : 'manage_options';
+    }
+
+    /**
+     * Whether the plugin debug mode is enabled.
+     */
+    public static function is_debug_mode_enabled(): bool {
+        if (function_exists('bbpa_is_debug_mode_enabled')) {
+            return bbpa_is_debug_mode_enabled();
+        }
+
+        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+
+        return !empty($settings['debug_enabled']);
+    }
+
+    /**
+     * Read a cached response payload from the object cache group, then from its transient.
+     */
+    public static function get_cached_payload(string $cache_key, string $cache_group): ?array {
+        $cached = wp_cache_get($cache_key, $cache_group);
+        if (is_array($cached)) {
+            return $cached;
+        }
+
+        $cached = get_transient($cache_key);
+
+        return is_array($cached) ? $cached : null;
+    }
+
+    /**
+     * Store a response payload in the object cache group and, when persisted, as a transient.
+     *
+     * @param int  $ttl     Lifetime in seconds, already resolved by the controller; nothing is stored when it is not positive.
+     * @param bool $persist Whether the payload is also stored as a transient. Free-text searches only use the
+     *                      object cache, so they cannot fill the options table with one transient per typed term.
+     */
+    public static function set_cached_payload(string $cache_key, array $payload, string $cache_group, int $ttl, bool $persist = true): void {
+        if ($ttl <= 0) {
+            return;
+        }
+
+        wp_cache_set($cache_key, $payload, $cache_group, $ttl);
+        if ($persist) {
+            set_transient($cache_key, $payload, $ttl);
+        }
+    }
+
+    /**
+     * Whether a database table exists, through the canonical schema helper.
+     *
+     * bbpa_table_exists() escapes the LIKE pattern and compares names case-insensitively.
+     */
+    public static function table_exists(string $table): bool {
+        if ($table === '') {
+            return false;
+        }
+
+        if (function_exists('bbpa_table_exists')) {
+            return bbpa_table_exists($table);
+        }
+
+        global $wpdb;
+        $result = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($table)));
+
+        return is_string($result) && strcasecmp($result, $table) === 0;
+    }
+
+    /**
+     * List the site-timezone days (`Y-m-d`) of an inclusive day range.
+     *
+     * @return array<int, string>
+     */
+    public static function get_day_buckets(string $start, string $end): array {
+        $timezone = wp_timezone();
+        $start_date = new DateTimeImmutable($start, $timezone);
+        $end_date = new DateTimeImmutable($end, $timezone);
+
+        $period = new DatePeriod(
+            $start_date,
+            new DateInterval('P1D'),
+            $end_date->modify('+1 day')
+        );
+
+        $buckets = [];
+        foreach ($period as $date) {
+            $buckets[] = $date->format('Y-m-d');
+        }
+
+        return $buckets;
+    }
+
+    /**
+     * Map an exact `WIDTHxHEIGHT` viewport value to its coarse report bucket.
+     *
+     * Bucket values are returned unchanged; other unparsable values are returned trimmed.
+     */
+    public static function normalize_screen_resolution_bucket(string $screen_resolution): string {
+        $screen_resolution = trim($screen_resolution);
+        if ($screen_resolution === '') {
+            return '';
+        }
+
+        $allowed_buckets = [
+            '0-480px',
+            '481-768px',
+            '769-1024px',
+            '1025-1440px',
+            '1441px+',
+        ];
+        if (in_array($screen_resolution, $allowed_buckets, true)) {
+            return $screen_resolution;
+        }
+
+        if (!preg_match('/^(\d{1,5})x(\d{1,5})$/', $screen_resolution, $matches)) {
+            return $screen_resolution;
+        }
+
+        $width = absint($matches[1]);
+        if ($width <= 0) {
+            return '';
+        }
+
+        if ($width <= 480) {
+            return '0-480px';
+        }
+        if ($width <= 768) {
+            return '481-768px';
+        }
+        if ($width <= 1024) {
+            return '769-1024px';
+        }
+        if ($width <= 1440) {
+            return '1025-1440px';
+        }
+
+        return '1441px+';
     }
 }
