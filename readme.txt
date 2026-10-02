@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.206
+Stable tag: 8.45.207
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.206 =
-* [Improvement] Smaller plugin downloads: translation source files and duplicate JavaScript translation files that WordPress never loads are no longer shipped, about 0.5 MB less for the free version and 0.8 MB less for Pro. Translations are unchanged.
+= 8.45.207 =
+* [Fix] The city report counts visitors on the site's local days (time zone setting), like the country and Visitors reports: visits recorded shortly before or after midnight no longer appear on the wrong day. [Pro].
