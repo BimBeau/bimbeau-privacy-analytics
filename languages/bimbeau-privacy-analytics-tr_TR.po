@@ -1441,6 +1441,11 @@ msgstr "Konum"
 msgid "Data scope list"
 msgstr "Veri kapsamı listesi"
 
+#. translators: %s: example page path.
+#: src/admin/panels/SettingsPanel.js
+msgid "Enter page paths such as %s, not full web addresses."
+msgstr "Tam web adresleri değil, %s gibi sayfa yolları girin."
+
 #: src/admin/panels/SettingsPanel.js
 msgid "Unable to load the GeoIP database status."
 msgstr "GeoIP veritabanı durumu yüklenemiyor."
@@ -1881,6 +1886,19 @@ msgstr "İzlemeden hariç tutulacak rolleri seçin. Tüm oturum açmış kullan�
 #: src/admin/panels/SettingsPanel.js
 msgid "No roles available."
 msgstr "Kullanılabilir rol yok."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Excluded paths"
+msgstr "Hariç tutulan yollar"
+
+#. translators: 1: example page path, 2: example page path below the first one.
+#: src/admin/panels/SettingsPanel.js
+msgid "One page path per line, for example %1$s. Letter case, a trailing slash and the query string are ignored. There is no wildcard: %1$s does not exclude %2$s."
+msgstr "Her satıra bir sayfa yolu, örneğin %1$s. Büyük/küçük harf, sondaki eğik çizgi ve sorgu dizesi yok sayılır. Joker karakter yoktur: %1$s, %2$s yolunu hariç tutmaz."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Listed pages are no longer counted after you save. Statistics already recorded do not change."
+msgstr "Listelenen sayfalar kaydettikten sonra artık sayılmaz. Daha önce kaydedilmiş istatistikler değişmez."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug"

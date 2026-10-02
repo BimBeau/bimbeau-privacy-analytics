@@ -1441,6 +1441,11 @@ msgstr "位置"
 msgid "Data scope list"
 msgstr "数据范围列表"
 
+#. translators: %s: example page path.
+#: src/admin/panels/SettingsPanel.js
+msgid "Enter page paths such as %s, not full web addresses."
+msgstr "请输入页面路径（例如 %s），而不是完整的网址。"
+
 #: src/admin/panels/SettingsPanel.js
 msgid "Unable to load the GeoIP database status."
 msgstr "无法加载 GeoIP 数据库状态。"
@@ -1881,6 +1886,19 @@ msgstr "选择要从跟踪中排除的角色。选择所有角色以忽略所有
 #: src/admin/panels/SettingsPanel.js
 msgid "No roles available."
 msgstr "没有可用角色。"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Excluded paths"
+msgstr "排除的路径"
+
+#. translators: 1: example page path, 2: example page path below the first one.
+#: src/admin/panels/SettingsPanel.js
+msgid "One page path per line, for example %1$s. Letter case, a trailing slash and the query string are ignored. There is no wildcard: %1$s does not exclude %2$s."
+msgstr "每行一个页面路径，例如 %1$s。忽略大小写、末尾斜杠和查询字符串。不支持通配符：%1$s 不会排除 %2$s。"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Listed pages are no longer counted after you save. Statistics already recorded do not change."
+msgstr "保存后，列出的页面将不再被统计。已记录的统计数据不会改变。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug"

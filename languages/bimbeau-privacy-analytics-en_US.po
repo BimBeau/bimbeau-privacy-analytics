@@ -1445,6 +1445,11 @@ msgstr "Location"
 msgid "Data scope list"
 msgstr "Data scope list"
 
+#. translators: %s: example page path.
+#: src/admin/panels/SettingsPanel.js
+msgid "Enter page paths such as %s, not full web addresses."
+msgstr "Enter page paths such as %s, not full web addresses."
+
 #: src/admin/panels/SettingsPanel.js
 msgid "Unable to load the GeoIP database status."
 msgstr "Unable to load the GeoIP database status."
@@ -1885,6 +1890,19 @@ msgstr "Select roles to exclude from tracking. Select all roles to ignore all lo
 #: src/admin/panels/SettingsPanel.js
 msgid "No roles available."
 msgstr "No roles available."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Excluded paths"
+msgstr "Excluded paths"
+
+#. translators: 1: example page path, 2: example page path below the first one.
+#: src/admin/panels/SettingsPanel.js
+msgid "One page path per line, for example %1$s. Letter case, a trailing slash and the query string are ignored. There is no wildcard: %1$s does not exclude %2$s."
+msgstr "One page path per line, for example %1$s. Letter case, a trailing slash and the query string are ignored. There is no wildcard: %1$s does not exclude %2$s."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Listed pages are no longer counted after you save. Statistics already recorded do not change."
+msgstr "Listed pages are no longer counted after you save. Statistics already recorded do not change."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug"

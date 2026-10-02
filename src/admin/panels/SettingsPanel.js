@@ -286,6 +286,63 @@ export const prepareMaxMindLicenseKeyPayload = (state) => {
   return payload;
 };
 
+/**
+ * Show the stored `excluded_paths` list in its text field, one entry per line.
+ *
+ * @param {Array} paths Stored excluded paths.
+ * @return {string} Field value.
+ */
+export const formatExcludedPathsInput = (paths) =>
+  normalizeArray(paths)
+    .filter((path) => typeof path === "string")
+    .join("\n");
+
+/**
+ * Read the excluded paths text field: one entry per line.
+ *
+ * Lines are trimmed and empty lines are dropped. The server normalizes each
+ * entry (lowercase, one leading slash, no trailing slash, no duplicate) and
+ * returns the stored list after the save.
+ *
+ * @param {string} value Field value.
+ * @return {string[]} Trimmed non-empty lines.
+ */
+export const parseExcludedPathsInput = (value) =>
+  String(value || "")
+    .split(/\r\n|\r|\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+// A line that starts with a URL scheme ("https://") is a full address: the
+// server would store it as a path that never matches a page.
+const FULL_ADDRESS_PATTERN = /^[a-z][a-z0-9+.-]*:\/\//i;
+
+/**
+ * Validate the excluded paths before saving.
+ *
+ * @param {Object} state Form state.
+ * @return {Object} Field errors keyed by setting name (empty when valid).
+ */
+export const validateExcludedPaths = (state) => {
+  const hasFullAddress = normalizeArray(state?.excluded_paths).some(
+    (path) => typeof path === "string" && FULL_ADDRESS_PATTERN.test(path),
+  );
+  if (!hasFullAddress) {
+    return {};
+  }
+
+  return {
+    excluded_paths: sprintf(
+      /* translators: %s: example page path. */
+      __(
+        "Enter page paths such as %s, not full web addresses.",
+        "bimbeau-privacy-analytics",
+      ),
+      "/contact",
+    ),
+  };
+};
+
 const normalizeSettings = (settings) => ({
   ...DEFAULT_SETTINGS,
   ...(settings || {}),
@@ -351,6 +408,7 @@ const SettingsPanel = ({
     Number(ADMIN_CONFIG?.settings?.adminCacheVersion || 1),
   );
   const [allowlistInput, setAllowlistInput] = useState("");
+  const [excludedPathsInput, setExcludedPathsInput] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   
   const [saveNotice, setSaveNotice] = useState(null);
@@ -500,6 +558,9 @@ const SettingsPanel = ({
       const normalized = normalizeSettings(data.settings);
       setFormState(normalized);
       setAllowlistInput(normalized.url_query_allowlist.join(", "));
+      setExcludedPathsInput(
+        formatExcludedPathsInput(normalized.excluded_paths),
+      );
       window.BBPA_DEBUG = Boolean(normalized.debug_enabled);
       setValidationErrors({});
     }
@@ -546,7 +607,10 @@ const SettingsPanel = ({
       showToast = true,
     } = options;
     if (!skipValidation) {
-      const errors = validateMaxMindFields(nextState, { requireFilled: false });
+      const errors = {
+        ...validateMaxMindFields(nextState, { requireFilled: false }),
+        ...validateExcludedPaths(nextState),
+      };
       if (Object.keys(errors).length > 0) {
         setValidationErrors(errors);
         setSaveNotice({
@@ -609,6 +673,10 @@ const SettingsPanel = ({
         
         setFormState(normalized);
         setAllowlistInput(normalized.url_query_allowlist.join(", "));
+        // Show the list as the server stored it (normalized, without duplicates).
+        setExcludedPathsInput(
+          formatExcludedPathsInput(normalized.excluded_paths),
+        );
         window.BBPA_DEBUG = Boolean(normalized.debug_enabled);
         setValidationErrors({});
         setAdminCacheVersion(nextAdminCacheVersion);
@@ -2095,6 +2163,48 @@ const SettingsPanel = ({
                           ))}
                         </div>
                       </div>
+                      <TextareaControl
+                        className="bbpa-settings-excluded-paths-control"
+                        label={__(
+                          "Excluded paths",
+                          "bimbeau-privacy-analytics",
+                        )}
+                        rows={4}
+                        spellCheck={false}
+                        value={excludedPathsInput}
+                        help={
+                          validationErrors.excluded_paths || (
+                            <>
+                              {sprintf(
+                                /* translators: 1: example page path, 2: example page path below the first one. */
+                                __(
+                                  "One page path per line, for example %1$s. Letter case, a trailing slash and the query string are ignored. There is no wildcard: %1$s does not exclude %2$s.",
+                                  "bimbeau-privacy-analytics",
+                                ),
+                                "/contact",
+                                "/contact/team",
+                              )}{" "}
+                              {__(
+                                "Listed pages are no longer counted after you save. Statistics already recorded do not change.",
+                                "bimbeau-privacy-analytics",
+                              )}
+                            </>
+                          )
+                        }
+                        onChange={(value) => {
+                          setExcludedPathsInput(value);
+                          setFormState((prev) => ({
+                            ...prev,
+                            excluded_paths: parseExcludedPathsInput(value),
+                          }));
+                          if (validationErrors.excluded_paths) {
+                            setValidationErrors((prev) => ({
+                              ...prev,
+                              excluded_paths: null,
+                            }));
+                          }
+                        }}
+                      />
                     </CardBody>
                   </Card>
                 )}

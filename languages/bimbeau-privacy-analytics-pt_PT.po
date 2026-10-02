@@ -1445,6 +1445,11 @@ msgstr "Localização"
 msgid "Data scope list"
 msgstr "Lista de âmbito dos dados"
 
+#. translators: %s: example page path.
+#: src/admin/panels/SettingsPanel.js
+msgid "Enter page paths such as %s, not full web addresses."
+msgstr "Introduza caminhos de página como %s, não endereços web completos."
+
 #: src/admin/panels/SettingsPanel.js
 msgid "Unable to load the GeoIP database status."
 msgstr "Não foi possível carregar o estado da base de dados GeoIP."
@@ -1885,6 +1890,19 @@ msgstr "Selecione funções a excluir do rastreio. Selecione todas as funções 
 #: src/admin/panels/SettingsPanel.js
 msgid "No roles available."
 msgstr "Nenhuma função disponível."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Excluded paths"
+msgstr "Caminhos excluídos"
+
+#. translators: 1: example page path, 2: example page path below the first one.
+#: src/admin/panels/SettingsPanel.js
+msgid "One page path per line, for example %1$s. Letter case, a trailing slash and the query string are ignored. There is no wildcard: %1$s does not exclude %2$s."
+msgstr "Um caminho de página por linha, por exemplo %1$s. As maiúsculas e minúsculas, a barra final e a cadeia de consulta são ignoradas. Não há caracteres universais: %1$s não exclui %2$s."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Listed pages are no longer counted after you save. Statistics already recorded do not change."
+msgstr "As páginas indicadas deixam de ser contadas depois de guardar. As estatísticas já registadas não mudam."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug"

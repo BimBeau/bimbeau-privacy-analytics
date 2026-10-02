@@ -1445,6 +1445,11 @@ msgstr "Plats"
 msgid "Data scope list"
 msgstr "Lista över dataomfattning"
 
+#. translators: %s: example page path.
+#: src/admin/panels/SettingsPanel.js
+msgid "Enter page paths such as %s, not full web addresses."
+msgstr "Ange sid-sökvägar som %s, inte fullständiga webbadresser."
+
 #: src/admin/panels/SettingsPanel.js
 msgid "Unable to load the GeoIP database status."
 msgstr "Det går inte att läsa in GeoIP-databasens status."
@@ -1885,6 +1890,19 @@ msgstr "Välj roller som ska exkluderas från spårning. Välj alla roller för 
 #: src/admin/panels/SettingsPanel.js
 msgid "No roles available."
 msgstr "Inga roller tillgängliga."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Excluded paths"
+msgstr "Exkluderade sökvägar"
+
+#. translators: 1: example page path, 2: example page path below the first one.
+#: src/admin/panels/SettingsPanel.js
+msgid "One page path per line, for example %1$s. Letter case, a trailing slash and the query string are ignored. There is no wildcard: %1$s does not exclude %2$s."
+msgstr "En sid-sökväg per rad, till exempel %1$s. Versaler och gemener, ett avslutande snedstreck och frågesträngen ignoreras. Det finns inga jokertecken: %1$s exkluderar inte %2$s."
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Listed pages are no longer counted after you save. Statistics already recorded do not change."
+msgstr "Listade sidor räknas inte längre efter att du har sparat. Statistik som redan har registrerats ändras inte."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug"
