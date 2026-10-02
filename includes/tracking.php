@@ -306,6 +306,10 @@ function bbpa_filter_tracking_query_args_by_allowlist(array $sanitized_args, $al
 
 /**
  * Check excluded paths list.
+ *
+ * Matches an entry of the `excluded_paths` setting exactly, either the whole path (with its query string) or the
+ * path without its query string. `$path` must already be normalized like the setting (lowercase path, one leading
+ * slash, no trailing slash), as bbpa_get_request_path() returns it; see bbpa_is_excluded_tracking_path() otherwise.
  */
 function bbpa_is_excluded_path(string $path, array $settings): bool
 {
@@ -323,6 +327,38 @@ function bbpa_is_excluded_path(string $path, array $settings): bool
     }
 
     return in_array($base_path, $settings['excluded_paths'], true);
+}
+
+/**
+ * Check a page path that keeps its original case against the `excluded_paths` setting.
+ *
+ * Used by the `/hits` route, whose stored page paths keep the case sent by the browser
+ * (`BBPA_Hit_Controller::clean_page_path()`). The setting stores lowercased paths with one leading slash and no
+ * trailing slash (bbpa_normalize_path_value()), so the path part is normalized the same way before the shared
+ * exact-match rule of bbpa_is_excluded_path() runs: `/Contact/` and `/Contact?utm_source=x` match `/contact`.
+ * The query string is compared as sent, like server-side request tracking does. There is no prefix or wildcard
+ * matching. Server-side request tracking calls bbpa_is_excluded_path() directly, because bbpa_get_request_path()
+ * already returns a normalized path.
+ *
+ * @param string               $path     Page path, optionally followed by a query string.
+ * @param array<string, mixed> $settings Plugin settings (`excluded_paths`).
+ */
+function bbpa_is_excluded_tracking_path(string $path, array $settings): bool
+{
+    if (empty($settings['excluded_paths'])) {
+        return false;
+    }
+
+    $query_position = strpos($path, '?');
+    $base_path = $query_position === false ? $path : substr($path, 0, $query_position);
+    $query = $query_position === false ? '' : substr($path, $query_position);
+
+    $base_path = bbpa_normalize_path_value($base_path);
+    if ($base_path === '') {
+        return false;
+    }
+
+    return bbpa_is_excluded_path($base_path . $query, $settings);
 }
 
 /**

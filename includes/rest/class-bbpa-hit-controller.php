@@ -151,6 +151,12 @@ class BBPA_Hit_Controller {
             ]);
         }
 
+        if ($this->is_excluded_page_path($request)) {
+            return $this->create_skip_response('excluded_path', [
+                'source' => 'excluded_paths_setting',
+            ]);
+        }
+
         $hit = $this->sanitize_hit_data($request);
         if (is_wp_error($hit)) {
             $this->log_debug('Hit payload rejected during sanitization.', [
@@ -292,6 +298,27 @@ class BBPA_Hit_Controller {
             $request->get_header('DNT'),
             $request->get_header('Sec-GPC')
         );
+    }
+
+    /**
+     * Apply the `excluded_paths` setting to the posted page path.
+     *
+     * Page views, heartbeats and enriched upgrade hits all carry the page path, so the rule covers all of them.
+     * The path is cleaned like the stored one (clean_page_path()) and compared with
+     * bbpa_is_excluded_tracking_path(). The check runs after the rate limit, so an excluded hit still counts
+     * against the client budget like any other request, and before payload validation, geolocation and replay
+     * deduplication, so an excluded hit stores nothing: no aggregate, visitor, realtime, raw log or session row,
+     * and no replay marker. With an empty setting (the default) the page path is not even cleaned.
+     */
+    private function is_excluded_page_path(WP_REST_Request $request): bool {
+        $settings = bbpa_get_settings();
+        if (empty($settings['excluded_paths'])) {
+            return false;
+        }
+
+        $page_path = $this->clean_page_path($request->get_param('page_path'));
+
+        return $page_path !== '' && bbpa_is_excluded_tracking_path($page_path, $settings);
     }
 
     /**

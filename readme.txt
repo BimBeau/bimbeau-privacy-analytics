@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.220
+Stable tag: 8.46.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.220 =
-* [Build] Release tooling only: a versioning guide and release checks for maintainers. No change to the plugin code or packages.
+= 8.46.0 =
+* [Fix] Pages listed in the excluded paths setting are now also ignored when the tracking scripts record a visit, so they no longer add page views, visitors, real-time activity, time on page or entry and exit pages. Matching ignores letter case, a trailing slash and the query string ("/Contact/" and "/contact?utm_source=newsletter" match "/contact"), but not other pages ("/contact-us" or "/contact/team"). If your site already lists paths, those pages stop being counted after the update; past statistics are unchanged. This setting has no field in the settings screen.
+* [Docs] Document the excluded paths setting.
