@@ -6,7 +6,7 @@ import {
 	useState,
 } from '@wordpress/element';
 import { Button, Notice, Tooltip } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
 
@@ -22,6 +22,7 @@ import { getLocationLabel } from '../lib/locationLabel';
 import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../lib/date';
 import { formatDeviceClassLabel } from '../lib/deviceClassLabel';
 import { getChannelLabel } from '../lib/channelLabels';
+import { getNumberFormatter } from '../lib/formatters';
 import { isVisitorOriginUnavailable } from '../lib/geoipStatus';
 import { createLogger } from '../logger';
 
@@ -456,7 +457,7 @@ const RealtimePanel = () => {
 		height: 0,
 	});
 	const cardContainerRef = useRef(null);
-	const numberFormatter = useMemo(() => new Intl.NumberFormat(), []);
+	const numberFormatter = getNumberFormatter();
 	const measureCardDimensions = useCallback(() => {
 		const cardNode = cardContainerRef.current;
 		if (!cardNode) {
@@ -605,6 +606,15 @@ const RealtimePanel = () => {
 	);
 	const shouldRenderRealtimeMarkers = isPro && isAdvancedScope && hasRealtimeMarkers;
 	const shouldShowCity = isPro && isFieldVisible('city', isAdvancedScope);
+	// Headers and cells use the same visibility rule so the columns stay aligned.
+	const visibleColumns = {
+		channel: isFieldVisible('source_category', isAdvancedScope),
+		operatingSystem: isFieldVisible('operating_system', isAdvancedScope),
+		browser: isFieldVisible('browser', isAdvancedScope),
+		browserVersion: isFieldVisible('browser_version', isAdvancedScope),
+		device: isFieldVisible('device_class', isAdvancedScope),
+		resolution: isFieldVisible('screen_resolution', isAdvancedScope),
+	};
 	useEffect(() => {
 		const items = realtimeMapData.items;
 		const validCoordinates = items.filter((item) => {
@@ -772,11 +782,12 @@ const RealtimePanel = () => {
 										{numberFormatter.format(activeVisitors)}
 									</span>
 									<span className="bbpa-realtime-panel__kpi-label">
-										{
-											activeVisitors === 1
-												? __('Visitor', 'bimbeau-privacy-analytics')
-												: __('Visitors', 'bimbeau-privacy-analytics')
-										}
+										{_n(
+											'Visitor',
+											'Visitors',
+											activeVisitors,
+											'bimbeau-privacy-analytics'
+										)}
 									</span>
 								</p>
 							}
@@ -819,12 +830,12 @@ const RealtimePanel = () => {
 											{shouldShowCity ? <th scope="col">{VISITOR_TABLE_LABELS.city}</th> : null}
 											<th scope="col">{VISITOR_TABLE_LABELS.connectionTime}</th>
 											<th scope="col">{VISITOR_TABLE_LABELS.currentPage}</th>
-											{isFieldVisible('source_category', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.channel}</th> : null}
-											{isFieldVisible('operating_system', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.operatingSystem}</th> : null}
-											{isFieldVisible('browser', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.browser}</th> : null}
-											{isFieldVisible('browser_version', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.browserVersion}</th> : null}
-											{isFieldVisible('device_class', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.device}</th> : null}
-											{isFieldVisible('screen_resolution', isAdvancedScope) ? <th scope="col">{VISITOR_TABLE_LABELS.resolution}</th> : null}
+											{visibleColumns.channel ? <th scope="col">{VISITOR_TABLE_LABELS.channel}</th> : null}
+											{visibleColumns.operatingSystem ? <th scope="col">{VISITOR_TABLE_LABELS.operatingSystem}</th> : null}
+											{visibleColumns.browser ? <th scope="col">{VISITOR_TABLE_LABELS.browser}</th> : null}
+											{visibleColumns.browserVersion ? <th scope="col">{VISITOR_TABLE_LABELS.browserVersion}</th> : null}
+											{visibleColumns.device ? <th scope="col">{VISITOR_TABLE_LABELS.device}</th> : null}
+											{visibleColumns.resolution ? <th scope="col">{VISITOR_TABLE_LABELS.resolution}</th> : null}
 										</tr></thead>
 										<tbody>
 											{realtimeVisitRows.map((visit, index) => {
@@ -862,16 +873,12 @@ const RealtimePanel = () => {
 												<td className="bbpa-realtime-current-page-cell">
 													<PageTitle>{visit?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}</PageTitle>
 														</td>
-														{!isEssentialOnlyScope ? (
-															<>
-																<td><ChannelLabel sourceCategory={getRealtimeVisitChannelValue(visit)} referrerDomain={visit?.referrer_domain || ''} /></td>
-																<td><span className="bbpa-brand-label"><BrandIcon kind="os" value={visit?.operating_system} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(visit?.operating_system || UNKNOWN_LABEL)}>{visit?.operating_system || UNKNOWN_LABEL}</span></span></td>
-																<td><span className="bbpa-brand-label"><BrandIcon kind="browser" value={visit?.browser} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(visit?.browser || UNKNOWN_LABEL)}>{visit?.browser || UNKNOWN_LABEL}</span></span></td>
-																<td><span className={getPlaceholderLabelClassName(visit?.browser_version || UNKNOWN_LABEL)}>{visit?.browser_version || UNKNOWN_LABEL}</span></td>
-																<td><span className="bbpa-brand-label"><BrandIcon kind="device" value={visit?.device_class} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(formatDeviceClassLabel(visit?.device_class, UNKNOWN_LABEL))}>{formatDeviceClassLabel(visit?.device_class, UNKNOWN_LABEL)}</span></span></td>
-																<td><span className={getPlaceholderLabelClassName(screenResolutionLabel)}>{screenResolutionLabel}</span></td>
-															</>
-														) : null}
+														{visibleColumns.channel ? <td><ChannelLabel sourceCategory={getRealtimeVisitChannelValue(visit)} referrerDomain={visit?.referrer_domain || ''} /></td> : null}
+														{visibleColumns.operatingSystem ? <td><span className="bbpa-brand-label"><BrandIcon kind="os" value={visit?.operating_system} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(visit?.operating_system || UNKNOWN_LABEL)}>{visit?.operating_system || UNKNOWN_LABEL}</span></span></td> : null}
+														{visibleColumns.browser ? <td><span className="bbpa-brand-label"><BrandIcon kind="browser" value={visit?.browser} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(visit?.browser || UNKNOWN_LABEL)}>{visit?.browser || UNKNOWN_LABEL}</span></span></td> : null}
+														{visibleColumns.browserVersion ? <td><span className={getPlaceholderLabelClassName(visit?.browser_version || UNKNOWN_LABEL)}>{visit?.browser_version || UNKNOWN_LABEL}</span></td> : null}
+														{visibleColumns.device ? <td><span className="bbpa-brand-label"><BrandIcon kind="device" value={visit?.device_class} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(formatDeviceClassLabel(visit?.device_class, UNKNOWN_LABEL))}>{formatDeviceClassLabel(visit?.device_class, UNKNOWN_LABEL)}</span></span></td> : null}
+														{visibleColumns.resolution ? <td><span className={getPlaceholderLabelClassName(screenResolutionLabel)}>{screenResolutionLabel}</span></td> : null}
 													</tr>
 												);
 											})}

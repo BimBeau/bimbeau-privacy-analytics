@@ -13,6 +13,12 @@
       " (%s)": [
         "（%s）"
       ],
+      "%1$dh %2$dm": [
+        "%1$d小时 %2$d分"
+      ],
+      "%1$dm %2$ds": [
+        "%1$d分 %2$d秒"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s %2$s — %3$s：%4$s"
       ],
@@ -40,10 +46,13 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s：页面浏览量 %2$s，访客 %3$s，上一周期页面浏览量 %4$s，上一周期访客 %5$s"
       ],
-      "%s Visitor": [
-        "%s 位访客"
+      "%ds": [
+        "%d秒"
       ],
-      "%s Visitors": [
+      "%s MB": [
+        "%s MB"
+      ],
+      "%s Visitor": [
         "%s 位访客"
       ],
       "%s of total visitors": [
@@ -418,6 +427,9 @@
       "Device page views": [
         "设备页面浏览量"
       ],
+      "Device type": [
+        "设备类型"
+      ],
       "Device usage breakdown": [
         "设备使用细分"
       ],
@@ -432,6 +444,9 @@
       ],
       "Display": [
         "显示"
+      ],
+      "Display format": [
+        "显示格式"
       ],
       "Display referrer favicons": [
         "显示引荐网站图标"
@@ -474,6 +489,9 @@
       ],
       "Endpoint:": [
         "端点："
+      ],
+      "Engagement time": [
+        "参与时间"
       ],
       "Enriched tracker diagnostic": [
         "增强跟踪器诊断"
@@ -655,20 +673,23 @@
       "Installed": [
         "已安装"
       ],
+      "Interactions": [
+        "交互"
+      ],
       "Internal searches": [
         "站内搜索"
       ],
-      "Keep report details for %(days)s days": [
-        "Keep report details for %(days)s days"
+      "Keep report details for %d days": [
+        "Keep report details for %d days"
       ],
-      "Keep report details for %(years)s years": [
-        "Keep report details for %(years)s years"
+      "Keep report details for %d years": [
+        "Keep report details for %d years"
       ],
       "Keep report details for 1 year": [
         "Keep report details for 1 year"
       ],
-      "Keep totals for %(years)s years": [
-        "Keep totals for %(years)s years"
+      "Keep totals for %d years": [
+        "Keep totals for %d years"
       ],
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
@@ -747,6 +768,9 @@
       ],
       "Local GeoLite database — recommended": [
         "本地 GeoLite 数据库（默认）"
+      ],
+      "Location": [
+        "位置"
       ],
       "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
         "在下载本地 GeoIP 数据库之前，位置报告不可用。从地理位置设置页面下载它。"
@@ -1066,6 +1090,9 @@
       "Referring sites": [
         "引荐站点"
       ],
+      "Reliable counting": [
+        "可靠计数"
+      ],
       "Reload page": [
         "地理定位"
       ],
@@ -1126,8 +1153,8 @@
       "Run diagnostic": [
         "运行诊断"
       ],
-      "Run every %(days)s days": [
-        "每 %(days)s 天运行"
+      "Run every %d days": [
+        "每 %d 天运行"
       ],
       "Run every day": [
         "每天运行"
@@ -1383,6 +1410,9 @@
       ],
       "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
         "Used mainly for real-time and diagnostics. Not related to Debug mode."
+      ],
+      "Visit journey": [
+        "访问路径"
       ],
       "Visit measurement": [
         "访问测量"

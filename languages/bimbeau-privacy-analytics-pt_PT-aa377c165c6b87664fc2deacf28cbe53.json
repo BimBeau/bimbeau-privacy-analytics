@@ -13,6 +13,12 @@
       " (%s)": [
         " (%s)"
       ],
+      "%1$dh %2$dm": [
+        "%1$dh %2$dm"
+      ],
+      "%1$dm %2$ds": [
+        "%1$dm %2$ds"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s às %2$s — %3$s: %4$s"
       ],
@@ -40,10 +46,14 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Visualizações de página %2$s, visitantes %3$s, visualizações de página anteriores %4$s, visitantes anteriores %5$s"
       ],
-      "%s Visitor": [
-        "%s visitante"
+      "%ds": [
+        "%ds"
       ],
-      "%s Visitors": [
+      "%s MB": [
+        "%s MB"
+      ],
+      "%s Visitor": [
+        "%s visitante",
         "%s visitantes"
       ],
       "%s of total visitors": [
@@ -419,6 +429,9 @@
       "Device page views": [
         "Visualizações por dispositivo"
       ],
+      "Device type": [
+        "Tipo de dispositivo"
+      ],
       "Device usage breakdown": [
         "Repartição da utilização por dispositivo"
       ],
@@ -433,6 +446,9 @@
       ],
       "Display": [
         "Mostrar"
+      ],
+      "Display format": [
+        "Formato de ecrã"
       ],
       "Display referrer favicons": [
         "Exibir ícones de referência"
@@ -475,6 +491,9 @@
       ],
       "Endpoint:": [
         "Endpoint:"
+      ],
+      "Engagement time": [
+        "Tempo de interação"
       ],
       "Enriched tracker diagnostic": [
         "Diagnóstico do rastreio enriquecido"
@@ -656,20 +675,23 @@
       "Installed": [
         "Instalado"
       ],
+      "Interactions": [
+        "Interações"
+      ],
       "Internal searches": [
         "Pesquisas internas"
       ],
-      "Keep report details for %(days)s days": [
-        "Keep report details for %(days)s days"
+      "Keep report details for %d days": [
+        "Keep report details for %d days"
       ],
-      "Keep report details for %(years)s years": [
-        "Keep report details for %(years)s years"
+      "Keep report details for %d years": [
+        "Keep report details for %d years"
       ],
       "Keep report details for 1 year": [
         "Keep report details for 1 year"
       ],
-      "Keep totals for %(years)s years": [
-        "Keep totals for %(years)s years"
+      "Keep totals for %d years": [
+        "Keep totals for %d years"
       ],
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
@@ -748,6 +770,9 @@
       ],
       "Local GeoLite database — recommended": [
         "Base de dados GeoLite local (predefinição)"
+      ],
+      "Location": [
+        "Localização"
       ],
       "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
         "Os relatórios de localização ficam indisponíveis até que o banco de dados GeoIP local seja baixado. Baixe-o na página de configurações de geolocalização."
@@ -1067,6 +1092,9 @@
       "Referring sites": [
         "Sites de referência"
       ],
+      "Reliable counting": [
+        "Contagem fiável"
+      ],
       "Reload page": [
         "Geolocalização"
       ],
@@ -1127,8 +1155,8 @@
       "Run diagnostic": [
         "Executar diagnóstico"
       ],
-      "Run every %(days)s days": [
-        "Executar a cada %(days)s dias"
+      "Run every %d days": [
+        "Executar a cada %d dias"
       ],
       "Run every day": [
         "Executar todos os dias"
@@ -1385,11 +1413,15 @@
       "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
         "Used mainly for real-time and diagnostics. Not related to Debug mode."
       ],
+      "Visit journey": [
+        "Percurso da visita"
+      ],
       "Visit measurement": [
         "Medição de visitas"
       ],
       "Visitor": [
-        "Visitante"
+        "Visitante",
+        "Visitantes"
       ],
       "Visitor ID hash": [
         "Hash do ID do visitante"

@@ -19,7 +19,11 @@ import BpaCard from '../components/BpaCard';
 import ReportExportAction from '../components/ReportExportAction';
 import { ADMIN_CONFIG } from '../constants';
 import { getPreviousRange, getRangeFromSelection } from '../lib/date';
-import { calculateChangePercent, formatChangePercent } from '../lib/formatters';
+import {
+	calculateChangePercent,
+	formatChangePercent,
+	formatNumber,
+} from '../lib/formatters';
 import { getChannelLabel } from '../lib/channelLabels';
 
 const CHANNEL_ICONS = {
@@ -35,7 +39,11 @@ const CHANNEL_ICONS = {
 	other: LuCircleHelp,
 };
 
-const formatShare = ( value ) => `${ Number( value || 0 ).toFixed( 1 ) }%`;
+const formatShare = ( value ) =>
+	`${ formatNumber( Number( value || 0 ), {
+		minimumFractionDigits: 1,
+		maximumFractionDigits: 1,
+	} ) }%`;
 
 const AcquisitionPanel = ( { rangeSelection } ) => {
 	const range = useMemo(
@@ -157,9 +165,11 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 											<td>
 												<div className="bbpa-report-table__metric">
 													<span className="bbpa-report-table__metric-value">
-														{ Number(
-															item.visits || 0
-														).toLocaleString() }
+														{ formatNumber(
+															Number(
+																item.visits || 0
+															)
+														) }
 													</span>
 													{ changeLabel !== null ? (
 														<span
@@ -194,7 +204,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 							{ sprintf(
 								/* translators: %s: Total visits in the selected range. */
 								__( 'Total visits: %s', 'bimbeau-privacy-analytics' ),
-								total.toLocaleString()
+								formatNumber( total )
 							) }
 						</p>
 					</div>

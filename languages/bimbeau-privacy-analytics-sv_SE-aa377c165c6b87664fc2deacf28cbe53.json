@@ -13,6 +13,12 @@
       " (%s)": [
         " (%s)"
       ],
+      "%1$dh %2$dm": [
+        "%1$dh %2$dm"
+      ],
+      "%1$dm %2$ds": [
+        "%1$dm %2$ds"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s kl. %2$s — %3$s: %4$s"
       ],
@@ -40,10 +46,14 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Sidvisningar %2$s, besökare %3$s, tidigare sidvisningar %4$s, tidigare besökare %5$s"
       ],
-      "%s Visitor": [
-        "%s besökare"
+      "%ds": [
+        "%ds"
       ],
-      "%s Visitors": [
+      "%s MB": [
+        "%s MB"
+      ],
+      "%s Visitor": [
+        "%s besökare",
         "%s besökare"
       ],
       "%s of total visitors": [
@@ -419,6 +429,9 @@
       "Device page views": [
         "Sidvisningar per enhet"
       ],
+      "Device type": [
+        "Enhetstyp"
+      ],
       "Device usage breakdown": [
         "Fördelning av enhetsanvändning"
       ],
@@ -433,6 +446,9 @@
       ],
       "Display": [
         "Visa"
+      ],
+      "Display format": [
+        "Visningsformat"
       ],
       "Display referrer favicons": [
         "Visa hänvisningsfavikoner"
@@ -475,6 +491,9 @@
       ],
       "Endpoint:": [
         "Endpoint:"
+      ],
+      "Engagement time": [
+        "Engagemangstid"
       ],
       "Enriched tracker diagnostic": [
         "Diagnostik för utökad spårning"
@@ -656,20 +675,23 @@
       "Installed": [
         "Installerad"
       ],
+      "Interactions": [
+        "Interaktioner"
+      ],
       "Internal searches": [
         "Interna sökningar"
       ],
-      "Keep report details for %(days)s days": [
-        "Keep report details for %(days)s days"
+      "Keep report details for %d days": [
+        "Keep report details for %d days"
       ],
-      "Keep report details for %(years)s years": [
-        "Keep report details for %(years)s years"
+      "Keep report details for %d years": [
+        "Keep report details for %d years"
       ],
       "Keep report details for 1 year": [
         "Keep report details for 1 year"
       ],
-      "Keep totals for %(years)s years": [
-        "Keep totals for %(years)s years"
+      "Keep totals for %d years": [
+        "Keep totals for %d years"
       ],
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
@@ -748,6 +770,9 @@
       ],
       "Local GeoLite database — recommended": [
         "Lokal GeoLite-databas (standard)"
+      ],
+      "Location": [
+        "Plats"
       ],
       "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
         "Platsrapporter är inte tillgängliga förrän den lokala GeoIP-databasen har laddats ner. Ladda ner den från sidan med inställningar för geolokalisering."
@@ -1067,6 +1092,9 @@
       "Referring sites": [
         "Hänvisande webbplatser"
       ],
+      "Reliable counting": [
+        "Tillförlitlig räkning"
+      ],
       "Reload page": [
         "Geolokalisering"
       ],
@@ -1127,8 +1155,8 @@
       "Run diagnostic": [
         "Kör diagnostik"
       ],
-      "Run every %(days)s days": [
-        "Kör var %(days)s:e dag"
+      "Run every %d days": [
+        "Kör var %d:e dag"
       ],
       "Run every day": [
         "Kör varje dag"
@@ -1385,10 +1413,14 @@
       "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
         "Used mainly for real-time and diagnostics. Not related to Debug mode."
       ],
+      "Visit journey": [
+        "Besöksflöde"
+      ],
       "Visit measurement": [
         "Besöksmätning"
       ],
       "Visitor": [
+        "Besökare",
         "Besökare"
       ],
       "Visitor ID hash": [

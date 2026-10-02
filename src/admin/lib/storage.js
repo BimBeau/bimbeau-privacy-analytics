@@ -53,6 +53,25 @@ const normalizeRangeSelection = (selection) => {
   return null;
 };
 
+/**
+ * Return window.localStorage, or null when the browser blocks it.
+ *
+ * Reading the property itself throws a SecurityError when site data is
+ * blocked (browser privacy settings, sandboxed frames), so it is read inside
+ * try/catch: the admin then works without remembered preferences.
+ *
+ * @return {Storage|null} Local storage or null.
+ */
+const getLocalStorage = () => {
+  try {
+    return typeof window !== "undefined" && window.localStorage
+      ? window.localStorage
+      : null;
+  } catch {
+    return null;
+  }
+};
+
 export const normalizePageLabelDisplay = (mode) =>
   PAGE_LABEL_DISPLAY_OPTIONS.includes(mode) ? mode : null;
 
@@ -73,13 +92,14 @@ export const getRangeSelectionFromUrl = () => {
 };
 
 export const getStoredRangeSelection = () => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return null;
   }
 
   try {
     return normalizeRangeSelection(
-      window.localStorage.getItem(getRangePresetStorageKey()),
+      storage.getItem(getRangePresetStorageKey()),
     );
   } catch (error) {
     return null;
@@ -87,18 +107,19 @@ export const getStoredRangeSelection = () => {
 };
 
 export const storeRangeSelection = (selection) => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return;
   }
 
   try {
     if (selection?.type === "preset") {
-      window.localStorage.setItem(getRangePresetStorageKey(), selection.preset);
+      storage.setItem(getRangePresetStorageKey(), selection.preset);
       return;
     }
 
     if (selection?.type === "custom") {
-      window.localStorage.setItem(
+      storage.setItem(
         getRangePresetStorageKey(),
         JSON.stringify({
           type: "custom",
@@ -123,13 +144,14 @@ export const getPageLabelDisplayStorageKey = () => {
 };
 
 export const getStoredPageLabelDisplay = () => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return null;
   }
 
   try {
     return normalizePageLabelDisplay(
-      window.localStorage.getItem(getPageLabelDisplayStorageKey()),
+      storage.getItem(getPageLabelDisplayStorageKey()),
     );
   } catch (error) {
     return null;
@@ -137,12 +159,13 @@ export const getStoredPageLabelDisplay = () => {
 };
 
 export const storePageLabelDisplay = (mode) => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return;
   }
 
   try {
-    window.localStorage.setItem(getPageLabelDisplayStorageKey(), mode);
+    storage.setItem(getPageLabelDisplayStorageKey(), mode);
   } catch (error) {
     // Ignore storage failures (e.g. privacy mode).
   }
@@ -159,12 +182,13 @@ export const getAdvancedConsentLastTestStorageKey = () => {
 };
 
 export const getStoredAdvancedConsentLastTestAt = () => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return null;
   }
 
   try {
-    const rawValue = window.localStorage.getItem(
+    const rawValue = storage.getItem(
       getAdvancedConsentLastTestStorageKey(),
     );
     const timestamp = Number(rawValue);
@@ -180,7 +204,8 @@ export const getStoredAdvancedConsentLastTestAt = () => {
 };
 
 export const storeAdvancedConsentLastTestAt = (value) => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return;
   }
 
@@ -190,7 +215,7 @@ export const storeAdvancedConsentLastTestAt = (value) => {
   }
 
   try {
-    window.localStorage.setItem(
+    storage.setItem(
       getAdvancedConsentLastTestStorageKey(),
       String(timestamp),
     );
@@ -243,12 +268,13 @@ const normalizeStoredAdvancedConsentDiagnostic = (value) => {
 };
 
 export const getStoredAdvancedConsentLastDiagnostic = () => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return null;
   }
 
   try {
-    const rawValue = window.localStorage.getItem(
+    const rawValue = storage.getItem(
       getAdvancedConsentLastDiagnosticStorageKey(),
     );
     if (!rawValue) {
@@ -262,7 +288,8 @@ export const getStoredAdvancedConsentLastDiagnostic = () => {
 };
 
 export const storeAdvancedConsentLastDiagnostic = (value) => {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const storage = getLocalStorage();
+  if (!storage) {
     return;
   }
 
@@ -272,7 +299,7 @@ export const storeAdvancedConsentLastDiagnostic = (value) => {
   }
 
   try {
-    window.localStorage.setItem(
+    storage.setItem(
       getAdvancedConsentLastDiagnosticStorageKey(),
       JSON.stringify(normalizedDiagnostic),
     );

@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from "@wordpress/element";
-import { __ } from "@wordpress/i18n";
+import { __, sprintf } from "@wordpress/i18n";
 import {
   BaseControl,
   Button,
@@ -50,11 +50,14 @@ import useAdminEndpoint, {
   buildRestUrl,
   fetchAdminJson,
 } from "../api/useAdminEndpoint";
+import { fetchGeoIpDatabaseStatus } from "../api/geoipDatabaseStatus";
 import DataState from "../components/DataState";
 import BpaCard from "../components/BpaCard";
 
 
 import { ADMIN_CONFIG, DEFAULT_SETTINGS } from "../constants";
+import { getAdminLocale } from "../lib/date";
+import { formatNumber } from "../lib/formatters";
 import { createLogger, createTraceId } from "../logger";
 
 const DEBUG_FLAG = Boolean(
@@ -86,12 +89,15 @@ const GEOIP_UPDATE_FREQUENCY_OPTIONS = [
   { value: "1_year", label: __("Every year", "bimbeau-privacy-analytics") },
   { value: "2_years", label: __("Every 2 years", "bimbeau-privacy-analytics") },
 ];
+// The day and year counts of these labels are never 1: one year and one day
+// have their own strings.
 const formatAggregatedRetentionOptionLabel = (days) => {
   if (days < 365) {
-    return __(
-      "Keep report details for %(days)s days",
-      "bimbeau-privacy-analytics",
-    ).replace("%(days)s", String(days));
+    return sprintf(
+      /* translators: %d: number of days, 30 or more. */
+      __("Keep report details for %d days", "bimbeau-privacy-analytics"),
+      days,
+    );
   }
 
   const years = Math.round(days / 365);
@@ -99,10 +105,11 @@ const formatAggregatedRetentionOptionLabel = (days) => {
     return __("Keep report details for 1 year", "bimbeau-privacy-analytics");
   }
 
-  return __(
-    "Keep report details for %(years)s years",
-    "bimbeau-privacy-analytics",
-  ).replace("%(years)s", String(years));
+  return sprintf(
+    /* translators: %d: number of years, 2 or more. */
+    __("Keep report details for %d years", "bimbeau-privacy-analytics"),
+    years,
+  );
 };
 
 const formatOverviewTotalsRetentionOptionLabel = (days) => {
@@ -111,10 +118,11 @@ const formatOverviewTotalsRetentionOptionLabel = (days) => {
     return __("Keep totals for 1 year", "bimbeau-privacy-analytics");
   }
 
-  return __(
-    "Keep totals for %(years)s years",
-    "bimbeau-privacy-analytics",
-  ).replace("%(years)s", String(years));
+  return sprintf(
+    /* translators: %d: number of years, 2 or more. */
+    __("Keep totals for %d years", "bimbeau-privacy-analytics"),
+    years,
+  );
 };
 
 const formatAggregatedRetentionFrequencyOptionLabel = (days) => {
@@ -122,9 +130,10 @@ const formatAggregatedRetentionFrequencyOptionLabel = (days) => {
     return __("Run every day", "bimbeau-privacy-analytics");
   }
 
-  return __("Run every %(days)s days", "bimbeau-privacy-analytics").replace(
-    "%(days)s",
-    String(days),
+  return sprintf(
+    /* translators: %d: number of days, 2 or more. */
+    __("Run every %d days", "bimbeau-privacy-analytics"),
+    days,
   );
 };
 
@@ -137,15 +146,40 @@ const SettingsSectionTitle = ({ icon: IconComponent, children }) => (
   </h3>
 );
 
-const DATA_FEATURE_ICONS = {
-  "Page views": pages,
-  "Device type": desktop,
-  "Reliable counting": chartBar,
-  "Visit journey": LuRoute,
-  "Engagement time": LuClock,
-  "Display format": LuRuler,
-  Interactions: comment,
-  Location: LuMapPinCheck,
+// Labels are translated when rendered (literal strings, so they reach the POT).
+const DATA_FEATURES = {
+  "Page views": {
+    icon: pages,
+    getLabel: () => __("Page views", "bimbeau-privacy-analytics"),
+  },
+  "Device type": {
+    icon: desktop,
+    getLabel: () => __("Device type", "bimbeau-privacy-analytics"),
+  },
+  "Reliable counting": {
+    icon: chartBar,
+    getLabel: () => __("Reliable counting", "bimbeau-privacy-analytics"),
+  },
+  "Visit journey": {
+    icon: LuRoute,
+    getLabel: () => __("Visit journey", "bimbeau-privacy-analytics"),
+  },
+  "Engagement time": {
+    icon: LuClock,
+    getLabel: () => __("Engagement time", "bimbeau-privacy-analytics"),
+  },
+  "Display format": {
+    icon: LuRuler,
+    getLabel: () => __("Display format", "bimbeau-privacy-analytics"),
+  },
+  Interactions: {
+    icon: comment,
+    getLabel: () => __("Interactions", "bimbeau-privacy-analytics"),
+  },
+  Location: {
+    icon: LuMapPinCheck,
+    getLabel: () => __("Location", "bimbeau-privacy-analytics"),
+  },
 };
 
 const DataFeatureGrid = ({ items = [] }) => (
@@ -164,7 +198,7 @@ const DataFeatureGrid = ({ items = [] }) => (
         <CardBody>
           <Flex gap={2} align="center" justify="flex-start">
             {(() => {
-              const FeatureIcon = DATA_FEATURE_ICONS[item];
+              const FeatureIcon = DATA_FEATURES[item]?.icon;
 
               if (typeof FeatureIcon === "function") {
                 return <FeatureIcon size={18} aria-hidden="true" />;
@@ -177,7 +211,7 @@ const DataFeatureGrid = ({ items = [] }) => (
               return <Icon icon={cloud} size={18} />;
             })()}
             <span className="bbpa-settings-data-chip__label">
-              {__(item, "bimbeau-privacy-analytics")}
+              {DATA_FEATURES[item] ? DATA_FEATURES[item].getLabel() : item}
             </span>
           </Flex>
         </CardBody>
@@ -375,14 +409,15 @@ const SettingsPanel = ({
         value: String(days),
       }));
   }, [formState.aggregated_retention_frequency_days]);
-  const geoIpDateFormatter = useMemo(
-    () =>
-      new Intl.DateTimeFormat(undefined, {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }),
-    [],
-  );
+  const geoIpDateFormatter = useMemo(() => {
+    const dateOptions = { dateStyle: "medium", timeStyle: "short" };
+    // Dates follow the language of the admin screen, not of the browser.
+    try {
+      return new Intl.DateTimeFormat(getAdminLocale(), dateOptions);
+    } catch {
+      return new Intl.DateTimeFormat(undefined, dateOptions);
+    }
+  }, []);
   const validateMaxMindFields = (nextState, options = {}) => {
     const { requireFilled = false } = options;
     const errors = {};
@@ -435,9 +470,10 @@ const SettingsPanel = ({
     );
   }, [data]);
 
-  const refreshGeoIpDbStatus = async () => {
+  const refreshGeoIpDbStatus = async ({ force = true } = {}) => {
     try {
-      const payload = await fetchAdminJson("/admin/geoip-database/status");
+      // The first load shares the status request of the admin header.
+      const payload = await fetchGeoIpDatabaseStatus({ force });
       setGeoIpDbStatus(payload?.database || null);
     } catch (statusError) {
       setGeoIpDbStatus(null);
@@ -454,7 +490,7 @@ const SettingsPanel = ({
   };
 
   useEffect(() => {
-    refreshGeoIpDbStatus();
+    refreshGeoIpDbStatus({ force: false });
   }, []);
 
   const persistSettings = async (nextState, options = {}) => {
@@ -523,6 +559,8 @@ const SettingsPanel = ({
         );
       }
 
+      // Set when the general settings are saved but a second request fails.
+      let partialSaveMessage = "";
       
 
       const nextAdminCacheVersion = Number(
@@ -543,6 +581,7 @@ const SettingsPanel = ({
 
       if (normalizedPayload?.settings) {
         const normalized = normalizeSettings(normalizedPayload.settings);
+        
         setFormState(normalized);
         setAllowlistInput(normalized.url_query_allowlist.join(", "));
         window.BBPA_DEBUG = Boolean(normalized.debug_enabled);
@@ -554,6 +593,23 @@ const SettingsPanel = ({
         if (ADMIN_CONFIG?.settings) {
           ADMIN_CONFIG.settings.adminCacheVersion = nextAdminCacheVersion;
         }
+      }
+
+      if (partialSaveMessage) {
+        setSaveNotice({
+          status: "error",
+          message: partialSaveMessage,
+        });
+        setSaveToast({
+          status: "error",
+          message: partialSaveMessage,
+        });
+        logger.error("Settings partially saved", {
+          action: "settings.save.partial",
+          traceId,
+          error: partialSaveMessage,
+        });
+        return { ok: false, message: partialSaveMessage };
       }
 
       setSaveNotice({
@@ -743,11 +799,15 @@ const SettingsPanel = ({
 
   const geoIpSizeMb = useMemo(() => {
     const size = Number(geoIpDbStatus?.file_size || 0);
-    if (!size) {
-      return "0.00 MB";
-    }
 
-    return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+    return sprintf(
+      /* translators: %s: file size in megabytes, for example 58.12. */
+      __("%s MB", "bimbeau-privacy-analytics"),
+      formatNumber(size > 0 ? size / (1024 * 1024) : 0, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+    );
   }, [geoIpDbStatus?.file_size]);
 
   const geoIpLastAttempt = useMemo(() => {

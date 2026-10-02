@@ -7,9 +7,6 @@ const DEBUG_FLAG = () =>
 	Boolean( window.BBPA_DEBUG ?? ADMIN_CONFIG?.settings?.debugEnabled );
 
 const ADMIN_CACHE_VERSION_PARAM = '_bbpa_cv';
-const AUTH_REQUIRED_ERROR_CODES = new Set( [
-	'rest_cookie_invalid_nonce',
-] );
 
 const authRequiredStore = {
 	isAuthRequired: false,
@@ -242,6 +239,17 @@ export const fetchAdminJson = async ( path, options = {} ) => {
 
 	if ( ! response.ok ) {
 		const endpointError = await parseEndpointError( response, endpoint );
+		if ( endpointError.isExpiredSession ) {
+			// The REST nonce of this page has expired: every later request fails
+			// the same way, so show the reload screen and stop the polling. The
+			// shell displays its own session message; the error keeps the
+			// status, code and endpoint for the debug diagnostics.
+			setAuthRequired( {
+				...endpointError,
+				message: '',
+				isAuthRequired: true,
+			} );
+		}
 		throw endpointError;
 	}
 

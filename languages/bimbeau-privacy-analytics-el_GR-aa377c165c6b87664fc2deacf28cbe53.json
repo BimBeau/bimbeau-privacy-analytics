@@ -13,6 +13,12 @@
       " (%s)": [
         " (%s)"
       ],
+      "%1$dh %2$dm": [
+        "%1$dω %2$dλ"
+      ],
+      "%1$dm %2$ds": [
+        "%1$dλ %2$dδ"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s στις %2$s — %3$s: %4$s"
       ],
@@ -40,10 +46,14 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Προβολές σελίδων %2$s, επισκέπτες %3$s, προηγούμενες προβολές σελίδων %4$s, προηγούμενοι επισκέπτες %5$s"
       ],
-      "%s Visitor": [
-        "%s επισκέπτης"
+      "%ds": [
+        "%dδ"
       ],
-      "%s Visitors": [
+      "%s MB": [
+        "%s MB"
+      ],
+      "%s Visitor": [
+        "%s επισκέπτης",
         "%s επισκέπτες"
       ],
       "%s of total visitors": [
@@ -419,6 +429,9 @@
       "Device page views": [
         "Προβολές σελίδας ανά συσκευή"
       ],
+      "Device type": [
+        "Τύπος συσκευής"
+      ],
       "Device usage breakdown": [
         "Κατανομή χρήσης συσκευών"
       ],
@@ -433,6 +446,9 @@
       ],
       "Display": [
         "Εμφάνιση"
+      ],
+      "Display format": [
+        "Μορφή οθόνης"
       ],
       "Display referrer favicons": [
         "Εμφάνιση favicon παραπομπής"
@@ -475,6 +491,9 @@
       ],
       "Endpoint:": [
         "Endpoint:"
+      ],
+      "Engagement time": [
+        "Χρόνος αλληλεπίδρασης"
       ],
       "Enriched tracker diagnostic": [
         "Διαγνωστικός έλεγχος εμπλουτισμένου tracker"
@@ -656,20 +675,23 @@
       "Installed": [
         "Εγκατεστημένο"
       ],
+      "Interactions": [
+        "Αλληλεπιδράσεις"
+      ],
       "Internal searches": [
         "Εσωτερικές αναζητήσεις"
       ],
-      "Keep report details for %(days)s days": [
-        "Keep report details for %(days)s days"
+      "Keep report details for %d days": [
+        "Keep report details for %d days"
       ],
-      "Keep report details for %(years)s years": [
-        "Keep report details for %(years)s years"
+      "Keep report details for %d years": [
+        "Keep report details for %d years"
       ],
       "Keep report details for 1 year": [
         "Keep report details for 1 year"
       ],
-      "Keep totals for %(years)s years": [
-        "Keep totals for %(years)s years"
+      "Keep totals for %d years": [
+        "Keep totals for %d years"
       ],
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
@@ -748,6 +770,9 @@
       ],
       "Local GeoLite database — recommended": [
         "Τοπική βάση GeoLite (προεπιλογή)"
+      ],
+      "Location": [
+        "Τοποθεσία"
       ],
       "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
         "Οι αναφορές τοποθεσίας δεν είναι διαθέσιμες έως ότου ολοκληρωθεί η λήψη της τοπικής βάσης δεδομένων GeoIP. Κατεβάστε το από τη σελίδα ρυθμίσεων γεωγραφικής τοποθεσίας."
@@ -1067,6 +1092,9 @@
       "Referring sites": [
         "Ιστότοποι παραπομπής"
       ],
+      "Reliable counting": [
+        "Αξιόπιστη καταμέτρηση"
+      ],
       "Reload page": [
         "Γεωεντοπισμός"
       ],
@@ -1127,8 +1155,8 @@
       "Run diagnostic": [
         "Εκτέλεση διαγνωστικού"
       ],
-      "Run every %(days)s days": [
-        "Εκτέλεση κάθε %(days)s ημέρες"
+      "Run every %d days": [
+        "Εκτέλεση κάθε %d ημέρες"
       ],
       "Run every day": [
         "Εκτέλεση κάθε ημέρα"
@@ -1385,11 +1413,15 @@
       "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
         "Used mainly for real-time and diagnostics. Not related to Debug mode."
       ],
+      "Visit journey": [
+        "Διαδρομή επίσκεψης"
+      ],
       "Visit measurement": [
         "Μέτρηση επισκέψεων"
       ],
       "Visitor": [
-        "Επισκέπτης"
+        "Επισκέπτης",
+        "Επισκέπτες"
       ],
       "Visitor ID hash": [
         "Hash ID επισκέπτη"

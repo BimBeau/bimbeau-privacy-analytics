@@ -1,3 +1,55 @@
+import { __, sprintf } from '@wordpress/i18n';
+
+import { getAdminLocale } from './date';
+
+const numberFormatCache = new Map();
+
+const resolveFormatLocale = () => {
+	try {
+		return getAdminLocale() || undefined;
+	} catch {
+		return undefined;
+	}
+};
+
+/**
+ * Return a number formatter for the WordPress admin locale.
+ *
+ * Numbers follow the language of the admin screen (like dates) instead of the
+ * browser language. Formatters are cached per locale and options because
+ * table cells and charts format many values on every render.
+ *
+ * @param {Object} options Intl.NumberFormat options.
+ * @return {Intl.NumberFormat} Shared formatter.
+ */
+export const getNumberFormatter = ( options = {} ) => {
+	const locale = resolveFormatLocale();
+	const cacheKey = `${ locale || '' }|${ JSON.stringify( options ) }`;
+	let formatter = numberFormatCache.get( cacheKey );
+
+	if ( ! formatter ) {
+		try {
+			formatter = new Intl.NumberFormat( locale, options );
+		} catch {
+			// Unsupported locale tag: use the browser locale.
+			formatter = new Intl.NumberFormat( undefined, options );
+		}
+		numberFormatCache.set( cacheKey, formatter );
+	}
+
+	return formatter;
+};
+
+/**
+ * Format a number for the WordPress admin locale.
+ *
+ * @param {number} value   Number to format.
+ * @param {Object} options Intl.NumberFormat options.
+ * @return {string} Formatted number.
+ */
+export const formatNumber = ( value, options = {} ) =>
+	getNumberFormatter( options ).format( value );
+
 export const decodeHtmlEntities = ( value ) => {
 	if ( typeof value !== 'string' ) {
 		return '';
@@ -76,16 +128,16 @@ export const formatChangePercent = ( value ) => {
 
 		return (
 			sign +
-			new Intl.NumberFormat( undefined, {
+			formatNumber( scaled, {
 				minimumFractionDigits: decimals,
 				maximumFractionDigits: decimals,
-			} ).format( scaled ) +
+			} ) +
 			suffix +
 			'%'
 		);
 	}
 
-	const formatter = new Intl.NumberFormat( undefined, {
+	const formatter = getNumberFormatter( {
 		maximumFractionDigits: 1,
 		minimumFractionDigits: 0,
 		signDisplay: 'exceptZero',
@@ -106,9 +158,9 @@ export const formatCompactMetricValue = ( value ) => {
 			: 0;
 
 	if ( safeValue < 1000 ) {
-		return new Intl.NumberFormat( undefined, {
+		return formatNumber( safeValue, {
 			maximumFractionDigits: 0,
-		} ).format( safeValue );
+		} );
 	}
 
 	const suffixes = [
@@ -143,10 +195,10 @@ export const formatCompactMetricValue = ( value ) => {
 	}
 
 	return (
-		new Intl.NumberFormat( undefined, {
+		formatNumber( scaled, {
 			minimumFractionDigits: decimals,
 			maximumFractionDigits: decimals,
-		} ).format( scaled ) + suffix
+		} ) + suffix
 	);
 };
 
@@ -157,10 +209,10 @@ export const formatRatioMetricValue = ( value ) => {
 			? normalizedValue
 			: 0;
 
-	return new Intl.NumberFormat( undefined, {
+	return formatNumber( safeValue, {
 		minimumFractionDigits: safeValue < 10 ? 1 : 0,
 		maximumFractionDigits: safeValue < 10 ? 1 : 0,
-	} ).format( safeValue );
+	} );
 };
 
 export const formatDurationMetricValue = ( valueInMs ) => {
@@ -172,19 +224,30 @@ export const formatDurationMetricValue = ( valueInMs ) => {
 	const totalSeconds = Math.floor( safeValueInMs / 1000 );
 
 	if ( totalSeconds < 60 ) {
-		return `${ totalSeconds }s`;
+		/* translators: %d: Number of seconds. */
+		return sprintf( __( '%ds', 'bimbeau-privacy-analytics' ), totalSeconds );
 	}
 
 	if ( totalSeconds < 3600 ) {
 		const minutes = Math.floor( totalSeconds / 60 );
 		const seconds = totalSeconds % 60;
-		return `${ minutes }m ${ seconds }s`;
+		return sprintf(
+			/* translators: 1: Number of minutes, 2: Number of seconds. */
+			__( '%1$dm %2$ds', 'bimbeau-privacy-analytics' ),
+			minutes,
+			seconds
+		);
 	}
 
 	const hours = Math.floor( totalSeconds / 3600 );
 	const minutes = Math.floor( ( totalSeconds % 3600 ) / 60 );
 
-	return `${ hours }h ${ minutes }m`;
+	return sprintf(
+		/* translators: 1: Number of hours, 2: Number of minutes. */
+		__( '%1$dh %2$dm', 'bimbeau-privacy-analytics' ),
+		hours,
+		minutes
+	);
 };
 
 export const formatCompactDurationMetricValue = ( valueInMs ) => {
@@ -196,7 +259,8 @@ export const formatCompactDurationMetricValue = ( valueInMs ) => {
 	const totalSeconds = Math.floor( safeValueInMs / 1000 );
 
 	if ( totalSeconds < 60 ) {
-		return `${ totalSeconds }s`;
+		/* translators: %d: Number of seconds. */
+		return sprintf( __( '%ds', 'bimbeau-privacy-analytics' ), totalSeconds );
 	}
 
 	if ( totalSeconds < 3600 ) {

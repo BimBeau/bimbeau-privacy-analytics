@@ -36,7 +36,10 @@ const navigateToCardLink = ( href ) => {
 };
 
 const OverviewKpis = ( { range } ) => {
-	const { data: realtimeData } = useRealtimeSnapshot();
+	// The active visitors card is only rendered when the Real-time panel is enabled.
+	const { data: realtimeData } = useRealtimeSnapshot( {
+		enabled: isPanelEnabled( 'realtime' ),
+	} );
 	const { data, isLoading, error } = useAdminEndpoint( '/overview', range, {
 		namespace: ADMIN_CONFIG?.settings?.restNamespace,
 	} );

@@ -8,8 +8,10 @@ import AdminAppCore from './AdminAppCore';
 export const FreeHeaderBrand = ( { label } ) => {
 	const logoUrl = ADMIN_CONFIG?.settings?.brandLogoUrl || '';
 
+	// A missing logo URL (payload changed by another script) falls back to
+	// the text title instead of replacing the whole admin with an error.
 	if ( ! logoUrl ) {
-		throw new Error( 'Missing BPA admin header logo URL.' );
+		return label;
 	}
 
 	return (

@@ -97,8 +97,8 @@ msgid "Geolocation"
 msgstr "Geolocatie"
 
 #: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -153,7 +153,7 @@ msgid "Visits"
 msgstr "Bezoeken"
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/SettingsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -474,12 +474,9 @@ msgstr "Statistieken"
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminAppCore.js
 msgid "%s Visitor"
-msgstr "%s bezoeker"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminAppCore.js
-msgid "%s Visitors"
-msgstr "%s bezoekers"
+msgid_plural "%s Visitors"
+msgstr[0] "%s bezoeker"
+msgstr[1] "%s bezoekers"
 
 #: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
@@ -1079,6 +1076,21 @@ msgstr "AI-assistenten"
 msgid "Other"
 msgstr "Overig"
 
+#. translators: %d: Number of seconds.
+#: src/admin/lib/formatters.js
+msgid "%ds"
+msgstr "%ds"
+
+#. translators: 1: Number of minutes, 2: Number of seconds.
+#: src/admin/lib/formatters.js
+msgid "%1$dm %2$ds"
+msgstr "%1$dm %2$ds"
+
+#. translators: 1: Number of hours, 2: Number of minutes.
+#: src/admin/lib/formatters.js
+msgid "%1$dh %2$dm"
+msgstr "%1$du %2$dm"
+
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Monday"
 msgstr "Maandag"
@@ -1306,7 +1318,9 @@ msgstr "Realtimegegevens laden…"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor"
-msgstr "Bezoeker"
+msgid_plural "Visitors"
+msgstr[0] "Bezoeker"
+msgstr[1] "Bezoekers"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Exit fullscreen"
@@ -1348,33 +1362,65 @@ msgstr "Alleen essentiële statistieken"
 msgid "Every 30 days"
 msgstr "Elke 60 dagen"
 
+#. translators: %d: number of days, 30 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(days)s days"
-msgstr "Keep report details for %(days)s days"
+msgid "Keep report details for %d days"
+msgstr "Keep report details for %d days"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for 1 year"
 msgstr "Keep report details for 1 year"
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(years)s years"
-msgstr "Keep report details for %(years)s years"
+msgid "Keep report details for %d years"
+msgstr "Keep report details for %d years"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep totals for 1 year"
 msgstr "Keep totals for 1 year"
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep totals for %(years)s years"
-msgstr "Keep totals for %(years)s years"
+msgid "Keep totals for %d years"
+msgstr "Keep totals for %d years"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Run every day"
 msgstr "Elke dag uitvoeren"
 
+#. translators: %d: number of days, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Run every %(days)s days"
-msgstr "Elke %(days)s dagen uitvoeren"
+msgid "Run every %d days"
+msgstr "Elke %d dagen uitvoeren"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Device type"
+msgstr "Apparaattype"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Reliable counting"
+msgstr "Betrouwbare telling"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visit journey"
+msgstr "Bezoekpad"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Engagement time"
+msgstr "Betrokkenheidstijd"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Display format"
+msgstr "Weergaveformaat"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Interactions"
+msgstr "Interacties"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr "Locatie"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data scope list"
@@ -1403,6 +1449,11 @@ msgstr "Geen automatische update gepland"
 #: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "Wachtend schema"
+
+#. translators: %s: file size in megabytes, for example 58.12.
+#: src/admin/panels/SettingsPanel.js
+msgid "%s MB"
+msgstr "%s MB"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Update in progress"

@@ -97,8 +97,8 @@ msgid "Geolocation"
 msgstr "Γεωεντοπισμός"
 
 #: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -153,7 +153,7 @@ msgid "Visits"
 msgstr "Επισκέψεις"
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/SettingsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -474,12 +474,9 @@ msgstr "Στατιστικά"
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminAppCore.js
 msgid "%s Visitor"
-msgstr "%s επισκέπτης"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminAppCore.js
-msgid "%s Visitors"
-msgstr "%s επισκέπτες"
+msgid_plural "%s Visitors"
+msgstr[0] "%s επισκέπτης"
+msgstr[1] "%s επισκέπτες"
 
 #: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
@@ -1079,6 +1076,21 @@ msgstr "Βοηθοί ΤΝ"
 msgid "Other"
 msgstr "Άλλο"
 
+#. translators: %d: Number of seconds.
+#: src/admin/lib/formatters.js
+msgid "%ds"
+msgstr "%dδ"
+
+#. translators: 1: Number of minutes, 2: Number of seconds.
+#: src/admin/lib/formatters.js
+msgid "%1$dm %2$ds"
+msgstr "%1$dλ %2$dδ"
+
+#. translators: 1: Number of hours, 2: Number of minutes.
+#: src/admin/lib/formatters.js
+msgid "%1$dh %2$dm"
+msgstr "%1$dω %2$dλ"
+
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Monday"
 msgstr "Δευτέρα"
@@ -1306,7 +1318,9 @@ msgstr "Φόρτωση δεδομένων πραγματικού χρόνου…
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor"
-msgstr "Επισκέπτης"
+msgid_plural "Visitors"
+msgstr[0] "Επισκέπτης"
+msgstr[1] "Επισκέπτες"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Exit fullscreen"
@@ -1348,33 +1362,65 @@ msgstr "Μόνο βασικά στατιστικά"
 msgid "Every 30 days"
 msgstr "Κάθε 60 ημέρες"
 
+#. translators: %d: number of days, 30 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(days)s days"
-msgstr "Keep report details for %(days)s days"
+msgid "Keep report details for %d days"
+msgstr "Keep report details for %d days"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for 1 year"
 msgstr "Keep report details for 1 year"
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(years)s years"
-msgstr "Keep report details for %(years)s years"
+msgid "Keep report details for %d years"
+msgstr "Keep report details for %d years"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep totals for 1 year"
 msgstr "Keep totals for 1 year"
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep totals for %(years)s years"
-msgstr "Keep totals for %(years)s years"
+msgid "Keep totals for %d years"
+msgstr "Keep totals for %d years"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Run every day"
 msgstr "Εκτέλεση κάθε ημέρα"
 
+#. translators: %d: number of days, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Run every %(days)s days"
-msgstr "Εκτέλεση κάθε %(days)s ημέρες"
+msgid "Run every %d days"
+msgstr "Εκτέλεση κάθε %d ημέρες"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Device type"
+msgstr "Τύπος συσκευής"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Reliable counting"
+msgstr "Αξιόπιστη καταμέτρηση"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visit journey"
+msgstr "Διαδρομή επίσκεψης"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Engagement time"
+msgstr "Χρόνος αλληλεπίδρασης"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Display format"
+msgstr "Μορφή οθόνης"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Interactions"
+msgstr "Αλληλεπιδράσεις"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr "Τοποθεσία"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data scope list"
@@ -1403,6 +1449,11 @@ msgstr "Δεν έχει προγραμματιστεί αυτόματη ενημ
 #: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "Εκκρεμές πρόγραμμα"
+
+#. translators: %s: file size in megabytes, for example 58.12.
+#: src/admin/panels/SettingsPanel.js
+msgid "%s MB"
+msgstr "%s MB"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Update in progress"

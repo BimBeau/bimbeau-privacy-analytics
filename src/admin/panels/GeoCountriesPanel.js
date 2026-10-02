@@ -11,6 +11,7 @@ import {
 	getCountryLabel,
 	isUnknownCountryCode,
 } from '../lib/countryNames';
+import { formatNumber } from '../lib/formatters';
 
 const GeoCountriesPanel = ( { range } ) => {
 	const { data, isLoading, error } = useAdminEndpoint(
@@ -40,7 +41,7 @@ const GeoCountriesPanel = ( { range } ) => {
 		const isUnknown = ! flagClass || isUnknownCountryCode( countryCode );
 		const countryLabel = label || unknownCountryLabel;
 		const visitors = Number( item?.visitors ?? item?.visits ?? 0 );
-		const formattedVisitors = new Intl.NumberFormat().format( visitors );
+		const formattedVisitors = formatNumber( visitors );
 		const tooltipText =
 			visitors > 0
 				? sprintf(

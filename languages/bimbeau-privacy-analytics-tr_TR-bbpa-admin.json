@@ -13,6 +13,12 @@
       " (%s)": [
         " (%s)"
       ],
+      "%1$dh %2$dm": [
+        "%1$dsa %2$ddk"
+      ],
+      "%1$dm %2$ds": [
+        "%1$ddk %2$dsn"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s, %2$s — %3$s: %4$s"
       ],
@@ -40,10 +46,13 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Sayfa görüntülemeleri %2$s, ziyaretçiler %3$s, önceki sayfa görüntülemeleri %4$s, önceki ziyaretçiler %5$s"
       ],
-      "%s Visitor": [
-        "%s ziyaretçi"
+      "%ds": [
+        "%dsn"
       ],
-      "%s Visitors": [
+      "%s MB": [
+        "%s MB"
+      ],
+      "%s Visitor": [
         "%s ziyaretçi"
       ],
       "%s of total visitors": [
@@ -418,6 +427,9 @@
       "Device page views": [
         "Cihaz sayfa görüntülemeleri"
       ],
+      "Device type": [
+        "Cihaz türü"
+      ],
       "Device usage breakdown": [
         "Cihaz kullanımı kırılımı"
       ],
@@ -432,6 +444,9 @@
       ],
       "Display": [
         "Göster"
+      ],
+      "Display format": [
+        "Ekran biçimi"
       ],
       "Display referrer favicons": [
         "Yönlendiren favori simgelerini görüntüle"
@@ -474,6 +489,9 @@
       ],
       "Endpoint:": [
         "Uç nokta:"
+      ],
+      "Engagement time": [
+        "Etkileşim süresi"
       ],
       "Enriched tracker diagnostic": [
         "Zenginleştirilmiş izleyici tanısı"
@@ -655,20 +673,23 @@
       "Installed": [
         "Yüklendi"
       ],
+      "Interactions": [
+        "Etkileşimler"
+      ],
       "Internal searches": [
         "Dahili aramalar"
       ],
-      "Keep report details for %(days)s days": [
-        "Keep report details for %(days)s days"
+      "Keep report details for %d days": [
+        "Keep report details for %d days"
       ],
-      "Keep report details for %(years)s years": [
-        "Keep report details for %(years)s years"
+      "Keep report details for %d years": [
+        "Keep report details for %d years"
       ],
       "Keep report details for 1 year": [
         "Keep report details for 1 year"
       ],
-      "Keep totals for %(years)s years": [
-        "Keep totals for %(years)s years"
+      "Keep totals for %d years": [
+        "Keep totals for %d years"
       ],
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
@@ -747,6 +768,9 @@
       ],
       "Local GeoLite database — recommended": [
         "Yerel GeoLite veritabanı (varsayılan)"
+      ],
+      "Location": [
+        "Konum"
       ],
       "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
         "Yerel GeoIP veritabanı indirilene kadar konum raporları kullanılamaz. Coğrafi Konum ayarları sayfasından indirin."
@@ -1066,6 +1090,9 @@
       "Referring sites": [
         "Yönlendiren siteler"
       ],
+      "Reliable counting": [
+        "Güvenilir sayım"
+      ],
       "Reload page": [
         "Coğrafi konum"
       ],
@@ -1126,8 +1153,8 @@
       "Run diagnostic": [
         "Tanıyı çalıştır"
       ],
-      "Run every %(days)s days": [
-        "Her %(days)s günde bir çalıştır"
+      "Run every %d days": [
+        "Her %d günde bir çalıştır"
       ],
       "Run every day": [
         "Her gün çalıştır"
@@ -1383,6 +1410,9 @@
       ],
       "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
         "Used mainly for real-time and diagnostics. Not related to Debug mode."
+      ],
+      "Visit journey": [
+        "Ziyaret yolculuğu"
       ],
       "Visit measurement": [
         "Ziyaret ölçümü"

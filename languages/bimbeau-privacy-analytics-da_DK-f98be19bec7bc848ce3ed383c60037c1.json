@@ -13,6 +13,12 @@
       " (%s)": [
         " (%s)"
       ],
+      "%1$dh %2$dm": [
+        "%1$dt %2$dm"
+      ],
+      "%1$dm %2$ds": [
+        "%1$dm %2$ds"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s kl. %2$s — %3$s: %4$s"
       ],
@@ -40,10 +46,14 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Sidevisninger %2$s, besøgende %3$s, tidligere sidevisninger %4$s, tidligere besøgende %5$s"
       ],
-      "%s Visitor": [
-        "%s besøgende"
+      "%ds": [
+        "%ds"
       ],
-      "%s Visitors": [
+      "%s MB": [
+        "%s MB"
+      ],
+      "%s Visitor": [
+        "%s besøgende",
         "%s besøgende"
       ],
       "%s of total visitors": [
@@ -419,6 +429,9 @@
       "Device page views": [
         "Sidevisninger pr. enhed"
       ],
+      "Device type": [
+        "Enhedstype"
+      ],
       "Device usage breakdown": [
         "Fordeling af enhedsbrug"
       ],
@@ -433,6 +446,9 @@
       ],
       "Display": [
         "Vis"
+      ],
+      "Display format": [
+        "Visningsformat"
       ],
       "Display referrer favicons": [
         "Vis henvisningsfavikoner"
@@ -475,6 +491,9 @@
       ],
       "Endpoint:": [
         "Endpoint:"
+      ],
+      "Engagement time": [
+        "Engagementstid"
       ],
       "Enriched tracker diagnostic": [
         "Diagnosticering af beriget tracking"
@@ -656,20 +675,23 @@
       "Installed": [
         "Installeret"
       ],
+      "Interactions": [
+        "Interaktioner"
+      ],
       "Internal searches": [
         "Interne søgninger"
       ],
-      "Keep report details for %(days)s days": [
-        "Keep report details for %(days)s days"
+      "Keep report details for %d days": [
+        "Keep report details for %d days"
       ],
-      "Keep report details for %(years)s years": [
-        "Keep report details for %(years)s years"
+      "Keep report details for %d years": [
+        "Keep report details for %d years"
       ],
       "Keep report details for 1 year": [
         "Keep report details for 1 year"
       ],
-      "Keep totals for %(years)s years": [
-        "Keep totals for %(years)s years"
+      "Keep totals for %d years": [
+        "Keep totals for %d years"
       ],
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
@@ -748,6 +770,9 @@
       ],
       "Local GeoLite database — recommended": [
         "Lokal GeoLite-database (standard)"
+      ],
+      "Location": [
+        "Placering"
       ],
       "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
         "Placeringsrapporter er ikke tilgængelige, før den lokale GeoIP-database er blevet downloadet. Download det fra siden med indstillinger for geografisk placering."
@@ -1067,6 +1092,9 @@
       "Referring sites": [
         "Henvisende websteder"
       ],
+      "Reliable counting": [
+        "Pålidelig optælling"
+      ],
       "Reload page": [
         "Geolokalisering"
       ],
@@ -1127,8 +1155,8 @@
       "Run diagnostic": [
         "Kør diagnosticering"
       ],
-      "Run every %(days)s days": [
-        "Kør hver %(days)s. dag"
+      "Run every %d days": [
+        "Kør hver %d. dag"
       ],
       "Run every day": [
         "Kør hver dag"
@@ -1385,10 +1413,14 @@
       "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
         "Used mainly for real-time and diagnostics. Not related to Debug mode."
       ],
+      "Visit journey": [
+        "Besøgsforløb"
+      ],
       "Visit measurement": [
         "Besøgsmåling"
       ],
       "Visitor": [
+        "Besøgende",
         "Besøgende"
       ],
       "Visitor ID hash": [

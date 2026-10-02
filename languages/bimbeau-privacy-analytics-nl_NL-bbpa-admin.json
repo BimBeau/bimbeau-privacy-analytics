@@ -13,6 +13,12 @@
       " (%s)": [
         " (%s)"
       ],
+      "%1$dh %2$dm": [
+        "%1$du %2$dm"
+      ],
+      "%1$dm %2$ds": [
+        "%1$dm %2$ds"
+      ],
       "%1$s at %2$s — %3$s: %4$s": [
         "%1$s om %2$s — %3$s: %4$s"
       ],
@@ -40,10 +46,14 @@
       "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s": [
         "%1$s: Paginaweergaven %2$s, bezoekers %3$s, vorige paginaweergaven %4$s, vorige bezoekers %5$s"
       ],
-      "%s Visitor": [
-        "%s bezoeker"
+      "%ds": [
+        "%ds"
       ],
-      "%s Visitors": [
+      "%s MB": [
+        "%s MB"
+      ],
+      "%s Visitor": [
+        "%s bezoeker",
         "%s bezoekers"
       ],
       "%s of total visitors": [
@@ -419,6 +429,9 @@
       "Device page views": [
         "Paginaweergaven per apparaat"
       ],
+      "Device type": [
+        "Apparaattype"
+      ],
       "Device usage breakdown": [
         "Verdeling van apparaatgebruik"
       ],
@@ -433,6 +446,9 @@
       ],
       "Display": [
         "Weergeven"
+      ],
+      "Display format": [
+        "Weergaveformaat"
       ],
       "Display referrer favicons": [
         "Geef verwijzende favicons weer"
@@ -475,6 +491,9 @@
       ],
       "Endpoint:": [
         "Endpoint:"
+      ],
+      "Engagement time": [
+        "Betrokkenheidstijd"
       ],
       "Enriched tracker diagnostic": [
         "Diagnose van verrijkte tracking"
@@ -656,20 +675,23 @@
       "Installed": [
         "Geïnstalleerd"
       ],
+      "Interactions": [
+        "Interacties"
+      ],
       "Internal searches": [
         "Interne zoekopdrachten"
       ],
-      "Keep report details for %(days)s days": [
-        "Keep report details for %(days)s days"
+      "Keep report details for %d days": [
+        "Keep report details for %d days"
       ],
-      "Keep report details for %(years)s years": [
-        "Keep report details for %(years)s years"
+      "Keep report details for %d years": [
+        "Keep report details for %d years"
       ],
       "Keep report details for 1 year": [
         "Keep report details for 1 year"
       ],
-      "Keep totals for %(years)s years": [
-        "Keep totals for %(years)s years"
+      "Keep totals for %d years": [
+        "Keep totals for %d years"
       ],
       "Keep totals for 1 year": [
         "Keep totals for 1 year"
@@ -748,6 +770,9 @@
       ],
       "Local GeoLite database — recommended": [
         "Lokale GeoLite-database (standaard)"
+      ],
+      "Location": [
+        "Locatie"
       ],
       "Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.": [
         "Locatierapporten zijn pas beschikbaar nadat de lokale GeoIP-database is gedownload. Download het van de pagina Geolocatie-instellingen."
@@ -1067,6 +1092,9 @@
       "Referring sites": [
         "Verwijzende sites"
       ],
+      "Reliable counting": [
+        "Betrouwbare telling"
+      ],
       "Reload page": [
         "Geolocatie"
       ],
@@ -1127,8 +1155,8 @@
       "Run diagnostic": [
         "Diagnose uitvoeren"
       ],
-      "Run every %(days)s days": [
-        "Elke %(days)s dagen uitvoeren"
+      "Run every %d days": [
+        "Elke %d dagen uitvoeren"
       ],
       "Run every day": [
         "Elke dag uitvoeren"
@@ -1385,11 +1413,15 @@
       "Used mainly for real-time and diagnostics. Not related to Debug mode.": [
         "Used mainly for real-time and diagnostics. Not related to Debug mode."
       ],
+      "Visit journey": [
+        "Bezoekpad"
+      ],
       "Visit measurement": [
         "Bezoekmeting"
       ],
       "Visitor": [
-        "Bezoeker"
+        "Bezoeker",
+        "Bezoekers"
       ],
       "Visitor ID hash": [
         "Hash van bezoekers-ID"

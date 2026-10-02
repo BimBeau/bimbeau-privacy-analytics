@@ -1,4 +1,4 @@
-import { useEffect, useState } from "@wordpress/element";
+import { useEffect, useMemo, useState } from "@wordpress/element";
 
 import { DEFAULT_RANGE_PRESET } from "../constants";
 import {
@@ -9,7 +9,9 @@ import {
 } from "../lib/storage";
 
 const useSharedRangeSelection = () => {
-  const urlSelection = getRangeSelectionFromUrl();
+  // The URL does not change while the page is open: parse it once, so the
+  // effect below does not run (and write to localStorage) on every render.
+  const urlSelection = useMemo(() => getRangeSelectionFromUrl(), []);
   const [rangeSelection, setRangeSelectionState] = useState(() => {
     if (urlSelection) {
       return urlSelection;

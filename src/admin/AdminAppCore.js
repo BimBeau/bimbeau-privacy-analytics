@@ -5,7 +5,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import Notice from './components/BrandNotice';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG, isPanelEnabled } from './constants';
 import {
@@ -13,9 +13,11 @@ import {
 	reloadForAuthRequired,
 	useAuthRequiredState,
 } from './api/useAdminEndpoint';
+import { fetchGeoIpDatabaseStatus } from './api/geoipDatabaseStatus';
 import useRealtimeSnapshot from './hooks/useRealtimeSnapshot';
 import useSharedRangeSelection from './hooks/useSharedRangePreset';
 import { getAdminPanelUrl } from './lib/adminUrls';
+import { formatNumber } from './lib/formatters';
 import {
 	createLogger,
 	createTraceId,
@@ -71,6 +73,7 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 	const dashboardUrl = useMemo( () => getAdminPanelUrl( 'dashboard' ), [] );
 	const [ rangeSelection, setRangeSelection ] = useSharedRangeSelection();
 	const noticesContainerRef = useRef( null );
+	const headingRef = useRef( null );
 	const [ hasFreemiusNotices, setHasFreemiusNotices ] = useState( false );
 	const [ geoIpDatabaseStatus, setGeoIpDatabaseStatus ] = useState( null );
 	const [ geoIpStatusError, setGeoIpStatusError ] = useState( null );
@@ -84,30 +87,32 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 	const isSetupWizardMountedRef = useRef( true );
 	const [ isGeoIpStatusLoading, setIsGeoIpStatusLoading ] = useState( true );
 	const { isAuthRequired, error: authRequiredError } = useAuthRequiredState();
-	const { data: realtimeData, isLoading: isRealtimeLoading } =
-		useRealtimeSnapshot( {
-			enabled: ! isAuthRequired,
-			currentPanel,
-		} );
-	const activeRealtimeVisitors = Number( realtimeData?.activeVisitors ?? 0 );
-	const realtimeUrl = useMemo( () => getAdminPanelUrl( 'realtime' ), [] );
 	const isAdvancedStatsEnabled =
 		ADMIN_CONFIG?.settings?.advanced_stats_enabled !== false;
 	const isRealtimeEnabled =
 		isAdvancedStatsEnabled && isPanelEnabled( 'realtime' );
-	const formattedRealtimeVisitors = new Intl.NumberFormat().format(
-		activeRealtimeVisitors
-	);
-	const realtimeVisitorLabel =
-		activeRealtimeVisitors <= 1
-			? /* translators: %s: active real-time visitor count. */
-			  __( '%s Visitor', 'bimbeau-privacy-analytics' )
-			: /* translators: %s: active real-time visitor count. */
-			  __( '%s Visitors', 'bimbeau-privacy-analytics' );
+	// The header counter is only polled while its real-time button is shown.
+	const { data: realtimeData, isLoading: isRealtimeLoading } =
+		useRealtimeSnapshot( {
+			enabled: ! isAuthRequired && isRealtimeEnabled,
+			currentPanel,
+		} );
+	const activeRealtimeVisitors = Number( realtimeData?.activeVisitors ?? 0 );
+	const realtimeUrl = useMemo( () => getAdminPanelUrl( 'realtime' ), [] );
+	const formattedRealtimeVisitors = formatNumber( activeRealtimeVisitors );
 	const realtimeLabel =
 		isRealtimeLoading && ! realtimeData
 			? __( 'Visitors', 'bimbeau-privacy-analytics' )
-			: sprintf( realtimeVisitorLabel, formattedRealtimeVisitors );
+			: sprintf(
+					/* translators: %s: active real-time visitor count. */
+					_n(
+						'%s Visitor',
+						'%s Visitors',
+						activeRealtimeVisitors,
+						'bimbeau-privacy-analytics'
+					),
+					formattedRealtimeVisitors
+			  );
 	const isRealtimeSkeletonVisible = isRealtimeLoading && ! realtimeData;
 	const lookupMode =
 		ADMIN_CONFIG?.settings?.geoip_lookup_mode || 'local_database';
@@ -149,7 +154,7 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 		setIsGeoIpStatusLoading( true );
 		setGeoIpStatusError( null );
 
-		fetchAdminJson( '/admin/geoip-database/status' )
+		fetchGeoIpDatabaseStatus()
 			.then( ( payload ) => {
 				if ( isCurrent ) {
 					setGeoIpDatabaseStatus( payload?.database || null );
@@ -299,28 +304,30 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 		} );
 	}, [ logger ] );
 
+	const moveHeaderNotices = useCallback( () => {
+		const noticesContainer = noticesContainerRef.current;
+		const headingNotices = Array.from(
+			document.querySelectorAll( HEADING_NOTICE_SELECTOR )
+		);
+
+		if ( ! noticesContainer ) {
+			setHasFreemiusNotices( headingNotices.length > 0 );
+			return;
+		}
+
+		headingNotices.forEach( ( noticeElement ) => {
+			noticesContainer.append( noticeElement );
+		} );
+
+		setHasFreemiusNotices(
+			noticesContainer.querySelectorAll( '.notice, .fs-notice' ).length >
+				0
+		);
+	}, [] );
+
 	useEffect( () => {
-		const moveHeaderNotices = () => {
-			const noticesContainer = noticesContainerRef.current;
-			const headingNotices = Array.from(
-				document.querySelectorAll( HEADING_NOTICE_SELECTOR )
-			);
-
-			if ( ! noticesContainer ) {
-				setHasFreemiusNotices( headingNotices.length > 0 );
-				return;
-			}
-
-			headingNotices.forEach( ( noticeElement ) => {
-				noticesContainer.append( noticeElement );
-			} );
-
-			setHasFreemiusNotices(
-				noticesContainer.querySelectorAll( '.notice, .fs-notice' )
-					.length > 0
-			);
-		};
-
+		// Runs again when the notices container appears or disappears, so the
+		// pending notices move into it and dismissed notices hide it.
 		moveHeaderNotices();
 
 		const MutationObserverClass = window.MutationObserver;
@@ -329,16 +336,23 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 			return undefined;
 		}
 
+		// Notices are only moved from the direct children of the heading (where
+		// WordPress places admin notices after the first title): observe the
+		// heading and the notices container instead of every DOM change of
+		// the page.
 		const observer = new MutationObserverClass( moveHeaderNotices );
-		observer.observe( document.body, {
-			childList: true,
-			subtree: true,
-		} );
+		[ headingRef.current, noticesContainerRef.current ].forEach(
+			( element ) => {
+				if ( element ) {
+					observer.observe( element, { childList: true } );
+				}
+			}
+		);
 
 		return () => {
 			observer.disconnect();
 		};
-	}, [] );
+	}, [ hasFreemiusNotices, moveHeaderNotices ] );
 
 	const onReloadApp = () => {
 		reloadForAuthRequired();
@@ -429,7 +443,7 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 			data-context={ appContext }
 		>
 			<div className="bbpa-admin-app__header">
-				<div className="bbpa-admin-app__heading">
+				<div className="bbpa-admin-app__heading" ref={ headingRef }>
 					<h1>
 						<a
 							className="bbpa-admin-app__title-link"

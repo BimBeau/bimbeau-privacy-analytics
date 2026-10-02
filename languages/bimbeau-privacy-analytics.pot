@@ -112,7 +112,6 @@ msgstr ""
 #: src/admin/AdminAppCore.js
 #: src/admin/constants/index.js
 #: src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -177,6 +176,7 @@ msgstr ""
 
 #: admin/dashboard-widget.php
 #: src/admin/free-stubs/OverviewPanel.js
+#: src/admin/panels/SettingsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -536,13 +536,9 @@ msgstr ""
 #: src/admin/AdminAppCore.js
 #, js-format
 msgid "%s Visitor"
-msgstr ""
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminAppCore.js
-#, js-format
-msgid "%s Visitors"
-msgstr ""
+msgid_plural "%s Visitors"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
@@ -635,6 +631,7 @@ msgid "Missing REST configuration."
 msgstr ""
 
 #: src/admin/api/useAdminEndpoint.js
+#: src/admin/hooks/useRealtimeSnapshot.js
 #: src/admin/hooks/useRealtimeSnapshot.js
 msgid "Loading error."
 msgstr ""
@@ -1178,6 +1175,25 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
+#. translators: %d: Number of seconds.
+#: src/admin/lib/formatters.js
+#: src/admin/lib/formatters.js
+#, js-format
+msgid "%ds"
+msgstr ""
+
+#. translators: 1: Number of minutes, 2: Number of seconds.
+#: src/admin/lib/formatters.js
+#, js-format
+msgid "%1$dm %2$ds"
+msgstr ""
+
+#. translators: 1: Number of hours, 2: Number of minutes.
+#: src/admin/lib/formatters.js
+#, js-format
+msgid "%1$dh %2$dm"
+msgstr ""
+
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Monday"
 msgstr ""
@@ -1421,7 +1437,9 @@ msgstr ""
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor"
-msgstr ""
+msgid_plural "Visitors"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
@@ -1465,32 +1483,68 @@ msgstr ""
 msgid "Every 30 days"
 msgstr ""
 
+#. translators: %d: number of days, 30 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(days)s days"
+#, js-format
+msgid "Keep report details for %d days"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for 1 year"
 msgstr ""
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(years)s years"
+#, js-format
+msgid "Keep report details for %d years"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep totals for 1 year"
 msgstr ""
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep totals for %(years)s years"
+#, js-format
+msgid "Keep totals for %d years"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Run every day"
 msgstr ""
 
+#. translators: %d: number of days, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Run every %(days)s days"
+#, js-format
+msgid "Run every %d days"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Device type"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Reliable counting"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visit journey"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Engagement time"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Display format"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Interactions"
+msgstr ""
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -1519,6 +1573,12 @@ msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
+msgstr ""
+
+#. translators: %s: file size in megabytes, for example 58.12.
+#: src/admin/panels/SettingsPanel.js
+#, js-format
+msgid "%s MB"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js

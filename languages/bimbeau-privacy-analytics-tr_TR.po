@@ -96,8 +96,8 @@ msgid "Geolocation"
 msgstr "Coğrafi konum"
 
 #: admin/admin.php src/admin/AdminAppCore.js src/admin/constants/index.js
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -152,7 +152,7 @@ msgid "Visits"
 msgstr "Ziyaretler"
 
 #: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/SettingsPanel.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -473,12 +473,8 @@ msgstr "İstatistikler"
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminAppCore.js
 msgid "%s Visitor"
-msgstr "%s ziyaretçi"
-
-#. translators: %s: active real-time visitor count.
-#: src/admin/AdminAppCore.js
-msgid "%s Visitors"
-msgstr "%s ziyaretçi"
+msgid_plural "%s Visitors"
+msgstr[0] "%s ziyaretçi"
 
 #: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
@@ -1078,6 +1074,21 @@ msgstr "Yapay zekâ asistanları"
 msgid "Other"
 msgstr "Diğer"
 
+#. translators: %d: Number of seconds.
+#: src/admin/lib/formatters.js
+msgid "%ds"
+msgstr "%dsn"
+
+#. translators: 1: Number of minutes, 2: Number of seconds.
+#: src/admin/lib/formatters.js
+msgid "%1$dm %2$ds"
+msgstr "%1$ddk %2$dsn"
+
+#. translators: 1: Number of hours, 2: Number of minutes.
+#: src/admin/lib/formatters.js
+msgid "%1$dh %2$dm"
+msgstr "%1$dsa %2$ddk"
+
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Monday"
 msgstr "Pazartesi"
@@ -1305,7 +1316,8 @@ msgstr "Gerçek zamanlı veri yükleniyor…"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor"
-msgstr "Ziyaretçi"
+msgid_plural "Visitors"
+msgstr[0] "Ziyaretçi"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Exit fullscreen"
@@ -1347,33 +1359,65 @@ msgstr "Yalnızca temel istatistikler"
 msgid "Every 30 days"
 msgstr "Her 60 günde bir"
 
+#. translators: %d: number of days, 30 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(days)s days"
-msgstr "Keep report details for %(days)s days"
+msgid "Keep report details for %d days"
+msgstr "Keep report details for %d days"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep report details for 1 year"
 msgstr "Keep report details for 1 year"
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep report details for %(years)s years"
-msgstr "Keep report details for %(years)s years"
+msgid "Keep report details for %d years"
+msgstr "Keep report details for %d years"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keep totals for 1 year"
 msgstr "Keep totals for 1 year"
 
+#. translators: %d: number of years, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Keep totals for %(years)s years"
-msgstr "Keep totals for %(years)s years"
+msgid "Keep totals for %d years"
+msgstr "Keep totals for %d years"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Run every day"
 msgstr "Her gün çalıştır"
 
+#. translators: %d: number of days, 2 or more.
 #: src/admin/panels/SettingsPanel.js
-msgid "Run every %(days)s days"
-msgstr "Her %(days)s günde bir çalıştır"
+msgid "Run every %d days"
+msgstr "Her %d günde bir çalıştır"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Device type"
+msgstr "Cihaz türü"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Reliable counting"
+msgstr "Güvenilir sayım"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Visit journey"
+msgstr "Ziyaret yolculuğu"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Engagement time"
+msgstr "Etkileşim süresi"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Display format"
+msgstr "Ekran biçimi"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Interactions"
+msgstr "Etkileşimler"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr "Konum"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data scope list"
@@ -1402,6 +1446,11 @@ msgstr "Otomatik güncelleme planlanmadı"
 #: src/admin/panels/SettingsPanel.js
 msgid "Pending schedule"
 msgstr "Bekleyen zamanlama"
+
+#. translators: %s: file size in megabytes, for example 58.12.
+#: src/admin/panels/SettingsPanel.js
+msgid "%s MB"
+msgstr "%s MB"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Update in progress"

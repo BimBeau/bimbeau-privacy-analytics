@@ -129,16 +129,28 @@ const getAdminLocale = () => {
   return "en";
 };
 
+// Country labels are resolved for every table row: build one Intl.DisplayNames
+// instance per locale instead of one per call.
+const displayNamesCache = new Map();
+
 const getDisplayNames = (locale) => {
   if (typeof Intl === "undefined" || typeof Intl.DisplayNames !== "function") {
     return null;
   }
 
-  try {
-    return new Intl.DisplayNames([locale], { type: "region" });
-  } catch (error) {
-    return null;
+  if (displayNamesCache.has(locale)) {
+    return displayNamesCache.get(locale);
   }
+
+  let displayNames = null;
+  try {
+    displayNames = new Intl.DisplayNames([locale], { type: "region" });
+  } catch {
+    displayNames = null;
+  }
+  displayNamesCache.set(locale, displayNames);
+
+  return displayNames;
 };
 
 export const getCountryLabel = (code) => {
