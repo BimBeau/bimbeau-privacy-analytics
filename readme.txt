@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.219
+Stable tag: 8.45.220
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,9 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.219 =
-* [Fix] Events statistics keep the current rows and totals on screen while the next page or filter loads, instead of showing an empty table for a moment; they are cleared when loading fails, as before. [Pro].
-* [Improvement] Device types in the Real-time and Visitors tables (Desktop, Mobile, Tablet, Bot) are shown in the language of the site.
-* [Improvement] Saving the settings, testing the MaxMind connection and purging data use the same request handling as the reports: an expired login shows the "reload the page" screen, purge errors show the message returned by the server, and debug mode adds its diagnostic header.
-* [Improvement] Turning debug mode on or off in Settings applies to the logs of the Settings screen without reloading the page.
-* [Build] Internal restructuring of the admin app: one request client and one set of constants shared by both editions, shared heatmap and number formatting helpers, removal of unused code, and new checks that keep the free admin code complete when the edition-specific blocks are removed.
+= 8.45.220 =
+* [Build] Release tooling only: a versioning guide and release checks for maintainers. No change to the plugin code or packages.
