@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.45.213
+Stable tag: 8.45.215
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,9 +213,13 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.45.213 =
-* [Fix] "Run cleanup now" now applies the same rules as the automatic retention cleanup. It also removes daily visitor activity rows older than the report details retention, and overview totals older than their own, longer retention. Before, those rows stayed until the next scheduled cleanup.
-* [Fix] The Pages not found report now leaves out technical `/.well-known` addresses before it counts and paginates rows. Totals and page counts stay the same from page to page, and no row becomes unreachable.
-* [Improvement] The automatic retention cleanup now only deletes from the plugin tables and columns on the SQL allowlist, the same safeguard the manual cleanup already used.
-* [Improvement] Hit ingestion and server-side tracking now share one copy of each rule: privacy exclusions, referrer parsing, query parameter filtering, device detection, and the visitor lookup. Page views, visits, visitors and stored values do not change.
-* [Improvement] The database setup for the city-level visitor columns now resists formatting changes and logs an error if it cannot apply them. The tables it creates are unchanged. [Pro].
+= 8.45.215 =
+* [Fix] Releases are published to Freemius again: the 8.45.214 release note mentioned the app address, which the free package validation rejects, so that version was not published. This release ships the 8.45.214 changes (admin, app and app login code cleanup) together with the changes below.
+* [Improvement] Internal cleanup of the plugin bootstrap, the settings storage helpers, the GeoIP and referrer favicon services and the Pro content screens. Stored settings, reports and front-end output are unchanged.
+* [Fix] The GeoIP "Update now" button and the GeoIP database status now use the same database updater as the scheduled update on sites that customize it with the `bbpa_geoip_database_updater` filter.
+* [Fix] A local GeoIP database file left empty by a failed write is now reported as unavailable, as on the settings screen, instead of being opened on every geolocated hit.
+* [Performance] When an old GeoIP database cannot be moved to its current folder, the move is attempted once per request instead of on every lookup.
+* [Performance] Each tracked hit makes one object cache call less.
+* [Performance] REST API requests no longer run an extra Real-time map callback. [Pro].
+* [Improvement] Referrer favicon diagnostics are written to the debug log only when the plugin debug mode is enabled, like the other plugin diagnostics.
+* [Docs] Hooks reference updated (`bbpa_geoip_database_updater` and `bbpa_geoip_local_mmdb_path` filters), deprecated helpers listed, consent helpers and uninstall table list corrected.

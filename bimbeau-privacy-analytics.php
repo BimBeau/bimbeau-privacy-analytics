@@ -3,7 +3,7 @@
 /**
  * Plugin Name: BimBeau Privacy Analytics
  * Description: Privacy-friendly, self-hosted analytics for WordPress.
- * Version: 8.45.213
+ * Version: 8.45.215
  * Author: BimBeau
  * Text Domain: bimbeau-privacy-analytics
  * Domain Path: /languages
@@ -288,9 +288,15 @@ if (!defined('BBPA_VERSION')) {
         return 'data:image/svg+xml;base64,' . base64_encode($svg);
     }
 
+    /**
+     * Return the plugin icon shown on the Freemius pricing, upgrade and account screens.
+     *
+     * This is the only callback registered on the Freemius `plugin_icon` filter. It returns the packaged app
+     * favicon, the icon also forced in the plugin update metadata by `bbpa_filter_plugin_update_icons()`.
+     */
     function bbpa_get_freemius_plugin_icon_path(): string
     {
-        return BBPA_PATH . 'assets/images/bbpa-logo-compact.svg';
+        return BBPA_PATH . 'assets/images/bpa-favicon-app.svg';
     }
 
     function bbpa_get_freemius_default_currency($currency): string
@@ -413,10 +419,7 @@ if (!defined('BBPA_VERSION')) {
 
     add_action('init', 'bbpa_load_textdomain', 0);
 
-
-    if (function_exists('bbpa_register_freemius_uninstall_hook')) {
-        bbpa_register_freemius_uninstall_hook();
-    }
+    bbpa_register_freemius_uninstall_hook();
 
     $bbpa_edition_runtime = BBPA_PATH . 'includes/edition-runtime.php';
     if (is_readable($bbpa_edition_runtime)) {

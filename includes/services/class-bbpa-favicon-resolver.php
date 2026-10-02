@@ -29,6 +29,12 @@ class BBPA_Favicon_Resolver {
     private const NEGATIVE_TTL = 3600;
     private const LOCAL_EXTENSIONS = ['ico', 'png', 'jpg', 'webp', 'gif', 'svg'];
 
+    /** Storage directory of downloaded favicons, relative to the uploads directory and URL. */
+    private const UPLOAD_SUBDIR = 'bbpa/favicons';
+
+    /** Filesystem adapter used to write and check stored favicons. */
+    private ?BBPA_Filesystem_Service $filesystem_service = null;
+
     /** Reason of the last failure, used for the negative cache and debug logs. */
     private string $last_failure = '';
 
@@ -58,6 +64,16 @@ class BBPA_Favicon_Resolver {
 
     /** Number of HTTP requests (redirect hops included) made for the host being resolved. */
     private int $host_requests = 0;
+
+    /**
+     * Create the resolver.
+     *
+     * @param BBPA_Filesystem_Service|null $filesystem_service Filesystem adapter; a default instance is created on
+     *                                                         first use when omitted.
+     */
+    public function __construct(?BBPA_Filesystem_Service $filesystem_service = null) {
+        $this->filesystem_service = $filesystem_service;
+    }
 
     /** Invalidate every negative entry without an unbounded transient-table scan. */
     public static function invalidate_negative_cache(): void {
@@ -127,7 +143,6 @@ class BBPA_Favicon_Resolver {
         }
 
         $local_files = $this->get_local_favicon_files();
-        $directory = trailingslashit($uploads['basedir']) . 'bbpa/favicons';
         $basename = hash('sha256', $host);
         foreach (self::LOCAL_EXTENSIONS as $extension) {
             $name = $basename . '.' . $extension;
@@ -135,11 +150,7 @@ class BBPA_Favicon_Resolver {
                 continue;
             }
 
-            $entry = [
-                'path' => trailingslashit($directory) . $name,
-                'url' => trailingslashit($uploads['baseurl']) . 'bbpa/favicons/' . $name,
-                'cache_version' => self::CACHE_VERSION,
-            ];
+            $entry = $this->build_local_entry($name);
             if ($this->is_valid_local_file($entry)) {
                 return $entry;
             }
@@ -483,15 +494,16 @@ class BBPA_Favicon_Resolver {
             return [];
         }
 
-        $directory = trailingslashit($uploads['basedir']) . 'bbpa/favicons';
+        $directory = $this->get_favicon_directory();
         $name = hash('sha256', $host) . '.' . $validated['format'];
-        $path = trailingslashit($directory) . $name;
-        $service = new BBPA_Filesystem_Service();
+        $entry = $this->build_local_entry($name);
+        $path = $entry['path'];
+        $service = $this->get_filesystem_service();
         if (
             !$service->ensure_directory($directory)
             || !$service->put_contents($path, $validated['body'])
             || !$service->exists($path)
-            || !is_readable($path)
+            || !$service->is_readable($path)
         ) {
             // A write failure repeats until the server configuration changes: do not retry it every few minutes.
             $this->set_failure('local favicon write failed', false);
@@ -502,11 +514,7 @@ class BBPA_Favicon_Resolver {
             $this->local_files[$name] = true;
         }
 
-        return [
-            'path' => $path,
-            'url' => trailingslashit($uploads['baseurl']) . 'bbpa/favicons/' . $name,
-            'cache_version' => self::CACHE_VERSION,
-        ];
+        return $entry;
     }
 
     /** Return the detected format together with the exact bytes safe to persist. */
@@ -852,8 +860,8 @@ class BBPA_Favicon_Resolver {
             return false;
         }
 
-        $uploads = $this->get_uploads();
-        $root = $uploads !== [] ? realpath(trailingslashit($uploads['basedir']) . 'bbpa/favicons') : false;
+        $directory = $this->get_favicon_directory();
+        $root = $directory !== '' ? realpath($directory) : false;
         $path = realpath((string) $entry['path']);
         if ($root === false || $path === false || !str_starts_with($path, trailingslashit($root)) || !is_file($path) || !is_readable($path)) {
             return false;
@@ -955,7 +963,7 @@ class BBPA_Favicon_Resolver {
     /** Return whether referrer favicons are enabled, read once per instance. */
     private function is_enabled(): bool {
         if ($this->enabled === null) {
-            $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+            $settings = bbpa_get_settings();
             $this->enabled = !empty($settings['referrer_favicons_enabled']);
         }
 
@@ -992,8 +1000,7 @@ class BBPA_Favicon_Resolver {
         }
 
         $this->local_files = [];
-        $uploads = $this->get_uploads();
-        $directory = $uploads !== [] ? trailingslashit($uploads['basedir']) . 'bbpa/favicons' : '';
+        $directory = $this->get_favicon_directory();
         $entries = $directory !== '' && is_dir($directory) ? scandir($directory) : false;
         foreach (is_array($entries) ? $entries : [] as $entry) {
             if (preg_match('/^[a-f0-9]{64}\.(?:ico|png|jpg|webp|gif|svg)$/', (string) $entry)) {
@@ -1007,7 +1014,7 @@ class BBPA_Favicon_Resolver {
     /** Return whether downloaded favicons can be written to uploads, checked once per instance. */
     private function can_store_favicons(): bool {
         if ($this->can_store === null) {
-            $this->can_store = $this->get_uploads() !== [] && (new BBPA_Filesystem_Service())->can_write();
+            $this->can_store = $this->get_uploads() !== [] && $this->get_filesystem_service()->can_write();
         }
 
         return $this->can_store;
@@ -1052,11 +1059,46 @@ class BBPA_Favicon_Resolver {
         return (string) ($parts['scheme'] ?? '') . '://' . $parts['host'] . (isset($parts['port']) ? ':' . $parts['port'] : '') . (string) ($parts['path'] ?? '/');
     }
 
-    /** Write a diagnostic line when WP_DEBUG or the plugin debug mode is enabled. */
+    /**
+     * Write a diagnostic line through the plugin logger (written only when the plugin debug mode is enabled and a
+     * log sink is configured).
+     */
     private function debug(string $field, string $value): void {
-        if ((defined('WP_DEBUG') && WP_DEBUG) || (function_exists('bbpa_is_debug_mode_enabled') && bbpa_is_debug_mode_enabled())) {
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Guarded diagnostic logging, URLs are redacted.
-            error_log('[BBPA favicon] ' . $field . ': ' . $value);
+        BBPA_Logger::channel('Enrich')->debug('Favicon ' . $field . ': ' . $value);
+    }
+
+    /**
+     * Return the favicon storage directory, or an empty string when the uploads directory is unavailable.
+     */
+    private function get_favicon_directory(): string {
+        $uploads = $this->get_uploads();
+
+        return $uploads !== [] ? trailingslashit($uploads['basedir']) . self::UPLOAD_SUBDIR : '';
+    }
+
+    /**
+     * Build the stored favicon entry (path, URL and cache version) of a file name.
+     *
+     * Callers check that the uploads directory is available first.
+     *
+     * @return array{path:string,url:string,cache_version:string}
+     */
+    private function build_local_entry(string $name): array {
+        $uploads = $this->get_uploads();
+
+        return [
+            'path' => trailingslashit($this->get_favicon_directory()) . $name,
+            'url' => trailingslashit((string) ($uploads['baseurl'] ?? '')) . self::UPLOAD_SUBDIR . '/' . $name,
+            'cache_version' => self::CACHE_VERSION,
+        ];
+    }
+
+    /** Return the filesystem adapter, created on first use when none was injected. */
+    private function get_filesystem_service(): BBPA_Filesystem_Service {
+        if ($this->filesystem_service === null) {
+            $this->filesystem_service = new BBPA_Filesystem_Service();
         }
+
+        return $this->filesystem_service;
     }
 }

@@ -41,7 +41,13 @@ class BBPA_GeoIP_Database_Updater {
     private const LOCAL_DATABASE_MANIFEST_URL = 'https://raw.githubusercontent.com/BimBeau/bimbeau-geoip-database/main/manifest.json';
     private const STATUS_OPTION = 'bbpa_geoip_database_update_status';
     private const LOCAL_DATABASE_AVAILABLE_OPTION = 'bbpa_geoip_database_local_available';
-    private const DATABASE_RELATIVE_PATH = 'bpa/geoip/GeoLite2-City.mmdb';
+    /**
+     * Canonical database location, relative to the uploads directory.
+     *
+     * Older releases stored the database under bpa/geoip/. A usable database found there is moved to this location
+     * by `bbpa_normalize_geoip_local_mmdb_path()` (filter `bbpa_geoip_local_mmdb_path`, priority 5).
+     */
+    private const DATABASE_RELATIVE_PATH = 'bbpa/geoip/GeoLite2-City.mmdb';
     private const TEMP_WORKSPACE_PREFIX = 'bbpa-geoip-workspace-';
     private const TEMP_WORKSPACE_MARKER = '.bbpa-geoip-workspace';
 
@@ -84,7 +90,7 @@ class BBPA_GeoIP_Database_Updater {
      * @return array|WP_Error
      */
     private function run_update() {
-        $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+        $settings = bbpa_get_settings();
         $lookup_mode = isset($settings['geoip_lookup_mode'])
             ? sanitize_key((string) $settings['geoip_lookup_mode'])
             : 'local_database';
@@ -154,7 +160,9 @@ class BBPA_GeoIP_Database_Updater {
     /**
      * Return the current local MMDB destination path.
      *
-     * Lookup routing to local MMDB remains in a separate implementation step.
+     * The default is uploads/bbpa/geoip/GeoLite2-City.mmdb. The `bbpa_geoip_local_mmdb_path` filter receives it
+     * with the uploads directory metadata; its priority 5 callback returns the legacy uploads/bpa/geoip file while
+     * that file cannot be moved to the canonical directory.
      */
     public function get_local_database_path(): string {
         $uploads = wp_upload_dir();
@@ -180,7 +188,7 @@ class BBPA_GeoIP_Database_Updater {
             return $manifest;
         }
 
-        $temp_file = $this->create_temp_file('bbpa-geolite2-city.mmdb.gz');
+        $temp_file = $this->create_temp_path('bbpa-geolite2-city.mmdb.gz');
         if (is_wp_error($temp_file)) {
             return $this->build_error('bbpa_geoip_download_failed', 'download_temp_file_unavailable');
         }
@@ -585,15 +593,25 @@ class BBPA_GeoIP_Database_Updater {
     }
 
     /**
-     * Check whether the local MMDB file is ready for future lookup routing.
+     * Check whether the local MMDB file is present, readable and not empty.
      */
     public function is_local_database_available(): bool {
-        $target_path = $this->get_local_database_path();
-        if ($target_path === '' || !$this->filesystem_service->exists($target_path) || !$this->filesystem_service->is_readable($target_path)) {
+        return $this->is_database_file_usable($this->get_local_database_path());
+    }
+
+    /**
+     * Check whether a database file can be read: present, readable and not empty.
+     *
+     * Single rule shared by the status screen, the stored availability flag and the local lookup.
+     *
+     * @param string $path Database file path, usually the result of get_local_database_path().
+     */
+    public function is_database_file_usable(string $path): bool {
+        if ($path === '' || !$this->filesystem_service->exists($path) || !$this->filesystem_service->is_readable($path)) {
             return false;
         }
 
-        return $this->filesystem_service->size($target_path) > 0;
+        return $this->filesystem_service->size($path) > 0;
     }
 
     /**
@@ -689,17 +707,6 @@ class BBPA_GeoIP_Database_Updater {
 
         return $this->build_error('bbpa_geoip_temp_file_unavailable', 'temp_file_unavailable');
     }
-
-    /**
-     * Allocate a temporary file path for GeoIP operations.
-     *
-     * @return string|WP_Error
-     */
-    private function create_temp_file(string $filename) {
-        return $this->create_temp_path($filename);
-    }
-
-
 
     /**
      * Create an owned temporary workspace for GeoIP extraction.
@@ -986,17 +993,7 @@ class BBPA_GeoIP_Database_Updater {
      * Write debug logs when debug mode is enabled.
      */
     private function log_debug(string $message): void {
-        if (function_exists('bbpa_is_debug_mode_enabled')) {
-            if (!bbpa_is_debug_mode_enabled()) {
-                return;
-            }
-        } else {
-            $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-            if (empty($settings['debug_enabled'])) {
-                return;
-            }
-        }
-
+        // The logger writes `info` lines only when the plugin debug mode is enabled.
         BBPA_Logger::channel('Geo')->info($message);
     }
 }

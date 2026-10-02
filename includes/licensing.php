@@ -48,12 +48,22 @@ function bbpa_get_upgrade_url(): string
 }
 
 /**
+ * Return the two-letter language code of the current WordPress user locale (for example `fr` for `fr_FR`).
+ */
+function bbpa_get_current_language_code(): string
+{
+    return strtolower(substr((string) get_user_locale(), 0, 2));
+}
+
+/**
  * Return the Freemius checkout language matching the current WordPress user locale.
+ *
+ * Only the languages listed here are passed to the checkout; the pricing page adapter
+ * (`bbpa_get_freemius_pricing_i18n_config()`) covers more languages.
  */
 function bbpa_get_freemius_checkout_language(): string
 {
-    $locale = function_exists('get_user_locale') ? get_user_locale() : get_locale();
-    $language = strtolower(substr((string) $locale, 0, 2));
+    $language = bbpa_get_current_language_code();
 
     return in_array($language, ['de', 'es', 'fr', 'it', 'nl'], true) ? $language : 'auto';
 }
@@ -75,8 +85,7 @@ function bbpa_filter_freemius_checkout_parameters(array $parameters): array
  */
 function bbpa_get_freemius_pricing_i18n_config(): array
 {
-    $locale = function_exists('get_user_locale') ? get_user_locale() : get_locale();
-    $language = strtolower(substr((string) $locale, 0, 2));
+    $language = bbpa_get_current_language_code();
 
     $catalog = [
         'fr' => [

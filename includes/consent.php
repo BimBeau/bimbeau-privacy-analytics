@@ -94,6 +94,10 @@ function bbpa_is_ui_field_visible(string $context, string $field, bool $advanced
 
 /**
  * Return whether the current request carries explicit advanced consent.
+ *
+ * Helper for extensions: it reads an `X-BBPA-Consent` request header that the bundled trackers do not send, and the
+ * hit ingestion does not call it. Advanced collection is gated in the browser, by the consent management platform
+ * that loads the advanced tracker, and by the `advanced_stats_enabled` setting.
  */
 function bbpa_can_collect_advanced_fields(array $context = []): bool
 {
@@ -111,6 +115,8 @@ function bbpa_can_collect_advanced_fields(array $context = []): bool
 /**
  * Return whether geolocation enrichment is allowed for this request.
  *
+ * Helper for extensions, not called by the hit ingestion (see `bbpa_can_collect_advanced_fields()`).
+ *
  * Fallback behavior when consent settings are missing:
  * - geolocation aggregation defaults to enabled (settings default), and
  * - consent still requires an explicit request signal.
@@ -119,7 +125,7 @@ function bbpa_can_enrich_geolocation(array $context = []): bool
 {
     $settings = $context['settings'] ?? null;
     if (!is_array($settings)) {
-        $settings = function_exists('bbpa_get_settings_defaults') ? bbpa_get_settings_defaults() : [];
+        $settings = bbpa_get_settings_defaults();
     }
 
     $geo_enabled = true;

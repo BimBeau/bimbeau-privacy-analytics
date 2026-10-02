@@ -86,6 +86,8 @@ function bbpa_safe_require_once(string $base_path, string $candidate): void
 
 /**
  * Require a PHP file inside a fixed base directory when present.
+ *
+ * @deprecated Not used by the plugin. Use `bbpa_safe_require_once()` for required files.
  */
 function bbpa_safe_require_once_if_exists(string $base_path, string $candidate): bool
 {
@@ -162,12 +164,13 @@ function bbpa_geoip_database_file_is_usable(string $path): bool
 }
 
 /**
- * Normalize the historical GeoIP uploads path and migrate an existing database.
+ * Resolve the default GeoIP database path and migrate a database left in the historical directory.
  *
- * The updater originally supplied uploads/bpa/geoip as its default. Keep that
- * input recognizable for backward compatibility, while new writes and reads
- * use the canonical uploads/bbpa/geoip directory. A failed migration keeps the
- * usable legacy file available until a later request can complete the move.
+ * The updater default is the canonical uploads/bbpa/geoip directory; older releases used uploads/bpa/geoip, and
+ * that path is still recognized when a callback returns it. When the canonical file is missing and a usable legacy
+ * file exists, the legacy file is moved to the canonical directory. A failed move keeps the usable legacy file in
+ * use and is not retried during the same request (a hit or an admin screen resolves the path several times); a
+ * later request tries again. Other paths returned by earlier callbacks are kept as they are.
  *
  * @param mixed $path Current filtered GeoIP database path.
  * @param array $uploads WordPress uploads directory metadata.
@@ -175,18 +178,20 @@ function bbpa_geoip_database_file_is_usable(string $path): bool
  */
 function bbpa_normalize_geoip_local_mmdb_path($path, array $uploads)
 {
+    static $failed_migrations = [];
+
     if (!is_string($path) || empty($uploads['basedir'])) {
         return $path;
     }
 
     $uploads_base = trailingslashit((string) $uploads['basedir']);
     $legacy_path = $uploads_base . 'bpa/geoip/GeoLite2-City.mmdb';
+    $canonical_path = $uploads_base . 'bbpa/geoip/GeoLite2-City.mmdb';
+    $normalized_path = wp_normalize_path($path);
 
-    if (wp_normalize_path($path) !== wp_normalize_path($legacy_path)) {
+    if ($normalized_path !== wp_normalize_path($legacy_path) && $normalized_path !== wp_normalize_path($canonical_path)) {
         return $path;
     }
-
-    $canonical_path = $uploads_base . 'bbpa/geoip/GeoLite2-City.mmdb';
 
     if (bbpa_geoip_database_file_is_usable($canonical_path)) {
         return $canonical_path;
@@ -196,7 +201,7 @@ function bbpa_normalize_geoip_local_mmdb_path($path, array $uploads)
         return $canonical_path;
     }
 
-    if (!class_exists('BBPA_Filesystem_Service')) {
+    if (isset($failed_migrations[$legacy_path]) || !class_exists('BBPA_Filesystem_Service')) {
         return $legacy_path;
     }
 
@@ -213,6 +218,8 @@ function bbpa_normalize_geoip_local_mmdb_path($path, array $uploads)
 
         return $canonical_path;
     }
+
+    $failed_migrations[$legacy_path] = true;
 
     return $legacy_path;
 }

@@ -29,35 +29,23 @@ function bbpa_features(): array
 /**
  * Return the packaged BPA app favicon used for Freemius branding.
  *
- * Freemius renders the plugin icon on pricing and upgrade screens from its
- * plugin_icon filter. Keep this aligned with the app/update favicon instead
- * of the compact BBPA logo so the branding is consistent across admin flows.
+ * @deprecated The Freemius `plugin_icon` filter has a single callback, `bbpa_get_freemius_plugin_icon_path()`,
+ *             which returns the same icon. Kept for backward compatibility.
  */
 function bbpa_get_freemius_app_icon_path(): string
 {
-    return BBPA_PATH . 'assets/images/bpa-favicon-app.svg';
+    return bbpa_get_freemius_plugin_icon_path();
 }
 
 /**
- * Register the BPA app favicon for Freemius screens after the SDK is loaded.
+ * Register the plugin icon for Freemius screens.
+ *
+ * @deprecated The icon is registered with the other Freemius customizations by
+ *             `bbpa_register_freemius_pricing_customizations()`, which this wrapper calls (it registers once).
  */
 function bbpa_register_freemius_app_icon(): void
 {
-    if (!function_exists('bbpa_fs')) {
-        return;
-    }
-
-    $freemius = bbpa_fs();
-    if (!is_object($freemius) || !method_exists($freemius, 'add_filter')) {
-        return;
-    }
-
-    $freemius->add_filter('plugin_icon', 'bbpa_get_freemius_app_icon_path');
-}
-add_action('bbpa_fs_loaded', 'bbpa_register_freemius_app_icon', 20);
-
-if (function_exists('bbpa_fs')) {
-    bbpa_register_freemius_app_icon();
+    bbpa_register_freemius_pricing_customizations();
 }
 
 /**

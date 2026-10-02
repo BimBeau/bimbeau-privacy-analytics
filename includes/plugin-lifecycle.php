@@ -34,7 +34,7 @@ function bbpa_get_legacy_prefix_migration_map(): array
 {
     return [
         'options' => [
-            'bpa_settings' => 'bbpa_settings',
+            'bpa_settings' => BBPA_SETTINGS_OPTION,
             'bpa_schema_version' => 'bbpa_schema_version',
             'bpa_db_migration_version' => 'bbpa_db_migration_version',
             'bpa_overview_daily_backfill_schema_23_last_run' => 'bbpa_overview_daily_backfill_schema_23_last_run',
@@ -67,9 +67,7 @@ function bbpa_get_legacy_prefix_migration_map(): array
  */
 function bbpa_log_prefix_migration(string $message, array $context = []): void
 {
-    if (function_exists('bbpa_safe_log')) {
-        bbpa_safe_log('Storage', 'warning', '[BBPA prefix migration] ' . $message, $context);
-    }
+    bbpa_safe_log('Storage', 'warning', '[BBPA prefix migration] ' . $message, $context);
 }
 
 function bbpa_detect_legacy_prefix_tables(): array
@@ -163,7 +161,7 @@ function bbpa_backfill_marketing_query_allowlist(): void
         return;
     }
 
-    $settings = get_option('bbpa_settings', null);
+    $settings = get_option(BBPA_SETTINGS_OPTION, null);
     if (!is_array($settings)) {
         update_option(BBPA_MARKETING_QUERY_ALLOWLIST_BACKFILL_COMPLETED, true, false);
         return;
@@ -183,8 +181,8 @@ function bbpa_backfill_marketing_query_allowlist(): void
         return;
     }
 
-    $defaults = function_exists('bbpa_get_settings_defaults') ? bbpa_get_settings_defaults() : [];
-    $default_allowlist = is_array($defaults) && isset($defaults['url_query_allowlist']) && is_array($defaults['url_query_allowlist'])
+    $defaults = bbpa_get_settings_defaults();
+    $default_allowlist = isset($defaults['url_query_allowlist']) && is_array($defaults['url_query_allowlist'])
         ? $defaults['url_query_allowlist']
         : [];
     $default_allowlist = array_values(array_unique(array_filter(array_map('sanitize_key', $default_allowlist))));
@@ -195,14 +193,14 @@ function bbpa_backfill_marketing_query_allowlist(): void
     }
 
     $settings['url_query_allowlist'] = $default_allowlist;
-    update_option('bbpa_settings', $settings, false);
+    update_option(BBPA_SETTINGS_OPTION, $settings, false);
     update_option(BBPA_MARKETING_QUERY_ALLOWLIST_BACKFILL_COMPLETED, true, false);
 }
 
 /** Preserve the historic advanced-statistics default for sites upgrading from older releases. */
 function bbpa_migrate_existing_settings_for_setup_wizard(): void
 {
-    $settings = get_option('bbpa_settings', null);
+    $settings = get_option(BBPA_SETTINGS_OPTION, null);
     if (!is_array($settings)) {
         return;
     }
@@ -216,7 +214,7 @@ function bbpa_migrate_existing_settings_for_setup_wizard(): void
         $changed = true;
     }
     if ($changed) {
-        update_option('bbpa_settings', $settings, false);
+        update_option(BBPA_SETTINGS_OPTION, $settings, false);
     }
 }
 
@@ -378,25 +376,11 @@ function bbpa_activate_site(bool $network_wide = false, bool $allow_redirect = t
         set_transient(BBPA_ACTIVATION_REDIRECT_TRANSIENT, 1, MINUTE_IN_SECONDS);
     }
 
-    if (function_exists('bbpa_schedule_raw_log_cleanup')) {
-        bbpa_schedule_raw_log_cleanup(true);
-    } elseif (!wp_next_scheduled(BBPA_RAW_LOGS_CRON_HOOK)) {
-        wp_schedule_event(time(), 'daily', BBPA_RAW_LOGS_CRON_HOOK);
-    }
+    bbpa_schedule_raw_log_cleanup(true);
+    bbpa_schedule_next_aggregation(true);
+    bbpa_schedule_aggregated_retention_cleanup(true);
 
-    if (function_exists('bbpa_schedule_next_aggregation')) {
-        bbpa_schedule_next_aggregation(true);
-    } elseif (!wp_next_scheduled(BBPA_AGGREGATION_CRON_HOOK)) {
-        wp_schedule_event(time(), 'hourly', BBPA_AGGREGATION_CRON_HOOK);
-    }
-    if (function_exists('bbpa_schedule_aggregated_retention_cleanup')) {
-        bbpa_schedule_aggregated_retention_cleanup(true);
-    } elseif (!wp_next_scheduled(BBPA_AGGREGATED_RETENTION_CRON_HOOK)) {
-        wp_schedule_event(time(), 'monthly', BBPA_AGGREGATED_RETENTION_CRON_HOOK);
-    }
-
-
-    if (function_exists('bbpa_get_geoip_update_frequency') && bbpa_get_geoip_update_frequency() === 'disabled' && function_exists('bbpa_clear_geoip_update_schedule')) {
+    if (bbpa_get_geoip_update_frequency() === 'disabled') {
         bbpa_clear_geoip_update_schedule();
     }
 
@@ -536,7 +520,7 @@ function bbpa_run_upgrade_routine(): bool
         });
     }
 
-    if (function_exists('bbpa_get_geoip_update_frequency') && bbpa_get_geoip_update_frequency() === 'disabled' && function_exists('bbpa_clear_geoip_update_schedule')) {
+    if (bbpa_get_geoip_update_frequency() === 'disabled') {
         bbpa_clear_geoip_update_schedule();
     }
 
@@ -601,7 +585,7 @@ function bbpa_is_other_package_installed(): bool
  */
 function bbpa_uninstall_cleanup_current_site(): void
 {
-    $settings = get_option('bbpa_settings', []);
+    $settings = get_option(BBPA_SETTINGS_OPTION, []);
     $delete_data_on_uninstall = is_array($settings)
         ? !empty($settings['delete_data_on_uninstall'])
         : false;
@@ -633,7 +617,6 @@ function bbpa_uninstall_drop_tables(wpdb $wpdb): void
         'bbpa_sessions',
         'bbpa_hits_daily',
         'bbpa_daily_source_category',
-        'bbpa_utm_daily',
         'bbpa_404s_daily',
         'bbpa_search_terms_daily',
         'bbpa_entry_exit_daily',
@@ -825,13 +808,7 @@ function bbpa_deactivate_site(): void
     wp_clear_scheduled_hook(BBPA_RAW_LOGS_CRON_HOOK);
     wp_clear_scheduled_hook(BBPA_AGGREGATION_CRON_HOOK);
     wp_clear_scheduled_hook(BBPA_AGGREGATED_RETENTION_CRON_HOOK);
-    if (function_exists('bbpa_clear_geoip_update_schedule')) {
-        bbpa_clear_geoip_update_schedule();
-    } else {
-        wp_clear_scheduled_hook(BBPA_GEOIP_UPDATE_CRON_HOOK);
-        wp_clear_scheduled_hook(BBPA_GEOIP_RETRY_UPDATE_CRON_HOOK);
-        wp_clear_scheduled_hook('bbpa_geoip_initial_update');
-    }
+    bbpa_clear_geoip_update_schedule();
     /**
      * Fires before core plugin deactivation cleanup finishes so edition-specific runtime can clear lifecycle work.
      */

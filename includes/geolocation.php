@@ -66,7 +66,7 @@ function bbpa_get_geoip_update_frequency_options(): array
  */
 function bbpa_get_geoip_update_frequency(): string
 {
-    $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
+    $settings = bbpa_get_settings();
     $frequency = isset($settings['geoip_update_frequency'])
         ? sanitize_key((string) $settings['geoip_update_frequency'])
         : 'disabled';
@@ -677,6 +677,8 @@ function bbpa_get_visit_identifier(int $timestamp_bucket = 0): string
 
 /**
  * Backward-compatible alias for visit identifier generation.
+ *
+ * @deprecated Not used by the plugin. Use `bbpa_get_visit_identifier()`.
  */
 function bbpa_get_hashed_client_ip(): string
 {
@@ -929,7 +931,8 @@ function bbpa_lookup_local_geoip_location(string $ip): array
     $updater = bbpa_get_geoip_database_updater();
     $database_path = $updater->get_local_database_path();
 
-    if ($database_path === '' || !is_readable($database_path)) {
+    // Same rule as the admin status: an empty file (left by a failed write) is unavailable, not unreadable.
+    if (!$updater->is_database_file_usable($database_path)) {
         return [
             'error' => __('Local GeoLite database is unavailable.', 'bimbeau-privacy-analytics'),
             'source' => 'maxmind-local-database',
@@ -1105,7 +1108,7 @@ function bbpa_maybe_open_maxmind_api_circuit(array $location): void
  */
 function bbpa_reset_maxmind_api_pause_on_credentials_change($settings)
 {
-    if (!is_array($settings) || !function_exists('bbpa_get_settings')) {
+    if (!is_array($settings)) {
         return $settings;
     }
 
@@ -1263,10 +1266,12 @@ function bbpa_get_runtime_geoip_lookup_mode(array $settings): string
 
 /**
  * Write geolocation debug logs when debug mode is enabled.
+ *
+ * @deprecated Not used by the plugin. Use `BBPA_Logger::channel('Geo')->debug()`, gated by the same debug mode.
  */
 function bbpa_log_geolocation_debug(string $message, array $context = []): void
 {
-    if (!function_exists('bbpa_is_debug_mode_enabled') || !bbpa_is_debug_mode_enabled()) {
+    if (!bbpa_is_debug_mode_enabled()) {
         return;
     }
 

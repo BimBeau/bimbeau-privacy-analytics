@@ -512,7 +512,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             );
         }
 
-        $service = new BBPA_MaxMind_Service();
+        $service = bbpa_get_maxmind_service();
         $result = $service->lookup('8.8.8.8', $account_id, $license_key);
         if (!empty($result['error'])) {
             return new WP_Error(
@@ -538,7 +538,8 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Update the local GeoIP database from MaxMind.
      */
     public function update_geoip_database(WP_REST_Request $request): WP_REST_Response {
-        $updater = new BBPA_GeoIP_Database_Updater();
+        // Same updater as the scheduled update (filter `bbpa_geoip_database_updater`).
+        $updater = bbpa_get_geoip_database_updater();
         $result = $updater->update_database();
 
         if (is_wp_error($result)) {
@@ -568,7 +569,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
      * Return GeoIP database status payload for admin UI.
      */
     public function get_geoip_database_status(WP_REST_Request $request): WP_REST_Response {
-        $updater = new BBPA_GeoIP_Database_Updater();
+        $updater = bbpa_get_geoip_database_updater();
         $database_status = $updater->get_database_status();
 
         $payload = [

@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 if (!function_exists('bbpa_place_free_upgrade_submenu_last')) {
     /**
      * Ensure the Free pricing submenu item remains last.
+     *
+     * No longer hooked: bbpa_normalize_free_upgrade_submenu() already places the
+     * pricing item last. Kept for code that calls it directly.
      */
     function bbpa_place_free_upgrade_submenu_last(): void
     {
@@ -52,7 +55,6 @@ add_action('admin_menu', 'bbpa_register_admin_menu');
 add_action('admin_menu', 'bbpa_register_free_upgrade_submenu', 999);
 add_action('admin_menu', 'bbpa_register_contact_submenu', 100);
 add_action('admin_head', 'bbpa_normalize_free_upgrade_submenu', 1);
-add_action('admin_head', 'bbpa_place_free_upgrade_submenu_last', 2);
 add_action('admin_init', 'bbpa_redirect_disabled_admin_page');
 add_action('admin_enqueue_scripts', 'bbpa_enqueue_admin_assets');
 // Enqueue the menu icon before admin_print_styles so it is printed in <head>.

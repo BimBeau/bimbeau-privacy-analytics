@@ -66,6 +66,10 @@ function bbpa_set_metrics_cache_value(string $metric, array $dimensions, $value,
 
 /**
  * Invalidate runtime metrics cache namespace.
+ *
+ * @deprecated No effect: nothing stores the `version` key of the metrics cache group. Metrics cache keys embed the
+ *             admin cache version (see `bbpa_build_metrics_cache_key()`), so `bbpa_flush_admin_cache()` is the
+ *             function that invalidates them.
  */
 function bbpa_invalidate_metrics_cache(): void
 {
@@ -132,7 +136,6 @@ function bbpa_get_admin_cache_key(string $suffix): string
 function bbpa_flush_admin_cache(): void
 {
     bbpa_bump_admin_cache_version();
-    bbpa_invalidate_metrics_cache();
 }
 
 /**
@@ -145,8 +148,6 @@ function bbpa_flush_admin_cache(): void
 function bbpa_flush_admin_cache_after_tracking_write(): void
 {
     if (bbpa_admin_cache_bump_pending()) {
-        bbpa_invalidate_metrics_cache();
-
         return;
     }
 

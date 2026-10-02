@@ -8,6 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Settings helpers for BimBeau Privacy Analytics.
  */
 
+/**
+ * Name of the option that stores the plugin settings.
+ */
+const BBPA_SETTINGS_OPTION = 'bbpa_settings';
 const BBPA_MAX_PATH_LENGTH = 2048;
 const BBPA_LEGACY_PRIVACY_OPTIONS_CLEANUP_COMPLETED = 'bbpa_legacy_privacy_options_cleanup_completed';
 const BBPA_VISIT_IDENTIFIER_WINDOW_SECONDS_MIN = 300;
@@ -140,8 +144,8 @@ function bbpa_get_default_aggregated_retention_days(): int
  */
 function bbpa_register_settings_option(): void
 {
-    if (get_option('bbpa_settings', null) === null) {
-        add_option('bbpa_settings', bbpa_get_settings_defaults(), '', false);
+    if (get_option(BBPA_SETTINGS_OPTION, null) === null) {
+        add_option(BBPA_SETTINGS_OPTION, bbpa_get_settings_defaults(), '', false);
     }
 
 }
@@ -201,9 +205,7 @@ function bbpa_sanitize_settings($settings): array
     $settings['geoip_lookup_mode'] = $lookup_mode;
 
     $geoip_update_frequency = sanitize_key((string) ($settings['geoip_update_frequency'] ?? ''));
-    $allowed_geoip_update_frequencies = function_exists('bbpa_get_geoip_update_frequency_options')
-        ? array_keys(bbpa_get_geoip_update_frequency_options())
-        : ['disabled', '15_days', '30_days', '45_days', '60_days', '3_months', '6_months', '1_year', '2_years'];
+    $allowed_geoip_update_frequencies = array_keys(bbpa_get_geoip_update_frequency_options());
     if (!in_array($geoip_update_frequency, $allowed_geoip_update_frequencies, true)) {
         $geoip_update_frequency = $defaults['geoip_update_frequency'];
     }
@@ -485,7 +487,7 @@ function bbpa_get_plugin_label(): string
  */
 function bbpa_get_settings(): array
 {
-    $raw_settings = get_option('bbpa_settings', []);
+    $raw_settings = get_option(BBPA_SETTINGS_OPTION, []);
     $filters_signature = bbpa_get_settings_filters_signature();
     $roles = bbpa_get_settings_cache_roles();
     $memo = bbpa_settings_runtime_cache();
@@ -720,7 +722,7 @@ function bbpa_is_debug_mode_enabled(): bool
  */
 function bbpa_update_settings($settings)
 {
-    $raw_previous = get_option('bbpa_settings', []);
+    $raw_previous = get_option(BBPA_SETTINGS_OPTION, []);
     if (!is_array($raw_previous)) {
         $raw_previous = [];
     }
@@ -760,43 +762,24 @@ function bbpa_update_settings($settings)
     foreach (bbpa_get_deprecated_settings_keys() as $deprecated_key) {
         unset($persisted[$deprecated_key]);
     }
-    update_option('bbpa_settings', $persisted, false);
+    update_option(BBPA_SETTINGS_OPTION, $persisted, false);
 
-    if (!empty($sanitized['referrer_favicons_enabled']) && empty($previous['referrer_favicons_enabled']) && class_exists('BBPA_Favicon_Resolver')) {
+    if (!empty($sanitized['referrer_favicons_enabled']) && empty($previous['referrer_favicons_enabled'])) {
         BBPA_Favicon_Resolver::invalidate_negative_cache();
     }
 
-    if (function_exists('bbpa_flush_admin_settings_cache')) {
-        bbpa_flush_admin_settings_cache();
-    } elseif (function_exists('bbpa_flush_admin_cache')) {
-        bbpa_flush_admin_cache();
-    } elseif (function_exists('bbpa_bump_admin_cache_version')) {
-        bbpa_bump_admin_cache_version();
-    }
+    bbpa_flush_admin_settings_cache();
 
-    if (
-        $sanitized['raw_logs_retention_days'] !== $previous['raw_logs_retention_days']
-        && function_exists('bbpa_schedule_raw_log_cleanup')
-    ) {
-        bbpa_schedule_raw_log_cleanup(true);
-    } elseif (function_exists('bbpa_schedule_raw_log_cleanup')) {
-        bbpa_schedule_raw_log_cleanup(false);
-    }
+    bbpa_schedule_raw_log_cleanup($sanitized['raw_logs_retention_days'] !== $previous['raw_logs_retention_days']);
 
     $aggregated_retention_changed = ($sanitized['aggregated_data_retention_days'] ?? null) !== ($previous['aggregated_data_retention_days'] ?? null);
-    if ($aggregated_retention_changed && function_exists('bbpa_ensure_aggregation_schedule')) {
+    if ($aggregated_retention_changed) {
         bbpa_ensure_aggregation_schedule();
     }
     $aggregated_retention_frequency_changed = ($sanitized['aggregated_retention_frequency_days'] ?? null) !== ($previous['aggregated_retention_frequency_days'] ?? null);
-    if ($aggregated_retention_frequency_changed && function_exists('bbpa_schedule_aggregated_retention_cleanup')) {
-        bbpa_schedule_aggregated_retention_cleanup(true);
-    } elseif (function_exists('bbpa_schedule_aggregated_retention_cleanup')) {
-        bbpa_schedule_aggregated_retention_cleanup(false);
-    }
+    bbpa_schedule_aggregated_retention_cleanup($aggregated_retention_frequency_changed);
 
-    if (function_exists('bbpa_schedule_geoip_update')) {
-        bbpa_schedule_geoip_update($sanitized['geoip_update_frequency'] !== ($previous['geoip_update_frequency'] ?? null));
-    }
+    bbpa_schedule_geoip_update($sanitized['geoip_update_frequency'] !== ($previous['geoip_update_frequency'] ?? null));
 
     // Same projection as bbpa_get_settings(): only keys owned by the loaded edition.
     return array_intersect_key($sanitized, $defaults);

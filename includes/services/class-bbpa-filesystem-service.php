@@ -241,7 +241,7 @@ class BBPA_Filesystem_Service {
 			return false;
 		}
 
-		return function_exists( 'wp_mkdir_p' ) ? wp_mkdir_p( $safe_path ) : (bool) $filesystem->mkdir( $safe_path, defined( 'FS_CHMOD_DIR' ) ? FS_CHMOD_DIR : 0755 );
+		return wp_mkdir_p( $safe_path );
 	}
 
 	/**
@@ -288,10 +288,6 @@ class BBPA_Filesystem_Service {
 		$temp_root = $this->get_safe_temp_root();
 		if ( $temp_root !== '' ) {
 			return trailingslashit( $temp_root );
-		}
-
-		if ( ! function_exists( 'wp_upload_dir' ) ) {
-			return '';
 		}
 
 		$uploads = wp_upload_dir( null, false, false );
@@ -408,10 +404,6 @@ class BBPA_Filesystem_Service {
 	 * Return the directory tested by get_filesystem_method(): the uploads base directory.
 	 */
 	private function get_filesystem_method_context(): string {
-		if ( ! function_exists( 'wp_upload_dir' ) ) {
-			return '';
-		}
-
 		$uploads = wp_upload_dir( null, false, false );
 		if ( ! empty( $uploads['error'] ) || empty( $uploads['basedir'] ) || ! is_string( $uploads['basedir'] ) || ! is_dir( $uploads['basedir'] ) ) {
 			return '';
@@ -492,7 +484,7 @@ class BBPA_Filesystem_Service {
 	 * Normalize a filesystem path for comparisons and WP_Filesystem operations.
 	 */
 	private function normalize_path( string $path ): string {
-		$normalized = function_exists( 'wp_normalize_path' ) ? wp_normalize_path( trim( $path ) ) : str_replace( '\\', '/', trim( $path ) );
+		$normalized = wp_normalize_path( trim( $path ) );
 		return $normalized === '' ? '' : rtrim( $normalized, '/' );
 	}
 
@@ -604,10 +596,6 @@ class BBPA_Filesystem_Service {
 	 * Return the normalized uploads base directory, or an empty string.
 	 */
 	private function get_uploads_root(): string {
-		if ( ! function_exists( 'wp_upload_dir' ) ) {
-			return '';
-		}
-
 		$uploads = wp_upload_dir( null, false, false );
 		if ( ! empty( $uploads['error'] ) || ! isset( $uploads['basedir'] ) || ! is_string( $uploads['basedir'] ) ) {
 			return '';
@@ -649,7 +637,7 @@ class BBPA_Filesystem_Service {
 	 * Return the temporary directory chosen by WordPress.
 	 */
 	protected function get_wordpress_temp_dir(): string {
-		return (string) ( function_exists( 'get_temp_dir' ) ? get_temp_dir() : sys_get_temp_dir() );
+		return (string) get_temp_dir();
 	}
 
 	/**

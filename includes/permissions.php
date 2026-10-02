@@ -201,7 +201,7 @@ function bbpa_log_ignored_access_capability(string $capability): void
 {
     static $reported = [];
 
-    if (isset($reported[$capability]) || !function_exists('bbpa_safe_log')) {
+    if (isset($reported[$capability])) {
         return;
     }
 
@@ -269,10 +269,6 @@ function bbpa_apply_role_access_capabilities(array $allcaps, array $caps, array 
     }
     $requested = array_intersect_key($requested, $grantable);
     if ($requested === []) {
-        return $allcaps;
-    }
-
-    if (!function_exists('bbpa_get_settings')) {
         return $allcaps;
     }
 

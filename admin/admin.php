@@ -404,6 +404,9 @@ function bbpa_submenu_item_is_upgrade_entry(array $submenu_item): bool
 
 /**
  * Normalize Free submenu upgrade entries so only one pricing item remains.
+ *
+ * The remaining pricing item is placed last, after the Contact item, which is the
+ * order bbpa_place_free_upgrade_submenu_last() used to restore afterwards.
  */
 function bbpa_normalize_free_upgrade_submenu(): void
 {
@@ -466,11 +469,11 @@ function bbpa_normalize_free_upgrade_submenu(): void
         $ordered_submenu[] = $submenu_item;
     }
 
-    $ordered_submenu[] = $upgrade_item;
-
     if (null !== $contact_item) {
         $ordered_submenu[] = $contact_item;
     }
+
+    $ordered_submenu[] = $upgrade_item;
 
     $GLOBALS['submenu'][$submenu_root] = array_values($ordered_submenu);
 }
@@ -517,9 +520,13 @@ function bbpa_register_contact_submenu(): void
 
 /**
  * Backward-compatible wrapper for the previous Pro-only contact submenu registration name.
+ *
+ * @deprecated 8.45.214 Use bbpa_register_contact_submenu().
  */
 function bbpa_register_pro_contact_submenu(): void
 {
+    _deprecated_function(__FUNCTION__, '8.45.214', 'bbpa_register_contact_submenu()');
+
     bbpa_register_contact_submenu();
 }
 
@@ -1004,19 +1011,21 @@ function bbpa_register_react_jsx_runtime_fallback(): void
 
 /**
  * Enqueue admin app bundle and pass runtime configuration.
+ *
+ * @param string $current_panel            Panel rendered by the current screen.
+ * @param bool   $inject_localized_payload Whether the wp-admin `window.BBPAAdmin` payload is printed. A runtime that
+ *                                         prints its own payload passes false, so the wp-admin payload is neither
+ *                                         built nor printed next to it.
  */
-function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): void
+function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard', bool $inject_localized_payload = true): void
 {
-    $menu_label = bbpa_get_plugin_label();
     $settings = bbpa_get_settings();
     $debug_enabled = function_exists('bbpa_is_debug_mode_enabled')
         ? bbpa_is_debug_mode_enabled()
         : !empty($settings['debug_enabled']);
-    $flag_assets = bbpa_get_flag_assets();
 
     $root_id = bbpa_normalize_admin_root_id('bbpa-admin');
     $panels = bbpa_get_admin_panels();
-    $available_panels = bbpa_get_admin_panels(true);
     $panel_names = array_values(
         array_filter(
             array_map(
@@ -1030,7 +1039,6 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
     if (!in_array($current_panel, $panel_names, true)) {
         $current_panel = 'dashboard';
     }
-    $hidden_by_policy = bbpa_get_effective_hidden_panels($settings);
     $asset_data = [
         'dependencies' => bbpa_get_admin_app_default_script_dependencies(),
         'version' => BBPA_VERSION,
@@ -1225,23 +1233,24 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
 
 
     bbpa_add_admin_color_scheme_styles();
-    $rest_config = bbpa_get_js_rest_config();
 
-    $localized_admin_payload = bbpa_build_admin_localized_payload(
-        $root_id,
-        $rest_config,
-        $panels,
-        $current_panel,
-        $menu_label,
-        $debug_enabled,
-        $hidden_by_policy,
-        $flag_assets,
-        $available_panels
-    );
+    if ($inject_localized_payload) {
+        $localized_admin_payload = bbpa_build_admin_localized_payload(
+            $root_id,
+            bbpa_get_js_rest_config(),
+            $panels,
+            $current_panel,
+            bbpa_get_plugin_label(),
+            $debug_enabled,
+            bbpa_get_effective_hidden_panels($settings),
+            bbpa_get_flag_assets(),
+            bbpa_get_admin_panels(true)
+        );
 
-    $localized_admin_json = wp_json_encode($localized_admin_payload);
-    if (is_string($localized_admin_json) && $localized_admin_json !== '') {
-        wp_add_inline_script('bbpa-admin', 'window.BBPAAdmin = ' . $localized_admin_json . ';', 'before');
+        $localized_admin_json = wp_json_encode($localized_admin_payload);
+        if (is_string($localized_admin_json) && $localized_admin_json !== '') {
+            wp_add_inline_script('bbpa-admin', 'window.BBPAAdmin = ' . $localized_admin_json . ';', 'before');
+        }
     }
 
     wp_add_inline_script(
@@ -1250,197 +1259,8 @@ function bbpa_enqueue_admin_app_assets(string $current_panel = 'dashboard'): voi
         'before'
     );
 
-    wp_add_inline_script(
-        'bbpa-admin',
-        <<<'JS'
-(function () {
-    if (typeof window === 'undefined' || !window.location || !window.MutationObserver) {
-        return;
-    }
-
-    var currentPageParams = new URLSearchParams(window.location.search);
-    var pluginSlug = String(
-        window.BBPAAdmin && window.BBPAAdmin.settings && window.BBPAAdmin.settings.slug
-            ? window.BBPAAdmin.settings.slug
-            : 'bimbeau-privacy-analytics'
-    );
-    var requestedTab = currentPageParams.get('bbpa_tab');
-    var topPagesPage = pluginSlug + '-top-pages';
-    var availablePanels = Array.isArray(window.BBPAAdmin && window.BBPAAdmin.panels)
-        ? window.BBPAAdmin.panels.map(function (panel) {
-            return String(panel && panel.name ? panel.name : '');
-        }).filter(Boolean)
-        : [];
-    var isPanelDisabled = function (panelName) {
-        if (!panelName || panelName === 'dashboard') {
-            return false;
-        }
-
-
-        return availablePanels.length > 0 && availablePanels.indexOf(panelName) === -1;
-    };
-
-    var summaryRoutes = [
-        { key: 'visits', page: pluginSlug + '-visitors', panel: 'visitors' },
-        { key: 'pageviews', page: topPagesPage, panel: 'top-pages' },
-        { key: 'uniquereferrers', page: pluginSlug + '-referrers', panel: 'referrers' },
-        { key: 'notfoundhits', page: topPagesPage, panel: 'top-pages', params: { bbpa_tab: 'not-found' } },
-        { key: 'searchhits', page: pluginSlug + '-search-terms', panel: 'search-terms' }
-    ];
-
-    var isSummaryRouteEnabled = function (route) {
-        var panelName = route && route.panel ? String(route.panel) : String(route.page || '').replace(pluginSlug + '-', '');
-        return !isPanelDisabled(panelName);
-    };
-
-    var buildAdminUrl = function (page, params) {
-        var url = new URL(window.location.href);
-        url.searchParams.set('page', page);
-
-        Object.keys(params || {}).forEach(function (key) {
-            var value = params[key];
-
-            if (value === undefined || value === null || value === '') {
-                url.searchParams.delete(key);
-                return;
-            }
-
-            url.searchParams.set(key, value);
-        });
-
-        return url.toString();
-    };
-
-    var openDashboardSummaryCard = function (card, event) {
-        if (!card) {
-            return;
-        }
-
-        var href = card.getAttribute('data-bbpa-card-href');
-
-        if (!href) {
-            return;
-        }
-
-        if (event && event.target && typeof event.target.closest === 'function') {
-            var interactiveTarget = event.target.closest('a, button, input, select, textarea, [role="button"], [role="link"]');
-            if (interactiveTarget && interactiveTarget !== card) {
-                return;
-            }
-        }
-
-        window.location.assign(href);
-    };
-
-    var redirectIfDisabledPageRequested = function () {
-        var page = currentPageParams.get('page');
-        if (!page || page === pluginSlug) {
-            return;
-        }
-
-        if (page.indexOf(pluginSlug + '-') !== 0) {
-            return;
-        }
-
-        var panelName = page.replace(pluginSlug + '-', '');
-        if (!isPanelDisabled(panelName)) {
-            return;
-        }
-
-        window.location.replace(buildAdminUrl(pluginSlug, {}));
-    };
-
-    var decorateDashboardSummaryCards = function () {
-        var page = currentPageParams.get('page');
-
-        if (page !== pluginSlug) {
-            return;
-        }
-
-        var cards = document.querySelectorAll('.bbpa-overview__summary .bbpa-overview__summary-card');
-
-        summaryRoutes.forEach(function (route, index) {
-            var card = cards[index];
-
-            if (!card) {
-                return;
-            }
-
-            if (!isSummaryRouteEnabled(route)) {
-                card.classList.remove('bbpa-overview__summary-card--interactive');
-                card.removeAttribute('role');
-                card.removeAttribute('tabindex');
-                card.removeAttribute('aria-label');
-                card.removeAttribute('data-bbpa-card-href');
-                return;
-            }
-
-            var label = card.querySelector('.bbpa-kpi-card__label');
-            if (!label) {
-                return;
-            }
-
-            card.classList.add('bbpa-overview__summary-card--interactive');
-            card.setAttribute('role', 'link');
-            card.setAttribute('tabindex', '0');
-            card.setAttribute('aria-label', (label.textContent || '').trim());
-            card.setAttribute(
-                'data-bbpa-card-href',
-                buildAdminUrl(route.page, route.params || {})
-            );
-
-            if (card.dataset.lsCardBound !== 'true') {
-                card.addEventListener('click', function (event) {
-                    openDashboardSummaryCard(card, event);
-                });
-                card.addEventListener('keydown', function (event) {
-                    if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') {
-                        return;
-                    }
-
-                    event.preventDefault();
-                    openDashboardSummaryCard(card, event);
-                });
-                card.dataset.lsCardBound = 'true';
-            }
-        });
-    };
-
-    var activateRequestedTopPagesTab = function () {
-        var page = currentPageParams.get('page');
-
-        if (page !== topPagesPage || requestedTab !== 'not-found') {
-            return;
-        }
-
-        var tabs = document.querySelectorAll('.bbpa-pages-tabs .components-tab-panel__tabs button');
-        tabs.forEach(function (button) {
-            var label = (button.textContent || '').toLowerCase();
-            var isPagesNotFoundTab = label.indexOf('pages not found') !== -1 || label.indexOf('404') !== -1;
-            if (isPagesNotFoundTab && button.getAttribute('aria-selected') !== 'true') {
-                button.click();
-            }
-        });
-    };
-
-    var observer = new window.MutationObserver(function () {
-        decorateDashboardSummaryCards();
-        activateRequestedTopPagesTab();
-    });
-
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-    });
-
-    redirectIfDisabledPageRequested();
-    decorateDashboardSummaryCards();
-    activateRequestedTopPagesTab();
-}());
-JS,
-        'after'
-    );
-
+    // Country flags: the image of every `.fi-xx` / `.bbpa-country-flag` node is resolved at runtime from
+    // settings.flagAssets (the packaged flag files), independently of the image URLs compiled into the stylesheet.
     $inline_script = implode("\n", [
         '(function () {',
         "    if (typeof window === 'undefined' || !window.BBPAAdmin || !window.BBPAAdmin.settings) {",
@@ -1470,7 +1290,7 @@ JS,
         "        var nodes = scope.querySelectorAll('.bbpa-country-flag, .fi');",
         '',
         '        nodes.forEach(function (node) {',
-        '            if (!node || node.dataset && node.dataset.lsFlagApplied) {',
+        '            if (!node || node.dataset && node.dataset.bbpaFlagApplied) {',
         '                return;',
         '            }',
         '',
@@ -1496,7 +1316,7 @@ JS,
         "            node.style.backgroundRepeat = 'no-repeat';",
         '',
         '            if (node.dataset) {',
-        "                node.dataset.lsFlagApplied = 'true';",
+        "                node.dataset.bbpaFlagApplied = 'true';",
         '            }',
         '        });',
         '    };',
@@ -1603,7 +1423,7 @@ function bbpa_get_admin_geoip_database_status_for_payload(): array
         ];
     }
 
-    $updater = new BBPA_GeoIP_Database_Updater();
+    $updater = bbpa_get_geoip_database_updater();
     $status = $updater->get_database_status();
 
     if (!is_array($status)) {
@@ -2524,11 +2344,19 @@ function bbpa_get_admin_panels(bool $include_disabled = false): array
             continue;
         }
 
-        $normalized[] = [
+        $normalized_panel = [
             'name' => $name,
             'title' => isset($panel['title']) ? wp_strip_all_tags((string) $panel['title']) : $name,
             'type' => isset($panel['type']) ? sanitize_key($panel['type']) : 'custom',
         ];
+
+        // Optional documented key, kept only when a panel declares it (the admin app treats a missing value as free).
+        $availability = bbpa_normalize_admin_availability($panel['availability'] ?? null);
+        if ($availability !== '') {
+            $normalized_panel['availability'] = $availability;
+        }
+
+        $normalized[] = $normalized_panel;
     }
 
     if ($include_disabled || empty($hidden_by_policy)) {
@@ -2539,7 +2367,7 @@ function bbpa_get_admin_panels(bool $include_disabled = false): array
         array_filter(
             $normalized,
             static function (array $panel) use ($hidden_by_policy): bool {
-                $name = $panel['name'] ?? '';
+                $name = $panel['name'];
                 if ($name === 'dashboard') {
                     return true;
                 }
@@ -2551,7 +2379,27 @@ function bbpa_get_admin_panels(bool $include_disabled = false): array
 }
 
 /**
+ * Normalize the optional `availability` key of an admin panel or REST source entry.
+ *
+ * @param mixed $availability Declared availability.
+ * @return string `free`, `pro`, or an empty string when the value is missing or unsupported.
+ */
+function bbpa_normalize_admin_availability($availability): string
+{
+    if (!is_string($availability)) {
+        return '';
+    }
+
+    $availability = sanitize_key($availability);
+
+    return in_array($availability, ['free', 'pro'], true) ? $availability : '';
+}
+
+/**
  * Get the effective hidden panels list from settings and consent-gated advanced stats.
+ *
+ * When advanced statistics are disabled, the panels that depend on them
+ * (BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS) and the realtime panel are hidden.
  */
 function bbpa_get_effective_hidden_panels(array $settings): array
 {
@@ -2564,7 +2412,7 @@ function bbpa_get_effective_hidden_panels(array $settings): array
         return $hidden_panels;
     }
 
-    $consent_gated_panels = ['geolocation', 'visitors', 'devices', 'events', 'realtime'];
+    $consent_gated_panels = array_merge(BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS, ['realtime']);
     return array_values(array_unique(array_merge($hidden_panels, $consent_gated_panels)));
 }
 
@@ -2692,12 +2540,19 @@ function bbpa_get_rest_sources(): array
             continue;
         }
 
-        $normalized[] = [
+        $normalized_source = [
             'key' => $key,
             'method' => $method,
             'namespace' => $namespace,
             'path' => $path,
         ];
+
+        $availability = bbpa_normalize_admin_availability($source['availability'] ?? null);
+        if ($availability !== '') {
+            $normalized_source['availability'] = $availability;
+        }
+
+        $normalized[] = $normalized_source;
     }
 
     return $normalized;

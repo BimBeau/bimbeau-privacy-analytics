@@ -4,6 +4,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Escape a value for HTML output.
+ *
+ * @deprecated Not used by the plugin. Use `esc_html()`.
+ *
+ * @param mixed $value Value to escape.
+ */
 function bbpa_esc_html($value): string
 {
     return esc_html((string) $value);

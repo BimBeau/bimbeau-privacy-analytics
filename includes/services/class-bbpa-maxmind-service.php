@@ -121,18 +121,8 @@ class BBPA_MaxMind_Service {
      * The request URL is never logged because it contains the visitor address.
      */
     private function log_maxmind_error(int $status, string $error_code): void {
-        if (
-            function_exists('bbpa_is_debug_mode_enabled')
-            && !bbpa_is_debug_mode_enabled()
-        ) {
+        if (!bbpa_is_debug_mode_enabled()) {
             return;
-        }
-
-        if (!function_exists('bbpa_is_debug_mode_enabled')) {
-            $settings = function_exists('bbpa_get_settings') ? bbpa_get_settings() : [];
-            if (empty($settings['debug_enabled'])) {
-                return;
-            }
         }
 
         $message = sprintf(
