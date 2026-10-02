@@ -298,24 +298,110 @@ export const formatExcludedPathsInput = (paths) =>
     .join("\n");
 
 /**
- * Read the excluded paths text field: one entry per line.
+ * Read the excluded paths text field: one entry per line or per comma.
  *
- * Lines are trimmed and empty lines are dropped. The server normalizes each
- * entry (lowercase, one leading slash, no trailing slash, no duplicate) and
- * returns the stored list after the save.
+ * New lines and commas both separate entries, as the server does for a
+ * string value (`bbpa_sanitize_settings()`), so "/a, /b" gives two entries
+ * and a path that contains a literal comma cannot be entered in this field.
+ * Entries are trimmed and empty entries are dropped. The server normalizes
+ * each entry (lowercase, one leading slash, no trailing slash, no duplicate)
+ * and returns the stored list after the save.
  *
  * @param {string} value Field value.
- * @return {string[]} Trimmed non-empty lines.
+ * @return {string[]} Trimmed non-empty entries.
  */
 export const parseExcludedPathsInput = (value) =>
   String(value || "")
-    .split(/\r\n|\r|\n/)
+    .split(/[\r\n,]+/)
     .map((line) => line.trim())
     .filter(Boolean);
 
 // A line that starts with a URL scheme ("https://") is a full address: the
 // server would store it as a path that never matches a page.
 const FULL_ADDRESS_PATTERN = /^[a-z][a-z0-9+.-]*:\/\//i;
+
+// Host name: dot-separated labels of letters, digits and hyphens, then a last
+// label of 2 to 63 letters (the shape of a top-level domain) and an optional
+// port.
+const HOST_NAME_PATTERN = /^(?:[a-z0-9-]+\.)+([a-z]{2,63})(?::\d{1,5})?$/i;
+
+// Last labels that are common file extensions, not top-level domains:
+// "page.html", "index.php/contact" or "robots.txt" are page paths.
+const FILE_EXTENSION_LABELS = new Set(
+  [
+    // Pages and server scripts.
+    "htm html shtml xhtml php phtml asp aspx jsp cfm cgi pl py sh",
+    // Feeds, data and text files.
+    "xml xsl xslt rss atom json jsonld webmanifest ics vcf txt csv md yml yaml ini conf cfg log sql",
+    // Documents.
+    "pdf doc docx xls xlsx ppt pptx odt ods odp rtf epub",
+    // Styles, scripts, images and fonts.
+    "css js mjs map jpg jpeg png gif svg webp avif heic heif ico bmp tif tiff ttf otf eot woff",
+    // Audio and video.
+    "webm ogg oga ogv wav flac aac mpg mpeg mov avi mkv vtt srt",
+    // Archives and backups.
+    "zip gz tgz tar rar xz bz bak old orig save swp tmp",
+  ]
+    .join(" ")
+    .split(" "),
+);
+
+/**
+ * Tell whether an excluded paths entry is a web address without a scheme.
+ *
+ * Rule: the entry does not start with a single "/" (a leading "//" is a
+ * protocol-relative address, checked without it), and its first segment, up
+ * to the first "/", "?" or "#" or the end of the entry, matches
+ * HOST_NAME_PATTERN with a last label that is not in FILE_EXTENSION_LABELS.
+ *
+ * Addresses: "example.com/contact", "www.example.com", "example.co.uk/a",
+ * "example.com:8080/contact", "//example.com/contact".
+ * Paths: "page.html", "index.php/contact", "contact", "a.b/c" (one-letter
+ * last label), "docs.v2/intro" (digit in the last label), "/a.b/c",
+ * "/blog/page.html", "/caf%C3%A9". Stored entries always start with a single
+ * "/" (the server normalizes them), so a stored list never matches.
+ *
+ * @param {string} path Trimmed entry.
+ * @return {boolean} Whether the entry starts with a host name.
+ */
+const isAddressWithoutScheme = (path) => {
+  let rest = path;
+  if (rest.startsWith("//")) {
+    rest = rest.slice(2);
+  } else if (rest.startsWith("/")) {
+    return false;
+  }
+
+  const firstSegment = rest.split(/[/?#]/)[0];
+  const match = HOST_NAME_PATTERN.exec(firstSegment);
+  if (!match) {
+    return false;
+  }
+
+  // "www." followed by another label is an address whatever its ending.
+  if (/^www\.[a-z0-9-]+\./i.test(firstSegment)) {
+    return true;
+  }
+
+  return !FILE_EXTENSION_LABELS.has(match[1].toLowerCase());
+};
+
+/**
+ * Tell whether an excluded paths entry is a full web address, with or
+ * without a scheme, instead of a page path.
+ *
+ * @param {*} path Entry from the form state.
+ * @return {boolean} Whether the entry is a web address.
+ */
+const isWebAddressEntry = (path) => {
+  if (typeof path !== "string") {
+    return false;
+  }
+
+  const value = path.trim();
+
+  return FULL_ADDRESS_PATTERN.test(value) || isAddressWithoutScheme(value);
+};
 
 /**
  * Validate the excluded paths before saving.
@@ -324,8 +410,8 @@ const FULL_ADDRESS_PATTERN = /^[a-z][a-z0-9+.-]*:\/\//i;
  * @return {Object} Field errors keyed by setting name (empty when valid).
  */
 export const validateExcludedPaths = (state) => {
-  const hasFullAddress = normalizeArray(state?.excluded_paths).some(
-    (path) => typeof path === "string" && FULL_ADDRESS_PATTERN.test(path),
+  const hasFullAddress = normalizeArray(state?.excluded_paths).some((path) =>
+    isWebAddressEntry(path),
   );
   if (!hasFullAddress) {
     return {};
@@ -1343,7 +1429,7 @@ const SettingsPanel = ({
                                 }));
                               }
                             }}
-                            isInvalid={Boolean(
+                            aria-invalid={Boolean(
                               validationErrors.maxmind_account_id,
                             )}
                           />
@@ -1384,7 +1470,7 @@ const SettingsPanel = ({
                                 }));
                               }
                             }}
-                            isInvalid={Boolean(
+                            aria-invalid={Boolean(
                               validationErrors.maxmind_license_key,
                             )}
                           />
@@ -2172,6 +2258,9 @@ const SettingsPanel = ({
                         rows={4}
                         spellCheck={false}
                         value={excludedPathsInput}
+                        // The error replaces the help text, which the control
+                        // links to the textarea with aria-describedby.
+                        aria-invalid={Boolean(validationErrors.excluded_paths)}
                         help={
                           validationErrors.excluded_paths || (
                             <>
