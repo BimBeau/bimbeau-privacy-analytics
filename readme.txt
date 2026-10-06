@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.54.0
+Stable tag: 8.54.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.54.0 =
-* [Feature] Acquisition: with WooCommerce, the channel table adds Orders, Revenue and Conversion rate columns; paid orders are attributed to the channel of the visit that placed them only when the visitor consented to advanced tracking, and the number of orders not attributed is shown under the table.
+= 8.54.1 =
+* [Fix] Dashboard: the Visitors card no longer shows the number of excluded robots under its value, which made it taller than the other cards; the number stays in the help of the card.

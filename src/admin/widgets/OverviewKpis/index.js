@@ -1,7 +1,6 @@
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Card, CardBody, Spinner, Tooltip } from '@wordpress/components';
 
-import BrandIcon from '../../components/icons/BrandIcon';
 import FeatureIcon from '../../components/icons/FeatureIcon';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
@@ -71,8 +70,8 @@ const OverviewKpis = ( { range } ) => {
 	const { data, isLoading, error } = useAdminEndpoint( '/overview', range, {
 		namespace: ADMIN_CONFIG?.settings?.restNamespace,
 	} );
-	// Robots are excluded from every statistic; the Visitors card mentions how
-	// many were detected, from the Robots list of the Visitors report.
+	// Robots are excluded from every statistic; the help of the Visitors card
+	// says how many were detected, from the Robots list of the Visitors report.
 	const { data: robotsData } = useAdminEndpoint(
 		'/visitors',
 		{
@@ -172,20 +171,6 @@ const OverviewKpis = ( { range } ) => {
 							'Visitors correspond to bounded visitor activity rows in the selected period.',
 							'bimbeau-privacy-analytics'
 					  ),
-			note:
-				robotsCount > 0
-					? sprintf(
-							/* translators: %s: number of robots detected in the selected period. */
-							_n(
-								'%s robot excluded',
-								'%s robots excluded',
-								robotsCount,
-								'bimbeau-privacy-analytics'
-							),
-							formatNumber( robotsCount )
-					  )
-					: null,
-			noteIcon: { kind: 'device', value: 'bot' },
 			value: overview.visitors,
 			icon: 'visits',
 			comparison: comparisonOverview?.visitors,
@@ -360,19 +345,6 @@ const OverviewKpis = ( { range } ) => {
 										</KpiBadge>
 									) }
 								</p>
-								{ card.note ? (
-									<p className="bbpa-kpi-card__note">
-										{ card.noteIcon ? (
-											<BrandIcon
-												kind={ card.noteIcon.kind }
-												value={ card.noteIcon.value }
-												className="bbpa-kpi-card__note-icon"
-												size={ 14 }
-											/>
-										) : null }
-										<span>{ card.note }</span>
-									</p>
-								) : null }
 							</div>
 							<FeatureIcon
 								name={ card.icon }
