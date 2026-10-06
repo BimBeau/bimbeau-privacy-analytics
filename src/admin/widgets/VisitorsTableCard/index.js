@@ -1,18 +1,15 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import {
-	Button,
-	Flex,
-	FlexItem,
-	SelectControl,
-	TextControl,
-	ToggleControl,
-	Tooltip,
-} from '@wordpress/components';
+import { SelectControl, ToggleControl, Tooltip } from '@wordpress/components';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
 import BpaCard from '../../components/BpaCard';
+import {
+	DataViewsChips,
+	DataViewsPagination,
+	DataViewsToolbar,
+} from '../../components/DataViewsFrame';
 import ReferrerLabel from '../../components/ReferrerLabel';
 import { normalizeReferrerHost, useReferrerFavicons } from '../../components/ReferrerLabel/faviconCache';
 import ReportExportAction from '../../components/ReportExportAction';
@@ -30,11 +27,7 @@ import {
 import { getLocationLabel } from '../../lib/locationLabel';
 import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
 import { getChannelLabel } from '../../lib/channelLabels';
-import {
-	formatHiddenPrivateCount,
-	formatItemCount,
-	formatPageOfTotal,
-} from '../../lib/paginationLabels';
+import { formatHiddenPrivateCount } from '../../lib/paginationLabels';
 
 const formatVisitTime = (timestamp) => {
 	const parsedTimestamp = Number(timestamp);
@@ -196,7 +189,7 @@ const renderVisitorHash = (visitorId) =>
  */
 const BotVisitorsTable = ({ items, tableLabel }) => (
 	<table
-		className="widefat striped bbpa-report-table bbpa-report-table--visitors bbpa-report-table--bots"
+		className="bbpa-dataviews-table bbpa-report-table bbpa-report-table--visitors bbpa-report-table--bots"
 		aria-label={tableLabel}
 	>
 		<thead>
@@ -341,8 +334,6 @@ const VisitorsTableCard = ({
 		}
 	}, [totalPages, page, isLoading, error]);
 
-	const canPrevious = page > 1;
-	const canNext = page < totalPages;
 	const hiddenPrivateItems = isPrivateFilterActive
 		? Math.max(0, Number(data?.hiddenPrivateItems) || 0)
 		: 0;
@@ -365,68 +356,76 @@ const VisitorsTableCard = ({
 	);
 
 	return (
-		<BpaCard title={title} headerActions={headerActions} bodyClassName="bbpa-listing-region">
-			<div className="bbpa-table-controls">
-				<div className="bbpa-table-controls__group">
-					<SelectControl
-						className="bbpa-table-controls__sort-control"
-						label={__('Sort by', 'bimbeau-privacy-analytics')}
-						value={sortBy}
-						options={sortOptions.map((option) => ({
-							label: option.label,
-							value: option.value,
-						}))}
-						onChange={(value) => {
-							setSortBy(value);
-							setPage(1);
-						}}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
-					/>
-					<SelectControl
-						className="bbpa-table-controls__rows-control"
-						label={__('Rows', 'bimbeau-privacy-analytics')}
-						value={String(perPage)}
-						options={[
-							{ label: '5', value: '5' },
-							{ label: '10', value: '10' },
-							{ label: '20', value: '20' },
-						]}
-						onChange={(value) => {
-							setPerPage(Number(value));
-							setPage(1);
-						}}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
-					/>
-				</div>
-				{showPrivateVisitorsToggle && (
-					<ToggleControl
-						className="bbpa-table-controls__toggle"
-						label={__('Hide private visitors', 'bimbeau-privacy-analytics')}
-						help={__('Saved for your account', 'bimbeau-privacy-analytics')}
-						checked={isPrivateFilterActive}
-						onChange={(value) => {
-							onHidePrivateVisitorsChange(Boolean(value));
-							setPage(1);
-						}}
-						__nextHasNoMarginBottom
-					/>
-				)}
-				<div className="bbpa-table-controls__search">
-					<TextControl
-						label={__('Search', 'bimbeau-privacy-analytics')}
-						value={searchInput}
-						onChange={(value) => {
-							setSearchInput(value);
-							setPage(1);
-						}}
-						placeholder={__('Search…', 'bimbeau-privacy-analytics')}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
-					/>
-				</div>
-			</div>
+		<BpaCard title={title} className="bbpa-dataviews-card" bodyClassName="bbpa-listing-region bbpa-dataviews">
+			<DataViewsToolbar
+				searchValue={searchInput}
+				onSearchChange={(value) => {
+					setSearchInput(value);
+					setPage(1);
+				}}
+				viewOptions={
+					<>
+						<SelectControl
+							label={__('Sort by', 'bimbeau-privacy-analytics')}
+							value={sortBy}
+							options={sortOptions.map((option) => ({
+								label: option.label,
+								value: option.value,
+							}))}
+							onChange={(value) => {
+								setSortBy(value);
+								setPage(1);
+							}}
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
+						/>
+						<SelectControl
+							label={__('Rows', 'bimbeau-privacy-analytics')}
+							value={String(perPage)}
+							options={[
+								{ label: '5', value: '5' },
+								{ label: '10', value: '10' },
+								{ label: '20', value: '20' },
+							]}
+							onChange={(value) => {
+								setPerPage(Number(value));
+								setPage(1);
+							}}
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
+						/>
+						{showPrivateVisitorsToggle && (
+							<ToggleControl
+								label={__('Hide private visitors', 'bimbeau-privacy-analytics')}
+								help={__('Saved for your account', 'bimbeau-privacy-analytics')}
+								checked={isPrivateFilterActive}
+								onChange={(value) => {
+									onHidePrivateVisitorsChange(Boolean(value));
+									setPage(1);
+								}}
+								__nextHasNoMarginBottom
+							/>
+						)}
+					</>
+				}
+				actions={headerActions}
+			/>
+			<DataViewsChips
+				chips={
+					isPrivateFilterActive
+						? [
+							{
+								key: 'private',
+								label: __('Private visitors hidden', 'bimbeau-privacy-analytics'),
+								onRemove: () => {
+									onHidePrivateVisitorsChange(false);
+									setPage(1);
+								},
+							},
+						]
+						: []
+				}
+			/>
 			<DataState
 				isLoading={isLoading}
 				error={error}
@@ -441,7 +440,7 @@ const VisitorsTableCard = ({
 							<BotVisitorsTable items={items} tableLabel={tableLabel} />
 						) : (
 						<table
-							className="widefat striped bbpa-report-table bbpa-report-table--visitors"
+							className="bbpa-dataviews-table bbpa-report-table bbpa-report-table--visitors"
 							aria-label={tableLabel}
 						>
 							<thead>
@@ -752,46 +751,17 @@ const VisitorsTableCard = ({
 						</table>
 						)}
 					</div>
-					<Flex
-						className="bbpa-table-pagination"
-						justify="space-between"
-						align="center"
-					>
-						<FlexItem>
-							<div className="bbpa-table-pagination__buttons">
-								<Button
-									variant="secondary"
-									onClick={() =>
-										setPage((prev) =>
-											Math.max(prev - 1, 1)
-										)
-									}
-									disabled={!canPrevious}
-								>
-									{__('Previous', 'bimbeau-privacy-analytics')}
-								</Button>
-								<Button
-									variant="secondary"
-									onClick={() =>
-										setPage((prev) =>
-											Math.min(prev + 1, totalPages)
-										)
-									}
-									disabled={!canNext}
-								>
-									{__('Next', 'bimbeau-privacy-analytics')}
-								</Button>
-							</div>
-						</FlexItem>
-						<FlexItem className="bbpa-table-pagination__meta">
-							{formatPageOfTotal(page, totalPages)}
-						</FlexItem>
-						<FlexItem className="bbpa-table-pagination__meta">
-							{formatItemCount(totalItems)}
-							{hiddenPrivateItems > 0 &&
-								` · ${formatHiddenPrivateCount(hiddenPrivateItems)}`}
-						</FlexItem>
-					</Flex>
+					<DataViewsPagination
+						page={page}
+						totalPages={totalPages}
+						totalItems={totalItems}
+						onPageChange={setPage}
+						meta={
+							hiddenPrivateItems > 0
+								? formatHiddenPrivateCount(hiddenPrivateItems)
+								: ''
+						}
+					/>
 				</>
 			)}
 		</BpaCard>

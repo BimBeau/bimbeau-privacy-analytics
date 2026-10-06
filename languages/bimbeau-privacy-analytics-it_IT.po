@@ -670,6 +670,54 @@ msgstr "Anteprima risposta:"
 msgid "Loading: %s"
 msgstr "Caricamento: %s"
 
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search"
+msgstr "Cerca"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search…"
+msgstr "Cerca…"
+
+#: src/admin/components/DataViewsFrame/index.js
+msgid "View options"
+msgstr "Opzioni di visualizzazione"
+
+#. translators: %s: label of an active list filter.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Remove filter: %s"
+msgstr "Rimuovi filtro: %s"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "Reimposta"
+
+#. translators: %s: number of pages. "<CurrentPage />" is the page selector.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Page <CurrentPage /> of %s"
+msgstr "Pagina <CurrentPage /> di %s"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "Pagina corrente"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "Pagina precedente"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "Pagina successiva"
+
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
 msgstr "Abilita aggregazione geolocalizzazione"
@@ -826,7 +874,6 @@ msgstr "Altre impostazioni utilizzano le impostazioni predefinite consigliate e 
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Precedente"
 
@@ -946,10 +993,6 @@ msgstr "Caricamento mappa del mondo"
 #: src/admin/components/WorldMap/index.js
 msgid "Map zoom controls"
 msgstr "Controlli zoom mappa"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "Reimposta"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1319,10 +1362,6 @@ msgstr "Città"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Ora di connessione"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "Pagina corrente"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -2317,7 +2356,6 @@ msgstr "Tempo attivo medio durante una visita."
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Successivo"
 
@@ -2371,34 +2409,12 @@ msgid "Rows"
 msgstr "Righe"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Cerca"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Cerca…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "Nessun dato sui siti di riferimento disponibile."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "Caricamento siti di riferimento…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Pagina precedente"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Pagina successiva"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
@@ -2587,3 +2603,7 @@ msgstr "Nascondi visitatori privati"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Saved for your account"
 msgstr "Salvato per il tuo account"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Private visitors hidden"
+msgstr "Visitatori privati nascosti"

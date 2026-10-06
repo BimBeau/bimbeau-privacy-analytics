@@ -668,6 +668,54 @@ msgstr "响应预览："
 msgid "Loading: %s"
 msgstr "正在加载：%s"
 
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search"
+msgstr "搜索"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search…"
+msgstr "搜索…"
+
+#: src/admin/components/DataViewsFrame/index.js
+msgid "View options"
+msgstr "视图选项"
+
+#. translators: %s: label of an active list filter.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Remove filter: %s"
+msgstr "移除筛选：%s"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "重置"
+
+#. translators: %s: number of pages. "<CurrentPage />" is the page selector.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Page <CurrentPage /> of %s"
+msgstr "第 <CurrentPage /> 页，共 %s 页"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "当前页面"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "上一页"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "下一页"
+
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
 msgstr "启用地理定位聚合"
@@ -824,7 +872,6 @@ msgstr "其他设置使用建议的默认值，并且可以稍后从 BimBeau Pri
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "上一步"
 
@@ -944,10 +991,6 @@ msgstr "正在加载世界地图"
 #: src/admin/components/WorldMap/index.js
 msgid "Map zoom controls"
 msgstr "地图缩放控件"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "重置"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1315,10 +1358,6 @@ msgstr "城市"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "连接时间"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "当前页面"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -2310,7 +2349,6 @@ msgstr "每次访问期间的平均活跃时长。"
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "下一项"
 
@@ -2364,34 +2402,12 @@ msgid "Rows"
 msgstr "行"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "搜索"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "搜索…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "没有可用的引荐站点数据。"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "正在加载引荐站点…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "上一页"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "下一页"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
@@ -2579,3 +2595,7 @@ msgstr "隐藏私密访客"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Saved for your account"
 msgstr "已为您的账户保存"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Private visitors hidden"
+msgstr "已隐藏私密访客"

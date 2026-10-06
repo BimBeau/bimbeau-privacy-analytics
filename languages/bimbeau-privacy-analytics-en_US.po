@@ -670,6 +670,54 @@ msgstr "Response preview:"
 msgid "Loading: %s"
 msgstr "Loading: %s"
 
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search"
+msgstr "Search"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search…"
+msgstr "Search…"
+
+#: src/admin/components/DataViewsFrame/index.js
+msgid "View options"
+msgstr "View options"
+
+#. translators: %s: label of an active list filter.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Remove filter: %s"
+msgstr "Remove filter: %s"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "Reset"
+
+#. translators: %s: number of pages. "<CurrentPage />" is the page selector.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Page <CurrentPage /> of %s"
+msgstr "Page <CurrentPage /> of %s"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "Current page"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "Previous page"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "Next page"
+
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
 msgstr "Enable geolocation aggregation"
@@ -826,7 +874,6 @@ msgstr "Other settings use the recommended defaults and can be changed later fro
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Previous"
 
@@ -946,10 +993,6 @@ msgstr "Loading world map"
 #: src/admin/components/WorldMap/index.js
 msgid "Map zoom controls"
 msgstr "Map zoom controls"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "Reset"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1319,10 +1362,6 @@ msgstr "City"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Connection time"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "Current page"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -2317,7 +2356,6 @@ msgstr "Average active time spent during a visit."
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Next"
 
@@ -2371,34 +2409,12 @@ msgid "Rows"
 msgstr "Rows"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Search"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Search…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "No referring site data available."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "Loading referring sites…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Previous page"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Next page"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
@@ -2587,3 +2603,7 @@ msgstr "Hide private visitors"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Saved for your account"
 msgstr "Saved for your account"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Private visitors hidden"
+msgstr "Private visitors hidden"

@@ -670,6 +670,54 @@ msgstr "Προεπισκόπηση απόκρισης:"
 msgid "Loading: %s"
 msgstr "Φόρτωση: %s"
 
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Search…"
+msgstr "Αναζήτηση…"
+
+#: src/admin/components/DataViewsFrame/index.js
+msgid "View options"
+msgstr "Επιλογές προβολής"
+
+#. translators: %s: label of an active list filter.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Remove filter: %s"
+msgstr "Αφαίρεση φίλτρου: %s"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/components/WorldMap/index.js
+msgid "Reset"
+msgstr "Επαναφορά"
+
+#. translators: %s: number of pages. "<CurrentPage />" is the page selector.
+#: src/admin/components/DataViewsFrame/index.js
+msgid "Page <CurrentPage /> of %s"
+msgstr "Σελίδα <CurrentPage /> από %s"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "Τρέχουσα σελίδα"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Previous page"
+msgstr "Προηγούμενη σελίδα"
+
+#: src/admin/components/DataViewsFrame/index.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Next page"
+msgstr "Επόμενη σελίδα"
+
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
 msgstr "Ενεργοποίηση συγκέντρωσης γεωεντοπισμού"
@@ -826,7 +874,6 @@ msgstr "Άλλες ρυθμίσεις χρησιμοποιούν τις προτ
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Previous"
 msgstr "Προηγούμενο"
 
@@ -946,10 +993,6 @@ msgstr "Φόρτωση παγκόσμιου χάρτη"
 #: src/admin/components/WorldMap/index.js
 msgid "Map zoom controls"
 msgstr "Χειριστήρια μεγέθυνσης χάρτη"
-
-#: src/admin/components/WorldMap/index.js
-msgid "Reset"
-msgstr "Επαναφορά"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1319,10 +1362,6 @@ msgstr "Πόλη"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
 msgstr "Χρόνος σύνδεσης"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "Τρέχουσα σελίδα"
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
@@ -2317,7 +2356,6 @@ msgstr "Μέσος ενεργός χρόνος κατά τη διάρκεια μ
 #: src/admin/widgets/PeriodFilter/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Next"
 msgstr "Επόμενο"
 
@@ -2371,34 +2409,12 @@ msgid "Rows"
 msgstr "Γραμμές"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search"
-msgstr "Αναζήτηση"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Search…"
-msgstr "Αναζήτηση…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "No referring site data available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα ιστότοπων παραπομπής."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "Φόρτωση ιστότοπων παραπομπής…"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Προηγούμενη σελίδα"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Επόμενη σελίδα"
 
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Title"
@@ -2587,3 +2603,7 @@ msgstr "Απόκρυψη ιδιωτικών επισκεπτών"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Saved for your account"
 msgstr "Αποθηκεύτηκε για τον λογαριασμό σας"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Private visitors hidden"
+msgstr "Οι ιδιωτικοί επισκέπτες αποκρύπτονται"
