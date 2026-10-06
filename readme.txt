@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.47.4
+Stable tag: 8.47.5
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.47.4 =
-* [Fix] Real-time map markers pulse again, with a size and opacity weighted by activity; the animation stays off when the system asks for reduced motion.
+= 8.47.5 =
+* [Fix] The loading screen of the installed Stats App is centered on the screen instead of sticking to the top. [Pro].
