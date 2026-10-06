@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.55.0
+Stable tag: 8.56.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.55.0 =
-* [Feature] Events: new Funnels tab that follows the visits completing 2 to 8 configured events in order during the same visit, with visits entered, conversions, conversion rate against the previous period, median time to convert, drop-offs per step, channel and device filters and a breakdown by channel.
+= 8.56.0 =
+* [Feature] WooCommerce: ready-made purchase funnel (product viewed, added to cart, checkout started, order placed) in the Funnels tab, with the revenue of converted visits in total and per channel.
