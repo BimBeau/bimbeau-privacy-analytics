@@ -78,6 +78,14 @@ export const wpAdminAuthStrategy = Object.freeze( {
 		} );
 	},
 	/**
+	 * Whether an expired session reported by a request sent outside
+	 * fetchAdminJson(), such as a file export, gets the onExpiredSession()
+	 * reaction. wp-admin keeps the error message of the caller.
+	 *
+	 * @return {boolean} True to apply onExpiredSession().
+	 */
+	handlesDirectRequestExpiredSession: () => false,
+	/**
 	 * React to a successful response.
 	 */
 	onRequestSuccess: () => {},
@@ -270,6 +278,31 @@ export const createAdminEndpointClient = ( {
 	 * @return {Object} Request headers.
 	 */
 	const getAdminAuthHeaders = () => strategy.getAuthHeaders( getConfig() );
+
+	/**
+	 * Handle an expired session reported by a request sent outside
+	 * fetchAdminJson(), such as a file export.
+	 *
+	 * When the strategy asks for it, the error gets the same reaction as an
+	 * expired session of fetchAdminJson() (for example the app reloads for
+	 * fresh nonces, then shows the session-expired screen).
+	 *
+	 * @param {Object} endpointError Error built by parseEndpointError().
+	 * @return {boolean} True when the session reaction ran: the caller should
+	 *                   not show its own error message.
+	 */
+	const handleExpiredSessionError = ( endpointError ) => {
+		const config = getConfig();
+		if (
+			! endpointError?.isExpiredSession ||
+			! strategy.handlesDirectRequestExpiredSession( config, session )
+		) {
+			return false;
+		}
+
+		strategy.onExpiredSession( endpointError, config, session );
+		return true;
+	};
 
 	const buildRestUrl = ( path, params, namespace, options = {} ) => {
 		const config = getConfig();
@@ -525,6 +558,7 @@ export const createAdminEndpointClient = ( {
 		fetchAdminJson,
 		getAdminAuthHeaders,
 		getAuthRequiredState,
+		handleExpiredSessionError,
 		parseEndpointError,
 		parseJsonResponse,
 		reloadForAuthRequired,

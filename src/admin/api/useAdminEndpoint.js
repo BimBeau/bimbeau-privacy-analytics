@@ -19,6 +19,7 @@ export const {
 	fetchAdminJson,
 	getAdminAuthHeaders,
 	getAuthRequiredState,
+	handleExpiredSessionError,
 	parseEndpointError,
 	parseJsonResponse,
 	reloadForAuthRequired,
