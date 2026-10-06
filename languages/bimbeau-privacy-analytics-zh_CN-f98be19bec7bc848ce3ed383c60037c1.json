@@ -67,6 +67,9 @@
       "%s private hidden": [
         "已隐藏 %s 个私密访客"
       ],
+      "%s robot excluded": [
+        "已排除 %s 个机器人"
+      ],
       "%s visitor": [
         "%s 位访客"
       ],
@@ -691,6 +694,9 @@
       "Hourly heatmaps require hourly page aggregation data for the selected source.": [
         "小时热力图需要所选来源的页面小时聚合数据。"
       ],
+      "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics.": [
+        "仅限真人访客：所选时间段内的访客活动记录。此时间段内检测到的机器人（%s）已从所有统计中排除。"
+      ],
       "Humans": [
         "人类"
       ],
@@ -708,6 +714,15 @@
       ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "在你的 CMP 中，在统计或分析目的被接受之前阻止 BimBeau Privacy Analytics 高级统计脚本。"
+      ],
+      "Include robots": [
+        "包含机器人"
+      ],
+      "Includes %1$s page views of %2$s robot.": [
+        "包含 %2$s 个机器人的 %1$s 次页面浏览。"
+      ],
+      "Includes %1$s page views of the %2$s most active robots, out of %3$s robots in the selected range.": [
+        "包含所选时间段内 %3$s 个机器人中最活跃的 %2$s 个机器人的 %1$s 次页面浏览。"
       ],
       "Initial configuration completed.": [
         "初始配置完成。"
@@ -982,6 +997,9 @@
       "No robot detected for this period.": [
         "此期间未检测到机器人。"
       ],
+      "No robot was detected in the selected range.": [
+        "所选时间段内未检测到机器人。"
+      ],
       "No roles available.": [
         "没有可用角色。"
       ],
@@ -1204,11 +1222,17 @@
       "Return to the download": [
         "返回下载"
       ],
+      "Robot page views could not be loaded.": [
+        "无法加载机器人的页面浏览量。"
+      ],
       "Robots": [
         "机器人"
       ],
       "Robots are excluded from all statistics. This list only lets you check what was filtered.": [
         "机器人已从所有统计数据中排除。此列表仅用于检查被过滤的内容。"
+      ],
+      "Robots stay excluded from every other report.": [
+        "机器人仍会从所有其他报告中排除。"
       ],
       "Role access": [
         "角色访问"

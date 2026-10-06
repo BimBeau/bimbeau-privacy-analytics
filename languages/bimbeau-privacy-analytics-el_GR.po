@@ -2206,6 +2206,34 @@ msgid "Based on %s tracked page views in the selected range."
 msgstr "Βάσει %s καταγεγραμμένων προβολών σελίδας στο επιλεγμένο εύρος."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robot page views could not be loaded."
+msgstr "Δεν ήταν δυνατή η φόρτωση των προβολών σελίδας των ρομπότ."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robots stay excluded from every other report."
+msgstr "Τα ρομπότ παραμένουν εκτός όλων των άλλων αναφορών."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No robot was detected in the selected range."
+msgstr "Δεν εντοπίστηκε κανένα ρομπότ στην επιλεγμένη περίοδο."
+
+#. translators: 1: robot page views, 2: number of robots read, 3: number of robots in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of the %2$s most active robots, out of %3$s robots in the selected range."
+msgstr "Περιλαμβάνει %1$s προβολές σελίδας από τα %2$s πιο ενεργά ρομπότ, από %3$s ρομπότ στην επιλεγμένη περίοδο."
+
+#. translators: 1: robot page views, 2: number of robots.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of %2$s robot."
+msgid_plural "Includes %1$s page views of %2$s robots."
+msgstr[0] "Περιλαμβάνει %1$s προβολές σελίδας από %2$s ρομπότ."
+msgstr[1] "Περιλαμβάνει %1$s προβολές σελίδας από %2$s ρομπότ."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Include robots"
+msgstr "Συμπερίληψη ρομπότ"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No audience breakdowns available."
 msgstr "Δεν υπάρχουν διαθέσιμες κατανομές κοινού."
 
@@ -2261,9 +2289,21 @@ msgstr "Δεν υπάρχουν διαθέσιμες μετρικές επισκ
 msgid "Loading KPIs…"
 msgstr "Φόρτωση KPI…"
 
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "Μόνο ανθρώπινοι επισκέπτες: γραμμές δραστηριότητας επισκεπτών στην επιλεγμένη περίοδο. Τα ρομπότ που εντοπίστηκαν σε αυτή την περίοδο (%s) εξαιρούνται από όλα τα στατιστικά."
+
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."
 msgstr "Οι επισκέπτες αντιστοιχούν σε οριοθετημένες γραμμές δραστηριότητας επισκέπτη στην επιλεγμένη περίοδο."
+
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "%s robot excluded"
+msgid_plural "%s robots excluded"
+msgstr[0] "%s ρομπότ εξαιρέθηκε"
+msgstr[1] "%s ρομπότ εξαιρέθηκαν"
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Pages / visit"

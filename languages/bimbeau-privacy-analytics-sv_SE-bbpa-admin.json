@@ -71,6 +71,10 @@
         "%s privat dold",
         "%s privata dolda"
       ],
+      "%s robot excluded": [
+        "%s robot undantagen",
+        "%s robotar undantagna"
+      ],
       "%s visitor": [
         "%s besökare",
         "%s besökare"
@@ -696,6 +700,9 @@
       "Hourly heatmaps require hourly page aggregation data for the selected source.": [
         "Timvisa heatmaps kräver timvis sidaggregeringsdata för den valda källan."
       ],
+      "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics.": [
+        "Endast mänskliga besökare: rader med besöksaktivitet under den valda perioden. Robotar som upptäckts under perioden (%s) är undantagna från all statistik."
+      ],
       "Humans": [
         "Människor"
       ],
@@ -713,6 +720,16 @@
       ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "Blockera BimBeau Privacy Analytics-skriptet för avancerad statistik i din CMP tills ändamålet Statistik eller Analys har accepterats."
+      ],
+      "Include robots": [
+        "Inkludera robotar"
+      ],
+      "Includes %1$s page views of %2$s robot.": [
+        "Innehåller %1$s sidvisningar från %2$s robot.",
+        "Innehåller %1$s sidvisningar från %2$s robotar."
+      ],
+      "Includes %1$s page views of the %2$s most active robots, out of %3$s robots in the selected range.": [
+        "Innehåller %1$s sidvisningar från de %2$s mest aktiva robotarna, av %3$s robotar under den valda perioden."
       ],
       "Initial configuration completed.": [
         "Initial konfiguration slutförd."
@@ -987,6 +1004,9 @@
       "No robot detected for this period.": [
         "Ingen robot upptäcktes under den här perioden."
       ],
+      "No robot was detected in the selected range.": [
+        "Ingen robot upptäcktes under den valda perioden."
+      ],
       "No roles available.": [
         "Inga roller tillgängliga."
       ],
@@ -1209,11 +1229,17 @@
       "Return to the download": [
         "Återgå till nedladdningen"
       ],
+      "Robot page views could not be loaded.": [
+        "Robotarnas sidvisningar kunde inte läsas in."
+      ],
       "Robots": [
         "Robotar"
       ],
       "Robots are excluded from all statistics. This list only lets you check what was filtered.": [
         "Robotar utesluts från all statistik. Listan låter dig bara kontrollera vad som har filtrerats bort."
+      ],
+      "Robots stay excluded from every other report.": [
+        "Robotar är fortfarande undantagna från alla andra rapporter."
       ],
       "Role access": [
         "Rollåtkomst"

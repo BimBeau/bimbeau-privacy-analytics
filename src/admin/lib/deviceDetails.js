@@ -132,3 +132,53 @@ export const buildDeviceDetailsBreakdowns = ( visitors = [] ) => {
 		browserVersionsIdentifiedTotal: browserVersions.identifiedTotal,
 	};
 };
+
+/**
+ * Page views of the robots read from /visitors (visitor_type=bot).
+ *
+ * @param {Array} robots Bot visitor rows.
+ * @return {number} Sum of their page views.
+ */
+export const sumRobotPageViews = ( robots = [] ) =>
+	( Array.isArray( robots ) ? robots : [] ).reduce( ( total, item ) => {
+		const hits = Number( item?.page_views || 0 );
+
+		return Number.isFinite( hits ) && hits > 0 ? total + hits : total;
+	}, 0 );
+
+/**
+ * Device items with a robot row appended, shares recomputed over the human and
+ * robot page views. The robot row stays last whatever its size, so the human
+ * device order does not change when it is shown.
+ *
+ * @param {Array}  devices   Human device items ({ label, hits, share }).
+ * @param {number} robotHits Robot page views.
+ * @return {Array} Device items, the robot one flagged with isRobot.
+ */
+export const withRobotDeviceItem = ( devices = [], robotHits = 0 ) => {
+	const humanItems = ( Array.isArray( devices ) ? devices : [] ).filter(
+		( item ) => String( item?.label || '' ).toLowerCase() !== 'bot'
+	);
+	const safeRobotHits =
+		Number.isFinite( robotHits ) && robotHits > 0 ? robotHits : 0;
+	const total =
+		humanItems.reduce(
+			( sum, item ) => sum + ( Number( item?.hits ) || 0 ),
+			0
+		) + safeRobotHits;
+	const toShare = ( hits ) =>
+		total > 0 ? Math.round( ( hits / total ) * 100 ) : 0;
+
+	return [
+		...humanItems.map( ( item ) => ( {
+			...item,
+			share: toShare( Number( item?.hits ) || 0 ),
+		} ) ),
+		{
+			label: 'bot',
+			hits: safeRobotHits,
+			share: toShare( safeRobotHits ),
+			isRobot: true,
+		},
+	];
+};

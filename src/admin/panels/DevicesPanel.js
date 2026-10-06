@@ -11,7 +11,11 @@ const DevicesPanel = ( { rangeSelection } ) => {
 
 	return (
 		<div className="bbpa-report-panel">
-			<AudienceBreakdownCards range={ range } includeResolutions />
+			<AudienceBreakdownCards
+				range={ range }
+				includeResolutions
+				allowRobotsToggle
+			/>
 		</div>
 	);
 };

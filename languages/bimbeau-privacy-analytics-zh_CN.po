@@ -2200,6 +2200,33 @@ msgid "Based on %s tracked page views in the selected range."
 msgstr "基于所选范围内 %s 次已跟踪页面浏览。"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robot page views could not be loaded."
+msgstr "无法加载机器人的页面浏览量。"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robots stay excluded from every other report."
+msgstr "机器人仍会从所有其他报告中排除。"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No robot was detected in the selected range."
+msgstr "所选时间段内未检测到机器人。"
+
+#. translators: 1: robot page views, 2: number of robots read, 3: number of robots in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of the %2$s most active robots, out of %3$s robots in the selected range."
+msgstr "包含所选时间段内 %3$s 个机器人中最活跃的 %2$s 个机器人的 %1$s 次页面浏览。"
+
+#. translators: 1: robot page views, 2: number of robots.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of %2$s robot."
+msgid_plural "Includes %1$s page views of %2$s robots."
+msgstr[0] "包含 %2$s 个机器人的 %1$s 次页面浏览。"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Include robots"
+msgstr "包含机器人"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No audience breakdowns available."
 msgstr "没有可用的受众细分。"
 
@@ -2255,9 +2282,20 @@ msgstr "没有可用的概览指标。"
 msgid "Loading KPIs…"
 msgstr "正在加载 KPI…"
 
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "仅限真人访客：所选时间段内的访客活动记录。此时间段内检测到的机器人（%s）已从所有统计中排除。"
+
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."
 msgstr "访客对应于所选期间内有边界的访客活动行。"
+
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "%s robot excluded"
+msgid_plural "%s robots excluded"
+msgstr[0] "已排除 %s 个机器人"
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Pages / visit"

@@ -2206,6 +2206,34 @@ msgid "Based on %s tracked page views in the selected range."
 msgstr "Basado en %s páginas vistas registradas en el rango seleccionado."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robot page views could not be loaded."
+msgstr "No se han podido cargar las páginas vistas de los robots."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robots stay excluded from every other report."
+msgstr "Los robots siguen excluidos de todos los demás informes."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No robot was detected in the selected range."
+msgstr "No se ha detectado ningún robot en el periodo seleccionado."
+
+#. translators: 1: robot page views, 2: number of robots read, 3: number of robots in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of the %2$s most active robots, out of %3$s robots in the selected range."
+msgstr "Incluye %1$s páginas vistas de los %2$s robots más activos, de %3$s robots en el periodo seleccionado."
+
+#. translators: 1: robot page views, 2: number of robots.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of %2$s robot."
+msgid_plural "Includes %1$s page views of %2$s robots."
+msgstr[0] "Incluye %1$s páginas vistas de %2$s robot."
+msgstr[1] "Incluye %1$s páginas vistas de %2$s robots."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Include robots"
+msgstr "Incluir robots"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No audience breakdowns available."
 msgstr "No hay desgloses de audiencia disponibles."
 
@@ -2261,9 +2289,21 @@ msgstr "No hay métricas generales disponibles."
 msgid "Loading KPIs…"
 msgstr "Cargando KPI…"
 
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "Solo visitantes humanos: filas de actividad de visitantes en el periodo seleccionado. Los robots detectados en este periodo (%s) se excluyen de todas las estadísticas."
+
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."
 msgstr "Los visitantes corresponden a filas de actividad de visitante delimitadas en el periodo seleccionado."
+
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "%s robot excluded"
+msgid_plural "%s robots excluded"
+msgstr[0] "%s robot excluido"
+msgstr[1] "%s robots excluidos"
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Pages / visit"

@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.50.0
+Stable tag: 8.51.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,6 +213,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.50.0 =
-* [Feature] Visitors report: new Humans and Robots tabs; the Robots tab lists the crawlers and other automated visits that are excluded from all statistics, with their connection time, last activity, page views, entry page and device.
-* [Feature] Visitors report: new "Hide private visitors" switch on the Humans tab, saved for your account, to list only visitors with advanced (consented) data; the item count shows how many private visitors are hidden.
+= 8.51.0 =
+* [Feature] Dashboard: the Visitors indicator now shows how many robots were excluded in the selected period ("3,410 robots excluded"), and its help text says that visitors are humans only.
+* [Feature] Devices report: new "Include robots" switch on the Device usage breakdown card, to compare robot page views with desktop, smartphone and tablet traffic; every other card and report stays human-only.

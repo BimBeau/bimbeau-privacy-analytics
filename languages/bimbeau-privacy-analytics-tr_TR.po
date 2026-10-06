@@ -2200,6 +2200,33 @@ msgid "Based on %s tracked page views in the selected range."
 msgstr "Seçilen aralıkta izlenen %s sayfa görüntülemesine göre."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robot page views could not be loaded."
+msgstr "Robotların sayfa görüntülemeleri yüklenemedi."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Robots stay excluded from every other report."
+msgstr "Robotlar diğer tüm raporların dışında kalmaya devam eder."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "No robot was detected in the selected range."
+msgstr "Seçilen dönemde hiçbir robot tespit edilmedi."
+
+#. translators: 1: robot page views, 2: number of robots read, 3: number of robots in the selected range.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of the %2$s most active robots, out of %3$s robots in the selected range."
+msgstr "Seçilen dönemdeki %3$s robot içinden en etkin %2$s robotun %1$s sayfa görüntülemesini içerir."
+
+#. translators: 1: robot page views, 2: number of robots.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Includes %1$s page views of %2$s robot."
+msgid_plural "Includes %1$s page views of %2$s robots."
+msgstr[0] "%2$s robotun %1$s sayfa görüntülemesini içerir."
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Include robots"
+msgstr "Robotları dahil et"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No audience breakdowns available."
 msgstr "Kitle kırılımları mevcut değil."
 
@@ -2255,9 +2282,20 @@ msgstr "Genel bakış metrikleri mevcut değil."
 msgid "Loading KPIs…"
 msgstr "KPI’lar yükleniyor…"
 
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "Yalnızca insan ziyaretçiler: seçilen dönemdeki ziyaretçi etkinliği satırları. Bu dönemde tespit edilen robotlar (%s) tüm istatistiklerin dışında tutulur."
+
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."
 msgstr "Ziyaretçiler, seçilen dönemde sınırlandırılmış ziyaretçi etkinliği satırlarına karşılık gelir."
+
+#. translators: %s: number of robots detected in the selected period.
+#: src/admin/widgets/OverviewKpis/index.js
+msgid "%s robot excluded"
+msgid_plural "%s robots excluded"
+msgstr[0] "%s robot hariç tutuldu"
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Pages / visit"

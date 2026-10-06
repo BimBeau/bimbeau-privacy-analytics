@@ -1,6 +1,7 @@
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { Card, CardBody, Spinner, Tooltip } from '@wordpress/components';
 
+import BrandIcon from '../../components/icons/BrandIcon';
 import FeatureIcon from '../../components/icons/FeatureIcon';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
@@ -13,6 +14,7 @@ import {
 	formatChangePercent,
 	formatCompactMetricValue,
 	formatCompactDurationMetricValue,
+	formatNumber,
 	formatRatioMetricValue,
 } from '../../lib/formatters';
 
@@ -46,6 +48,21 @@ const stopCardNavigation = ( event ) => {
 
 const getCardHelpId = ( cardKey ) => `bbpa-kpi-card-help-${ cardKey }`;
 
+/**
+ * Number of robots seen in the range: the item count of the Robots list of the
+ * Visitors report (bot visitor rows whose last activity is in the range).
+ *
+ * @param {Object|null} data /visitors response for visitor_type=bot.
+ * @return {number} Robots count, 0 when unknown.
+ */
+export const getRobotsCount = ( data ) => {
+	const totalItems = Number( data?.pagination?.totalItems );
+
+	return Number.isFinite( totalItems ) && totalItems > 0
+		? Math.floor( totalItems )
+		: 0;
+};
+
 const OverviewKpis = ( { range } ) => {
 	// The active visitors card is only rendered when the Real-time panel is enabled.
 	const { data: realtimeData } = useRealtimeSnapshot( {
@@ -54,6 +71,24 @@ const OverviewKpis = ( { range } ) => {
 	const { data, isLoading, error } = useAdminEndpoint( '/overview', range, {
 		namespace: ADMIN_CONFIG?.settings?.restNamespace,
 	} );
+	// Robots are excluded from every statistic; the Visitors card mentions how
+	// many were detected, from the Robots list of the Visitors report.
+	const { data: robotsData } = useAdminEndpoint(
+		'/visitors',
+		{
+			...range,
+			visitor_type: 'bot',
+			page: 1,
+			per_page: 1,
+		},
+		{
+			namespace: ADMIN_CONFIG?.settings?.restNamespace,
+			enabled: isPanelEnabled( 'visitors' ),
+		}
+	);
+	const robotsCount = isPanelEnabled( 'visitors' )
+		? getRobotsCount( robotsData )
+		: 0;
 	const overview = data?.overview || null;
 	const comparisonOverview = data?.comparison?.overview || null;
 	const isEmpty = ! isLoading && ! error && ! overview;
@@ -123,10 +158,34 @@ const OverviewKpis = ( { range } ) => {
 		{
 			key: 'visits',
 			label: __( 'Visitors', 'bimbeau-privacy-analytics' ),
-			tooltip: __(
-				'Visitors correspond to bounded visitor activity rows in the selected period.',
-				'bimbeau-privacy-analytics'
-			),
+			tooltip:
+				robotsCount > 0
+					? sprintf(
+							/* translators: %s: number of robots detected in the selected period. */
+							__(
+								'Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics.',
+								'bimbeau-privacy-analytics'
+							),
+							formatNumber( robotsCount )
+					  )
+					: __(
+							'Visitors correspond to bounded visitor activity rows in the selected period.',
+							'bimbeau-privacy-analytics'
+					  ),
+			note:
+				robotsCount > 0
+					? sprintf(
+							/* translators: %s: number of robots detected in the selected period. */
+							_n(
+								'%s robot excluded',
+								'%s robots excluded',
+								robotsCount,
+								'bimbeau-privacy-analytics'
+							),
+							formatNumber( robotsCount )
+					  )
+					: null,
+			noteIcon: { kind: 'device', value: 'bot' },
 			value: overview.visitors,
 			icon: 'visits',
 			comparison: comparisonOverview?.visitors,
@@ -301,6 +360,19 @@ const OverviewKpis = ( { range } ) => {
 										</KpiBadge>
 									) }
 								</p>
+								{ card.note ? (
+									<p className="bbpa-kpi-card__note">
+										{ card.noteIcon ? (
+											<BrandIcon
+												kind={ card.noteIcon.kind }
+												value={ card.noteIcon.value }
+												className="bbpa-kpi-card__note-icon"
+												size={ 14 }
+											/>
+										) : null }
+										<span>{ card.note }</span>
+									</p>
+								) : null }
 							</div>
 							<FeatureIcon
 								name={ card.icon }
