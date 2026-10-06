@@ -13,6 +13,10 @@ import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
 import BpaCard from '../../components/BpaCard';
 import {
+	DataViewsPagination,
+	DataViewsToolbar,
+} from '../../components/DataViewsFrame';
+import {
 	ADMIN_CONFIG,
 	DEFAULT_PAGE_LABEL_DISPLAY,
 	normalizeBooleanSetting,
@@ -89,6 +93,8 @@ const ReportTableCard = ( {
 	maxDisplayedLabelCharacters = null,
 	getRowClassName,
 	footnote = '',
+	// Renders the list in the WordPress DataViews look (search and view options toolbar, compact pagination).
+	dataViewsFrame = false,
 } ) => {
 	const [ page, setPage ] = useState( 1 );
 	const [ perPage, setPerPage ] = useState( 10 );
@@ -343,102 +349,129 @@ const ReportTableCard = ( {
 		/>
 	) : null;
 
+	const sortAndRowsControls = (
+		<>
+			<SelectControl
+				label={ __( 'Sort by', 'bimbeau-privacy-analytics' ) }
+				value={ orderBy }
+				options={ [
+					{ label: metricLabel, value: metricKey },
+					{
+						label: labelSortLabel,
+						value: activeLabelSortKey,
+					},
+				] }
+				onChange={ ( value ) => {
+					setOrderBy( value );
+					setPage( 1 );
+				} }
+				__next40pxDefaultSize __nextHasNoMarginBottom
+			/>
+			{ supportsPageLabelToggle && (
+				<SelectControl
+					label={ __( 'Display', 'bimbeau-privacy-analytics' ) }
+					value={ pageLabelDisplay }
+					options={ [
+						{
+							label: __( 'URL', 'bimbeau-privacy-analytics' ),
+							value: 'url',
+						},
+						{
+							label: __( 'Title', 'bimbeau-privacy-analytics' ),
+							value: 'title',
+						},
+					] }
+					onChange={ ( value ) => {
+						const nextMode =
+							normalizePageLabelDisplay( value ) ||
+							DEFAULT_PAGE_LABEL_DISPLAY;
+						setPageLabelDisplay( nextMode );
+						setPage( 1 );
+					} }
+					__next40pxDefaultSize __nextHasNoMarginBottom
+				/>
+			) }
+			<Button
+				variant="secondary"
+				icon={
+					<FeatureIcon
+						name={
+							order === 'asc' ? 'ascending' : 'descending'
+						}
+						size={ 14 }
+					/>
+				}
+				onClick={ () => {
+					setOrder( order === 'asc' ? 'desc' : 'asc' );
+					setPage( 1 );
+				} }
+				aria-label={ orderToggleLabel }
+			>
+				{ orderLabel }
+			</Button>
+			<SelectControl
+				className="bbpa-table-controls__rows-control"
+				label={ __( 'Rows', 'bimbeau-privacy-analytics' ) }
+				value={ String( perPage ) }
+				options={ [
+					{ label: '5', value: '5' },
+					{ label: '10', value: '10' },
+					{ label: '20', value: '20' },
+				] }
+				onChange={ ( value ) => {
+					setPerPage( Number( value ) );
+					setPage( 1 );
+				} }
+				__next40pxDefaultSize __nextHasNoMarginBottom
+			/>
+		</>
+	);
+
 	return (
 		<BpaCard
 			title={ title }
-			headerActions={ headerActions }
-			bodyClassName="bbpa-listing-region"
+			headerActions={ dataViewsFrame ? null : headerActions }
+			className={ dataViewsFrame ? 'bbpa-dataviews-card' : undefined }
+			bodyClassName={
+				dataViewsFrame
+					? 'bbpa-listing-region bbpa-dataviews'
+					: 'bbpa-listing-region'
+			}
 		>
-			<div className="bbpa-table-controls">
-				<div className="bbpa-table-controls__group">
-					<SelectControl
-						label={ __( 'Sort by', 'bimbeau-privacy-analytics' ) }
-						value={ orderBy }
-						options={ [
-							{ label: metricLabel, value: metricKey },
-							{
-								label: labelSortLabel,
-								value: activeLabelSortKey,
-							},
-						] }
-						onChange={ ( value ) => {
-							setOrderBy( value );
-							setPage( 1 );
-						} }
-						__next40pxDefaultSize __nextHasNoMarginBottom
-					/>
-					{ supportsPageLabelToggle && (
-						<SelectControl
-							label={ __( 'Display', 'bimbeau-privacy-analytics' ) }
-							value={ pageLabelDisplay }
-							options={ [
-								{
-									label: __( 'URL', 'bimbeau-privacy-analytics' ),
-									value: 'url',
-								},
-								{
-									label: __( 'Title', 'bimbeau-privacy-analytics' ),
-									value: 'title',
-								},
-							] }
+			{ dataViewsFrame ? (
+				<DataViewsToolbar
+					searchValue={ searchInput }
+					onSearchChange={
+						enableSearch
+							? ( value ) => {
+									setSearchInput( value );
+									setPage( 1 );
+							  }
+							: undefined
+					}
+					viewOptions={ sortAndRowsControls }
+					actions={ headerActions }
+				/>
+			) : (
+				<div className="bbpa-table-controls">
+					<div className="bbpa-table-controls__group">
+						{ sortAndRowsControls }
+					</div>
+					{ enableSearch && (
+						<TextControl
+							className="bbpa-table-controls__search"
+							label={ __( 'Search', 'bimbeau-privacy-analytics' ) }
+							value={ searchInput }
 							onChange={ ( value ) => {
-								const nextMode =
-									normalizePageLabelDisplay( value ) ||
-									DEFAULT_PAGE_LABEL_DISPLAY;
-								setPageLabelDisplay( nextMode );
+								setSearchInput( value );
 								setPage( 1 );
 							} }
+							placeholder={ __( 'Search…', 'bimbeau-privacy-analytics' ) }
 							__next40pxDefaultSize __nextHasNoMarginBottom
 						/>
 					) }
-					<Button
-						variant="secondary"
-						icon={
-							<FeatureIcon
-								name={
-									order === 'asc' ? 'ascending' : 'descending'
-								}
-								size={ 14 }
-							/>
-						}
-						onClick={ () => {
-							setOrder( order === 'asc' ? 'desc' : 'asc' );
-							setPage( 1 );
-						} }
-						aria-label={ orderToggleLabel }
-					>
-						{ orderLabel }
-					</Button>
-					<SelectControl
-						className="bbpa-table-controls__rows-control"
-						label={ __( 'Rows', 'bimbeau-privacy-analytics' ) }
-						value={ String( perPage ) }
-						options={ [
-							{ label: '5', value: '5' },
-							{ label: '10', value: '10' },
-							{ label: '20', value: '20' },
-						] }
-						onChange={ ( value ) => {
-							setPerPage( Number( value ) );
-							setPage( 1 );
-						} }
-						__next40pxDefaultSize __nextHasNoMarginBottom
-					/>
 				</div>
-				{ enableSearch && (
-					<TextControl
-						className="bbpa-table-controls__search"
-						label={ __( 'Search', 'bimbeau-privacy-analytics' ) }
-						value={ searchInput }
-						onChange={ ( value ) => {
-							setSearchInput( value );
-							setPage( 1 );
-						} }
-						placeholder={ __( 'Search…', 'bimbeau-privacy-analytics' ) }
-						__next40pxDefaultSize __nextHasNoMarginBottom
-					/>
-				) }
-			</div>
+			) }
 			<DataState
 				isLoading={ isLoading }
 				error={ error }
@@ -456,7 +489,11 @@ const ReportTableCard = ( {
 				<>
 					<div className="bbpa-table-scroll">
 						<table
-							className={ `widefat striped bbpa-report-table${
+							className={ `${
+								dataViewsFrame
+									? 'bbpa-dataviews-table'
+									: 'widefat striped'
+							} bbpa-report-table${
 								useAdaptiveLabel
 									? ' bbpa-report-table--adaptive-label'
 									: ''
@@ -749,6 +786,14 @@ const ReportTableCard = ( {
 					{ footnote ? (
 						<p className="bbpa-report-table__footnote">{ footnote }</p>
 					) : null }
+					{ dataViewsFrame ? (
+						<DataViewsPagination
+							page={ page }
+							totalPages={ totalPages }
+							totalItems={ totalItems }
+							onPageChange={ setPage }
+						/>
+					) : (
 					<PaginationWrapper { ...paginationWrapperProps }>
 						<PaginationItem className={ paginationItemClass }>
 							<div className="bbpa-table-pagination__buttons">
@@ -791,6 +836,7 @@ const ReportTableCard = ( {
 							{ formatItemCount( totalItems ) }
 						</PaginationItem>
 					</PaginationWrapper>
+					) }
 				</>
 			) }
 		</BpaCard>

@@ -17,6 +17,7 @@ const ReportPanel = ( {
 	supportsPageLabelToggle = false,
 	rangeSelection,
 	exportReportKey = '',
+	dataViewsFrame = false,
 } ) => {
 	const range = useMemo(
 		() => getRangeFromSelection( rangeSelection ),
@@ -39,6 +40,7 @@ const ReportPanel = ( {
 				metricValueKey={ metricValueKey }
 				supportsPageLabelToggle={ supportsPageLabelToggle }
 				exportReportKey={ exportReportKey }
+				dataViewsFrame={ dataViewsFrame }
 			/>
 		</div>
 	);

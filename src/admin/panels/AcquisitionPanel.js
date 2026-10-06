@@ -16,6 +16,7 @@ import useAdminEndpoint from '../api/useAdminEndpoint';
 import DataState from '../components/DataState';
 import FeatureIcon from '../components/icons/FeatureIcon';
 import BpaCard from '../components/BpaCard';
+import { DataViewsToolbar } from '../components/DataViewsFrame';
 import ReportExportAction from '../components/ReportExportAction';
 import { ADMIN_CONFIG } from '../constants';
 import { getPreviousRange, getRangeFromSelection } from '../lib/date';
@@ -87,8 +88,10 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 		<div className="bbpa-report-panel">
 			<BpaCard
 				title={ __( 'Acquisition channels', 'bimbeau-privacy-analytics' ) }
-				headerActions={ headerActions }
+				className="bbpa-dataviews-card"
+				bodyClassName="bbpa-dataviews"
 			>
+				<DataViewsToolbar actions={ headerActions } />
 				<DataState
 					isLoading={ isLoading }
 					error={ error }
@@ -99,120 +102,124 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 					) }
 				/>
 				{ ! isLoading && ! error && items.length > 0 ? (
-					<div className="bbpa-table-scroll">
-						<table
-							className="widefat striped bbpa-report-table"
-							aria-label={ __(
-								'Table: Acquisition channels',
-								'bimbeau-privacy-analytics'
-							) }
-						>
-							<thead>
-								<tr>
-									<th scope="col">
-										{ __( 'Channel', 'bimbeau-privacy-analytics' ) }
-									</th>
-									<th scope="col">
-										{ __( 'Visits', 'bimbeau-privacy-analytics' ) }
-									</th>
-									<th scope="col">
-										{ __( 'Traffic share', 'bimbeau-privacy-analytics' ) }
-									</th>
-									{  }
-								</tr>
-							</thead>
-							<tbody>
-								{ items.map( ( item ) => {
-									const Icon =
-										CHANNEL_ICONS[ item.key ] ||
-										LuCircleHelp;
-									const channelLabel = getChannelLabel(
-										item.key || item.channel
-									);
-									const previousVisits = comparisonByKey.get(
-										item.key
-									);
-									const change = calculateChangePercent(
-										Number( item.visits || 0 ),
-										previousVisits
-									);
-									const changeLabel =
-										isComparisonLoading ||
-										previousVisits === undefined
-											? null
-											: formatChangePercent( change );
-									const isNegative = Number( change ) < 0;
-									const isNeutral = Number( change ) === 0;
-									let trendClassName =
-										'bbpa-report-table__trend bbpa-report-table__trend--positive';
+					<>
+						<div className="bbpa-table-scroll">
+							<table
+								className="bbpa-dataviews-table bbpa-report-table"
+								aria-label={ __(
+									'Table: Acquisition channels',
+									'bimbeau-privacy-analytics'
+								) }
+							>
+								<thead>
+									<tr>
+										<th scope="col">
+											{ __( 'Channel', 'bimbeau-privacy-analytics' ) }
+										</th>
+										<th scope="col">
+											{ __( 'Visits', 'bimbeau-privacy-analytics' ) }
+										</th>
+										<th scope="col">
+											{ __( 'Traffic share', 'bimbeau-privacy-analytics' ) }
+										</th>
+										{  }
+									</tr>
+								</thead>
+								<tbody>
+									{ items.map( ( item ) => {
+										const Icon =
+											CHANNEL_ICONS[ item.key ] ||
+											LuCircleHelp;
+										const channelLabel = getChannelLabel(
+											item.key || item.channel
+										);
+										const previousVisits = comparisonByKey.get(
+											item.key
+										);
+										const change = calculateChangePercent(
+											Number( item.visits || 0 ),
+											previousVisits
+										);
+										const changeLabel =
+											isComparisonLoading ||
+											previousVisits === undefined
+												? null
+												: formatChangePercent( change );
+										const isNegative = Number( change ) < 0;
+										const isNeutral = Number( change ) === 0;
+										let trendClassName =
+											'bbpa-report-table__trend bbpa-report-table__trend--positive';
 
-									if ( isNeutral ) {
-										trendClassName =
-											'bbpa-report-table__trend bbpa-report-table__trend--neutral';
-									} else if ( isNegative ) {
-										trendClassName =
-											'bbpa-report-table__trend bbpa-report-table__trend--negative';
-									}
+										if ( isNeutral ) {
+											trendClassName =
+												'bbpa-report-table__trend bbpa-report-table__trend--neutral';
+										} else if ( isNegative ) {
+											trendClassName =
+												'bbpa-report-table__trend bbpa-report-table__trend--negative';
+										}
 
-									return (
-										<tr key={ item.key }>
-											<th scope="row">
-												<span className="bbpa-channel-label">
-													<Icon
-														aria-hidden="true"
-														focusable="false"
-													/>
-													{ channelLabel }
-												</span>
-											</th>
-											<td>
-												<div className="bbpa-report-table__metric">
-													<span className="bbpa-report-table__metric-value">
-														{ formatNumber(
-															Number(
-																item.visits || 0
-															)
-														) }
+										return (
+											<tr key={ item.key }>
+												<th scope="row">
+													<span className="bbpa-channel-label">
+														<Icon
+															aria-hidden="true"
+															focusable="false"
+														/>
+														{ channelLabel }
 													</span>
-													{ changeLabel !== null ? (
-														<span
-															className={
-																trendClassName
-															}
-														>
-															{ changeLabel }
-															{ ! isNeutral && (
-																<FeatureIcon
-																	name={
-																		isNegative
-																			? 'trendingDown'
-																			: 'trendingUp'
-																	}
-																	size={ 12 }
-																/>
+												</th>
+												<td>
+													<div className="bbpa-report-table__metric">
+														<span className="bbpa-report-table__metric-value">
+															{ formatNumber(
+																Number(
+																	item.visits || 0
+																)
 															) }
 														</span>
-													) : null }
-												</div>
-											</td>
-											<td>
-												{ formatShare( item.share ) }
-											</td>
-											{  }
-										</tr>
-									);
-								} ) }
-							</tbody>
-						</table>
-						<p className="description">
-							{ sprintf(
-								/* translators: %s: Total visits in the selected range. */
-								__( 'Total visits: %s', 'bimbeau-privacy-analytics' ),
-								formatNumber( total )
-							) }
-						</p>
-						{  }
-					</div>
+														{ changeLabel !== null ? (
+															<span
+																className={
+																	trendClassName
+																}
+															>
+																{ changeLabel }
+																{ ! isNeutral && (
+																	<FeatureIcon
+																		name={
+																			isNegative
+																				? 'trendingDown'
+																				: 'trendingUp'
+																		}
+																		size={ 12 }
+																	/>
+																) }
+															</span>
+														) : null }
+													</div>
+												</td>
+												<td>
+													{ formatShare( item.share ) }
+												</td>
+												{  }
+											</tr>
+										);
+									} ) }
+								</tbody>
+							</table>
+						</div>
+						<div className="bbpa-dataviews__footer">
+							<p className="description">
+								{ sprintf(
+									/* translators: %s: Total visits in the selected range. */
+									__( 'Total visits: %s', 'bimbeau-privacy-analytics' ),
+									formatNumber( total )
+								) }
+							</p>
+							{  }
+						</div>
+					</>
 				) : null }
 			</BpaCard>
 		</div>

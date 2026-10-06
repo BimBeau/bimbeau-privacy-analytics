@@ -1,16 +1,14 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import {
-	Button,
-	Flex,
-	FlexItem,
-	SelectControl,
-	TextControl,
-} from '@wordpress/components';
+import { Button, SelectControl } from '@wordpress/components';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
 import BpaCard from '../../components/BpaCard';
+import {
+	DataViewsPagination,
+	DataViewsToolbar,
+} from '../../components/DataViewsFrame';
 import { ADMIN_CONFIG } from '../../constants';
 import FeatureIcon from '../../components/icons/FeatureIcon';
 import ReferrerLabel from '../../components/ReferrerLabel';
@@ -21,7 +19,6 @@ import {
 	calculateChangePercent,
 	formatChangePercent,
 } from '../../lib/formatters';
-import { formatItemCount, formatPageOfTotal } from '../../lib/paginationLabels';
 import { getChannelLabel } from '../../lib/channelLabels';
 
 /**
@@ -101,8 +98,6 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 		}
 	}, [ totalPages, page, isLoading, error ] );
 
-	const canPrevious = page > 1;
-	const canNext = page < totalPages;
 
 	const orderLabel =
 		order === 'asc'
@@ -172,92 +167,88 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 	return (
 		<BpaCard
 			title={ __( 'Referring sites', 'bimbeau-privacy-analytics' ) }
-			headerActions={ headerActions }
-			bodyClassName="bbpa-listing-region"
+			className="bbpa-dataviews-card"
+			bodyClassName="bbpa-listing-region bbpa-dataviews"
 		>
-			<div className="bbpa-table-controls">
-				<div className="bbpa-table-controls__group">
-					<SelectControl
-						label={ __( 'Sort by', 'bimbeau-privacy-analytics' ) }
-						value={ orderBy }
-						options={ [
-							{
-								label: __(
-									'Visits',
-									'bimbeau-privacy-analytics'
-								),
-								value: 'visits',
-							},
-							{
-								label: __(
-									'Referrer',
-									'bimbeau-privacy-analytics'
-								),
-								value: 'referrer',
-							},
-							{
-								label: __(
-									'Channel',
-									'bimbeau-privacy-analytics'
-								),
-								value: 'category',
-							},
-						] }
-						onChange={ ( value ) => {
-							setOrderBy( value );
-							setPage( 1 );
-						} }
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
-					/>
-					<Button
-						variant="secondary"
-						icon={
-							<FeatureIcon
-								name={
-									order === 'asc' ? 'ascending' : 'descending'
-								}
-								size={ 14 }
-							/>
-						}
-						onClick={ () => {
-							setOrder( order === 'asc' ? 'desc' : 'asc' );
-							setPage( 1 );
-						} }
-						aria-label={ orderToggleLabel }
-					>
-						{ orderLabel }
-					</Button>
-					<SelectControl
-						className="bbpa-table-controls__rows-control"
-						label={ __( 'Rows', 'bimbeau-privacy-analytics' ) }
-						value={ String( perPage ) }
-						options={ [
-							{ label: '5', value: '5' },
-							{ label: '10', value: '10' },
-							{ label: '20', value: '20' },
-						] }
-						onChange={ ( value ) => {
-							setPerPage( Number( value ) );
-							setPage( 1 );
-						} }
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
-					/>
-				</div>
-				<TextControl
-					className="bbpa-table-controls__search"
-					label={ __( 'Search', 'bimbeau-privacy-analytics' ) }
-					value={ searchInput }
-					onChange={ ( value ) => {
-						setSearchInput( value );
-						setPage( 1 );
-					} }
-					placeholder={ __( 'Search…', 'bimbeau-privacy-analytics' ) }
-					__next40pxDefaultSize
-					__nextHasNoMarginBottom
-				/>
-			</div>
+			<DataViewsToolbar
+				searchValue={ searchInput }
+				onSearchChange={ ( value ) => {
+					setSearchInput( value );
+					setPage( 1 );
+				} }
+				viewOptions={
+					<>
+						<SelectControl
+							label={ __( 'Sort by', 'bimbeau-privacy-analytics' ) }
+							value={ orderBy }
+							options={ [
+								{
+									label: __(
+										'Visits',
+										'bimbeau-privacy-analytics'
+									),
+									value: 'visits',
+								},
+								{
+									label: __(
+										'Referrer',
+										'bimbeau-privacy-analytics'
+									),
+									value: 'referrer',
+								},
+								{
+									label: __(
+										'Channel',
+										'bimbeau-privacy-analytics'
+									),
+									value: 'category',
+								},
+							] }
+							onChange={ ( value ) => {
+								setOrderBy( value );
+								setPage( 1 );
+							} }
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
+						/>
+						<Button
+							variant="secondary"
+							icon={
+								<FeatureIcon
+									name={
+										order === 'asc' ? 'ascending' : 'descending'
+									}
+									size={ 14 }
+								/>
+							}
+							onClick={ () => {
+								setOrder( order === 'asc' ? 'desc' : 'asc' );
+								setPage( 1 );
+							} }
+							aria-label={ orderToggleLabel }
+						>
+							{ orderLabel }
+						</Button>
+						<SelectControl
+							className="bbpa-table-controls__rows-control"
+							label={ __( 'Rows', 'bimbeau-privacy-analytics' ) }
+							value={ String( perPage ) }
+							options={ [
+								{ label: '5', value: '5' },
+								{ label: '10', value: '10' },
+								{ label: '20', value: '20' },
+							] }
+							onChange={ ( value ) => {
+								setPerPage( Number( value ) );
+								setPage( 1 );
+							} }
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
+						/>
+					</>
+				}
+				actions={ headerActions }
+			/>
 			<DataState
 				isLoading={ isLoading }
 				error={ error }
@@ -275,7 +266,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 				<>
 					<div className="bbpa-table-scroll">
 						<table
-							className="widefat striped bbpa-report-table bbpa-report-table--adaptive-label bbpa-report-table--referrers"
+							className="bbpa-dataviews-table bbpa-report-table bbpa-report-table--adaptive-label bbpa-report-table--referrers"
 							aria-label={ tableLabel }
 						>
 							<thead>
@@ -385,58 +376,12 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 							</tbody>
 						</table>
 					</div>
-					<Flex
-						className="bbpa-table-pagination"
-						justify="space-between"
-						align="center"
-					>
-						<FlexItem>
-							<div className="bbpa-table-pagination__buttons">
-								<Button
-									variant="secondary"
-									onClick={ () =>
-										setPage( ( prev ) =>
-											Math.max( prev - 1, 1 )
-										)
-									}
-									disabled={ ! canPrevious }
-									aria-label={ __(
-										'Previous page',
-										'bimbeau-privacy-analytics'
-									) }
-								>
-									{ __(
-										'Previous',
-										'bimbeau-privacy-analytics'
-									) }
-								</Button>
-								<Button
-									variant="secondary"
-									onClick={ () =>
-										setPage( ( prev ) =>
-											Math.min( prev + 1, totalPages )
-										)
-									}
-									disabled={ ! canNext }
-									aria-label={ __(
-										'Next page',
-										'bimbeau-privacy-analytics'
-									) }
-								>
-									{ __(
-										'Next',
-										'bimbeau-privacy-analytics'
-									) }
-								</Button>
-							</div>
-						</FlexItem>
-						<FlexItem className="bbpa-table-pagination__meta">
-							{ formatPageOfTotal( page, totalPages ) }
-						</FlexItem>
-						<FlexItem className="bbpa-table-pagination__meta">
-							{ formatItemCount( totalItems ) }
-						</FlexItem>
-					</Flex>
+					<DataViewsPagination
+						page={ page }
+						totalPages={ totalPages }
+						totalItems={ totalItems }
+						onPageChange={ setPage }
+					/>
 				</>
 			) }
 		</BpaCard>

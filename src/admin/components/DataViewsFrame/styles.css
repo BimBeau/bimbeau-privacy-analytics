@@ -151,9 +151,24 @@
   min-width: 56px;
 }
 
+.bbpa-dataviews__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 24px;
+  border-top: 1px solid #f0f0f0;
+  color: #757575;
+  font-size: 13px;
+}
+
+.bbpa-dataviews__footer p {
+  margin: 0;
+}
+
 @media (max-width: 782px) {
   .bbpa-dataviews__toolbar,
-  .bbpa-dataviews__pagination {
+  .bbpa-dataviews__pagination,
+  .bbpa-dataviews__footer {
     padding-right: 16px;
     padding-left: 16px;
   }

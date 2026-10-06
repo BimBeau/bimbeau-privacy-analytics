@@ -12,6 +12,7 @@ import TimeseriesChart from '../widgets/TimeseriesChart';
 
 const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	<ReportTableCard
+		dataViewsFrame
 		title={ __( 'Top pages', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -51,6 +52,7 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 
 const NotFoundPanel = ( { range } ) => (
 	<ReportTableCard
+		dataViewsFrame
 		title={ __( 'Top 404s', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -64,6 +66,7 @@ const NotFoundPanel = ( { range } ) => (
 
 const EntryPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	<ReportTableCard
+		dataViewsFrame
 		title={ __( 'Entry pages (approx.)', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -84,6 +87,7 @@ const EntryPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 
 const ExitPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	<ReportTableCard
+		dataViewsFrame
 		title={ __( 'Exit pages', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -149,6 +153,7 @@ const TopContentPanel = ( {
 	footnote = '',
 } ) => (
 	<ReportTableCard
+		dataViewsFrame
 		title={ title }
 		hideZeroPrimaryRows
 		labelHeader={ labelHeader }

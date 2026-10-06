@@ -11,6 +11,7 @@ const SearchTermsPanel = ( { rangeSelection } ) => (
 		labelFallback={ __( 'Unknown', 'bimbeau-privacy-analytics' ) }
 		rangeSelection={ rangeSelection }
 		exportReportKey="search-terms"
+		dataViewsFrame
 	/>
 );
 
