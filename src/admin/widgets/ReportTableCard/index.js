@@ -87,6 +87,8 @@ const ReportTableCard = ( {
 	tableClassName = '',
 	useAdaptiveLabel = true,
 	maxDisplayedLabelCharacters = null,
+	getRowClassName,
+	footnote = '',
 } ) => {
 	const [ page, setPage ] = useState( 1 );
 	const [ perPage, setPerPage ] = useState( 10 );
@@ -527,9 +529,16 @@ const ReportTableCard = ( {
 									<tr
 										key={ row.key }
 										className={
-											shouldRenderOpenColumn && row.href
-												? 'bbpa-report-table__row--has-open-link'
-												: undefined
+											[
+												shouldRenderOpenColumn && row.href
+													? 'bbpa-report-table__row--has-open-link'
+													: '',
+												typeof getRowClassName === 'function'
+													? getRowClassName( row.item ) || ''
+													: '',
+											]
+												.filter( Boolean )
+												.join( ' ' ) || undefined
 										}
 									>
 										<td>
@@ -737,6 +746,9 @@ const ReportTableCard = ( {
 							</tbody>
 						</table>
 					</div>
+					{ footnote ? (
+						<p className="bbpa-report-table__footnote">{ footnote }</p>
+					) : null }
 					<PaginationWrapper { ...paginationWrapperProps }>
 						<PaginationItem className={ paginationItemClass }>
 							<div className="bbpa-table-pagination__buttons">

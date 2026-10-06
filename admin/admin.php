@@ -2483,6 +2483,12 @@ function bbpa_get_rest_sources(): array
             'path' => '/top-pages',
         ],
         [
+            'key' => 'report-top-content',
+            'method' => 'GET',
+            'namespace' => BBPA_REST_NAMESPACE,
+            'path' => '/top-content',
+        ],
+        [
             'key' => 'report-referrers',
             'method' => 'GET',
             'namespace' => BBPA_REST_NAMESPACE,

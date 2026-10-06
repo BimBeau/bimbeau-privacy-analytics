@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.47.7
+Stable tag: 8.48.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.47.7 =
-* [Fix] Show the correct device icon instead of a question mark when the admin language translates device names, and label bot visitors "Bot" in device breakdowns.
+= 8.48.0 =
+* [Feature] Add Content types, Categories and Authors tabs to the Pages report, with page views, a comparison with the previous period and a daily trend for each row.
+* [Feature] Add the `GET /bbpa/v1/top-content` report route, which groups page views by post type, category or author.
+* [Fix] Return the post ID of each Top pages row, so the page details screen can link to the post in WordPress.

@@ -29,9 +29,34 @@ class BBPA_Report_Controller {
     private const MAX_PERSISTED_PER_PAGE = 100;
 
     /**
+     * Content dimensions accepted by the /top-content report.
+     */
+    private const TOP_CONTENT_DIMENSIONS = ['post_type', 'category', 'author'];
+
+    /**
+     * Item key of the /top-content row that holds page views without a published post.
+     */
+    private const TOP_CONTENT_UNRESOLVED_KEY = 'unresolved';
+
+    /**
      * Remaining page-title lookups for the page-path report being built; null means unlimited.
      */
     private ?int $page_title_lookups_remaining = null;
+
+    /**
+     * Memo of resolved post IDs keyed by get_page_path_resolution_cache_key(), shared by the
+     * page titles and the top-content groups of the requests served by this controller.
+     *
+     * @var array<string, int>
+     */
+    private array $post_id_memo = [];
+
+    /**
+     * Memo of resolved page titles keyed by get_page_path_resolution_cache_key().
+     *
+     * @var array<string, string>
+     */
+    private array $page_title_memo = [];
 
     /**
      * Per-request memo of table existence checks, keyed by table name.
@@ -86,6 +111,33 @@ class BBPA_Report_Controller {
                             'type' => 'boolean',
                             'default' => true,
                             'sanitize_callback' => 'rest_sanitize_boolean',
+                        ],
+                    ]
+                ),
+            ]
+        );
+
+        // The top-content groups are not page paths: the page_path filter does not apply.
+        $top_content_args = $list_args;
+        unset($top_content_args['page_path']);
+        register_rest_route(
+            BBPA_REST_NAMESPACE,
+            '/top-content',
+            [
+                'methods' => 'GET',
+                'callback' => [$this, 'get_top_content'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'top-pages');
+                },
+                'args' => array_merge(
+                    $top_content_args,
+                    [
+                        'dimension' => [
+                            'required' => true,
+                            'type' => 'string',
+                            'enum' => self::TOP_CONTENT_DIMENSIONS,
+                            'validate_callback' => 'rest_validate_request_arg',
+                            'sanitize_callback' => 'sanitize_key',
                         ],
                     ]
                 ),
@@ -323,6 +375,455 @@ class BBPA_Report_Controller {
         $response->set_data($payload);
 
         return $response;
+    }
+
+    /**
+     * Page views grouped by content type, category or author.
+     *
+     * Stored page paths are resolved to WordPress posts at query time, with the same path
+     * merging, lookup limit and resolution memo as the top pages report: no
+     * post ID is stored with the hits. Only published posts are grouped. Page views of paths
+     * that do not resolve to a published post (archives, search results, the blog home, paths
+     * beyond the lookup limit) are counted in one `unresolved` row, always listed last;
+     * paths tracked as 404 pages are left out. In the category dimension a post filed in
+     * several categories counts in each of them, and posts without a category (pages) are
+     * not listed.
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function get_top_content(WP_REST_Request $request) {
+        $dimension = sanitize_key((string) $request->get_param('dimension'));
+        if (!in_array($dimension, self::TOP_CONTENT_DIMENSIONS, true)) {
+            return new WP_Error(
+                'rest_invalid_param',
+                __('Invalid content dimension.', 'bimbeau-privacy-analytics'),
+                [
+                    'status' => 400,
+                    'params' => ['dimension' => implode(', ', self::TOP_CONTENT_DIMENSIONS)],
+                ]
+            );
+        }
+
+        $range = $this->get_day_range($request);
+        $pagination = $this->normalize_pagination($request);
+        $search_term = $this->get_search_term($request);
+        $exclude_zero = rest_sanitize_boolean($request->get_param('exclude_zero'));
+        $sorting = $this->normalize_sorting(
+            $request,
+            [
+                'hits' => 'hits',
+                'label' => 'label',
+                'items_count' => 'items_count',
+            ],
+            'hits'
+        );
+        $cache_key = $this->get_cache_key(
+            'top-content',
+            [
+                'dimension' => $dimension,
+                'range' => $range,
+                'pagination' => $pagination,
+                'sorting' => $sorting,
+                'search' => $search_term,
+                'excludeZero' => $exclude_zero,
+                // Post type labels, the unresolved label and term names follow the request locale.
+                'locale' => determine_locale(),
+            ]
+        );
+        $cached = $this->get_cached_payload($cache_key);
+        if ($cached !== null) {
+            return new WP_REST_Response($cached, 200);
+        }
+
+        $report = $this->build_top_content_groups($dimension, $range);
+        $groups = $report['groups'];
+        $unresolved = $report['unresolved'];
+
+        $keep_group = function (array $group) use ($search_term, $exclude_zero): bool {
+            if ($exclude_zero && (int) $group['hits'] <= 0) {
+                return false;
+            }
+
+            return $this->string_contains_search((string) $group['label'], $search_term);
+        };
+        $groups = array_values(array_filter($groups, $keep_group));
+        $groups = $this->sort_top_content_groups($groups, $sorting);
+        if ($unresolved !== null && $keep_group($unresolved)) {
+            // The unresolved row is not content: it stays last whatever the sort order.
+            $groups[] = $unresolved;
+        }
+
+        $total_items = count($groups);
+        $page_groups = array_slice($groups, (int) $pagination['offset'], (int) $pagination['per_page']);
+        $series_by_key = $this->get_top_content_views_series($page_groups, $report['stored_paths'], $range);
+        $empty_series = array_fill(0, count($this->get_day_buckets($range['start'], $range['end'])), 0);
+
+        $items = [];
+        foreach ($page_groups as $group) {
+            $items[] = [
+                'key' => (string) $group['key'],
+                'label' => (string) $group['label'],
+                'hits' => (int) $group['hits'],
+                'items_count' => count($group['posts']),
+                'views_series' => $series_by_key[(string) $group['key']] ?? $empty_series,
+            ];
+        }
+
+        $payload = [
+            'range' => $range,
+            'pagination' => [
+                'page' => $pagination['page'],
+                'perPage' => $pagination['per_page'],
+                'totalItems' => $total_items,
+                'totalPages' => $pagination['per_page'] > 0
+                    ? (int) ceil($total_items / $pagination['per_page'])
+                    : 0,
+            ],
+            'items' => $items,
+        ];
+
+        $this->set_cached_payload(
+            $cache_key,
+            $payload,
+            'top-content',
+            $this->should_persist_cached_payload($search_term, $pagination)
+        );
+
+        return new WP_REST_Response($payload, 200);
+    }
+
+    /**
+     * Group the page views of a range by content dimension.
+     *
+     * One grouped query reads the stored paths of the range; path variants are merged like
+     * the page-path reports, then resolved to posts busiest first within the lookup limit.
+     *
+     * @return array{
+     *     groups: array<int, array{key: string, label: string, hits: int, posts: array<int, bool>, variants: array<string, bool>}>,
+     *     unresolved: array{key: string, label: string, hits: int, posts: array<int, bool>, variants: array<string, bool>}|null,
+     *     stored_paths: array<int, string>
+     * }
+     */
+    private function build_top_content_groups(string $dimension, array $range): array {
+        global $wpdb;
+
+        $table = $this->get_allowed_table('daily');
+        $rows = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT page_path AS label, SUM(hits) AS metric
+                FROM {$table}
+                WHERE date_bucket BETWEEN %s AND %s
+                GROUP BY page_path",
+                $range['start'],
+                $range['end']
+            ),
+            ARRAY_A
+        ) ?: [];
+
+        // Merged paths keyed like get_report_page_path_key(), with their stored variants.
+        $paths = [];
+        $stored_paths = [];
+        foreach ($rows as $row) {
+            $stored_path = (string) ($row['label'] ?? '');
+            $stored_paths[] = $stored_path;
+            $normalized_path = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($stored_path));
+            $merge_key = bbpa_normalize_percent_encoding_case($normalized_path);
+            if ($merge_key === '') {
+                continue;
+            }
+
+            if (!isset($paths[$merge_key])) {
+                $paths[$merge_key] = [
+                    'path' => $normalized_path,
+                    'hits' => 0,
+                    'variants' => [],
+                    'post_id' => 0,
+                ];
+            }
+            $paths[$merge_key]['hits'] += isset($row['metric']) ? (int) $row['metric'] : 0;
+            $paths[$merge_key]['variants'][$stored_path] = true;
+        }
+
+        $resolution_order = array_keys($paths);
+        usort(
+            $resolution_order,
+            static function ($left, $right) use ($paths): int {
+                if ($paths[$left]['hits'] !== $paths[$right]['hits']) {
+                    return $paths[$right]['hits'] <=> $paths[$left]['hits'];
+                }
+
+                return strcmp((string) $left, (string) $right);
+            }
+        );
+
+        // Busiest paths first, so the lookup limit keeps the paths that weigh most.
+        $this->page_title_lookups_remaining = $this->get_page_title_lookup_limit('top-content');
+        try {
+            foreach ($resolution_order as $merge_key) {
+                $paths[$merge_key]['post_id'] = (int) ($this->resolve_post_id_from_path($paths[$merge_key]['path']) ?? 0);
+            }
+        } finally {
+            $this->page_title_lookups_remaining = null;
+        }
+
+        $post_ids = [];
+        foreach ($paths as $path) {
+            if ($path['post_id'] > 0) {
+                $post_ids[$path['post_id']] = true;
+            }
+        }
+        $this->prime_top_content_caches(array_keys($post_ids), $dimension);
+
+        $not_found_paths = $this->get_not_found_page_paths_for_range($range);
+        $groups = [];
+        $unresolved = null;
+        foreach ($paths as $merge_key => $path) {
+            $post = $path['post_id'] > 0 ? get_post($path['post_id']) : null;
+            $memberships = null;
+            $member_post_id = 0;
+            if ($post instanceof WP_Post && $post->post_status === 'publish') {
+                $memberships = $this->get_top_content_memberships($post, $dimension);
+                $member_post_id = (int) $post->ID;
+            } elseif (isset($not_found_paths[(string) $merge_key])) {
+                // Tracked 404 paths are missing pages, not content.
+                continue;
+            }
+
+            if ($memberships === null) {
+                if ($unresolved === null) {
+                    $unresolved = [
+                        'key' => self::TOP_CONTENT_UNRESOLVED_KEY,
+                        'label' => __('Unresolved', 'bimbeau-privacy-analytics'),
+                        'hits' => 0,
+                        'posts' => [],
+                        'variants' => [],
+                    ];
+                }
+                $unresolved['hits'] += $path['hits'];
+                $unresolved['variants'] += $path['variants'];
+                continue;
+            }
+
+            foreach ($memberships as $group_key => $group_label) {
+                $group_key = (string) $group_key;
+                if (!isset($groups[$group_key])) {
+                    $groups[$group_key] = [
+                        'key' => $group_key,
+                        'label' => $group_label,
+                        'hits' => 0,
+                        'posts' => [],
+                        'variants' => [],
+                    ];
+                }
+                $groups[$group_key]['hits'] += $path['hits'];
+                $groups[$group_key]['posts'][$member_post_id] = true;
+                $groups[$group_key]['variants'] += $path['variants'];
+            }
+        }
+
+        return [
+            'groups' => array_values($groups),
+            'unresolved' => $unresolved,
+            'stored_paths' => $stored_paths,
+        ];
+    }
+
+    /**
+     * Load the posts, and the terms or users the dimension reads, with a few bulk queries.
+     *
+     * @param array<int, int> $post_ids
+     */
+    private function prime_top_content_caches(array $post_ids, string $dimension): void {
+        if ($post_ids === []) {
+            return;
+        }
+
+        if (function_exists('_prime_post_caches')) {
+            _prime_post_caches($post_ids, false, false);
+        }
+
+        if ($dimension === 'category') {
+            $post_types = [];
+            foreach ($post_ids as $post_id) {
+                $post_type = get_post_type($post_id);
+                if (is_string($post_type) && is_object_in_taxonomy($post_type, 'category')) {
+                    $post_types[$post_type] = true;
+                }
+            }
+            if ($post_types !== []) {
+                update_object_term_cache($post_ids, array_keys($post_types));
+            }
+
+            return;
+        }
+
+        if ($dimension === 'author' && function_exists('cache_users')) {
+            $author_ids = [];
+            foreach ($post_ids as $post_id) {
+                $post = get_post($post_id);
+                if ($post instanceof WP_Post && (int) $post->post_author > 0) {
+                    $author_ids[(int) $post->post_author] = true;
+                }
+            }
+            if ($author_ids !== []) {
+                cache_users(array_keys($author_ids));
+            }
+        }
+    }
+
+    /**
+     * Groups of one published post in a content dimension, keyed by group key.
+     *
+     * @return array<string, string>|null Group labels keyed by group key; an empty array when the
+     *                                    post belongs to no group (a page in the category dimension);
+     *                                    null when its group cannot be resolved (missing author).
+     */
+    private function get_top_content_memberships(WP_Post $post, string $dimension): ?array {
+        if ($dimension === 'post_type') {
+            $post_type_object = get_post_type_object($post->post_type);
+            $label = $post_type_object instanceof WP_Post_Type && isset($post_type_object->labels->name)
+                ? sanitize_text_field((string) $post_type_object->labels->name)
+                : '';
+
+            return [(string) $post->post_type => $label !== '' ? $label : (string) $post->post_type];
+        }
+
+        if ($dimension === 'category') {
+            $terms = get_the_terms($post, 'category');
+            if (!is_array($terms)) {
+                return [];
+            }
+
+            $memberships = [];
+            foreach ($terms as $term) {
+                if (!$term instanceof WP_Term) {
+                    continue;
+                }
+                $label = sanitize_text_field(html_entity_decode((string) $term->name, ENT_QUOTES, 'UTF-8'));
+                $memberships[(string) $term->term_id] = $label !== '' ? $label : (string) $term->slug;
+            }
+
+            return $memberships;
+        }
+
+        $author_id = (int) $post->post_author;
+        $author = $author_id > 0 ? get_userdata($author_id) : false;
+        if (!$author instanceof WP_User) {
+            return null;
+        }
+
+        $label = sanitize_text_field((string) $author->display_name);
+
+        return [(string) $author_id => $label !== '' ? $label : sanitize_text_field((string) $author->user_nicename)];
+    }
+
+    /**
+     * Sort top-content groups; ties are ordered by label, then by key.
+     */
+    private function sort_top_content_groups(array $groups, array $sorting): array {
+        $sort_direction = ($sorting['order'] ?? 'DESC') === 'DESC' ? -1 : 1;
+        $orderby_key = isset($sorting['orderby_key']) ? (string) $sorting['orderby_key'] : 'hits';
+
+        usort(
+            $groups,
+            static function (array $left, array $right) use ($orderby_key, $sort_direction): int {
+                if ($orderby_key === 'label') {
+                    $comparison = strcasecmp((string) $left['label'], (string) $right['label']);
+                    if ($comparison !== 0) {
+                        return $comparison * $sort_direction;
+                    }
+                } else {
+                    $left_metric = $orderby_key === 'items_count' ? count($left['posts']) : (int) $left['hits'];
+                    $right_metric = $orderby_key === 'items_count' ? count($right['posts']) : (int) $right['hits'];
+                    if ($left_metric !== $right_metric) {
+                        return ($left_metric <=> $right_metric) * $sort_direction;
+                    }
+
+                    $comparison = strcasecmp((string) $left['label'], (string) $right['label']);
+                    if ($comparison !== 0) {
+                        return $comparison;
+                    }
+                }
+
+                return strcmp((string) $left['key'], (string) $right['key']);
+            }
+        );
+
+        return $groups;
+    }
+
+    /**
+     * Daily page-view series of the returned top-content rows, keyed by row key.
+     *
+     * One query sums every row by day in SQL: each row reads its stored path variants, or the
+     * other stored paths of the range when that list is shorter, so the response never loads
+     * one result row per path and day.
+     *
+     * @param array<int, array<string, mixed>> $groups       Returned rows with their `variants`.
+     * @param array<int, string>               $stored_paths Every stored page_path of the range.
+     * @return array<string, array<int, int>>
+     */
+    private function get_top_content_views_series(array $groups, array $stored_paths, array $range): array {
+        global $wpdb;
+
+        $buckets = $this->get_day_buckets($range['start'], $range['end']);
+        $empty_series = array_fill(0, count($buckets), 0);
+        $bucket_indexes = array_flip($buckets);
+        $all_paths = array_fill_keys(array_map('strval', $stored_paths), true);
+
+        $columns = [];
+        $column_args = [];
+        $column_keys = [];
+        foreach (array_values($groups) as $index => $group) {
+            $variants = array_map('strval', array_keys((array) ($group['variants'] ?? [])));
+            if ($variants === []) {
+                continue;
+            }
+
+            $alias = 'series_' . (int) $index;
+            $other_paths = array_map('strval', array_keys(array_diff_key($all_paths, array_flip($variants))));
+            if ($other_paths === []) {
+                $columns[] = "SUM(hits) AS {$alias}";
+            } elseif (count($other_paths) < count($variants)) {
+                $columns[] = "SUM(CASE WHEN page_path NOT IN (" . $this->build_string_placeholders($other_paths) . ") THEN hits ELSE 0 END) AS {$alias}";
+                $column_args = array_merge($column_args, $other_paths);
+            } else {
+                $columns[] = "SUM(CASE WHEN page_path IN (" . $this->build_string_placeholders($variants) . ") THEN hits ELSE 0 END) AS {$alias}";
+                $column_args = array_merge($column_args, $variants);
+            }
+            $column_keys[$alias] = (string) $group['key'];
+        }
+
+        if ($columns === []) {
+            return [];
+        }
+
+        $table = $this->get_allowed_table('daily');
+        $query = $wpdb->prepare(
+            'SELECT date_bucket, ' . implode(', ', $columns) . "
+            FROM {$table}
+            WHERE date_bucket BETWEEN %s AND %s
+            GROUP BY date_bucket",
+            array_merge($column_args, [$range['start'], $range['end']])
+        );
+        $rows = $wpdb->get_results($query, ARRAY_A) ?: [];
+
+        $series_by_key = [];
+        foreach ($column_keys as $key) {
+            $series_by_key[$key] = $empty_series;
+        }
+        foreach ($rows as $row) {
+            $bucket = isset($row['date_bucket']) ? (string) $row['date_bucket'] : '';
+            if (!isset($bucket_indexes[$bucket])) {
+                continue;
+            }
+
+            foreach ($column_keys as $alias => $key) {
+                $series_by_key[$key][$bucket_indexes[$bucket]] += (int) ($row[$alias] ?? 0);
+            }
+        }
+
+        return $series_by_key;
     }
 
     /**
@@ -1581,6 +2082,11 @@ class BBPA_Report_Controller {
             if ($item['page_title'] === null) {
                 $item['page_title'] = $this->resolve_page_title_from_path((string) $item['_title_path']);
             }
+            if ($cache_id === 'top-pages') {
+                // The post of the displayed title; memoized by the title lookup, so no extra
+                // url_to_postid() call. 0 for the blog home and rows beyond the lookup limit.
+                $item['post_id'] = (int) ($this->resolve_post_id_from_path((string) $item['_title_path']) ?? 0);
+            }
             unset($item['_title_path']);
             $items[$index] = $item;
         }
@@ -1767,13 +2273,15 @@ class BBPA_Report_Controller {
     private function get_page_title_lookup_limit(string $endpoint): ?int {
         /**
          * Filters the maximum number of page-title lookups (url_to_postid()) performed to build
-         * one page-path report response (top pages, entry pages, exit pages, 404s).
+         * one page-path report response (top pages, entry pages, exit pages, 404s) or one
+         * top-content response.
          *
-         * Rows beyond the limit are handled as rows without a WordPress post title. Return 0 or
-         * a negative value to remove the limit.
+         * Rows beyond the limit are handled as rows without a WordPress post title (in top
+         * content, as unresolved page views). Return 0 or a negative value to remove the limit.
          *
          * @param int    $limit    Default 5000.
-         * @param string $endpoint Report identifier: top-pages, entry-pages, exit-pages or not-found.
+         * @param string $endpoint Report identifier: top-pages, entry-pages, exit-pages, not-found
+         *                         or top-content.
          */
         $limit = (int) apply_filters('bbpa_report_page_title_lookup_limit', self::DEFAULT_PAGE_TITLE_LOOKUP_LIMIT, $endpoint);
 
@@ -3277,57 +3785,96 @@ class BBPA_Report_Controller {
         return $path;
     }
 
-    private function resolve_page_title_from_path(string $page_path): string {
-        static $title_cache = [];
-
+    /**
+     * Build the memo key of a stored report path for the post and title resolution caches.
+     *
+     * The key includes the install directory, and the static front page for the homepage, so
+     * a change of either setting resolves the path again.
+     */
+    private function get_page_path_resolution_cache_key(string $page_path): string {
         $normalized_path = trim($page_path);
         $home_path = $this->get_home_path_prefix();
-        $lookup_path = $this->strip_home_path_prefix($normalized_path, $home_path);
         $cache_key = $home_path === '' ? $normalized_path : $home_path . '|' . $normalized_path;
-        if ($lookup_path === '/') {
+        if ($this->strip_home_path_prefix($normalized_path, $home_path) === '/') {
             $cache_key .= '|front:' . (int) get_option('page_on_front');
         }
 
-        if (isset($title_cache[$cache_key])) {
-            return $title_cache[$cache_key];
+        return $cache_key;
+    }
+
+    /**
+     * Resolve the WordPress post of a stored report path.
+     *
+     * The homepage resolves to the static front page when one is set, without a lookup; other
+     * paths go through url_to_postid(), counted against the lookup limit of the response being
+     * built. Results are memoized by this controller (one request) and shared by the page titles and
+     * the top-content groups.
+     *
+     * @return int|null Post ID, 0 when the path maps to no post, or null when the lookup limit of
+     *                  the current response is reached (not memoized).
+     */
+    private function resolve_post_id_from_path(string $page_path): ?int {
+
+        $normalized_path = trim($page_path);
+        $cache_key = $this->get_page_path_resolution_cache_key($page_path);
+        if (isset($this->post_id_memo[$cache_key])) {
+            return $this->post_id_memo[$cache_key];
         }
 
         if ($normalized_path === '') {
-            $title_cache[$cache_key] = '';
+            $this->post_id_memo[$cache_key] = 0;
 
-            return '';
+            return 0;
         }
 
+        $lookup_path = $this->strip_home_path_prefix($normalized_path, $this->get_home_path_prefix());
         if ($lookup_path === '/') {
             $front_page_id = (int) get_option('page_on_front');
             if ($front_page_id > 0) {
-                $front_title = get_the_title($front_page_id);
-                $title_cache[$cache_key] = is_string($front_title) ? sanitize_text_field($front_title) : '';
+                $this->post_id_memo[$cache_key] = $front_page_id;
 
-                return $title_cache[$cache_key];
+                return $front_page_id;
             }
         }
 
         if ($this->page_title_lookups_remaining !== null) {
             if ($this->page_title_lookups_remaining <= 0) {
-                // Lookup limit reached: handled as untitled and not cached.
-                return '';
+                // Lookup limit reached: handled as unresolved and not cached.
+                return null;
             }
 
             $this->page_title_lookups_remaining--;
         }
 
-        $post_id = url_to_postid(home_url($lookup_path));
+        $post_id = (int) url_to_postid(home_url($lookup_path));
+        $this->post_id_memo[$cache_key] = max(0, $post_id);
+
+        return $this->post_id_memo[$cache_key];
+    }
+
+    private function resolve_page_title_from_path(string $page_path): string {
+
+        $cache_key = $this->get_page_path_resolution_cache_key($page_path);
+        if (isset($this->page_title_memo[$cache_key])) {
+            return $this->page_title_memo[$cache_key];
+        }
+
+        $post_id = $this->resolve_post_id_from_path($page_path);
+        if ($post_id === null) {
+            // Lookup limit reached: handled as untitled and not cached.
+            return '';
+        }
+
         if ($post_id <= 0) {
-            $title_cache[$cache_key] = '';
+            $this->page_title_memo[$cache_key] = '';
 
             return '';
         }
 
         $title = get_the_title($post_id);
-        $title_cache[$cache_key] = is_string($title) ? sanitize_text_field($title) : '';
+        $this->page_title_memo[$cache_key] = is_string($title) ? sanitize_text_field($title) : '';
 
-        return $title_cache[$cache_key];
+        return $this->page_title_memo[$cache_key];
     }
 
     /**

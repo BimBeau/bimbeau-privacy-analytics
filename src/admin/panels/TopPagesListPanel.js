@@ -1,4 +1,4 @@
-import { TabPanel } from '@wordpress/components';
+import { TabPanel, Tooltip } from '@wordpress/components';
 import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -102,6 +102,97 @@ const ExitPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	/>
 );
 
+// Row key of the /top-content row that holds page views without a published post.
+export const TOP_CONTENT_UNRESOLVED_KEY = 'unresolved';
+
+// Top-content rows are matched with the previous period by group key: two authors
+// or categories can share a label.
+export const getTopContentComparisonKey = ( item ) =>
+	String( item?.key ?? item?.label ?? '' );
+
+const getTopContentRowClassName = ( item ) =>
+	item?.key === TOP_CONTENT_UNRESOLVED_KEY
+		? 'bbpa-report-table__row--muted'
+		: '';
+
+const renderTopContentLabel = ( visibleLabel, item ) => {
+	if ( item?.key !== TOP_CONTENT_UNRESOLVED_KEY ) {
+		return visibleLabel;
+	}
+
+	const helpText = __(
+		'Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page.',
+		'bimbeau-privacy-analytics'
+	);
+
+	return (
+		<span className="bbpa-report-table__label-with-help">
+			<span>{ visibleLabel }</span>
+			<Tooltip text={ helpText }>
+				<span
+					className="dashicons dashicons-editor-help"
+					role="img"
+					tabIndex={ 0 }
+					aria-label={ helpText }
+				/>
+			</Tooltip>
+		</span>
+	);
+};
+
+const TopContentPanel = ( {
+	range,
+	dimension,
+	title,
+	labelHeader,
+	emptyLabel,
+	footnote = '',
+} ) => (
+	<ReportTableCard
+		title={ title }
+		hideZeroPrimaryRows
+		labelHeader={ labelHeader }
+		range={ range }
+		endpoint="/top-content"
+		requestParams={ { dimension } }
+		emptyLabel={ emptyLabel }
+		labelFallback="—"
+		supportsPageLabelToggle={ false }
+		showOpenButton={ false }
+		showMetricTrend
+		metricSeriesKey="views_series"
+		getComparisonKey={ getTopContentComparisonKey }
+		getRowClassName={ getTopContentRowClassName }
+		renderLabel={ renderTopContentLabel }
+		footnote={ footnote }
+	/>
+);
+
+const contentTabPanels = {
+	'content-types': {
+		dimension: 'post_type',
+		title: __( 'Content types', 'bimbeau-privacy-analytics' ),
+		labelHeader: __( 'Content type', 'bimbeau-privacy-analytics' ),
+		emptyLabel: __( 'No content types available.', 'bimbeau-privacy-analytics' ),
+	},
+	categories: {
+		dimension: 'category',
+		title: __( 'Categories', 'bimbeau-privacy-analytics' ),
+		labelHeader: __( 'Category', 'bimbeau-privacy-analytics' ),
+		emptyLabel: __( 'No categories available.', 'bimbeau-privacy-analytics' ),
+		footnote: __(
+			'A post filed in several categories counts in each of them.',
+			'bimbeau-privacy-analytics'
+		),
+	},
+	authors: {
+		dimension: 'author',
+		title: __( 'Authors', 'bimbeau-privacy-analytics' ),
+		labelHeader: __( 'Author', 'bimbeau-privacy-analytics' ),
+		emptyLabel: __( 'No authors available.', 'bimbeau-privacy-analytics' ),
+	},
+};
+
 const getInitialTabName = () => {
 	if ( typeof window === 'undefined' || ! window.location ) {
 		return 'top-pages';
@@ -114,6 +205,7 @@ const getInitialTabName = () => {
 		'entry-pages',
 		'exit-pages',
 		'not-found',
+		...Object.keys( contentTabPanels ),
 	];
 
 	return supportedTabs.includes( requestedTab ) ? requestedTab : 'top-pages';
@@ -125,6 +217,10 @@ const pagesTabs = [
 	{ name: 'entry-pages', title: __( 'Entry pages', 'bimbeau-privacy-analytics' ) },
 	{ name: 'exit-pages', title: __( 'Exit pages', 'bimbeau-privacy-analytics' ) },
 	{ name: 'not-found', title: __( 'Pages not found', 'bimbeau-privacy-analytics' ) },
+	...Object.entries( contentTabPanels ).map( ( [ name, panel ] ) => ( {
+		name,
+		title: panel.title,
+	} ) ),
 ];
 
 const TopPagesListPanel = ( { rangeSelection, getRowHref, onOpenDetails } ) => {
@@ -147,6 +243,15 @@ const TopPagesListPanel = ( { rangeSelection, getRowHref, onOpenDetails } ) => {
 						}
 						if ( tab.name === 'not-found' ) {
 							return <NotFoundPanel range={ range } />;
+						}
+						if ( contentTabPanels[ tab.name ] ) {
+							return (
+								<TopContentPanel
+									key={ tab.name }
+									range={ range }
+									{ ...contentTabPanels[ tab.name ] }
+								/>
+							);
 						}
 						return <TopPagesReportPanel range={ range } onOpenDetails={ onOpenDetails?.( 'top-pages' ) } getRowHref={ getRowHref?.( 'top-pages' ) } />;
 					} }

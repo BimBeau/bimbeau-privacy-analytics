@@ -1681,3 +1681,31 @@ ul.striped > :nth-child(odd) {
 .bbpa-admin-app .bbpa-settings-excluded-paths-control {
   margin-top: var(--bbpa-gap-md);
 }
+
+.bbpa-pages-tabs .components-tab-panel__tabs {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.bbpa-pages-tabs .components-tab-panel__tabs .components-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.bbpa-report-table__row--muted td,
+.bbpa-report-table__row--muted .bbpa-page-title {
+  color: var(--bbpa-color-text-muted, #646970);
+}
+
+.bbpa-report-table__label-with-help {
+  align-items: center;
+  display: inline-flex;
+  gap: 4px;
+}
+
+.bbpa-report-table__footnote {
+  margin: 0;
+  color: var(--bbpa-color-text-muted, #646970);
+  font-size: 12px;
+  line-height: 1.4;
+}
