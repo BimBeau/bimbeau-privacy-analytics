@@ -31,6 +31,7 @@ const BBPA_ACCESS_ROLE_KEYS = [
     'stats_access_roles',
     'settings_access_roles',
     'contact_access_roles',
+    'account_access_roles',
 ];
 const BBPA_DEFAULT_STATS_ACCESS_ROLES = [
     'editor',
@@ -42,7 +43,7 @@ const BBPA_DEFAULT_STATS_ACCESS_ROLES = [
 const BBPA_MAXMIND_LICENSE_KEY_MASK = '********';
 
 /**
- * Return roles eligible for delegated access to stats/settings/contact panels.
+ * Return roles eligible for delegated access to stats/settings/contact/account panels.
  *
  * Eligible roles match editor-level capabilities or higher.
  *
@@ -96,6 +97,7 @@ function bbpa_get_settings_defaults(): array
         'stats_access_roles' => BBPA_DEFAULT_STATS_ACCESS_ROLES,
         'settings_access_roles' => [],
         'contact_access_roles' => [],
+        'account_access_roles' => [],
         'excluded_paths' => [],
         'debug_enabled' => false,
         'geo_aggregation_enabled' => true,
@@ -784,6 +786,33 @@ function bbpa_update_settings($settings)
     // Same projection as bbpa_get_settings(): only keys owned by the loaded edition.
     return array_intersect_key($sanitized, $defaults);
 }
+
+/**
+ * Keep the stored Account page delegation when the current user cannot manage it.
+ *
+ * Roles delegated to the settings screen can save every setting, but only users
+ * with `manage_options` may change `account_access_roles`: the key is dropped from
+ * the input of other users, and the partial update of bbpa_update_settings() keeps
+ * the stored value.
+ *
+ * @param mixed $settings Settings input (key => value).
+ * @return mixed Settings input without `account_access_roles` for other users.
+ */
+function bbpa_protect_account_access_roles_input($settings)
+{
+    if (!is_array($settings) || !array_key_exists('account_access_roles', $settings)) {
+        return $settings;
+    }
+
+    if (function_exists('bbpa_current_user_can_manage_account_access') && bbpa_current_user_can_manage_account_access()) {
+        return $settings;
+    }
+
+    unset($settings['account_access_roles']);
+
+    return $settings;
+}
+add_filter('bbpa_settings_input_before_sanitize', 'bbpa_protect_account_access_roles_input', 10, 1);
 
 /**
  * Normalize a path for settings storage.

@@ -47,6 +47,14 @@ msgid "Contact"
 msgstr "联系"
 
 #: admin/admin.php
+msgid "You are viewing this page in read-only mode. Contact an administrator to change the license or billing."
+msgstr "您正在以只读模式查看此页面。如需更改许可证或账单，请联系管理员。"
+
+#: admin/admin.php
+msgid "The account details cannot be displayed in read-only mode. Contact an administrator."
+msgstr "无法以只读模式显示账户详细信息。请联系管理员。"
+
+#: admin/admin.php
 msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
 msgstr "基础跟踪保持启用。增强跟踪可通过外部 CMP 声明。数据粒度取决于收集到的信号。"
 
@@ -1532,6 +1540,14 @@ msgid "Access to the plugin Contact page."
 msgstr "访问插件联系页面。"
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Account"
+msgstr "账户"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to the plugin Account page: plan, expiry and renewal."
+msgstr "访问插件账户页面：套餐、到期和续订。"
+
+#: src/admin/panels/SettingsPanel.js
 msgid "General"
 msgstr "常规"
 
@@ -1552,8 +1568,8 @@ msgid "Role access"
 msgstr "角色访问"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page."
-msgstr "管理员保留完整访问权限。请选择其他可打开分析页面、插件设置或联系页面的角色。"
+msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page."
+msgstr "管理员保留完整访问权限。请选择其他可打开分析页面、插件设置、联系页面或账户页面的角色。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1566,6 +1582,10 @@ msgstr "允许"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "隐藏"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan."
+msgstr "对这些角色，许可证密钥、站点密钥、账单和发票始终隐藏。只有管理员可以更改许可证或套餐。"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."

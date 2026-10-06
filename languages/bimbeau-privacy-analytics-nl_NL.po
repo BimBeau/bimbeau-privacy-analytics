@@ -48,6 +48,14 @@ msgid "Contact"
 msgstr "Contact"
 
 #: admin/admin.php
+msgid "You are viewing this page in read-only mode. Contact an administrator to change the license or billing."
+msgstr "Je bekijkt deze pagina in alleen-lezenmodus. Neem contact op met een beheerder om de licentie of facturering te wijzigen."
+
+#: admin/admin.php
+msgid "The account details cannot be displayed in read-only mode. Contact an administrator."
+msgstr "De accountgegevens kunnen niet worden weergegeven in alleen-lezenmodus. Neem contact op met een beheerder."
+
+#: admin/admin.php
 msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
 msgstr "Basistracking blijft actief. Verrijkte tracking kan via een externe CMP worden gedeclareerd. De gegevensgranulariteit hangt af van de verzamelde signalen."
 
@@ -1536,6 +1544,14 @@ msgid "Access to the plugin Contact page."
 msgstr "Toegang tot de contactpagina van de plugin."
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Account"
+msgstr "Account"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to the plugin Account page: plan, expiry and renewal."
+msgstr "Toegang tot de accountpagina van de plugin: abonnement, vervaldatum en verlenging."
+
+#: src/admin/panels/SettingsPanel.js
 msgid "General"
 msgstr "Algemeen"
 
@@ -1556,8 +1572,8 @@ msgid "Role access"
 msgstr "Roltoegang"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page."
-msgstr "Beheerders behouden volledige toegang. Selecteer extra rollen die analytics-pagina's, plugininstellingen of de contactpagina kunnen openen."
+msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page."
+msgstr "Beheerders behouden volledige toegang. Selecteer extra rollen die analytics-pagina's, plugininstellingen, de contactpagina of de accountpagina kunnen openen."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1570,6 +1586,10 @@ msgstr "Toegestaan"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "Verborgen"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan."
+msgstr "De licentiesleutel, de sitesleutels, facturering en facturen blijven verborgen voor deze rollen. Alleen beheerders kunnen de licentie of het abonnement wijzigen."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."

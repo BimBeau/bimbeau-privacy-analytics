@@ -47,6 +47,14 @@ msgid "Contact"
 msgstr "İletişim"
 
 #: admin/admin.php
+msgid "You are viewing this page in read-only mode. Contact an administrator to change the license or billing."
+msgstr "Bu sayfayı salt okunur modda görüntülüyorsunuz. Lisansı veya faturalandırmayı değiştirmek için bir yöneticiyle iletişime geçin."
+
+#: admin/admin.php
+msgid "The account details cannot be displayed in read-only mode. Contact an administrator."
+msgstr "Hesap ayrıntıları salt okunur modda görüntülenemez. Bir yöneticiyle iletişime geçin."
+
+#: admin/admin.php
 msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
 msgstr "Temel izleme etkin kalır. Gelişmiş izleme harici bir CMP üzerinden bildirilebilir. Veri ayrıntı düzeyi toplanan sinyallere bağlıdır."
 
@@ -1532,6 +1540,14 @@ msgid "Access to the plugin Contact page."
 msgstr "Eklentinin İletişim sayfasına erişim."
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Account"
+msgstr "Hesap"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to the plugin Account page: plan, expiry and renewal."
+msgstr "Eklentinin Hesap sayfasına erişim: plan, sona erme ve yenileme."
+
+#: src/admin/panels/SettingsPanel.js
 msgid "General"
 msgstr "Genel"
 
@@ -1552,8 +1568,8 @@ msgid "Role access"
 msgstr "Rol erişimi"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page."
-msgstr "Yöneticiler tam erişimi korur. Analiz sayfalarını, eklenti ayarlarını veya İletişim sayfasını açabilecek ek rolleri seçin."
+msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page."
+msgstr "Yöneticiler tam erişimi korur. Analiz sayfalarını, eklenti ayarlarını, İletişim sayfasını veya Hesap sayfasını açabilecek ek rolleri seçin."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1566,6 +1582,10 @@ msgstr "İzin verildi"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "Gizli"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan."
+msgstr "Lisans anahtarı, site anahtarları, faturalandırma ve faturalar bu roller için gizli kalır. Lisansı veya planı yalnızca yöneticiler değiştirebilir."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."

@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.48.0
+Stable tag: 8.49.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,7 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.48.0 =
-* [Feature] Add Content types, Categories and Authors tabs to the Pages report, with page views, a comparison with the previous period and a daily trend for each row.
-* [Feature] Add the `GET /bbpa/v1/top-content` report route, which groups page views by post type, category or author.
-* [Fix] Return the post ID of each Top pages row, so the page details screen can link to the post in WordPress.
+= 8.49.0 =
+* [Feature] Settings → General → Role access has a new Account group: administrators can let selected roles (editor level or above) open the Account page in read-only mode to check the plan, its expiry and its renewal. The license key, the site keys, billing and invoices stay hidden for these roles, and only administrators can change the license, the plan or this group. No role has this access by default. Label: `feature`: new setting (`account_access_roles`), new capability (`bbpa_access_account`) and new filter (`bbpa_account_access_capability`), all additive; `surface-diff.sh` suggests `feature`.

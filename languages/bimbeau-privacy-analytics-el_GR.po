@@ -48,6 +48,14 @@ msgid "Contact"
 msgstr "Επικοινωνία"
 
 #: admin/admin.php
+msgid "You are viewing this page in read-only mode. Contact an administrator to change the license or billing."
+msgstr "Βλέπετε αυτή τη σελίδα σε λειτουργία μόνο ανάγνωσης. Επικοινωνήστε με έναν διαχειριστή για να αλλάξετε την άδεια ή τη χρέωση."
+
+#: admin/admin.php
+msgid "The account details cannot be displayed in read-only mode. Contact an administrator."
+msgstr "Τα στοιχεία του λογαριασμού δεν μπορούν να εμφανιστούν σε λειτουργία μόνο ανάγνωσης. Επικοινωνήστε με έναν διαχειριστή."
+
+#: admin/admin.php
 msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
 msgstr "Η βασική παρακολούθηση παραμένει ενεργή. Η εμπλουτισμένη παρακολούθηση μπορεί να δηλωθεί μέσω εξωτερικού CMP. Η ανάλυση των δεδομένων εξαρτάται από τα σήματα που συλλέγονται."
 
@@ -1536,6 +1544,14 @@ msgid "Access to the plugin Contact page."
 msgstr "Πρόσβαση στη σελίδα Επικοινωνίας του πρόσθετου."
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Account"
+msgstr "Λογαριασμός"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to the plugin Account page: plan, expiry and renewal."
+msgstr "Πρόσβαση στη σελίδα Λογαριασμού του πρόσθετου: πρόγραμμα, λήξη και ανανέωση."
+
+#: src/admin/panels/SettingsPanel.js
 msgid "General"
 msgstr "Γενικά"
 
@@ -1556,8 +1572,8 @@ msgid "Role access"
 msgstr "Πρόσβαση ρόλων"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page."
-msgstr "Οι διαχειριστές διατηρούν πλήρη πρόσβαση. Επιλέξτε επιπλέον ρόλους που μπορούν να ανοίγουν σελίδες αναλυτικών, ρυθμίσεις πρόσθετου ή τη σελίδα Επικοινωνίας."
+msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page."
+msgstr "Οι διαχειριστές διατηρούν πλήρη πρόσβαση. Επιλέξτε επιπλέον ρόλους που μπορούν να ανοίγουν σελίδες αναλυτικών, ρυθμίσεις πρόσθετου, τη σελίδα Επικοινωνίας ή τη σελίδα Λογαριασμού."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1570,6 +1586,10 @@ msgstr "Επιτρέπεται"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "Κρυφό"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan."
+msgstr "Το κλειδί άδειας, τα κλειδιά του ιστότοπου, η χρέωση και τα τιμολόγια παραμένουν κρυφά για αυτούς τους ρόλους. Μόνο οι διαχειριστές μπορούν να αλλάξουν την άδεια ή το πρόγραμμα."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."

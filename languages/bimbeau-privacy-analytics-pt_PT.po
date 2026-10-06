@@ -48,6 +48,14 @@ msgid "Contact"
 msgstr "Contacto"
 
 #: admin/admin.php
+msgid "You are viewing this page in read-only mode. Contact an administrator to change the license or billing."
+msgstr "Está a ver esta página em modo só de leitura. Contacte um administrador para alterar a licença ou a faturação."
+
+#: admin/admin.php
+msgid "The account details cannot be displayed in read-only mode. Contact an administrator."
+msgstr "Os detalhes da conta não podem ser apresentados em modo só de leitura. Contacte um administrador."
+
+#: admin/admin.php
 msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
 msgstr "O rastreio base permanece ativo. O rastreio enriquecido pode ser declarado através de uma CMP externa. A granularidade dos dados depende dos sinais recolhidos."
 
@@ -1536,6 +1544,14 @@ msgid "Access to the plugin Contact page."
 msgstr "Acesso à página de Contacto do plugin."
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Account"
+msgstr "Conta"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to the plugin Account page: plan, expiry and renewal."
+msgstr "Acesso à página de Conta do plugin: plano, expiração e renovação."
+
+#: src/admin/panels/SettingsPanel.js
 msgid "General"
 msgstr "Geral"
 
@@ -1556,8 +1572,8 @@ msgid "Role access"
 msgstr "Acesso por função"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page."
-msgstr "Os administradores mantêm acesso total. Selecione funções adicionais que possam abrir páginas de analytics, definições do plugin ou a página de Contacto."
+msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page."
+msgstr "Os administradores mantêm acesso total. Selecione funções adicionais que possam abrir páginas de analytics, definições do plugin, a página de Contacto ou a página de Conta."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1570,6 +1586,10 @@ msgstr "Permitido"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "Oculto"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan."
+msgstr "A chave de licença, as chaves do site, a faturação e as faturas permanecem ocultas para estas funções. Apenas os administradores podem alterar a licença ou o plano."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."

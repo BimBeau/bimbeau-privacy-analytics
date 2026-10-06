@@ -54,6 +54,8 @@ if (!function_exists('bbpa_place_free_upgrade_submenu_last')) {
 add_action('admin_menu', 'bbpa_register_admin_menu');
 add_action('admin_menu', 'bbpa_register_free_upgrade_submenu', 999);
 add_action('admin_menu', 'bbpa_register_contact_submenu', 100);
+// After Freemius (admin_menu priority 999999999) and before the Pro submenu ordering (PHP_INT_MAX).
+add_action('admin_menu', 'bbpa_register_delegated_account_submenu', PHP_INT_MAX - 1);
 add_action('admin_head', 'bbpa_normalize_free_upgrade_submenu', 1);
 add_action('admin_init', 'bbpa_redirect_disabled_admin_page');
 add_action('admin_enqueue_scripts', 'bbpa_enqueue_admin_assets');
@@ -62,3 +64,5 @@ add_action('admin_enqueue_scripts', 'bbpa_enqueue_admin_assets');
 add_action('admin_enqueue_scripts', 'bbpa_add_admin_menu_icon_styles');
 add_action('wp_dashboard_setup', 'bbpa_register_dashboard_widget');
 add_filter('rest_url', 'bbpa_filter_rest_url_for_admin_pages', 10, 4);
+
+bbpa_register_freemius_account_customizations();

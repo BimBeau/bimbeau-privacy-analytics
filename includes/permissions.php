@@ -39,6 +39,20 @@ function bbpa_get_contact_access_capability(): string
 }
 
 /**
+ * Capability used for delegated access to the Freemius Account page.
+ *
+ * Users with `manage_options` keep the Account page registered by Freemius.
+ * Roles listed in the `account_access_roles` setting receive this capability
+ * and open the same page in read-only mode.
+ */
+function bbpa_get_account_access_capability(): string
+{
+    $capability = apply_filters('bbpa_account_access_capability', 'bbpa_access_account');
+
+    return is_string($capability) && $capability !== '' ? sanitize_key($capability) : 'bbpa_access_account';
+}
+
+/**
  * Resolve capability required to access BimBeau Privacy Analytics protected analytics surfaces.
  */
 function bbpa_get_required_admin_capability(): string
@@ -62,6 +76,7 @@ function bbpa_get_panel_capability_map(): array
     $admin_capability = bbpa_get_required_admin_capability();
     $settings_capability = bbpa_get_settings_access_capability();
     $contact_capability = bbpa_get_contact_access_capability();
+    $account_capability = bbpa_get_account_access_capability();
     $default_map = [
         'dashboard' => $admin_capability,
         'top-pages' => $admin_capability,
@@ -73,6 +88,9 @@ function bbpa_get_panel_capability_map(): array
         'realtime' => $admin_capability,
         'settings' => $settings_capability,
         'contact' => $contact_capability,
+        // Delegated access to the Freemius Account page. Users with
+        // manage_options keep the entry registered by Freemius itself.
+        'account' => $account_capability,
         // Freemius requires manage_options for its pricing page, so the plugin
         // upgrade menu entry uses the same capability by default.
         'pricing' => 'manage_options',
@@ -123,6 +141,18 @@ function bbpa_current_user_can_access_panel(string $panel): bool
 }
 
 /**
+ * Check whether the current user manages the plugin license and the Account page delegation.
+ *
+ * Only users with `manage_options` (the capability Freemius requires for its Account page)
+ * may change the `account_access_roles` setting and see the license key, the site keys and
+ * the billing details on the Account page.
+ */
+function bbpa_current_user_can_manage_account_access(): bool
+{
+    return current_user_can('manage_options');
+}
+
+/**
  * Capabilities WordPress reserves for super admins or grants without storing them in any site role.
  *
  * They can never be granted by the plugin role access settings.
@@ -150,7 +180,8 @@ function bbpa_get_reserved_wordpress_capabilities(): array
  * Determine whether the role access settings may grant a panel access capability to delegated roles.
  *
  * The capability names come from the `bbpa_stats_access_capability`,
- * `bbpa_settings_access_capability` and `bbpa_contact_access_capability` filters.
+ * `bbpa_settings_access_capability`, `bbpa_contact_access_capability` and
+ * `bbpa_account_access_capability` filters.
  * Delegated roles only receive dedicated capabilities: the plugin's own `bbpa_*`
  * names, or a custom name that no site role stores and that WordPress does not
  * reserve. A capability managed by WordPress or another plugin (for example
@@ -234,12 +265,18 @@ function bbpa_apply_role_access_capabilities(array $allcaps, array $caps, array 
     $stats_capability = bbpa_get_stats_access_capability();
     $settings_capability = bbpa_get_settings_access_capability();
     $contact_capability = bbpa_get_contact_access_capability();
+    $account_capability = bbpa_get_account_access_capability();
     $requested = array_fill_keys($caps, true);
-    if (!isset($requested[$stats_capability]) && !isset($requested[$settings_capability]) && !isset($requested[$contact_capability])) {
+    if (
+        !isset($requested[$stats_capability])
+        && !isset($requested[$settings_capability])
+        && !isset($requested[$contact_capability])
+        && !isset($requested[$account_capability])
+    ) {
         return $allcaps;
     }
 
-    $access_capabilities = [$stats_capability, $settings_capability, $contact_capability];
+    $access_capabilities = [$stats_capability, $settings_capability, $contact_capability, $account_capability];
 
     // Site managers keep every panel capability, except the ones WordPress
     // reserves for super admins (network capabilities, unfiltered uploads).
@@ -301,6 +338,15 @@ function bbpa_apply_role_access_capabilities(array $allcaps, array $caps, array 
             : [];
         if (!empty(array_intersect($user_roles, $contact_roles))) {
             $allcaps[$contact_capability] = true;
+        }
+    }
+
+    if (isset($requested[$account_capability])) {
+        $account_roles = isset($settings['account_access_roles']) && is_array($settings['account_access_roles'])
+            ? array_map('sanitize_key', $settings['account_access_roles'])
+            : [];
+        if (!empty(array_intersect($user_roles, $account_roles))) {
+            $allcaps[$account_capability] = true;
         }
     }
 

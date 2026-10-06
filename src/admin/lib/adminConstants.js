@@ -61,6 +61,7 @@ export const DEFAULT_SETTINGS = {
 	stats_access_roles: [],
 	settings_access_roles: [],
 	contact_access_roles: [],
+	account_access_roles: [],
 	excluded_paths: [],
 	debug_enabled: false,
 	geo_aggregation_enabled: true,

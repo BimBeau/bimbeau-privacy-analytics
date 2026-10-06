@@ -48,6 +48,14 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #: admin/admin.php
+msgid "You are viewing this page in read-only mode. Contact an administrator to change the license or billing."
+msgstr "Du visar den här sidan i skrivskyddat läge. Kontakta en administratör för att ändra licensen eller faktureringen."
+
+#: admin/admin.php
+msgid "The account details cannot be displayed in read-only mode. Contact an administrator."
+msgstr "Kontouppgifterna kan inte visas i skrivskyddat läge. Kontakta en administratör."
+
+#: admin/admin.php
 msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
 msgstr "Grundläggande spårning förblir aktiv. Utökad spårning kan deklareras via en extern CMP. Datans detaljnivå beror på insamlade signaler."
 
@@ -1536,6 +1544,14 @@ msgid "Access to the plugin Contact page."
 msgstr "Åtkomst till tilläggets kontaktsida."
 
 #: src/admin/panels/SettingsPanel.js
+msgid "Account"
+msgstr "Konto"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "Access to the plugin Account page: plan, expiry and renewal."
+msgstr "Åtkomst till tilläggets kontosida: plan, utgång och förnyelse."
+
+#: src/admin/panels/SettingsPanel.js
 msgid "General"
 msgstr "Allmänt"
 
@@ -1556,8 +1572,8 @@ msgid "Role access"
 msgstr "Rollåtkomst"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page."
-msgstr "Administratörer behåller full åtkomst. Välj ytterligare roller som kan öppna analyssidor, tilläggsinställningar eller kontaktsidan."
+msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page."
+msgstr "Administratörer behåller full åtkomst. Välj ytterligare roller som kan öppna analyssidor, tilläggsinställningar, kontaktsidan eller kontosidan."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -1570,6 +1586,10 @@ msgstr "Tillåten"
 #: src/admin/panels/SettingsPanel.js
 msgid "Hidden"
 msgstr "Dold"
+
+#: src/admin/panels/SettingsPanel.js
+msgid "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan."
+msgstr "Licensnyckeln, webbplatsens nycklar, fakturering och fakturor förblir dolda för dessa roller. Endast administratörer kan ändra licensen eller planen."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."

@@ -547,6 +547,240 @@ function bbpa_render_freemius_contact_page(): void
     call_user_func([$freemius, '_contact_page_render']);
 }
 
+/**
+ * Register the Freemius Account page for the roles delegated through `account_access_roles`.
+ *
+ * Freemius registers its Account page with the `manage_options` capability: for other users
+ * WordPress only records the page as forbidden in `$_wp_submenu_nopriv`. When Freemius tried
+ * to add the entry for the current user (the forbidden flag exists under the plugin menu) and
+ * the user holds the `account` panel capability, the flag is removed and the same page slug is
+ * registered with that capability and rendered by Freemius. Users with `manage_options` keep
+ * the entry registered by Freemius, and nothing is registered when Freemius did not add it.
+ *
+ * Runs on `admin_menu` after Freemius (priority 999999999).
+ */
+function bbpa_register_delegated_account_submenu(): void
+{
+    global $_wp_submenu_nopriv;
+
+    if (bbpa_current_user_can_manage_account_access()) {
+        return;
+    }
+
+    $account_slug = BBPA_SLUG . '-account';
+    if (!isset($_wp_submenu_nopriv[BBPA_SLUG][$account_slug])) {
+        return;
+    }
+
+    if (!bbpa_current_user_can_access_panel('account') || !function_exists('bbpa_fs')) {
+        return;
+    }
+
+    $freemius = bbpa_fs();
+    if (
+        !is_object($freemius)
+        || !is_callable([$freemius, '_account_page_render'])
+        || !is_callable([$freemius, '_account_page_load'])
+        || !is_callable([$freemius, 'get_text_inline'])
+    ) {
+        return;
+    }
+
+    $label = wp_strip_all_tags((string) call_user_func([$freemius, 'get_text_inline'], 'Account', 'account'));
+    if ($label === '') {
+        return;
+    }
+
+    unset($_wp_submenu_nopriv[BBPA_SLUG][$account_slug]);
+
+    $hook_suffix = add_submenu_page(
+        BBPA_SLUG,
+        $label,
+        esc_html($label),
+        bbpa_get_panel_capability('account'),
+        $account_slug,
+        'bbpa_render_freemius_account_page'
+    );
+
+    if (is_string($hook_suffix) && $hook_suffix !== '') {
+        add_action('load-' . $hook_suffix, 'bbpa_load_freemius_account_page');
+    }
+}
+
+/**
+ * Prepare the delegated Account page: Freemius resources and the read-only notice.
+ */
+function bbpa_load_freemius_account_page(): void
+{
+    if (function_exists('bbpa_fs')) {
+        $freemius = bbpa_fs();
+        if (is_object($freemius) && is_callable([$freemius, '_account_page_load'])) {
+            call_user_func([$freemius, '_account_page_load']);
+        }
+    }
+
+    if (!bbpa_current_user_can_manage_account_access()) {
+        add_action('admin_notices', 'bbpa_render_account_read_only_notice');
+    }
+}
+
+/**
+ * Delegate rendering of the Account page to Freemius.
+ */
+function bbpa_render_freemius_account_page(): void
+{
+    if (!function_exists('bbpa_fs')) {
+        return;
+    }
+
+    $freemius = bbpa_fs();
+    if (!is_object($freemius) || !is_callable([$freemius, '_account_page_render'])) {
+        return;
+    }
+
+    call_user_func([$freemius, '_account_page_render']);
+}
+
+/**
+ * Print the read-only notice of the Account page for delegated users.
+ */
+function bbpa_render_account_read_only_notice(): void
+{
+    if (bbpa_current_user_can_manage_account_access()) {
+        return;
+    }
+
+    printf(
+        '<div class="notice notice-info bbpa-account-read-only-notice"><p>%s</p></div>',
+        esc_html__('You are viewing this page in read-only mode. Contact an administrator to change the license or billing.', 'bimbeau-privacy-analytics')
+    );
+}
+
+/**
+ * Hide the license key from users who cannot manage the license (Freemius `hide_license_key` filter).
+ *
+ * @param mixed $hide Value computed by Freemius or a previous callback.
+ */
+function bbpa_filter_freemius_hide_license_key($hide): bool
+{
+    return (bool) $hide || !bbpa_current_user_can_manage_account_access();
+}
+
+/**
+ * Hide billing and invoices from users who cannot manage the license (Freemius
+ * `hide_billing_and_payments_info` filter).
+ *
+ * @param mixed $hide Value computed by Freemius or a previous callback.
+ */
+function bbpa_filter_freemius_hide_billing_and_payments_info($hide): bool
+{
+    return (bool) $hide || !bbpa_current_user_can_manage_account_access();
+}
+
+/**
+ * Return the secret values that the Account page must never show to delegated users.
+ *
+ * @return array<int, string> Site secret key, license key and Freemius user secret key, when known.
+ */
+function bbpa_get_freemius_account_secret_values(): array
+{
+    if (!function_exists('bbpa_fs')) {
+        return [];
+    }
+
+    $freemius = bbpa_fs();
+    if (!is_object($freemius)) {
+        return [];
+    }
+
+    $entities = [];
+    foreach (['get_site', '_get_license', 'get_user'] as $method) {
+        if (is_callable([$freemius, $method])) {
+            $entities[] = call_user_func([$freemius, $method]);
+        }
+    }
+
+    $secrets = [];
+    foreach ($entities as $entity) {
+        if (is_object($entity) && isset($entity->secret_key) && is_string($entity->secret_key)) {
+            $secret = trim($entity->secret_key);
+            // Short values cannot be told apart from ordinary page text.
+            if (strlen($secret) >= 8) {
+                $secrets[] = $secret;
+            }
+        }
+    }
+
+    return array_values(array_unique($secrets));
+}
+
+/**
+ * Remove the site key rows of the Freemius Account page for delegated users (Freemius
+ * `templates/account.php` filter).
+ *
+ * The public key and secret key rows are consecutive table rows (`fs-field-site_public_key`,
+ * `fs-field-site_secret_key`); removing both keeps the row striping. When a secret value is
+ * still present after the removal (a changed Freemius template), the account details are
+ * replaced with a short message instead of being shown.
+ *
+ * @param mixed $html Account page markup rendered by Freemius.
+ * @return mixed Markup without the site key rows for delegated users.
+ */
+function bbpa_filter_freemius_account_template($html)
+{
+    if (!is_string($html) || bbpa_current_user_can_manage_account_access()) {
+        return $html;
+    }
+
+    $filtered = preg_replace(
+        '#<tr\s+class="fs-field-(?:site_public_key|site_secret_key)(?:\s[^"]*)?"\s*>.*?</tr>#s',
+        '',
+        $html
+    );
+
+    $is_safe = is_string($filtered);
+    if ($is_safe) {
+        foreach (bbpa_get_freemius_account_secret_values() as $secret) {
+            if (strpos($filtered, $secret) !== false) {
+                $is_safe = false;
+                break;
+            }
+        }
+    }
+
+    if (!$is_safe) {
+        return sprintf(
+            '<div class="wrap"><div class="notice notice-warning inline"><p>%s</p></div></div>',
+            esc_html__('The account details cannot be displayed in read-only mode. Contact an administrator.', 'bimbeau-privacy-analytics')
+        );
+    }
+
+    return $filtered;
+}
+
+/**
+ * Attach the Account page filters that protect the license details from delegated users.
+ */
+function bbpa_register_freemius_account_customizations(): void
+{
+    static $registered = false;
+
+    if ($registered || !function_exists('bbpa_fs')) {
+        return;
+    }
+
+    $freemius = bbpa_fs();
+    if (!is_object($freemius) || !method_exists($freemius, 'add_filter')) {
+        return;
+    }
+
+    $freemius->add_filter('hide_license_key', 'bbpa_filter_freemius_hide_license_key');
+    $freemius->add_filter('hide_billing_and_payments_info', 'bbpa_filter_freemius_hide_billing_and_payments_info');
+    $freemius->add_filter('templates/account.php', 'bbpa_filter_freemius_account_template');
+
+    $registered = true;
+}
+
 
 /**
  * Normalize an admin app root id for DOM lookup.
@@ -1507,6 +1741,8 @@ function bbpa_build_admin_localized_payload(
                     : admin_url('admin.php?page=' . BBPA_SLUG . '-pricing')
             ),
             'debugEnabled' => $debug_enabled,
+            // Only users with manage_options may change the Account page role access.
+            'canManageAccountAccess' => bbpa_current_user_can_manage_account_access(),
             'supportsXlsxExport' => class_exists('ZipArchive'),
             'exportMaxRows' => max(1, (int) apply_filters('bbpa_export_max_rows', 10000)),
             'fieldVisibilityMatrix' => function_exists('bbpa_get_ui_field_visibility_matrix') ? bbpa_get_ui_field_visibility_matrix() : [],

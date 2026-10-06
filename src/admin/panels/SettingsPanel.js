@@ -470,6 +470,9 @@ const normalizeSettings = (settings) => ({
   contact_access_roles: Array.isArray(settings?.contact_access_roles)
     ? settings.contact_access_roles
     : normalizeArray(DEFAULT_SETTINGS.contact_access_roles),
+  account_access_roles: Array.isArray(settings?.account_access_roles)
+    ? settings.account_access_roles
+    : normalizeArray(DEFAULT_SETTINGS.account_access_roles),
   excluded_roles: Array.isArray(settings?.excluded_roles)
     ? settings.excluded_roles
     : normalizeArray(DEFAULT_SETTINGS.excluded_roles),
@@ -1139,6 +1142,8 @@ const SettingsPanel = ({
   const accessRoles = roles.filter(
     (role) => role.key !== "administrator" && Boolean(role.canDelegateAccess),
   );
+  const canManageAccountAccess =
+    ADMIN_CONFIG?.settings?.canManageAccountAccess === true;
   const permissionGroups = [
     {
       key: "stats_access_roles",
@@ -1163,6 +1168,16 @@ const SettingsPanel = ({
         "Access to the plugin Contact page.",
         "bimbeau-privacy-analytics",
       ),
+    },
+    {
+      key: "account_access_roles",
+      title: __("Account", "bimbeau-privacy-analytics"),
+      description: __(
+        "Access to the plugin Account page: plan, expiry and renewal.",
+        "bimbeau-privacy-analytics",
+      ),
+      // Only administrators can change who opens the Account page.
+      isLocked: !canManageAccountAccess,
     },
   ];
   const postTypes = normalizeArray(ADMIN_CONFIG?.settings?.postTypes);
@@ -1241,7 +1256,7 @@ const SettingsPanel = ({
                           </SettingsSectionTitle>
                           <p className="bbpa-general-settings__helper">
                             {__(
-                              "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, or the Contact page.",
+                              "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page.",
                               "bimbeau-privacy-analytics",
                             )}
                           </p>
@@ -1287,6 +1302,9 @@ const SettingsPanel = ({
                                           <CheckboxControl
                                             label={role.label}
                                             checked={isAllowed}
+                                            disabled={Boolean(
+                                              permission.isLocked,
+                                            )}
                                             onChange={(isChecked) => {
                                               setFormState((prev) => {
                                                 const nextRoles = new Set(
@@ -1333,6 +1351,18 @@ const SettingsPanel = ({
                               </Card>
                             ))}
                           </div>
+                        )}
+                        {accessRoles.length > 0 && (
+                          <Notice
+                            status="warning"
+                            isDismissible={false}
+                            className="bbpa-general-settings__access-notice"
+                          >
+                            {__(
+                              "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan.",
+                              "bimbeau-privacy-analytics",
+                            )}
+                          </Notice>
                         )}
                       </CardBody>
                     </Card>
