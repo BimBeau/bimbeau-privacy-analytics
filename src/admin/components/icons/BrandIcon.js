@@ -22,8 +22,22 @@ const normalizeValue = ( value ) =>
 		.trim()
 		.toLowerCase();
 
+// Device classes stored by the trackers. Callers pass the raw device class,
+// not its translated label: a translated label (for example "机器人" for
+// "Bot") does not contain the keywords matched below.
+const DEVICE_CLASS_ICONS = new Map( [
+	[ 'desktop', TbDeviceDesktop ],
+	[ 'mobile', TbDeviceMobile ],
+	[ 'tablet', TbDeviceTablet ],
+	[ 'bot', TbRobot ],
+] );
+
 const getDeviceIcon = ( value ) => {
 	const normalizedValue = normalizeValue( value );
+
+	if ( DEVICE_CLASS_ICONS.has( normalizedValue ) ) {
+		return DEVICE_CLASS_ICONS.get( normalizedValue );
+	}
 
 	if (
 		normalizedValue.includes( 'mobile' ) ||

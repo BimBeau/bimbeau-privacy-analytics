@@ -7,6 +7,7 @@ import BrandIcon from '../../components/icons/BrandIcon';
 import BpaCard from '../../components/BpaCard';
 import { ADMIN_CONFIG } from '../../constants';
 import { buildAudienceBreakdownSections } from '../../lib/audienceBreakdowns';
+import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
 import {
 	DEVICE_DETAILS_VISITOR_SAMPLE_SIZE,
 	buildDeviceDetailsBreakdowns,
@@ -14,7 +15,7 @@ import {
 import { formatNumber } from '../../lib/formatters';
 import './styles.css';
 
-const formatBreakdownLabel = ( label, fallbackLabel ) => {
+const formatBreakdownLabel = ( label, fallbackLabel, kind ) => {
 	if ( typeof label !== 'string' || label.trim() === '' ) {
 		return fallbackLabel;
 	}
@@ -34,6 +35,10 @@ const formatBreakdownLabel = ( label, fallbackLabel ) => {
 		return __( 'Tablet', 'bimbeau-privacy-analytics' );
 	}
 
+	if ( kind === 'device' && lowercaseLabel === 'bot' ) {
+		return formatDeviceClassLabel( lowercaseLabel );
+	}
+
 	return normalizedLabel;
 };
 
@@ -49,7 +54,8 @@ const BreakdownCard = ( {
 		rawLabel: item.label,
 		label: formatBreakdownLabel(
 			item.label,
-			__( 'Unknown', 'bimbeau-privacy-analytics' )
+			__( 'Unknown', 'bimbeau-privacy-analytics' ),
+			kind
 		),
 		hits: item.hits,
 		share: item.share,
