@@ -1214,6 +1214,13 @@ msgstr "Ikke tilgængelig"
 msgid "Page %1$d of %2$d"
 msgstr "Side %1$d af %2$d"
 
+#. translators: %s: number of private visitors hidden from the table.
+#: src/admin/lib/paginationLabels.js
+msgid "%s private hidden"
+msgid_plural "%s private hidden"
+msgstr[0] "%s privat skjult"
+msgstr[1] "%s private skjult"
+
 #. translators: %s: number of rows in the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s item"
@@ -2141,6 +2148,14 @@ msgid "Pages not found"
 msgstr "Sider ikke fundet"
 
 #: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "Mennesker"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "Robotter"
+
+#: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Ingen besøgsdata tilgængelige."
@@ -2149,6 +2164,18 @@ msgstr "Ingen besøgsdata tilgængelige."
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Indlæser besøgende…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
+msgstr "Robotter er udelukket fra al statistik. Listen lader dig kun kontrollere, hvad der er filtreret fra."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "No robot detected for this period."
+msgstr "Ingen robot registreret i denne periode."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading robots…"
+msgstr "Indlæser robotter…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2497,9 +2524,33 @@ msgid "Entry channel"
 msgstr "Indgangssider"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Last activity"
+msgstr "Seneste aktivitet"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Entry page"
+msgstr "Indgangsside"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "Privat"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Table: Robots"
+msgstr "Tabel: Robotter"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabel: Besøgende"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "Ingen besøgende med avancerede data i denne periode. Private besøgende er skjult."
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Hide private visitors"
+msgstr "Skjul private besøgende"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Saved for your account"
+msgstr "Gemt for din konto"

@@ -6,6 +6,7 @@ import {
 	FlexItem,
 	SelectControl,
 	TextControl,
+	ToggleControl,
 	Tooltip,
 } from '@wordpress/components';
 
@@ -29,7 +30,11 @@ import {
 import { getLocationLabel } from '../../lib/locationLabel';
 import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
 import { getChannelLabel } from '../../lib/channelLabels';
-import { formatItemCount, formatPageOfTotal } from '../../lib/paginationLabels';
+import {
+	formatHiddenPrivateCount,
+	formatItemCount,
+	formatPageOfTotal,
+} from '../../lib/paginationLabels';
 
 const formatVisitTime = (timestamp) => {
 	const parsedTimestamp = Number(timestamp);
@@ -102,6 +107,8 @@ const VISITOR_TABLE_LABELS = {
 	browserVersion: __('Browser version', 'bimbeau-privacy-analytics'),
 	device: __('Device', 'bimbeau-privacy-analytics'),
 	resolution: __('Resolution', 'bimbeau-privacy-analytics'),
+	lastActivity: __('Last activity', 'bimbeau-privacy-analytics'),
+	entryPage: __('Entry page', 'bimbeau-privacy-analytics'),
 };
 
 const VISITOR_SORT_OPTIONS = [
@@ -114,6 +121,25 @@ const VISITOR_SORT_OPTIONS = [
 		label: __('Country', 'bimbeau-privacy-analytics'),
 		value: 'country',
 		order: 'asc',
+	},
+	{
+		label: __('Page views', 'bimbeau-privacy-analytics'),
+		value: 'pages',
+		order: 'desc',
+	},
+];
+
+// Robots have no consented dimensions: sort them by activity and page views only.
+const BOT_SORT_OPTIONS = [
+	{
+		label: __('Connection time', 'bimbeau-privacy-analytics'),
+		value: 'first_view',
+		order: 'desc',
+	},
+	{
+		label: __('Last activity', 'bimbeau-privacy-analytics'),
+		value: 'last_view',
+		order: 'desc',
 	},
 	{
 		label: __('Page views', 'bimbeau-privacy-analytics'),
@@ -152,13 +178,102 @@ const getPrivateDataCellProps = (isPrivate) =>
 		}
 		: {};
 
+const renderVisitorHash = (visitorId) =>
+	visitorId ? (
+		<Tooltip text={visitorId}>
+			<code>{formatVisitorHashForTable(visitorId)}</code>
+		</Tooltip>
+	) : (
+		'—'
+	);
+
+/**
+ * Robots list: bots have no consented dimensions, so only activity, entry page and device are shown.
+ *
+ * @param {Object} props            Component props.
+ * @param {Array}  props.items      Robot rows of the visitors report.
+ * @param {string} props.tableLabel Accessible table label.
+ */
+const BotVisitorsTable = ({ items, tableLabel }) => (
+	<table
+		className="widefat striped bbpa-report-table bbpa-report-table--visitors bbpa-report-table--bots"
+		aria-label={tableLabel}
+	>
+		<thead>
+			<tr>
+				<th scope="col">{VISITOR_TABLE_LABELS.visitorId}</th>
+				<th scope="col">{VISITOR_TABLE_LABELS.connectionTime}</th>
+				<th scope="col">{VISITOR_TABLE_LABELS.lastActivity}</th>
+				<th scope="col">{VISITOR_TABLE_LABELS.pageViews}</th>
+				<th scope="col">{VISITOR_TABLE_LABELS.entryPage}</th>
+				<th scope="col">{VISITOR_TABLE_LABELS.device}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{items.map((item, index) => (
+				<tr key={`${item.visitor_id || 'bot'}-${index}`}>
+					<td data-label={VISITOR_TABLE_LABELS.visitorId}>
+						{renderVisitorHash(item.visitor_id)}
+					</td>
+					<td data-label={VISITOR_TABLE_LABELS.connectionTime}>
+						{formatVisitTime(item.first_view_at)}
+					</td>
+					<td data-label={VISITOR_TABLE_LABELS.lastActivity}>
+						{formatVisitTime(item.last_view_at)}
+					</td>
+					<td data-label={VISITOR_TABLE_LABELS.pageViews}>
+						{item.page_views || 0}
+					</td>
+					<td data-label={VISITOR_TABLE_LABELS.entryPage}>
+						{item.entry_page ? (
+							<code>{item.entry_page}</code>
+						) : (
+							renderMaybeUnavailableLabel(UNKNOWN_LABEL)
+						)}
+					</td>
+					<td data-label={VISITOR_TABLE_LABELS.device}>
+						<span className="bbpa-brand-label">
+							<BrandIcon
+								kind="device"
+								value={item.device_class}
+								className="bbpa-brand-icon"
+							/>
+							<span>
+								{renderMaybeUnavailableLabel(
+									formatDeviceClassLabel(
+										item.device_class,
+										UNKNOWN_LABEL
+									)
+								)}
+							</span>
+						</span>
+					</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+);
+
 const VisitorsTableCard = ({
 	range,
 	requestParams = {},
 	title = __('Visitors', 'bimbeau-privacy-analytics'),
 	emptyLabel = __('No visitor data available.', 'bimbeau-privacy-analytics'),
 	loadingLabel = __('Loading visitors…', 'bimbeau-privacy-analytics'),
+	// The "Hide private visitors" toggle is shown only when the parent passes a change handler.
+	hidePrivateVisitors = false,
+	onHidePrivateVisitorsChange,
 }) => {
+	const isBotList = requestParams.visitor_type === 'bot';
+	const showPrivateVisitorsToggle =
+		!isBotList && typeof onHidePrivateVisitorsChange === 'function';
+	const isPrivateFilterActive =
+		showPrivateVisitorsToggle && Boolean(hidePrivateVisitors);
+	const sortOptions = isBotList ? BOT_SORT_OPTIONS : VISITOR_SORT_OPTIONS;
+	// `data_scope` is sent only while private visitors are hidden, so the default request is unchanged.
+	const dataScopeParams = isPrivateFilterActive
+		? { data_scope: 'enriched' }
+		: {};
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(10);
 	const [searchInput, setSearchInput] = useState('');
@@ -172,6 +287,7 @@ const VisitorsTableCard = ({
 		range.end,
 		requestParams.page_path,
 		requestParams.visitor_type,
+		isPrivateFilterActive,
 	]);
 
 	useEffect(() => {
@@ -183,14 +299,15 @@ const VisitorsTableCard = ({
 	}, [searchInput]);
 
 	const selectedSortOption =
-		VISITOR_SORT_OPTIONS.find((option) => option.value === sortBy) ||
-		VISITOR_SORT_OPTIONS[0];
+		sortOptions.find((option) => option.value === sortBy) ||
+		sortOptions[0];
 
 	const { data, isLoading, error } = useAdminEndpoint(
 		'/visitors',
 		{
 			...range,
 			...requestParams,
+			...dataScopeParams,
 			page,
 			per_page: perPage,
 			orderby: selectedSortOption.value,
@@ -205,6 +322,7 @@ const VisitorsTableCard = ({
 	const exportParams = {
 		...range,
 		...requestParams,
+		...dataScopeParams,
 		orderby: selectedSortOption.value,
 		order: selectedSortOption.order,
 		search: searchTerm,
@@ -225,8 +343,19 @@ const VisitorsTableCard = ({
 
 	const canPrevious = page > 1;
 	const canNext = page < totalPages;
+	const hiddenPrivateItems = isPrivateFilterActive
+		? Math.max(0, Number(data?.hiddenPrivateItems) || 0)
+		: 0;
 
-	const tableLabel = __('Table: Visitors', 'bimbeau-privacy-analytics');
+	const tableLabel = isBotList
+		? __('Table: Robots', 'bimbeau-privacy-analytics')
+		: __('Table: Visitors', 'bimbeau-privacy-analytics');
+	const resolvedEmptyLabel = isPrivateFilterActive
+		? __(
+			'No visitor with advanced data for this period. Private visitors are hidden.',
+			'bimbeau-privacy-analytics'
+		)
+		: emptyLabel;
 	const headerActions = (
 		<ReportExportAction
 			report="visitors"
@@ -243,7 +372,7 @@ const VisitorsTableCard = ({
 						className="bbpa-table-controls__sort-control"
 						label={__('Sort by', 'bimbeau-privacy-analytics')}
 						value={sortBy}
-						options={VISITOR_SORT_OPTIONS.map((option) => ({
+						options={sortOptions.map((option) => ({
 							label: option.label,
 							value: option.value,
 						}))}
@@ -271,6 +400,19 @@ const VisitorsTableCard = ({
 						__nextHasNoMarginBottom
 					/>
 				</div>
+				{showPrivateVisitorsToggle && (
+					<ToggleControl
+						className="bbpa-table-controls__toggle"
+						label={__('Hide private visitors', 'bimbeau-privacy-analytics')}
+						help={__('Saved for your account', 'bimbeau-privacy-analytics')}
+						checked={isPrivateFilterActive}
+						onChange={(value) => {
+							onHidePrivateVisitorsChange(Boolean(value));
+							setPage(1);
+						}}
+						__nextHasNoMarginBottom
+					/>
+				)}
 				<div className="bbpa-table-controls__search">
 					<TextControl
 						label={__('Search', 'bimbeau-privacy-analytics')}
@@ -289,12 +431,15 @@ const VisitorsTableCard = ({
 				isLoading={isLoading}
 				error={error}
 				isEmpty={!isLoading && !error && items.length === 0}
-				emptyLabel={emptyLabel}
+				emptyLabel={resolvedEmptyLabel}
 				loadingLabel={loadingLabel}
 			/>
 			{!isLoading && !error && items.length > 0 && (
 				<>
 					<div className="bbpa-table-scroll">
+						{isBotList ? (
+							<BotVisitorsTable items={items} tableLabel={tableLabel} />
+						) : (
 						<table
 							className="widefat striped bbpa-report-table bbpa-report-table--visitors"
 							aria-label={tableLabel}
@@ -605,6 +750,7 @@ const VisitorsTableCard = ({
 								})}
 							</tbody>
 						</table>
+						)}
 					</div>
 					<Flex
 						className="bbpa-table-pagination"
@@ -642,6 +788,8 @@ const VisitorsTableCard = ({
 						</FlexItem>
 						<FlexItem className="bbpa-table-pagination__meta">
 							{formatItemCount(totalItems)}
+							{hiddenPrivateItems > 0 &&
+								` · ${formatHiddenPrivateCount(hiddenPrivateItems)}`}
 						</FlexItem>
 					</Flex>
 				</>

@@ -190,6 +190,7 @@ msgstr ""
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr ""
 
@@ -1314,6 +1315,14 @@ msgstr ""
 msgid "Page %1$d of %2$d"
 msgstr ""
 
+#. translators: %s: number of private visitors hidden from the table.
+#: src/admin/lib/paginationLabels.js
+#, js-format
+msgid "%s private hidden"
+msgid_plural "%s private hidden"
+msgstr[0] ""
+msgstr[1] ""
+
 #. translators: %s: number of rows in the table.
 #: src/admin/lib/paginationLabels.js
 #, js-format
@@ -1421,6 +1430,7 @@ msgid "City"
 msgstr ""
 
 #: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Connection time"
@@ -2271,6 +2281,16 @@ msgid "Pages not found"
 msgstr ""
 
 #: src/admin/panels/VisitorsPanel.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr ""
+
+#: src/admin/panels/VisitorsPanel.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr ""
+
+#: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr ""
@@ -2278,6 +2298,18 @@ msgstr ""
 #: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
+msgstr ""
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
+msgstr ""
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "No robot detected for this period."
+msgstr ""
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading robots…"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -2655,9 +2687,34 @@ msgid "Entry channel"
 msgstr ""
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Last activity"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Entry page"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr ""
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Table: Robots"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Hide private visitors"
+msgstr ""
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Saved for your account"
 msgstr ""

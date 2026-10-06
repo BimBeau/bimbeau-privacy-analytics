@@ -1214,6 +1214,13 @@ msgstr "Inte tillgängligt"
 msgid "Page %1$d of %2$d"
 msgstr "Sida %1$d av %2$d"
 
+#. translators: %s: number of private visitors hidden from the table.
+#: src/admin/lib/paginationLabels.js
+msgid "%s private hidden"
+msgid_plural "%s private hidden"
+msgstr[0] "%s privat dold"
+msgstr[1] "%s privata dolda"
+
 #. translators: %s: number of rows in the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s item"
@@ -2141,6 +2148,14 @@ msgid "Pages not found"
 msgstr "Sidor hittades inte"
 
 #: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "Människor"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "Robotar"
+
+#: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Ingen besökardata tillgänglig."
@@ -2149,6 +2164,18 @@ msgstr "Ingen besökardata tillgänglig."
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Laddar besökare…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
+msgstr "Robotar utesluts från all statistik. Listan låter dig bara kontrollera vad som har filtrerats bort."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "No robot detected for this period."
+msgstr "Ingen robot upptäcktes under den här perioden."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading robots…"
+msgstr "Laddar robotar…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2497,9 +2524,33 @@ msgid "Entry channel"
 msgstr "Ingångssidor"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Last activity"
+msgstr "Senaste aktivitet"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Entry page"
+msgstr "Ingångssida"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "Privat"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Table: Robots"
+msgstr "Tabell: Robotar"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tabell: Besökare"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "Ingen besökare med avancerade data under den här perioden. Privata besökare är dolda."
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Hide private visitors"
+msgstr "Dölj privata besökare"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Saved for your account"
+msgstr "Sparat för ditt konto"

@@ -1212,6 +1212,12 @@ msgstr "Kullanılabilir değil"
 msgid "Page %1$d of %2$d"
 msgstr "Sayfa %1$d / %2$d"
 
+#. translators: %s: number of private visitors hidden from the table.
+#: src/admin/lib/paginationLabels.js
+msgid "%s private hidden"
+msgid_plural "%s private hidden"
+msgstr[0] "%s özel gizlendi"
+
 #. translators: %s: number of rows in the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s item"
@@ -2137,6 +2143,14 @@ msgid "Pages not found"
 msgstr "Bulunamayan sayfalar"
 
 #: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "İnsanlar"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "Botlar"
+
+#: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Ziyaretçi verisi mevcut değil."
@@ -2145,6 +2159,18 @@ msgstr "Ziyaretçi verisi mevcut değil."
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Ziyaretçiler yükleniyor…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
+msgstr "Botlar tüm istatistiklerin dışında tutulur. Bu liste yalnızca neyin filtrelendiğini kontrol etmenizi sağlar."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "No robot detected for this period."
+msgstr "Bu dönemde bot algılanmadı."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading robots…"
+msgstr "Botlar yükleniyor…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2491,9 +2517,33 @@ msgid "Entry channel"
 msgstr "Giriş sayfaları"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Last activity"
+msgstr "Son etkinlik"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Entry page"
+msgstr "Giriş sayfası"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "Özel"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Table: Robots"
+msgstr "Tablo: Botlar"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Tablo: Ziyaretçiler"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "Bu dönemde gelişmiş verisi olan ziyaretçi yok. Özel ziyaretçiler gizlendi."
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Hide private visitors"
+msgstr "Özel ziyaretçileri gizle"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Saved for your account"
+msgstr "Hesabınız için kaydedildi"

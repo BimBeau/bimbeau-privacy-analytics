@@ -6,6 +6,7 @@ import {
   PAGE_LABEL_DISPLAY_STORAGE_PREFIX,
   RANGE_PRESET_OPTIONS,
   RANGE_PRESET_STORAGE_PREFIX,
+  VISITORS_HIDE_PRIVATE_STORAGE_PREFIX,
 } from "../constants";
 import { isRangeWithinMaxDays, isValidDateString } from "./date";
 
@@ -178,6 +179,45 @@ export const storePageLabelDisplay = (mode) => {
 
 export const isValidPageLabelDisplay = (mode) =>
   Boolean(normalizePageLabelDisplay(mode));
+
+export const getVisitorsHidePrivateStorageKey = () =>
+  getUserScopedStorageKey(VISITORS_HIDE_PRIVATE_STORAGE_PREFIX);
+
+/**
+ * Read the "Hide private visitors" preference of the current user.
+ *
+ * @return {boolean|null} Stored preference, or null when none is stored.
+ */
+export const getStoredVisitorsHidePrivate = () => {
+  const storage = getLocalStorage();
+  if (!storage) {
+    return null;
+  }
+
+  try {
+    const rawValue = storage.getItem(getVisitorsHidePrivateStorageKey());
+    if (rawValue === "1") {
+      return true;
+    }
+
+    return rawValue === "0" ? false : null;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const storeVisitorsHidePrivate = (hidePrivate) => {
+  const storage = getLocalStorage();
+  if (!storage) {
+    return;
+  }
+
+  try {
+    storage.setItem(getVisitorsHidePrivateStorageKey(), hidePrivate ? "1" : "0");
+  } catch (error) {
+    // Ignore storage failures (e.g. privacy mode).
+  }
+};
 
 export const getAdvancedConsentLastTestStorageKey = () =>
   getUserScopedStorageKey(ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX);

@@ -163,3 +163,5 @@ export const ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX =
 	'bbpa_advanced_consent_last_test';
 export const ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX =
 	'bbpa_advanced_consent_last_diagnostic';
+// "Hide private visitors" toggle of the Visitors report (`1` on, `0` off).
+export const VISITORS_HIDE_PRIVATE_STORAGE_PREFIX = 'bbpa_visitors_hide_private';

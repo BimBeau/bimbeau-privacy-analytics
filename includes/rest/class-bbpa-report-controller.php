@@ -39,6 +39,12 @@ class BBPA_Report_Controller {
     private const TOP_CONTENT_UNRESOLVED_KEY = 'unresolved';
 
     /**
+     * Accepted values of the visitors report `data_scope` argument: `all` (default) lists every visitor row,
+     * `enriched` lists only rows with advanced (consented) data (`has_enriched_data = 1`).
+     */
+    private const VISITORS_DATA_SCOPES = ['all', 'enriched'];
+
+    /**
      * Remaining page-title lookups for the page-path report being built; null means unlimited.
      */
     private ?int $page_title_lookups_remaining = null;
@@ -269,6 +275,14 @@ class BBPA_Report_Controller {
                         'visitor_type' => [
                             'type' => 'string',
                             'required' => false,
+                            'sanitize_callback' => 'sanitize_key',
+                        ],
+                        // Optional: `enriched` lists only visitor rows with advanced (consented) data.
+                        'data_scope' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'enum' => self::VISITORS_DATA_SCOPES,
+                            'validate_callback' => 'rest_validate_request_arg',
                             'sanitize_callback' => 'sanitize_key',
                         ],
                     ]
@@ -1049,18 +1063,22 @@ class BBPA_Report_Controller {
         if (!in_array($visitor_type, ['human', 'bot'], true)) {
             $visitor_type = 'human';
         }
+        $data_scope = $this->get_visitors_data_scope($request);
+        $enriched_only = $data_scope === 'enriched';
 
-        $cache_key = $this->get_cache_key(
-            'visitors',
-            [
-                'range' => $range,
-                'pagination' => $pagination,
-                'sorting' => $sorting,
-                'search' => $search_term,
-                'pagePath' => $page_path,
-                'visitorType' => $visitor_type,
-            ]
-        );
+        $cache_key_params = [
+            'range' => $range,
+            'pagination' => $pagination,
+            'sorting' => $sorting,
+            'search' => $search_term,
+            'pagePath' => $page_path,
+            'visitorType' => $visitor_type,
+        ];
+        if ($enriched_only) {
+            // Added only for the filtered scope, so the default cache key is unchanged.
+            $cache_key_params['dataScope'] = $data_scope;
+        }
+        $cache_key = $this->get_cache_key('visitors', $cache_key_params);
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
             $cached['rawLogsEnabled'] = bbpa_raw_logs_enabled();
@@ -1103,14 +1121,32 @@ class BBPA_Report_Controller {
             $params[] = $page_path;
         }
 
-        $where_parts = [];
-        foreach ($where as $clause) {
-            $where_parts[] = ['sql' => $clause, 'params' => []];
+        $total_items = 0;
+        $hidden_private_items = 0;
+        if ($enriched_only) {
+            // One pass over the unfiltered scope gives the listed total and the number of hidden private rows.
+            $scope_where_sql = $this->compile_visitors_where_sql($where);
+            $scope_counts = $wpdb->get_row(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) AS scope_rows, COALESCE(SUM(CASE WHEN has_enriched_data = 1 THEN 1 ELSE 0 END), 0) AS enriched_rows FROM {$table} WHERE {$scope_where_sql}",
+                    $params
+                ),
+                ARRAY_A
+            );
+            $scope_rows = is_array($scope_counts) ? (int) ($scope_counts['scope_rows'] ?? 0) : 0;
+            $total_items = is_array($scope_counts) ? (int) ($scope_counts['enriched_rows'] ?? 0) : 0;
+            $hidden_private_items = max(0, $scope_rows - $total_items);
+
+            $where[] = 'has_enriched_data = %d';
+            $params[] = 1;
         }
-        $where_compiled = bbpa_sql_build_where($where_parts);
-        $where_sql = $where_compiled['sql'];
-        $count_sql = "SELECT COUNT(*) FROM {$table} WHERE {$where_sql}";
-        $total_items = (int) $wpdb->get_var($wpdb->prepare($count_sql, $params));
+
+        $where_sql = $this->compile_visitors_where_sql($where);
+        if (!$enriched_only) {
+            // Default scope: same count query as before the data_scope argument existed.
+            $count_sql = "SELECT COUNT(*) FROM {$table} WHERE {$where_sql}";
+            $total_items = (int) $wpdb->get_var($wpdb->prepare($count_sql, $params));
+        }
 
         $order_column = bbpa_sql_allowlisted_identifier((string) $sorting['orderby_key'], $sorting_columns, 'first_view');
         $order_direction = strtoupper($sorting['order']) === 'ASC' ? 'ASC' : 'DESC';
@@ -1175,6 +1211,11 @@ class BBPA_Report_Controller {
             ],
             'items' => $items,
         ];
+        if ($enriched_only) {
+            // Additive fields, present only when the request asks for the enriched scope.
+            $payload['dataScope'] = $data_scope;
+            $payload['hiddenPrivateItems'] = $hidden_private_items;
+        }
 
         $this->set_cached_payload(
             $cache_key,
@@ -1184,6 +1225,31 @@ class BBPA_Report_Controller {
         );
 
         return new WP_REST_Response($payload, 200);
+    }
+
+    /**
+     * Resolve the visitors report data scope; unknown or missing values fall back to `all`.
+     *
+     * The route validates the argument, but export jobs call get_visitors() with a replayed request.
+     */
+    private function get_visitors_data_scope(WP_REST_Request $request): string {
+        $data_scope = sanitize_key((string) $request->get_param('data_scope'));
+
+        return in_array($data_scope, self::VISITORS_DATA_SCOPES, true) ? $data_scope : 'all';
+    }
+
+    /**
+     * Join the visitors report WHERE clauses; their values stay `$wpdb->prepare()` placeholders.
+     *
+     * @param list<string> $clauses SQL conditions.
+     */
+    private function compile_visitors_where_sql(array $clauses): string {
+        $where_parts = [];
+        foreach ($clauses as $clause) {
+            $where_parts[] = ['sql' => $clause, 'params' => []];
+        }
+
+        return bbpa_sql_build_where($where_parts)['sql'];
     }
 
     /**

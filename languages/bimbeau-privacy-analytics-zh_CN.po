@@ -1212,6 +1212,12 @@ msgstr "不可用"
 msgid "Page %1$d of %2$d"
 msgstr "第 %1$d 页，共 %2$d 页"
 
+#. translators: %s: number of private visitors hidden from the table.
+#: src/admin/lib/paginationLabels.js
+msgid "%s private hidden"
+msgid_plural "%s private hidden"
+msgstr[0] "已隐藏 %s 个私密访客"
+
 #. translators: %s: number of rows in the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s item"
@@ -2137,6 +2143,14 @@ msgid "Pages not found"
 msgstr "未找到的页面"
 
 #: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "人类"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "机器人"
+
+#: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "没有可用的访客数据。"
@@ -2145,6 +2159,18 @@ msgstr "没有可用的访客数据。"
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "正在加载访客…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
+msgstr "机器人已从所有统计数据中排除。此列表仅用于检查被过滤的内容。"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "No robot detected for this period."
+msgstr "此期间未检测到机器人。"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading robots…"
+msgstr "正在加载机器人…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2491,9 +2517,33 @@ msgid "Entry channel"
 msgstr "入口页面"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Last activity"
+msgstr "最后活动"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Entry page"
+msgstr "入口页面"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "私密"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Table: Robots"
+msgstr "表格：机器人"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "表格：访客"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "此期间没有包含高级数据的访客。私密访客已隐藏。"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Hide private visitors"
+msgstr "隐藏私密访客"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Saved for your account"
+msgstr "已为您的账户保存"

@@ -18,6 +18,27 @@ export const formatPageOfTotal = ( page, totalPages ) =>
 	);
 
 /**
+ * Number of private visitor rows left out of a filtered table, for example "13 private hidden".
+ *
+ * @param {number} count Number of hidden rows.
+ * @return {string} Translated label.
+ */
+export const formatHiddenPrivateCount = ( count ) => {
+	const total = Number( count ) || 0;
+
+	return sprintf(
+		/* translators: %s: number of private visitors hidden from the table. */
+		_n(
+			'%s private hidden',
+			'%s private hidden',
+			total,
+			'bimbeau-privacy-analytics'
+		),
+		formatNumber( total )
+	);
+};
+
+/**
  * Number of rows of a report table, for example "12 items".
  *
  * @param {number} count Number of rows.

@@ -1214,6 +1214,13 @@ msgstr "Μη διαθέσιμο"
 msgid "Page %1$d of %2$d"
 msgstr "Σελίδα %1$d από %2$d"
 
+#. translators: %s: number of private visitors hidden from the table.
+#: src/admin/lib/paginationLabels.js
+msgid "%s private hidden"
+msgid_plural "%s private hidden"
+msgstr[0] "%s ιδιωτικός κρυφός"
+msgstr[1] "%s ιδιωτικοί κρυφοί"
+
 #. translators: %s: number of rows in the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s item"
@@ -2141,6 +2148,14 @@ msgid "Pages not found"
 msgstr "Σελίδες που δεν βρέθηκαν"
 
 #: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "Άνθρωποι"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "Ρομπότ"
+
+#: src/admin/panels/VisitorsPanel.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "No visitor data available."
 msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
@@ -2149,6 +2164,18 @@ msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκε
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Loading visitors…"
 msgstr "Φόρτωση επισκεπτών…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
+msgstr "Τα ρομπότ εξαιρούνται από όλα τα στατιστικά. Αυτή η λίστα σας επιτρέπει μόνο να ελέγξετε τι φιλτραρίστηκε."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "No robot detected for this period."
+msgstr "Δεν εντοπίστηκε ρομπότ σε αυτήν την περίοδο."
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading robots…"
+msgstr "Φόρτωση ρομπότ…"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2497,9 +2524,33 @@ msgid "Entry channel"
 msgstr "Σελίδες εισόδου"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Last activity"
+msgstr "Τελευταία δραστηριότητα"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Entry page"
+msgstr "Σελίδα εισόδου"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Private"
 msgstr "Ιδιωτικό"
 
 #: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Table: Robots"
+msgstr "Πίνακας: Ρομπότ"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Table: Visitors"
 msgstr "Πίνακας: Επισκέπτες"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "Κανένας επισκέπτης με προηγμένα δεδομένα σε αυτήν την περίοδο. Οι ιδιωτικοί επισκέπτες είναι κρυφοί."
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Hide private visitors"
+msgstr "Απόκρυψη ιδιωτικών επισκεπτών"
+
+#: src/admin/widgets/VisitorsTableCard/index.js
+msgid "Saved for your account"
+msgstr "Αποθηκεύτηκε για τον λογαριασμό σας"

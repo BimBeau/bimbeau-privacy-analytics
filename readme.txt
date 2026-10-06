@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.49.0
+Stable tag: 8.50.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.49.0 =
-* [Feature] Settings → General → Role access has a new Account group: administrators can let selected roles (editor level or above) open the Account page in read-only mode to check the plan, its expiry and its renewal. The license key, the site keys, billing and invoices stay hidden for these roles, and only administrators can change the license, the plan or this group. No role has this access by default. Label: `feature`: new setting (`account_access_roles`), new capability (`bbpa_access_account`) and new filter (`bbpa_account_access_capability`), all additive; `surface-diff.sh` suggests `feature`.
+= 8.50.0 =
+* [Feature] Visitors report: new Humans and Robots tabs; the Robots tab lists the crawlers and other automated visits that are excluded from all statistics, with their connection time, last activity, page views, entry page and device.
+* [Feature] Visitors report: new "Hide private visitors" switch on the Humans tab, saved for your account, to list only visitors with advanced (consented) data; the item count shows how many private visitors are hidden.
