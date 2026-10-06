@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.53.0
+Stable tag: 8.54.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,6 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.53.0 =
-* [Feature] Settings: new Email summaries tab to receive a daily, weekly or monthly summary of the site statistics by email, with the send day and time, up to 10 recipients (the site administration email by default), the sections to include (key metrics, top pages, referring sites, acquisition channels, events, countries) and the rows per list.
-* [Feature] Email summaries: a test email and a preview built from the unsaved form values, and the date of the last and next sends under the buttons.
+= 8.54.0 =
+* [Feature] Acquisition: with WooCommerce, the channel table adds Orders, Revenue and Conversion rate columns; paid orders are attributed to the channel of the visit that placed them only when the visitor consented to advanced tracking, and the number of orders not attributed is shown under the table.

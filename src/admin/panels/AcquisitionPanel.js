@@ -1,5 +1,5 @@
 import { useMemo } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import {
 	LuBadgeDollarSign,
 	LuCircleHelp,
@@ -25,6 +25,7 @@ import {
 	formatNumber,
 } from '../lib/formatters';
 import { getChannelLabel } from '../lib/channelLabels';
+
 
 const CHANNEL_ICONS = {
 	direct: LuMousePointerClick,
@@ -73,6 +74,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 		new Map()
 	);
 	const total = Number( data?.total || 0 );
+	
 	const headerActions = (
 		<ReportExportAction
 			report="acquisition-channels"
@@ -116,6 +118,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 									<th scope="col">
 										{ __( 'Traffic share', 'bimbeau-privacy-analytics' ) }
 									</th>
+									{  }
 								</tr>
 							</thead>
 							<tbody>
@@ -195,6 +198,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 											<td>
 												{ formatShare( item.share ) }
 											</td>
+											{  }
 										</tr>
 									);
 								} ) }
@@ -207,6 +211,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 								formatNumber( total )
 							) }
 						</p>
+						{  }
 					</div>
 				) : null }
 			</BpaCard>
