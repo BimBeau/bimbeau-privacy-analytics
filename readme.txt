@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.52.0
+Stable tag: 8.53.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.52.0 =
-* [Feature] Report exports: a progress bar now appears to the left of the export button while a file is prepared, with the percentage and the rows written so far for large exports ("4,200 / 10,000 rows"), then "File ready" for a few seconds once the download starts.
+= 8.53.0 =
+* [Feature] Settings: new Email summaries tab to receive a daily, weekly or monthly summary of the site statistics by email, with the send day and time, up to 10 recipients (the site administration email by default), the sections to include (key metrics, top pages, referring sites, acquisition channels, events, countries) and the rows per list.
+* [Feature] Email summaries: a test email and a preview built from the unsaved form values, and the date of the last and next sends under the buttons.
