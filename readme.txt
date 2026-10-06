@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.51.0
+Stable tag: 8.52.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,6 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.51.0 =
-* [Feature] Dashboard: the Visitors indicator now shows how many robots were excluded in the selected period ("3,410 robots excluded"), and its help text says that visitors are humans only.
-* [Feature] Devices report: new "Include robots" switch on the Device usage breakdown card, to compare robot page views with desktop, smartphone and tablet traffic; every other card and report stays human-only.
+= 8.52.0 =
+* [Feature] Report exports: a progress bar now appears to the left of the export button while a file is prepared, with the percentage and the rows written so far for large exports ("4,200 / 10,000 rows"), then "File ready" for a few seconds once the download starts.
