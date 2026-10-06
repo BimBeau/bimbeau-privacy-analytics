@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.54.1
+Stable tag: 8.54.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.54.1 =
-* [Fix] Dashboard: the Visitors card no longer shows the number of excluded robots under its value, which made it taller than the other cards; the number stays in the help of the card.
+= 8.54.2 =
+* [Fix] Report exports: when the file is ready, the export button shows a check for a moment instead of a green bar with a "File ready" label, so the card header keeps its width.

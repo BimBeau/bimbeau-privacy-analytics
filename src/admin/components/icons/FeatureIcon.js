@@ -1,5 +1,6 @@
 import {
 	LuActivity,
+	LuCheck,
 	LuLayers,
 	LuScanSearch,
 	LuChartColumn,
@@ -48,6 +49,7 @@ const FEATURE_ICON_MAP = {
 	ascending: LuChevronUp,
 	descending: LuChevronDown,
 	activity: LuActivity,
+	check: LuCheck,
 	download: LucideDownloadIcon,
 	fileBraces: LuFileJson,
 	fileSpreadsheet: LuFileSpreadsheet,
