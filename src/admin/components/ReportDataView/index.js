@@ -25,6 +25,18 @@ import { DATAVIEWS_PER_PAGE_SIZES } from '../../lib/dataviewsConfig';
 import { getPreviousRange } from '../../lib/date';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
 
+
+// Rows loaded at once when a list searches in the browser (the API accepts up to 1000).
+const BROWSER_SEARCH_MAX_ITEMS = 1000;
+
+// Case and accent insensitive comparison for browser searches ("etats" finds "États-Unis").
+const normalizeSearchText = ( value ) =>
+	String( value || '' )
+		.normalize( 'NFD' )
+		.replace( /[\u0300-\u036f]/g, '' )
+		.toLowerCase()
+		.trim();
+
 export const LABEL_FIELD = 'label';
 export const PAGE_TITLE_FIELD = 'page_title';
 
@@ -183,6 +195,9 @@ const ReportDataView = ( {
 	footnote = '',
 	// More columns after the metric: [ { id, label, getValue( item ), render( item ), sortable } ].
 	extraFields = [],
+	// Search in the browser, on the displayed label (formatLabel) and the raw label, for endpoints
+	// that do not filter (countries: names are translated in the browser). Short lists only.
+	searchInBrowser = false,
 } ) => {
 	registerDataViewsTranslations();
 
@@ -266,9 +281,17 @@ const ReportDataView = ( {
 		...sortParams,
 		search,
 	};
+	const isBrowserSearch = searchInBrowser && search !== '';
 	const { data, isLoading, error } = useAdminEndpoint(
 		endpoint,
-		{ ...listParams, page: view.page, per_page: view.perPage },
+		isBrowserSearch
+			? {
+					...listParams,
+					search: '',
+					page: 1,
+					per_page: BROWSER_SEARCH_MAX_ITEMS,
+			  }
+			: { ...listParams, page: view.page, per_page: view.perPage },
 		{ namespace: ADMIN_CONFIG?.settings?.restNamespace }
 	);
 
@@ -319,7 +342,29 @@ const ReportDataView = ( {
 		showMetricTrend,
 	] );
 
-	const rawItems = useMemo( () => data?.items || [], [ data ] );
+	const browserSearchMatches = useMemo( () => {
+		if ( ! isBrowserSearch ) {
+			return null;
+		}
+		const needle = normalizeSearchText( search );
+
+		return ( data?.items || [] ).filter( ( item ) => {
+			const rawLabel = decodeHtmlEntities( item?.label || '' );
+			const displayed = formatLabel ? formatLabel( rawLabel, item ) : rawLabel;
+
+			return [ rawLabel, displayed ].some( ( value ) =>
+				normalizeSearchText( value ).includes( needle )
+			);
+		} );
+	}, [ data, formatLabel, isBrowserSearch, search ] );
+	const rawItems = useMemo( () => {
+		if ( browserSearchMatches ) {
+			const start = ( view.page - 1 ) * view.perPage;
+			return browserSearchMatches.slice( start, start + view.perPage );
+		}
+
+		return data?.items || [];
+	}, [ browserSearchMatches, data, view.page, view.perPage ] );
 	const faviconsEnabled =
 		loadReferrerFavicons &&
 		normalizeBooleanSetting(
@@ -350,7 +395,12 @@ const ReportDataView = ( {
 		[ rawItems, formatLabel, labelFallback ]
 	);
 
-	const pagination = data?.pagination || {};
+	const pagination = browserSearchMatches
+		? {
+				totalItems: browserSearchMatches.length,
+				totalPages: Math.ceil( browserSearchMatches.length / view.perPage ),
+		  }
+		: data?.pagination || {};
 	const totalItems =
 		Number( pagination.totalItems || pagination.total_items ) || rows.length;
 	const totalPages = Math.max(

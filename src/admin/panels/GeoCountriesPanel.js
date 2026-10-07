@@ -111,6 +111,7 @@ const GeoCountriesPanel = ( { range } ) => {
 					emptyStateNoticeStatus="warning"
 					labelFallback={ unknownCountryLabel }
 					formatLabel={ getCountryLabel }
+					searchInBrowser
 					renderLabel={ renderCountryLabel }
 					metricLabel={ __( 'Visitors', 'bimbeau-privacy-analytics' ) }
 					metricKey="visitors"

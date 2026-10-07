@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.62.2
+Stable tag: 8.62.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.62.2 =
-* [Fix] Period picker: the active quick range keeps its blue look when focused, without the dark WordPress focus ring.
+= 8.62.3 =
+* [Fix] Geolocation and page details: the search field of the countries list finds a country by its name or its two-letter code, with or without accents.
