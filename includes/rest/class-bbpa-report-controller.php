@@ -4117,7 +4117,10 @@ class BBPA_Report_Controller {
         }
 
         $title = get_the_title($post_id);
-        $this->page_title_memo[$cache_key] = is_string($title) ? sanitize_text_field($title) : '';
+        // get_the_title() returns HTML (wptexturize turns ' into &rsquo;): the API returns plain text.
+        $this->page_title_memo[$cache_key] = is_string($title)
+            ? sanitize_text_field(html_entity_decode($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'))
+            : '';
 
         return $this->page_title_memo[$cache_key];
     }
