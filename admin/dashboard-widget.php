@@ -73,6 +73,59 @@ function bbpa_get_dashboard_widget_payload(): array
 }
 
 /**
+ * Human visitors and excluded robots of the widget period, counted like the dashboard.
+ *
+ * Visitors come from the overview report used by the Visitors card of the plugin dashboard; robots are the bot rows
+ * listed by the Robots tab of the Visitors report for the same days.
+ *
+ * @param array<string, mixed> $range Reporting range with `start` and `end` days (`Y-m-d`).
+ * @return array{visitors: int|null, robots: int}
+ */
+function bbpa_get_dashboard_widget_visitor_counts(array $range): array
+{
+    $counts = ['visitors' => null, 'robots' => 0];
+    $start = isset($range['start']) ? (string) $range['start'] : '';
+    $end = isset($range['end']) ? (string) $range['end'] : '';
+
+    if (class_exists('BBPA_Report_Controller')) {
+        $controller = new BBPA_Report_Controller();
+        $request = new WP_REST_Request('GET', '/bbpa/v1/overview');
+        if ($start !== '' && $end !== '') {
+            $request->set_param('start', $start);
+            $request->set_param('end', $end);
+        }
+        $data = $controller->get_overview($request)->get_data();
+        if (is_array($data) && isset($data['overview']['visitors'])) {
+            $counts['visitors'] = (int) $data['overview']['visitors'];
+        }
+    }
+
+    if ($start === '' || $end === '' || !function_exists('bbpa_get_site_day_bounds') || !function_exists('bbpa_sql_table_name')) {
+        return $counts;
+    }
+
+    global $wpdb;
+    $visitors_table = bbpa_sql_table_name('bbpa_visitors');
+    if ($wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $visitors_table)) !== $visitors_table) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Table probe.
+        return $counts;
+    }
+
+    $bounds = bbpa_get_site_day_bounds($start, $end);
+    // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery -- Internal table name; read-only count.
+    $counts['robots'] = (int) $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT COUNT(*) FROM {$visitors_table} WHERE last_view_at BETWEEN %d AND %d AND device_class = %s",
+            (int) $bounds[0],
+            (int) $bounds[1],
+            'bot'
+        )
+    );
+    // phpcs:enable
+
+    return $counts;
+}
+
+/**
  * Format a `Y-m-d` reporting day with the site date format.
  *
  * The day is interpreted in the site timezone, so the displayed date is the same
@@ -132,6 +185,9 @@ function bbpa_render_dashboard_widget(): void
     $is_referrers_enabled = !in_array('referrers', $hidden_by_policy, true);
 
     $visits = isset($kpis['visits']) ? (int) $kpis['visits'] : 0;
+    $visitor_counts = $is_visitors_enabled
+        ? bbpa_get_dashboard_widget_visitor_counts($range)
+        : ['visitors' => null, 'robots' => 0];
     $page_views = isset($kpis['pageViews']) ? (int) $kpis['pageViews'] : 0;
     $unique_referrers = isset($kpis['uniqueReferrers']) ? (int) $kpis['uniqueReferrers'] : 0;
 
@@ -155,7 +211,15 @@ function bbpa_render_dashboard_widget(): void
     } else {
         echo '<ul>';
         if ($is_visitors_enabled) {
-            echo '<li>' . esc_html__('Visits', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($visits)) . '</strong></li>';
+            // Same human visitors as the Visitors card of the plugin dashboard; visits only when they are unavailable.
+            if ($visitor_counts['visitors'] !== null) {
+                echo '<li>' . esc_html__('Visitors', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($visitor_counts['visitors'])) . '</strong></li>';
+            } else {
+                echo '<li>' . esc_html__('Visits', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($visits)) . '</strong></li>';
+            }
+            if ($visitor_counts['robots'] > 0) {
+                echo '<li>' . esc_html__('Robots excluded', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($visitor_counts['robots'])) . '</strong></li>';
+            }
         }
         if ($is_top_pages_enabled) {
             echo '<li>' . esc_html__('Page views', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($page_views)) . '</strong></li>';

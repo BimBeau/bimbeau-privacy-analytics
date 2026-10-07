@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.58.2
+Stable tag: 8.58.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.58.2 =
-* [Fix] Report lists: the column headers take their compact uppercase style (11 px) instead of large text that pushed the last columns out of view, and the Pages average time column no longer ends with a colon.
+= 8.58.3 =
+* [Fix] WordPress dashboard widget: shows the same human visitors as the Visitors card of the plugin dashboard, followed by the number of robots excluded in the period, instead of the number of visits.
