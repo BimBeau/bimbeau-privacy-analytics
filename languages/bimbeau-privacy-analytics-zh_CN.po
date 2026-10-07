@@ -162,10 +162,10 @@ msgstr "访问"
 msgid "Robots excluded"
 msgstr "已排除的机器人"
 
-#: admin/dashboard-widget.php src/admin/components/VisitorsDataView/index.js
+#: admin/dashboard-widget.php src/admin/components/ReportDataView/index.js
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/SettingsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Page views"
 msgstr "页面浏览量"
@@ -668,57 +668,8 @@ msgstr "响应预览："
 
 #. translators: %s: card title.
 #: src/admin/components/DataTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Loading: %s"
 msgstr "正在加载：%s"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Search"
-msgstr "搜索"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Search…"
-msgstr "搜索…"
-
-#: src/admin/components/DataViewsFrame/index.js
-msgid "View options"
-msgstr "视图选项"
-
-#. translators: %s: label of an active list filter.
-#: src/admin/components/DataViewsFrame/index.js
-msgid "Remove filter: %s"
-msgstr "移除筛选：%s"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/components/WorldMap/index.js
-#: src/admin/lib/dataviewsTranslations.js
-msgid "Reset"
-msgstr "重置"
-
-#. translators: %s: number of pages. "<CurrentPage />" is the page selector.
-#: src/admin/components/DataViewsFrame/index.js
-msgid "Page <CurrentPage /> of %s"
-msgstr "第 <CurrentPage /> 页，共 %s 页"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "当前页面"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "上一页"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "下一页"
 
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
@@ -758,6 +709,32 @@ msgstr "技术状态不能证明同意收集的有效性。"
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Direct"
 msgstr "直接访问"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Open details"
+msgstr "打开详情"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "URL"
+msgstr "URL"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Title"
+msgstr "标题"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Open row"
+msgstr "打开行"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Open"
+msgstr "打开"
+
+#: src/admin/components/ReportDataView/index.js
+#: src/admin/lib/dataviewsTranslations.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Search"
+msgstr "搜索"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to save this choice. Please try again."
@@ -874,7 +851,6 @@ msgstr "其他设置使用建议的默认值，并且可以稍后从 BimBeau Pri
 
 #: src/admin/components/SetupWizard/index.js
 #: src/admin/widgets/PeriodFilter/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Previous"
 msgstr "上一步"
 
@@ -1103,6 +1079,11 @@ msgid "Map zoom controls"
 msgstr "地图缩放控件"
 
 #: src/admin/components/WorldMap/index.js
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Reset"
+msgstr "重置"
+
+#: src/admin/components/WorldMap/index.js
 msgid "Map legend"
 msgstr "地图图例"
 
@@ -1250,6 +1231,10 @@ msgstr "取消"
 msgid "Conditions"
 msgstr "条件"
 
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "当前页面"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Density"
 msgstr "密度"
@@ -1325,6 +1310,10 @@ msgid "Move right"
 msgstr "右移"
 
 #: src/admin/lib/dataviewsTranslations.js
+msgid "Next page"
+msgstr "下一页"
+
+#: src/admin/lib/dataviewsTranslations.js
 msgid "No elements found"
 msgstr "未找到元素"
 
@@ -1352,6 +1341,10 @@ msgid "<div>Page</div>%1$s<div>of %2$d</div>"
 msgstr "<div>第</div>%1$s<div>页，共 %2$d 页</div>"
 
 #: src/admin/lib/dataviewsTranslations.js
+msgid "Previous page"
+msgstr "上一页"
+
+#: src/admin/lib/dataviewsTranslations.js
 msgid "Properties"
 msgstr "属性"
 
@@ -1376,8 +1369,6 @@ msgid "Sort ascending"
 msgstr "升序排序"
 
 #: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Sort by"
 msgstr "排序依据"
 
@@ -1553,18 +1544,6 @@ msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s 项"
 
-#: src/admin/panels/AcquisitionPanel.js
-msgid "Acquisition channels"
-msgstr "获客渠道"
-
-#: src/admin/panels/AcquisitionPanel.js
-msgid "No acquisition channel data is available for this period."
-msgstr "此时间段没有可用的访客画像数据。"
-
-#: src/admin/panels/AcquisitionPanel.js
-msgid "Table: Acquisition channels"
-msgstr "表格：访客"
-
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Channel"
@@ -1573,6 +1552,14 @@ msgstr "渠道"
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr "流量占比"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Acquisition channels"
+msgstr "获客渠道"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "No acquisition channel data is available for this period."
+msgstr "此时间段没有可用的访客画像数据。"
 
 #. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
@@ -2574,7 +2561,6 @@ msgid "Average active time spent during a visit."
 msgstr "每次访问期间的平均活跃时长。"
 
 #: src/admin/widgets/PeriodFilter/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Next"
 msgstr "下一项"
 
@@ -2592,75 +2578,16 @@ msgid "Quick ranges"
 msgstr "快速范围"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "升序"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "降序"
-
-#. translators: %s: current sort order, "Ascending" or "Descending".
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Toggle sort order: %s"
-msgstr "切换排序顺序：%s"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Table: Referring sites"
-msgstr "表格：引荐站点"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referrer unavailable"
 msgstr "没有可用的引荐来源。"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Rows"
-msgstr "行"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "No referring site data available."
-msgstr "没有可用的引荐站点数据。"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "正在加载引荐站点…"
 
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "标题"
-
-#. translators: %s: header of the first column, for example "Page".
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "%s label"
-msgstr "标签（%s）"
-
-#. translators: %s: table title.
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Table: %s"
-msgstr "表格：%s"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "显示"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Open row"
-msgstr "打开行"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Open details"
-msgstr "打开详情"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Open"
-msgstr "打开"
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "No referring site data available."
+msgstr "没有可用的引荐站点数据。"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous page views"

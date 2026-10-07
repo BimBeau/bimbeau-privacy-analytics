@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.59.1
+Stable tag: 8.60.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.59.1 =
-* [Change] Admin header: every edition shows the "Statistics" title in the language of the site instead of the logo, and the interface branding option is removed from the settings.
+= 8.60.1 =
+* [Fix] Release: the package build checks the report lists as they now render, so version 8.60.0 and later can be published.

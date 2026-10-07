@@ -163,10 +163,10 @@ msgstr "Visits"
 msgid "Robots excluded"
 msgstr "Robots excluded"
 
-#: admin/dashboard-widget.php src/admin/components/VisitorsDataView/index.js
+#: admin/dashboard-widget.php src/admin/components/ReportDataView/index.js
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/SettingsPanel.js
 #: src/admin/widgets/OverviewKpis/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Page views"
 msgstr "Page views"
@@ -670,57 +670,8 @@ msgstr "Response preview:"
 
 #. translators: %s: card title.
 #: src/admin/components/DataTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Loading: %s"
 msgstr "Loading: %s"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Search"
-msgstr "Search"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Search…"
-msgstr "Search…"
-
-#: src/admin/components/DataViewsFrame/index.js
-msgid "View options"
-msgstr "View options"
-
-#. translators: %s: label of an active list filter.
-#: src/admin/components/DataViewsFrame/index.js
-msgid "Remove filter: %s"
-msgstr "Remove filter: %s"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/components/WorldMap/index.js
-#: src/admin/lib/dataviewsTranslations.js
-msgid "Reset"
-msgstr "Reset"
-
-#. translators: %s: number of pages. "<CurrentPage />" is the page selector.
-#: src/admin/components/DataViewsFrame/index.js
-msgid "Page <CurrentPage /> of %s"
-msgstr "Page <CurrentPage /> of %s"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js src/admin/panels/RealtimePanel.js
-msgid "Current page"
-msgstr "Current page"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Previous page"
-msgstr "Previous page"
-
-#: src/admin/components/DataViewsFrame/index.js
-#: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Next page"
-msgstr "Next page"
 
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
@@ -760,6 +711,32 @@ msgstr "Technical state does not prove consent collection validity."
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Direct"
 msgstr "Direct"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Open details"
+msgstr "Open details"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "URL"
+msgstr "URL"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Title"
+msgstr "Title"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Open row"
+msgstr "Open row"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Open"
+msgstr "Open"
+
+#: src/admin/components/ReportDataView/index.js
+#: src/admin/lib/dataviewsTranslations.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Search"
+msgstr "Search"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to save this choice. Please try again."
@@ -876,7 +853,6 @@ msgstr "Other settings use the recommended defaults and can be changed later fro
 
 #: src/admin/components/SetupWizard/index.js
 #: src/admin/widgets/PeriodFilter/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Previous"
 msgstr "Previous"
 
@@ -1105,6 +1081,11 @@ msgid "Map zoom controls"
 msgstr "Map zoom controls"
 
 #: src/admin/components/WorldMap/index.js
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Reset"
+msgstr "Reset"
+
+#: src/admin/components/WorldMap/index.js
 msgid "Map legend"
 msgstr "Map legend"
 
@@ -1252,6 +1233,10 @@ msgstr "Cancel"
 msgid "Conditions"
 msgstr "Conditions"
 
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/RealtimePanel.js
+msgid "Current page"
+msgstr "Current page"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Density"
 msgstr "Density"
@@ -1327,6 +1312,10 @@ msgid "Move right"
 msgstr "Move right"
 
 #: src/admin/lib/dataviewsTranslations.js
+msgid "Next page"
+msgstr "Next page"
+
+#: src/admin/lib/dataviewsTranslations.js
 msgid "No elements found"
 msgstr "No elements found"
 
@@ -1354,6 +1343,10 @@ msgid "<div>Page</div>%1$s<div>of %2$d</div>"
 msgstr "<div>Page</div>%1$s<div>of %2$d</div>"
 
 #: src/admin/lib/dataviewsTranslations.js
+msgid "Previous page"
+msgstr "Previous page"
+
+#: src/admin/lib/dataviewsTranslations.js
 msgid "Properties"
 msgstr "Properties"
 
@@ -1378,8 +1371,6 @@ msgid "Sort ascending"
 msgstr "Sort ascending"
 
 #: src/admin/lib/dataviewsTranslations.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Sort by"
 msgstr "Sort by"
 
@@ -1560,18 +1551,6 @@ msgid_plural "%s items"
 msgstr[0] "%s item"
 msgstr[1] "%s items"
 
-#: src/admin/panels/AcquisitionPanel.js
-msgid "Acquisition channels"
-msgstr "Acquisition channels"
-
-#: src/admin/panels/AcquisitionPanel.js
-msgid "No acquisition channel data is available for this period."
-msgstr "No visitor profile data available for this period."
-
-#: src/admin/panels/AcquisitionPanel.js
-msgid "Table: Acquisition channels"
-msgstr "Table: Visitors"
-
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Channel"
@@ -1580,6 +1559,14 @@ msgstr "Channel"
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
 msgstr "Traffic share"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Acquisition channels"
+msgstr "Acquisition channels"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "No acquisition channel data is available for this period."
+msgstr "No visitor profile data available for this period."
 
 #. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
@@ -2584,7 +2571,6 @@ msgid "Average active time spent during a visit."
 msgstr "Average active time spent during a visit."
 
 #: src/admin/widgets/PeriodFilter/index.js
-#: src/admin/widgets/ReportTableCard/index.js
 msgid "Next"
 msgstr "Next"
 
@@ -2602,75 +2588,16 @@ msgid "Quick ranges"
 msgstr "Quick ranges"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Ascending"
-msgstr "Ascending"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Descending"
-msgstr "Descending"
-
-#. translators: %s: current sort order, "Ascending" or "Descending".
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Toggle sort order: %s"
-msgstr "Toggle sort order: %s"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Table: Referring sites"
-msgstr "Table: Referring sites"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referrer unavailable"
 msgstr "No referrers available."
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Rows"
-msgstr "Rows"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "No referring site data available."
-msgstr "No referring site data available."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"
 msgstr "Loading referring sites…"
 
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Title"
-msgstr "Title"
-
-#. translators: %s: header of the first column, for example "Page".
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "%s label"
-msgstr "%s label"
-
-#. translators: %s: table title.
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Table: %s"
-msgstr "Table: %s"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Display"
-msgstr "Display"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "URL"
-msgstr "URL"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Open row"
-msgstr "Open row"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Open details"
-msgstr "Open details"
-
-#: src/admin/widgets/ReportTableCard/index.js
-msgid "Open"
-msgstr "Open"
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "No referring site data available."
+msgstr "No referring site data available."
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous page views"

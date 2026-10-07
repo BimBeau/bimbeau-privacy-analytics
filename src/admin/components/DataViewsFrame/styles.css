@@ -1,4 +1,4 @@
-/* List frame in the look of the WordPress DataViews lists (@wordpress/dataviews table layout). */
+/* Cards that hold a WordPress DataViews list (@wordpress/dataviews table layout). */
 
 /* The Card wraps its parts in an inner element: no child combinator here. */
 .bbpa-dataviews-card .components-card__body.bbpa-dataviews,
@@ -10,161 +10,7 @@
   min-width: 0;
 }
 
-.bbpa-dataviews__toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 24px;
-}
-
-.bbpa-dataviews__toolbar-spacer {
-  flex: 1 1 auto;
-}
-
-.bbpa-dataviews__search {
-  width: 240px;
-  max-width: 100%;
-}
-
-.bbpa-dataviews__search input[type="search"].components-search-control__input {
-  height: 32px;
-  min-height: 32px;
-  background: #f0f0f0;
-  border: 0;
-  border-radius: 2px;
-  font-size: 13px;
-}
-
-.bbpa-dataviews__view-options-content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-width: 240px;
-  padding: 8px;
-}
-
-.bbpa-dataviews__chips {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  padding: 0 24px 12px;
-}
-
-.bbpa-dataviews__chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 32px;
-  padding: 0 4px 0 12px;
-  border-radius: 16px;
-  background: #f0f0f0;
-  color: #1e1e1e;
-  font-size: 13px;
-}
-
-.bbpa-dataviews__chip .bbpa-dataviews__chip-remove.components-button {
-  width: 24px;
-  min-width: 24px;
-  height: 24px;
-  padding: 0;
-  border-radius: 50%;
-}
-
-.bbpa-dataviews .bbpa-table-scroll {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.bbpa-dataviews-table {
-  width: 100%;
-  border: 0;
-  border-collapse: collapse;
-  color: #757575;
-  background: #fff;
-}
-
-/* `table.` outranks `.bbpa-report-table th` of globals.css, which loads after this file. */
-table.bbpa-dataviews-table thead th {
-  padding: 8px 12px;
-  border: 0;
-  box-shadow: inset 0 -1px 0 #f0f0f0;
-  color: #1e1e1e;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1.4;
-  text-align: left;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.bbpa-dataviews-table td {
-  padding: 12px;
-  border: 0;
-  border-top: 1px solid #f0f0f0;
-  color: #757575;
-  font-size: 13px;
-  line-height: 20px;
-  vertical-align: middle;
-}
-
-.bbpa-dataviews-table th:first-child,
-.bbpa-dataviews-table td:first-child {
-  padding-left: 24px;
-}
-
-.bbpa-dataviews-table th:last-child,
-.bbpa-dataviews-table td:last-child {
-  padding-right: 24px;
-}
-
-/* First column: the primary field of the row (a cell or a row header). */
-.bbpa-dataviews-table td:first-child {
-  color: #1e1e1e;
-  font-weight: 500;
-}
-
-table.bbpa-dataviews-table tbody th {
-  padding: 12px;
-  border: 0;
-  border-top: 1px solid #f0f0f0;
-  color: #1e1e1e;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 20px;
-  text-align: left;
-  text-transform: none;
-  vertical-align: middle;
-}
-
-.bbpa-dataviews-table tbody tr:hover {
-  background: #f8f8f8;
-}
-
-.bbpa-dataviews__pagination {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 24px;
-  border-top: 1px solid #f0f0f0;
-  color: #757575;
-  font-size: 13px;
-}
-
-.bbpa-dataviews__pagination-pages {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #1e1e1e;
-}
-
-.bbpa-dataviews__page-select {
-  min-width: 56px;
-}
-
+/* Totals and notes under a list. */
 .bbpa-dataviews__footer {
   display: flex;
   flex-direction: column;
@@ -180,26 +26,8 @@ table.bbpa-dataviews-table tbody th {
 }
 
 @media (max-width: 782px) {
-  .bbpa-dataviews__toolbar,
-  .bbpa-dataviews__pagination,
   .bbpa-dataviews__footer {
     padding-right: 16px;
-    padding-left: 16px;
-  }
-
-  .bbpa-dataviews__chips {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
-
-  .bbpa-dataviews__search {
-    flex: 1 1 100%;
-    width: auto;
-    order: 10;
-  }
-
-  .bbpa-dataviews-table th:first-child,
-  .bbpa-dataviews-table td:first-child {
     padding-left: 16px;
   }
 }

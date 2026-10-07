@@ -12,7 +12,7 @@ import TimeseriesChart from '../widgets/TimeseriesChart';
 
 const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	<ReportTableCard
-		dataViewsFrame
+		withCard={ false }
 		title={ __( 'Top pages', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -52,7 +52,7 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 
 const NotFoundPanel = ( { range } ) => (
 	<ReportTableCard
-		dataViewsFrame
+		withCard={ false }
 		title={ __( 'Top 404s', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -66,7 +66,7 @@ const NotFoundPanel = ( { range } ) => (
 
 const EntryPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	<ReportTableCard
-		dataViewsFrame
+		withCard={ false }
 		title={ __( 'Entry pages (approx.)', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -87,7 +87,7 @@ const EntryPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 
 const ExitPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	<ReportTableCard
-		dataViewsFrame
+		withCard={ false }
 		title={ __( 'Exit pages', 'bimbeau-privacy-analytics' ) }
 		hideZeroPrimaryRows
 		labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
@@ -153,7 +153,7 @@ const TopContentPanel = ( {
 	footnote = '',
 } ) => (
 	<ReportTableCard
-		dataViewsFrame
+		withCard={ false }
 		title={ title }
 		hideZeroPrimaryRows
 		labelHeader={ labelHeader }
@@ -237,7 +237,11 @@ const TopPagesListPanel = ( { rangeSelection, getRowHref, onOpenDetails } ) => {
 	return (
 		<div className="bbpa-report-panel">
 			<TimeseriesChart range={ range } metric="pageViews" />
-			<BpaCard className="bbpa-pages-listings-card" title={ __( 'Pages', 'bimbeau-privacy-analytics' ) }>
+			<BpaCard
+				className="bbpa-pages-listings-card bbpa-dataviews-card"
+				bodyClassName="bbpa-listing-region bbpa-dataviews"
+				title={ __( 'Pages', 'bimbeau-privacy-analytics' ) }
+			>
 				<TabPanel className="bbpa-pages-tabs" initialTabName={ getInitialTabName() } tabs={ pagesTabs }>
 					{ ( tab ) => {
 						if ( tab.name === 'entry-pages' ) {

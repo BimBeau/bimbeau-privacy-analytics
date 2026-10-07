@@ -118,7 +118,6 @@ const GeoCountriesPanel = ( { range } ) => {
 					metricFallbackValueKey="visits"
 					metricFallbackBadgeLabel={ __( 'Legacy visits', 'bimbeau-privacy-analytics' ) }
 					exportReportKey="geo-countries"
-					dataViewsFrame
 				/>
 			</div>
 		</div>

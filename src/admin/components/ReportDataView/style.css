@@ -1,0 +1,73 @@
+/* Report lists in the WordPress DataViews layout. */
+.bbpa-report-dataview {
+  min-width: 0;
+}
+
+.bbpa-report-dataview .dataviews-wrapper {
+  background: #fff;
+}
+
+.bbpa-report-dataview__empty {
+  margin: 0;
+  padding: 24px;
+  color: #757575;
+  text-align: center;
+}
+
+.bbpa-report-dataview > .bbpa-brand-notice,
+.bbpa-report-dataview .dataviews-no-results .bbpa-brand-notice {
+  margin: 16px 24px;
+  text-align: start;
+}
+
+.bbpa-report-dataview .bbpa-report-dataview__footnote {
+  padding: 0 24px 16px;
+}
+
+/* Metric cells: value, trend and minichart on one line, aligned to the end of the column. */
+.bbpa-report-dataview .bbpa-report-table__metric {
+  justify-content: flex-end;
+}
+
+.bbpa-report-dataview .bbpa-report-table__metric-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bbpa-report-dataview .bbpa-report-table__metric-header .dashicons {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
+
+/* Long URLs and titles stay on one line in the label column. */
+.bbpa-report-dataview .bbpa-report-table__row-action.components-button.is-link {
+  max-width: 100%;
+  text-align: start;
+}
+
+/* Pages card: tabs above the list, one card for every list. */
+.bbpa-pages-listings-card .bbpa-pages-tabs .components-tab-panel__tabs {
+  padding: 0 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/*
+ * Without a primary column, DataViews stretches the last column. Report lists stretch the label
+ * column instead, so the metric columns stay next to their values.
+ */
+.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-expand {
+  width: 1%;
+}
+
+.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-label,
+.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-page_title,
+.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-referrer {
+  width: auto;
+}
+
+/* DataViews caps cell contents at 80ch: end-aligned values would stop short of their header. */
+.bbpa-report-dataview tbody .dataviews-view-table__cell-content-wrapper.dataviews-view-table__cell-align-end {
+  max-width: none;
+}

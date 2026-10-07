@@ -23,7 +23,8 @@ const runtimeJsonTargets = [
 const criticalRuntimeMsgids = [
   'Previous',
   'Next',
-  'Rows',
+  // Page size label of the WordPress DataViews lists (the former "Rows" control).
+  'Items per page',
   'Country',
 ];
 

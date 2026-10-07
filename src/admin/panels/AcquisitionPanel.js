@@ -1,4 +1,5 @@
-import { useMemo } from '@wordpress/element';
+import { useMemo, useState } from '@wordpress/element';
+import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import {
 	LuBadgeDollarSign,
@@ -14,18 +15,14 @@ import {
 
 import useAdminEndpoint from '../api/useAdminEndpoint';
 import DataState from '../components/DataState';
-import FeatureIcon from '../components/icons/FeatureIcon';
 import BpaCard from '../components/BpaCard';
-import { DataViewsToolbar } from '../components/DataViewsFrame';
+import MetricTrend from '../components/MetricTrend';
 import ReportExportAction from '../components/ReportExportAction';
 import { ADMIN_CONFIG } from '../constants';
 import { getPreviousRange, getRangeFromSelection } from '../lib/date';
-import {
-	calculateChangePercent,
-	formatChangePercent,
-	formatNumber,
-} from '../lib/formatters';
+import { formatNumber } from '../lib/formatters';
 import { getChannelLabel } from '../lib/channelLabels';
+import { registerDataViewsTranslations } from '../lib/dataviewsTranslations';
 
 
 const CHANNEL_ICONS = {
@@ -47,12 +44,54 @@ const formatShare = ( value ) =>
 		maximumFractionDigits: 1,
 	} ) }%`;
 
+const DEFAULT_VIEW = {
+	type: 'table',
+	page: 1,
+	perPage: 20,
+	sort: { field: 'visits', direction: 'desc' },
+	filters: [],
+	fields: [ 'visits', 'share' ],
+	titleField: 'channel',
+	layout: {
+		styles: {
+			visits: { align: 'end' },
+			share: { align: 'end' },
+			orders: { align: 'end' },
+			revenue: { align: 'end' },
+			conversion_rate: { align: 'end' },
+		},
+	},
+};
+
+const ChannelLabel = ( { item } ) => {
+	const Icon = CHANNEL_ICONS[ item.key ] || LuCircleHelp;
+
+	return (
+		<span className="bbpa-channel-label">
+			<Icon aria-hidden="true" focusable="false" />
+			{ item.label }
+		</span>
+	);
+};
+
+/**
+ * Acquisition channels report: one row per channel (all channels fit on one page), sorted in
+ * the browser, rendered with the WordPress DataViews component.
+ *
+ * @param {Object} props                Component props.
+ * @param {Object} props.rangeSelection Selected range.
+ */
 const AcquisitionPanel = ( { rangeSelection } ) => {
+	registerDataViewsTranslations();
+
 	const range = useMemo(
 		() => getRangeFromSelection( rangeSelection ),
 		[ rangeSelection ]
 	);
 	const previousRange = useMemo( () => getPreviousRange( range ), [ range ] );
+	const [ view, setView ] = useState( DEFAULT_VIEW );
+	// Optional columns (WooCommerce) are shown by default; these ones were hidden by the user.
+	const [ hiddenOptionalFields, setHiddenOptionalFields ] = useState( [] );
 
 	const { data, isLoading, error } = useAdminEndpoint(
 		'/acquisition-channels',
@@ -66,149 +105,132 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 			namespace: ADMIN_CONFIG?.settings?.restNamespace,
 		} );
 
-	const items = data?.items || [];
-	const comparisonByKey = ( comparisonData?.items || [] ).reduce(
-		( accumulator, item ) => {
-			accumulator.set( item?.key || '', Number( item?.visits || 0 ) );
-			return accumulator;
-		},
-		new Map()
+	const rows = useMemo(
+		() =>
+			( data?.items || [] ).map( ( item ) => ( {
+				key: item.key || '',
+				label: getChannelLabel( item.key || item.channel ),
+				visits: Number( item.visits || 0 ),
+				share: Number( item.share || 0 ),
+			} ) ),
+		[ data ]
 	);
+	const comparisonByKey = useMemo( () => {
+		const values = new Map();
+		( comparisonData?.items || [] ).forEach( ( item ) => {
+			values.set( item?.key || '', Number( item?.visits || 0 ) );
+		} );
+
+		return values;
+	}, [ comparisonData ] );
 	const total = Number( data?.total || 0 );
+	let ecommerceFields = [];
 	
-	const headerActions = (
-		<ReportExportAction
-			report="acquisition-channels"
-			params={ range }
-			totalItems={ items.length }
-		/>
+
+	const fields = [
+		{
+			id: 'channel',
+			label: __( 'Channel', 'bimbeau-privacy-analytics' ),
+			getValue: ( { item } ) => item.label,
+			render: ChannelLabel,
+			enableHiding: false,
+			enableSorting: true,
+			filterBy: false,
+		},
+		{
+			id: 'visits',
+			label: __( 'Visits', 'bimbeau-privacy-analytics' ),
+			type: 'integer',
+			getValue: ( { item } ) => item.visits,
+			render: ( { item } ) => (
+				<div className="bbpa-report-table__metric">
+					<span className="bbpa-report-table__metric-value">
+						{ formatNumber( item.visits ) }
+					</span>
+					{ ! isComparisonLoading && comparisonByKey.has( item.key ) ? (
+						<MetricTrend
+							value={ item.visits }
+							previousValue={ comparisonByKey.get( item.key ) }
+						/>
+					) : null }
+				</div>
+			),
+			enableHiding: false,
+			enableSorting: true,
+			filterBy: false,
+		},
+		{
+			id: 'share',
+			label: __( 'Traffic share', 'bimbeau-privacy-analytics' ),
+			type: 'number',
+			getValue: ( { item } ) => item.share,
+			render: ( { item } ) => formatShare( item.share ),
+			enableSorting: true,
+			filterBy: false,
+		},
+		...ecommerceFields,
+	];
+	const optionalFieldIds = ecommerceFields.map( ( field ) => field.id );
+	const visibleFields = [
+		...view.fields,
+		...optionalFieldIds.filter(
+			( id ) =>
+				! view.fields.includes( id ) && ! hiddenOptionalFields.includes( id )
+		),
+	];
+	const { data: shownRows, paginationInfo } = filterSortAndPaginate(
+		rows,
+		{ ...view, fields: visibleFields },
+		fields
 	);
+
+	const onChangeView = ( nextView ) => {
+		const nextFields = nextView.fields || [];
+		setHiddenOptionalFields(
+			optionalFieldIds.filter( ( id ) => ! nextFields.includes( id ) )
+		);
+		setView( nextView );
+	};
 
 	return (
 		<div className="bbpa-report-panel">
 			<BpaCard
 				title={ __( 'Acquisition channels', 'bimbeau-privacy-analytics' ) }
 				className="bbpa-dataviews-card"
-				bodyClassName="bbpa-dataviews"
+				bodyClassName="bbpa-listing-region bbpa-dataviews"
 			>
-				<DataViewsToolbar actions={ headerActions } />
-				<DataState
-					isLoading={ isLoading }
-					error={ error }
-					isEmpty={ ! isLoading && ! error && items.length === 0 }
-					emptyLabel={ __(
-						'No acquisition channel data is available for this period.',
-						'bimbeau-privacy-analytics'
-					) }
-				/>
-				{ ! isLoading && ! error && items.length > 0 ? (
-					<>
-						<div className="bbpa-table-scroll">
-							<table
-								className="bbpa-dataviews-table bbpa-report-table"
-								aria-label={ __(
-									'Table: Acquisition channels',
+				<div className="bbpa-report-dataview bbpa-report-dataview--acquisition">
+					{ error ? (
+						<DataState isLoading={ false } error={ error } isEmpty={ false } />
+					) : null }
+					<DataViews
+						view={ { ...view, fields: visibleFields } }
+						onChangeView={ onChangeView }
+						fields={ fields }
+						data={ error ? [] : shownRows }
+						isLoading={ isLoading }
+						getItemId={ ( item ) => item.key || item.label }
+						paginationInfo={ paginationInfo }
+						defaultLayouts={ { table: {} } }
+						search={ false }
+						config={ { perPageSizes: [ 10, 20, 50 ] } }
+						empty={
+							<p className="bbpa-report-dataview__empty">
+								{ __(
+									'No acquisition channel data is available for this period.',
 									'bimbeau-privacy-analytics'
 								) }
-							>
-								<thead>
-									<tr>
-										<th scope="col">
-											{ __( 'Channel', 'bimbeau-privacy-analytics' ) }
-										</th>
-										<th scope="col">
-											{ __( 'Visits', 'bimbeau-privacy-analytics' ) }
-										</th>
-										<th scope="col">
-											{ __( 'Traffic share', 'bimbeau-privacy-analytics' ) }
-										</th>
-										{  }
-									</tr>
-								</thead>
-								<tbody>
-									{ items.map( ( item ) => {
-										const Icon =
-											CHANNEL_ICONS[ item.key ] ||
-											LuCircleHelp;
-										const channelLabel = getChannelLabel(
-											item.key || item.channel
-										);
-										const previousVisits = comparisonByKey.get(
-											item.key
-										);
-										const change = calculateChangePercent(
-											Number( item.visits || 0 ),
-											previousVisits
-										);
-										const changeLabel =
-											isComparisonLoading ||
-											previousVisits === undefined
-												? null
-												: formatChangePercent( change );
-										const isNegative = Number( change ) < 0;
-										const isNeutral = Number( change ) === 0;
-										let trendClassName =
-											'bbpa-report-table__trend bbpa-report-table__trend--positive';
-
-										if ( isNeutral ) {
-											trendClassName =
-												'bbpa-report-table__trend bbpa-report-table__trend--neutral';
-										} else if ( isNegative ) {
-											trendClassName =
-												'bbpa-report-table__trend bbpa-report-table__trend--negative';
-										}
-
-										return (
-											<tr key={ item.key }>
-												<th scope="row">
-													<span className="bbpa-channel-label">
-														<Icon
-															aria-hidden="true"
-															focusable="false"
-														/>
-														{ channelLabel }
-													</span>
-												</th>
-												<td>
-													<div className="bbpa-report-table__metric">
-														<span className="bbpa-report-table__metric-value">
-															{ formatNumber(
-																Number(
-																	item.visits || 0
-																)
-															) }
-														</span>
-														{ changeLabel !== null ? (
-															<span
-																className={
-																	trendClassName
-																}
-															>
-																{ changeLabel }
-																{ ! isNeutral && (
-																	<FeatureIcon
-																		name={
-																			isNegative
-																				? 'trendingDown'
-																				: 'trendingUp'
-																		}
-																		size={ 12 }
-																	/>
-																) }
-															</span>
-														) : null }
-													</div>
-												</td>
-												<td>
-													{ formatShare( item.share ) }
-												</td>
-												{  }
-											</tr>
-										);
-									} ) }
-								</tbody>
-							</table>
-						</div>
+							</p>
+						}
+						header={
+							<ReportExportAction
+								report="acquisition-channels"
+								params={ range }
+								totalItems={ rows.length }
+							/>
+						}
+					/>
+					{ ! isLoading && ! error && rows.length > 0 ? (
 						<div className="bbpa-dataviews__footer">
 							<p className="description">
 								{ sprintf(
@@ -219,8 +241,8 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 							</p>
 							{  }
 						</div>
-					</>
-				) : null }
+					) : null }
+				</div>
 			</BpaCard>
 		</div>
 	);
