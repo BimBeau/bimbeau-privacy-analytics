@@ -93,3 +93,10 @@
   height: 100%;
   background: var(--wp-admin-theme-color, #3858e9);
 }
+
+/* Visitor hashes of the real-time list: monospace text without the WordPress admin code background. */
+.bbpa-report-dataview--realtime code {
+  padding: 0;
+  background: none;
+  font-size: 12px;
+}

@@ -666,11 +666,6 @@ msgstr "Uç nokta:"
 msgid "Response preview:"
 msgstr "Yanıt önizlemesi:"
 
-#. translators: %s: card title.
-#: src/admin/components/DataTableCard/index.js
-msgid "Loading: %s"
-msgstr "Yükleniyor: %s"
-
 #: src/admin/components/GeoCountriesStatusNotice.js
 msgid "Enable geolocation aggregation"
 msgstr "Coğrafi konum toplamasını etkinleştir"
@@ -1022,6 +1017,7 @@ msgid "No visitor with advanced data for this period. Private visitors are hidde
 msgstr "Bu dönemde gelişmiş verisi olan ziyaretçi yok. Özel ziyaretçiler gizlendi."
 
 #: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
 msgid "Search visitors"
 msgstr "Ziyaretçilerde ara"
 
@@ -1645,10 +1641,6 @@ msgstr "Tam ekran"
 #: src/admin/panels/RealtimePanel.js
 msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
 msgstr "Yalnızca temel kapsam: zenginleştirilmiş ziyaret ayrıntıları ve hassas harita işaretçileri kullanılamaz."
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Table: Real-time visitors"
-msgstr "Tablo: Gerçek zamanlı ziyaretçiler"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "No visits in the current activity window."

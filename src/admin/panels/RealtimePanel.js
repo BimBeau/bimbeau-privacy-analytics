@@ -6,6 +6,7 @@ import {
 	useState,
 } from '@wordpress/element';
 import { Button, Notice, Tooltip } from '@wordpress/components';
+import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
 import { __, _n } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
@@ -25,6 +26,8 @@ import { getChannelLabel } from '../lib/channelLabels';
 import { getNumberFormatter } from '../lib/formatters';
 import { isVisitorOriginUnavailable } from '../lib/geoipStatus';
 import { createLogger } from '../logger';
+import { DATAVIEWS_PER_PAGE_SIZES } from '../lib/dataviewsConfig';
+import { registerDataViewsTranslations } from '../lib/dataviewsTranslations';
 
 const VisitorOriginUnavailableNotice = () => {
 	if (!isVisitorOriginUnavailable()) {
@@ -442,6 +445,295 @@ const isFieldVisible = (field, isAdvancedEnabled) => {
 	return true;
 };
 
+const REALTIME_VISITS_DEFAULT_VIEW = {
+	type: 'table',
+	page: 1,
+	perPage: 20,
+	search: '',
+	sort: { field: 'connection_time', direction: 'desc' },
+	filters: [],
+	titleField: 'visitor',
+	fields: [
+		'country',
+		'city',
+		'connection_time',
+		'current_page',
+		'channel',
+		'os',
+		'browser',
+		'browser_version',
+		'device',
+		'resolution',
+	],
+	layout: {},
+};
+
+// Distinct values of a field among the active visits, as DataViews filter elements.
+const getFilterElements = (rows, getValue, getLabel) => {
+	const elements = new Map();
+	rows.forEach((row) => {
+		const value = getValue(row);
+		if (value !== '' && !elements.has(value)) {
+			elements.set(value, { value, label: getLabel(row, value) });
+		}
+	});
+
+	return Array.from(elements.values()).sort((left, right) =>
+		String(left.label).localeCompare(String(right.label))
+	);
+};
+
+const BrandValue = ({ kind, value, label }) => (
+	<span className="bbpa-brand-label">
+		<BrandIcon kind={kind} value={value} className="bbpa-brand-icon" />
+		<span className={getPlaceholderLabelClassName(label)}>{label}</span>
+	</span>
+);
+
+/**
+ * Active visits of the real-time report in the WordPress DataViews layout. The list is
+ * refreshed with each snapshot; search, sort, filters and paging run in the browser.
+ *
+ * @param {Object}  props                Component props.
+ * @param {Array}   props.rows           Active visits, newest first.
+ * @param {boolean} props.shouldShowCity Whether the City field is offered (Pro, advanced scope).
+ * @param {Object}  props.visibleColumns Fields allowed by the visibility matrix.
+ */
+const RealtimeVisitsDataView = ({ rows, shouldShowCity, visibleColumns }) => {
+	registerDataViewsTranslations();
+
+	const [view, setView] = useState(REALTIME_VISITS_DEFAULT_VIEW);
+	const items = useMemo(
+		() =>
+			rows.map((visit, index) => ({
+				...visit,
+				_bbpaRowId: buildRealtimeVisitRowKey(visit, index),
+				_bbpaCountryCode: String(visit?.country_code || '').toUpperCase(),
+				_bbpaChannel: getRealtimeVisitChannelValue(visit),
+			})),
+		[rows]
+	);
+
+	const fields = useMemo(() => {
+		const countryLabel = (visit) => visit?.country || UNKNOWN_COUNTRY_LABEL;
+		const allFields = [
+			{
+				id: 'visitor',
+				label: VISITOR_TABLE_LABELS.visitorId,
+				getValue: ({ item }) => item.visitor_id || '',
+				render: ({ item }) =>
+					item.visitor_id ? (
+						<Tooltip text={item.visitor_id}>
+							<code>{formatVisitorHashForTable(item.visitor_id)}</code>
+						</Tooltip>
+					) : (
+						'—'
+					),
+				enableHiding: false,
+				enableSorting: false,
+				enableGlobalSearch: true,
+				filterBy: false,
+			},
+			{
+				id: 'country',
+				label: VISITOR_TABLE_LABELS.country,
+				getValue: ({ item }) => item._bbpaCountryCode,
+				render: ({ item }) => {
+					const countryCode = (item?.country_code || '').toLowerCase();
+					const flagClass = getCountryFlagClass(countryCode);
+					const hasCountry = !isUnknownCountryCode(countryCode) && flagClass;
+					const label = countryLabel(item);
+					const flagFallback =
+						typeof item?.country_flag === 'string' ? item.country_flag.trim() : '';
+					const fallbackLabel =
+						flagFallback && !/^[A-Za-z]{2}$/.test(flagFallback) ? flagFallback : '';
+
+					return (
+						<span className="bbpa-country-label">
+							{hasCountry ? (
+								<span className={`bbpa-country-flag ${flagClass}`} role="img" aria-label={label} />
+							) : (
+								<span
+									className="bbpa-country-flag bbpa-country-flag--unknown"
+									role="img"
+									aria-label={__('Unknown country', 'bimbeau-privacy-analytics')}
+								/>
+							)}
+							{fallbackLabel ? (
+								<span className="bbpa-country-flag-fallback" aria-hidden="true">
+									{fallbackLabel}
+								</span>
+							) : null}
+							<span className={getPlaceholderLabelClassName(label)}>{label}</span>
+						</span>
+					);
+				},
+				elements: getFilterElements(items, (row) => row._bbpaCountryCode, countryLabel),
+				filterBy: { operators: ['is'] },
+				enableGlobalSearch: true,
+			},
+			shouldShowCity && {
+				id: 'city',
+				label: VISITOR_TABLE_LABELS.city,
+				getValue: ({ item }) => getLocationLabel(item),
+				render: ({ item }) => {
+					const label = getLocationLabel(item);
+					return (
+						<span className={getPlaceholderLabelClassName(label, 'bbpa-location-label')}>
+							{label}
+						</span>
+					);
+				},
+				enableGlobalSearch: true,
+				filterBy: false,
+			},
+			{
+				id: 'connection_time',
+				label: VISITOR_TABLE_LABELS.connectionTime,
+				type: 'integer',
+				getValue: ({ item }) => Number(item?.first_view_at) || 0,
+				render: ({ item }) => formatConnectionTime(item?.first_view_at),
+				filterBy: false,
+			},
+			{
+				id: 'current_page',
+				label: VISITOR_TABLE_LABELS.currentPage,
+				getValue: ({ item }) => item?.current_page || '',
+				render: ({ item }) => (
+					<span className="bbpa-realtime-current-page-cell">
+						<PageTitle>
+							{item?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}
+						</PageTitle>
+					</span>
+				),
+				enableGlobalSearch: true,
+				filterBy: false,
+			},
+			visibleColumns.channel && {
+				id: 'channel',
+				label: VISITOR_TABLE_LABELS.channel,
+				getValue: ({ item }) => item._bbpaChannel,
+				render: ({ item }) => (
+					<ChannelLabel
+						sourceCategory={item._bbpaChannel}
+						referrerDomain={item?.referrer_domain || ''}
+					/>
+				),
+				elements: getFilterElements(
+					items,
+					(row) => row._bbpaChannel,
+					(row, value) => getChannelLabel(value)
+				),
+				filterBy: { operators: ['is'] },
+			},
+			visibleColumns.operatingSystem && {
+				id: 'os',
+				label: VISITOR_TABLE_LABELS.operatingSystem,
+				getValue: ({ item }) => item?.operating_system || '',
+				render: ({ item }) => (
+					<BrandValue kind="os" value={item?.operating_system} label={item?.operating_system || UNKNOWN_LABEL} />
+				),
+				enableGlobalSearch: true,
+				filterBy: false,
+			},
+			visibleColumns.browser && {
+				id: 'browser',
+				label: VISITOR_TABLE_LABELS.browser,
+				getValue: ({ item }) => item?.browser || '',
+				render: ({ item }) => (
+					<BrandValue kind="browser" value={item?.browser} label={item?.browser || UNKNOWN_LABEL} />
+				),
+				enableGlobalSearch: true,
+				filterBy: false,
+			},
+			visibleColumns.browserVersion && {
+				id: 'browser_version',
+				label: VISITOR_TABLE_LABELS.browserVersion,
+				getValue: ({ item }) => item?.browser_version || '',
+				render: ({ item }) => {
+					const label = item?.browser_version || UNKNOWN_LABEL;
+					return <span className={getPlaceholderLabelClassName(label)}>{label}</span>;
+				},
+				enableSorting: false,
+				filterBy: false,
+			},
+			visibleColumns.device && {
+				id: 'device',
+				label: VISITOR_TABLE_LABELS.device,
+				getValue: ({ item }) => item?.device_class || '',
+				render: ({ item }) => (
+					<BrandValue
+						kind="device"
+						value={item?.device_class}
+						label={formatDeviceClassLabel(item?.device_class, UNKNOWN_LABEL)}
+					/>
+				),
+				elements: getFilterElements(
+					items,
+					(row) => row?.device_class || '',
+					(row, value) => formatDeviceClassLabel(value, UNKNOWN_LABEL)
+				),
+				filterBy: { operators: ['is'] },
+			},
+			visibleColumns.resolution && {
+				id: 'resolution',
+				label: VISITOR_TABLE_LABELS.resolution,
+				getValue: ({ item }) => formatScreenResolution(item?.screen_resolution) || '',
+				render: ({ item }) => {
+					const label = formatScreenResolution(item?.screen_resolution) || UNKNOWN_LABEL;
+					return <span className={getPlaceholderLabelClassName(label)}>{label}</span>;
+				},
+				enableSorting: false,
+				filterBy: false,
+			},
+		];
+
+		return allFields.filter(Boolean);
+	}, [items, shouldShowCity, visibleColumns]);
+
+	const fieldIds = fields.map((field) => field.id);
+	const visibleView = {
+		...view,
+		fields: view.fields.filter((id) => fieldIds.includes(id)),
+		filters: (view.filters || []).filter((filter) => fieldIds.includes(filter.field)),
+	};
+	const { data, paginationInfo } = filterSortAndPaginate(items, visibleView, fields);
+
+	return (
+		<div className="bbpa-report-dataview bbpa-report-dataview--realtime">
+			<DataViews
+				view={visibleView}
+				onChangeView={(nextView) => {
+					const resetsPage =
+						nextView.search !== view.search ||
+						nextView.filters !== visibleView.filters ||
+						nextView.perPage !== view.perPage ||
+						nextView.sort?.field !== view.sort?.field ||
+						nextView.sort?.direction !== view.sort?.direction;
+					setView({
+						...nextView,
+						// Fields hidden by the visibility matrix come back when the scope allows them.
+						fields: [
+							...nextView.fields,
+							...view.fields.filter(
+								(id) => !fieldIds.includes(id) && !nextView.fields.includes(id)
+							),
+						],
+						page: resetsPage ? 1 : nextView.page,
+					});
+				}}
+				fields={fields}
+				data={data}
+				getItemId={(item) => item._bbpaRowId}
+				paginationInfo={paginationInfo}
+				defaultLayouts={{ table: {} }}
+				searchLabel={__('Search visitors', 'bimbeau-privacy-analytics')}
+				config={{ perPageSizes: DATAVIEWS_PER_PAGE_SIZES }}
+			/>
+		</div>
+	);
+};
+
 const RealtimePanel = () => {
 	const isPro = Boolean(ADMIN_CONFIG?.settings?.isPro);
 	const logger = useMemo(
@@ -822,69 +1114,11 @@ const RealtimePanel = () => {
 								</p>
 							) : null}
 							{realtimeVisitRows.length > 0 ? (
-								<div className="bbpa-table-scroll">
-									<table className="widefat striped bbpa-report-table bbpa-report-table--visitors bbpa-report-table--realtime-visits" aria-label={__('Table: Real-time visitors', 'bimbeau-privacy-analytics')}>
-										<thead><tr>
-											<th scope="col">{VISITOR_TABLE_LABELS.visitorId}</th>
-											<th scope="col">{VISITOR_TABLE_LABELS.country}</th>
-											{shouldShowCity ? <th scope="col">{VISITOR_TABLE_LABELS.city}</th> : null}
-											<th scope="col">{VISITOR_TABLE_LABELS.connectionTime}</th>
-											<th scope="col">{VISITOR_TABLE_LABELS.currentPage}</th>
-											{visibleColumns.channel ? <th scope="col">{VISITOR_TABLE_LABELS.channel}</th> : null}
-											{visibleColumns.operatingSystem ? <th scope="col">{VISITOR_TABLE_LABELS.operatingSystem}</th> : null}
-											{visibleColumns.browser ? <th scope="col">{VISITOR_TABLE_LABELS.browser}</th> : null}
-											{visibleColumns.browserVersion ? <th scope="col">{VISITOR_TABLE_LABELS.browserVersion}</th> : null}
-											{visibleColumns.device ? <th scope="col">{VISITOR_TABLE_LABELS.device}</th> : null}
-											{visibleColumns.resolution ? <th scope="col">{VISITOR_TABLE_LABELS.resolution}</th> : null}
-										</tr></thead>
-										<tbody>
-											{realtimeVisitRows.map((visit, index) => {
-												const countryCode = (visit?.country_code || '').toLowerCase();
-												const flagClass = getCountryFlagClass(countryCode);
-												const hasCountry = !isUnknownCountryCode(countryCode) && flagClass;
-												const countryLabel = visit?.country || UNKNOWN_COUNTRY_LABEL;
-												const countryFlagFallbackCandidate =
-													typeof visit?.country_flag === 'string' ? visit.country_flag.trim() : '';
-												const countryFallbackLabel =
-													countryFlagFallbackCandidate && ! /^[A-Za-z]{2}$/.test(countryFlagFallbackCandidate)
-														? countryFlagFallbackCandidate
-														: '';
-												const locationLabel = getLocationLabel(visit);
-												const screenResolutionLabel =
-													formatScreenResolution(visit?.screen_resolution) || UNKNOWN_LABEL;
-												const locationLabelClassName = getPlaceholderLabelClassName(
-													locationLabel,
-													'bbpa-location-label'
-												);
-												return (
-													<tr key={buildRealtimeVisitRowKey(visit, index)}>
-														<td>
-															{visit?.visitor_id ? (
-																<Tooltip text={visit.visitor_id}>
-																	<code>{formatVisitorHashForTable(visit.visitor_id)}</code>
-																</Tooltip>
-															) : (
-																'—'
-															)}
-														</td>
-														<td><span className="bbpa-country-label">{hasCountry ? <span className={`bbpa-country-flag ${flagClass}`} role="img" aria-label={countryLabel} /> : <span className="bbpa-country-flag bbpa-country-flag--unknown" role="img" aria-label={__('Unknown country', 'bimbeau-privacy-analytics')} />}{countryFallbackLabel ? <span className="bbpa-country-flag-fallback" aria-hidden="true">{countryFallbackLabel}</span> : null}<span className={getPlaceholderLabelClassName(countryLabel)}>{countryLabel}</span></span></td>
-														{shouldShowCity ? <td><span className={locationLabelClassName}>{locationLabel}</span></td> : null}
-														<td>{formatConnectionTime(visit?.first_view_at)}</td>
-												<td className="bbpa-realtime-current-page-cell">
-													<PageTitle>{visit?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}</PageTitle>
-														</td>
-														{visibleColumns.channel ? <td><ChannelLabel sourceCategory={getRealtimeVisitChannelValue(visit)} referrerDomain={visit?.referrer_domain || ''} /></td> : null}
-														{visibleColumns.operatingSystem ? <td><span className="bbpa-brand-label"><BrandIcon kind="os" value={visit?.operating_system} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(visit?.operating_system || UNKNOWN_LABEL)}>{visit?.operating_system || UNKNOWN_LABEL}</span></span></td> : null}
-														{visibleColumns.browser ? <td><span className="bbpa-brand-label"><BrandIcon kind="browser" value={visit?.browser} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(visit?.browser || UNKNOWN_LABEL)}>{visit?.browser || UNKNOWN_LABEL}</span></span></td> : null}
-														{visibleColumns.browserVersion ? <td><span className={getPlaceholderLabelClassName(visit?.browser_version || UNKNOWN_LABEL)}>{visit?.browser_version || UNKNOWN_LABEL}</span></td> : null}
-														{visibleColumns.device ? <td><span className="bbpa-brand-label"><BrandIcon kind="device" value={visit?.device_class} className="bbpa-brand-icon" /><span className={getPlaceholderLabelClassName(formatDeviceClassLabel(visit?.device_class, UNKNOWN_LABEL))}>{formatDeviceClassLabel(visit?.device_class, UNKNOWN_LABEL)}</span></span></td> : null}
-														{visibleColumns.resolution ? <td><span className={getPlaceholderLabelClassName(screenResolutionLabel)}>{screenResolutionLabel}</span></td> : null}
-													</tr>
-												);
-											})}
-										</tbody>
-									</table>
-								</div>
+								<RealtimeVisitsDataView
+									rows={realtimeVisitRows}
+									shouldShowCity={shouldShowCity}
+									visibleColumns={visibleColumns}
+								/>
 							) : (
 								<p className="bbpa-realtime-panel__meta">{__('No visits in the current activity window.', 'bimbeau-privacy-analytics')}</p>
 							)}
