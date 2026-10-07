@@ -1,6 +1,7 @@
 import { useMemo, useState } from '@wordpress/element';
 import { filterSortAndPaginate } from '@wordpress/dataviews';
-import ListDataViews from '../components/ListDataViews';
+import ListDataViews, { resolveListColumns } from '../components/ListDataViews';
+import { getStoredListColumns } from '../lib/storage';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import {
 	LuBadgeDollarSign,
@@ -44,6 +45,8 @@ const formatShare = ( value ) =>
 		minimumFractionDigits: 1,
 		maximumFractionDigits: 1,
 	} ) }%`;
+
+const ACQUISITION_COLUMNS_STORAGE_ID = 'acquisition_channels';
 
 const DEFAULT_VIEW = {
 	type: 'table',
@@ -91,9 +94,32 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 		[ rangeSelection ]
 	);
 	const previousRange = useMemo( () => getPreviousRange( range ), [ range ] );
-	const [ view, setView ] = useState( DEFAULT_VIEW );
+	// Saved columns: the optional WooCommerce columns are not known yet on the first render, so
+	// their saved place and visibility are kept as they are.
+	const [ storedColumns ] = useState( () =>
+		getStoredListColumns( ACQUISITION_COLUMNS_STORAGE_ID )
+	);
+	const [ view, setView ] = useState( () => ( {
+		...DEFAULT_VIEW,
+		fields: storedColumns
+			? resolveListColumns(
+					storedColumns,
+					DEFAULT_VIEW.fields,
+					[
+						{ id: 'channel' },
+						{ id: 'visits', enableHiding: false },
+						{ id: 'share' },
+						...storedColumns.fields
+							.filter( ( id ) => ! DEFAULT_VIEW.fields.includes( id ) )
+							.map( ( id ) => ( { id } ) ),
+					]
+			  )
+			: DEFAULT_VIEW.fields,
+	} ) );
 	// Optional columns (WooCommerce) are shown by default; these ones were hidden by the user.
-	const [ hiddenOptionalFields, setHiddenOptionalFields ] = useState( [] );
+	const [ hiddenOptionalFields, setHiddenOptionalFields ] = useState(
+		() => storedColumns?.hidden || []
+	);
 
 	const { data, isLoading, error } = useAdminEndpoint(
 		'/acquisition-channels',
@@ -173,8 +199,9 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 		...ecommerceFields,
 	];
 	const optionalFieldIds = ecommerceFields.map( ( field ) => field.id );
+	const fieldIds = fields.map( ( field ) => field.id );
 	const visibleFields = [
-		...view.fields,
+		...view.fields.filter( ( id ) => fieldIds.includes( id ) ),
 		...optionalFieldIds.filter(
 			( id ) =>
 				! view.fields.includes( id ) && ! hiddenOptionalFields.includes( id )
@@ -191,7 +218,16 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 		setHiddenOptionalFields(
 			optionalFieldIds.filter( ( id ) => ! nextFields.includes( id ) )
 		);
-		setView( nextView );
+		setView( {
+			...nextView,
+			// Saved optional columns not loaded yet keep their place for when they are.
+			fields: [
+				...nextFields,
+				...view.fields.filter(
+					( id ) => ! fieldIds.includes( id ) && ! nextFields.includes( id )
+				),
+			],
+		} );
 	};
 
 	return (
@@ -208,6 +244,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 					<ListDataViews
 						view={ { ...view, fields: visibleFields } }
 						onChangeView={ onChangeView }
+						columnsStorageId={ ACQUISITION_COLUMNS_STORAGE_ID }
 						fields={ fields }
 						data={ error ? [] : shownRows }
 						isLoading={ isLoading }

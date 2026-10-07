@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import ListDataViews from '../ListDataViews';
+import ListDataViews, { getInitialListColumns } from '../ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../DataState';
@@ -520,13 +520,23 @@ const VisitorsDataView = ( {
 	const isBotList = requestParams.visitor_type === 'bot';
 	const canFilterData =
 		! isBotList && typeof onHidePrivateVisitorsChange === 'function';
-	const [ view, setView ] = useState( () =>
-		getDefaultView( {
+	const columnsStorageId = isBotList ? 'visitors_bots' : 'visitors';
+	const [ view, setView ] = useState( () => {
+		const defaultView = getDefaultView( {
 			isBotList,
 			showCity,
 			hidePrivateVisitors: canFilterData && hidePrivateVisitors,
-		} )
-	);
+		} );
+
+		return {
+			...defaultView,
+			fields: getInitialListColumns(
+				columnsStorageId,
+				defaultView.fields,
+				getVisitorFields( { isBotList, showCity, canFilterData } )
+			),
+		};
+	} );
 
 	// A new range or list starts on the first page.
 	useEffect( () => {
@@ -645,6 +655,7 @@ const VisitorsDataView = ( {
 			<ListDataViews
 				view={ view }
 				onChangeView={ onChangeView }
+				columnsStorageId={ columnsStorageId }
 				fields={ fields }
 				data={ error ? [] : items }
 				isLoading={ isLoading }

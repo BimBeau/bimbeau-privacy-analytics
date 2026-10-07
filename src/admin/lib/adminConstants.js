@@ -163,6 +163,9 @@ export const PAGE_LABEL_DISPLAY_STORAGE_PREFIX = 'bbpa_page_label_display';
 export const LIST_DENSITY_OPTIONS = [ 'compact', 'balanced', 'comfortable' ];
 export const DEFAULT_LIST_DENSITY = 'compact';
 export const LIST_DENSITY_STORAGE_PREFIX = 'bbpa_list_density';
+// Column order and visibility of a DataViews list, saved per list and per user
+// (`bbpa_list_columns:{listId}:{userId}`, JSON `{ fields, hidden }`).
+export const LIST_COLUMNS_STORAGE_PREFIX = 'bbpa_list_columns';
 export const ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX =
 	'bbpa_advanced_consent_last_test';
 export const ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX =

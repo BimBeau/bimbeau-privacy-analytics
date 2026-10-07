@@ -2,6 +2,7 @@ import {
   ADMIN_CONFIG,
   ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX,
   ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX,
+  LIST_COLUMNS_STORAGE_PREFIX,
   LIST_DENSITY_OPTIONS,
   LIST_DENSITY_STORAGE_PREFIX,
   PAGE_LABEL_DISPLAY_OPTIONS,
@@ -209,6 +210,78 @@ export const storeListDensity = (density) => {
 
   try {
     storage.setItem(getListDensityStorageKey(), density);
+  } catch (error) {
+    // Ignore storage failures (e.g. privacy mode).
+  }
+};
+
+const normalizeFieldIdList = (value) =>
+  Array.isArray(value)
+    ? value.filter(
+        (id, index) =>
+          typeof id === "string" && id !== "" && value.indexOf(id) === index,
+      )
+    : null;
+
+/**
+ * Normalize saved list columns.
+ *
+ * @param {*} value Saved value.
+ * @return {{fields: string[], hidden: string[]}|null} Visible field ids in their order and the
+ *                                                     field ids hidden by the user, or null.
+ */
+export const normalizeListColumns = (value) => {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+  const fields = normalizeFieldIdList(value.fields);
+  if (!fields) {
+    return null;
+  }
+
+  return {
+    fields,
+    hidden: (normalizeFieldIdList(value.hidden) || []).filter(
+      (id) => !fields.includes(id),
+    ),
+  };
+};
+
+export const getListColumnsStorageKey = (listId) =>
+  getUserScopedStorageKey(`${LIST_COLUMNS_STORAGE_PREFIX}:${listId}`);
+
+/**
+ * Read the columns (order and visibility) saved for a list by the current user.
+ *
+ * @param {string} listId List identifier.
+ * @return {{fields: string[], hidden: string[]}|null} Saved columns, or null.
+ */
+export const getStoredListColumns = (listId) => {
+  const storage = getLocalStorage();
+  if (!storage || !listId) {
+    return null;
+  }
+
+  try {
+    const rawValue = storage.getItem(getListColumnsStorageKey(listId));
+    return rawValue ? normalizeListColumns(JSON.parse(rawValue)) : null;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const storeListColumns = (listId, columns) => {
+  const storage = getLocalStorage();
+  const normalizedColumns = normalizeListColumns(columns);
+  if (!storage || !listId || !normalizedColumns) {
+    return;
+  }
+
+  try {
+    storage.setItem(
+      getListColumnsStorageKey(listId),
+      JSON.stringify(normalizedColumns),
+    );
   } catch (error) {
     // Ignore storage failures (e.g. privacy mode).
   }

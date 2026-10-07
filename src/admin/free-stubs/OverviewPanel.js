@@ -44,6 +44,7 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						labelHeader={ __( 'Url', 'bimbeau-privacy-analytics' ) }
 						range={ range }
 						endpoint="/top-pages"
+						columnsStorageId="overview_top-pages"
 						exportReportKey="top-pages"
 						emptyLabel={ __( 'No popular pages available.', 'bimbeau-privacy-analytics' ) }
 						labelFallback="/"
@@ -59,6 +60,7 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						labelHeader={ __( 'Referrer', 'bimbeau-privacy-analytics' ) }
 						range={ range }
 						endpoint="/referrers"
+						columnsStorageId="overview_referrers"
 						exportReportKey="referrers"
 						emptyLabel={ __( 'No referrers available.', 'bimbeau-privacy-analytics' ) }
 						labelFallback={ __( 'Direct', 'bimbeau-privacy-analytics' ) }

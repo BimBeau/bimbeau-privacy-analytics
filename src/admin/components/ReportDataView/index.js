@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Button, Tooltip } from '@wordpress/components';
-import ListDataViews from '../ListDataViews';
+import ListDataViews, { getInitialListColumns } from '../ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import BrandNotice from '../BrandNotice';
@@ -152,6 +152,57 @@ const getVisibleFields = ( {
 };
 
 /**
+ * Visible columns of a report list: the columns saved by the user (`columnsStorageId`) or the
+ * default ones. A page list keeps one label column (URL or title).
+ *
+ * @param {Object}   options
+ * @param {string}   options.columnsStorageId        Identifier of the saved columns.
+ * @param {boolean}  options.supportsPageLabelToggle Whether the URL and Title columns exist.
+ * @param {string}   options.pageLabelDisplay        Shared page label display (`url`, `title`).
+ * @param {string}   options.metricKey               Main metric field id.
+ * @param {string[]} options.extraFieldIds           Extra column ids.
+ * @param {string}   options.extraMetricValueKey     Extra metric field id, or empty.
+ * @param {boolean}  options.hasOpenField            Whether the Open column exists.
+ * @return {string[]} Visible field ids.
+ */
+export const getInitialReportFields = ( {
+	columnsStorageId,
+	supportsPageLabelToggle,
+	pageLabelDisplay,
+	metricKey,
+	extraFieldIds = [],
+	extraMetricValueKey,
+	hasOpenField = false,
+} ) => {
+	const defaultFields = getVisibleFields( {
+		supportsPageLabelToggle,
+		pageLabelDisplay,
+		metricKey,
+		extraFieldIds,
+		extraMetricValueKey,
+	} );
+	// Same order and hiding rules as the field definitions of the list.
+	const fields = getInitialListColumns( columnsStorageId, defaultFields, [
+		{ id: LABEL_FIELD, enableHiding: supportsPageLabelToggle },
+		...( supportsPageLabelToggle ? [ { id: PAGE_TITLE_FIELD } ] : [] ),
+		{ id: metricKey, enableHiding: false },
+		...extraFieldIds.map( ( id ) => ( { id } ) ),
+		...( extraMetricValueKey ? [ { id: extraMetricValueKey } ] : [] ),
+		...( hasOpenField ? [ { id: 'open', enableHiding: false } ] : [] ),
+	] );
+
+	if (
+		supportsPageLabelToggle &&
+		! fields.includes( LABEL_FIELD ) &&
+		! fields.includes( PAGE_TITLE_FIELD )
+	) {
+		return [ defaultFields[ 0 ], ...fields ];
+	}
+
+	return fields;
+};
+
+/**
  * Report list (one label column and one or two metric columns) rendered with the WordPress
  * DataViews component: search, sort, page size, visible columns, server pagination and export.
  *
@@ -199,12 +250,17 @@ const ReportDataView = ( {
 	// Search in the browser, on the displayed label (formatLabel) and the raw label, for endpoints
 	// that do not filter (countries: names are translated in the browser). Short lists only.
 	searchInBrowser = false,
+	// Identifier of the saved columns; defaults to one per endpoint (`report_top-pages`).
+	columnsStorageId = '',
 } ) => {
 	registerDataViewsTranslations();
 
 	const resolvedExtraMetricKey = extraMetricLabel ? extraMetricValueKey : '';
 	const [ pageLabelDisplay, setPageLabelDisplay ] =
 		useSharedPageLabelDisplay();
+	const resolvedColumnsStorageId =
+		columnsStorageId ||
+		`report_${ String( endpoint || '' ).replace( /^\/+/, '' ) }`;
 	const [ view, setView ] = useState( () => ( {
 		type: 'table',
 		page: 1,
@@ -212,12 +268,14 @@ const ReportDataView = ( {
 		search: '',
 		sort: { field: metricKey, direction: 'desc' },
 		filters: [],
-		fields: getVisibleFields( {
+		fields: getInitialReportFields( {
+			columnsStorageId: resolvedColumnsStorageId,
 			supportsPageLabelToggle,
 			pageLabelDisplay,
 			metricKey,
 			extraFieldIds: extraFields.map( ( field ) => field.id ),
 			extraMetricValueKey: resolvedExtraMetricKey,
+			hasOpenField: showOpenButton && typeof getRowHref === 'function',
 		} ),
 		// Numbers stay aligned to the start, under their header (mockups 0B, 2A); DataViews aligns
 		// number fields to the end unless told otherwise.
@@ -715,6 +773,7 @@ const ReportDataView = ( {
 			<ListDataViews
 				view={ { ...view, fields: viewFields } }
 				onChangeView={ onChangeView }
+				columnsStorageId={ resolvedColumnsStorageId }
 				fields={ fields }
 				data={ error ? [] : rows }
 				isLoading={ isLoading }

@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.65.0
+Stable tag: 8.65.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.65.0 =
-* [Feature] Email summaries: the send time can now be expressed in UTC instead of the site time, so the summary leaves at the same moment all year round, whatever the daylight saving time changes. The default stays the site time, so existing schedules do not change.
+= 8.65.1 =
+* [Fix] Lists: the columns moved left or right, hidden or shown again are now kept for your account, so every list opens with the columns you chose instead of the default ones.

@@ -7,7 +7,7 @@ import {
 } from '@wordpress/element';
 import { Button, Notice, Tooltip } from '@wordpress/components';
 import { filterSortAndPaginate } from '@wordpress/dataviews';
-import ListDataViews from '../components/ListDataViews';
+import ListDataViews, { getInitialListColumns } from '../components/ListDataViews';
 import { __, _n } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
@@ -503,7 +503,15 @@ const BrandValue = ({ kind, value, label }) => (
 const RealtimeVisitsDataView = ({ rows, shouldShowCity, visibleColumns }) => {
 	registerDataViewsTranslations();
 
-	const [view, setView] = useState(REALTIME_VISITS_DEFAULT_VIEW);
+	const [view, setView] = useState(() => ({
+		...REALTIME_VISITS_DEFAULT_VIEW,
+		fields: getInitialListColumns(
+			'realtime',
+			REALTIME_VISITS_DEFAULT_VIEW.fields,
+			// Same order as the field definitions below.
+			['visitor', ...REALTIME_VISITS_DEFAULT_VIEW.fields].map((id) => ({ id }))
+		),
+	}));
 	const items = useMemo(
 		() =>
 			rows.map((visit, index) => ({
@@ -704,6 +712,7 @@ const RealtimeVisitsDataView = ({ rows, shouldShowCity, visibleColumns }) => {
 		<div className="bbpa-report-dataview bbpa-report-dataview--realtime">
 			<ListDataViews
 				view={visibleView}
+				columnsStorageId="realtime"
 				onChangeView={(nextView) => {
 					const resetsPage =
 						nextView.search !== view.search ||

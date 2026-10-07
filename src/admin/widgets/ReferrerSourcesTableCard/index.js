@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import ListDataViews from '../../components/ListDataViews';
+import ListDataViews, { getInitialListColumns } from '../../components/ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
@@ -60,7 +60,14 @@ const DEFAULT_VIEW = {
 const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 	registerDataViewsTranslations();
 
-	const [ view, setView ] = useState( DEFAULT_VIEW );
+	const [ view, setView ] = useState( () => ( {
+		...DEFAULT_VIEW,
+		fields: getInitialListColumns(
+			'referrer_sources',
+			DEFAULT_VIEW.fields,
+			DEFAULT_VIEW.fields.map( ( id ) => ( { id } ) )
+		),
+	} ) );
 
 	// A new range or page starts on the first page.
 	useEffect( () => {
@@ -227,6 +234,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 				<ListDataViews
 					view={ view }
 					onChangeView={ onChangeView }
+					columnsStorageId="referrer_sources"
 					fields={ fields }
 					data={ error ? [] : rows }
 					isLoading={ isLoading }
