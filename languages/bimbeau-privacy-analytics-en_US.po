@@ -125,7 +125,7 @@ msgstr "Settings"
 #: admin/dashboard-widget.php
 #, php-format
 msgid "%s overview"
-msgstr "%s page view"
+msgstr "%s overview"
 
 #. translators: %s: Resolved plugin label shown in the WordPress admin.
 #: admin/dashboard-widget.php
@@ -377,27 +377,27 @@ msgstr "GeoIP database download size does not match the manifest."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database checksum does not match the manifest."
-msgstr "GeoIP database is not available yet."
+msgstr "GeoIP database checksum does not match the manifest."
 
 #. translators: %s: HTTP error message returned by wp_remote_get.
 #: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database manifest request failed: %s"
-msgstr "GeoIP database download failed: %s"
+msgstr "GeoIP database manifest request failed: %s"
 
 #. translators: %d: HTTP status code returned by the GeoIP manifest request.
 #: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
-msgstr "GeoIP database download failed with HTTP status %d."
+msgstr "GeoIP database manifest request failed with HTTP status %d."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database manifest is not valid JSON."
-msgstr "GeoIP database file is not readable."
+msgstr "GeoIP database manifest is not valid JSON."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database manifest metadata is invalid."
-msgstr "GeoIP database is available."
+msgstr "GeoIP database manifest metadata is invalid."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database file is not readable."
@@ -409,7 +409,7 @@ msgstr "GeoIP archive file is not readable."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Server is missing required gzip extraction capabilities."
-msgstr "Server is missing required archive extraction capabilities."
+msgstr "Server is missing required gzip extraction capabilities."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to allocate temporary workspace for GeoIP extraction."
@@ -425,11 +425,11 @@ msgstr "GeoIP archive decompression failed."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to write decompressed GeoIP MMDB file."
-msgstr "Unable to write decompressed GeoIP archive."
+msgstr "Unable to write decompressed GeoIP MMDB file."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP MMDB file is not readable from an allowed temporary directory."
-msgstr "GeoIP MMDB file is not readable."
+msgstr "GeoIP MMDB file is not readable from an allowed temporary directory."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to resolve GeoIP destination path."
@@ -458,7 +458,7 @@ msgstr "Unable to create temporary workspace for GeoIP extraction."
 #: includes/services/class-bbpa-geoip-database-updater.php
 #: src/admin/panels/SettingsPanel.js
 msgid "The last GeoIP database update failed."
-msgstr "Automatic GeoIP database updates"
+msgstr "The last GeoIP database update failed."
 
 #. translators: 1: MaxMind API response code, 2: MaxMind API error details.
 #: includes/services/class-bbpa-maxmind-service.php
@@ -488,7 +488,7 @@ msgstr "MaxMind credentials are required to enable IP geolocation."
 
 #: includes/settings.php src/admin/AdminAppCore.js
 msgid "Statistics"
-msgstr "Stats"
+msgstr "Statistics"
 
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminAppCore.js
@@ -515,7 +515,7 @@ msgstr "Your WordPress session has expired. Reload this page."
 
 #: src/admin/AdminAppCore.js
 msgid "Reload page"
-msgstr "Geolocation"
+msgstr "Reload page"
 
 #: src/admin/AdminAppCore.js
 msgid "No panel available for this screen."
@@ -686,7 +686,7 @@ msgstr "No hourly details available for this page."
 
 #: src/admin/components/HourlyHeatmap/index.js
 msgid "Hourly activity heatmap by day and hour"
-msgstr "Global hourly heatmap by day and hour"
+msgstr "Hourly activity heatmap by day and hour"
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
@@ -973,7 +973,7 @@ msgstr "Referrer"
 
 #: src/admin/components/VisitorsDataView/index.js
 msgid "Entry channel"
-msgstr "Entry pages"
+msgstr "Entry channel"
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/RealtimePanel.js
@@ -1060,12 +1060,12 @@ msgstr "No geolocated visits are available. Check your geolocation settings to s
 #. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visitors"
-msgstr "%s Visitors"
+msgstr "%s visitors"
 
 #. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
 msgid "%s of total visitors"
-msgstr "%s of total visits"
+msgstr "%s of total visitors"
 
 #. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
@@ -1522,7 +1522,7 @@ msgstr "Hourly heatmaps are unavailable for pages not found (404)."
 
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
-msgstr "Hourly heatmaps are disabled by the bpa_hourly_aggregation_enabled filter."
+msgstr "Hourly heatmaps are disabled by the bbpa_hourly_aggregation_enabled filter."
 
 #: src/admin/lib/hourlyHeatmap.js
 msgid "Hourly heatmaps are unavailable because the hourly aggregation table is missing."
@@ -1574,12 +1574,12 @@ msgstr "Acquisition channels"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "No acquisition channel data is available for this period."
-msgstr "No visitor profile data available for this period."
+msgstr "No acquisition channel data is available for this period."
 
 #. translators: %s: Total visits in the selected range.
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Total visits: %s"
-msgstr "%s of total visits"
+msgstr "Total visits: %s"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."
@@ -1588,7 +1588,7 @@ msgstr "No country data available for the selected period."
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s visitors"
-msgstr "%1$s — %2$s visits"
+msgstr "%1$s — %2$s visitors"
 
 #. translators: 1: country name, 2: no data label.
 #: src/admin/panels/GeoCountriesPanel.js
@@ -1614,11 +1614,11 @@ msgstr "Top countries"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
-msgstr "Daily visitors"
+msgstr "Legacy visits"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin unavailable"
-msgstr "No visitor data available."
+msgstr "Visitor origin unavailable"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
@@ -1672,7 +1672,7 @@ msgstr "No search terms available."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Manual updates only"
-msgstr "Essential stats only"
+msgstr "Manual updates only"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Every 30 days"
@@ -1778,7 +1778,7 @@ msgstr "%s MB"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Update in progress"
-msgstr "Update now"
+msgstr "Update in progress"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Error during last update"
@@ -1790,7 +1790,7 @@ msgstr "Operational"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Unavailable"
-msgstr "No available"
+msgstr "Unavailable"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Database not downloaded"
@@ -1874,7 +1874,7 @@ msgstr "The license key, site keys, billing and invoices stay hidden for these r
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."
-msgstr "Controls the cron frequency for local GeoIP database updates."
+msgstr "Configure the geolocation source and GeoIP database updates."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Geolocation source"
@@ -1882,11 +1882,11 @@ msgstr "Geolocation source"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Local GeoLite database — recommended"
-msgstr "Local GeoLite database (default)"
+msgstr "Local GeoLite database — recommended"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind API"
-msgstr "MaxMind Account ID"
+msgstr "MaxMind API"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "The local database works without external requests during tracking. The MaxMind API requires your credentials."
@@ -1922,7 +1922,7 @@ msgstr "Test MaxMind connection"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Automatic updates"
-msgstr "Automatic GeoIP updates:"
+msgstr "Automatic updates"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "GeoLite local database download frequency."
@@ -1934,11 +1934,11 @@ msgstr "No automatic download will be performed."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Manual update"
-msgstr "Essential stats only"
+msgstr "Manual update"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Immediately download the latest GeoLite database."
-msgstr "Unable to read the local GeoLite database."
+msgstr "Immediately download the latest GeoLite database."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Update now"
@@ -1946,15 +1946,15 @@ msgstr "Update now"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database status"
-msgstr "GeoIP database not installed"
+msgstr "GeoIP database status"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last updated"
-msgstr "Last attempt"
+msgstr "Last updated"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Next update"
-msgstr "Next page"
+msgstr "Next update"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Size"
@@ -1962,7 +1962,7 @@ msgstr "Size"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Technical details"
-msgstr "Device details"
+msgstr "Technical details"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last attempt"
@@ -1978,7 +1978,7 @@ msgstr "Source or service"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "BimBeau GeoIP Database Service"
-msgstr "Local GeoIP database unavailable"
+msgstr "BimBeau GeoIP Database Service"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last error code"
@@ -2263,15 +2263,15 @@ msgstr "Delete all analytics data"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Referring site icons"
-msgstr "Referring sites"
+msgstr "Referring site icons"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Display referring site favicons"
-msgstr "Display referrer favicons"
+msgstr "Display referring site favicons"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
-msgstr "Allow BimBeau Privacy Analytics to contact referrer domains, retrieve validated icons server-side, and serve cached local copies in reports."
+msgstr "Allows BimBeau Privacy Analytics to retrieve referring site favicons, validate them on the server, and display locally cached copies in reports."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons."
@@ -2597,7 +2597,7 @@ msgstr "Quick ranges"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referrer unavailable"
-msgstr "No referrers available."
+msgstr "Referrer unavailable"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Loading referring sites…"

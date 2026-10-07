@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.66.0
+Stable tag: 8.66.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.66.0 =
-* [Feature] Email summaries: the test email is sent only to a dedicated test address, prefilled with your own email, instead of the recipients.
+= 8.66.1 =
+* [Fix] Translations: on English sites, 47 admin labels and messages showed another sentence (for example the Entry channel column of the Visitors list was named "Entry pages", and the Reload page button was named "Geolocation"). They show their own text again.
