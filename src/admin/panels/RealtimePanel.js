@@ -6,7 +6,8 @@ import {
 	useState,
 } from '@wordpress/element';
 import { Button, Notice, Tooltip } from '@wordpress/components';
-import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
+import { filterSortAndPaginate } from '@wordpress/dataviews';
+import ListDataViews from '../components/ListDataViews';
 import { __, _n } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
@@ -701,7 +702,7 @@ const RealtimeVisitsDataView = ({ rows, shouldShowCity, visibleColumns }) => {
 
 	return (
 		<div className="bbpa-report-dataview bbpa-report-dataview--realtime">
-			<DataViews
+			<ListDataViews
 				view={visibleView}
 				onChangeView={(nextView) => {
 					const resetsPage =

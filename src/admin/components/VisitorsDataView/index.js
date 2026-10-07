@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { DataViews } from '@wordpress/dataviews';
+import ListDataViews from '../ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../DataState';
@@ -642,7 +642,7 @@ const VisitorsDataView = ( {
 					loadingLabel={ loadingLabel }
 				/>
 			) : null }
-			<DataViews
+			<ListDataViews
 				view={ view }
 				onChangeView={ onChangeView }
 				fields={ fields }

@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.62.8
+Stable tag: 8.63.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,9 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.62.8 =
-* [Change] Lists: numbers aligned under their column header, with thousands separators and trends written as "+14 %"; the first column in dark text, longer share bars, a grey search field.
-* [Change] Buttons: secondary buttons use blue text.
-* [Change] Settings: smaller section titles; in Email summaries, the frequency is a segmented control and the test and preview buttons have icons.
-* [Change] Funnels: each step is a row with its bar, visits and share of the entries.
-* [Change] Email summary: narrower daily bars, the site address in the header and the channel legend in two columns.
+= 8.63.0 =
+* [Feature] Lists: the density chosen in View options (compact, balanced or comfortable) applies to every list and is kept for your account; lists start in the compact density.

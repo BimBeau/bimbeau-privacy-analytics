@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Button, Tooltip } from '@wordpress/components';
-import { DataViews } from '@wordpress/dataviews';
+import ListDataViews from '../ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import BrandNotice from '../BrandNotice';
@@ -712,7 +712,7 @@ const ReportDataView = ( {
 					loadingLabel={ title }
 				/>
 			) : null }
-			<DataViews
+			<ListDataViews
 				view={ { ...view, fields: viewFields } }
 				onChangeView={ onChangeView }
 				fields={ fields }

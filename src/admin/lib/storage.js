@@ -2,6 +2,8 @@ import {
   ADMIN_CONFIG,
   ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX,
   ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX,
+  LIST_DENSITY_OPTIONS,
+  LIST_DENSITY_STORAGE_PREFIX,
   PAGE_LABEL_DISPLAY_OPTIONS,
   PAGE_LABEL_DISPLAY_STORAGE_PREFIX,
   RANGE_PRESET_OPTIONS,
@@ -179,6 +181,38 @@ export const storePageLabelDisplay = (mode) => {
 
 export const isValidPageLabelDisplay = (mode) =>
   Boolean(normalizePageLabelDisplay(mode));
+
+export const normalizeListDensity = (density) =>
+  LIST_DENSITY_OPTIONS.includes(density) ? density : null;
+
+export const getListDensityStorageKey = () =>
+  getUserScopedStorageKey(LIST_DENSITY_STORAGE_PREFIX);
+
+export const getStoredListDensity = () => {
+  const storage = getLocalStorage();
+  if (!storage) {
+    return null;
+  }
+
+  try {
+    return normalizeListDensity(storage.getItem(getListDensityStorageKey()));
+  } catch (error) {
+    return null;
+  }
+};
+
+export const storeListDensity = (density) => {
+  const storage = getLocalStorage();
+  if (!storage || !normalizeListDensity(density)) {
+    return;
+  }
+
+  try {
+    storage.setItem(getListDensityStorageKey(), density);
+  } catch (error) {
+    // Ignore storage failures (e.g. privacy mode).
+  }
+};
 
 export const getVisitorsHidePrivateStorageKey = () =>
   getUserScopedStorageKey(VISITORS_HIDE_PRIVATE_STORAGE_PREFIX);

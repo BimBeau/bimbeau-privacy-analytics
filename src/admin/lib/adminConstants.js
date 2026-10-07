@@ -159,6 +159,10 @@ export const PERIOD_PRESET_OPTIONS = [
 export const PAGE_LABEL_DISPLAY_OPTIONS = [ 'url', 'title' ];
 export const DEFAULT_PAGE_LABEL_DISPLAY = 'url';
 export const PAGE_LABEL_DISPLAY_STORAGE_PREFIX = 'bbpa_page_label_display';
+// Row density of every DataViews list, shared and saved per user (View options > Density).
+export const LIST_DENSITY_OPTIONS = [ 'compact', 'balanced', 'comfortable' ];
+export const DEFAULT_LIST_DENSITY = 'compact';
+export const LIST_DENSITY_STORAGE_PREFIX = 'bbpa_list_density';
 export const ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX =
 	'bbpa_advanced_consent_last_test';
 export const ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX =

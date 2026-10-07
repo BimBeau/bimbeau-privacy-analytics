@@ -1,5 +1,6 @@
 import { useMemo, useState } from '@wordpress/element';
-import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
+import { filterSortAndPaginate } from '@wordpress/dataviews';
+import ListDataViews from '../components/ListDataViews';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import {
 	LuBadgeDollarSign,
@@ -204,7 +205,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 					{ error ? (
 						<DataState isLoading={ false } error={ error } isEmpty={ false } />
 					) : null }
-					<DataViews
+					<ListDataViews
 						view={ { ...view, fields: visibleFields } }
 						onChangeView={ onChangeView }
 						fields={ fields }

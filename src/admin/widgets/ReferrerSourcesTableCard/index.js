@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { DataViews } from '@wordpress/dataviews';
+import ListDataViews from '../../components/ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
@@ -224,7 +224,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 						loadingLabel={ __( 'Loading referring sites…', 'bimbeau-privacy-analytics' ) }
 					/>
 				) : null }
-				<DataViews
+				<ListDataViews
 					view={ view }
 					onChangeView={ onChangeView }
 					fields={ fields }
