@@ -26,6 +26,7 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		showOpenButton={ false }
 		showMetricTrend
 		metricSeriesKey="views_series"
+		extraFields={ [ SHARE_FIELD ] }
 		exportReportKey="top-pages"
 		requestParams={ {
 			include_avg_time: isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
@@ -81,6 +82,7 @@ const EntryPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		onRowClick={ onOpenDetails }
 		getRowHref={ getRowHref }
 		showOpenButton={ false }
+		extraFields={ [ SHARE_FIELD ] }
 		exportReportKey="entry-pages"
 	/>
 );
@@ -150,25 +152,28 @@ const formatShare = ( value ) =>
 		maximumFractionDigits: 1,
 	} ) } %`;
 
+// Share of the range total, after the main metric.
+const SHARE_FIELD = {
+	id: 'share',
+	label: __( 'Share', 'bimbeau-privacy-analytics' ),
+	getValue: ( item ) => Number( item?.share ) || 0,
+	render: ( item ) => (
+		<span className="bbpa-report-table__share">
+			<span className="bbpa-report-table__share-bar" aria-hidden="true">
+				<span
+					style={ {
+						width: `${ Math.min( 100, Math.max( 0, Number( item?.share ) || 0 ) ) }%`,
+					} }
+				/>
+			</span>
+			<span>{ formatShare( item?.share ) }</span>
+		</span>
+	),
+};
+
 // Share of the content page views and number of contents viewed, after Page views.
 const TOP_CONTENT_EXTRA_FIELDS = [
-	{
-		id: 'share',
-		label: __( 'Share', 'bimbeau-privacy-analytics' ),
-		getValue: ( item ) => Number( item?.share ) || 0,
-		render: ( item ) => (
-			<span className="bbpa-report-table__share">
-				<span className="bbpa-report-table__share-bar" aria-hidden="true">
-					<span
-						style={ {
-							width: `${ Math.min( 100, Math.max( 0, Number( item?.share ) || 0 ) ) }%`,
-						} }
-					/>
-				</span>
-				<span>{ formatShare( item?.share ) }</span>
-			</span>
-		),
-	},
+	SHARE_FIELD,
 	{
 		id: 'items_count',
 		label: __( 'Content viewed', 'bimbeau-privacy-analytics' ),

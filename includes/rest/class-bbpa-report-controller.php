@@ -39,6 +39,11 @@ class BBPA_Report_Controller {
     private const TOP_CONTENT_UNRESOLVED_KEY = 'unresolved';
 
     /**
+     * Page path reports whose rows carry a `share` of the range total.
+     */
+    private const PAGE_PATH_SHARE_REPORTS = ['top-pages', 'entry-pages'];
+
+    /**
      * Accepted values of the visitors report `data_scope` argument: `all` (default) lists every visitor row,
      * `enriched` lists only rows with advanced (consented) data (`has_enriched_data = 1`).
      */
@@ -2116,6 +2121,7 @@ class BBPA_Report_Controller {
                 'pagePath' => $page_path,
                 'includeViewsSeries' => $cache_id === 'top-pages',
                 'sortVersion' => $cache_id === 'top-pages' ? 5 : 1,
+                'withShare' => in_array($cache_id, self::PAGE_PATH_SHARE_REPORTS, true),
             ]
         );
         $cached = $this->get_cached_payload($cache_key);
@@ -2167,6 +2173,22 @@ class BBPA_Report_Controller {
             $items = $page_path_result['items'];
             $total_items = $page_path_result['total'];
             $page_path_variants = $page_path_result['variants'];
+
+            if (in_array($cache_id, self::PAGE_PATH_SHARE_REPORTS, true)) {
+                $share_total = $this->get_page_path_report_total(
+                    $table,
+                    $metric_column,
+                    $range,
+                    $extra_where_sql,
+                    $extra_where_args,
+                    $all_rows_cover_range ? $all_rows : null
+                );
+                foreach ($items as $index => $item) {
+                    $items[$index]['share'] = $share_total > 0
+                        ? round(((int) ($item[$metric_column] ?? 0) / $share_total) * 100, 1)
+                        : 0;
+                }
+            }
         } else {
             $search_sql = '';
             $search_args = [];
@@ -3825,6 +3847,54 @@ class BBPA_Report_Controller {
         }
 
         return array_values($merged_items);
+    }
+
+    /**
+     * Total of a page path report metric over the range, for the `share` of each row.
+     *
+     * The total does not depend on the search or on the page: it sums every stored path of
+     * the range except the paths tracked as 404 pages, as the content type shares do.
+     *
+     * @param array<int, array<string, mixed>>|null $all_rows Grouped rows (`label`, `metric`) of the whole range, or null to query them.
+     */
+    private function get_page_path_report_total(
+        string $table,
+        string $metric_column,
+        array $range,
+        string $extra_where_sql,
+        array $extra_where_args,
+        ?array $all_rows
+    ): int {
+        global $wpdb;
+
+        if ($all_rows === null) {
+            $all_rows = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT page_path AS label, SUM({$metric_column}) AS metric
+                    FROM {$table}
+                    WHERE date_bucket BETWEEN %s AND %s{$extra_where_sql}
+                    GROUP BY page_path",
+                    ...array_merge([$range['start'], $range['end']], $extra_where_args)
+                ),
+                ARRAY_A
+            ) ?: [];
+        }
+
+        $not_found_paths = $this->get_not_found_page_paths_for_range($range);
+        $total = 0;
+        foreach ($all_rows as $row) {
+            $normalized_path = $this->normalize_report_page_path(bbpa_sanitize_page_path_value($row['label'] ?? ''));
+            if (
+                $normalized_path !== ''
+                && !$this->is_home_page_path($normalized_path)
+                && isset($not_found_paths[bbpa_normalize_percent_encoding_case($normalized_path)])
+            ) {
+                continue;
+            }
+            $total += (int) ($row['metric'] ?? 0);
+        }
+
+        return $total;
     }
 
     /**
