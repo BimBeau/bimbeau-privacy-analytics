@@ -1367,8 +1367,6 @@ const SettingsPanel = ({
                       </CardBody>
                     </Card>
                     {}
-
-                    {}
                   </div>
                 )}
 

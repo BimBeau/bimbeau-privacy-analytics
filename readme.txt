@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.59.0
+Stable tag: 8.59.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,7 +75,6 @@ Depending on the active license, site configuration, consent setup, and availabl
 * Custom event tracking and event configuration.
 * Content analytics directly inside WordPress content lists and the editor.
 * An installable Stats App for desktop and mobile.
-* White-label admin header controls.
 * Panel visibility customization for the analytics navigation.
 * Additional detailed reports and analysis tools.
 
@@ -176,7 +175,7 @@ Campaign parameters, referrer information, and available acquisition signals can
 
 = What does the Pro edition add? =
 
-The separate Pro edition adds advanced features such as exports, Page Details, city-level geolocation, event tracking, WordPress content analytics, the installable Stats App, white-label controls, and interface customization.
+The separate Pro edition adds advanced features such as exports, Page Details, city-level geolocation, event tracking, WordPress content analytics, the installable Stats App, and analytics panel visibility controls.
 
 The Pro edition is not required to use the Free plugin.
 
@@ -198,7 +197,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 8. Pro — Analyze city-level traffic with top cities and interactive map markers.
 9. Discover what visitors search for on your website.
 10. Compare top pages with page views, trends, and average time on page.
-11. Configure role access and, with Pro, interface branding and analytics panel visibility.
+11. Configure role access and, with Pro, analytics panel visibility.
 12. Configure essential and advanced statistics, privacy, and consent-related tracking settings.
 13. Configure country geolocation with the local GeoIP database or MaxMind.
 14. Manage retention, cleanup, and analytics data maintenance.
@@ -209,9 +208,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 19. Pro — Configure custom events and actions and inspect tracked activity.
 20. Pro — Export filtered analytics data to CSV, JSON, or Excel.
 21. Pro — Install and use the standalone PWA Stats App on desktop or mobile.
-22. Pro — White-label the interface, choose visible panels, and configure Quick Stats.
+22. Pro — Choose visible panels and configure Quick Stats.
 
 == Changelog ==
 
-= 8.59.0 =
-* [Feature] Visitors: the Humans and Robots lists use the WordPress list component (DataViews), with filters on country, device and entry channel shown as removable chips, the consented-visitors filter, a view options panel to choose the sort, order, density, items per page and visible columns, and the row count on each tab.
+= 8.59.1 =
+* [Change] Admin header: every edition shows the "Statistics" title in the language of the site instead of the logo, and the interface branding option is removed from the settings.
