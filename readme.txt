@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.58.4
+Stable tag: 8.59.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.58.4 =
-* [Fix] Report exports: the card header no longer shifts while a file is prepared; the export button shows that it is busy, then a check when the file is ready.
+= 8.59.0 =
+* [Feature] Visitors: the Humans and Robots lists use the WordPress list component (DataViews), with filters on country, device and entry channel shown as removable chips, the consented-visitors filter, a view options panel to choose the sort, order, density, items per page and visible columns, and the row count on each tab.

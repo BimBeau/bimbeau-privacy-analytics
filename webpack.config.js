@@ -1,5 +1,6 @@
 const path = require('path');
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
 const cssAssetPublicPath = process.env.BBPA_ADMIN_CSS_PUBLIC_PATH || '../';
 const adminSourceRoot = process.env.BBPA_ADMIN_SOURCE_ROOT
@@ -56,6 +57,38 @@ const defaultRules = defaultConfig.module.rules.filter((rule) => {
   );
 });
 
+/*
+ * @wordpress/dataviews follows the latest WordPress packages (components, private APIs, theme) that older WordPress
+ * versions do not provide. The packages it imports from node_modules are bundled with it, so the lists work on every
+ * supported WordPress version; the plugin's own code keeps the WordPress scripts. Only the packages whose public API
+ * is stable since WordPress 6.4 stay shared: i18n (one translation registry), hooks and date.
+ */
+const SHARED_WORDPRESS_PACKAGES = new Set(['@wordpress/i18n', '@wordpress/hooks', '@wordpress/date']);
+const nodeModulesSegment = `${path.sep}node_modules${path.sep}`;
+
+class BundledDependenciesExtractionPlugin extends DependencyExtractionWebpackPlugin {
+  externalizeWpDeps(data, callback) {
+    const request = data?.request || '';
+    const context = data?.context || '';
+
+    if (
+      request.startsWith('@wordpress/') &&
+      context.includes(nodeModulesSegment) &&
+      !SHARED_WORDPRESS_PACKAGES.has(request)
+    ) {
+      return callback();
+    }
+
+    return super.externalizeWpDeps(data, callback);
+  }
+}
+
+const defaultPlugins = (defaultConfig.plugins || []).map((plugin) =>
+  plugin instanceof DependencyExtractionWebpackPlugin
+    ? new BundledDependenciesExtractionPlugin(plugin.options)
+    : plugin
+);
+
 module.exports = {
   ...defaultConfig,
   resolve: {
@@ -64,10 +97,13 @@ module.exports = {
       ...((defaultConfig.resolve || {}).alias || {}),
       ...freeAdminAliases,
     },
-    modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
+    // Nearest node_modules first, so a package resolves its own nested dependency versions
+    // (@wordpress/dataviews needs @wordpress/ui's @daypicker/react); the repository root stays the fallback
+    // for admin sources built from outside the repository (BBPA_ADMIN_SOURCE_ROOT).
+    modules: ['node_modules', path.resolve(__dirname, 'node_modules')],
   },
   plugins: [
-    ...(defaultConfig.plugins || []),
+    ...defaultPlugins,
   ],
   module: {
     ...defaultConfig.module,

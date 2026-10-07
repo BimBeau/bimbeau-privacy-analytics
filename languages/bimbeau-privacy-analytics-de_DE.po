@@ -163,11 +163,11 @@ msgstr "Besuche"
 msgid "Robots excluded"
 msgstr "Ausgeschlossene Robots"
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/SettingsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/dashboard-widget.php src/admin/components/VisitorsDataView/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/SettingsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Seitenaufrufe"
 
@@ -280,18 +280,18 @@ msgid "GeoIP database is not available yet."
 msgstr "Die GeoIP-Datenbank ist noch nicht verfügbar."
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown"
 msgstr "Unbekannt"
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Unbekanntes Land"
 
@@ -675,6 +675,7 @@ msgid "Loading: %s"
 msgstr "Wird geladen: %s"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Search"
 msgstr "Suchen"
@@ -695,6 +696,7 @@ msgstr "Filter entfernen: %s"
 
 #: src/admin/components/DataViewsFrame/index.js
 #: src/admin/components/WorldMap/index.js
+#: src/admin/lib/dataviewsTranslations.js
 msgid "Reset"
 msgstr "Zurücksetzen"
 
@@ -704,16 +706,18 @@ msgid "Page <CurrentPage /> of %s"
 msgstr "Seite <CurrentPage /> von %s"
 
 #: src/admin/components/DataViewsFrame/index.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/RealtimePanel.js
 msgid "Current page"
 msgstr "Aktuelle Seite"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Previous page"
 msgstr "Vorherige Seite"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Next page"
 msgstr "Nächste Seite"
@@ -751,9 +755,9 @@ msgid "Technical state does not prove consent collection validity."
 msgstr "Der technische Status belegt nicht die Gültigkeit der Einwilligungserfassung."
 
 #: src/admin/components/ReferrerLabel/index.js
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Direkt"
 
@@ -932,6 +936,113 @@ msgstr "Ohne Geolokalisierung fortfahren"
 msgid "Return to the download"
 msgstr "Zurück zum Download"
 
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+msgid "No available"
+msgstr "Nicht verfügbar"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Private"
+msgstr "Privat"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "0s"
+msgstr "0s"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor ID hash"
+msgstr "Hash der Besucher-ID"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Connection time"
+msgstr "Verbindungszeit"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Device"
+msgstr "Gerät"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
+msgstr "Letzte Aktivität"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Entry page"
+msgstr "Einstiegsseite"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+msgid "Country"
+msgstr "Land"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "City"
+msgstr "Stadt"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Active time"
+msgstr "Aktive Zeit"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Referrer"
+msgstr "Referrer"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Entry channel"
+msgstr "Einstiegsseiten"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Operating system"
+msgstr "Betriebssystem"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Browser"
+msgstr "Browser"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Browser version"
+msgstr "Browser-Version"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Resolution"
+msgstr "Auflösung"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Data"
+msgstr "Daten"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Consented visitors"
+msgstr "Besucher mit Einwilligung"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "No visitor data available."
+msgstr "Keine Besucherdaten verfügbar."
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading visitors…"
+msgstr "Besucher werden geladen…"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "Kein Besucher mit erweiterten Daten in diesem Zeitraum. Private Besucher sind ausgeblendet."
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Search visitors"
+msgstr "Besucher suchen"
+
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
 msgstr "Karte vergrößern"
@@ -1008,12 +1119,6 @@ msgstr "Keine beliebten Seiten verfügbar."
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "Top referrers"
 msgstr "Top-Referrer"
-
-#: src/admin/free-stubs/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Referrer"
-msgstr "Referrer"
 
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "No referrers available."
@@ -1126,6 +1231,201 @@ msgstr "KI-Assistenten"
 #: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Sonstiges"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Add filter"
+msgstr "Filter hinzufügen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Actions"
+msgstr "Aktionen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Appearance"
+msgstr "Darstellung"
+
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Conditions"
+msgstr "Bedingungen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Density"
+msgstr "Dichte"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Comfortable"
+msgstr "Komfortabel"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Balanced"
+msgstr "Ausgewogen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Compact"
+msgstr "Kompakt"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Deselect all"
+msgstr "Alle abwählen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "verb"
+msgid "Filter"
+msgstr "Filtern"
+
+#. translators: %1$s: field label of a list filter.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Filter by: %1$s"
+msgstr "Filtern nach: %1$s"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Hide column"
+msgstr "Spalte ausblenden"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Insert left"
+msgstr "Links einfügen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Insert right"
+msgstr "Rechts einfügen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Is"
+msgstr "Ist"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Is not"
+msgstr "Ist nicht"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Items per page"
+msgstr "Elemente pro Seite"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Layout"
+msgstr "Layout"
+
+#. translators: %1$s: field label of a list filter.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "List of: %1$s"
+msgstr "Liste von: %1$s"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Move left"
+msgstr "Nach links verschieben"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Move right"
+msgstr "Nach rechts verschieben"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No elements found"
+msgstr "Keine Elemente gefunden"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No results found"
+msgstr "Keine Ergebnisse gefunden"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Order"
+msgstr "Reihenfolge"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: src/admin/lib/dataviewsTranslations.js src/admin/lib/paginationLabels.js
+msgid "Page %1$d of %2$d"
+msgstr "Seite %1$d von %2$d"
+
+#. translators: 1: page selector, 2: total number of pages. Keep the <div> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "paging"
+msgid "<div>Page</div>%1$s<div>of %2$d</div>"
+msgstr "<div>Seite</div>%1$s<div>von %2$d</div>"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Remove"
+msgstr "Entfernen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Reset view"
+msgstr "Ansicht zurücksetzen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Search items"
+msgstr "Elemente durchsuchen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Select all"
+msgstr "Alle auswählen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Sort ascending"
+msgstr "Aufsteigend sortieren"
+
+#: src/admin/lib/dataviewsTranslations.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Sort by"
+msgstr "Sortieren nach"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Sort descending"
+msgstr "Absteigend sortieren"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "View is used as a noun"
+msgid "View options"
+msgstr "Ansichtsoptionen"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "(no title)"
+msgstr "(kein Titel)"
+
+#. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "<Name>%1$s is: </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s ist: </Name><Value>%2$s</Value>"
+
+#. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "<Name>%1$s is not: </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s ist nicht: </Name><Value>%2$s</Value>"
+
+#. translators: %d: number of list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%d Item"
+msgid_plural "%d Items"
+msgstr[0] "%d Element"
+msgstr[1] "%d Elemente"
+
+#. translators: 1: items shown, 2: total number of list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%1$d of %2$d Item"
+msgid_plural "%1$d of %2$d Items"
+msgstr[0] "%1$d von %2$d Element"
+msgstr[1] "%1$d von %2$d Elementen"
+
+#. translators: %d: number of selected list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%d Item selected"
+msgid_plural "%d Items selected"
+msgstr[0] "%d Element ausgewählt"
+msgstr[1] "%d Elemente ausgewählt"
 
 #: src/admin/lib/deviceClassLabel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1246,16 +1546,6 @@ msgstr "Ungefähre Stadt"
 msgid "Approx. %d km"
 msgstr "Ca. %d km"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No available"
-msgstr "Nicht verfügbar"
-
-#. translators: 1: current page number, 2: total number of pages.
-#: src/admin/lib/paginationLabels.js
-msgid "Page %1$d of %2$d"
-msgstr "Seite %1$d von %2$d"
-
 #. translators: %s: number of private visitors hidden from the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s private hidden"
@@ -1327,11 +1617,6 @@ msgstr "Flagge von %s"
 msgid "Top countries"
 msgstr "Top-Länder"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "Land"
-
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
 msgstr "Tägliche Besucher"
@@ -1347,46 +1632,6 @@ msgstr "Die Herkunft der Besucher ist verfügbar, nachdem die lokale GeoIP-Daten
 #: src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Unbekannte Seite"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Hash der Besucher-ID"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "City"
-msgstr "Stadt"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Verbindungszeit"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "Betriebssystem"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Browser"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Browser-Version"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Gerät"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Auflösung"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
@@ -2074,10 +2319,6 @@ msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Ich bestätige, dass ich alle Analysedaten dauerhaft löschen möchte."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
 msgstr "Jetzt löschen"
 
@@ -2186,24 +2427,6 @@ msgid "Pages not found"
 msgstr "Nicht gefundene Seiten"
 
 #: src/admin/panels/VisitorsPanel.js
-msgid "Humans"
-msgstr "Menschen"
-
-#: src/admin/panels/VisitorsPanel.js
-msgid "Robots"
-msgstr "Bots"
-
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No visitor data available."
-msgstr "Keine Besucherdaten verfügbar."
-
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Loading visitors…"
-msgstr "Besucher werden geladen…"
-
-#: src/admin/panels/VisitorsPanel.js
 msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
 msgstr "Bots sind von allen Statistiken ausgeschlossen. Diese Liste dient nur zur Kontrolle dessen, was herausgefiltert wurde."
 
@@ -2214,6 +2437,14 @@ msgstr "Kein Bot in diesem Zeitraum erkannt."
 #: src/admin/panels/VisitorsPanel.js
 msgid "Loading robots…"
 msgstr "Bots werden geladen…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "Menschen"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "Bots"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2396,13 +2627,6 @@ msgstr "Keine Referrer verfügbar."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Sortieren nach"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Rows"
 msgstr "Zeilen"
 
@@ -2557,51 +2781,3 @@ msgstr "Aktuell %s"
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous %s"
 msgstr "Vorherig %s"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "0s"
-msgstr "0s"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Active time"
-msgstr "Aktive Zeit"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Entry channel"
-msgstr "Einstiegsseiten"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Last activity"
-msgstr "Letzte Aktivität"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Entry page"
-msgstr "Einstiegsseite"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Private"
-msgstr "Privat"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Table: Robots"
-msgstr "Tabelle: Bots"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Table: Visitors"
-msgstr "Tabelle: Besucher"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No visitor with advanced data for this period. Private visitors are hidden."
-msgstr "Kein Besucher mit erweiterten Daten in diesem Zeitraum. Private Besucher sind ausgeblendet."
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Hide private visitors"
-msgstr "Private Besucher ausblenden"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Saved for your account"
-msgstr "Für Ihr Konto gespeichert"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Private visitors hidden"
-msgstr "Private Besucher ausgeblendet"

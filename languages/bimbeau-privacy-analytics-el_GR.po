@@ -163,11 +163,11 @@ msgstr "Επισκέψεις"
 msgid "Robots excluded"
 msgstr "Εξαιρούμενα ρομπότ"
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/SettingsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/dashboard-widget.php src/admin/components/VisitorsDataView/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/SettingsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Προβολές σελίδας"
 
@@ -280,18 +280,18 @@ msgid "GeoIP database is not available yet."
 msgstr "Η βάση δεδομένων GeoIP δεν είναι ακόμη διαθέσιμη."
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown"
 msgstr "Άγνωστο"
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Άγνωστη χώρα"
 
@@ -675,6 +675,7 @@ msgid "Loading: %s"
 msgstr "Φόρτωση: %s"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Search"
 msgstr "Αναζήτηση"
@@ -695,6 +696,7 @@ msgstr "Αφαίρεση φίλτρου: %s"
 
 #: src/admin/components/DataViewsFrame/index.js
 #: src/admin/components/WorldMap/index.js
+#: src/admin/lib/dataviewsTranslations.js
 msgid "Reset"
 msgstr "Επαναφορά"
 
@@ -704,16 +706,18 @@ msgid "Page <CurrentPage /> of %s"
 msgstr "Σελίδα <CurrentPage /> από %s"
 
 #: src/admin/components/DataViewsFrame/index.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/RealtimePanel.js
 msgid "Current page"
 msgstr "Τρέχουσα σελίδα"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Previous page"
 msgstr "Προηγούμενη σελίδα"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Next page"
 msgstr "Επόμενη σελίδα"
@@ -751,9 +755,9 @@ msgid "Technical state does not prove consent collection validity."
 msgstr "Η τεχνική κατάσταση δεν αποδεικνύει την εγκυρότητα συλλογής συναίνεσης."
 
 #: src/admin/components/ReferrerLabel/index.js
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Άμεση πρόσβαση"
 
@@ -932,6 +936,113 @@ msgstr "Συνεχίστε χωρίς γεωγραφική θέση"
 msgid "Return to the download"
 msgstr "Επιστρέψτε στη λήψη"
 
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+msgid "No available"
+msgstr "Μη διαθέσιμο"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Private"
+msgstr "Ιδιωτικό"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "0s"
+msgstr "0δ"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor ID hash"
+msgstr "Hash ID επισκέπτη"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Connection time"
+msgstr "Χρόνος σύνδεσης"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Device"
+msgstr "Συσκευή"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
+msgstr "Τελευταία δραστηριότητα"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Entry page"
+msgstr "Σελίδα εισόδου"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+msgid "Country"
+msgstr "Χώρα"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "City"
+msgstr "Πόλη"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Active time"
+msgstr "Ενεργός χρόνος"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Referrer"
+msgstr "Παραπέμπτης"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Entry channel"
+msgstr "Σελίδες εισόδου"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Operating system"
+msgstr "Λειτουργικό σύστημα"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Browser"
+msgstr "Περιηγητής"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Browser version"
+msgstr "Έκδοση περιηγητή"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Resolution"
+msgstr "Ανάλυση"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Data"
+msgstr "Δεδομένα"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Consented visitors"
+msgstr "Επισκέπτες με συναίνεση"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "No visitor data available."
+msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading visitors…"
+msgstr "Φόρτωση επισκεπτών…"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "Κανένας επισκέπτης με προηγμένα δεδομένα σε αυτήν την περίοδο. Οι ιδιωτικοί επισκέπτες είναι κρυφοί."
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Search visitors"
+msgstr "Αναζήτηση επισκεπτών"
+
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
 msgstr "Μεγέθυνση χάρτη"
@@ -1008,12 +1119,6 @@ msgstr "Δεν υπάρχουν διαθέσιμες δημοφιλείς σελ
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "Top referrers"
 msgstr "Κορυφαίοι παραπέμπτες"
-
-#: src/admin/free-stubs/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Referrer"
-msgstr "Παραπέμπτης"
 
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "No referrers available."
@@ -1126,6 +1231,201 @@ msgstr "Βοηθοί ΤΝ"
 #: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Άλλο"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Add filter"
+msgstr "Προσθήκη φίλτρου"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Actions"
+msgstr "Ενέργειες"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Appearance"
+msgstr "Εμφάνιση"
+
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Conditions"
+msgstr "Συνθήκες"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Density"
+msgstr "Πυκνότητα"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Comfortable"
+msgstr "Άνετη"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Balanced"
+msgstr "Ισορροπημένη"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Compact"
+msgstr "Συμπαγής"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Deselect all"
+msgstr "Αποεπιλογή όλων"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "verb"
+msgid "Filter"
+msgstr "Φιλτράρισμα"
+
+#. translators: %1$s: field label of a list filter.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Filter by: %1$s"
+msgstr "Φιλτράρισμα κατά: %1$s"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Hide column"
+msgstr "Απόκρυψη στήλης"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Insert left"
+msgstr "Εισαγωγή αριστερά"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Insert right"
+msgstr "Εισαγωγή δεξιά"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Is"
+msgstr "Είναι"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Is not"
+msgstr "Δεν είναι"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Items per page"
+msgstr "Στοιχεία ανά σελίδα"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Layout"
+msgstr "Διάταξη"
+
+#. translators: %1$s: field label of a list filter.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "List of: %1$s"
+msgstr "Λίστα: %1$s"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Move left"
+msgstr "Μετακίνηση αριστερά"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Move right"
+msgstr "Μετακίνηση δεξιά"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No elements found"
+msgstr "Δεν βρέθηκαν στοιχεία"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No results"
+msgstr "Κανένα αποτέλεσμα"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No results found"
+msgstr "Δεν βρέθηκαν αποτελέσματα"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Order"
+msgstr "Σειρά"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: src/admin/lib/dataviewsTranslations.js src/admin/lib/paginationLabels.js
+msgid "Page %1$d of %2$d"
+msgstr "Σελίδα %1$d από %2$d"
+
+#. translators: 1: page selector, 2: total number of pages. Keep the <div> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "paging"
+msgid "<div>Page</div>%1$s<div>of %2$d</div>"
+msgstr "<div>Σελίδα</div>%1$s<div>από %2$d</div>"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Properties"
+msgstr "Ιδιότητες"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Reset view"
+msgstr "Επαναφορά προβολής"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Search items"
+msgstr "Αναζήτηση στοιχείων"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Select all"
+msgstr "Επιλογή όλων"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Sort ascending"
+msgstr "Αύξουσα ταξινόμηση"
+
+#: src/admin/lib/dataviewsTranslations.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Sort by"
+msgstr "Ταξινόμηση κατά"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Sort descending"
+msgstr "Φθίνουσα ταξινόμηση"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "View is used as a noun"
+msgid "View options"
+msgstr "Επιλογές προβολής"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "(no title)"
+msgstr "(χωρίς τίτλο)"
+
+#. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "<Name>%1$s is: </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s είναι: </Name><Value>%2$s</Value>"
+
+#. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "<Name>%1$s is not: </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s δεν είναι: </Name><Value>%2$s</Value>"
+
+#. translators: %d: number of list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%d Item"
+msgid_plural "%d Items"
+msgstr[0] "%d στοιχείο"
+msgstr[1] "%d στοιχεία"
+
+#. translators: 1: items shown, 2: total number of list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%1$d of %2$d Item"
+msgid_plural "%1$d of %2$d Items"
+msgstr[0] "%1$d από %2$d στοιχείο"
+msgstr[1] "%1$d από %2$d στοιχεία"
+
+#. translators: %d: number of selected list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%d Item selected"
+msgid_plural "%d Items selected"
+msgstr[0] "%d στοιχείο επιλέχθηκε"
+msgstr[1] "%d στοιχεία επιλέχθηκαν"
 
 #: src/admin/lib/deviceClassLabel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1246,16 +1546,6 @@ msgstr "Κατά προσέγγιση πόλη"
 msgid "Approx. %d km"
 msgstr "Περ. %d χλμ"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No available"
-msgstr "Μη διαθέσιμο"
-
-#. translators: 1: current page number, 2: total number of pages.
-#: src/admin/lib/paginationLabels.js
-msgid "Page %1$d of %2$d"
-msgstr "Σελίδα %1$d από %2$d"
-
 #. translators: %s: number of private visitors hidden from the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s private hidden"
@@ -1327,11 +1617,6 @@ msgstr "Σημαία του/της %s"
 msgid "Top countries"
 msgstr "Κορυφαίες χώρες"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "Χώρα"
-
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
 msgstr "Ημερήσιοι επισκέπτες"
@@ -1347,46 +1632,6 @@ msgstr "Η προέλευση των επισκεπτών θα είναι δια
 #: src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Άγνωστη σελίδα"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Hash ID επισκέπτη"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "City"
-msgstr "Πόλη"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Χρόνος σύνδεσης"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "Λειτουργικό σύστημα"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Περιηγητής"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Έκδοση περιηγητή"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Συσκευή"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Ανάλυση"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
@@ -2074,10 +2319,6 @@ msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Επιβεβαιώνω ότι θέλω να εκκαθαρίσω μόνιμα όλα τα δεδομένα αναλυτικών."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "Ακύρωση"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
 msgstr "Εκκαθάριση τώρα"
 
@@ -2186,24 +2427,6 @@ msgid "Pages not found"
 msgstr "Σελίδες που δεν βρέθηκαν"
 
 #: src/admin/panels/VisitorsPanel.js
-msgid "Humans"
-msgstr "Άνθρωποι"
-
-#: src/admin/panels/VisitorsPanel.js
-msgid "Robots"
-msgstr "Ρομπότ"
-
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No visitor data available."
-msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα επισκεπτών."
-
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Loading visitors…"
-msgstr "Φόρτωση επισκεπτών…"
-
-#: src/admin/panels/VisitorsPanel.js
 msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
 msgstr "Τα ρομπότ εξαιρούνται από όλα τα στατιστικά. Αυτή η λίστα σας επιτρέπει μόνο να ελέγξετε τι φιλτραρίστηκε."
 
@@ -2214,6 +2437,14 @@ msgstr "Δεν εντοπίστηκε ρομπότ σε αυτήν την περ
 #: src/admin/panels/VisitorsPanel.js
 msgid "Loading robots…"
 msgstr "Φόρτωση ρομπότ…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "Άνθρωποι"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "Ρομπότ"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2396,13 +2627,6 @@ msgstr "Δεν υπάρχουν διαθέσιμοι παραπέμπτες."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Ταξινόμηση κατά"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Rows"
 msgstr "Γραμμές"
 
@@ -2557,51 +2781,3 @@ msgstr "Τρέχον %s"
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous %s"
 msgstr "Προηγούμενο %s"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "0s"
-msgstr "0δ"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Active time"
-msgstr "Ενεργός χρόνος"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Entry channel"
-msgstr "Σελίδες εισόδου"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Last activity"
-msgstr "Τελευταία δραστηριότητα"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Entry page"
-msgstr "Σελίδα εισόδου"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Private"
-msgstr "Ιδιωτικό"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Table: Robots"
-msgstr "Πίνακας: Ρομπότ"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Table: Visitors"
-msgstr "Πίνακας: Επισκέπτες"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No visitor with advanced data for this period. Private visitors are hidden."
-msgstr "Κανένας επισκέπτης με προηγμένα δεδομένα σε αυτήν την περίοδο. Οι ιδιωτικοί επισκέπτες είναι κρυφοί."
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Hide private visitors"
-msgstr "Απόκρυψη ιδιωτικών επισκεπτών"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Saved for your account"
-msgstr "Αποθηκεύτηκε για τον λογαριασμό σας"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Private visitors hidden"
-msgstr "Οι ιδιωτικοί επισκέπτες αποκρύπτονται"

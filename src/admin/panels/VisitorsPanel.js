@@ -2,9 +2,11 @@ import { TabPanel } from '@wordpress/components';
 import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
+import useAdminEndpoint from '../api/useAdminEndpoint';
 import BpaCard from '../components/BpaCard';
 import Notice from '../components/BrandNotice';
 import { ADMIN_CONFIG } from '../constants';
+import { formatNumber } from '../lib/formatters';
 import useVisitorsHidePrivatePreference from '../hooks/useVisitorsHidePrivatePreference';
 import { isAdvancedStatsEnabled } from '../lib/adminConstants';
 import { getRangeFromSelection } from '../lib/date';
@@ -28,13 +30,37 @@ const getInitialTabName = () => {
 	return SUPPORTED_TABS.includes( requestedTab ) ? requestedTab : HUMANS_TAB;
 };
 
-const visitorsTabs = [
-	{ name: HUMANS_TAB, title: __( 'Humans', 'bimbeau-privacy-analytics' ) },
-	{ name: ROBOTS_TAB, title: __( 'Robots', 'bimbeau-privacy-analytics' ) },
-];
-
 const HUMAN_REQUEST_PARAMS = { visitor_type: 'human' };
 const BOT_REQUEST_PARAMS = { visitor_type: 'bot' };
+
+/**
+ * Number of rows of a visitors list for the range (one-row request).
+ *
+ * @param {Object} range         Reporting range.
+ * @param {Object} requestParams `visitor_type` parameter.
+ * @return {number|null} Total, or null while unknown.
+ */
+const useVisitorsTotal = ( range, requestParams ) => {
+	const { data } = useAdminEndpoint(
+		'/visitors',
+		{ ...range, ...requestParams, page: 1, per_page: 1 },
+		{ namespace: ADMIN_CONFIG?.settings?.restNamespace }
+	);
+	const total = Number( data?.pagination?.totalItems );
+
+	return Number.isFinite( total ) ? total : null;
+};
+
+const TabTitle = ( { label, count } ) => (
+	<span className="bbpa-visitors-tab-title">
+		{ label }
+		{ count !== null ? (
+			<span className="bbpa-visitors-tab-title__count">
+				{ formatNumber( count ) }
+			</span>
+		) : null }
+	</span>
+);
 
 const HumanVisitorsTab = ( { range } ) => {
 	const [ hidePrivateVisitors, setHidePrivateVisitors ] =
@@ -46,9 +72,9 @@ const HumanVisitorsTab = ( { range } ) => {
 
 	return (
 		<VisitorsTableCard
+			withCard={ false }
 			range={ range }
 			requestParams={ HUMAN_REQUEST_PARAMS }
-			title={ __( 'Humans', 'bimbeau-privacy-analytics' ) }
 			emptyLabel={ __( 'No visitor data available.', 'bimbeau-privacy-analytics' ) }
 			loadingLabel={ __( 'Loading visitors…', 'bimbeau-privacy-analytics' ) }
 			hidePrivateVisitors={ canHidePrivateVisitors && hidePrivateVisitors }
@@ -70,9 +96,9 @@ const RobotsTab = ( { range } ) => (
 			</p>
 		</Notice>
 		<VisitorsTableCard
+			withCard={ false }
 			range={ range }
 			requestParams={ BOT_REQUEST_PARAMS }
-			title={ __( 'Robots', 'bimbeau-privacy-analytics' ) }
 			emptyLabel={ __( 'No robot detected for this period.', 'bimbeau-privacy-analytics' ) }
 			loadingLabel={ __( 'Loading robots…', 'bimbeau-privacy-analytics' ) }
 		/>
@@ -84,11 +110,34 @@ const VisitorsPanel = ( { rangeSelection } ) => {
 		() => getRangeFromSelection( rangeSelection ),
 		[ rangeSelection ]
 	);
+	const humansTotal = useVisitorsTotal( range, HUMAN_REQUEST_PARAMS );
+	const robotsTotal = useVisitorsTotal( range, BOT_REQUEST_PARAMS );
+	const visitorsTabs = [
+		{
+			name: HUMANS_TAB,
+			title: (
+				<TabTitle
+					label={ __( 'Humans', 'bimbeau-privacy-analytics' ) }
+					count={ humansTotal }
+				/>
+			),
+		},
+		{
+			name: ROBOTS_TAB,
+			title: (
+				<TabTitle
+					label={ __( 'Robots', 'bimbeau-privacy-analytics' ) }
+					count={ robotsTotal }
+				/>
+			),
+		},
+	];
 
 	return (
 		<div className="bbpa-report-panel">
 			<BpaCard
-				className="bbpa-visitors-listings-card"
+				className="bbpa-visitors-listings-card bbpa-dataviews-card"
+				bodyClassName="bbpa-listing-region bbpa-dataviews"
 				title={ __( 'Visitors', 'bimbeau-privacy-analytics' ) }
 			>
 				<TabPanel

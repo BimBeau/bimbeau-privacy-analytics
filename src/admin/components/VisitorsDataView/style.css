@@ -1,0 +1,53 @@
+/* Visitors list in the WordPress DataViews layout. */
+.bbpa-visitors-dataview .dataviews-wrapper {
+  background: #fff;
+}
+
+.bbpa-visitors-dataview__empty {
+  margin: 0;
+  padding: 24px;
+  color: #757575;
+  text-align: center;
+}
+
+.bbpa-visitors-dataview__meta {
+  margin: 0;
+  padding: 0 24px 16px;
+  color: #757575;
+  font-size: 13px;
+}
+
+.bbpa-visitors-dataview .bbpa-private-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Visitors card: tabs with counts above the list, one card for both lists. */
+.bbpa-visitors-listings-card .bbpa-visitors-tabs .components-tab-panel__tabs {
+  padding: 0 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.bbpa-visitors-tab-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bbpa-visitors-tab-title__count {
+  color: #757575;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.bbpa-visitors-listings-card .bbpa-visitors-tab-content > .bbpa-brand-notice {
+  margin: 16px 24px 0;
+}
+
+/* Visitor hashes: monospace text without the WordPress admin code background. */
+.bbpa-visitors-dataview code {
+  padding: 0;
+  background: none;
+  font-size: 12px;
+}

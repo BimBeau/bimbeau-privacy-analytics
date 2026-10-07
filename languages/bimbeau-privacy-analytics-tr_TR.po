@@ -162,11 +162,11 @@ msgstr "Ziyaretler"
 msgid "Robots excluded"
 msgstr "Hariç tutulan robotlar"
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/SettingsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: admin/dashboard-widget.php src/admin/components/VisitorsDataView/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/SettingsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReportTableCard/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Page views"
 msgstr "Sayfa görüntülemeleri"
 
@@ -279,18 +279,18 @@ msgid "GeoIP database is not available yet."
 msgstr "GeoIP veritabanı henüz mevcut değil."
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/lib/deviceClassLabel.js src/admin/panels/RealtimePanel.js
 #: src/admin/panels/SearchTermsPanel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown"
 msgstr "Bilinmiyor"
 
 #: includes/rest/class-bbpa-admin-controller.php
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/components/WorldMap/index.js src/admin/lib/countryNames.js
 #: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Unknown country"
 msgstr "Bilinmeyen ülke"
 
@@ -673,6 +673,7 @@ msgid "Loading: %s"
 msgstr "Yükleniyor: %s"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Search"
 msgstr "Ara"
@@ -693,6 +694,7 @@ msgstr "Filtreyi kaldır: %s"
 
 #: src/admin/components/DataViewsFrame/index.js
 #: src/admin/components/WorldMap/index.js
+#: src/admin/lib/dataviewsTranslations.js
 msgid "Reset"
 msgstr "Sıfırla"
 
@@ -702,16 +704,18 @@ msgid "Page <CurrentPage /> of %s"
 msgstr "Sayfa <CurrentPage /> / %s"
 
 #: src/admin/components/DataViewsFrame/index.js
-#: src/admin/panels/RealtimePanel.js
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/RealtimePanel.js
 msgid "Current page"
 msgstr "Geçerli sayfa"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Previous page"
 msgstr "Önceki sayfa"
 
 #: src/admin/components/DataViewsFrame/index.js
+#: src/admin/lib/dataviewsTranslations.js
 #: src/admin/widgets/ReportTableCard/index.js
 msgid "Next page"
 msgstr "Sonraki sayfa"
@@ -749,9 +753,9 @@ msgid "Technical state does not prove consent collection validity."
 msgstr "Teknik durum, onay toplamanın geçerliliğini kanıtlamaz."
 
 #: src/admin/components/ReferrerLabel/index.js
+#: src/admin/components/VisitorsDataView/index.js
 #: src/admin/free-stubs/OverviewPanel.js src/admin/lib/channelLabels.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Direct"
 msgstr "Doğrudan"
 
@@ -930,6 +934,113 @@ msgstr "Coğrafi konum olmadan devam et"
 msgid "Return to the download"
 msgstr "İndirmeye geri dön"
 
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
+msgid "No available"
+msgstr "Kullanılabilir değil"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Private"
+msgstr "Özel"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "0s"
+msgstr "0sn"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor ID hash"
+msgstr "Ziyaretçi kimliği karması"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Connection time"
+msgstr "Bağlantı zamanı"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Device"
+msgstr "Cihaz"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
+msgstr "Son etkinlik"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Entry page"
+msgstr "Giriş sayfası"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
+msgid "Country"
+msgstr "Ülke"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "City"
+msgstr "Şehir"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Active time"
+msgstr "Etkin süre"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/free-stubs/OverviewPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Referrer"
+msgstr "Yönlendiren"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Entry channel"
+msgstr "Giriş sayfaları"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Operating system"
+msgstr "İşletim sistemi"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Browser"
+msgstr "Tarayıcı"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Browser version"
+msgstr "Tarayıcı sürümü"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Resolution"
+msgstr "Çözünürlük"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Data"
+msgstr "Veriler"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Consented visitors"
+msgstr "Onay veren ziyaretçiler"
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "No visitor data available."
+msgstr "Ziyaretçi verisi mevcut değil."
+
+#: src/admin/components/VisitorsDataView/index.js
+#: src/admin/panels/VisitorsPanel.js
+msgid "Loading visitors…"
+msgstr "Ziyaretçiler yükleniyor…"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "No visitor with advanced data for this period. Private visitors are hidden."
+msgstr "Bu dönemde gelişmiş verisi olan ziyaretçi yok. Özel ziyaretçiler gizlendi."
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Search visitors"
+msgstr "Ziyaretçilerde ara"
+
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
 msgstr "Haritada yakınlaştır"
@@ -1006,12 +1117,6 @@ msgstr "Popüler sayfa mevcut değil."
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "Top referrers"
 msgstr "En çok yönlendirenler"
-
-#: src/admin/free-stubs/OverviewPanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Referrer"
-msgstr "Yönlendiren"
 
 #: src/admin/free-stubs/OverviewPanel.js
 msgid "No referrers available."
@@ -1124,6 +1229,198 @@ msgstr "Yapay zekâ asistanları"
 #: src/admin/lib/channelLabels.js
 msgid "Other"
 msgstr "Diğer"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Add filter"
+msgstr "Filtre ekle"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Actions"
+msgstr "Eylemler"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Appearance"
+msgstr "Görünüm"
+
+#: src/admin/lib/dataviewsTranslations.js src/admin/panels/SettingsPanel.js
+msgid "Cancel"
+msgstr "İptal"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Conditions"
+msgstr "Koşullar"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Density"
+msgstr "Yoğunluk"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Comfortable"
+msgstr "Rahat"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Balanced"
+msgstr "Dengeli"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "Density option for DataView layout"
+msgid "Compact"
+msgstr "Sıkı"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Deselect all"
+msgstr "Tüm seçimleri kaldır"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "verb"
+msgid "Filter"
+msgstr "Filtrele"
+
+#. translators: %1$s: field label of a list filter.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Filter by: %1$s"
+msgstr "Filtreleme ölçütü: %1$s"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Hide column"
+msgstr "Sütunu gizle"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Insert left"
+msgstr "Sola ekle"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Insert right"
+msgstr "Sağa ekle"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Is"
+msgstr "Eşittir"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Is not"
+msgstr "Eşit değildir"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Items per page"
+msgstr "Sayfa başına öğe"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Layout"
+msgstr "Düzen"
+
+#. translators: %1$s: field label of a list filter.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "List of: %1$s"
+msgstr "Liste: %1$s"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Move left"
+msgstr "Sola taşı"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Move right"
+msgstr "Sağa taşı"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No elements found"
+msgstr "Öğe bulunamadı"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No results"
+msgstr "Sonuç yok"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "No results found"
+msgstr "Sonuç bulunamadı"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Order"
+msgstr "Sıra"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: src/admin/lib/dataviewsTranslations.js src/admin/lib/paginationLabels.js
+msgid "Page %1$d of %2$d"
+msgstr "Sayfa %1$d / %2$d"
+
+#. translators: 1: page selector, 2: total number of pages. Keep the <div> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "paging"
+msgid "<div>Page</div>%1$s<div>of %2$d</div>"
+msgstr "<div>Sayfa</div>%1$s<div>/ %2$d</div>"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Properties"
+msgstr "Özellikler"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Remove"
+msgstr "Kaldır"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Reset view"
+msgstr "Görünümü sıfırla"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Search items"
+msgstr "Öğelerde ara"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Select all"
+msgstr "Tümünü seç"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Sort ascending"
+msgstr "Artan sırala"
+
+#: src/admin/lib/dataviewsTranslations.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+#: src/admin/widgets/ReportTableCard/index.js
+msgid "Sort by"
+msgstr "Sıralama ölçütü"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Sort descending"
+msgstr "Azalan sırala"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgctxt "View is used as a noun"
+msgid "View options"
+msgstr "Görünüm seçenekleri"
+
+#: src/admin/lib/dataviewsTranslations.js
+msgid "(no title)"
+msgstr "(başlıksız)"
+
+#. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "<Name>%1$s is: </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s: </Name><Value>%2$s</Value>"
+
+#. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "<Name>%1$s is not: </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s değil: </Name><Value>%2$s</Value>"
+
+#. translators: %d: number of list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%d Item"
+msgid_plural "%d Items"
+msgstr[0] "%d öğe"
+
+#. translators: 1: items shown, 2: total number of list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%1$d of %2$d Item"
+msgid_plural "%1$d of %2$d Items"
+msgstr[0] "%1$d / %2$d öğe"
+
+#. translators: %d: number of selected list items.
+#: src/admin/lib/dataviewsTranslations.js
+msgid "%d Item selected"
+msgid_plural "%d Items selected"
+msgstr[0] "%d öğe seçildi"
 
 #: src/admin/lib/deviceClassLabel.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -1244,16 +1541,6 @@ msgstr "Yaklaşık şehir"
 msgid "Approx. %d km"
 msgstr "Yaklaşık %d km"
 
-#: src/admin/lib/locationLabel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No available"
-msgstr "Kullanılabilir değil"
-
-#. translators: 1: current page number, 2: total number of pages.
-#: src/admin/lib/paginationLabels.js
-msgid "Page %1$d of %2$d"
-msgstr "Sayfa %1$d / %2$d"
-
 #. translators: %s: number of private visitors hidden from the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s private hidden"
@@ -1323,11 +1610,6 @@ msgstr "%s bayrağı"
 msgid "Top countries"
 msgstr "Popüler ülkeler"
 
-#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Country"
-msgstr "Ülke"
-
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
 msgstr "Günlük ziyaretçiler"
@@ -1343,46 +1625,6 @@ msgstr "Ziyaretçi kaynağı, yerel GeoIP veritabanı eklentinin coğrafi konum 
 #: src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Bilinmeyen sayfa"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Visitor ID hash"
-msgstr "Ziyaretçi kimliği karması"
-
-#: src/admin/panels/RealtimePanel.js
-msgid "City"
-msgstr "Şehir"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Connection time"
-msgstr "Bağlantı zamanı"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Operating system"
-msgstr "İşletim sistemi"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser"
-msgstr "Tarayıcı"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Browser version"
-msgstr "Tarayıcı sürümü"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Device"
-msgstr "Cihaz"
-
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Resolution"
-msgstr "Çözünürlük"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
@@ -2069,10 +2311,6 @@ msgid "I confirm that I want to permanently purge all analytics data."
 msgstr "Tüm analiz verilerini kalıcı olarak temizlemek istediğimi onaylıyorum."
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Cancel"
-msgstr "İptal"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
 msgstr "Şimdi temizle"
 
@@ -2181,24 +2419,6 @@ msgid "Pages not found"
 msgstr "Bulunamayan sayfalar"
 
 #: src/admin/panels/VisitorsPanel.js
-msgid "Humans"
-msgstr "İnsanlar"
-
-#: src/admin/panels/VisitorsPanel.js
-msgid "Robots"
-msgstr "Botlar"
-
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No visitor data available."
-msgstr "Ziyaretçi verisi mevcut değil."
-
-#: src/admin/panels/VisitorsPanel.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Loading visitors…"
-msgstr "Ziyaretçiler yükleniyor…"
-
-#: src/admin/panels/VisitorsPanel.js
 msgid "Robots are excluded from all statistics. This list only lets you check what was filtered."
 msgstr "Botlar tüm istatistiklerin dışında tutulur. Bu liste yalnızca neyin filtrelendiğini kontrol etmenizi sağlar."
 
@@ -2209,6 +2429,14 @@ msgstr "Bu dönemde bot algılanmadı."
 #: src/admin/panels/VisitorsPanel.js
 msgid "Loading robots…"
 msgstr "Botlar yükleniyor…"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Humans"
+msgstr "İnsanlar"
+
+#: src/admin/panels/VisitorsPanel.js
+msgid "Robots"
+msgstr "Botlar"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Smartphone"
@@ -2389,13 +2617,6 @@ msgstr "Yönlendiren mevcut değil."
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 #: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Sort by"
-msgstr "Sıralama ölçütü"
-
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-#: src/admin/widgets/ReportTableCard/index.js
-#: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Rows"
 msgstr "Satırlar"
 
@@ -2549,51 +2770,3 @@ msgstr "Geçerli %s"
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous %s"
 msgstr "Önceki %s"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "0s"
-msgstr "0sn"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Active time"
-msgstr "Etkin süre"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Entry channel"
-msgstr "Giriş sayfaları"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Last activity"
-msgstr "Son etkinlik"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Entry page"
-msgstr "Giriş sayfası"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Private"
-msgstr "Özel"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Table: Robots"
-msgstr "Tablo: Botlar"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Table: Visitors"
-msgstr "Tablo: Ziyaretçiler"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "No visitor with advanced data for this period. Private visitors are hidden."
-msgstr "Bu dönemde gelişmiş verisi olan ziyaretçi yok. Özel ziyaretçiler gizlendi."
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Hide private visitors"
-msgstr "Özel ziyaretçileri gizle"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Saved for your account"
-msgstr "Hesabınız için kaydedildi"
-
-#: src/admin/widgets/VisitorsTableCard/index.js
-msgid "Private visitors hidden"
-msgstr "Özel ziyaretçiler gizlendi"

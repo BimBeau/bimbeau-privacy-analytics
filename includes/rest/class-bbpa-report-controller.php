@@ -45,6 +45,27 @@ class BBPA_Report_Controller {
     private const VISITORS_DATA_SCOPES = ['all', 'enriched'];
 
     /**
+     * Device classes accepted by the Visitors list filter (robots have their own visitor type).
+     */
+    private const VISITORS_DEVICE_FILTERS = ['desktop', 'mobile', 'tablet'];
+
+    /**
+     * Channel keys accepted by the Visitors list filter, with the labels stored by older versions.
+     */
+    private const VISITORS_CHANNEL_FILTERS = [
+        'direct' => ['Direct'],
+        'organic-search' => ['Organic Search'],
+        'paid-search' => ['Paid Search'],
+        'referrals' => ['Referrals', 'Referral', 'Referrer'],
+        'paid-social' => ['Paid Social'],
+        'organic-social' => ['Organic Social'],
+        'email' => ['Email'],
+        'other-campaigns' => ['Other Campaigns'],
+        'ai-assistants' => ['AI Assistants'],
+        'other' => ['Other'],
+    ];
+
+    /**
      * Remaining page-title lookups for the page-path report being built; null means unlimited.
      */
     private ?int $page_title_lookups_remaining = null;
@@ -282,6 +303,27 @@ class BBPA_Report_Controller {
                             'type' => 'string',
                             'required' => false,
                             'enum' => self::VISITORS_DATA_SCOPES,
+                            'validate_callback' => 'rest_validate_request_arg',
+                            'sanitize_callback' => 'sanitize_key',
+                        ],
+                        // Optional list filters: two-letter country code, device class and channel key.
+                        'country_code' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'pattern' => '^[A-Za-z]{2}$',
+                            'validate_callback' => 'rest_validate_request_arg',
+                        ],
+                        'device_class' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'enum' => self::VISITORS_DEVICE_FILTERS,
+                            'validate_callback' => 'rest_validate_request_arg',
+                            'sanitize_callback' => 'sanitize_key',
+                        ],
+                        'source_category' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'enum' => array_keys(self::VISITORS_CHANNEL_FILTERS),
                             'validate_callback' => 'rest_validate_request_arg',
                             'sanitize_callback' => 'sanitize_key',
                         ],
@@ -1078,6 +1120,11 @@ class BBPA_Report_Controller {
             // Added only for the filtered scope, so the default cache key is unchanged.
             $cache_key_params['dataScope'] = $data_scope;
         }
+        $list_filters = $visitor_type === 'bot' ? [] : $this->get_visitors_list_filters($request);
+        if ($list_filters !== []) {
+            // Added only when a filter is active, so the default cache key is unchanged.
+            $cache_key_params['filters'] = $list_filters;
+        }
         $cache_key = $this->get_cache_key('visitors', $cache_key_params);
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
@@ -1098,6 +1145,23 @@ class BBPA_Report_Controller {
         } else {
             $where[] = 'device_class <> %s';
             $params[] = 'bot';
+        }
+
+        if (isset($list_filters['country_code'])) {
+            $where[] = 'country_code = %s';
+            $params[] = $list_filters['country_code'];
+        }
+        if (isset($list_filters['device_class'])) {
+            $where[] = 'device_class = %s';
+            $params[] = $list_filters['device_class'];
+        }
+        if (isset($list_filters['source_category']) && $this->table_has_column($table, 'source_category')) {
+            $channel_values = array_merge(
+                [$list_filters['source_category']],
+                self::VISITORS_CHANNEL_FILTERS[$list_filters['source_category']]
+            );
+            $where[] = 'source_category IN (' . implode(', ', array_fill(0, count($channel_values), '%s')) . ')';
+            $params = array_merge($params, $channel_values);
         }
 
         if ($search_term !== '') {
@@ -1225,6 +1289,34 @@ class BBPA_Report_Controller {
         );
 
         return new WP_REST_Response($payload, 200);
+    }
+
+    /**
+     * Active filters of the Visitors list: country code, device class and channel key.
+     *
+     * Values outside the accepted lists are ignored, so an unknown value never empties the list.
+     *
+     * @return array<string, string>
+     */
+    private function get_visitors_list_filters(WP_REST_Request $request): array {
+        $filters = [];
+
+        $country_code = strtoupper(sanitize_text_field((string) $request->get_param('country_code')));
+        if (preg_match('/^[A-Z]{2}$/', $country_code) === 1) {
+            $filters['country_code'] = $country_code;
+        }
+
+        $device_class = sanitize_key((string) $request->get_param('device_class'));
+        if (in_array($device_class, self::VISITORS_DEVICE_FILTERS, true)) {
+            $filters['device_class'] = $device_class;
+        }
+
+        $source_category = sanitize_key((string) $request->get_param('source_category'));
+        if (isset(self::VISITORS_CHANNEL_FILTERS[$source_category])) {
+            $filters['source_category'] = $source_category;
+        }
+
+        return $filters;
     }
 
     /**
