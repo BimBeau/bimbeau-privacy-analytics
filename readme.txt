@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.64.2
+Stable tag: 8.65.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.64.2 =
-* [Fix] Settings: the data icons of the Tracking and privacy tab (page views, device type, reliable counting, interactions) are back to their small size instead of filling their pill.
+= 8.65.0 =
+* [Feature] Email summaries: the send time can now be expressed in UTC instead of the site time, so the summary leaves at the same moment all year round, whatever the daylight saving time changes. The default stays the site time, so existing schedules do not change.
