@@ -963,6 +963,7 @@
 }
 
 .bbpa-report-export-action__menu {
+  width: max-content;
   display: grid;
   gap: var(--bbpa-gap-xs);
   padding: var(--bbpa-gap-sm);
@@ -979,6 +980,8 @@
 .bbpa-report-export-action__control.components-button {
   justify-content: flex-start;
   width: 100%;
+  /* "Export as CSV" and the other formats stay on one line: the menu takes their width. */
+  white-space: nowrap;
 }
 
 .bbpa-report-export-action__upgrade-link {

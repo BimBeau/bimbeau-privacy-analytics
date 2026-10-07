@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.62.5
+Stable tag: 8.62.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,6 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.62.5 =
-* [Fix] REST API: requests authenticated with a WordPress application password can read the reports and use the settings, events and funnels routes, as the WordPress API allows.
-* [Fix] Pages: titles with an apostrophe or an ampersand display as written, without codes such as &rsquo;.
+= 8.62.6 =
+* [Fix] Export: the export menu shows "Export as CSV", "JSON" and "Excel" on one line each.
