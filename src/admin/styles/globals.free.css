@@ -118,8 +118,15 @@
 .bbpa-admin-app .bbpa-admin-app__title-link,
 .bbpa-admin-app .bbpa-admin-app__title-link:visited,
 .bbpa-admin-app .bbpa-admin-app__title-link:hover,
-.bbpa-admin-app .bbpa-admin-app__title-link:focus {
-  color: var(--color-1);
+.bbpa-admin-app .bbpa-admin-app__title-link:focus,
+.bbpa-admin-app .bbpa-admin-app__title-link:focus-visible,
+.bbpa-admin-app .bbpa-admin-app__title-link:active,
+.bbpa-admin-app .bbpa-admin-app__title-link .bbpa-admin-app__brand-title {
+  /*
+   * The title stays dark in every state and admin color scheme (--color-1 follows the scheme and
+   * WordPress link styles can color it): it still links to the dashboard.
+   */
+  color: #1e1e1e !important;
   text-decoration: none;
   font-size: 22px;
   font-weight: 600;
