@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.65.1
+Stable tag: 8.65.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.65.1 =
-* [Fix] Lists: the columns moved left or right, hidden or shown again are now kept for your account, so every list opens with the columns you chose instead of the default ones.
+= 8.65.2 =
+* [Fix] Email summaries settings: the Daily / Weekly / Monthly selector no longer squeezes the longest label against the selected option.
