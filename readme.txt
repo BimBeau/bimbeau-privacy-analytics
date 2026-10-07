@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.58.0
+Stable tag: 8.58.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.58.0 =
-* [Feature] Reports: the Pages, Referring sites, Acquisition, Search terms, Geolocation and triggered events lists take the look of the WordPress lists, with the search at the top, a View options button for sorting, filters, display and rows, removable filter chips, the export button in the toolbar and a page selector.
+= 8.58.1 =
+* [Fix] Report lists: the search, View options, export button, filter chips, table and pagination of the lists take their intended compact layout again, instead of stacking full width since 8.57.0.

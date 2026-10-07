@@ -10,7 +10,6 @@ import { chevronLeft, chevronRight, closeSmall, cog } from '@wordpress/icons';
 
 import { formatItemCount } from '../../lib/paginationLabels';
 
-import './styles.css';
 
 /**
  * List frame in the look of the WordPress DataViews lists (Pages, Templates): toolbar with search, view options
