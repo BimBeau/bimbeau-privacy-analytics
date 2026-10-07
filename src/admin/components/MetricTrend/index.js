@@ -1,7 +1,7 @@
 import FeatureIcon from '../icons/FeatureIcon';
 import {
 	calculateChangePercent,
-	formatChangePercent,
+	formatTrendPercent,
 } from '../../lib/formatters';
 
 /**
@@ -13,7 +13,7 @@ import {
  */
 const MetricTrend = ( { value, previousValue } ) => {
 	const change = calculateChangePercent( Number( value ), previousValue );
-	const changeLabel = formatChangePercent( change );
+	const changeLabel = formatTrendPercent( change );
 
 	if ( changeLabel === null ) {
 		return null;

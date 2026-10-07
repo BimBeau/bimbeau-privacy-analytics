@@ -18,6 +18,8 @@ import {
 	LuTimer,
 	LuTrendingDown,
 	LuTrendingUp,
+	LuInfo,
+	LuSend,
 } from 'react-icons/lu';
 
 const LucideDownloadIcon = ( { className, size } ) => (
@@ -62,6 +64,8 @@ const FEATURE_ICON_MAP = {
 	chevronRight: LuChevronRight,
 	trendingUp: LuTrendingUp,
 	trendingDown: LuTrendingDown,
+	info: LuInfo,
+	send: LuSend,
 };
 
 const FeatureIcon = ( { name, className, size = 18 } ) => {

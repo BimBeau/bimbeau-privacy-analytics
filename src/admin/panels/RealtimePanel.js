@@ -465,7 +465,7 @@ const REALTIME_VISITS_DEFAULT_VIEW = {
 		'device',
 		'resolution',
 	],
-	layout: {},
+	layout: { styles: { connection_time: { align: 'start' } } },
 };
 
 // Distinct values of a field among the active visits, as DataViews filter elements.

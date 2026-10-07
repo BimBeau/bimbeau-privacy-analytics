@@ -6,6 +6,7 @@ import { DataViews } from '@wordpress/dataviews';
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import BrandNotice from '../BrandNotice';
 import DataState from '../DataState';
+import FeatureIcon from '../icons/FeatureIcon';
 import MetricTrend from '../MetricTrend';
 import MiniSparkline from '../MiniSparkline';
 import PageTitle from '../PageTitle';
@@ -20,7 +21,7 @@ import {
 	normalizeBooleanSetting,
 } from '../../constants';
 import useSharedPageLabelDisplay from '../../hooks/useSharedPageLabelDisplay';
-import { decodeHtmlEntities } from '../../lib/formatters';
+import { decodeHtmlEntities, formatNumber } from '../../lib/formatters';
 import { DATAVIEWS_PER_PAGE_SIZES } from '../../lib/dataviewsConfig';
 import { getPreviousRange } from '../../lib/date';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
@@ -218,14 +219,16 @@ const ReportDataView = ( {
 			extraFieldIds: extraFields.map( ( field ) => field.id ),
 			extraMetricValueKey: resolvedExtraMetricKey,
 		} ),
+		// Numbers stay aligned to the start, under their header (mockups 0B, 2A); DataViews aligns
+		// number fields to the end unless told otherwise.
 		layout: {
 			styles: {
-				[ metricKey ]: { align: 'end' },
+				[ metricKey ]: { align: 'start' },
 				...Object.fromEntries(
-					extraFields.map( ( field ) => [ field.id, { align: 'end' } ] )
+					extraFields.map( ( field ) => [ field.id, { align: 'start' } ] )
 				),
 				...( resolvedExtraMetricKey
-					? { [ resolvedExtraMetricKey ]: { align: 'end' } }
+					? { [ resolvedExtraMetricKey ]: { align: 'start' } }
 					: {} ),
 			},
 		},
@@ -517,7 +520,7 @@ const ReportDataView = ( {
 					return (
 						<div className="bbpa-report-table__metric">
 							<span className="bbpa-report-table__metric-value">
-								{ value }
+								{ formatNumber( Number( value ) || 0 ) }
 							</span>
 							{ typeof renderMetricAccessory === 'function'
 								? renderMetricAccessory( row.item, row )
@@ -734,7 +737,8 @@ const ReportDataView = ( {
 			/>
 			{ footnote ? (
 				<p className="bbpa-report-table__footnote bbpa-report-dataview__footnote">
-					{ footnote }
+					<FeatureIcon name="info" size={ 16 } />
+					<span>{ footnote }</span>
 				</p>
 			) : null }
 		</div>

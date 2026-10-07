@@ -46,7 +46,7 @@ const DEFAULT_VIEW = {
 	sort: { field: 'visits', direction: 'desc' },
 	filters: [],
 	fields: [ 'referrer', 'channel', 'visits' ],
-	layout: { styles: { visits: { align: 'end' } } },
+	layout: { styles: { visits: { align: 'start' } } },
 };
 
 /**

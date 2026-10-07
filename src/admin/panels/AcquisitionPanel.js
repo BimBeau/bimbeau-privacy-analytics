@@ -52,13 +52,14 @@ const DEFAULT_VIEW = {
 	filters: [],
 	fields: [ 'visits', 'share' ],
 	titleField: 'channel',
+	// Numbers aligned to the start, under their header (mockups).
 	layout: {
 		styles: {
-			visits: { align: 'end' },
-			share: { align: 'end' },
-			orders: { align: 'end' },
-			revenue: { align: 'end' },
-			conversion_rate: { align: 'end' },
+			visits: { align: 'start' },
+			share: { align: 'start' },
+			orders: { align: 'start' },
+			revenue: { align: 'start' },
+			conversion_rate: { align: 'start' },
 		},
 	},
 };

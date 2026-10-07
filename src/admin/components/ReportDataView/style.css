@@ -20,13 +20,9 @@
   text-align: start;
 }
 
-.bbpa-report-dataview .bbpa-report-dataview__footnote {
-  padding: 0 24px 16px;
-}
-
 /* Metric cells: value, trend and minichart on one line, aligned to the end of the column. */
 .bbpa-report-dataview .bbpa-report-table__metric {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .bbpa-report-dataview .bbpa-report-table__metric-header {
@@ -54,22 +50,58 @@
 }
 
 /*
- * Without a primary column, DataViews stretches the last column. Report lists stretch the label
- * column instead, so the metric columns stay next to their values.
+ * Mockup tokens (DataViews table): the label column in #1e1e1e/500, the main number in #1e1e1e,
+ * the other cells in the DataViews grey; numbers aligned to the start and the last column takes the
+ * free width (DataViews default).
  */
-.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-expand {
-  width: 1%;
+.bbpa-report-dataview .dataviews-view-table .bbpa-page-title,
+.bbpa-report-dataview .dataviews-view-table .bbpa-report-table__row-action.components-button.is-link {
+  color: #1e1e1e;
+  font-weight: 500;
 }
 
-.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-label,
-.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-page_title,
-.bbpa-report-dataview .dataviews-view-table col[class^="dataviews-view-table__col-"].dataviews-view-table__col-referrer {
-  width: auto;
+.bbpa-report-dataview .dataviews-view-table .bbpa-report-table__row--muted .bbpa-page-title {
+  color: #757575;
+  font-weight: 400;
 }
 
-/* DataViews caps cell contents at 80ch: end-aligned values would stop short of their header. */
-.bbpa-report-dataview tbody .dataviews-view-table__cell-content-wrapper.dataviews-view-table__cell-align-end {
-  max-width: none;
+.bbpa-report-dataview .bbpa-report-table__metric-value {
+  color: #1e1e1e;
+  font-variant-numeric: tabular-nums;
+}
+
+.bbpa-report-dataview .bbpa-report-dataview__footnote {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 24px;
+  border-top: 1px solid #f0f0f0;
+  color: #757575;
+  font-size: 12px;
+}
+
+.bbpa-report-dataview .bbpa-report-dataview__footnote svg {
+  flex: 0 0 auto;
+}
+
+/* Search field of the mockups: grey field without border. */
+.bbpa-report-dataview .dataviews-search .components-input-control__container,
+.bbpa-visitors-dataview .dataviews-search .components-input-control__container {
+  background: #f0f0f0;
+}
+
+.bbpa-report-dataview .dataviews-search .components-input-control__backdrop,
+.bbpa-visitors-dataview .dataviews-search .components-input-control__backdrop {
+  /* The backdrop border is set by the component styles (emotion): override it. */
+  border-color: transparent !important;
+}
+
+/* Column headers stay #1e1e1e (they are tertiary buttons, blue elsewhere in the plugin). */
+.bbpa-admin-app .components-button.dataviews-view-table-header-button.is-tertiary:not(.is-pressed):not(.is-destructive),
+.bbpa-admin-app .components-button.dataviews-view-table-header-button.is-tertiary:not(.is-pressed):not(.is-destructive):hover,
+.bbpa-admin-app .components-button.dataviews-view-table-header-button.is-tertiary:not(.is-pressed):not(.is-destructive):focus {
+  color: #1e1e1e;
 }
 
 /* Share column: a short bar and the percentage. */
@@ -81,10 +113,10 @@
 
 .bbpa-report-table__share-bar {
   display: inline-block;
-  width: 64px;
+  width: 120px;
   height: 6px;
   border-radius: 3px;
-  background: #f0f0f0;
+  background: #f0f2fa;
   overflow: hidden;
 }
 

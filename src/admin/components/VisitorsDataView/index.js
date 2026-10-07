@@ -487,7 +487,8 @@ const getDefaultView = ( { isBotList, showCity, hidePrivateVisitors } ) => ( {
 				'device',
 				'resolution',
 		  ],
-	layout: {},
+	// Numbers aligned to the start, under their header (mockups).
+	layout: { styles: { page_views: { align: 'start' } } },
 } );
 
 /**

@@ -127,6 +127,29 @@ export const calculateChangePercent = ( current, previous ) => {
 	return ( ( current - previous ) / previous ) * 100;
 };
 
+/**
+ * Change of a list row against the previous period, in the locale percent format: "+14 %" in
+ * French, "+14%" in English, grouped digits for large changes ("+4 000 %"), no compact suffix.
+ *
+ * @param {number|null} value Change in percent (14 for +14 %).
+ * @return {string|null} Formatted change, or null without a value.
+ */
+export const formatTrendPercent = ( value ) => {
+	if ( value === null || value === undefined ) {
+		return null;
+	}
+
+	const normalizedValue = Number( value );
+	const safeValue = Number.isFinite( normalizedValue ) ? normalizedValue : 0;
+
+	return getNumberFormatter( {
+		style: 'percent',
+		maximumFractionDigits: Math.abs( safeValue ) >= 100 ? 0 : 1,
+		minimumFractionDigits: 0,
+		signDisplay: 'exceptZero',
+	} ).format( safeValue / 100 );
+};
+
 export const formatChangePercent = ( value ) => {
 	if ( value === null || value === undefined ) {
 		return null;

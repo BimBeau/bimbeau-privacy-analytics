@@ -43,6 +43,20 @@
   color: var(--wp-components-color-accent-inverted, #fff);
 }
 
+/* Secondary and tertiary buttons: blue text, as in the mockups and WordPress (btn-s, btn-t). */
+.bbpa-admin-app .components-button.is-secondary:not(.is-pressed):not(.is-destructive),
+.bbpa-admin-app .components-button.is-secondary:not(.is-pressed):not(.is-destructive):visited,
+.bbpa-admin-app .components-button.is-secondary:not(.is-pressed):not(.is-destructive):hover,
+.bbpa-admin-app .components-button.is-secondary:not(.is-pressed):not(.is-destructive):focus,
+.bbpa-admin-app .components-button.is-secondary:not(.is-pressed):not(.is-destructive):focus-visible,
+.bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive),
+.bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive):visited,
+.bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive):hover,
+.bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive):focus,
+.bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive):focus-visible {
+  color: var(--color-3);
+}
+
 .bbpa-admin-app .components-button.is-primary {
   color: var(--wp-components-color-accent-inverted, #fff) !important;
 }
@@ -359,6 +373,10 @@
 
 .bbpa-admin-app .bbpa-settings-section__title {
   margin: 0 0 var(--bbpa-gap-sm);
+  /* Card title of the mockups (card-t): 14px, semibold. */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .bbpa-admin-app .bbpa-settings-section__title-row {
