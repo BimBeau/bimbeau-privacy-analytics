@@ -166,6 +166,13 @@ class BBPA_Report_Controller {
                             'validate_callback' => 'rest_validate_request_arg',
                             'sanitize_callback' => 'sanitize_key',
                         ],
+                        // Adds avg_time_on_page_ms to each row; off by default to keep the payload unchanged.
+                        'include_avg_time' => [
+                            'required' => false,
+                            'type' => 'boolean',
+                            'default' => false,
+                            'sanitize_callback' => 'rest_sanitize_boolean',
+                        ],
                     ]
                 ),
             ]
@@ -464,6 +471,7 @@ class BBPA_Report_Controller {
         $pagination = $this->normalize_pagination($request);
         $search_term = $this->get_search_term($request);
         $exclude_zero = rest_sanitize_boolean($request->get_param('exclude_zero'));
+        $include_avg_time = rest_sanitize_boolean($request->get_param('include_avg_time'));
         $sorting = $this->normalize_sorting(
             $request,
             [
@@ -482,6 +490,7 @@ class BBPA_Report_Controller {
                 'sorting' => $sorting,
                 'search' => $search_term,
                 'excludeZero' => $exclude_zero,
+                'avgTime' => $include_avg_time,
                 // Post type labels, the unresolved label and term names follow the request locale.
                 'locale' => determine_locale(),
             ]
@@ -513,16 +522,26 @@ class BBPA_Report_Controller {
         $page_groups = array_slice($groups, (int) $pagination['offset'], (int) $pagination['per_page']);
         $series_by_key = $this->get_top_content_views_series($page_groups, $report['stored_paths'], $range);
         $empty_series = array_fill(0, count($this->get_day_buckets($range['start'], $range['end'])), 0);
+        $average_times = $include_avg_time ? $this->get_top_content_average_times($page_groups, $range) : [];
+        $total_hits = (int) $report['total_hits'];
 
         $items = [];
         foreach ($page_groups as $group) {
-            $items[] = [
+            $item = [
                 'key' => (string) $group['key'],
                 'label' => (string) $group['label'],
                 'hits' => (int) $group['hits'],
                 'items_count' => count($group['posts']),
+                // Share of the content page views of the range; a post filed in several groups counts in each.
+                'share' => $total_hits > 0 ? round(((int) $group['hits'] / $total_hits) * 100, 1) : 0,
                 'views_series' => $series_by_key[(string) $group['key']] ?? $empty_series,
             ];
+            if ($include_avg_time) {
+                $average_time_ms = $average_times[(string) $group['key']] ?? 0;
+                $item['avg_time_on_page_ms'] = $average_time_ms;
+                $item['avg_time_on_page_seconds'] = $average_time_ms / 1000;
+            }
+            $items[] = $item;
         }
 
         $payload = [
@@ -557,7 +576,8 @@ class BBPA_Report_Controller {
      * @return array{
      *     groups: array<int, array{key: string, label: string, hits: int, posts: array<int, bool>, variants: array<string, bool>}>,
      *     unresolved: array{key: string, label: string, hits: int, posts: array<int, bool>, variants: array<string, bool>}|null,
-     *     stored_paths: array<int, string>
+     *     stored_paths: array<int, string>,
+     *     total_hits: int
      * }
      */
     private function build_top_content_groups(string $dimension, array $range): array {
@@ -633,6 +653,8 @@ class BBPA_Report_Controller {
         $not_found_paths = $this->get_not_found_page_paths_for_range($range);
         $groups = [];
         $unresolved = null;
+        // Page views of the content paths (404 paths left out), each path counted once.
+        $total_hits = 0;
         foreach ($paths as $merge_key => $path) {
             $post = $path['post_id'] > 0 ? get_post($path['post_id']) : null;
             $memberships = null;
@@ -644,6 +666,7 @@ class BBPA_Report_Controller {
                 // Tracked 404 paths are missing pages, not content.
                 continue;
             }
+            $total_hits += $path['hits'];
 
             if ($memberships === null) {
                 if ($unresolved === null) {
@@ -681,7 +704,71 @@ class BBPA_Report_Controller {
             'groups' => array_values($groups),
             'unresolved' => $unresolved,
             'stored_paths' => $stored_paths,
+            'total_hits' => $total_hits,
         ];
+    }
+
+    /**
+     * Average active time on the pages of each top-content group, like avg_time_on_page_ms of
+     * the top pages: active time over visits with time, summed over every stored path variant
+     * of the group's pages (bbpa_page_time_daily).
+     *
+     * @param array<int, array{key: string, variants: array<string, bool>}> $groups Groups of the returned page.
+     * @return array<string, int> Average milliseconds keyed by group key.
+     */
+    private function get_top_content_average_times(array $groups, array $range): array {
+        global $wpdb;
+
+        $lookup_paths = [];
+        foreach ($groups as $group) {
+            foreach (array_keys($group['variants'] ?? []) as $variant) {
+                if ((string) $variant !== '') {
+                    $lookup_paths[(string) $variant] = true;
+                }
+            }
+        }
+        if ($lookup_paths === []) {
+            return [];
+        }
+        $lookup_paths = array_map('strval', array_keys($lookup_paths));
+
+        $page_time_table = $this->get_allowed_table('page_time_daily');
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Allowlisted table name, placeholders built from the path count; the report payload is cached by the caller.
+        $rows = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT page_path, SUM(active_ms_total) AS total_active_time_ms, SUM(visits_with_time) AS visits_count
+                FROM {$page_time_table}
+                WHERE date_bucket BETWEEN %s AND %s
+                    AND page_path IN (" . $this->build_string_placeholders($lookup_paths) . ")
+                GROUP BY page_path",
+                array_merge([$range['start'], $range['end']], $lookup_paths)
+            ),
+            ARRAY_A
+        ) ?: [];
+        // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+        $totals_by_path = [];
+        foreach ($rows as $row) {
+            $totals_by_path[(string) ($row['page_path'] ?? '')] = [
+                (int) ($row['total_active_time_ms'] ?? 0),
+                (int) ($row['visits_count'] ?? 0),
+            ];
+        }
+
+        $averages = [];
+        foreach ($groups as $group) {
+            $active_ms = 0;
+            $visits = 0;
+            foreach (array_keys($group['variants'] ?? []) as $variant) {
+                if (isset($totals_by_path[(string) $variant])) {
+                    $active_ms += $totals_by_path[(string) $variant][0];
+                    $visits += $totals_by_path[(string) $variant][1];
+                }
+            }
+            $averages[(string) $group['key']] = $visits > 0 ? (int) floor($active_ms / $visits) : 0;
+        }
+
+        return $averages;
     }
 
     /**

@@ -162,7 +162,7 @@ const OverviewKpis = ( { range } ) => {
 					? sprintf(
 							/* translators: %s: number of robots detected in the selected period. */
 							__(
-								'Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics.',
+								'Human visitors only. The robots detected in this period (%s) are excluded from all statistics.',
 								'bimbeau-privacy-analytics'
 							),
 							formatNumber( robotsCount )

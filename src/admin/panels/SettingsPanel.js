@@ -2503,6 +2503,7 @@ const SettingsPanel = ({
                   </Card>
                 )}
                 <Button
+                  className="bbpa-settings__save"
                   variant="primary"
                   isBusy={isSaving}
                   disabled={
@@ -2510,9 +2511,8 @@ const SettingsPanel = ({
                     
                   }
                   onClick={onSave}
-                  aria-label={__("Save settings", "bimbeau-privacy-analytics")}
                 >
-                  {__("Save", "bimbeau-privacy-analytics")}
+                  {__("Save settings", "bimbeau-privacy-analytics")}
                 </Button>
                 {isPurgeOpen && (
                   <Modal

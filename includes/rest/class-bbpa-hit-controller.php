@@ -539,6 +539,8 @@ class BBPA_Hit_Controller {
             'operating_system' => '',
             'country_code' => '',
             'country' => '',
+            // Robot family name ("Googlebot"), stored on robot visitor rows only.
+            'bot_family' => $device_class === 'bot' ? bbpa_get_bot_family($user_agent) : '',
         ];
 
         $hit['granularity'] = $this->resolve_hit_granularity($request, $hit);

@@ -941,6 +941,14 @@ msgid "Device"
 msgstr "Enhet"
 
 #: src/admin/components/VisitorsDataView/index.js
+msgid "Robot"
+msgstr "Robot"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Unidentified robot"
+msgstr "Oidentifierad robot"
+
+#: src/admin/components/VisitorsDataView/index.js
 msgid "Last activity"
 msgstr "Senaste aktivitet"
 
@@ -2290,10 +2298,6 @@ msgid "Save settings"
 msgstr "Spara inställningar"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Save"
-msgstr "Spara"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Confirm data purge"
 msgstr "Bekräfta datarensning"
 
@@ -2364,6 +2368,14 @@ msgstr "Utgångar (ca)"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page."
 msgstr "Sidvisningar för adresser som inte motsvarar något publicerat inlägg eller någon publicerad sida, till exempel arkiv, sökresultat eller bloggens startsida."
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "Andel"
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Content viewed"
+msgstr "Visat innehåll"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
@@ -2547,8 +2559,8 @@ msgstr "Laddar KPI:er…"
 
 #. translators: %s: number of robots detected in the selected period.
 #: src/admin/widgets/OverviewKpis/index.js
-msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
-msgstr "Endast mänskliga besökare: rader med besöksaktivitet under den valda perioden. Robotar som upptäckts under perioden (%s) är undantagna från all statistik."
+msgid "Human visitors only. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "Endast mänskliga besökare. Robotar som upptäckts under perioden (%s) är undantagna från all statistik."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."

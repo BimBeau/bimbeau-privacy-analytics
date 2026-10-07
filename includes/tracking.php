@@ -652,6 +652,86 @@ function bbpa_is_bot_user_agent(string $user_agent): bool
 }
 
 /**
+ * Name of the robot family of a crawler User-Agent (for example "Googlebot" or "GPTBot"), or an empty
+ * string when the robot is not identified.
+ *
+ * Only this coarse name is stored, on the visitor row of the robot (`browser` column, robot rows only):
+ * the User-Agent itself is never kept.
+ */
+function bbpa_get_bot_family(string $user_agent): string
+{
+    $families = [
+        'Googlebot' => 'googlebot|google-inspectiontool|googleother|adsbot-google|mediapartners-google|apis-google|google-extended',
+        'Bingbot' => 'bingbot|bingpreview|msnbot|adidxbot',
+        'GPTBot' => 'gptbot',
+        'ChatGPT-User' => 'chatgpt-user',
+        'OAI-SearchBot' => 'oai-searchbot',
+        'ClaudeBot' => 'claudebot|claude-web|claude-user|claude-searchbot|anthropic-ai',
+        'PerplexityBot' => 'perplexitybot|perplexity-user',
+        'CCBot' => 'ccbot',
+        'Bytespider' => 'bytespider',
+        'Amazonbot' => 'amazonbot',
+        'Applebot' => 'applebot',
+        'YandexBot' => 'yandex(?:bot|images|metrika|accessibilitybot)',
+        'Baiduspider' => 'baiduspider',
+        'DuckDuckBot' => 'duckduckbot|duckassistbot',
+        'Qwantbot' => 'qwantbot|qwantify',
+        'PetalBot' => 'petalbot',
+        'SeznamBot' => 'seznambot',
+        'AhrefsBot' => 'ahrefsbot|ahrefssiteaudit',
+        'SemrushBot' => 'semrushbot|siteauditbot',
+        'MJ12bot' => 'mj12bot',
+        'DotBot' => 'dotbot',
+        'DataForSeoBot' => 'dataforseobot',
+        'Screaming Frog' => 'screaming frog',
+        'Meta' => 'facebookexternalhit|meta-externalagent|meta-externalfetcher|facebookbot',
+        'Twitterbot' => 'twitterbot',
+        'LinkedInBot' => 'linkedinbot',
+        'Slackbot' => 'slackbot|slack-imgproxy',
+        'Discordbot' => 'discordbot',
+        'TelegramBot' => 'telegrambot',
+        'WhatsApp' => 'whatsapp',
+        'Pinterestbot' => 'pinterestbot',
+        'Lighthouse' => 'lighthouse',
+        'GTmetrix' => 'gtmetrix',
+        'Pingdom' => 'pingdom',
+        'UptimeRobot' => 'uptimerobot',
+        'HeadlessChrome' => 'headlesschrome|headless',
+        'PhantomJS' => 'phantomjs',
+        'Python' => 'python-requests|python-urllib|aiohttp|httpx',
+        'Scrapy' => 'scrapy',
+        'curl' => 'curl\/',
+        'Wget' => 'wget\/',
+        'Go HTTP client' => 'go-http-client',
+        'Node.js' => 'node-fetch|axios\/|undici',
+        'OkHttp' => 'okhttp',
+        'Apache HttpClient' => 'apache-httpclient',
+        'WordPress' => 'wordpress\/',
+    ];
+
+    $family = '';
+    $user_agent = trim($user_agent);
+    if ($user_agent !== '') {
+        foreach ($families as $name => $pattern) {
+            if (preg_match('/' . $pattern . '/i', $user_agent) === 1) {
+                $family = $name;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Filter the robot family name stored for a crawler User-Agent.
+     *
+     * @param string $family     Name found by the built-in list, or an empty string.
+     * @param string $user_agent Request User-Agent (never stored).
+     */
+    $family = apply_filters('bbpa_bot_family', $family, $user_agent);
+
+    return is_string($family) ? substr(sanitize_text_field($family), 0, 64) : '';
+}
+
+/**
  * Classify a User-Agent as `bot`, `tablet`, `mobile` or `desktop` (`unknown` when it is empty).
  *
  * Used when a hit or an event signal carries no valid device class. The /hits route recognizes crawlers with

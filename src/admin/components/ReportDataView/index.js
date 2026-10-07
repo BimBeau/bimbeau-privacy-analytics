@@ -75,13 +75,19 @@ const withHelp = ( field, helpText ) =>
 /**
  * Server sort key of a DataViews sort field.
  *
- * @param {Object} view      DataViews view.
- * @param {string} metricKey Sort key of the metric.
+ * @param {Object}   view          DataViews view.
+ * @param {string}   metricKey     Sort key of the metric.
+ * @param {string[]} extraSortKeys Other fields the endpoint sorts by.
  * @return {{orderby: string, order: string}} Sort parameters.
  */
-export const getReportSortParams = ( view, metricKey ) => {
+export const getReportSortParams = ( view, metricKey, extraSortKeys = [] ) => {
 	const field = view?.sort?.field;
-	const orderby = [ LABEL_FIELD, PAGE_TITLE_FIELD, metricKey ].includes( field )
+	const orderby = [
+		LABEL_FIELD,
+		PAGE_TITLE_FIELD,
+		metricKey,
+		...extraSortKeys,
+	].includes( field )
 		? field
 		: metricKey;
 
@@ -117,6 +123,7 @@ const getVisibleFields = ( {
 	supportsPageLabelToggle,
 	pageLabelDisplay,
 	metricKey,
+	extraFieldIds = [],
 	extraMetricValueKey,
 } ) => {
 	const labelFields = ! supportsPageLabelToggle
@@ -126,6 +133,7 @@ const getVisibleFields = ( {
 	return [
 		...labelFields,
 		metricKey,
+		...extraFieldIds,
 		...( extraMetricValueKey ? [ extraMetricValueKey ] : [] ),
 	];
 };
@@ -173,6 +181,8 @@ const ReportDataView = ( {
 	maxDisplayedLabelCharacters = null,
 	getRowClassName,
 	footnote = '',
+	// More columns after the metric: [ { id, label, getValue( item ), render( item ), sortable } ].
+	extraFields = [],
 } ) => {
 	registerDataViewsTranslations();
 
@@ -190,11 +200,15 @@ const ReportDataView = ( {
 			supportsPageLabelToggle,
 			pageLabelDisplay,
 			metricKey,
+			extraFieldIds: extraFields.map( ( field ) => field.id ),
 			extraMetricValueKey: resolvedExtraMetricKey,
 		} ),
 		layout: {
 			styles: {
 				[ metricKey ]: { align: 'end' },
+				...Object.fromEntries(
+					extraFields.map( ( field ) => [ field.id, { align: 'end' } ] )
+				),
 				...( resolvedExtraMetricKey
 					? { [ resolvedExtraMetricKey ]: { align: 'end' } }
 					: {} ),
@@ -240,7 +254,11 @@ const ReportDataView = ( {
 	}, [ pageLabelDisplay, supportsPageLabelToggle ] );
 
 	const search = enableSearch ? String( view.search || '' ).trim() : '';
-	const sortParams = getReportSortParams( view, metricKey );
+	const sortParams = getReportSortParams(
+		view,
+		metricKey,
+		extraFields.filter( ( field ) => field.sortable ).map( ( field ) => field.id )
+	);
 	const listParams = {
 		...range,
 		...requestParams,
@@ -502,6 +520,17 @@ const ReportDataView = ( {
 			  )
 			: null;
 
+		const additionalFields = extraFields.map( ( field ) => ( {
+			id: field.id,
+			label: field.label,
+			getValue: ( { item: row } ) => field.getValue( row.item ),
+			render: ( { item: row } ) =>
+				field.render ? field.render( row.item ) : field.getValue( row.item ),
+			enableHiding: true,
+			enableSorting: Boolean( field.sortable ),
+			filterBy: false,
+		} ) );
+
 		const openField =
 			showOpenButton && typeof getRowHref === 'function'
 				? {
@@ -536,11 +565,13 @@ const ReportDataView = ( {
 			labelField,
 			...( supportsPageLabelToggle ? [ pageTitleField ] : [] ),
 			metricField,
+			...additionalFields,
 			...( extraField ? [ extraField ] : [] ),
 			...( openField ? [ openField ] : [] ),
 		];
 	}, [
 		comparisonValuesByKey,
+		extraFields,
 		extraMetricHelpText,
 		extraMetricLabel,
 		favicons,

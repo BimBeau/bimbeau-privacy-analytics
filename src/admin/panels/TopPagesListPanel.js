@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { ADMIN_CONFIG } from '../constants';
 import { isAdvancedStatsEnabled } from '../lib/adminConstants';
 import { getRangeFromSelection } from '../lib/date';
-import { formatDurationMetricValue } from '../lib/formatters';
+import { formatDurationMetricValue, formatNumber } from '../lib/formatters';
 import BpaCard from '../components/BpaCard';
 import ReportTableCard from '../widgets/ReportTableCard';
 import TimeseriesChart from '../widgets/TimeseriesChart';
@@ -144,6 +144,40 @@ const renderTopContentLabel = ( visibleLabel, item ) => {
 	);
 };
 
+const formatShare = ( value ) =>
+	`${ formatNumber( Number( value ) || 0, {
+		minimumFractionDigits: 1,
+		maximumFractionDigits: 1,
+	} ) } %`;
+
+// Share of the content page views and number of contents viewed, after Page views.
+const TOP_CONTENT_EXTRA_FIELDS = [
+	{
+		id: 'share',
+		label: __( 'Share', 'bimbeau-privacy-analytics' ),
+		getValue: ( item ) => Number( item?.share ) || 0,
+		render: ( item ) => (
+			<span className="bbpa-report-table__share">
+				<span className="bbpa-report-table__share-bar" aria-hidden="true">
+					<span
+						style={ {
+							width: `${ Math.min( 100, Math.max( 0, Number( item?.share ) || 0 ) ) }%`,
+						} }
+					/>
+				</span>
+				<span>{ formatShare( item?.share ) }</span>
+			</span>
+		),
+	},
+	{
+		id: 'items_count',
+		label: __( 'Content viewed', 'bimbeau-privacy-analytics' ),
+		getValue: ( item ) => Number( item?.items_count ) || 0,
+		render: ( item ) => formatNumber( Number( item?.items_count ) || 0 ),
+		sortable: true,
+	},
+];
+
 const TopContentPanel = ( {
 	range,
 	dimension,
@@ -159,7 +193,26 @@ const TopContentPanel = ( {
 		labelHeader={ labelHeader }
 		range={ range }
 		endpoint="/top-content"
-		requestParams={ { dimension } }
+		requestParams={ {
+			dimension,
+			include_avg_time: isAdvancedStatsEnabled( ADMIN_CONFIG?.settings ) ? 1 : 0,
+		} }
+		extraFields={ TOP_CONTENT_EXTRA_FIELDS }
+		extraMetricLabel={
+			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
+				? __( 'Avg. time on page', 'bimbeau-privacy-analytics' )
+				: ''
+		}
+		extraMetricValueKey={
+			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
+				? 'avg_time_on_page_ms'
+				: ''
+		}
+		formatExtraMetricValue={
+			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
+				? formatDurationMetricValue
+				: undefined
+		}
 		emptyLabel={ emptyLabel }
 		labelFallback="—"
 		supportsPageLabelToggle={ false }

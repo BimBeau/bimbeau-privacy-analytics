@@ -1,0 +1,13 @@
+/*
+ * Lucide icons (react-icons/lu) are stroke icons: WordPress fills the SVG of its buttons
+ * (.components-button svg { fill: currentColor }), which turns them into solid shapes.
+ */
+.components-button svg[stroke="currentColor"] {
+  fill: none;
+}
+
+/* Small icon buttons of a funnel step: 16px icons, as in the WordPress lists. */
+.bbpa-funnel-editor__step .components-button svg {
+  width: 16px;
+  height: 16px;
+}

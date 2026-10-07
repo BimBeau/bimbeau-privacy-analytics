@@ -228,7 +228,25 @@ export const getVisitorFields = ( {
 
 	if ( isBotList ) {
 		return withServerFilters( [
-			visitorField,
+			{
+				id: 'robot',
+				label: __( 'Robot', 'bimbeau-privacy-analytics' ),
+				// Robot rows carry the robot family name ("Googlebot") in `browser`.
+				getValue: ( { item } ) => item.browser || '',
+				render: ( { item } ) => (
+					<BrandCell
+						kind="device"
+						value="bot"
+						label={
+							item.browser ||
+							__( 'Unidentified robot', 'bimbeau-privacy-analytics' )
+						}
+					/>
+				),
+				enableHiding: false,
+				enableSorting: false,
+			},
+			{ ...visitorField, enableHiding: true },
 			firstViewField,
 			{
 				id: 'last_view',
@@ -452,9 +470,9 @@ const getDefaultView = ( { isBotList, showCity, hidePrivateVisitors } ) => ( {
 	filters: hidePrivateVisitors
 		? [ { field: 'data', operator: 'is', value: DATA_SCOPE_ENRICHED } ]
 		: [],
-	titleField: 'visitor',
+	titleField: isBotList ? 'robot' : 'visitor',
 	fields: isBotList
-		? [ 'first_view', 'last_view', 'page_views', 'entry_page', 'device' ]
+		? [ 'visitor', 'first_view', 'last_view', 'page_views', 'entry_page' ]
 		: [
 				'country',
 				...( showCity ? [ 'city' ] : [] ),

@@ -941,6 +941,14 @@ msgid "Device"
 msgstr "Appareil"
 
 #: src/admin/components/VisitorsDataView/index.js
+msgid "Robot"
+msgstr "Robot"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Unidentified robot"
+msgstr "Robot non identifié"
+
+#: src/admin/components/VisitorsDataView/index.js
 msgid "Last activity"
 msgstr "Dernière activité"
 
@@ -2290,10 +2298,6 @@ msgid "Save settings"
 msgstr "Enregistrer les réglages"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Save"
-msgstr "Enregistrer"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Confirm data purge"
 msgstr "Confirmer la purge des données"
 
@@ -2364,6 +2368,14 @@ msgstr "Sorties (approx.)"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page."
 msgstr "Pages vues des adresses qui ne correspondent à aucun article ni aucune page publiés, comme les archives, les résultats de recherche ou la page d’accueil du blog."
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "Part"
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Content viewed"
+msgstr "Contenus vus"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
@@ -2547,8 +2559,8 @@ msgstr "Chargement des KPI…"
 
 #. translators: %s: number of robots detected in the selected period.
 #: src/admin/widgets/OverviewKpis/index.js
-msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
-msgstr "Visiteurs humains uniquement : lignes d’activité des visiteurs sur la période sélectionnée. Les robots détectés sur cette période (%s) sont exclus de toutes les statistiques."
+msgid "Human visitors only. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "Visiteurs humains uniquement. Les robots détectés sur la période (%s) sont exclus de toutes les statistiques."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."

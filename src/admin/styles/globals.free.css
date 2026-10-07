@@ -430,13 +430,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* WordPress Badge look: square corners, sentence case. */
+  min-height: 24px;
   padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
   background: #f0f0f1;
   color: #1d2327;
-  text-transform: lowercase;
 }
 
 .bbpa-admin-app .bbpa-general-settings__status-pill--visible {
@@ -1736,4 +1738,10 @@ ul.striped > :nth-child(odd) {
   color: var(--bbpa-color-text-muted, #646970);
   font-size: 12px;
   line-height: 1.4;
+}
+
+.bbpa-admin-app .bbpa-settings-form .components-button.bbpa-settings__save {
+  /* Grid item: keep the button at its own width, at the start of the row. */
+  justify-self: start;
+  align-self: start;
 }

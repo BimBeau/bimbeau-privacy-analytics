@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.60.1
+Stable tag: 8.61.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,10 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.60.1 =
-* [Fix] Release: the package build checks the report lists as they now render, so version 8.60.0 and later can be published.
+= 8.61.0 =
+* [Feature] Pages report: the Content types, Categories and Authors tabs show each group's share of the page views, the number of contents viewed and, with advanced statistics, the average time on page.
+* [Feature] Visitors: the Robots list names each robot (Googlebot, GPTBot, ClaudeBot…) from its browser signature, without keeping the signature itself.
+* [Feature] Acquisition: with WooCommerce, a purchase journey card shows the visits of each step from product viewed to order placed.
+* [Change] Funnels: step bars use the admin colour, the funnel editor is a medium dialog with full-width step selectors and light outlined icons.
+* [Fix] Dashboard: the Visitors help no longer stretches over the admin menu.
+* [Change] Settings: compact "Save settings" button and status badges in the WordPress style.

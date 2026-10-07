@@ -193,6 +193,14 @@ function bbpa_write_visitor_hit(array $hit): array
         $data['screen_resolution'] = '';
     }
 
+    // Robot rows carry the robot family name ("Googlebot") in the browser column; never a User-Agent.
+    if ($data['device_class'] === 'bot' && isset($hit['bot_family']) && is_scalar($hit['bot_family'])) {
+        $bot_family = substr(sanitize_text_field((string) $hit['bot_family']), 0, 64);
+        if ($bot_family !== '') {
+            $data['browser'] = $bot_family;
+        }
+    }
+
 
     $result = $wpdb->query(
         $wpdb->prepare(

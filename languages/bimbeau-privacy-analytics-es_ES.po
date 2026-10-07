@@ -941,6 +941,14 @@ msgid "Device"
 msgstr "Dispositivo"
 
 #: src/admin/components/VisitorsDataView/index.js
+msgid "Robot"
+msgstr "Robot"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Unidentified robot"
+msgstr "Robot no identificado"
+
+#: src/admin/components/VisitorsDataView/index.js
 msgid "Last activity"
 msgstr "Última actividad"
 
@@ -2290,10 +2298,6 @@ msgid "Save settings"
 msgstr "Guardar ajustes"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Save"
-msgstr "Guardar"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Confirm data purge"
 msgstr "Confirmar purga de datos"
 
@@ -2364,6 +2368,14 @@ msgstr "Salidas (aprox.)"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page."
 msgstr "Páginas vistas de direcciones que no corresponden a ninguna entrada ni página publicada, como archivos, resultados de búsqueda o la página de inicio del blog."
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "Cuota"
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Content viewed"
+msgstr "Contenidos vistos"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
@@ -2547,8 +2559,8 @@ msgstr "Cargando KPI…"
 
 #. translators: %s: number of robots detected in the selected period.
 #: src/admin/widgets/OverviewKpis/index.js
-msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
-msgstr "Solo visitantes humanos: filas de actividad de visitantes en el periodo seleccionado. Los robots detectados en este periodo (%s) se excluyen de todas las estadísticas."
+msgid "Human visitors only. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "Solo visitantes humanos. Los robots detectados en este periodo (%s) se excluyen de todas las estadísticas."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."

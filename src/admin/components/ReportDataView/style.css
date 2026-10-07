@@ -71,3 +71,25 @@
 .bbpa-report-dataview tbody .dataviews-view-table__cell-content-wrapper.dataviews-view-table__cell-align-end {
   max-width: none;
 }
+
+/* Share column: a short bar and the percentage. */
+.bbpa-report-table__share {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bbpa-report-table__share-bar {
+  display: inline-block;
+  width: 64px;
+  height: 6px;
+  border-radius: 3px;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.bbpa-report-table__share-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--wp-admin-theme-color, #3858e9);
+}

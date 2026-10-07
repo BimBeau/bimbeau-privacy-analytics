@@ -941,6 +941,14 @@ msgid "Device"
 msgstr "Apparaat"
 
 #: src/admin/components/VisitorsDataView/index.js
+msgid "Robot"
+msgstr "Robot"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Unidentified robot"
+msgstr "Niet-geïdentificeerde robot"
+
+#: src/admin/components/VisitorsDataView/index.js
 msgid "Last activity"
 msgstr "Laatste activiteit"
 
@@ -2290,10 +2298,6 @@ msgid "Save settings"
 msgstr "Instellingen opslaan"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Save"
-msgstr "Opslaan"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Confirm data purge"
 msgstr "Wissen van gegevens bevestigen"
 
@@ -2364,6 +2368,14 @@ msgstr "Uitstappen (ongeveer)"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page."
 msgstr "Paginaweergaven van adressen die niet overeenkomen met een gepubliceerd bericht of een gepubliceerde pagina, zoals archieven, zoekresultaten of de startpagina van de blog."
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "Aandeel"
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Content viewed"
+msgstr "Bekeken inhoud"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
@@ -2547,8 +2559,8 @@ msgstr "KPI's laden…"
 
 #. translators: %s: number of robots detected in the selected period.
 #: src/admin/widgets/OverviewKpis/index.js
-msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
-msgstr "Alleen menselijke bezoekers: rijen met bezoekersactiviteit in de geselecteerde periode. De in deze periode gedetecteerde robots (%s) zijn uitgesloten van alle statistieken."
+msgid "Human visitors only. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "Alleen menselijke bezoekers. De in deze periode gedetecteerde robots (%s) zijn uitgesloten van alle statistieken."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."

@@ -939,6 +939,14 @@ msgid "Device"
 msgstr "设备"
 
 #: src/admin/components/VisitorsDataView/index.js
+msgid "Robot"
+msgstr "机器人"
+
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Unidentified robot"
+msgstr "未识别的机器人"
+
+#: src/admin/components/VisitorsDataView/index.js
 msgid "Last activity"
 msgstr "最后活动"
 
@@ -2282,10 +2290,6 @@ msgid "Save settings"
 msgstr "保存设置"
 
 #: src/admin/panels/SettingsPanel.js
-msgid "Save"
-msgstr "保存"
-
-#: src/admin/panels/SettingsPanel.js
 msgid "Confirm data purge"
 msgstr "确认数据清除"
 
@@ -2356,6 +2360,14 @@ msgstr "退出（近似）"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page."
 msgstr "与任何已发布文章或页面都不匹配的地址的页面浏览量，例如归档页、搜索结果或博客首页。"
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "占比"
+
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Content viewed"
+msgstr "浏览的内容"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
@@ -2537,8 +2549,8 @@ msgstr "正在加载 KPI…"
 
 #. translators: %s: number of robots detected in the selected period.
 #: src/admin/widgets/OverviewKpis/index.js
-msgid "Human visitors only: visitor activity rows in the selected period. The robots detected in this period (%s) are excluded from all statistics."
-msgstr "仅限真人访客：所选时间段内的访客活动记录。此时间段内检测到的机器人（%s）已从所有统计中排除。"
+msgid "Human visitors only. The robots detected in this period (%s) are excluded from all statistics."
+msgstr "仅限真人访客。此时间段内检测到的机器人（%s）已从所有统计中排除。"
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."

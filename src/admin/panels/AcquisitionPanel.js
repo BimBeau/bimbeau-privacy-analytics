@@ -244,6 +244,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 					) : null }
 				</div>
 			</BpaCard>
+			{  }
 		</div>
 	);
 };
