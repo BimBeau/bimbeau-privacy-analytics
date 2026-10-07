@@ -116,6 +116,24 @@
 }
 
 
+/*
+ * Focus of the quick range buttons: WordPress draws a dark (#1e1e1e) ring on a pressed button,
+ * which reads as a black border on the active range. Use the plugin blue instead, and white on the
+ * blue active range so the ring stays visible.
+ */
+.bbpa-period-filter__popover .components-button.bbpa-period-filter__preset-link:focus {
+	outline: none !important;
+}
+
+.bbpa-period-filter__popover .components-button.bbpa-period-filter__preset-link:focus-visible {
+	outline: 2px solid var(--color-3) !important;
+	outline-offset: -4px !important;
+}
+
+.bbpa-period-filter__popover .components-button.bbpa-period-filter__preset-link.is-active:focus-visible {
+	outline-color: #fff !important;
+}
+
 .bbpa-period-filter__popover .components-button:first-child {
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;

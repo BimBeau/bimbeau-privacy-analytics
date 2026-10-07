@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.62.1
+Stable tag: 8.62.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,6 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.62.1 =
-* [Fix] Real-time: the current page column keeps a normal width, so the channel, system, browser and device columns are back in view.
-* [Fix] Lists: the pagination stays under each list instead of floating over its rows while the page scrolls.
+= 8.62.2 =
+* [Fix] Period picker: the active quick range keeps its blue look when focused, without the dark WordPress focus ring.
