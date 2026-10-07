@@ -7,7 +7,7 @@
 defined('ABSPATH') || exit;
 
 return [
-    'version' => '8.66.1',
+    'version' => '8.66.2',
     'slug' => 'bimbeau-privacy-analytics',
     'rest_namespace' => 'bbpa/v1',
     'rest_namespace_internal' => 'bbpa/internal/v1',
