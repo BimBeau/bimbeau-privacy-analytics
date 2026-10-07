@@ -10,6 +10,16 @@
   min-width: 0;
 }
 
+/*
+ * DataViews keeps its pagination footer sticky at the bottom of the viewport, made for a list that
+ * fills the screen. Report lists sit in cards among other cards: the footer would float over the
+ * rows of its card while the page scrolls, so it stays under the table.
+ */
+.bbpa-report-dataview .dataviews-footer,
+.bbpa-visitors-dataview .dataviews-footer {
+  position: static;
+}
+
 /* Totals and notes under a list. */
 .bbpa-dataviews__footer {
   display: flex;
