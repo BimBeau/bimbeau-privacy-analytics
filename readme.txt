@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.58.1
+Stable tag: 8.58.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -213,5 +213,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.58.1 =
-* [Fix] Report lists: the search, View options, export button, filter chips, table and pagination of the lists take their intended compact layout again, instead of stacking full width since 8.57.0.
+= 8.58.2 =
+* [Fix] Report lists: the column headers take their compact uppercase style (11 px) instead of large text that pushed the last columns out of view, and the Pages average time column no longer ends with a colon.

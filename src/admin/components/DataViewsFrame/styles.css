@@ -85,7 +85,8 @@
   background: #fff;
 }
 
-.bbpa-dataviews-table th {
+/* `table.` outranks `.bbpa-report-table th` of globals.css, which loads after this file. */
+table.bbpa-dataviews-table thead th {
   padding: 8px 12px;
   border: 0;
   box-shadow: inset 0 -1px 0 #f0f0f0;
@@ -118,10 +119,23 @@
   padding-right: 24px;
 }
 
-/* First column: the primary field of the row. */
+/* First column: the primary field of the row (a cell or a row header). */
 .bbpa-dataviews-table td:first-child {
   color: #1e1e1e;
   font-weight: 500;
+}
+
+table.bbpa-dataviews-table tbody th {
+  padding: 12px;
+  border: 0;
+  border-top: 1px solid #f0f0f0;
+  color: #1e1e1e;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  text-transform: none;
+  vertical-align: middle;
 }
 
 .bbpa-dataviews-table tbody tr:hover {

@@ -34,7 +34,7 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		} }
 		extraMetricLabel={
 			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
-				? __( 'Avg. time on page:', 'bimbeau-privacy-analytics' )
+				? __( 'Avg. time on page', 'bimbeau-privacy-analytics' )
 				: ''
 		}
 		extraMetricValueKey={
