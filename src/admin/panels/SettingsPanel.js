@@ -15,7 +15,6 @@ import {
   CheckboxControl,
   Flex,
   FlexItem,
-  Icon,
   Modal,
   Snackbar,
   ExternalLink,
@@ -27,7 +26,16 @@ import {
 } from "@wordpress/components";
 import Notice from "../components/BrandNotice";
 
-import { chartBar, cloud, comment, desktop, pages } from "@wordpress/icons";
+// The Icon of @wordpress/icons sizes the bundled icons: the WordPress components Icon does not
+// recognize them as SVG elements and leaves them without a width.
+import {
+  Icon as WordPressIcon,
+  chartBar,
+  cloud,
+  comment,
+  desktop,
+  pages,
+} from "@wordpress/icons";
 import {
   LuBug,
   LuClock,
@@ -242,10 +250,10 @@ const DataFeatureGrid = ({ items = [] }) => (
               }
 
               if (FeatureIcon && typeof FeatureIcon !== "string") {
-                return <Icon icon={FeatureIcon} size={18} />;
+                return <WordPressIcon icon={FeatureIcon} size={18} />;
               }
 
-              return <Icon icon={cloud} size={18} />;
+              return <WordPressIcon icon={cloud} size={18} />;
             })()}
             <span className="bbpa-settings-data-chip__label">
               {DATA_FEATURES[item] ? DATA_FEATURES[item].getLabel() : item}

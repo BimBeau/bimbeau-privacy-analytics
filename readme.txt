@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.64.1
+Stable tag: 8.64.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,6 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.64.1 =
-* [Fix] Lists: a column hidden then shown again from View options comes back at its usual place instead of moving to the end of the table.
-* [Fix] Lists: the View options section that shows or hides the columns is called Columns instead of Properties.
+= 8.64.2 =
+* [Fix] Settings: the data icons of the Tracking and privacy tab (page views, device type, reliable counting, interactions) are back to their small size instead of filling their pill.
