@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.64.0
+Stable tag: 8.64.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.64.0 =
-* [Feature] Pages report: the Top pages and Entry pages lists show the Share of each page, with a bar and a percentage of the page views or entries of the period, like the Content types view.
+= 8.64.1 =
+* [Fix] Lists: a column hidden then shown again from View options comes back at its usual place instead of moving to the end of the table.
+* [Fix] Lists: the View options section that shows or hides the columns is called Columns instead of Properties.

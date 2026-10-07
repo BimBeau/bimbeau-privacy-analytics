@@ -59,6 +59,14 @@ export const DATAVIEWS_MSGIDS = [
 	[ '<Name>%1$s is not: </Name><Value>%2$s</Value>' ],
 ];
 
+/**
+ * DataViews strings the plugin always replaces, whatever WordPress translates: the view options
+ * section that shows or hides the columns of a table is called "Columns" instead of "Properties".
+ */
+const getDataViewsOverrides = () => ( {
+	Properties: [ __( 'Columns', 'bimbeau-privacy-analytics' ) ],
+} );
+
 export const DATAVIEWS_PLURAL_MSGIDS = [
 	'%d Item',
 	'%1$d of %2$d Item',
@@ -140,7 +148,7 @@ let isRegistered = false;
 
 /**
  * Copies the plugin translations of the DataViews strings into the `default` domain, only where
- * WordPress does not translate them already. Runs once.
+ * WordPress does not translate them already, then applies the plugin overrides. Runs once.
  */
 export const registerDataViewsTranslations = () => {
 	if ( isRegistered ) {
@@ -163,6 +171,8 @@ export const registerDataViewsTranslations = () => {
 			missing[ key ] = pluginData[ key ];
 		}
 	} );
+
+	Object.assign( missing, getDataViewsOverrides() );
 
 	if ( Object.keys( missing ).length ) {
 		// setLocaleData merges into the existing domain data.
