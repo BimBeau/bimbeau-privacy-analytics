@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.66.2
+Stable tag: 8.66.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,5 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.66.2 =
-* [Docs] WordPress.org screenshots refreshed with the current interface: dashboard, reports, settings and premium screens.
+= 8.66.3 =
+* [Fix] Statistics app on a phone: the Navigation button shows a normal-size chevron again, instead of an arrow filling the whole card.
