@@ -5,8 +5,9 @@ import { __ } from '@wordpress/i18n';
 import { ADMIN_CONFIG } from '../constants';
 import { isAdvancedStatsEnabled } from '../lib/adminConstants';
 import { getRangeFromSelection } from '../lib/date';
-import { formatDurationMetricValue, formatNumber } from '../lib/formatters';
+import { formatClockDurationMetricValue, formatNumber } from '../lib/formatters';
 import BpaCard from '../components/BpaCard';
+import ShareBar from '../components/ShareBar';
 import ReportTableCard from '../widgets/ReportTableCard';
 import TimeseriesChart from '../widgets/TimeseriesChart';
 
@@ -45,7 +46,7 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		}
 		formatExtraMetricValue={
 			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
-				? formatDurationMetricValue
+				? formatClockDurationMetricValue
 				: undefined
 		}
 	/>
@@ -146,28 +147,13 @@ const renderTopContentLabel = ( visibleLabel, item ) => {
 	);
 };
 
-const formatShare = ( value ) =>
-	`${ formatNumber( Number( value ) || 0, {
-		minimumFractionDigits: 1,
-		maximumFractionDigits: 1,
-	} ) } %`;
-
 // Share of the range total, after the main metric.
 const SHARE_FIELD = {
 	id: 'share',
 	label: __( 'Share', 'bimbeau-privacy-analytics' ),
 	getValue: ( item ) => Number( item?.share ) || 0,
-	render: ( item ) => (
-		<span className="bbpa-report-table__share">
-			<span className="bbpa-report-table__share-bar" aria-hidden="true">
-				<span
-					style={ {
-						width: `${ Math.min( 100, Math.max( 0, Number( item?.share ) || 0 ) ) }%`,
-					} }
-				/>
-			</span>
-			<span>{ formatShare( item?.share ) }</span>
-		</span>
+	render: ( item, rows = [] ) => (
+		<ShareBar value={ item?.share } shares={ rows.map( ( row ) => row?.share ) } />
 	),
 };
 
@@ -215,7 +201,7 @@ const TopContentPanel = ( {
 		}
 		formatExtraMetricValue={
 			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
-				? formatDurationMetricValue
+				? formatClockDurationMetricValue
 				: undefined
 		}
 		emptyLabel={ emptyLabel }

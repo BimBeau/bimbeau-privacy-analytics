@@ -1,18 +1,44 @@
+import { __, sprintf } from '@wordpress/i18n';
+
 import FeatureIcon from '../icons/FeatureIcon';
 import {
 	calculateChangePercent,
+	formatNumber,
 	formatTrendPercent,
 } from '../../lib/formatters';
 
 /**
  * Trend of a row metric against the previous period.
  *
- * @param {Object} props               Component props.
- * @param {number} props.value         Current value.
- * @param {number} props.previousValue Value of the previous period.
+ * A row without value in the previous period has no percent change: it shows a "New" badge. An
+ * unknown previous value (`null` or `undefined`, for instance a row beyond the compared rows)
+ * shows nothing, so a partial comparison never reads as a new row.
+ *
+ * @param {Object}      props               Component props.
+ * @param {number}      props.value         Current value.
+ * @param {number|null} props.previousValue Value of the previous period, or null when unknown.
  */
 const MetricTrend = ( { value, previousValue } ) => {
-	const change = calculateChangePercent( Number( value ), previousValue );
+	if ( previousValue === null || previousValue === undefined ) {
+		return null;
+	}
+
+	const current = Number( value ) || 0;
+	const previous = Number( previousValue ) || 0;
+
+	if ( previous === 0 ) {
+		if ( current === 0 ) {
+			return null;
+		}
+
+		return (
+			<span className="bbpa-report-table__trend bbpa-report-table__trend--new">
+				{ __( 'New', 'bimbeau-privacy-analytics' ) }
+			</span>
+		);
+	}
+
+	const change = calculateChangePercent( current, previous );
 	const changeLabel = formatTrendPercent( change );
 
 	if ( changeLabel === null ) {
@@ -28,9 +54,18 @@ const MetricTrend = ( { value, previousValue } ) => {
 		modifier = 'negative';
 	}
 
+	const difference = current - previous;
+	const detail = sprintf(
+		/* translators: 1: Value of the previous period, 2: Difference with the current period (+120). */
+		__( 'Previous period: %1$s (%2$s)', 'bimbeau-privacy-analytics' ),
+		formatNumber( previous ),
+		formatNumber( difference, { signDisplay: 'exceptZero' } )
+	);
+
 	return (
 		<span
 			className={ `bbpa-report-table__trend bbpa-report-table__trend--${ modifier }` }
+			title={ detail }
 		>
 			{ changeLabel }
 			{ ! isNeutral && (

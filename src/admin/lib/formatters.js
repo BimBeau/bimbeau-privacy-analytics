@@ -129,7 +129,8 @@ export const calculateChangePercent = ( current, previous ) => {
 
 /**
  * Change of a list row against the previous period, in the locale percent format: "+14 %" in
- * French, "+14%" in English, grouped digits for large changes ("+4 000 %"), no compact suffix.
+ * French, "+14%" in English. From 1,000 % on, the compact format of the dashboard KPIs keeps the
+ * column narrow ("+2.5k%").
  *
  * @param {number|null} value Change in percent (14 for +14 %).
  * @return {string|null} Formatted change, or null without a value.
@@ -141,6 +142,10 @@ export const formatTrendPercent = ( value ) => {
 
 	const normalizedValue = Number( value );
 	const safeValue = Number.isFinite( normalizedValue ) ? normalizedValue : 0;
+
+	if ( Math.abs( safeValue ) >= 1000 ) {
+		return formatChangePercent( safeValue );
+	}
 
 	return getNumberFormatter( {
 		style: 'percent',
@@ -245,6 +250,28 @@ export const formatDurationMetricValue = ( valueInMs ) => {
 		hours,
 		minutes
 	);
+};
+
+/**
+ * Duration of a list cell in a clock format that lines up in a column: "0:44", "1:06",
+ * "1:02:03". Same digits in every language, so no translatable text.
+ *
+ * @param {number} valueInMs Duration in milliseconds.
+ * @return {string} Formatted duration.
+ */
+export const formatClockDurationMetricValue = ( valueInMs ) => {
+	const normalizedValue = Number( valueInMs );
+	const totalSeconds =
+		Number.isFinite( normalizedValue ) && normalizedValue > 0
+			? Math.floor( normalizedValue / 1000 )
+			: 0;
+	const hours = Math.floor( totalSeconds / 3600 );
+	const minutes = Math.floor( ( totalSeconds % 3600 ) / 60 );
+	const seconds = String( totalSeconds % 60 ).padStart( 2, '0' );
+
+	return hours > 0
+		? `${ hours }:${ String( minutes ).padStart( 2, '0' ) }:${ seconds }`
+		: `${ minutes }:${ seconds }`;
 };
 
 export const formatCompactDurationMetricValue = ( valueInMs ) => {

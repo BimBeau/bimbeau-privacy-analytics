@@ -49,3 +49,42 @@
 .dataviews-filters__container-visibility-toggle:has(> .dataviews-filters__visibility-toggle[aria-disabled="true"]) {
   display: none;
 }
+
+/*
+ * Toolbar icons: a filled "filter" (three bars) and a "view options" icon made of two sliders,
+ * instead of the outlined funnel and cog drawn by @wordpress/dataviews, which takes no icon prop.
+ * The SVG of the button is hidden and the icon is drawn as a mask in the text color.
+ */
+.bbpa-admin-app .dataviews-filters__visibility-toggle > svg,
+.bbpa-admin-app .dataviews-view-config__toggle-wrapper > .components-button > svg {
+  display: none;
+}
+
+.bbpa-admin-app .dataviews-filters__visibility-toggle::before,
+.bbpa-admin-app .dataviews-view-config__toggle-wrapper > .components-button::before {
+  content: "";
+  display: block;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  background-color: currentColor;
+  -webkit-mask: var(--bbpa-dataviews-toolbar-icon) center / 24px 24px no-repeat;
+  mask: var(--bbpa-dataviews-toolbar-icon) center / 24px 24px no-repeat;
+}
+
+.bbpa-admin-app .dataviews-filters__visibility-toggle {
+  --bbpa-dataviews-toolbar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z'/%3E%3C/svg%3E");
+}
+
+.bbpa-admin-app .dataviews-view-config__toggle-wrapper > .components-button {
+  --bbpa-dataviews-toolbar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 7.5H4V9H10V11H11.5V5.5H10V7.5ZM20 9H13V7.5H20V9ZM4 16.5H13V15H4V16.5ZM15.5 13H17V15H20V16.5H17V18.5H15.5V13Z'/%3E%3C/svg%3E");
+}
+
+/*
+ * Numbers of the lists (cells aligned to the end) are written in the main text color, with
+ * digits of equal width: DataViews draws every column but the first one in a secondary grey.
+ */
+.bbpa-admin-app .dataviews-view-table__cell-align-end {
+  color: #1e1e1e;
+  font-variant-numeric: tabular-nums;
+}

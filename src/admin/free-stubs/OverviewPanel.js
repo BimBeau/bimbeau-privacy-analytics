@@ -52,6 +52,7 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						enableSearch={ false }
 						showOpenButton={ false }
 						showMetricTrend
+						inlineMetricChange
 					/>
 				) : null }
 				{ isReferrersEnabled ? (
@@ -70,6 +71,7 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						metricLabel={ __( 'Visits', 'bimbeau-privacy-analytics' ) }
 						enableSearch={ false }
 						showMetricTrend
+						inlineMetricChange
 					/>
 				) : null }
 				<BpaCard title={ __( 'Hourly heatmap global', 'bimbeau-privacy-analytics' ) }>

@@ -686,6 +686,15 @@ msgstr "此页面没有可用的小时详情。"
 msgid "Hourly activity heatmap by day and hour"
 msgstr "按日期和小时显示的全局小时热力图"
 
+#: src/admin/components/MetricTrend/index.js
+msgid "New"
+msgstr "新增"
+
+#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
+#: src/admin/components/MetricTrend/index.js
+msgid "Previous period: %1$s (%2$s)"
+msgstr "上一周期：%1$s（%2$s）"
+
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "隐私运行时诊断"
@@ -718,12 +727,32 @@ msgid "Title"
 msgstr "标题"
 
 #: src/admin/components/ReportDataView/index.js
+#: src/admin/panels/AcquisitionPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Change"
+msgstr "变化"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Trend"
+msgstr "趋势"
+
+#: src/admin/components/ReportDataView/index.js
 msgid "Open row"
 msgstr "打开行"
 
 #: src/admin/components/ReportDataView/index.js
 msgid "Open"
 msgstr "打开"
+
+#. translators: %s: Day of the previous period.
+#: src/admin/components/ReportDataView/index.js
+msgid "Change compared with %s."
+msgstr "与 %s 相比的变化。"
+
+#. translators: 1: First day of the previous period, 2: Last day of the previous period.
+#: src/admin/components/ReportDataView/index.js
+msgid "Change compared with the period from %1$s to %2$s."
+msgstr "与 %1$s 至 %2$s 期间相比的变化。"
 
 #: src/admin/components/ReportDataView/index.js
 #: src/admin/lib/dataviewsTranslations.js

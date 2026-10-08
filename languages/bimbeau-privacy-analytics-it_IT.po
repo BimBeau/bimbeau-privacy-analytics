@@ -688,6 +688,15 @@ msgstr "Nessun dettaglio orario disponibile per questa pagina."
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Mappa termica oraria globale per giorno e ora"
 
+#: src/admin/components/MetricTrend/index.js
+msgid "New"
+msgstr "Nuovo"
+
+#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
+#: src/admin/components/MetricTrend/index.js
+msgid "Previous period: %1$s (%2$s)"
+msgstr "Periodo precedente: %1$s (%2$s)"
+
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
 msgstr "Diagnostica runtime privacy"
@@ -720,12 +729,32 @@ msgid "Title"
 msgstr "Titolo"
 
 #: src/admin/components/ReportDataView/index.js
+#: src/admin/panels/AcquisitionPanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Change"
+msgstr "Variazione"
+
+#: src/admin/components/ReportDataView/index.js
+msgid "Trend"
+msgstr "Andamento"
+
+#: src/admin/components/ReportDataView/index.js
 msgid "Open row"
 msgstr "Apri riga"
 
 #: src/admin/components/ReportDataView/index.js
 msgid "Open"
 msgstr "Apri"
+
+#. translators: %s: Day of the previous period.
+#: src/admin/components/ReportDataView/index.js
+msgid "Change compared with %s."
+msgstr "Variazione rispetto al %s."
+
+#. translators: 1: First day of the previous period, 2: Last day of the previous period.
+#: src/admin/components/ReportDataView/index.js
+msgid "Change compared with the period from %1$s to %2$s."
+msgstr "Variazione rispetto al periodo dal %1$s al %2$s."
 
 #: src/admin/components/ReportDataView/index.js
 #: src/admin/lib/dataviewsTranslations.js

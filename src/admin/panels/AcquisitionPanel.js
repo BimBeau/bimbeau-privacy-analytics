@@ -19,6 +19,7 @@ import useAdminEndpoint from '../api/useAdminEndpoint';
 import DataState from '../components/DataState';
 import BpaCard from '../components/BpaCard';
 import MetricTrend from '../components/MetricTrend';
+import ShareBar from '../components/ShareBar';
 import ReportExportAction from '../components/ReportExportAction';
 import { ADMIN_CONFIG } from '../constants';
 import { getPreviousRange, getRangeFromSelection } from '../lib/date';
@@ -40,12 +41,6 @@ const CHANNEL_ICONS = {
 	other: LuCircleHelp,
 };
 
-const formatShare = ( value ) =>
-	`${ formatNumber( Number( value || 0 ), {
-		minimumFractionDigits: 1,
-		maximumFractionDigits: 1,
-	} ) }%`;
-
 const ACQUISITION_COLUMNS_STORAGE_ID = 'acquisition_channels';
 
 const DEFAULT_VIEW = {
@@ -54,16 +49,17 @@ const DEFAULT_VIEW = {
 	perPage: 20,
 	sort: { field: 'visits', direction: 'desc' },
 	filters: [],
-	fields: [ 'visits', 'share' ],
+	fields: [ 'visits', 'change', 'share' ],
 	titleField: 'channel',
-	// Numbers aligned to the start, under their header (mockups).
+	// Numbers are aligned to the end, with their header, so that digits line up.
 	layout: {
 		styles: {
-			visits: { align: 'start' },
-			share: { align: 'start' },
-			orders: { align: 'start' },
-			revenue: { align: 'start' },
-			conversion_rate: { align: 'start' },
+			visits: { align: 'end' },
+			change: { align: 'end' },
+			share: { align: 'end' },
+			orders: { align: 'end' },
+			revenue: { align: 'end' },
+			conversion_rate: { align: 'end' },
 		},
 	},
 };
@@ -108,6 +104,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 					[
 						{ id: 'channel' },
 						{ id: 'visits', enableHiding: false },
+						{ id: 'change' },
 						{ id: 'share' },
 						...storedColumns.fields
 							.filter( ( id ) => ! DEFAULT_VIEW.fields.includes( id ) )
@@ -171,20 +168,27 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 			type: 'integer',
 			getValue: ( { item } ) => item.visits,
 			render: ( { item } ) => (
-				<div className="bbpa-report-table__metric">
-					<span className="bbpa-report-table__metric-value">
-						{ formatNumber( item.visits ) }
-					</span>
-					{ ! isComparisonLoading && comparisonByKey.has( item.key ) ? (
-						<MetricTrend
-							value={ item.visits }
-							previousValue={ comparisonByKey.get( item.key ) }
-						/>
-					) : null }
-				</div>
+				<span className="bbpa-report-table__metric-value">
+					{ formatNumber( item.visits ) }
+				</span>
 			),
 			enableHiding: false,
 			enableSorting: true,
+			filterBy: false,
+		},
+		{
+			id: 'change',
+			label: __( 'Change', 'bimbeau-privacy-analytics' ),
+			// Every channel of the previous period is loaded: a missing channel had no visit.
+			render: ( { item } ) =>
+				isComparisonLoading || ! comparisonData ? null : (
+					<MetricTrend
+						value={ item.visits }
+						previousValue={ comparisonByKey.get( item.key ) ?? 0 }
+					/>
+				),
+			enableHiding: true,
+			enableSorting: false,
 			filterBy: false,
 		},
 		{
@@ -192,7 +196,9 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 			label: __( 'Traffic share', 'bimbeau-privacy-analytics' ),
 			type: 'number',
 			getValue: ( { item } ) => item.share,
-			render: ( { item } ) => formatShare( item.share ),
+			render: ( { item } ) => (
+				<ShareBar value={ item.share } shares={ rows.map( ( row ) => row.share ) } />
+			),
 			enableSorting: true,
 			filterBy: false,
 		},

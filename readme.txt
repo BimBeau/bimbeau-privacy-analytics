@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.68.5
+Stable tag: 8.68.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.68.5 =
-* [Fix] Page details now open at the top of the page instead of keeping the scroll position of the pages list.
-* [Fix] The number of items per page can be changed again in the triggered events list.
+= 8.68.6 =
+* [UI] Report lists show the change against the previous period and the daily trend in their own columns, with numbers aligned to the end in the main text color.
+* [Fix] A row without value in the previous period reads "New" instead of "+100%", and a row missing from a longer previous list no longer shows a wrong change.
+* [UI] Changes of 1,000% or more use the compact format of the dashboard key figures (+2.5k%); hovering a change shows the previous value and the difference.
+* [UI] The compared period is named under the lists, trend lines share one scale, the Share bar of the largest row fills its track (also in Acquisition) and the average time on page reads as minutes and seconds (1:06).
+* [UI] In title display, the page address shows under the title; the filter and view options buttons use filled icons.

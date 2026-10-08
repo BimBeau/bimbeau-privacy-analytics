@@ -13,6 +13,7 @@ import MetricTrend from '../../components/MetricTrend';
 import { DATAVIEWS_PER_PAGE_SIZES } from '../../lib/dataviewsConfig';
 import { getPreviousRange } from '../../lib/date';
 import { getChannelLabel } from '../../lib/channelLabels';
+import { formatNumber } from '../../lib/formatters';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
 
 /**
@@ -45,8 +46,9 @@ const DEFAULT_VIEW = {
 	search: '',
 	sort: { field: 'visits', direction: 'desc' },
 	filters: [],
-	fields: [ 'referrer', 'channel', 'visits' ],
-	layout: { styles: { visits: { align: 'start' } } },
+	fields: [ 'referrer', 'channel', 'visits', 'change' ],
+	// Numbers are aligned to the end, with their header, so that digits line up.
+	layout: { styles: { visits: { align: 'end' }, change: { align: 'end' } } },
 };
 
 /**
@@ -157,6 +159,20 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 
 		return values;
 	}, [ comparisonData ] );
+	// Only the first 100 rows of the previous period are loaded: a row missing from them had no
+	// visit only when they are the whole previous list.
+	const comparisonItemsCount = ( comparisonData?.items || [] ).length;
+	const isComparisonComplete =
+		Boolean( comparisonData ) &&
+		Number( comparisonData?.pagination?.totalItems ?? comparisonItemsCount ) <=
+		comparisonItemsCount;
+	const getPreviousVisits = ( key ) => {
+		if ( comparisonByKey.has( key ) ) {
+			return comparisonByKey.get( key );
+		}
+
+		return isComparisonComplete ? 0 : null;
+	};
 
 	const fields = [
 		{
@@ -188,20 +204,26 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 			type: 'integer',
 			getValue: ( { item } ) => item.visits,
 			render: ( { item } ) => (
-				<div className="bbpa-report-table__metric">
-					<span className="bbpa-report-table__metric-value">
-						{ item.visits }
-					</span>
-					{ ! isComparisonLoading ? (
-						<MetricTrend
-							value={ item.visits }
-							previousValue={ comparisonByKey.get( item.comparisonKey ) || 0 }
-						/>
-					) : null }
-				</div>
+				<span className="bbpa-report-table__metric-value">
+					{ formatNumber( item.visits ) }
+				</span>
 			),
 			enableHiding: false,
 			enableSorting: true,
+			filterBy: false,
+		},
+		{
+			id: 'change',
+			label: __( 'Change', 'bimbeau-privacy-analytics' ),
+			render: ( { item } ) =>
+				isComparisonLoading ? null : (
+					<MetricTrend
+						value={ item.visits }
+						previousValue={ getPreviousVisits( item.comparisonKey ) }
+					/>
+				),
+			enableHiding: true,
+			enableSorting: false,
 			filterBy: false,
 		},
 	];

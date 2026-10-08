@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Button, Tooltip } from '@wordpress/components';
 import ListDataViews, { getInitialListColumns } from '../ListDataViews';
 
@@ -8,7 +8,7 @@ import BrandNotice from '../BrandNotice';
 import DataState from '../DataState';
 import FeatureIcon from '../icons/FeatureIcon';
 import MetricTrend from '../MetricTrend';
-import MiniSparkline from '../MiniSparkline';
+import MiniSparkline, { getSeriesMaxValue } from '../MiniSparkline';
 import PageTitle from '../PageTitle';
 import ReportExportAction from '../ReportExportAction';
 import {
@@ -23,7 +23,7 @@ import {
 import useSharedPageLabelDisplay from '../../hooks/useSharedPageLabelDisplay';
 import { decodeHtmlEntities, formatNumber } from '../../lib/formatters';
 import { DATAVIEWS_PER_PAGE_SIZES } from '../../lib/dataviewsConfig';
-import { getPreviousRange } from '../../lib/date';
+import { formatDateStringForLocale, getPreviousRange } from '../../lib/date';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
 
 
@@ -40,6 +40,9 @@ const normalizeSearchText = ( value ) =>
 
 export const LABEL_FIELD = 'label';
 export const PAGE_TITLE_FIELD = 'page_title';
+// Change against the previous period and daily series of the main metric, in their own columns.
+export const CHANGE_FIELD = 'change';
+export const SERIES_FIELD = 'trend';
 
 export const truncateDisplayedLabel = ( value, maxLength ) => {
 	const text = typeof value === 'string' ? value : String( value || '' );
@@ -136,6 +139,7 @@ const getVisibleFields = ( {
 	supportsPageLabelToggle,
 	pageLabelDisplay,
 	metricKey,
+	metricColumnIds = [],
 	extraFieldIds = [],
 	extraMetricValueKey,
 } ) => {
@@ -146,6 +150,7 @@ const getVisibleFields = ( {
 	return [
 		...labelFields,
 		metricKey,
+		...metricColumnIds,
 		...extraFieldIds,
 		...( extraMetricValueKey ? [ extraMetricValueKey ] : [] ),
 	];
@@ -160,6 +165,7 @@ const getVisibleFields = ( {
  * @param {boolean}  options.supportsPageLabelToggle Whether the URL and Title columns exist.
  * @param {string}   options.pageLabelDisplay        Shared page label display (`url`, `title`).
  * @param {string}   options.metricKey               Main metric field id.
+ * @param {string[]} options.metricColumnIds         Change and series column ids, when shown.
  * @param {string[]} options.extraFieldIds           Extra column ids.
  * @param {string}   options.extraMetricValueKey     Extra metric field id, or empty.
  * @param {boolean}  options.hasOpenField            Whether the Open column exists.
@@ -170,6 +176,7 @@ export const getInitialReportFields = ( {
 	supportsPageLabelToggle,
 	pageLabelDisplay,
 	metricKey,
+	metricColumnIds = [],
 	extraFieldIds = [],
 	extraMetricValueKey,
 	hasOpenField = false,
@@ -178,6 +185,7 @@ export const getInitialReportFields = ( {
 		supportsPageLabelToggle,
 		pageLabelDisplay,
 		metricKey,
+		metricColumnIds,
 		extraFieldIds,
 		extraMetricValueKey,
 	} );
@@ -186,6 +194,7 @@ export const getInitialReportFields = ( {
 		{ id: LABEL_FIELD, enableHiding: supportsPageLabelToggle },
 		...( supportsPageLabelToggle ? [ { id: PAGE_TITLE_FIELD } ] : [] ),
 		{ id: metricKey, enableHiding: false },
+		...metricColumnIds.map( ( id ) => ( { id } ) ),
 		...extraFieldIds.map( ( id ) => ( { id } ) ),
 		...( extraMetricValueKey ? [ { id: extraMetricValueKey } ] : [] ),
 		...( hasOpenField ? [ { id: 'open', enableHiding: false } ] : [] ),
@@ -228,6 +237,8 @@ const ReportDataView = ( {
 	getRowHref,
 	requestParams = {},
 	showMetricTrend = false,
+	// Narrow cards (dashboard): the change stays in the metric cell instead of its own column.
+	inlineMetricChange = false,
 	getComparisonKey,
 	extraMetricLabel = '',
 	extraMetricHelpText = '',
@@ -245,7 +256,8 @@ const ReportDataView = ( {
 	maxDisplayedLabelCharacters = null,
 	getRowClassName,
 	footnote = '',
-	// More columns after the metric: [ { id, label, getValue( item ), render( item ), sortable } ].
+	// More columns after the metric: [ { id, label, getValue( item ), render( item, rows ), sortable } ],
+	// `rows` being the raw items of the displayed page (a share bar scales to the largest one).
 	extraFields = [],
 	// Search in the browser, on the displayed label (formatLabel) and the raw label, for endpoints
 	// that do not filter (countries: names are translated in the browser). Short lists only.
@@ -256,6 +268,10 @@ const ReportDataView = ( {
 	registerDataViewsTranslations();
 
 	const resolvedExtraMetricKey = extraMetricLabel ? extraMetricValueKey : '';
+	const metricColumnIds = [
+		...( showMetricTrend && ! inlineMetricChange ? [ CHANGE_FIELD ] : [] ),
+		...( metricSeriesKey ? [ SERIES_FIELD ] : [] ),
+	];
 	const [ pageLabelDisplay, setPageLabelDisplay ] =
 		useSharedPageLabelDisplay();
 	const resolvedColumnsStorageId =
@@ -273,20 +289,21 @@ const ReportDataView = ( {
 			supportsPageLabelToggle,
 			pageLabelDisplay,
 			metricKey,
+			metricColumnIds,
 			extraFieldIds: extraFields.map( ( field ) => field.id ),
 			extraMetricValueKey: resolvedExtraMetricKey,
 			hasOpenField: showOpenButton && typeof getRowHref === 'function',
 		} ),
-		// Numbers stay aligned to the start, under their header (mockups 0B, 2A); DataViews aligns
-		// number fields to the end unless told otherwise.
+		// Numbers are aligned to the end, with their header, so that digits line up.
 		layout: {
 			styles: {
-				[ metricKey ]: { align: 'start' },
+				[ metricKey ]: { align: 'end' },
+				[ CHANGE_FIELD ]: { align: 'end' },
 				...Object.fromEntries(
-					extraFields.map( ( field ) => [ field.id, { align: 'start' } ] )
+					extraFields.map( ( field ) => [ field.id, { align: 'end' } ] )
 				),
 				...( resolvedExtraMetricKey
-					? { [ resolvedExtraMetricKey ]: { align: 'start' } }
+					? { [ resolvedExtraMetricKey ]: { align: 'end' } }
 					: {} ),
 			},
 		},
@@ -378,6 +395,18 @@ const ReportDataView = ( {
 			}
 		);
 
+	// Only the first rows of the previous period are loaded: a row missing from them had no value
+	// only when they are the whole previous list; otherwise its previous value is unknown.
+	const comparisonItemsCount = ( comparisonData?.items || [] ).length;
+	const comparisonTotalItems = Number(
+		comparisonData?.pagination?.totalItems ??
+			comparisonData?.pagination?.total_items ??
+			comparisonItemsCount
+	);
+	// Without a comparison response (request failed), every previous value stays unknown.
+	const isComparisonComplete =
+		Boolean( comparisonData ) && comparisonTotalItems <= comparisonItemsCount;
+
 	const comparisonValuesByKey = useMemo( () => {
 		const values = new Map();
 		if ( ! showMetricTrend || isComparisonLoading ) {
@@ -457,6 +486,16 @@ const ReportDataView = ( {
 		[ rawItems, formatLabel, labelFallback ]
 	);
 
+	const seriesMaxValue = useMemo(
+		() =>
+			metricSeriesKey
+				? getSeriesMaxValue(
+						rawItems.map( ( item ) => item?.[ metricSeriesKey ] )
+				  )
+				: 0,
+		[ metricSeriesKey, rawItems ]
+	);
+
 	const pagination = browserSearchMatches
 		? {
 				totalItems: browserSearchMatches.length,
@@ -477,8 +516,14 @@ const ReportDataView = ( {
 		}
 	}, [ isLoading, error, totalPages, view.page ] );
 
+	// In title mode without the URL column, the address is shown under the title.
+	const showsPathUnderTitle =
+		supportsPageLabelToggle &&
+		view.fields.includes( PAGE_TITLE_FIELD ) &&
+		! view.fields.includes( LABEL_FIELD );
+
 	const fields = useMemo( () => {
-		const renderRowLabel = ( row, fullLabel ) => {
+		const renderRowLabel = ( row, fullLabel, path = '' ) => {
 			const visibleLabel = truncateDisplayedLabel(
 				fullLabel,
 				maxDisplayedLabelCharacters
@@ -500,7 +545,15 @@ const ReportDataView = ( {
 				typeof getRowClassName === 'function'
 					? getRowClassName( row.item ) || ''
 					: '';
-			const label = <PageTitle title={ fullLabel }>{ content }</PageTitle>;
+			const pageTitle = <PageTitle title={ fullLabel }>{ content }</PageTitle>;
+			const label = path ? (
+				<span className="bbpa-report-table__label-stack">
+					{ pageTitle }
+					<span className="bbpa-report-table__label-path">{ path }</span>
+				</span>
+			) : (
+				pageTitle
+			);
 			const cell =
 				! isActionable && ! href ? (
 					label
@@ -548,10 +601,47 @@ const ReportDataView = ( {
 			id: PAGE_TITLE_FIELD,
 			label: __( 'Title', 'bimbeau-privacy-analytics' ),
 			getValue: ( { item } ) => item.pageTitle || item.label,
-			render: ( { item } ) => renderRowLabel( item, item.pageTitle || item.label ),
+			render: ( { item } ) =>
+				renderRowLabel(
+					item,
+					item.pageTitle || item.label,
+					showsPathUnderTitle && item.pageTitle && item.pageTitle !== item.label
+						? item.label
+						: ''
+				),
 			enableHiding: true,
 			enableSorting: true,
 			filterBy: false,
+		};
+
+		const getRowMetricValue = ( row ) =>
+			row.item?.[ metricValueKey ] !== undefined
+				? row.item[ metricValueKey ] ?? 0
+				: ( metricFallbackValueKey && row.item?.[ metricFallbackValueKey ] ) ||
+				  0;
+
+		const renderChange = ( row ) => {
+			if ( isComparisonLoading ) {
+				return null;
+			}
+
+			const comparisonKey =
+				typeof getComparisonKey === 'function'
+					? getComparisonKey( row.item )
+					: row.item?.label || '';
+			let previousValue = null;
+			if ( comparisonValuesByKey.has( comparisonKey ) ) {
+				previousValue = comparisonValuesByKey.get( comparisonKey );
+			} else if ( isComparisonComplete ) {
+				previousValue = 0;
+			}
+
+			return (
+				<MetricTrend
+					value={ getRowMetricValue( row ) }
+					previousValue={ previousValue }
+				/>
+			);
 		};
 
 		const metricField = withHelp(
@@ -568,13 +658,6 @@ const ReportDataView = ( {
 						: ( metricFallbackValueKey &&
 								row.item?.[ metricFallbackValueKey ] ) ||
 						  0;
-					const series = metricSeriesKey
-						? row.item?.[ metricSeriesKey ]
-						: undefined;
-					const comparisonKey =
-						typeof getComparisonKey === 'function'
-							? getComparisonKey( row.item )
-							: row.item?.label || '';
 
 					return (
 						<div className="bbpa-report-table__metric">
@@ -584,21 +667,13 @@ const ReportDataView = ( {
 							{ typeof renderMetricAccessory === 'function'
 								? renderMetricAccessory( row.item, row )
 								: null }
+							{ showMetricTrend && inlineMetricChange
+								? renderChange( row )
+								: null }
 							{ ! hasPrimaryMetric && metricFallbackBadgeLabel ? (
 								<span className="components-badge is-info">
 									{ metricFallbackBadgeLabel }
 								</span>
-							) : null }
-							{ showMetricTrend && ! isComparisonLoading ? (
-								<MetricTrend
-									value={ value }
-									previousValue={
-										comparisonValuesByKey.get( comparisonKey ) || 0
-									}
-								/>
-							) : null }
-							{ Array.isArray( series ) && series.length > 0 ? (
-								<MiniSparkline series={ series } />
 							) : null }
 						</div>
 					);
@@ -609,6 +684,42 @@ const ReportDataView = ( {
 			},
 			metricHelpText
 		);
+
+		const changeField =
+			showMetricTrend && ! inlineMetricChange
+				? {
+						id: CHANGE_FIELD,
+						label: __( 'Change', 'bimbeau-privacy-analytics' ),
+						render: ( { item: row } ) => renderChange( row ),
+						enableHiding: true,
+						enableSorting: false,
+						filterBy: false,
+				  }
+				: null;
+
+		const seriesField = metricSeriesKey
+			? {
+					id: SERIES_FIELD,
+					label: __( 'Trend', 'bimbeau-privacy-analytics' ),
+					render: ( { item: row } ) => {
+						const series = row.item?.[ metricSeriesKey ];
+
+						// One point (a single day) draws no trend.
+						return Array.isArray( series ) && series.length > 1 ? (
+							<MiniSparkline
+								series={ series }
+								maxValue={ seriesMaxValue }
+								filled
+								width={ 96 }
+								height={ 24 }
+							/>
+						) : null;
+					},
+					enableHiding: true,
+					enableSorting: false,
+					filterBy: false,
+			  }
+			: null;
 
 		const extraField = resolvedExtraMetricKey
 			? withHelp(
@@ -637,7 +748,9 @@ const ReportDataView = ( {
 			label: field.label,
 			getValue: ( { item: row } ) => field.getValue( row.item ),
 			render: ( { item: row } ) =>
-				field.render ? field.render( row.item ) : field.getValue( row.item ),
+				field.render
+					? field.render( row.item, rawItems )
+					: field.getValue( row.item ),
 			enableHiding: true,
 			enableSorting: Boolean( field.sortable ),
 			filterBy: false,
@@ -677,6 +790,8 @@ const ReportDataView = ( {
 			labelField,
 			...( supportsPageLabelToggle ? [ pageTitleField ] : [] ),
 			metricField,
+			...( changeField ? [ changeField ] : [] ),
+			...( seriesField ? [ seriesField ] : [] ),
 			...additionalFields,
 			...( extraField ? [ extraField ] : [] ),
 			...( openField ? [ openField ] : [] ),
@@ -684,6 +799,10 @@ const ReportDataView = ( {
 	}, [
 		comparisonValuesByKey,
 		extraFields,
+		inlineMetricChange,
+		isComparisonComplete,
+		rawItems,
+		seriesMaxValue,
 		extraMetricHelpText,
 		extraMetricLabel,
 		favicons,
@@ -708,6 +827,7 @@ const ReportDataView = ( {
 		rowActionLabel,
 		showMetricTrend,
 		showOpenButton,
+		showsPathUnderTitle,
 		supportsPageLabelToggle,
 	] );
 
@@ -753,6 +873,30 @@ const ReportDataView = ( {
 		setView( resetsPage ? { ...resolvedView, page: 1 } : resolvedView );
 	};
 
+	let comparisonNote = '';
+	if (
+		showMetricTrend &&
+		comparisonRange &&
+		( inlineMetricChange || view.fields.includes( CHANGE_FIELD ) )
+	) {
+		comparisonNote =
+			comparisonRange.start === comparisonRange.end
+				? sprintf(
+						/* translators: %s: Day of the previous period. */
+						__( 'Change compared with %s.', 'bimbeau-privacy-analytics' ),
+						formatDateStringForLocale( comparisonRange.start )
+				  )
+				: sprintf(
+						/* translators: 1: First day of the previous period, 2: Last day of the previous period. */
+						__(
+							'Change compared with the period from %1$s to %2$s.',
+							'bimbeau-privacy-analytics'
+						),
+						formatDateStringForLocale( comparisonRange.start ),
+						formatDateStringForLocale( comparisonRange.end )
+				  );
+	}
+
 	const emptyContent = emptyStateNoticeStatus ? (
 		<BrandNotice status={ emptyStateNoticeStatus } isDismissible={ false }>
 			<p>{ emptyLabel }</p>
@@ -795,10 +939,12 @@ const ReportDataView = ( {
 					) : null
 				}
 			/>
-			{ footnote ? (
+			{ footnote || comparisonNote ? (
 				<p className="bbpa-report-table__footnote bbpa-report-dataview__footnote">
 					<FeatureIcon name="info" size={ 16 } />
-					<span>{ footnote }</span>
+					<span>
+						{ [ footnote, comparisonNote ].filter( Boolean ).join( ' ' ) }
+					</span>
 				</p>
 			) : null }
 		</div>
