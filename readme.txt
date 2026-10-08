@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.67.3
+Stable tag: 8.67.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.67.3 =
-* [Fix] The setup wizard keeps the choices already made when it is closed with "Finish later" and resumed.
-* [Fix] The two buttons of the "Continue without geolocation?" confirmation are no longer stuck together.
+= 8.67.4 =
+* [Fix] Typing the ID of an event no longer closes its card at each keystroke, and the field explains that events already recorded keep their previous ID.
