@@ -389,7 +389,8 @@ const ReportDataView = ( {
 				typeof getComparisonKey === 'function'
 					? getComparisonKey( item )
 					: item?.label || '';
-			if ( key ) {
+			// An empty label is a real row (Direct in the referrer lists): compare it like the others.
+			if ( typeof key === 'string' ) {
 				values.set( key, Number( item?.[ metricValueKey ] || 0 ) );
 			}
 		} );

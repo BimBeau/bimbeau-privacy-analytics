@@ -192,7 +192,18 @@ class BBPA_Report_Controller {
                 'permission_callback' => function (WP_REST_Request $request) {
                     return $this->check_permissions_for_panel($request, 'referrers');
                 },
-                'args' => $list_args,
+                'args' => array_merge(
+                    $list_args,
+                    [
+                        // Counts visits instead of page views in `visits`; off by default to keep the payload unchanged.
+                        'count_visits' => [
+                            'required' => false,
+                            'type' => 'boolean',
+                            'default' => false,
+                            'sanitize_callback' => 'rest_sanitize_boolean',
+                        ],
+                    ]
+                ),
             ]
         );
 
@@ -982,7 +993,14 @@ class BBPA_Report_Controller {
         $page_path = $this->get_page_path_filter($request);
 
         // The cache is read before the source-table detection queries run.
-        $cache_key = $this->get_source_report_cache_key('referrers', $request, $range, $page_path);
+        // Only the opt-in adds a key part, so the cache keys of existing requests do not change.
+        $cache_key = $this->get_source_report_cache_key(
+            'referrers',
+            $request,
+            $range,
+            $page_path,
+            rest_sanitize_boolean($request->get_param('count_visits')) ? ['countVisits' => true] : []
+        );
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
             $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'label');
@@ -1062,18 +1080,21 @@ class BBPA_Report_Controller {
      *
      * The key only depends on request parameters, so a cache hit skips the table detection.
      */
-    private function get_source_report_cache_key(string $cache_id, WP_REST_Request $request, array $range, string $page_path): string {
+    private function get_source_report_cache_key(string $cache_id, WP_REST_Request $request, array $range, string $page_path, array $extra = []): string {
         return $this->get_cache_key(
             $cache_id,
-            [
-                'range' => $range,
-                'pagination' => $this->normalize_pagination($request),
-                'orderby' => sanitize_key((string) $request->get_param('orderby')),
-                'order' => strtoupper(sanitize_key((string) $request->get_param('order'))) === 'ASC' ? 'ASC' : 'DESC',
-                'search' => $this->get_search_term($request),
-                'pagePath' => $page_path,
-                'contract' => 2,
-            ]
+            array_merge(
+                [
+                    'range' => $range,
+                    'pagination' => $this->normalize_pagination($request),
+                    'orderby' => sanitize_key((string) $request->get_param('orderby')),
+                    'order' => strtoupper(sanitize_key((string) $request->get_param('order'))) === 'ASC' ? 'ASC' : 'DESC',
+                    'search' => $this->get_search_term($request),
+                    'pagePath' => $page_path,
+                    'contract' => 2,
+                ],
+                $extra
+            )
         );
     }
 
@@ -3051,11 +3072,16 @@ class BBPA_Report_Controller {
         $pagination = $this->normalize_pagination($request);
         $search_term = $this->get_search_term($request);
         $page_path = $this->get_page_path_filter($request);
+        // Opt-in: `visits` counts the visits that started from each referrer (the `visits` column of the
+        // aggregate table) instead of repeating the page views. Off by default to keep the payload unchanged.
+        $count_aggregate_visits = $is_aggregate_table
+            && rest_sanitize_boolean($request->get_param('count_visits'))
+            && $this->table_has_column($table, 'visits');
         $sorting = $this->normalize_sorting(
             $request,
             [
                 'hits' => $is_aggregate_table ? 'hits' : 'visits',
-                'visits' => $is_aggregate_table ? 'hits' : 'visits',
+                'visits' => $is_aggregate_table && !$count_aggregate_visits ? 'hits' : 'visits',
                 'label' => 'referrer_domain',
             ],
             'visits'
@@ -3100,8 +3126,9 @@ class BBPA_Report_Controller {
                 $search_args,
                 [$pagination['per_page'], $pagination['offset']]
             );
+            $visits_sql = $count_aggregate_visits ? 'SUM(visits)' : 'SUM(hits)';
             $list_query = $wpdb->prepare(
-                "SELECT referrer_domain AS label, SUM(hits) AS hits
+                "SELECT referrer_domain AS label, SUM(hits) AS hits, {$visits_sql} AS visits
                 FROM {$table}
                 WHERE {$date_column} BETWEEN %s AND %s{$page_sql}{$search_sql}
                 GROUP BY referrer_domain
@@ -3127,7 +3154,7 @@ class BBPA_Report_Controller {
                     return [
                         'label' => isset($row['label']) ? sanitize_text_field((string) $row['label']) : '',
                         'hits' => $hits,
-                        'visits' => $hits,
+                        'visits' => isset($row['visits']) ? (int) $row['visits'] : $hits,
                     ];
                 },
                 $rows ?: []
