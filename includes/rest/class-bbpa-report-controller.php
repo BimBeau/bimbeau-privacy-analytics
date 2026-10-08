@@ -304,6 +304,46 @@ class BBPA_Report_Controller {
             ]
         );
 
+        $visitors_args = array_merge(
+            $list_args,
+            [
+                'visitor_type' => [
+                    'type' => 'string',
+                    'required' => false,
+                    'sanitize_callback' => 'sanitize_key',
+                ],
+                // Optional: `enriched` lists only visitor rows with advanced (consented) data.
+                'data_scope' => [
+                    'type' => 'string',
+                    'required' => false,
+                    'enum' => self::VISITORS_DATA_SCOPES,
+                    'validate_callback' => 'rest_validate_request_arg',
+                    'sanitize_callback' => 'sanitize_key',
+                ],
+                // Optional list filters: two-letter country code, device class and channel key.
+                'country_code' => [
+                    'type' => 'string',
+                    'required' => false,
+                    'pattern' => '^[A-Za-z]{2}$',
+                    'validate_callback' => 'rest_validate_request_arg',
+                ],
+                'device_class' => [
+                    'type' => 'string',
+                    'required' => false,
+                    'enum' => self::VISITORS_DEVICE_FILTERS,
+                    'validate_callback' => 'rest_validate_request_arg',
+                    'sanitize_callback' => 'sanitize_key',
+                ],
+                'source_category' => [
+                    'type' => 'string',
+                    'required' => false,
+                    'enum' => array_keys(self::VISITORS_CHANNEL_FILTERS),
+                    'validate_callback' => 'rest_validate_request_arg',
+                    'sanitize_callback' => 'sanitize_key',
+                ],
+            ]
+        );
+
         register_rest_route(
             BBPA_REST_NAMESPACE,
             '/visitors',
@@ -313,45 +353,21 @@ class BBPA_Report_Controller {
                 'permission_callback' => function (WP_REST_Request $request) {
                     return $this->check_permissions_for_panel($request, 'visitors');
                 },
-                'args' => array_merge(
-                    $list_args,
-                    [
-                        'visitor_type' => [
-                            'type' => 'string',
-                            'required' => false,
-                            'sanitize_callback' => 'sanitize_key',
-                        ],
-                        // Optional: `enriched` lists only visitor rows with advanced (consented) data.
-                        'data_scope' => [
-                            'type' => 'string',
-                            'required' => false,
-                            'enum' => self::VISITORS_DATA_SCOPES,
-                            'validate_callback' => 'rest_validate_request_arg',
-                            'sanitize_callback' => 'sanitize_key',
-                        ],
-                        // Optional list filters: two-letter country code, device class and channel key.
-                        'country_code' => [
-                            'type' => 'string',
-                            'required' => false,
-                            'pattern' => '^[A-Za-z]{2}$',
-                            'validate_callback' => 'rest_validate_request_arg',
-                        ],
-                        'device_class' => [
-                            'type' => 'string',
-                            'required' => false,
-                            'enum' => self::VISITORS_DEVICE_FILTERS,
-                            'validate_callback' => 'rest_validate_request_arg',
-                            'sanitize_callback' => 'sanitize_key',
-                        ],
-                        'source_category' => [
-                            'type' => 'string',
-                            'required' => false,
-                            'enum' => array_keys(self::VISITORS_CHANNEL_FILTERS),
-                            'validate_callback' => 'rest_validate_request_arg',
-                            'sanitize_callback' => 'sanitize_key',
-                        ],
-                    ]
-                ),
+                'args' => $visitors_args,
+            ]
+        );
+
+        // Browser, operating system, device and resolution totals of every visitor matching the /visitors filters.
+        register_rest_route(
+            BBPA_REST_NAMESPACE,
+            '/visitors/breakdowns',
+            [
+                'methods' => 'GET',
+                'callback' => [$this, 'get_visitor_breakdowns'],
+                'permission_callback' => function (WP_REST_Request $request) {
+                    return $this->check_permissions_for_panel($request, 'visitors');
+                },
+                'args' => $visitors_args,
             ]
         );
 
@@ -1247,56 +1263,7 @@ class BBPA_Report_Controller {
             return new WP_REST_Response($cached, 200);
         }
 
-        $where = ['last_view_at BETWEEN %d AND %d'];
-        $params = [
-            bbpa_get_site_day_bounds($range['start'], $range['end'])[0],
-            bbpa_get_site_day_bounds($range['start'], $range['end'])[1],
-        ];
-        if ($visitor_type === 'bot') {
-            $where[] = 'device_class = %s';
-            $params[] = 'bot';
-        } else {
-            $where[] = 'device_class <> %s';
-            $params[] = 'bot';
-        }
-
-        if (isset($list_filters['country_code'])) {
-            $where[] = 'country_code = %s';
-            $params[] = $list_filters['country_code'];
-        }
-        if (isset($list_filters['device_class'])) {
-            $where[] = 'device_class = %s';
-            $params[] = $list_filters['device_class'];
-        }
-        if (isset($list_filters['source_category']) && $this->table_has_column($table, 'source_category')) {
-            $channel_values = array_merge(
-                [$list_filters['source_category']],
-                self::VISITORS_CHANNEL_FILTERS[$list_filters['source_category']]
-            );
-            $where[] = 'source_category IN (' . implode(', ', array_fill(0, count($channel_values), '%s')) . ')';
-            $params = array_merge($params, $channel_values);
-        }
-
-        if ($search_term !== '') {
-            $like = '%' . $wpdb->esc_like($search_term) . '%';
-            $allowed_search_columns = [
-                'visitor_id', 'country', 'country_code', 'referrer_domain', 'source_category',
-                'browser', 'browser_version', 'device_class', 'operating_system',
-                'screen_resolution', 'entry_page', 'exit_page',
-            ];
-            $search_columns = apply_filters('bbpa_visitors_search_columns', $allowed_search_columns);
-            $search_columns = array_values(array_intersect((array) $search_columns, apply_filters('bbpa_visitors_search_column_allowlist', $allowed_search_columns)));
-            if ($search_columns !== []) {
-                $where[] = '(' . implode(' OR ', array_map(static fn(string $column): string => $column . ' LIKE %s', $search_columns)) . ')';
-                $params = array_merge($params, array_fill(0, count($search_columns), $like));
-            }
-        }
-
-        if ($page_path !== '') {
-            $where[] = '(entry_page = %s OR exit_page = %s)';
-            $params[] = $page_path;
-            $params[] = $page_path;
-        }
+        [$where, $params] = $this->build_visitors_where_clauses($table, $range, $visitor_type, $list_filters, $search_term, $page_path);
 
         $total_items = 0;
         $hidden_private_items = 0;
@@ -1399,6 +1366,196 @@ class BBPA_Report_Controller {
             $payload,
             'visitors',
             $this->should_persist_cached_payload($search_term, $pagination)
+        );
+
+        return new WP_REST_Response($payload, 200);
+    }
+
+    /**
+     * WHERE clauses of the visitors report: last view in the site-day range, visitor type, list filters,
+     * search and page path. Values stay `$wpdb->prepare()` placeholders.
+     *
+     * @param array<string, string> $range        Day range.
+     * @param array<string, string> $list_filters Active list filters (get_visitors_list_filters()).
+     * @return array{0: list<string>, 1: list<int|string>} Clauses and their placeholder values.
+     */
+    private function build_visitors_where_clauses(string $table, array $range, string $visitor_type, array $list_filters, string $search_term, string $page_path): array {
+        global $wpdb;
+
+        $where = ['last_view_at BETWEEN %d AND %d'];
+        $params = [
+            bbpa_get_site_day_bounds($range['start'], $range['end'])[0],
+            bbpa_get_site_day_bounds($range['start'], $range['end'])[1],
+        ];
+        if ($visitor_type === 'bot') {
+            $where[] = 'device_class = %s';
+            $params[] = 'bot';
+        } else {
+            $where[] = 'device_class <> %s';
+            $params[] = 'bot';
+        }
+
+        if (isset($list_filters['country_code'])) {
+            $where[] = 'country_code = %s';
+            $params[] = $list_filters['country_code'];
+        }
+        if (isset($list_filters['device_class'])) {
+            $where[] = 'device_class = %s';
+            $params[] = $list_filters['device_class'];
+        }
+        if (isset($list_filters['source_category']) && $this->table_has_column($table, 'source_category')) {
+            $channel_values = array_merge(
+                [$list_filters['source_category']],
+                self::VISITORS_CHANNEL_FILTERS[$list_filters['source_category']]
+            );
+            $where[] = 'source_category IN (' . implode(', ', array_fill(0, count($channel_values), '%s')) . ')';
+            $params = array_merge($params, $channel_values);
+        }
+
+        if ($search_term !== '') {
+            $like = '%' . $wpdb->esc_like($search_term) . '%';
+            $allowed_search_columns = [
+                'visitor_id', 'country', 'country_code', 'referrer_domain', 'source_category',
+                'browser', 'browser_version', 'device_class', 'operating_system',
+                'screen_resolution', 'entry_page', 'exit_page',
+            ];
+            $search_columns = apply_filters('bbpa_visitors_search_columns', $allowed_search_columns);
+            $search_columns = array_values(array_intersect((array) $search_columns, apply_filters('bbpa_visitors_search_column_allowlist', $allowed_search_columns)));
+            if ($search_columns !== []) {
+                $where[] = '(' . implode(' OR ', array_map(static fn(string $column): string => $column . ' LIKE %s', $search_columns)) . ')';
+                $params = array_merge($params, array_fill(0, count($search_columns), $like));
+            }
+        }
+
+        if ($page_path !== '') {
+            $where[] = '(entry_page = %s OR exit_page = %s)';
+            $params[] = $page_path;
+            $params[] = $page_path;
+        }
+
+        return [$where, $params];
+    }
+
+    /**
+     * Browser, operating system, device class, browser version and resolution totals of the visitors
+     * matching the /visitors filters, for the whole range instead of one page of visitor rows.
+     *
+     * Each dimension lists `{ label, page_views, visitors }` sorted by page views; empty labels are kept
+     * (visitors without the detail, such as Essential-only rows) so clients can leave them out of shares.
+     */
+    public function get_visitor_breakdowns(WP_REST_Request $request): WP_REST_Response {
+        global $wpdb;
+
+        $range = $this->get_day_range($request);
+        $search_term = $this->get_search_term($request);
+        $page_path = $this->get_page_path_filter($request);
+        $visitor_type = sanitize_key((string) $request->get_param('visitor_type'));
+        if (!in_array($visitor_type, ['human', 'bot'], true)) {
+            $visitor_type = 'human';
+        }
+        $data_scope = $this->get_visitors_data_scope($request);
+        $list_filters = $visitor_type === 'bot' ? [] : $this->get_visitors_list_filters($request);
+
+        $cache_key = $this->get_cache_key(
+            'visitor-breakdowns',
+            [
+                'range' => $range,
+                'search' => $search_term,
+                'pagePath' => $page_path,
+                'visitorType' => $visitor_type,
+                'dataScope' => $data_scope,
+                'filters' => $list_filters,
+            ]
+        );
+        $cached = $this->get_cached_payload($cache_key);
+        if ($cached !== null) {
+            return new WP_REST_Response($cached, 200);
+        }
+
+        $table = bbpa_sql_table_name('bbpa_visitors');
+        [$where, $params] = $this->build_visitors_where_clauses($table, $range, $visitor_type, $list_filters, $search_term, $page_path);
+        if ($data_scope === 'enriched') {
+            $where[] = 'has_enriched_data = %d';
+            $params[] = 1;
+        }
+        $where_sql = $this->compile_visitors_where_sql($where);
+
+        // One scan of the visitors table: totals per combination of the dimensions, folded per dimension below.
+        $rows = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT device_class, operating_system, browser, browser_version, screen_resolution,
+                    COUNT(*) AS visitors, COALESCE(SUM(total_views), 0) AS page_views
+                FROM {$table}
+                WHERE {$where_sql}
+                GROUP BY device_class, operating_system, browser, browser_version, screen_resolution",
+                $params
+            ),
+            ARRAY_A
+        );
+
+        $dimensions = [
+            'device_class' => [],
+            'operating_system' => [],
+            'browser' => [],
+            'browser_version' => [],
+            'screen_resolution' => [],
+        ];
+        $total_visitors = 0;
+        $total_page_views = 0;
+        foreach (is_array($rows) ? $rows : [] as $row) {
+            $visitors = absint($row['visitors'] ?? 0);
+            $page_views = absint($row['page_views'] ?? 0);
+            $total_visitors += $visitors;
+            $total_page_views += $page_views;
+
+            $browser = sanitize_text_field((string) ($row['browser'] ?? ''));
+            $labels = [
+                'device_class' => sanitize_text_field((string) ($row['device_class'] ?? '')),
+                'operating_system' => sanitize_text_field((string) ($row['operating_system'] ?? '')),
+                'browser' => $browser,
+                'browser_version' => sanitize_text_field((string) ($row['browser_version'] ?? '')),
+                'screen_resolution' => $this->normalize_screen_resolution_for_reports(
+                    sanitize_text_field((string) ($row['screen_resolution'] ?? ''))
+                ),
+            ];
+            foreach ($labels as $dimension => $label) {
+                $key = $dimension === 'browser_version' ? $browser . "\0" . $label : $label;
+                if (!isset($dimensions[$dimension][$key])) {
+                    $dimensions[$dimension][$key] = $dimension === 'browser_version'
+                        ? ['browser' => $browser, 'label' => $label, 'page_views' => 0, 'visitors' => 0]
+                        : ['label' => $label, 'page_views' => 0, 'visitors' => 0];
+                }
+                $dimensions[$dimension][$key]['page_views'] += $page_views;
+                $dimensions[$dimension][$key]['visitors'] += $visitors;
+            }
+        }
+
+        foreach ($dimensions as $dimension => $items) {
+            $items = array_values($items);
+            usort(
+                $items,
+                static function (array $left, array $right): int {
+                    return [$right['page_views'], $right['visitors'], $left['label']] <=> [$left['page_views'], $left['visitors'], $right['label']];
+                }
+            );
+            $dimensions[$dimension] = $items;
+        }
+
+        $payload = [
+            'range' => $range,
+            'visitorType' => $visitor_type,
+            'totals' => [
+                'visitors' => $total_visitors,
+                'pageViews' => $total_page_views,
+            ],
+            'breakdowns' => $dimensions,
+        ];
+
+        $this->set_cached_payload(
+            $cache_key,
+            $payload,
+            'visitors',
+            $search_term === ''
         );
 
         return new WP_REST_Response($payload, 200);

@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.67.4
+Stable tag: 8.68.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.67.4 =
-* [Fix] Typing the ID of an event no longer closes its card at each keystroke, and the field explains that events already recorded keep their previous ID.
+= 8.68.0 =
+* [Fix] The Devices report and the page details count every visitor of the range instead of the 500 most recent ones.
+* [Feature] New REST route `GET /visitors/breakdowns` with the browser, operating system, device and resolution totals of the visitors.

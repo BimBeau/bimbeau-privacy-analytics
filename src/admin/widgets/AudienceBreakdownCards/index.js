@@ -10,9 +10,8 @@ import { ADMIN_CONFIG } from '../../constants';
 import { buildAudienceBreakdownSections } from '../../lib/audienceBreakdowns';
 import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
 import {
-	DEVICE_DETAILS_VISITOR_SAMPLE_SIZE,
 	buildDeviceDetailsBreakdowns,
-	sumRobotPageViews,
+	getRobotTotals,
 	withRobotDeviceItem,
 } from '../../lib/deviceDetails';
 import { formatNumber } from '../../lib/formatters';
@@ -51,7 +50,6 @@ const BreakdownCard = ( {
 	items,
 	emptyLabel,
 	totalHits,
-	sample,
 	headerActions = null,
 	extraSummary = null,
 } ) => {
@@ -142,25 +140,14 @@ const BreakdownCard = ( {
 				) ) }
 			</ul>
 			<p className="bbpa-audience-breakdown-card__summary">
-				{ sample
-					? sprintf(
-							/* translators: 1: page views counted in the breakdown, 2: number of visitors read, 3: number of visitors in the selected range. */
-							__(
-								'Based on %1$s page views of the %2$s most active visitors, out of %3$s visitors in the selected range.',
-								'bimbeau-privacy-analytics'
-							),
-							formatNumber( totalHits ),
-							formatNumber( sample.readVisitors ),
-							formatNumber( sample.totalVisitors )
-					  )
-					: sprintf(
-							/* translators: %s: total page views in the selected range. */
-							__(
-								'Based on %s tracked page views in the selected range.',
-								'bimbeau-privacy-analytics'
-							),
-							totalHits
-					  ) }
+				{ sprintf(
+					/* translators: %s: total page views in the selected range. */
+					__(
+						'Based on %s tracked page views in the selected range.',
+						'bimbeau-privacy-analytics'
+					),
+					formatNumber( totalHits )
+				) }
 			</p>
 			{ extraSummary ? (
 				<p className="bbpa-audience-breakdown-card__summary">
@@ -174,11 +161,11 @@ const BreakdownCard = ( {
 /**
  * Summary line of the robot row of the device card.
  *
- * @param {Object} robotsState { data, isLoading, error } of the bot /visitors request.
- * @param {number} robotHits   Robot page views read.
+ * @param {Object} robotsState { data, isLoading, error } of the bot /visitors/breakdowns request.
+ * @param {Object} robotTotals { hits, robots } read from it.
  * @return {string|null} Summary, or null while loading.
  */
-const getRobotsSummary = ( robotsState, robotHits ) => {
+const getRobotsSummary = ( robotsState, robotTotals ) => {
 	if ( robotsState.error ) {
 		return __(
 			'Robot page views could not be loaded.',
@@ -190,32 +177,15 @@ const getRobotsSummary = ( robotsState, robotHits ) => {
 		return null;
 	}
 
-	const readRobots = Array.isArray( robotsState.data?.items )
-		? robotsState.data.items.length
-		: 0;
-	const totalRobots = Number( robotsState.data?.pagination?.totalItems );
 	const excludedNote = __(
 		'Robots stay excluded from every other report.',
 		'bimbeau-privacy-analytics'
 	);
 
-	if ( readRobots === 0 ) {
+	if ( robotTotals.robots === 0 ) {
 		return `${ __(
 			'No robot was detected in the selected range.',
 			'bimbeau-privacy-analytics'
-		) } ${ excludedNote }`;
-	}
-
-	if ( Number.isFinite( totalRobots ) && totalRobots > readRobots ) {
-		return `${ sprintf(
-			/* translators: 1: robot page views, 2: number of robots read, 3: number of robots in the selected range. */
-			__(
-				'Includes %1$s page views of the %2$s most active robots, out of %3$s robots in the selected range.',
-				'bimbeau-privacy-analytics'
-			),
-			formatNumber( robotHits ),
-			formatNumber( readRobots ),
-			formatNumber( totalRobots )
 		) } ${ excludedNote }`;
 	}
 
@@ -224,103 +194,71 @@ const getRobotsSummary = ( robotsState, robotHits ) => {
 		_n(
 			'Includes %1$s page views of %2$s robot.',
 			'Includes %1$s page views of %2$s robots.',
-			readRobots,
+			robotTotals.robots,
 			'bimbeau-privacy-analytics'
 		),
-		formatNumber( robotHits ),
-		formatNumber( readRobots )
+		formatNumber( robotTotals.hits ),
+		formatNumber( robotTotals.robots )
 	) } ${ excludedNote }`;
-};
-
-/**
- * Visitors read versus visitors of the range, when /visitors returned only the
- * most active visitors of the range.
- *
- * @param {Object|null} data /visitors response.
- * @return {{readVisitors: number, totalVisitors: number}|null} Sample sizes, or null when every visitor was read.
- */
-const getVisitorSample = ( data ) => {
-	const readVisitors = Array.isArray( data?.items ) ? data.items.length : 0;
-	const totalVisitors = Number( data?.pagination?.totalItems );
-
-	if ( ! Number.isFinite( totalVisitors ) || totalVisitors <= readVisitors ) {
-		return null;
-	}
-
-	return { readVisitors, totalVisitors };
 };
 
 /**
  * Browser, operating system, device and resolution breakdowns.
  *
- * The breakdowns are built from the most active visitors of the range (one
- * /visitors page of DEVICE_DETAILS_VISITOR_SAMPLE_SIZE rows); the summary says
- * so when the range has more visitors.
+ * The breakdowns come from GET /visitors/breakdowns: page view totals of every visitor matching the
+ * range and the request parameters, grouped on the server.
  *
  * @param {Object}  props                    Component props.
  * @param {Object}  props.range              Selected range.
- * @param {Object}  props.requestParams      Extra /visitors parameters.
+ * @param {Object}  props.requestParams      Extra /visitors/breakdowns parameters (page_path).
  * @param {boolean} props.includeResolutions Whether to render the resolution card.
- * @param {Object}  props.visitorsState      Optional { data, isLoading, error } of the same
- *                                           /visitors request made by the parent: no request is sent then.
+ * @param {Object}  props.breakdownsState    Optional { data, isLoading, error } of the same
+ *                                           /visitors/breakdowns request made by the parent: no request is sent then.
  * @param {boolean} props.allowRobotsToggle  Whether the device card offers the "Include robots" switch,
- *                                           which adds a robot row read from the Robots list of the
- *                                           Visitors report (most active robots, same sample size).
+ *                                           which adds a robot row from the robot totals of the range.
  */
 const AudienceBreakdownCards = ( {
 	range,
 	requestParams = {},
 	includeResolutions = false,
-	visitorsState,
+	breakdownsState,
 	allowRobotsToggle = false,
 } ) => {
 	const [ includeRobots, setIncludeRobots ] = useState( false );
 	const showRobots = allowRobotsToggle && includeRobots;
-	const hasVisitorsState = Boolean( visitorsState );
+	const hasBreakdownsState = Boolean( breakdownsState );
 	const endpointState = useAdminEndpoint(
-		'/visitors',
+		'/visitors/breakdowns',
 		{
 			...range,
 			...requestParams,
-			page: 1,
-			per_page: DEVICE_DETAILS_VISITOR_SAMPLE_SIZE,
-			orderby: 'pages',
-			order: 'desc',
 		},
 		{
 			namespace: ADMIN_CONFIG?.settings?.restNamespace,
-			enabled: ! hasVisitorsState,
+			enabled: ! hasBreakdownsState,
 		}
 	);
-	const { data, isLoading, error } = hasVisitorsState
-		? visitorsState
+	const { data, isLoading, error } = hasBreakdownsState
+		? breakdownsState
 		: endpointState;
-	const stats = useMemo(
-		() => buildDeviceDetailsBreakdowns( data?.items || [] ),
-		[ data ]
-	);
-	const sample = useMemo( () => getVisitorSample( data ), [ data ] );
+	const stats = useMemo( () => buildDeviceDetailsBreakdowns( data ), [ data ] );
 	const sections = useMemo(
 		() => buildAudienceBreakdownSections( stats ),
 		[ stats ]
 	);
 	const robotsState = useAdminEndpoint(
-		'/visitors',
+		'/visitors/breakdowns',
 		{
 			...range,
 			visitor_type: 'bot',
-			page: 1,
-			per_page: DEVICE_DETAILS_VISITOR_SAMPLE_SIZE,
-			orderby: 'pages',
-			order: 'desc',
 		},
 		{
 			namespace: ADMIN_CONFIG?.settings?.restNamespace,
 			enabled: showRobots,
 		}
 	);
-	const robotHits = useMemo(
-		() => sumRobotPageViews( robotsState.data?.items ),
+	const robotTotals = useMemo(
+		() => getRobotTotals( robotsState.data ),
 		[ robotsState.data ]
 	);
 	const hasRobotRow =
@@ -331,9 +269,9 @@ const AudienceBreakdownCards = ( {
 	const deviceItems = useMemo(
 		() =>
 			hasRobotRow
-				? withRobotDeviceItem( sections.devices, robotHits )
+				? withRobotDeviceItem( sections.devices, robotTotals.hits )
 				: sections.devices,
-		[ hasRobotRow, sections.devices, robotHits ]
+		[ hasRobotRow, sections.devices, robotTotals.hits ]
 	);
 	const robotsToggle = allowRobotsToggle ? (
 		<ToggleControl
@@ -372,7 +310,6 @@ const AudienceBreakdownCards = ( {
 						title={ __( 'Browser usage', 'bimbeau-privacy-analytics' ) }
 						items={ sections.browsers }
 						totalHits={ stats.totalHits }
-						sample={ sample }
 						emptyLabel={ __(
 							'No browser usage available.',
 							'bimbeau-privacy-analytics'
@@ -386,7 +323,6 @@ const AudienceBreakdownCards = ( {
 						) }
 						items={ sections.operatingSystems }
 						totalHits={ stats.totalHits }
-						sample={ sample }
 						emptyLabel={ __(
 							'No operating system usage available.',
 							'bimbeau-privacy-analytics'
@@ -397,11 +333,10 @@ const AudienceBreakdownCards = ( {
 						title={ __( 'Device usage breakdown', 'bimbeau-privacy-analytics' ) }
 						items={ deviceItems }
 						totalHits={ stats.totalHits }
-						sample={ sample }
 						headerActions={ robotsToggle }
 						extraSummary={
 							showRobots
-								? getRobotsSummary( robotsState, robotHits )
+								? getRobotsSummary( robotsState, robotTotals )
 								: null
 						}
 						emptyLabel={ __(
@@ -415,7 +350,6 @@ const AudienceBreakdownCards = ( {
 							title={ __( 'Resolution', 'bimbeau-privacy-analytics' ) }
 							items={ sections.resolutions }
 							totalHits={ stats.totalHits }
-							sample={ sample }
 							emptyLabel={ __(
 								'No resolution data available.',
 								'bimbeau-privacy-analytics'

@@ -1,13 +1,5 @@
 import { formatScreenResolution } from './formatScreenResolution';
 
-/**
- * Number of visitors read from /visitors to build the browser, system, device
- * and resolution breakdowns. The rows are the most active visitors of the
- * range (sorted by page views), so the breakdowns are a sample when the range
- * has more visitors.
- */
-export const DEVICE_DETAILS_VISITOR_SAMPLE_SIZE = 500;
-
 const UNKNOWN_LABELS = new Set( [
 	'unknown',
 	'null',
@@ -69,57 +61,65 @@ const toPercentItems = ( map ) => {
 	};
 };
 
-export const buildDeviceDetailsBreakdowns = ( visitors = [] ) => {
-	const deviceMap = new Map();
-	const osMap = new Map();
-	const browserMap = new Map();
-	const resolutionMap = new Map();
-	const browserVersionMap = new Map();
-	let totalHits = 0;
+/**
+ * Page views of one /visitors/breakdowns dimension, keyed by label. Unidentified labels are left out.
+ *
+ * @param {Array}    rows     Dimension rows ({ label, page_views }).
+ * @param {Function} getLabel Display label of a row.
+ * @return {Map} Page views by label.
+ */
+const sumDimensionHits = ( rows, getLabel ) => {
+	const map = new Map();
 
-	visitors.forEach( ( item ) => {
-		const hits = Number.isFinite( item?.page_views )
-			? item.page_views
-			: Number( item?.page_views || 0 );
-		if ( hits <= 0 ) {
-			return;
-		}
-
-		totalHits += hits;
-		const deviceLabel = normalizeLabel( item?.device_class );
-		const osLabel = normalizeLabel( item?.operating_system );
-		const browserLabel = normalizeLabel( item?.browser );
-		const resolutionLabel = normalizeLabel(
-			formatScreenResolution( item?.screen_resolution )
-		);
-		const browserVersion = normalizeLabel( item?.browser_version, '' );
-
-		addIdentifiedHits( deviceMap, deviceLabel, hits );
-		addIdentifiedHits( osMap, osLabel, hits );
-		addIdentifiedHits( browserMap, browserLabel, hits );
-		addIdentifiedHits( resolutionMap, resolutionLabel, hits );
-
-		if (
-			browserVersion &&
-			! isUnidentifiedDeviceDetailLabel( browserLabel ) &&
-			! isUnidentifiedDeviceDetailLabel( browserVersion )
-		) {
-			const browserKey = `${ browserLabel } ${ browserVersion }`;
-			browserVersionMap.set(
-				browserKey,
-				( browserVersionMap.get( browserKey ) || 0 ) + hits
-			);
+	( Array.isArray( rows ) ? rows : [] ).forEach( ( row ) => {
+		const hits = Number( row?.page_views ) || 0;
+		if ( hits > 0 ) {
+			addIdentifiedHits( map, getLabel( row ), hits );
 		}
 	} );
 
-	const devices = toPercentItems( deviceMap );
-	const operatingSystems = toPercentItems( osMap );
-	const browsers = toPercentItems( browserMap );
-	const resolutions = toPercentItems( resolutionMap );
-	const browserVersions = toPercentItems( browserVersionMap );
+	return map;
+};
+
+/**
+ * Browser, operating system, device, resolution and browser version breakdowns from the
+ * GET /visitors/breakdowns totals, which cover every visitor of the range. Shares are computed
+ * over the page views with an identified label; `totalHits` counts the page views of every visitor.
+ *
+ * @param {Object} payload /visitors/breakdowns response ({ totals, breakdowns }).
+ * @return {Object} Breakdown items and identified totals.
+ */
+export const buildDeviceDetailsBreakdowns = ( payload ) => {
+	const breakdowns = payload?.breakdowns || {};
+	const devices = toPercentItems(
+		sumDimensionHits( breakdowns.device_class, ( row ) => normalizeLabel( row?.label ) )
+	);
+	const operatingSystems = toPercentItems(
+		sumDimensionHits( breakdowns.operating_system, ( row ) => normalizeLabel( row?.label ) )
+	);
+	const browsers = toPercentItems(
+		sumDimensionHits( breakdowns.browser, ( row ) => normalizeLabel( row?.label ) )
+	);
+	const resolutions = toPercentItems(
+		sumDimensionHits( breakdowns.screen_resolution, ( row ) =>
+			normalizeLabel( formatScreenResolution( row?.label ) )
+		)
+	);
+	const browserVersions = toPercentItems(
+		sumDimensionHits( breakdowns.browser_version, ( row ) => {
+			const browserLabel = normalizeLabel( row?.browser );
+			const browserVersion = normalizeLabel( row?.label, '' );
+
+			return isUnidentifiedDeviceDetailLabel( browserLabel ) ||
+				isUnidentifiedDeviceDetailLabel( browserVersion )
+				? ''
+				: `${ browserLabel } ${ browserVersion }`;
+		} )
+	);
+	const totalHits = Number( payload?.totals?.pageViews );
 
 	return {
-		totalHits,
+		totalHits: Number.isFinite( totalHits ) && totalHits > 0 ? totalHits : 0,
 		devices: devices.items,
 		devicesIdentifiedTotal: devices.identifiedTotal,
 		operatingSystems: operatingSystems.items,
@@ -134,17 +134,20 @@ export const buildDeviceDetailsBreakdowns = ( visitors = [] ) => {
 };
 
 /**
- * Page views of the robots read from /visitors (visitor_type=bot).
+ * Robot totals of a /visitors/breakdowns response requested with visitor_type=bot.
  *
- * @param {Array} robots Bot visitor rows.
- * @return {number} Sum of their page views.
+ * @param {Object} payload Bot /visitors/breakdowns response.
+ * @return {{hits: number, robots: number}} Robot page views and number of robots.
  */
-export const sumRobotPageViews = ( robots = [] ) =>
-	( Array.isArray( robots ) ? robots : [] ).reduce( ( total, item ) => {
-		const hits = Number( item?.page_views || 0 );
+export const getRobotTotals = ( payload ) => {
+	const hits = Number( payload?.totals?.pageViews );
+	const robots = Number( payload?.totals?.visitors );
 
-		return Number.isFinite( hits ) && hits > 0 ? total + hits : total;
-	}, 0 );
+	return {
+		hits: Number.isFinite( hits ) && hits > 0 ? hits : 0,
+		robots: Number.isFinite( robots ) && robots > 0 ? robots : 0,
+	};
+};
 
 /**
  * Device items with a robot row appended, shares recomputed over the human and
