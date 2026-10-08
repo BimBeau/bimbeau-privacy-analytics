@@ -180,7 +180,7 @@ export const getVisitorFields = ( {
 } = {} ) => {
 	const visitorField = {
 		id: 'visitor',
-		label: __( 'Visitor ID hash', 'bimbeau-privacy-analytics' ),
+		label: __( 'Visitor ID', 'bimbeau-privacy-analytics' ),
 		enableHiding: false,
 		getValue: ( { item } ) => item.visitor_id || '',
 		render: ( { item } ) =>

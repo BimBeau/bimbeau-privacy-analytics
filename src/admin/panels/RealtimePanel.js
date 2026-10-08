@@ -408,7 +408,7 @@ const getPlaceholderLabelClassName = (label, baseClassName = '') => {
 };
 
 const VISITOR_TABLE_LABELS = {
-	visitorId: __('Visitor ID hash', 'bimbeau-privacy-analytics'),
+	visitorId: __('Visitor ID', 'bimbeau-privacy-analytics'),
 	country: __('Country', 'bimbeau-privacy-analytics'),
 	city: __('City', 'bimbeau-privacy-analytics'),
 	connectionTime: __('Connection time', 'bimbeau-privacy-analytics'),

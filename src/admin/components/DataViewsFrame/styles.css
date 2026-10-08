@@ -41,3 +41,11 @@
     padding-left: 16px;
   }
 }
+
+/*
+ * With a primary filter, DataViews always shows the filter chips and keeps its filter button
+ * disabled: it would look like a control that does nothing, so its container is hidden.
+ */
+.dataviews-filters__container-visibility-toggle:has(> .dataviews-filters__visibility-toggle[aria-disabled="true"]) {
+  display: none;
+}
