@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.68.4
+Stable tag: 8.68.5
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.68.4 =
-* [Dev] Automerge reads the mergeability of a pull request again for a few seconds when GitHub is still computing it, instead of leaving a ready pull request unmerged.
+= 8.68.5 =
+* [Fix] Page details now open at the top of the page instead of keeping the scroll position of the pages list.
+* [Fix] The number of items per page can be changed again in the triggered events list.
