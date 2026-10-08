@@ -2635,7 +2635,7 @@ function bbpa_normalize_admin_availability($availability): string
  * Get the effective hidden panels list from settings and consent-gated advanced stats.
  *
  * When advanced statistics are disabled, the panels that depend on them
- * (BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS) and the realtime panel are hidden.
+ * (BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS, which includes the realtime panel) are hidden.
  */
 function bbpa_get_effective_hidden_panels(array $settings): array
 {
@@ -2648,8 +2648,7 @@ function bbpa_get_effective_hidden_panels(array $settings): array
         return $hidden_panels;
     }
 
-    $consent_gated_panels = array_merge(BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS, ['realtime']);
-    return array_values(array_unique(array_merge($hidden_panels, $consent_gated_panels)));
+    return array_values(array_unique(array_merge($hidden_panels, BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS)));
 }
 
 /**

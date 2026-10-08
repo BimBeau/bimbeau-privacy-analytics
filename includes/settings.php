@@ -22,6 +22,7 @@ const BBPA_ADVANCED_STATS_DEPENDENT_PANEL_IDS = [
     'visitors',
     'devices',
     'events',
+    'realtime',
 ];
 const BBPA_NON_DISABLABLE_PANEL_IDS = [
     'dashboard',

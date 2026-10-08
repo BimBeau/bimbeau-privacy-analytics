@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.67.1
+Stable tag: 8.67.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -73,6 +73,9 @@ Depending on the active license, site configuration, consent setup, and availabl
 * Page Details for deeper page-level analysis.
 * City geolocation reports and interactive map markers.
 * Custom event tracking and event configuration.
+* Conversion funnels that show where visitors drop off between your events.
+* WooCommerce order attribution, revenue per acquisition channel and a ready-made purchase funnel.
+* Daily, weekly or monthly email summaries.
 * Content analytics directly inside WordPress content lists and the editor.
 * An installable Stats App for desktop and mobile.
 * Panel visibility customization for the analytics navigation.
@@ -212,5 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.67.1 =
-* [Fix] The countries and cities of the page details are sorted by the visits they display instead of the page views.
+= 8.67.2 =
+* [Fix] Conversion funnels: the empty state example now ends with a view of the confirmation page instead of a form submission, which new events no longer offer.
+* [Docs] New Conversion funnels page in the documentation, and user documentation aligned with the current plugin (Statistics menu path, dashboard and WordPress dashboard widget, real-time, events triggers and webhooks, exports, settings and retention).
