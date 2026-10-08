@@ -11,6 +11,19 @@ const CMP_DOCUMENTATION_URLS = {
 const stepNumber = ( step ) => Math.max( 0, STEPS.indexOf( step ) ) + 1;
 const postWizard = ( action, extra = {} ) => fetchAdminJson( '/admin/setup-wizard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { action, ...extra } ) } );
 const saveSettings = ( settings ) => fetchAdminJson( '/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( settings ) } );
+// Choices are saved in the wizard state at each step, settings only when the wizard finishes:
+// a resumed wizard starts from the choices already made instead of the saved settings.
+const CHOICE_SETTINGS = { advanced_stats: 'advanced_stats_enabled', referrer_favicons: 'referrer_favicons_enabled' };
+const getInitialDraftSettings = ( initial ) => {
+	const settings = { ...( initial?.settings || {} ) };
+	const choices = initial?.state?.choices || {};
+	Object.entries( CHOICE_SETTINGS ).forEach( ( [ choice, setting ] ) => {
+		if ( typeof choices[ choice ] === 'boolean' ) {
+			settings[ setting ] = choices[ choice ];
+		}
+	} );
+	return settings;
+};
 const getCmpDocumentationUrl = () => {
 	const locale = window.BBPAAdmin?.settings?.locale || window.BBPAAdmin?.locale || '';
 	return String( locale ).toLowerCase().startsWith( 'fr' )
@@ -20,7 +33,7 @@ const getCmpDocumentationUrl = () => {
 
 export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 	const [ payload, setPayload ] = useState( initial );
-	const [ draftSettings, setDraftSettings ] = useState( () => ( { ...( initial?.settings || {} ) } ) );
+	const [ draftSettings, setDraftSettings ] = useState( () => getInitialDraftSettings( initial ) );
 	const [ draftChoices, setDraftChoices ] = useState( () => ( { ...( initial?.state?.choices || {} ) } ) );
 	const [ busy, setBusy ] = useState( false );
 	const [ error, setError ] = useState( '' );
@@ -40,21 +53,22 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 		return result;
 	};
 	const moveTo = ( next ) => update( 'set_step', { step: next } );
+	const saveChoice = ( choice, value ) => update( 'set_choice', { choice, value } );
 	const chooseTracking = async ( enabled ) => {
 		setBusy( true ); setError( '' );
-		try { setDraftSettings( ( current ) => ( { ...current, advanced_stats_enabled: enabled } ) ); setDraftChoices( ( current ) => ( { ...current, advanced_stats: enabled } ) ); await moveTo( 'geolocation' ); }
+		try { await saveChoice( 'advanced_stats', enabled ); setDraftSettings( ( current ) => ( { ...current, advanced_stats_enabled: enabled } ) ); setDraftChoices( ( current ) => ( { ...current, advanced_stats: enabled } ) ); await moveTo( 'geolocation' ); }
 		catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); }
 		finally { setBusy( false ); }
 	};
 	const downloadGeoIp = async () => {
 		setBusy( true ); setError( '' );
-		try { await fetchAdminJson( '/admin/geoip-database/update', { method: 'POST', headers: { 'Content-Type': 'application/json' } } ); const status = await fetchAdminJson( '/admin/geoip-database/status' ); if ( status?.database?.operational !== true ) throw new Error( __( 'The GeoIP database could not be validated after download.', 'bimbeau-privacy-analytics' ) ); setDraftChoices( ( current ) => ( { ...current, geoip_database: true } ) ); await update( 'mark_geoip_downloaded' ); setPayload( ( current ) => ( { ...current, geoip: { local_database_available: true }, geoipStatus: status.database } ) ); await moveTo( 'referrers' ); }
+		try { await fetchAdminJson( '/admin/geoip-database/update', { method: 'POST', headers: { 'Content-Type': 'application/json' } } ); const status = await fetchAdminJson( '/admin/geoip-database/status' ); if ( status?.database?.operational !== true ) throw new Error( __( 'The GeoIP database could not be validated after download.', 'bimbeau-privacy-analytics' ) ); await saveChoice( 'geoip_database', true ); setDraftChoices( ( current ) => ( { ...current, geoip_database: true } ) ); await update( 'mark_geoip_downloaded' ); setPayload( ( current ) => ( { ...current, geoip: { local_database_available: true }, geoipStatus: status.database } ) ); await moveTo( 'referrers' ); }
 		catch ( requestError ) { setError( requestError?.message || __( 'Unable to download the GeoIP database. Please try again.', 'bimbeau-privacy-analytics' ) ); }
 		finally { setBusy( false ); }
 	};
-	const skipGeoIp = async () => { setBusy( true ); try { setDraftChoices( ( current ) => ( { ...current, geoip_database: false } ) ); await moveTo( 'referrers' ); setSkipOpen( false ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
-	const chooseFavicons = async ( enabled ) => { setBusy( true ); setError( '' ); try { setDraftSettings( ( current ) => ( { ...current, referrer_favicons_enabled: enabled } ) ); setDraftChoices( ( current ) => ( { ...current, referrer_favicons: enabled } ) ); await moveTo( 'complete' ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
-	const finish = async () => { setBusy( true ); try { const result = await saveSettings( settings ); syncSavedSettings( result ); for ( const [ choice, value ] of Object.entries( draftChoices ) ) await update( 'set_choice', { choice, value } ); if ( draftChoices.referrer_favicons ) await update( 'mark_favicons_enabled' ); await update( 'complete' ); onComplete?.(); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to finish configuration. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
+	const skipGeoIp = async () => { setBusy( true ); try { await saveChoice( 'geoip_database', false ); setDraftChoices( ( current ) => ( { ...current, geoip_database: false } ) ); await moveTo( 'referrers' ); setSkipOpen( false ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
+	const chooseFavicons = async ( enabled ) => { setBusy( true ); setError( '' ); try { await saveChoice( 'referrer_favicons', enabled ); setDraftSettings( ( current ) => ( { ...current, referrer_favicons_enabled: enabled } ) ); setDraftChoices( ( current ) => ( { ...current, referrer_favicons: enabled } ) ); await moveTo( 'complete' ); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to save this choice. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
+	const finish = async () => { setBusy( true ); try { const result = await saveSettings( settings ); syncSavedSettings( result ); if ( draftChoices.referrer_favicons ) await update( 'mark_favicons_enabled' ); await update( 'complete' ); onComplete?.(); } catch ( requestError ) { setError( requestError?.message || __( 'Unable to finish configuration. Please try again.', 'bimbeau-privacy-analytics' ) ); } finally { setBusy( false ); } };
 	// "Finish later" needs no saved state to be honoured: close the assistant
 	// even when the request fails (it opens again on the next visit).
 	const finishLater = async () => {
@@ -97,7 +111,7 @@ export const SetupWizard = ( { initial, onClose, onComplete } ) => {
 			</CardBody><CardFooter>{ step !== 'tracking' ? <Button className="bbpa-setup-wizard__back" variant="secondary" disabled={ busy } onClick={ back }>{ __( 'Previous', 'bimbeau-privacy-analytics' ) }</Button> : null }{ step === 'tracking' ? <><Button variant="primary" isBusy={ busy } disabled={ busy } onClick={ () => chooseTracking( true ) }>{ __( 'Enable advanced statistics and continue', 'bimbeau-privacy-analytics' ) }</Button><Button variant="link" disabled={ busy } onClick={ () => chooseTracking( false ) }>{ __( 'Continue with essential statistics only', 'bimbeau-privacy-analytics' ) }</Button></> : null }{ step === 'geolocation' ? <><Button variant="primary" isBusy={ busy } disabled={ busy } onClick={ downloadGeoIp }>{ __( 'Download the GeoIP database and continue', 'bimbeau-privacy-analytics' ) }</Button><Button variant="link" disabled={ busy } onClick={ () => setSkipOpen( true ) }>{ __( 'Continue without local geolocation', 'bimbeau-privacy-analytics' ) }</Button></> : null }{ step === 'referrers' ? <><Button variant="primary" isBusy={ busy } disabled={ busy } onClick={ () => chooseFavicons( true ) }>{ __( 'Allow referrer favicons and continue', 'bimbeau-privacy-analytics' ) }</Button><Button variant="link" disabled={ busy } onClick={ () => chooseFavicons( false ) }>{ __( 'Continue without enabling favicons', 'bimbeau-privacy-analytics' ) }</Button></> : null }{ step === 'complete' ? <Button variant="primary" isBusy={ busy } disabled={ busy } onClick={ finish }>{ __( 'Finish configuration', 'bimbeau-privacy-analytics' ) }</Button> : null }</CardFooter></Card>
 			<Button className="bbpa-setup-wizard__finish-later" variant="link" disabled={ busy } onClick={ finishLater }>{ busy ? <Spinner /> : null }{ __( 'Finish later', 'bimbeau-privacy-analytics' ) }</Button>
 		</div>
-		{ skipOpen && <Modal title={ __( 'Continue without geolocation?', 'bimbeau-privacy-analytics' ) } onRequestClose={ () => setSkipOpen( false ) } shouldReturnFocusAfterClose><p>{ __( 'Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors.', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available.', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'You can download the GeoIP database later from the geolocation settings.', 'bimbeau-privacy-analytics' ) }</p><Button variant="primary" isBusy={ busy } onClick={ skipGeoIp }>{ __( 'Continue without geolocation', 'bimbeau-privacy-analytics' ) }</Button><Button variant="link" onClick={ () => setSkipOpen( false ) }>{ __( 'Return to the download', 'bimbeau-privacy-analytics' ) }</Button></Modal> }
+		{ skipOpen && <Modal title={ __( 'Continue without geolocation?', 'bimbeau-privacy-analytics' ) } onRequestClose={ () => setSkipOpen( false ) } shouldReturnFocusAfterClose><p>{ __( 'Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors.', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available.', 'bimbeau-privacy-analytics' ) }</p><p>{ __( 'You can download the GeoIP database later from the geolocation settings.', 'bimbeau-privacy-analytics' ) }</p><div className="bbpa-setup-wizard__dialog-actions"><Button variant="primary" isBusy={ busy } onClick={ skipGeoIp }>{ __( 'Continue without geolocation', 'bimbeau-privacy-analytics' ) }</Button><Button variant="link" onClick={ () => setSkipOpen( false ) }>{ __( 'Return to the download', 'bimbeau-privacy-analytics' ) }</Button></div></Modal> }
 	</Modal>;
 };
 

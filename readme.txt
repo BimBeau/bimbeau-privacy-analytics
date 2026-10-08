@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.67.2
+Stable tag: 8.67.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.67.2 =
-* [Fix] Conversion funnels: the empty state example now ends with a view of the confirmation page instead of a form submission, which new events no longer offer.
-* [Docs] New Conversion funnels page in the documentation, and user documentation aligned with the current plugin (Statistics menu path, dashboard and WordPress dashboard widget, real-time, events triggers and webhooks, exports, settings and retention).
+= 8.67.3 =
+* [Fix] The setup wizard keeps the choices already made when it is closed with "Finish later" and resumed.
+* [Fix] The two buttons of the "Continue without geolocation?" confirmation are no longer stuck together.

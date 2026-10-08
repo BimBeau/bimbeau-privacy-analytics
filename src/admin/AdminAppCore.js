@@ -82,6 +82,7 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 	const [ isSetupWizardOpen, setIsSetupWizardOpen ] = useState( false );
 	const [ setupNotice, setSetupNotice ] = useState( false );
 	const [ isSetupWizardRestarting, setIsSetupWizardRestarting ] = useState( false );
+	const [ isSetupWizardResuming, setIsSetupWizardResuming ] = useState( false );
 	const setupWizardRequestRef = useRef( null );
 	const setupWizardResetRef = useRef( null );
 	const isSetupWizardMountedRef = useRef( true );
@@ -262,6 +263,27 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 	}, [ isAuthRequired ] );
 
 	const closeSetupWizard = () => setIsSetupWizardOpen( false );
+	// The assistant saves its step and choices on the server while it is open: reload them before
+	// reopening, so it does not restart from the state read when the page loaded.
+	const resumeSetupWizard = async () => {
+		if ( isSetupWizardResuming ) {
+			return;
+		}
+		setIsSetupWizardResuming( true );
+		try {
+			const refreshed = await fetchAdminJson( '/admin/setup-wizard' );
+			if ( isSetupWizardMountedRef.current && refreshed?.state ) {
+				setSetupWizard( ( current ) => ( { ...current, ...refreshed } ) );
+			}
+		} catch ( error ) {
+			// Reopen with the state already loaded.
+		} finally {
+			if ( isSetupWizardMountedRef.current ) {
+				setIsSetupWizardResuming( false );
+				setIsSetupWizardOpen( true );
+			}
+		}
+	};
 	const completeSetupWizard = () => {
 		persistSetupWizardCompletedFlash();
 		reloadAdminPage();
@@ -498,7 +520,7 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 				<Notice status="info" isDismissible={ false }>
 					<strong>{ __( 'Complete the initial configuration', 'bimbeau-privacy-analytics' ) }</strong>
 					<p>{ __( 'Finish configuring tracking, local geolocation, and optional referrer favicons.', 'bimbeau-privacy-analytics' ) }</p>
-					<Button variant="secondary" onClick={ () => setIsSetupWizardOpen( true ) }>{ __( 'Resume configuration', 'bimbeau-privacy-analytics' ) }</Button>
+					<Button variant="secondary" onClick={ resumeSetupWizard } isBusy={ isSetupWizardResuming } disabled={ isSetupWizardResuming }>{ __( 'Resume configuration', 'bimbeau-privacy-analytics' ) }</Button>
 				</Notice>
 			) : null }
 			{ setupNotice ? <Notice status={ setupNotice.status } isDismissible onRemove={ () => setSetupNotice( false ) }>{ setupNotice.message }</Notice> : null }
