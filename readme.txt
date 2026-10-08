@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.67.0
+Stable tag: 8.67.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -212,7 +212,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.67.0 =
-* [Fix] The referrers list of the dashboard and of the email summaries counts visits instead of page views, like the Referrers report.
-* [Fix] The Direct row of report lists shows its trend against the previous period instead of a constant +100 %.
-* [Feature] The `/referrers` REST route accepts `count_visits=true` to return the visits of each referrer.
+= 8.67.1 =
+* [Fix] The countries and cities of the page details are sorted by the visits they display instead of the page views.
