@@ -12,11 +12,15 @@
  * The admin color scheme (body.admin-color-*, or an admin theme plugin) redefines
  * these variables on <body>, which wins over :root. This stylesheet only loads on
  * the plugin screens, so pin the plugin palette there, including popovers and
- * modals that WordPress components render directly under <body>.
+ * modals that WordPress components render directly under <body>. The period picker
+ * popover and sheet are pinned on themselves too: a wrapper between <body> and the
+ * popover can redefine the accent (it showed black there while the rest was blue).
  */
 html body.wp-admin,
 html body.wp-admin #wpwrap,
-html body.wp-admin #bbpa-admin {
+html body.wp-admin #bbpa-admin,
+html body .bbpa-period-filter__popover,
+html body .bbpa-period-filter__sheet {
 	--wp-admin-theme-color: #3858e9 !important;
 	--wp-admin-theme-color--rgb: 56, 88, 233 !important;
 	--wp-admin-theme-color-darker-10: #2145e6 !important;
