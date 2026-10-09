@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.71.0
+Stable tag: 8.71.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,9 +215,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.71.0 =
-* [Feature] The Devices report compares each browser, operating system, device and screen share with the previous period of the same length, in percentage points.
-* [Fix] Browser, operating system and resolution shares are now explained: a notice gives how many page views have these details (they are only known for visitors with advanced statistics), and each card shows the other page views apart as "Not identified".
-* [UI] Shares keep one decimal, so they add up to 100%, and the bars are thinner with the percentage aligned on the right.
-* [UI] Screen widths are named (Mobile, Tablet, Laptop, Large screen) and get the icon of their device.
-* [UI] The operating systems card is titled "Operating systems" so that its title fits on one line, and the Devices report no longer offers the "Include robots" switch.
+= 8.71.1 =
+* [Improvement] Lists shown in a card now carry their title on the same row as the search, filters, view options and export buttons, which removes a row and its margins above each list.
+* [Improvement] Admin icons are gray and black only: list toolbar buttons (including hover, focus and open states), key figure icons and notice icons no longer turn blue.
+* [Improvement] Badges and bars are gray instead of blue: "New" and Pro badges, information badges, privacy mode labels, share bars of the lists, device bars and funnel bars. Success, warning and error badges keep their colors.

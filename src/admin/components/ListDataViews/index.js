@@ -100,13 +100,26 @@ export const getInitialListColumns = ( listId, defaultFields, fields ) =>
  * column order and visibility chosen by the user (View options, Move left / right, Hide column) are
  * saved per user; the list reads them back with `getInitialListColumns()`. Same props as DataViews.
  *
+ * With `title`, the list heads its card: the title shares the toolbar row with the search, filter,
+ * view options and `header` controls, so the card needs no header of its own. `notice` (an error)
+ * is shown under that row, or above the list without `title`.
+ *
  * @param {Object}   props
  * @param {Object}   props.view             DataViews view.
  * @param {Function} props.onChangeView     DataViews view change handler.
  * @param {string}   props.columnsStorageId Identifier under which the columns are saved (optional).
+ * @param {string}   props.title            Title shown at the start of the toolbar (optional).
+ * @param {*}        props.notice           Content shown before the list, such as an error (optional).
  */
-const ListDataViews = ( { view, onChangeView, columnsStorageId, ...props } ) => {
-	const { fields } = props;
+const ListDataViews = ( {
+	view,
+	onChangeView,
+	columnsStorageId,
+	title,
+	notice = null,
+	...props
+} ) => {
+	const { fields, search = true, searchLabel, header } = props;
 	const [ density, setDensity ] = useSharedListDensity();
 
 	const viewWithDensity = useMemo(
@@ -155,12 +168,42 @@ const ListDataViews = ( { view, onChangeView, columnsStorageId, ...props } ) => 
 		[ columnsStorageId, density, fields, onChangeView, setDensity, view?.fields ]
 	);
 
+	if ( ! title ) {
+		return (
+			<>
+				{ notice }
+				<DataViews
+					{ ...props }
+					view={ viewWithDensity }
+					onChangeView={ handleChangeView }
+				/>
+			</>
+		);
+	}
+
+	// The parts of the default DataViews layout, with the title first in the toolbar row.
 	return (
 		<DataViews
 			{ ...props }
 			view={ viewWithDensity }
 			onChangeView={ handleChangeView }
-		/>
+		>
+			<div className="dataviews__view-actions bbpa-dataviews-header">
+				<strong className="bbpa-card__title bbpa-dataviews-header__title">
+					{ title }
+				</strong>
+				<div className="bbpa-dataviews-header__tools">
+					{ search ? <DataViews.Search label={ searchLabel } /> : null }
+					<DataViews.FiltersToggle />
+					<DataViews.ViewConfig />
+					{ header }
+				</div>
+			</div>
+			{ notice }
+			<DataViews.FiltersToggled className="dataviews-filters__container" />
+			<DataViews.Layout />
+			<DataViews.Footer />
+		</DataViews>
 	);
 };
 

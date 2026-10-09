@@ -223,6 +223,8 @@ export const getInitialReportFields = ( {
  */
 const ReportDataView = ( {
 	title,
+	// Card title shown in the toolbar row, when the list heads its card (see ListDataViews).
+	cardTitle = '',
 	labelHeader,
 	range,
 	endpoint,
@@ -968,15 +970,18 @@ const ReportDataView = ( {
 					: 'bbpa-report-dataview'
 			}
 		>
-			{ error ? (
-				<DataState
-					isLoading={ false }
-					error={ error }
-					isEmpty={ false }
-					loadingLabel={ title }
-				/>
-			) : null }
 			<ListDataViews
+				title={ cardTitle }
+				notice={
+					error ? (
+						<DataState
+							isLoading={ false }
+							error={ error }
+							isEmpty={ false }
+							loadingLabel={ title }
+						/>
+					) : null
+				}
 				view={ displayedView }
 				onChangeView={ onChangeView }
 				columnsStorageId={ resolvedColumnsStorageId }

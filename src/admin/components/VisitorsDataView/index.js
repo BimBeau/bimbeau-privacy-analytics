@@ -505,8 +505,10 @@ const getDefaultView = ( { isBotList, showCity, hidePrivateVisitors } ) => ( {
  * @param {Function} props.onHidePrivateVisitorsChange Saves the preference; omitted to hide the Data filter.
  * @param {string}   props.emptyLabel                  Message without rows.
  * @param {string}   props.loadingLabel                Accessible loading message.
+ * @param {string}   props.cardTitle                   Card title shown in the toolbar row (optional).
  */
 const VisitorsDataView = ( {
+	cardTitle = '',
 	range,
 	requestParams = {},
 	showCity = false,
@@ -644,15 +646,18 @@ const VisitorsDataView = ( {
 
 	return (
 		<div className="bbpa-visitors-dataview">
-			{ error ? (
-				<DataState
-					isLoading={ false }
-					error={ error }
-					isEmpty={ false }
-					loadingLabel={ loadingLabel }
-				/>
-			) : null }
 			<ListDataViews
+				title={ cardTitle }
+				notice={
+					error ? (
+						<DataState
+							isLoading={ false }
+							error={ error }
+							isEmpty={ false }
+							loadingLabel={ loadingLabel }
+						/>
+					) : null
+				}
 				view={ view }
 				onChangeView={ onChangeView }
 				columnsStorageId={ columnsStorageId }

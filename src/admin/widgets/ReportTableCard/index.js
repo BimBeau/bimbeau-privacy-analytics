@@ -13,20 +13,17 @@ export { truncateDisplayedLabel };
  * @param {boolean} props.withCard Whether to wrap the list in a card.
  * @param {string}  props.title    Card title.
  */
-const ReportTableCard = ( { withCard = true, ...props } ) => {
-	const list = <ReportDataView { ...props } />;
-
-	return withCard ? (
+const ReportTableCard = ( { withCard = true, ...props } ) =>
+	withCard ? (
+		// The title heads the list toolbar, with the search and the list controls.
 		<BpaCard
-			title={ props.title }
 			className="bbpa-dataviews-card"
 			bodyClassName="bbpa-listing-region bbpa-dataviews"
 		>
-			{ list }
+			<ReportDataView { ...props } cardTitle={ props.title } />
 		</BpaCard>
 	) : (
-		list
+		<ReportDataView { ...props } />
 	);
-};
 
 export default ReportTableCard;

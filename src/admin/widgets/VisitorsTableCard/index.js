@@ -15,11 +15,17 @@ const VisitorsTableCard = ( {
 	title = __( 'Visitors', 'bimbeau-privacy-analytics' ),
 	...listProps
 } ) => {
-	const list = <VisitorsDataView showCity={ false } { ...listProps } />;
+	const list = (
+		<VisitorsDataView
+			showCity={ false }
+			{ ...listProps }
+			cardTitle={ withCard ? title : '' }
+		/>
+	);
 
+	// The title heads the list toolbar, with the search and the list controls.
 	return withCard ? (
 		<BpaCard
-			title={ title }
 			className="bbpa-dataviews-card"
 			bodyClassName="bbpa-listing-region bbpa-dataviews"
 		>

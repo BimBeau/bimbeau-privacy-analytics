@@ -240,20 +240,25 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 
 	return (
 		<BpaCard
-			title={ __( 'Referring sites', 'bimbeau-privacy-analytics' ) }
 			className="bbpa-dataviews-card"
 			bodyClassName="bbpa-listing-region bbpa-dataviews"
 		>
 			<div className="bbpa-report-dataview bbpa-report-dataview--referrers">
-				{ error ? (
-					<DataState
-						isLoading={ false }
-						error={ error }
-						isEmpty={ false }
-						loadingLabel={ __( 'Loading referring sites…', 'bimbeau-privacy-analytics' ) }
-					/>
-				) : null }
 				<ListDataViews
+					title={ __( 'Referring sites', 'bimbeau-privacy-analytics' ) }
+					notice={
+						error ? (
+							<DataState
+								isLoading={ false }
+								error={ error }
+								isEmpty={ false }
+								loadingLabel={ __(
+									'Loading referring sites…',
+									'bimbeau-privacy-analytics'
+								) }
+							/>
+						) : null
+					}
 					view={ view }
 					onChangeView={ onChangeView }
 					columnsStorageId="referrer_sources"

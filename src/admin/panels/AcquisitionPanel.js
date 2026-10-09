@@ -239,15 +239,17 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 	return (
 		<div className="bbpa-report-panel">
 			<BpaCard
-				title={ __( 'Acquisition channels', 'bimbeau-privacy-analytics' ) }
 				className="bbpa-dataviews-card"
 				bodyClassName="bbpa-listing-region bbpa-dataviews"
 			>
 				<div className="bbpa-report-dataview bbpa-report-dataview--acquisition">
-					{ error ? (
-						<DataState isLoading={ false } error={ error } isEmpty={ false } />
-					) : null }
 					<ListDataViews
+						title={ __( 'Acquisition channels', 'bimbeau-privacy-analytics' ) }
+						notice={
+							error ? (
+								<DataState isLoading={ false } error={ error } isEmpty={ false } />
+							) : null
+						}
 						view={ { ...view, fields: visibleFields } }
 						onChangeView={ onChangeView }
 						columnsStorageId={ ACQUISITION_COLUMNS_STORAGE_ID }

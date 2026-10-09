@@ -20,6 +20,45 @@
   position: static;
 }
 
+/*
+ * A list that heads its card (ListDataViews `title`): its toolbar row replaces the card header, with
+ * the title first, then the search and the list controls, and the card header divider under it.
+ * On a narrow card the controls go under the title.
+ */
+.bbpa-dataviews-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bbpa-dataviews-header__title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.bbpa-dataviews-header__tools {
+  display: flex;
+  flex: 0 1 auto;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  margin-left: auto;
+}
+
+.bbpa-dataviews-header__tools .dataviews-search {
+  flex: 0 1 210px;
+  min-width: 120px;
+  margin-right: 4px;
+}
+
+.dataviews-wrapper > .bbpa-dataviews-header ~ .components-notice {
+  margin: 16px 24px 0;
+}
+
 /* Totals and notes under a list. */
 .bbpa-dataviews__footer {
   display: flex;
@@ -82,8 +121,9 @@
 
 /*
  * Toolbar icon buttons of the lists (filters, view options, export): one look for all of them, a
- * neutral outlined square of the size of the DataViews search field. Blue only shows on hover,
- * keyboard focus and while their menu or the filters are open. The export keeps the WordPress
+ * neutral outlined square of the size of the DataViews search field, in gray and black only (no
+ * accent color): a light gray fill and a black outline on hover, keyboard focus and while their
+ * menu or the filters are open. The export keeps the WordPress
  * busy stripes while it runs. The selectors outweigh the generic button colors of globals.css,
  * which are loaded after this file.
  */
@@ -95,6 +135,7 @@
   padding: 0;
   border-radius: 2px;
   background: #fff;
+  border-color: transparent;
   box-shadow: inset 0 0 0 1px #dcdcde;
   color: #1e1e1e;
   outline: none;
@@ -102,14 +143,13 @@
 
 .bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy):not(:disabled):not([aria-disabled="true"]):hover,
 .bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy):is([aria-expanded="true"], .is-pressed) {
-  background: #f0f6fc;
-  background: color-mix(in srgb, var(--wp-admin-theme-color, var(--color-3)) 8%, #fff);
-  box-shadow: inset 0 0 0 1px var(--wp-admin-theme-color, var(--color-3));
-  color: var(--wp-admin-theme-color, var(--color-3));
+  background: #f0f0f0;
+  box-shadow: inset 0 0 0 1px #1e1e1e;
+  color: #1e1e1e;
 }
 
 .bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy):focus-visible {
-  outline: 2px solid var(--wp-admin-theme-color, var(--color-3));
+  outline: 2px solid #1e1e1e;
   outline-offset: 1px;
 }
 
