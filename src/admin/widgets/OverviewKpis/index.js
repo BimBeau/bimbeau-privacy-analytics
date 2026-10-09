@@ -6,7 +6,6 @@ import FeatureIcon from '../../components/icons/FeatureIcon';
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
 import { ADMIN_CONFIG, isPanelEnabled } from '../../constants';
-import useRealtimeSnapshot from '../../hooks/useRealtimeSnapshot';
 import { getAdminPanelUrl } from '../../lib/adminUrls';
 import {
 	calculateChangePercent,
@@ -63,10 +62,6 @@ export const getRobotsCount = ( data ) => {
 };
 
 const OverviewKpis = ( { range } ) => {
-	// The active visitors card is only rendered when the Real-time panel is enabled.
-	const { data: realtimeData } = useRealtimeSnapshot( {
-		enabled: isPanelEnabled( 'realtime' ),
-	} );
 	const { data, isLoading, error } = useAdminEndpoint( '/overview', range, {
 		namespace: ADMIN_CONFIG?.settings?.restNamespace,
 	} );
@@ -230,15 +225,6 @@ const OverviewKpis = ( { range } ) => {
 			comparison: comparisonOverview?.avgTimePerVisitMs,
 			href: getAdminPanelUrl( 'top-pages' ),
 			formatValue: formatCompactDurationMetricValue,
-		},
-		isPanelEnabled( 'realtime' ) && {
-			key: 'realtime',
-			label: __( 'Real-time', 'bimbeau-privacy-analytics' ),
-			value: Number( realtimeData?.activeVisitors ?? 0 ),
-			icon: 'activity',
-			comparison: null,
-			href: getAdminPanelUrl( 'realtime' ),
-			className: 'bbpa-overview__summary-card--mobile-only',
 		},
 	].filter( Boolean );
 

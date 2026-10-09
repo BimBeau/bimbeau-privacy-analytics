@@ -1,0 +1,190 @@
+/*
+ * Admin header controls: the real-time visitors button and the period filter share one height, so
+ * they line up in the header. Shared by Free and Pro; the selectors are one class more specific
+ * than the edition stylesheets (globals*.css), which load after this file.
+ */
+.bbpa-admin-app {
+	--bbpa-header-control-height: 46px;
+}
+
+/* Real-time button: icon, count of visitors, "right now" on a second line. */
+.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__realtime-button.components-button {
+	box-sizing: border-box;
+	height: var(--bbpa-header-control-height);
+	padding: 0 16px 0 12px;
+	gap: 10px;
+	border: 1px solid transparent;
+	text-align: left;
+}
+
+.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__realtime-button-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__realtime-button-label {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0;
+	line-height: 1.25;
+	font-weight: 600;
+}
+
+.bbpa-admin-app .bbpa-admin-app__realtime-button-hint {
+	font-size: 11px;
+	font-weight: 500;
+	opacity: 0.85;
+}
+
+.bbpa-admin-app .bbpa-admin-app__realtime-button-count {
+	display: none;
+	font-size: 15px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Period filter: previous arrow, trigger, next arrow in one bordered control. */
+.bbpa-admin-app .bbpa-period-filter__control {
+	box-sizing: border-box;
+	display: flex;
+	align-items: stretch;
+	height: var(--bbpa-header-control-height);
+	background: #fff;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .components-button {
+	height: auto;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .components-button:focus-visible {
+	box-shadow: inset 0 0 0 2px var(--color-3);
+	outline: none;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step {
+	justify-content: center;
+	min-width: 32px;
+	padding: 0 6px;
+	color: #50575e;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step:first-child {
+	border-right: 1px solid #dcdcde;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step:last-child {
+	border-left: 1px solid #dcdcde;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step:hover:not(:disabled) {
+	background: color-mix(in srgb, var(--color-3) 10%, #fff);
+	color: var(--color-3);
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step:disabled {
+	opacity: 0.35;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger {
+	gap: 8px;
+	padding: 0 10px;
+	color: #1e1e1e;
+	border: 0;
+	box-shadow: none;
+	overflow: visible;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger:hover {
+	background: color-mix(in srgb, var(--color-3) 6%, #fff);
+	color: #1e1e1e;
+}
+
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger-preset {
+	background: color-mix(in srgb, var(--color-3) 10%, #fff);
+	color: var(--color-3);
+	font-weight: 600;
+	border-radius: 3px;
+	padding: 2px 7px;
+}
+
+.bbpa-admin-app .bbpa-period-filter__trigger-dates {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	min-width: 0;
+	line-height: 1.25;
+}
+
+.bbpa-admin-app .bbpa-period-filter__trigger-comparison {
+	font-size: 11px;
+	color: #646970;
+}
+
+/* The chevron in the plugin blue, so the trigger reads as a menu. */
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger-icon {
+	display: block;
+	margin-left: 2px;
+	color: var(--color-3);
+	stroke-width: 2.5;
+}
+
+@media (max-width: 782px) {
+	/* Title on its own row, then the real-time button and the period filter side by side. */
+	div.bbpa-admin-app > .bbpa-admin-app__header {
+		grid-template-columns: auto minmax(0, 1fr);
+		grid-template-areas:
+			"heading heading"
+			"realtime filter";
+		align-items: center;
+	}
+
+	.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__heading {
+		grid-area: heading;
+		min-width: 0;
+	}
+
+	.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__realtime-button.components-button {
+		display: inline-flex !important;
+		grid-area: realtime;
+		padding: 0 12px;
+		gap: 6px;
+	}
+
+	.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__realtime-button-label {
+		display: none;
+	}
+
+	.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__realtime-button-count {
+		display: inline;
+	}
+
+	.bbpa-admin-app .bbpa-admin-app__header .bbpa-admin-app__period-filter {
+		grid-area: filter;
+		justify-self: stretch;
+		min-width: 0;
+	}
+
+	.bbpa-admin-app .bbpa-admin-app__header .bbpa-period-filter {
+		width: 100%;
+	}
+
+	/* No previous / next arrows on phones: the trigger takes the room. */
+	.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step {
+		display: none;
+	}
+
+	.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger-icon {
+		margin-left: auto;
+	}
+}

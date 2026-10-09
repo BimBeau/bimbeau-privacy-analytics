@@ -5,11 +5,11 @@
 import AdminAppCore from './AdminAppCore';
 
 /**
- * Admin header title: the localized "Statistics" label in Free and Pro. The data attribute is the
+ * Admin header title: the name of the current screen (Dashboard, Pages…) in Free and Pro. The data attribute is the
  * edition signature checked in the built bundle (scripts/verify-admin-bundle-sync.js).
  *
  * @param {Object} props
- * @param {string} props.label Localized plugin label.
+ * @param {string} props.label Localized title of the current screen.
  */
 export const FreeHeaderBrand = ( { label } ) => (
 	<span

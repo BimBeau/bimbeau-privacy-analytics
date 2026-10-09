@@ -111,6 +111,10 @@ export const RANGE_PRESET_OPTIONS = [
 	'6m',
 	'12m',
 	'24m',
+	'this-month',
+	'last-month',
+	'this-year',
+	'last-year',
 ];
 export const RANGE_PRESET_STORAGE_PREFIX = 'bbpa_range_preset';
 export const PERIOD_PRESET_OPTIONS = [
@@ -153,6 +157,31 @@ export const PERIOD_PRESET_OPTIONS = [
 		labelShort: __( '24m', 'bimbeau-privacy-analytics' ),
 		labelLong: __( '24 months', 'bimbeau-privacy-analytics' ),
 		value: '24m',
+	},
+	// Calendar periods: whole months and years, cut at today for the current ones.
+	{
+		labelShort: __( 'This month', 'bimbeau-privacy-analytics' ),
+		labelLong: __( 'This month', 'bimbeau-privacy-analytics' ),
+		value: 'this-month',
+		group: 'calendar',
+	},
+	{
+		labelShort: __( 'Last month', 'bimbeau-privacy-analytics' ),
+		labelLong: __( 'Last month', 'bimbeau-privacy-analytics' ),
+		value: 'last-month',
+		group: 'calendar',
+	},
+	{
+		labelShort: __( 'This year', 'bimbeau-privacy-analytics' ),
+		labelLong: __( 'This year', 'bimbeau-privacy-analytics' ),
+		value: 'this-year',
+		group: 'calendar',
+	},
+	{
+		labelShort: __( 'Last year', 'bimbeau-privacy-analytics' ),
+		labelLong: __( 'Last year', 'bimbeau-privacy-analytics' ),
+		value: 'last-year',
+		group: 'calendar',
 	},
 ];
 

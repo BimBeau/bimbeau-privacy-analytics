@@ -13,29 +13,10 @@
 	align-items: center;
 	gap: var(--bbpa-gap-xs);
 	text-align: left;
-	width: 100%;
+	width: auto;
 	max-width: 100%;
 	min-width: 0;
-	padding-right: 25px;
-	color: #50575e;
-	border-color: transparent;
-	box-shadow: inset 0 0 0 1px #f6f7f7;
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.bbpa-admin-app .bbpa-period-filter__trigger:hover,
-.bbpa-admin-app .bbpa-period-filter__trigger:focus {
-	color: #50575e;
-	border-color: transparent;
-	box-shadow: inset 0 0 0 1px #f6f7f7;
-}
-
-.bbpa-admin-app .bbpa-period-filter__trigger-preset {
-	background-color: #f6f7f7;
-	border-radius: 2px;
-	padding: 2px 6px;
 }
 
 .bbpa-admin-app .bbpa-period-filter__trigger-range {
@@ -45,48 +26,160 @@
 }
 
 .bbpa-admin-app .bbpa-period-filter__trigger-icon {
-	margin-left: auto;
 	flex: 0 0 auto;
 	fill: none;
 }
 
+/* Panel: shared by the desktop popover and the phone bottom sheet. */
 .bbpa-period-filter__popover-content {
-	display: grid;
-	gap: var(--bbpa-gap-lg);
+	display: flex;
+	flex-direction: column;
 	max-width: 100%;
-	width: 100%;
 	min-width: 0;
-	padding: var(--bbpa-gap-lg);
+}
+
+.bbpa-period-filter__body {
+	display: flex;
+	align-items: flex-start;
+	min-width: 0;
 }
 
 .bbpa-period-filter__presets {
-	width: 100%;
-	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--bbpa-gap-sm);
+	min-width: 180px;
+	padding: var(--bbpa-gap-md) var(--bbpa-gap-sm);
+	border-right: 1px solid #f0f0f1;
+	align-self: stretch;
+}
+
+.bbpa-period-filter__preset-group {
 	display: grid;
+	gap: 2px;
+}
+
+.bbpa-period-filter__presets-label {
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #646970;
+}
+
+.bbpa-period-filter__presets-links {
+	display: grid;
+	gap: 1px;
+}
+
+.bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link {
+	justify-content: flex-start;
+	width: 100%;
+	height: auto;
+	padding: 6px 10px;
+	border-radius: 4px;
+	color: #1e1e1e;
+	font-weight: 400;
+	box-shadow: none;
+}
+
+.bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link:hover {
+	background: color-mix(in srgb, var(--color-3) 10%, #fff);
+	color: #1e1e1e;
+}
+
+.bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link.is-active {
+	background: var(--color-3);
+	color: var(--bbpa-color-on-accent, #fff);
+	font-weight: 600;
+}
+
+/*
+ * Focus of the quick range buttons: WordPress draws a dark (#1e1e1e) ring on a pressed button,
+ * which reads as a black border on the active range. Use the plugin blue instead, and white on the
+ * blue active range so the ring stays visible.
+ */
+.bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link:focus-visible {
+	outline: 2px solid var(--color-3) !important;
+	outline-offset: -2px !important;
+}
+
+.bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link.is-active:focus-visible {
+	outline-color: #fff !important;
+}
+
+.bbpa-period-filter__footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--bbpa-gap-sm) var(--bbpa-gap-md);
+	padding: var(--bbpa-gap-md) var(--bbpa-gap-lg, 16px);
+	border-top: 1px solid #f0f0f1;
+}
+
+.bbpa-period-filter__inputs {
+	display: flex;
+	flex-wrap: wrap;
 	gap: var(--bbpa-gap-sm);
 }
 
-.bbpa-period-filter__calendar {
-	--rdp-cell-size: 40px;
-	--rdp-caption-font-size: 14px;
-	--rdp-accent-color: var(--color-3);
-	--rdp-background-color: var(--color-5);
-	--rdp-accent-color-dark: var(--color-3);
-	--rdp-background-color-dark: var(--color-3);
-	--rdp-outline: var(--color-3);
-	--rdp-outline-selected: var(--color-3);
-	--rdp-selected-color: var(--bbpa-color-on-accent);
-	margin: 0;
+.bbpa-period-filter__input {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--bbpa-gap-xs);
+	color: #50575e;
 }
 
-@media (max-width: 1450px) {
-	.bbpa-admin-app .bbpa-period-filter__trigger svg {
-		display: none;
-	}
+.bbpa-period-filter__input input[type="date"] {
+	min-height: 32px;
+	padding: 0 6px;
+	font-size: 13px;
+	font-variant-numeric: tabular-nums;
+}
+
+.bbpa-period-filter__comparison {
+	margin: 0;
+	color: #646970;
+	font-size: 12px;
+}
+
+.bbpa-period-filter__actions {
+	display: flex;
+	gap: var(--bbpa-gap-sm);
+	margin-left: auto;
+}
+
+.bbpa-period-filter__popover .components-popover__content {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 0 0 1px #ccc, 0 2px 3px #0000000d, 0 4px 5px #0000000a, 0 12px 12px #00000008, 0 16px 16px #00000005;
+	box-sizing: border-box;
+	width: fit-content;
+	max-width: calc(100vw - 32px);
+}
+
+/* Calendar */
+.bbpa-period-filter__calendar {
+	--rdp-cell-size: 36px;
+	--rdp-caption-font-size: 14px;
+	--rdp-accent-color: var(--color-3);
+	--rdp-background-color: color-mix(in srgb, var(--color-3) 10%, #fff);
+	--rdp-accent-color-dark: var(--color-3);
+	--rdp-background-color-dark: var(--color-3);
+	--rdp-outline: 2px solid var(--color-3);
+	--rdp-outline-selected: 2px solid var(--color-3);
+	--rdp-selected-color: var(--bbpa-color-on-accent);
+	margin: var(--bbpa-gap-md) var(--bbpa-gap-lg, 16px);
 }
 
 .bbpa-period-filter__calendar .rdp-months {
-	gap: var(--bbpa-gap-md);
+	gap: var(--bbpa-gap-lg, 16px);
 }
 
 .bbpa-period-filter__calendar .rdp-caption {
@@ -94,69 +187,15 @@
 	font-weight: 600;
 }
 
+.bbpa-period-filter__calendar .rdp-caption_label {
+	font-weight: 600;
+	border: none;
+	padding: 0;
+}
+
 .bbpa-period-filter__calendar .rdp-nav_icon {
 	width: var(--bbpa-gap-md);
 	height: var(--bbpa-gap-md);
-}
-
-.bbpa-period-filter__presets-links {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.bbpa-period-filter__popover .components-button {
-	border: 1px solid var(--color-3);
-	border-radius: 0;
-	box-shadow: none !important;
-	justify-content: center;
-	padding: var(--bbpa-gap-sm);
-	width: 100%;
-	border-right: none;
-}
-
-
-/*
- * Focus of the quick range buttons: WordPress draws a dark (#1e1e1e) ring on a pressed button,
- * which reads as a black border on the active range. Use the plugin blue instead, and white on the
- * blue active range so the ring stays visible.
- */
-.bbpa-period-filter__popover .components-button.bbpa-period-filter__preset-link:focus {
-	outline: none !important;
-}
-
-.bbpa-period-filter__popover .components-button.bbpa-period-filter__preset-link:focus-visible {
-	outline: 2px solid var(--color-3) !important;
-	outline-offset: -4px !important;
-}
-
-.bbpa-period-filter__popover .components-button.bbpa-period-filter__preset-link.is-active:focus-visible {
-	outline-color: #fff !important;
-}
-
-.bbpa-period-filter__popover .components-button:first-child {
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
-
-.bbpa-period-filter__popover .components-button:last-child {
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
-	border-right: 1px solid var(--color-3);
-}
-
-.bbpa-period-filter__popover .components-popover__content {
-	background: #fff;
-	border-radius: 4px;
-	box-shadow: 0 0 0 1px #ccc, 0 2px 3px #0000000d, 0 4px 5px #0000000a, 0 12px 12px #00000008, 0 16px 16px #00000005;
-	box-sizing: border-box;
-	width: fit-content;
-}
-
-.bbpa-period-filter__calendar .rdp-caption_label {
-	font-weight: normal;
-	border: none;
-	padding: 0;
 }
 
 .bbpa-period-filter__calendar .rdp-month {
@@ -170,27 +209,181 @@
 	max-width: none;
 }
 
+.bbpa-period-filter__calendar .rdp-head_cell {
+	font-size: 11px;
+	color: #646970;
+}
+
 .bbpa-period-filter__calendar .rdp-cell {
 	height: 100%;
-	padding: 0;
+	padding: 1px 0;
 	text-align: center;
 }
 
-.bbpa-period-filter__calendar .rdp-day,
-.bbpa-period-filter__calendar .rdp-weeknumber {
+/*
+ * Days: square cells whose width follows the column; the range is a band across the cells, and
+ * its first and last days are 32px circles centred in their cell, whatever the column width.
+ */
+.bbpa-period-filter__calendar .rdp-day {
+	position: relative;
+	/* Own stacking context: the circle (::before, z-index -1) paints above the band, under the number. */
+	z-index: 0;
+	isolation: isolate;
 	width: 100%;
 	max-width: none;
+	height: 34px;
+	border-radius: 0;
+	border: 0;
+	font-variant-numeric: tabular-nums;
 }
 
+.bbpa-period-filter__calendar .rdp-day::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 32px;
+	height: 32px;
+	margin: -16px 0 0 -16px;
+	border-radius: 50%;
+	pointer-events: none;
+	z-index: -1;
+}
 
 .bbpa-period-filter__calendar .rdp-day_selected,
 .bbpa-period-filter__calendar .rdp-day_selected:focus-visible,
 .bbpa-period-filter__calendar .rdp-day_selected:hover {
-	background: color-mix(in srgb, var(--color-3) 10%, #0000);
+	background: color-mix(in srgb, var(--color-3) 10%, #fff);
 	opacity: 1;
 	color: var(--color-3);
 }
 
+.bbpa-period-filter__calendar .rdp-day_range_start,
+.bbpa-period-filter__calendar .rdp-day_range_start:hover,
+.bbpa-period-filter__calendar .rdp-day_range_start:focus-visible {
+	background: linear-gradient(to right, transparent 50%, color-mix(in srgb, var(--color-3) 10%, #fff) 50%);
+	color: var(--bbpa-color-on-accent, #fff);
+	font-weight: 600;
+}
+
+.bbpa-period-filter__calendar .rdp-day_range_end,
+.bbpa-period-filter__calendar .rdp-day_range_end:hover,
+.bbpa-period-filter__calendar .rdp-day_range_end:focus-visible {
+	background: linear-gradient(to left, transparent 50%, color-mix(in srgb, var(--color-3) 10%, #fff) 50%);
+	color: var(--bbpa-color-on-accent, #fff);
+	font-weight: 600;
+}
+
+.bbpa-period-filter__calendar .rdp-day_range_start.rdp-day_range_end {
+	background: none;
+}
+
+/* The single day of a range being drawn is also a start. */
+.bbpa-period-filter__calendar .rdp-day_selected:not(.rdp-day_range_middle)::before {
+	background: var(--color-3);
+}
+
+.bbpa-period-filter__calendar .rdp-day_selected:not(.rdp-day_range_middle) {
+	color: var(--bbpa-color-on-accent, #fff);
+}
+
 .bbpa-period-filter__calendar .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
-	background: color-mix(in srgb, var(--color-3) 10%, #0000);
+	background: none;
+}
+
+.bbpa-period-filter__calendar .rdp-button:hover:not([disabled]):not(.rdp-day_selected)::before {
+	box-shadow: inset 0 0 0 1.5px var(--color-3);
+}
+
+.bbpa-period-filter__calendar .rdp-button:focus-visible:not([disabled]) {
+	outline: none;
+	border: 0;
+}
+
+.bbpa-period-filter__calendar .rdp-button:focus-visible:not([disabled])::before {
+	box-shadow: inset 0 0 0 2px var(--color-3);
+}
+
+.bbpa-period-filter__calendar .rdp-day_today:not(.rdp-day_selected) {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	font-weight: 600;
+}
+
+/* Phone: bottom sheet. */
+.bbpa-period-filter__sheet-overlay.components-modal__screen-overlay {
+	display: flex;
+	align-items: flex-end;
+	justify-content: stretch;
+}
+
+.components-modal__frame.bbpa-period-filter__sheet {
+	width: 100%;
+	max-width: none;
+	height: auto;
+	max-height: 88vh;
+	margin: 0;
+	border-radius: 16px 16px 0 0;
+	align-self: flex-end;
+}
+
+.bbpa-period-filter__sheet .components-modal__content {
+	padding: 0;
+	margin-top: 0;
+}
+
+.bbpa-period-filter__sheet .components-modal__header {
+	position: relative;
+	padding: 12px 16px;
+	height: auto;
+}
+
+.bbpa-period-filter__sheet .bbpa-period-filter__body {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.bbpa-period-filter__sheet .bbpa-period-filter__presets {
+	min-width: 0;
+	padding: 0 16px 12px;
+	border-right: 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.bbpa-period-filter__sheet .bbpa-period-filter__presets-links {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 6px;
+}
+
+.bbpa-period-filter__sheet .components-button.bbpa-period-filter__preset-link {
+	justify-content: center;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	padding: 8px 4px;
+	text-align: center;
+	white-space: normal;
+}
+
+.bbpa-period-filter__sheet .components-button.bbpa-period-filter__preset-link.is-active {
+	border-color: var(--color-3);
+}
+
+.bbpa-period-filter__sheet .bbpa-period-filter__calendar {
+	margin: 12px 16px;
+}
+
+.bbpa-period-filter__sheet .bbpa-period-filter__footer {
+	position: sticky;
+	bottom: 0;
+	background: #fff;
+	padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+
+.bbpa-period-filter__sheet .bbpa-period-filter__actions {
+	width: 100%;
+}
+
+.bbpa-period-filter__sheet .bbpa-period-filter__actions .components-button {
+	flex: 1;
+	justify-content: center;
 }

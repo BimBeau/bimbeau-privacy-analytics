@@ -342,13 +342,10 @@
   height: 100%;
 }
 
-.bbpa-admin-app .bbpa-overview__summary-card--mobile-only {
-  display: none;
-}
-
+/* Odd number of KPIs on two columns: the first one (Visitors) takes the whole row. */
 @media (max-width: 600px) {
-  .bbpa-admin-app .bbpa-overview__summary-card--mobile-only {
-    display: block;
+  .bbpa-admin-app .bbpa-overview__summary > .bbpa-overview__summary-card:first-child:nth-last-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 

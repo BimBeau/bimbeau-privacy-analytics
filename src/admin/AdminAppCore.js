@@ -114,6 +114,21 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 					formattedRealtimeVisitors
 			  );
 	const isRealtimeSkeletonVisible = isRealtimeLoading && ! realtimeData;
+	// Phones show only the count, so the button carries the full sentence for screen readers.
+	const realtimeAccessibleLabel = isRealtimeSkeletonVisible
+		? __( 'Real-time visitors', 'bimbeau-privacy-analytics' )
+		: sprintf(
+				/* translators: %s: active real-time visitor count. */
+				_n(
+					'%s visitor right now',
+					'%s visitors right now',
+					activeRealtimeVisitors,
+					'bimbeau-privacy-analytics'
+				),
+				formattedRealtimeVisitors
+		  );
+	// The header names the screen being viewed (Dashboard, Pages…), not the plugin.
+	const headerTitle = currentPanelConfig?.title || pluginLabel;
 	const lookupMode =
 		ADMIN_CONFIG?.settings?.geoip_lookup_mode || 'local_database';
 	const geolocationSettingsUrl = useMemo(
@@ -470,7 +485,7 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 							className="bbpa-admin-app__title-link"
 							href={ dashboardUrl }
 						>
-							{ HeaderBrand ? <HeaderBrand label={ pluginLabel } /> : pluginLabel }
+							{ HeaderBrand ? <HeaderBrand label={ headerTitle } /> : headerTitle }
 						</a>
 					</h1>
 					{ pluginVersion ? (
@@ -484,20 +499,34 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 						variant="primary"
 						className="bbpa-admin-app__realtime-button"
 						href={ realtimeUrl }
+						aria-label={ realtimeAccessibleLabel }
 					>
 						<FeatureIcon
 							name="activity"
 							className="bbpa-admin-app__realtime-button-icon"
-							size={ 16 }
+							size={ 20 }
 						/>
-						<span className="bbpa-admin-app__realtime-button-label">
-							{ isRealtimeSkeletonVisible ? (
-								<span
-									className="bbpa-admin-app__realtime-button-skeleton"
-									aria-hidden="true"
-								/>
-							) : null }
-							<span>{ realtimeLabel }</span>
+						<span
+							className="bbpa-admin-app__realtime-button-label"
+							aria-hidden="true"
+						>
+							<span>
+								{ isRealtimeSkeletonVisible ? (
+									<span className="bbpa-admin-app__realtime-button-skeleton" />
+								) : null }
+								{ realtimeLabel }
+							</span>
+							<span className="bbpa-admin-app__realtime-button-hint">
+								{ __( 'right now', 'bimbeau-privacy-analytics' ) }
+							</span>
+						</span>
+						<span
+							className="bbpa-admin-app__realtime-button-count"
+							aria-hidden="true"
+						>
+							{ isRealtimeSkeletonVisible
+								? '–'
+								: formattedRealtimeVisitors }
 						</span>
 					</Button>
 				) : null }

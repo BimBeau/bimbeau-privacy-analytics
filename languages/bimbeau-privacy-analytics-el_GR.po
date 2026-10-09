@@ -76,7 +76,7 @@ msgid "Dashboard"
 msgstr "Πίνακας ελέγχου"
 
 #: admin/admin.php src/admin/lib/adminConstants.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/RealtimePanel.js
 msgid "Real-time"
 msgstr "Πραγματικός χρόνος"
 
@@ -498,6 +498,17 @@ msgstr[0] "%s επισκέπτης"
 msgstr[1] "%s επισκέπτες"
 
 #: src/admin/AdminAppCore.js
+msgid "Real-time visitors"
+msgstr "Επισκέπτες σε πραγματικό χρόνο"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminAppCore.js
+msgid "%s visitor right now"
+msgid_plural "%s visitors right now"
+msgstr[0] "%s επισκέπτης αυτή τη στιγμή"
+msgstr[1] "%s επισκέπτες αυτή τη στιγμή"
+
+#: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
 msgstr "Η αρχική διαμόρφωση ολοκληρώθηκε."
 
@@ -520,6 +531,10 @@ msgstr "Γεωεντοπισμός"
 #: src/admin/AdminAppCore.js
 msgid "No panel available for this screen."
 msgstr "Δεν υπάρχει διαθέσιμος πίνακας για αυτήν την οθόνη."
+
+#: src/admin/AdminAppCore.js
+msgid "right now"
+msgstr "αυτή τη στιγμή"
 
 #: src/admin/AdminAppCore.js
 msgid "Complete the initial configuration"
@@ -1210,6 +1225,22 @@ msgstr "24μ"
 msgid "24 months"
 msgstr "24 μήνες"
 
+#: src/admin/lib/adminConstants.js
+msgid "This month"
+msgstr "Αυτός ο μήνας"
+
+#: src/admin/lib/adminConstants.js
+msgid "Last month"
+msgstr "Προηγούμενος μήνας"
+
+#: src/admin/lib/adminConstants.js
+msgid "This year"
+msgstr "Φέτος"
+
+#: src/admin/lib/adminConstants.js
+msgid "Last year"
+msgstr "Πέρυσι"
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Οργανική αναζήτηση"
@@ -1263,6 +1294,7 @@ msgid "Appearance"
 msgstr "Εμφάνιση"
 
 #: src/admin/lib/dataviewsTranslations.js src/admin/panels/SettingsPanel.js
+#: src/admin/widgets/PeriodFilter/index.js
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -2609,6 +2641,19 @@ msgstr "Μέση διάρκεια"
 msgid "Average active time spent during a visit."
 msgstr "Μέσος ενεργός χρόνος κατά τη διάρκεια μιας επίσκεψης."
 
+#. translators: 1: start date, 2: end date.
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "%1$s – %2$s"
+msgstr "%1$s – %2$s"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Rolling periods"
+msgstr "Κυλιόμενες περίοδοι"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Calendar periods"
+msgstr "Ημερολογιακές περίοδοι"
+
 #: src/admin/widgets/PeriodFilter/index.js
 msgid "Next"
 msgstr "Επόμενο"
@@ -2617,14 +2662,43 @@ msgstr "Επόμενο"
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
-#. translators: 1: start date, 2: end date.
+#. translators: %s: date range of the comparison period, e.g. "10/08/26 – 08/09/26".
 #: src/admin/widgets/PeriodFilter/index.js
-msgid "%1$s – %2$s"
-msgstr "%1$s – %2$s"
+msgid "vs %s"
+msgstr "έναντι %s"
 
 #: src/admin/widgets/PeriodFilter/index.js
-msgid "Quick ranges"
-msgstr "Γρήγορα διαστήματα"
+msgid "From"
+msgstr "Από"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "To"
+msgstr "Έως"
+
+#. translators: %s: date range of the comparison period.
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Compared with %s"
+msgstr "Σε σύγκριση με %s"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Choose the last day of the period."
+msgstr "Επιλέξτε την τελευταία ημέρα της περιόδου."
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Apply"
+msgstr "Εφαρμογή"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Previous period"
+msgstr "Προηγούμενη περίοδος"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Next period"
+msgstr "Επόμενη περίοδος"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Period"
+msgstr "Περίοδος"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referrer unavailable"

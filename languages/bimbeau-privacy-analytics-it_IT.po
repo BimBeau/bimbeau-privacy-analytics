@@ -76,7 +76,7 @@ msgid "Dashboard"
 msgstr "Dashboard"
 
 #: admin/admin.php src/admin/lib/adminConstants.js
-#: src/admin/panels/RealtimePanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/panels/RealtimePanel.js
 msgid "Real-time"
 msgstr "Tempo reale"
 
@@ -498,6 +498,17 @@ msgstr[0] "%s visitatore"
 msgstr[1] "%s visitatori"
 
 #: src/admin/AdminAppCore.js
+msgid "Real-time visitors"
+msgstr "Visitatori in tempo reale"
+
+#. translators: %s: active real-time visitor count.
+#: src/admin/AdminAppCore.js
+msgid "%s visitor right now"
+msgid_plural "%s visitors right now"
+msgstr[0] "%s visitatore in questo momento"
+msgstr[1] "%s visitatori in questo momento"
+
+#: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
 msgstr "Configurazione iniziale completata."
 
@@ -520,6 +531,10 @@ msgstr "Geolocalizzazione"
 #: src/admin/AdminAppCore.js
 msgid "No panel available for this screen."
 msgstr "Nessun pannello disponibile per questa schermata."
+
+#: src/admin/AdminAppCore.js
+msgid "right now"
+msgstr "in questo momento"
 
 #: src/admin/AdminAppCore.js
 msgid "Complete the initial configuration"
@@ -1210,6 +1225,22 @@ msgstr "24m"
 msgid "24 months"
 msgstr "24 mesi"
 
+#: src/admin/lib/adminConstants.js
+msgid "This month"
+msgstr "Questo mese"
+
+#: src/admin/lib/adminConstants.js
+msgid "Last month"
+msgstr "Mese scorso"
+
+#: src/admin/lib/adminConstants.js
+msgid "This year"
+msgstr "Quest'anno"
+
+#: src/admin/lib/adminConstants.js
+msgid "Last year"
+msgstr "Anno scorso"
+
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
 msgstr "Ricerca organica"
@@ -1263,6 +1294,7 @@ msgid "Appearance"
 msgstr "Aspetto"
 
 #: src/admin/lib/dataviewsTranslations.js src/admin/panels/SettingsPanel.js
+#: src/admin/widgets/PeriodFilter/index.js
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -2609,6 +2641,19 @@ msgstr "Durata media"
 msgid "Average active time spent during a visit."
 msgstr "Tempo attivo medio durante una visita."
 
+#. translators: 1: start date, 2: end date.
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "%1$s – %2$s"
+msgstr "%1$s – %2$s"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Rolling periods"
+msgstr "Periodi mobili"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Calendar periods"
+msgstr "Periodi di calendario"
+
 #: src/admin/widgets/PeriodFilter/index.js
 msgid "Next"
 msgstr "Successivo"
@@ -2617,14 +2662,43 @@ msgstr "Successivo"
 msgid "Custom"
 msgstr "Personalizzato"
 
-#. translators: 1: start date, 2: end date.
+#. translators: %s: date range of the comparison period, e.g. "10/08/26 – 08/09/26".
 #: src/admin/widgets/PeriodFilter/index.js
-msgid "%1$s – %2$s"
-msgstr "%1$s – %2$s"
+msgid "vs %s"
+msgstr "vs %s"
 
 #: src/admin/widgets/PeriodFilter/index.js
-msgid "Quick ranges"
-msgstr "Intervalli rapidi"
+msgid "From"
+msgstr "Dal"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "To"
+msgstr "Al"
+
+#. translators: %s: date range of the comparison period.
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Compared with %s"
+msgstr "Confrontato con %s"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Choose the last day of the period."
+msgstr "Scegli l'ultimo giorno del periodo."
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Apply"
+msgstr "Applica"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Previous period"
+msgstr "Periodo precedente"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Next period"
+msgstr "Periodo successivo"
+
+#: src/admin/widgets/PeriodFilter/index.js
+msgid "Period"
+msgstr "Periodo"
 
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referrer unavailable"

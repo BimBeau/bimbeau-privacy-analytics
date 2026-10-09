@@ -286,6 +286,21 @@ export const getRangeFromPreset = (preset, now = new Date()) => {
       start.setMonth(start.getMonth() - 24);
       start.setDate(start.getDate() + 1);
       break;
+    case "this-month":
+      start.setDate(1);
+      break;
+    case "last-month":
+      start.setDate(1);
+      start.setMonth(start.getMonth() - 1);
+      end.setDate(0);
+      break;
+    case "this-year":
+      start.setMonth(0, 1);
+      break;
+    case "last-year":
+      start.setFullYear(start.getFullYear() - 1, 0, 1);
+      end.setFullYear(end.getFullYear() - 1, 11, 31);
+      break;
     default:
       start.setDate(start.getDate() - 29);
   }
@@ -339,6 +354,85 @@ export const getPreviousRange = (range) => {
     end: formatDate(previousEnd),
   };
 };
+
+/**
+ * Range moved one period back (direction -1) or forward (1), for the previous / next arrows of the
+ * period filter. Whole calendar months and years move by one month or year (the current month or
+ * year counts as whole); any other range moves by its own length. The end never goes past the
+ * site's today. Returns null when the moved range would start after today.
+ *
+ * @param {{start: string, end: string}} range     Range of Y-m-d dates.
+ * @param {number}                       direction -1 for the previous period, 1 for the next one.
+ * @param {Date}                         [now]     Current time, for tests.
+ * @return {{start: string, end: string}|null} Moved range.
+ */
+export const getShiftedRange = (range, direction, now = new Date()) => {
+  const start = parseDateString(range?.start);
+  const end = parseDateString(range?.end);
+
+  if (!start || !end || (direction !== 1 && direction !== -1)) {
+    return null;
+  }
+
+  const today = getSiteToday(now);
+  const dayAfterEnd = new Date(end);
+  dayAfterEnd.setDate(dayAfterEnd.getDate() + 1);
+  const endsMonth = dayAfterEnd.getDate() === 1 || end.getTime() === today.getTime();
+  const isWholeYear =
+    start.getMonth() === 0 &&
+    start.getDate() === 1 &&
+    start.getFullYear() === end.getFullYear() &&
+    ((end.getMonth() === 11 && end.getDate() === 31) || end.getTime() === today.getTime());
+  const isWholeMonth =
+    start.getDate() === 1 &&
+    start.getFullYear() === end.getFullYear() &&
+    start.getMonth() === end.getMonth() &&
+    endsMonth;
+  let nextStart;
+  let nextEnd;
+
+  if (isWholeYear && !isWholeMonth) {
+    nextStart = new Date(start.getFullYear() + direction, 0, 1);
+    nextEnd = new Date(start.getFullYear() + direction, 11, 31);
+  } else if (isWholeMonth) {
+    nextStart = new Date(start.getFullYear(), start.getMonth() + direction, 1);
+    nextEnd = new Date(nextStart.getFullYear(), nextStart.getMonth() + 1, 0);
+  } else {
+    const dayInMs = 24 * 60 * 60 * 1000;
+    const totalDays = Math.max(1, Math.round((end - start) / dayInMs) + 1);
+    nextStart = new Date(start);
+    nextStart.setDate(nextStart.getDate() + direction * totalDays);
+    nextEnd = new Date(end);
+    nextEnd.setDate(nextEnd.getDate() + direction * totalDays);
+  }
+
+  if (nextStart > today) {
+    return null;
+  }
+
+  if (nextEnd > today) {
+    nextEnd = today;
+  }
+
+  return {
+    start: formatDate(nextStart),
+    end: formatDate(nextEnd),
+  };
+};
+
+/**
+ * Preset whose range is exactly the given range today, or null.
+ *
+ * @param {{start: string, end: string}} range   Range of Y-m-d dates.
+ * @param {string[]}                     presets Preset values to try, in order.
+ * @param {Date}                         [now]   Current time, for tests.
+ * @return {string|null} Matching preset.
+ */
+export const getPresetForRange = (range, presets, now = new Date()) =>
+  (presets || []).find((preset) => {
+    const presetRange = getRangeFromPreset(preset, now);
+    return presetRange.start === range?.start && presetRange.end === range?.end;
+  }) || null;
 
 export const isSingleDayRange = (range) => {
   if (!range?.start || !range?.end) {
