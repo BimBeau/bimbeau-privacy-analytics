@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.73.5
+Stable tag: 8.73.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.73.5 =
-* [Fix] The plugin package is built again: the new icon button styles no longer prevent the release from being published.
+= 8.73.6 =
+* [Fix] The interface uses the blue accent again: period picker, tabs, links, selected rows and progress bars. Icons in widgets and lists stay gray and black.
+* [Fix] Every marker of the real-time map is animated; visits of the last minute pulse faster.
+* [Fix] The channel detail panel of the Acquisition report is wider.
+* [Fix] Informational notices are blue instead of yellow.
+* [Fix] List pagination uses single chevrons, grayed out when there is no previous or next page.

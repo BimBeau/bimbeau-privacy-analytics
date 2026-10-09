@@ -1362,7 +1362,7 @@ const SettingsPanel = ({
                         )}
                         {accessRoles.length > 0 && (
                           <Notice
-                            status="warning"
+                            status="info"
                             isDismissible={false}
                             className="bbpa-general-settings__access-notice"
                           >

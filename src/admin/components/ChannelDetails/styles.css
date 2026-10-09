@@ -1,6 +1,6 @@
 /*
  * Acquisition report: the channel list and, once a channel is selected, its detail panel on the
- * right. Below about 920px the panel wraps under the list.
+ * right. Below about 980px the panel wraps under the list.
  */
 .bbpa-acquisition-explorer {
   display: flex;
@@ -72,7 +72,7 @@
 }
 
 .bbpa-channel-details {
-  flex: 1 1 320px;
+  flex: 1 1 400px;
   min-width: 0;
 }
 
@@ -206,8 +206,8 @@
   display: block;
   height: 100%;
   border-radius: 2px;
-  /* Same gray as the share bars of the report tables. */
-  background: #757575;
+  /* Same blue data color as the share bars of the report tables. */
+  background: var(--color-3, #3858e9);
 }
 
 .bbpa-channel-details__note {
