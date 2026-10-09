@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.73.2
+Stable tag: 8.73.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.73.2 =
-* [Fix] Share bars are gray everywhere, like in the report tables: the sources of the Acquisition channel details and the breakdown cards of the Devices and Pages reports were still blue.
+= 8.73.3 =
+* [Fix] The 8.69.0 release notes now list the avatars and roles of the Authors report and the smaller sort arrows of the list view options, which shipped in that version.
