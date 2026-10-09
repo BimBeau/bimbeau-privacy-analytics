@@ -5,7 +5,6 @@ import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
 import BrandIcon from '../../components/icons/BrandIcon';
 import FeatureIcon from '../../components/icons/FeatureIcon';
-import BrandNotice from '../../components/BrandNotice';
 import BpaCard from '../../components/BpaCard';
 import { ADMIN_CONFIG } from '../../constants';
 import { buildAudienceBreakdownSections } from '../../lib/audienceBreakdowns';
@@ -396,9 +395,6 @@ const AudienceBreakdownCards = ( {
 		sections.operatingSystems.length > 0 ||
 		sections.devices.length > 0 ||
 		( includeResolutions && sections.resolutions.length > 0 );
-	const detailedHits = stats.browsersIdentifiedTotal;
-	const showCoverageNotice =
-		stats.totalHits > 0 && detailedHits < stats.totalHits;
 
 	return (
 		<div className="bbpa-audience-breakdown-grid">
@@ -417,24 +413,6 @@ const AudienceBreakdownCards = ( {
 			/>
 			{ ! isLoading && ! error && hasContent ? (
 				<>
-					{ showCoverageNotice ? (
-						<BrandNotice
-							status="info"
-							isDismissible={ false }
-							className="bbpa-audience-breakdown-grid__notice"
-						>
-							{ sprintf(
-								/* translators: 1: page views with advanced statistics, 2: all page views, 3: share of the first in the second (32%). */
-								__(
-									'Browser, operating system and screen details are only known for visitors with advanced statistics: %1$s of %2$s page views (%3$s). Their shares are computed over these page views.',
-									'bimbeau-privacy-analytics'
-								),
-								formatNumber( detailedHits ),
-								formatNumber( stats.totalHits ),
-								formatShare( toShare( detailedHits, stats.totalHits ) )
-							) }
-						</BrandNotice>
-					) : null }
 					<BreakdownCard
 						kind="browser"
 						title={ __( 'Browser usage', 'bimbeau-privacy-analytics' ) }
