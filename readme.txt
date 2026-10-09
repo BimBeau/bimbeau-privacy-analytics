@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.73.1
+Stable tag: 8.73.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.73.1 =
-* [Fix] Audience breakdowns no longer show the notice about page views without browser, operating system and screen details; each card still states how many page views its shares are based on.
-* [Fix] Admin notices have an even outline again: the left edge no longer takes a different color from the rest of the rounded border.
+= 8.73.2 =
+* [Fix] Share bars are gray everywhere, like in the report tables: the sources of the Acquisition channel details and the breakdown cards of the Devices and Pages reports were still blue.
