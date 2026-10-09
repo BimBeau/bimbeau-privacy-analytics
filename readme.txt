@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.68.8
+Stable tag: 8.68.9
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.68.8 =
-* [Fix] The "New" badge of the report lists now has the same width as the changes, so it no longer touches the visit count in narrow cards.
+= 8.68.9 =
+* [Fix] The statistics screens keep their own colors whatever admin color scheme is selected in the user profile (or set by an admin theme plugin): buttons, bars and charts no longer turn black, red or brown.

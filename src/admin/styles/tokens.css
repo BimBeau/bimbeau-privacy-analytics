@@ -8,6 +8,27 @@
 	--wp-admin-border-width-focus: 2px;
 }
 
+/*
+ * The admin color scheme (body.admin-color-*, or an admin theme plugin) redefines
+ * these variables on <body>, which wins over :root. This stylesheet only loads on
+ * the plugin screens, so pin the plugin palette there, including popovers and
+ * modals that WordPress components render directly under <body>.
+ */
+html body.wp-admin,
+html body.wp-admin #wpwrap,
+html body.wp-admin #bbpa-admin {
+	--wp-admin-theme-color: #3858e9 !important;
+	--wp-admin-theme-color--rgb: 56, 88, 233 !important;
+	--wp-admin-theme-color-darker-10: #2145e6 !important;
+	--wp-admin-theme-color-darker-10--rgb: 33, 69, 230 !important;
+	--wp-admin-theme-color-darker-20: #183ad6 !important;
+	--wp-admin-theme-color-darker-20--rgb: 24, 58, 214 !important;
+	--wp-components-color-accent: var(--wp-admin-theme-color) !important;
+	--wp-components-color-accent-darker-10: var(--wp-admin-theme-color-darker-10) !important;
+	--wp-components-color-accent-darker-20: var(--wp-admin-theme-color-darker-20) !important;
+	--wp-components-color-accent-inverted: #fff !important;
+}
+
 body.wp-admin,
 body.wp-admin #bbpa-admin .bbpa-admin-app,
 .bbpa-period-filter__popover {
