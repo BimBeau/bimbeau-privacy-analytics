@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.73.3
+Stable tag: 8.73.5
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.73.3 =
-* [Fix] The 8.69.0 release notes now list the avatars and roles of the Authors report and the smaller sort arrows of the list view options, which shipped in that version.
+= 8.73.5 =
+* [Fix] The plugin package is built again: the new icon button styles no longer prevent the release from being published.

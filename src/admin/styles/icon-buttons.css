@@ -1,0 +1,84 @@
+/*
+ * Icon-only buttons: one look for every button of the plugin that shows an icon and no text.
+ * At rest a white square with a 1px gray outline; on hover, and while its menu is open or it is
+ * pressed, a light gray fill with a 1px black outline; a 2px black ring on keyboard focus.
+ * Each button keeps its own size. The export button keeps the WordPress busy stripes while an
+ * export runs. Buttons of the other edition get the same look from its own stylesheet.
+ *
+ * Loaded after globals.css / globals.free.css so that the generic button colors do not win. Modals
+ * (close button) and popovers (calendar) are rendered outside .bbpa-admin-app: their
+ * selectors are not scoped to it. This stylesheet is only enqueued on the plugin pages.
+ */
+:is(
+	.bbpa-admin-app .components-button.dataviews-filters__visibility-toggle,
+	.bbpa-admin-app .dataviews-view-config__toggle-wrapper > .components-button,
+	.bbpa-admin-app .components-button.bbpa-report-export-action__toggle,
+	.bbpa-admin-app .dataviews-pagination .components-button.has-icon,
+	.bbpa-admin-app .components-notice .components-notice__dismiss,
+	.bbpa-admin-app .bbpa-world-map__controls .components-button:not(.bbpa-world-map__reset),
+	.components-modal__header .components-button.has-icon,
+	.bbpa-period-filter__calendar .rdp-button.rdp-nav_button
+):not(.is-primary):not(.is-busy) {
+	box-sizing: border-box;
+	border: 0;
+	border-radius: 2px;
+	background: #fff;
+	box-shadow: inset 0 0 0 1px #dcdcde;
+	color: #1e1e1e;
+	outline: none;
+}
+
+:is(
+	.bbpa-admin-app .components-button.dataviews-filters__visibility-toggle,
+	.bbpa-admin-app .dataviews-view-config__toggle-wrapper > .components-button,
+	.bbpa-admin-app .components-button.bbpa-report-export-action__toggle,
+	.bbpa-admin-app .dataviews-pagination .components-button.has-icon,
+	.bbpa-admin-app .components-notice .components-notice__dismiss,
+	.bbpa-admin-app .bbpa-world-map__controls .components-button:not(.bbpa-world-map__reset),
+	.components-modal__header .components-button.has-icon,
+	.bbpa-period-filter__calendar .rdp-button.rdp-nav_button
+):not(.is-primary):not(.is-busy):not(:disabled):not([aria-disabled="true"]):is(:hover, [aria-expanded="true"], [aria-pressed="true"], .is-pressed) {
+	background: #f0f0f0;
+	box-shadow: inset 0 0 0 1px #1e1e1e;
+	color: #1e1e1e;
+}
+
+:is(
+	.bbpa-admin-app .components-button.dataviews-filters__visibility-toggle,
+	.bbpa-admin-app .dataviews-view-config__toggle-wrapper > .components-button,
+	.bbpa-admin-app .components-button.bbpa-report-export-action__toggle,
+	.bbpa-admin-app .dataviews-pagination .components-button.has-icon,
+	.bbpa-admin-app .components-notice .components-notice__dismiss,
+	.bbpa-admin-app .bbpa-world-map__controls .components-button:not(.bbpa-world-map__reset),
+	.components-modal__header .components-button.has-icon,
+	.bbpa-period-filter__calendar .rdp-button.rdp-nav_button
+):not(.is-primary):not(.is-busy):focus-visible {
+	outline: 2px solid #1e1e1e;
+	outline-offset: 1px;
+}
+
+/* After a download the check of the export button stays green (see .is-done in globals.css). */
+.bbpa-admin-app .components-button.bbpa-report-export-action__toggle.is-done:not(.is-primary):not(.is-busy) {
+	color: #008a20;
+}
+
+/* The calendar arrows draw their hover and focus ring with ::before, like the days: not here. */
+.bbpa-period-filter__calendar .rdp-button.rdp-nav_button::before {
+	content: none;
+}
+
+/*
+ * The previous / next period arrows are the two ends of the bordered period control of the header:
+ * the control draws their outline, and hover gives them the same gray fill and black outline.
+ */
+.bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step:hover:not(:disabled) {
+	background: #f0f0f0;
+	box-shadow: inset 0 0 0 1px #1e1e1e;
+	color: #1e1e1e;
+}
+
+/* The map zoom buttons are two outlined squares side by side. */
+.bbpa-admin-app .bbpa-world-map__controls .components-button-group {
+	display: inline-flex;
+	gap: 4px;
+}
