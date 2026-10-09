@@ -1488,6 +1488,7 @@ msgid "Desktop"
 msgstr "Masaüstü"
 
 #: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Mobile"
 msgstr "Mobil"
 
@@ -2509,6 +2510,28 @@ msgstr "Botlar"
 msgid "Smartphone"
 msgstr "Akıllı telefon"
 
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Small tablet"
+msgstr "Küçük tablet"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Laptop"
+msgstr "Dizüstü bilgisayar"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Large screen"
+msgstr "Büyük ekran"
+
+#. translators: %s: share of the previous period, for example 21.9%.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Previous period: %s"
+msgstr "Önceki dönem: %s"
+
+#. translators: %s: signed change of a rate, in percentage points (for example +1.2).
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "%s pt"
+msgstr "%s puan"
+
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -2517,37 +2540,19 @@ msgid "%s page view"
 msgid_plural "%s page views"
 msgstr[0] "%s sayfa görüntüleme"
 
-#. translators: %1$s: percentage value, without the percent sign.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "%1$s%% share"
-msgstr "%1$s%% pay"
+msgid "Not identified"
+msgstr "Tanımlanmadı"
+
+#. translators: %s: page views with a known value for this card.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Shares of the %s page views where this detail is known."
+msgstr "Bu ayrıntının bilindiği %s sayfa görüntülemesi üzerindeki paylar."
 
 #. translators: %s: total page views in the selected range.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Based on %s tracked page views in the selected range."
 msgstr "Seçilen aralıkta izlenen %s sayfa görüntülemesine göre."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Robot page views could not be loaded."
-msgstr "Robotların sayfa görüntülemeleri yüklenemedi."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Robots stay excluded from every other report."
-msgstr "Robotlar diğer tüm raporların dışında kalmaya devam eder."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "No robot was detected in the selected range."
-msgstr "Seçilen dönemde hiçbir robot tespit edilmedi."
-
-#. translators: 1: robot page views, 2: number of robots.
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Includes %1$s page views of %2$s robot."
-msgid_plural "Includes %1$s page views of %2$s robots."
-msgstr[0] "%2$s robotun %1$s sayfa görüntülemesini içerir."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Include robots"
-msgstr "Robotları dahil et"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No audience breakdowns available."
@@ -2556,6 +2561,11 @@ msgstr "Kitle kırılımları mevcut değil."
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Loading audience breakdowns…"
 msgstr "Kitle kırılımları yükleniyor…"
+
+#. translators: 1: page views with advanced statistics, 2: all page views, 3: share of the first in the second (32%).
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Browser, operating system and screen details are only known for visitors with advanced statistics: %1$s of %2$s page views (%3$s). Their shares are computed over these page views."
+msgstr "Tarayıcı, işletim sistemi ve ekran yalnızca gelişmiş istatistiklere sahip ziyaretçiler için bilinir: %2$s sayfa görüntülemeden %1$s tanesi (%3$s). Payları bu sayfa görüntülemeleri üzerinden hesaplanır."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Browser usage"
@@ -2566,8 +2576,8 @@ msgid "No browser usage available."
 msgstr "Tarayıcı kullanımı mevcut değil."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Most used operating systems"
-msgstr "En çok kullanılan işletim sistemleri"
+msgid "Operating systems"
+msgstr "İşletim sistemleri"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No operating system usage available."

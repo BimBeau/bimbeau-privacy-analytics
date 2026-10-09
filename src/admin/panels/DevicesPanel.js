@@ -14,7 +14,7 @@ const DevicesPanel = ( { rangeSelection } ) => {
 			<AudienceBreakdownCards
 				range={ range }
 				includeResolutions
-				allowRobotsToggle
+				showTrends
 			/>
 		</div>
 	);

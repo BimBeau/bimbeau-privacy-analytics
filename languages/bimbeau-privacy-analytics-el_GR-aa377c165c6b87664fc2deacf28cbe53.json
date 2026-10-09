@@ -29,9 +29,6 @@
       "%1$s — %2$s visitors": [
         "%1$s — %2$s επισκέψεις"
       ],
-      "%1$s%% share": [
-        "%1$s%% μερίδιο"
-      ],
       "%1$s: %2$s visits": [
         "%1$s: %2$s επισκέψεις"
       ],
@@ -79,6 +76,9 @@
       "%s private hidden": [
         "%s ιδιωτικός κρυφός",
         "%s ιδιωτικοί κρυφοί"
+      ],
+      "%s pt": [
+        "%s μ."
       ],
       "%s visitor": [
         "%s επισκέπτης",
@@ -321,6 +321,9 @@
       ],
       "Browser version": [
         "Έκδοση περιηγητή"
+      ],
+      "Browser, operating system and screen details are only known for visitors with advanced statistics: %1$s of %2$s page views (%3$s). Their shares are computed over these page views.": [
+        "Το πρόγραμμα περιήγησης, το λειτουργικό σύστημα και η οθόνη είναι γνωστά μόνο για επισκέπτες με προηγμένα στατιστικά στοιχεία: %1$s από %2$s προβολές σελίδας (%3$s). Τα μερίδιά τους υπολογίζονται επί αυτών των προβολών σελίδας."
       ],
       "CMP markers": [
         "Δείκτες CMP"
@@ -799,13 +802,6 @@
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "Στο CMP σας, αποκλείστε το script προηγμένων στατιστικών του BimBeau Privacy Analytics μέχρι να γίνει αποδεκτός ο σκοπός Στατιστικά ή Αναλυτικά."
       ],
-      "Include robots": [
-        "Συμπερίληψη ρομπότ"
-      ],
-      "Includes %1$s page views of %2$s robot.": [
-        "Περιλαμβάνει %1$s προβολές σελίδας από %2$s ρομπότ.",
-        "Περιλαμβάνει %1$s προβολές σελίδας από %2$s ρομπότ."
-      ],
       "Initial configuration completed.": [
         "Η αρχική διαμόρφωση ολοκληρώθηκε."
       ],
@@ -856,6 +852,12 @@
       ],
       "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details.": [
         "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
+      ],
+      "Laptop": [
+        "Φορητός υπολογιστής"
+      ],
+      "Large screen": [
+        "Μεγάλη οθόνη"
       ],
       "Last activity": [
         "Τελευταία δραστηριότητα"
@@ -998,9 +1000,6 @@
       "Monday": [
         "Δευτέρα"
       ],
-      "Most used operating systems": [
-        "Πιο χρησιμοποιούμενα λειτουργικά συστήματα"
-      ],
       "Move left": [
         "Μετακίνηση αριστερά"
       ],
@@ -1124,9 +1123,6 @@
       "No robot detected for this period.": [
         "Δεν εντοπίστηκε ρομπότ σε αυτήν την περίοδο."
       ],
-      "No robot was detected in the selected range.": [
-        "Δεν εντοπίστηκε κανένα ρομπότ στην επιλεγμένη περίοδο."
-      ],
       "No roles available.": [
         "Δεν υπάρχουν διαθέσιμοι ρόλοι."
       ],
@@ -1141,6 +1137,9 @@
       ],
       "No visits in the current activity window.": [
         "Δεν υπάρχουν επισκέψεις στο τρέχον παράθυρο δραστηριότητας."
+      ],
+      "Not identified": [
+        "Μη αναγνωρισμένο"
       ],
       "Not installed": [
         "Δεν έχει εγκατασταθεί"
@@ -1165,6 +1164,9 @@
       ],
       "Operating system": [
         "Λειτουργικό σύστημα"
+      ],
+      "Operating systems": [
+        "Λειτουργικά συστήματα"
       ],
       "Operational": [
         "Λειτουργικό"
@@ -1258,6 +1260,9 @@
       ],
       "Previous period: %1$s (%2$s)": [
         "Προηγούμενη περίοδος: %1$s (%2$s)"
+      ],
+      "Previous period: %s": [
+        "Προηγούμενη περίοδος: %s"
       ],
       "Previous visitors": [
         "Προηγούμενοι επισκέπτες"
@@ -1373,17 +1378,11 @@
       "Robot": [
         "Ρομπότ"
       ],
-      "Robot page views could not be loaded.": [
-        "Δεν ήταν δυνατή η φόρτωση των προβολών σελίδας των ρομπότ."
-      ],
       "Robots": [
         "Ρομπότ"
       ],
       "Robots are excluded from all statistics. This list only lets you check what was filtered.": [
         "Τα ρομπότ εξαιρούνται από όλα τα στατιστικά. Αυτή η λίστα σας επιτρέπει μόνο να ελέγξετε τι φιλτραρίστηκε."
-      ],
-      "Robots stay excluded from every other report.": [
-        "Τα ρομπότ παραμένουν εκτός όλων των άλλων αναφορών."
       ],
       "Role": [
         "Ρόλος"
@@ -1466,8 +1465,14 @@
       "Share": [
         "Μερίδιο"
       ],
+      "Shares of the %s page views where this detail is known.": [
+        "Μερίδια επί των %s προβολών σελίδας όπου αυτή η λεπτομέρεια είναι γνωστή."
+      ],
       "Size": [
         "Μέγεθος"
+      ],
+      "Small tablet": [
+        "Μικρό tablet"
       ],
       "Smartphone": [
         "Smartphone"

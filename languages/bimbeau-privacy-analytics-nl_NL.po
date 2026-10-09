@@ -1494,6 +1494,7 @@ msgid "Desktop"
 msgstr "Desktop"
 
 #: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Mobile"
 msgstr "Mobiel"
 
@@ -2518,6 +2519,28 @@ msgstr "Robots"
 msgid "Smartphone"
 msgstr "Smartphone"
 
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Small tablet"
+msgstr "Kleine tablet"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Laptop"
+msgstr "Laptop"
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Large screen"
+msgstr "Groot scherm"
+
+#. translators: %s: share of the previous period, for example 21.9%.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Previous period: %s"
+msgstr "Vorige periode: %s"
+
+#. translators: %s: signed change of a rate, in percentage points (for example +1.2).
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "%s pt"
+msgstr "%s pt"
+
 #. translators: %s: page views count.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
@@ -2527,38 +2550,19 @@ msgid_plural "%s page views"
 msgstr[0] "%s paginaweergave"
 msgstr[1] "%s paginaweergaven"
 
-#. translators: %1$s: percentage value, without the percent sign.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "%1$s%% share"
-msgstr "%1$s%% aandeel"
+msgid "Not identified"
+msgstr "Niet herkend"
+
+#. translators: %s: page views with a known value for this card.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Shares of the %s page views where this detail is known."
+msgstr "Aandelen van de %s paginaweergaven waarvoor dit detail bekend is."
 
 #. translators: %s: total page views in the selected range.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Based on %s tracked page views in the selected range."
 msgstr "Gebaseerd op %s gevolgde paginaweergaven in het geselecteerde bereik."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Robot page views could not be loaded."
-msgstr "De paginaweergaven van robots konden niet worden geladen."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Robots stay excluded from every other report."
-msgstr "Robots blijven uitgesloten van alle andere rapporten."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "No robot was detected in the selected range."
-msgstr "Er is geen robot gedetecteerd in de geselecteerde periode."
-
-#. translators: 1: robot page views, 2: number of robots.
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Includes %1$s page views of %2$s robot."
-msgid_plural "Includes %1$s page views of %2$s robots."
-msgstr[0] "Bevat %1$s paginaweergaven van %2$s robot."
-msgstr[1] "Bevat %1$s paginaweergaven van %2$s robots."
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Include robots"
-msgstr "Robots meetellen"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No audience breakdowns available."
@@ -2567,6 +2571,11 @@ msgstr "Geen publieksverdelingen beschikbaar."
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Loading audience breakdowns…"
 msgstr "Publieksverdelingen laden…"
+
+#. translators: 1: page views with advanced statistics, 2: all page views, 3: share of the first in the second (32%).
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Browser, operating system and screen details are only known for visitors with advanced statistics: %1$s of %2$s page views (%3$s). Their shares are computed over these page views."
+msgstr "Browser, besturingssysteem en scherm zijn alleen bekend voor bezoekers met geavanceerde statistieken: %1$s van %2$s paginaweergaven (%3$s). Hun aandelen worden over deze paginaweergaven berekend."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Browser usage"
@@ -2577,8 +2586,8 @@ msgid "No browser usage available."
 msgstr "Geen browsergebruik beschikbaar."
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Most used operating systems"
-msgstr "Meest gebruikte besturingssystemen"
+msgid "Operating systems"
+msgstr "Besturingssystemen"
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No operating system usage available."

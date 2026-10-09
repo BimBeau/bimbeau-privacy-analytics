@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.70.0
+Stable tag: 8.71.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,7 +215,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.70.0 =
-* [Feature] Period filter: calendar periods (this month, last month, this year, last year) next to the rolling ones, arrows to move to the previous or next period, the comparison period shown under the dates, date fields and an Apply button for custom ranges, and a bottom sheet on phones.
-* [Changed] The real-time visitors button has the same height as the period filter and stays visible on phones, as a compact count; the Real-time card is removed from the dashboard KPIs.
-* [Changed] The admin header shows the name of the current screen (Dashboard, Pages…) instead of "Statistics".
+= 8.71.0 =
+* [Feature] The Devices report compares each browser, operating system, device and screen share with the previous period of the same length, in percentage points.
+* [Fix] Browser, operating system and resolution shares are now explained: a notice gives how many page views have these details (they are only known for visitors with advanced statistics), and each card shows the other page views apart as "Not identified".
+* [UI] Shares keep one decimal, so they add up to 100%, and the bars are thinner with the percentage aligned on the right.
+* [UI] Screen widths are named (Mobile, Tablet, Laptop, Large screen) and get the icon of their device.
+* [UI] The operating systems card is titled "Operating systems" so that its title fits on one line, and the Devices report no longer offers the "Include robots" switch.

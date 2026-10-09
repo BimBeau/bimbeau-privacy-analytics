@@ -1602,10 +1602,12 @@ msgid "Desktop"
 msgstr ""
 
 #: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Mobile"
 msgstr ""
 
 #: src/admin/lib/deviceClassLabel.js
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Tablet"
 msgstr ""
@@ -2659,7 +2661,32 @@ msgstr ""
 msgid "Smartphone"
 msgstr ""
 
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Small tablet"
+msgstr ""
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Laptop"
+msgstr ""
+
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Large screen"
+msgstr ""
+
+#. translators: %s: share of the previous period, for example 21.9%.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#, js-format
+msgid "Previous period: %s"
+msgstr ""
+
+#. translators: %s: signed change of a rate, in percentage points (for example +1.2).
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#, js-format
+msgid "%s pt"
+msgstr ""
+
 #. translators: %s: page views count.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #: src/admin/widgets/DeviceSplit/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -2670,10 +2697,14 @@ msgid_plural "%s page views"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: %1$s: percentage value, without the percent sign.
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+msgid "Not identified"
+msgstr ""
+
+#. translators: %s: page views with a known value for this card.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 #, js-format
-msgid "%1$s%% share"
+msgid "Shares of the %s page views where this detail is known."
 msgstr ""
 
 #. translators: %s: total page views in the selected range.
@@ -2683,35 +2714,17 @@ msgid "Based on %s tracked page views in the selected range."
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Robot page views could not be loaded."
-msgstr ""
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Robots stay excluded from every other report."
-msgstr ""
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "No robot was detected in the selected range."
-msgstr ""
-
-#. translators: 1: robot page views, 2: number of robots.
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-#, js-format
-msgid "Includes %1$s page views of %2$s robot."
-msgid_plural "Includes %1$s page views of %2$s robots."
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Include robots"
-msgstr ""
-
-#: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "No audience breakdowns available."
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Loading audience breakdowns…"
+msgstr ""
+
+#. translators: 1: page views with advanced statistics, 2: all page views, 3: share of the first in the second (32%).
+#: src/admin/widgets/AudienceBreakdownCards/index.js
+#, js-format
+msgid "Browser, operating system and screen details are only known for visitors with advanced statistics: %1$s of %2$s page views (%3$s). Their shares are computed over these page views."
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -2723,7 +2736,7 @@ msgid "No browser usage available."
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js
-msgid "Most used operating systems"
+msgid "Operating systems"
 msgstr ""
 
 #: src/admin/widgets/AudienceBreakdownCards/index.js

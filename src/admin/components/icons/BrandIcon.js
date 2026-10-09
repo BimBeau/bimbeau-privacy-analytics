@@ -133,13 +133,35 @@ const getBrowserIcon = ( value ) => {
 	return TbQuestionMark;
 };
 
+// Screen width buckets of formatScreenResolution() ("0-480px", "1441px+"): the icon of the device
+// that usually has that width. Any other value keeps the generic resolution icon.
+const getResolutionIcon = ( value ) => {
+	const match = normalizeValue( value ).match( /^(\d+)(?:-\d+)?px\+?$/ );
+
+	if ( ! match ) {
+		return LuMaximize;
+	}
+
+	const lowerBound = Number.parseInt( match[ 1 ], 10 );
+
+	if ( lowerBound < 481 ) {
+		return TbDeviceMobile;
+	}
+
+	if ( lowerBound < 1025 ) {
+		return TbDeviceTablet;
+	}
+
+	return TbDeviceDesktop;
+};
+
 const BrandIcon = ( { kind, value, className, size = 16 } ) => {
 	let IconComponent = TbQuestionMark;
 
 	if ( kind === 'device' ) {
 		IconComponent = getDeviceIcon( value );
 	} else if ( kind === 'resolution' ) {
-		IconComponent = LuMaximize;
+		IconComponent = getResolutionIcon( value );
 	} else if ( kind === 'os' ) {
 		IconComponent = getOperatingSystemIcon( value );
 	} else if ( kind === 'browser' ) {

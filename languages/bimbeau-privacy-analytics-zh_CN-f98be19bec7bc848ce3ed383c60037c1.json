@@ -28,9 +28,6 @@
       "%1$s — %2$s visitors": [
         "%1$s — %2$s 次访问"
       ],
-      "%1$s%% share": [
-        "%1$s%% 占比"
-      ],
       "%1$s: %2$s visits": [
         "%1$s：%2$s 次访问"
       ],
@@ -72,6 +69,9 @@
       ],
       "%s private hidden": [
         "已隐藏 %s 个私密访客"
+      ],
+      "%s pt": [
+        "%s 个百分点"
       ],
       "%s visitor": [
         "%s 位访客"
@@ -312,6 +312,9 @@
       ],
       "Browser version": [
         "浏览器版本"
+      ],
+      "Browser, operating system and screen details are only known for visitors with advanced statistics: %1$s of %2$s page views (%3$s). Their shares are computed over these page views.": [
+        "浏览器、操作系统和屏幕信息仅对启用高级统计的访客可知：%2$s 次页面浏览中的 %1$s 次（%3$s）。其比例基于这些页面浏览计算。"
       ],
       "CMP markers": [
         "CMP 标记"
@@ -790,12 +793,6 @@
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "在你的 CMP 中，在统计或分析目的被接受之前阻止 BimBeau Privacy Analytics 高级统计脚本。"
       ],
-      "Include robots": [
-        "包含机器人"
-      ],
-      "Includes %1$s page views of %2$s robot.": [
-        "包含 %2$s 个机器人的 %1$s 次页面浏览。"
-      ],
       "Initial configuration completed.": [
         "初始配置完成。"
       ],
@@ -846,6 +843,12 @@
       ],
       "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details.": [
         "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
+      ],
+      "Laptop": [
+        "笔记本电脑"
+      ],
+      "Large screen": [
+        "大屏幕"
       ],
       "Last activity": [
         "最后活动"
@@ -988,9 +991,6 @@
       "Monday": [
         "星期一"
       ],
-      "Most used operating systems": [
-        "最常用的操作系统"
-      ],
       "Move left": [
         "左移"
       ],
@@ -1114,9 +1114,6 @@
       "No robot detected for this period.": [
         "此期间未检测到机器人。"
       ],
-      "No robot was detected in the selected range.": [
-        "所选时间段内未检测到机器人。"
-      ],
       "No roles available.": [
         "没有可用角色。"
       ],
@@ -1131,6 +1128,9 @@
       ],
       "No visits in the current activity window.": [
         "当前活动窗口内没有访问。"
+      ],
+      "Not identified": [
+        "未识别"
       ],
       "Not installed": [
         "未安装"
@@ -1154,6 +1154,9 @@
         "打开行"
       ],
       "Operating system": [
+        "操作系统"
+      ],
+      "Operating systems": [
         "操作系统"
       ],
       "Operational": [
@@ -1248,6 +1251,9 @@
       ],
       "Previous period: %1$s (%2$s)": [
         "上一周期：%1$s（%2$s）"
+      ],
+      "Previous period: %s": [
+        "上一周期：%s"
       ],
       "Previous visitors": [
         "上一周期访客"
@@ -1363,17 +1369,11 @@
       "Robot": [
         "机器人"
       ],
-      "Robot page views could not be loaded.": [
-        "无法加载机器人的页面浏览量。"
-      ],
       "Robots": [
         "机器人"
       ],
       "Robots are excluded from all statistics. This list only lets you check what was filtered.": [
         "机器人已从所有统计数据中排除。此列表仅用于检查被过滤的内容。"
-      ],
-      "Robots stay excluded from every other report.": [
-        "机器人仍会从所有其他报告中排除。"
       ],
       "Role": [
         "角色"
@@ -1456,8 +1456,14 @@
       "Share": [
         "占比"
       ],
+      "Shares of the %s page views where this detail is known.": [
+        "占已知此项信息的 %s 次页面浏览的比例。"
+      ],
       "Size": [
         "大小"
+      ],
+      "Small tablet": [
+        "小平板"
       ],
       "Smartphone": [
         "智能手机"
