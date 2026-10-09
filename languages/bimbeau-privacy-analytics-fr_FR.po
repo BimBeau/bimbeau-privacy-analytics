@@ -105,8 +105,9 @@ msgid "Geolocation"
 msgstr "Géolocalisation"
 
 #: admin/admin.php admin/dashboard-widget.php src/admin/AdminAppCore.js
-#: src/admin/lib/adminConstants.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/GeoRankingList/index.js src/admin/lib/adminConstants.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -764,6 +765,18 @@ msgstr "Saisir les identifiants MaxMind"
 msgid "Traffic data is pending"
 msgstr "Les données de trafic sont en attente"
 
+#: src/admin/components/GeoRankingList/GeoMapSummary.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgid_plural "Visitors"
+msgstr[0] "Visiteur"
+msgstr[1] "Visiteurs"
+
+#: src/admin/components/GeoRankingList/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr "Localisation"
+
 #: src/admin/components/HourlyHeatmap/index.js
 msgid "No hourly details available for this page."
 msgstr "Aucun détail horaire disponible pour cette page."
@@ -787,6 +800,20 @@ msgstr "La granularité d’exécution est établie à partir des niveaux de gra
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Technical state does not prove consent collection validity."
 msgstr "L’état technique ne prouve pas la validité de la collecte du consentement."
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Page"
+msgstr "Page"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Page inconnue"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
+msgstr "Dernière activité"
 
 #: src/admin/components/ReferrerLabel/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1052,10 +1079,6 @@ msgid "Unidentified robot"
 msgstr "Robot non identifié"
 
 #: src/admin/components/VisitorsDataView/index.js
-msgid "Last activity"
-msgstr "Dernière activité"
-
-#: src/admin/components/VisitorsDataView/index.js
 msgid "Entry page"
 msgstr "Page d’entrée"
 
@@ -1189,13 +1212,13 @@ msgid "Loading world map"
 msgstr "Chargement de la carte du monde"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "Commandes de zoom de la carte"
-
-#: src/admin/components/WorldMap/index.js
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Reset"
 msgstr "Réinitialiser"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map zoom controls"
+msgstr "Commandes de zoom de la carte"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1715,6 +1738,10 @@ msgstr "Sélectionnez un canal pour voir d’où viennent ses visites."
 msgid "No country data available for the selected period."
 msgstr "Aucune donnée de pays disponible pour la période sélectionnée."
 
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "Part"
+
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s visitors"
@@ -1738,9 +1765,20 @@ msgstr "Drapeau de pays inconnu"
 msgid "Flag of %s"
 msgstr "Drapeau de %s"
 
+#. translators: %s: number of countries.
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "%s country"
+msgid_plural "%s countries"
+msgstr[0] "%s pays"
+msgstr[1] "%s pays"
+
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
 msgstr "Principaux pays"
+
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "Countries"
+msgstr "Pays"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
@@ -1755,10 +1793,6 @@ msgid "Visitor origin will be available after the local GeoIP database is instal
 msgstr "La provenance des visiteurs sera disponible après l’installation de la base GeoIP locale depuis les réglages de géolocalisation de l’extension."
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Page inconnue"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
 msgstr "Le plein écran est indisponible dans ce contexte de navigateur."
 
@@ -1767,18 +1801,16 @@ msgid "Loading real-time data…"
 msgstr "Chargement des données en temps réel…"
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgid_plural "Visitors"
-msgstr[0] "Visiteur"
-msgstr[1] "Visiteurs"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Exit fullscreen"
 msgstr "Quitter le plein écran"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen"
 msgstr "Plein écran"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Recent activity"
+msgstr "Activité récente"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
@@ -1863,10 +1895,6 @@ msgstr "Format d’affichage"
 #: src/admin/panels/SettingsPanel.js
 msgid "Interactions"
 msgstr "Interactions"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Location"
-msgstr "Localisation"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data scope list"
@@ -2506,10 +2534,6 @@ msgstr "Rôle"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Archives, search, blog home"
 msgstr "Archives, recherche, accueil du blog"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Share"
-msgstr "Part"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content viewed"

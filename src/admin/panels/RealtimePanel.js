@@ -8,6 +8,7 @@ import {
 import { Button, Notice, Tooltip } from '@wordpress/components';
 import { filterSortAndPaginate } from '@wordpress/dataviews';
 import ListDataViews, { getInitialListColumns } from '../components/ListDataViews';
+import RealtimeActivityTimeline from '../components/RealtimeActivityTimeline';
 import { __, _n } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG } from '../constants';
@@ -295,6 +296,8 @@ export const normalizeRealtimeMapItem = (
 		current_page: currentPage,
 		currentPageLabel: currentPage || __('Unknown page', 'bimbeau-privacy-analytics'),
 		visitor_id: getRealtimeVisitField(normalizedPoint, ['visitor_id', 'visitorId']),
+		visitor_ids: getRealtimeVisitField(normalizedPoint, ['visitor_id', 'visitorId']),
+		last_view_at: Number(normalizedPoint?.last_view_at ?? normalizedPoint?.lastViewAt ?? 0) || 0,
 		country_code: getRealtimeVisitField(normalizedPoint, ['country_code', 'countryCode']),
 		city: normalizedPoint.city || '',
 		country: normalizedPoint.country || '',
@@ -322,6 +325,8 @@ export const aggregateRealtimeMapVisits = (visits = []) => {
 			currentPageLabel:
 				pages.join(', ') || __('Unknown page', 'bimbeau-privacy-analytics'),
 			visitor_id: '',
+			visitor_ids: [existing.visitor_ids, item.visitor_ids].filter(Boolean).join(','),
+			last_view_at: Math.max(existing.last_view_at || 0, item.last_view_at || 0),
 		});
 	});
 
@@ -753,6 +758,7 @@ const RealtimePanel = () => {
 	const lastMarkerDiagnosticRef = useRef('');
 	const { data, isLoading, error } = useRealtimeSnapshot();
 	const [isFullscreenActive, setIsFullscreenActive] = useState(false);
+	const [hoveredVisitorId, setHoveredVisitorId] = useState('');
 	const [isFullscreenSupported, setIsFullscreenSupported] = useState(true);
 	const [cardDimensions, setCardDimensions] = useState({
 		width: 0,
@@ -1035,6 +1041,9 @@ const RealtimePanel = () => {
 	const realtimePanelClassName = `bbpa-report-panel bbpa-realtime-panel${activeVisitors === 0 ? ' bbpa-realtime-panel--no-visitors' : ''
 		}`;
 
+	// The timeline needs per-visit pages and times, which the essential-only scope does not have.
+	const shouldShowActivityTimeline = !isEssentialOnlyScope && realtimeVisitRows.length > 0;
+
 	return (
 		<div className={realtimePanelClassName}>
 			<BpaCard
@@ -1073,7 +1082,13 @@ const RealtimePanel = () => {
 				/>
 				{!isLoading && !error ? (
 					<div className="bbpa-realtime-panel__body" style={fullscreenContentStyle}>
+						<div
+							className={`bbpa-realtime-panel__live${
+								shouldShowActivityTimeline ? ' bbpa-realtime-panel__live--with-timeline' : ''
+							}`}
+						>
 						<WorldMap
+							highlightedVisitorId={hoveredVisitorId}
 							mapMode={shouldRenderRealtimeMarkers ? 'realtime-markers' : 'countries'}
 							dataOverride={shouldRenderRealtimeMarkers ? realtimeMapData : countryMapData}
 							isLoadingOverride={false}
@@ -1114,6 +1129,21 @@ const RealtimePanel = () => {
 							emptyLabel=""
 							showGeolocationHelperMessage={false}
 						/>
+						{shouldShowActivityTimeline ? (
+							<section
+								className="bbpa-realtime-panel__timeline"
+								aria-label={__('Recent activity', 'bimbeau-privacy-analytics')}
+							>
+								<h3 className="bbpa-realtime-panel__timeline-title">
+									{__('Recent activity', 'bimbeau-privacy-analytics')}
+								</h3>
+								<RealtimeActivityTimeline
+									rows={realtimeVisitRows}
+									onHoverVisitor={setHoveredVisitorId}
+								/>
+							</section>
+						) : null}
+						</div>
 						<div className="bbpa-realtime-panel__visits">
 							{isEssentialOnlyScope ? (
 								<p className="bbpa-realtime-panel__meta">

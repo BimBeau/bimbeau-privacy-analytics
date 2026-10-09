@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.72.0
+Stable tag: 8.73.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.72.0 =
-* [Feature] Acquisition report: a detail panel next to the table, opened on the channel with the most visits and on any channel you click: visits and difference against the previous period, the sites its visits come from with proportional bars and their trend, an explanation for direct visits, and a link to the referrers or entry pages report.
+= 8.73.0 =
+* [Feature] Real-time: a compact Recent activity timeline (flag, page and time since the last page view) sits next to the map; hovering a line highlights the visitor on the map.
+* [Feature] Real-time map markers are a point with a soft halo: a visit seen in the last minute sends out a wave and older visits fade.
+* [Feature] Geolocation: the map shows the visitors of the period and a compact ranking of countries next to it, and the countries table gains a Share column.
+* [Change] Hovering a country on the map darkens its color, and the map Reset button moves to the left of the zoom buttons.
+* [Change] The interface accent is now near-black instead of blue (buttons, tabs, links, calendar, badges); charts and maps keep their blue.

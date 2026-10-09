@@ -119,6 +119,7 @@ msgstr ""
 #: admin/admin.php
 #: admin/dashboard-widget.php
 #: src/admin/AdminAppCore.js
+#: src/admin/components/GeoRankingList/index.js
 #: src/admin/lib/adminConstants.js
 #: src/admin/panels/GeoCountriesPanel.js
 #: src/admin/panels/VisitorsPanel.js
@@ -834,6 +835,18 @@ msgstr ""
 msgid "Traffic data is pending"
 msgstr ""
 
+#: src/admin/components/GeoRankingList/GeoMapSummary.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgid_plural "Visitors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/admin/components/GeoRankingList/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr ""
+
 #: src/admin/components/HourlyHeatmap/index.js
 msgid "No hourly details available for this page."
 msgstr ""
@@ -856,6 +869,23 @@ msgstr ""
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Technical state does not prove consent collection validity."
+msgstr ""
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Page"
+msgstr ""
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr ""
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
 msgstr ""
 
 #: src/admin/components/ReferrerLabel/index.js
@@ -1132,10 +1162,6 @@ msgid "Unidentified robot"
 msgstr ""
 
 #: src/admin/components/VisitorsDataView/index.js
-msgid "Last activity"
-msgstr ""
-
-#: src/admin/components/VisitorsDataView/index.js
 msgid "Entry page"
 msgstr ""
 
@@ -1276,12 +1302,12 @@ msgid "Loading world map"
 msgstr ""
 
 #: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
+#: src/admin/lib/dataviewsTranslations.js
+msgid "Reset"
 msgstr ""
 
 #: src/admin/components/WorldMap/index.js
-#: src/admin/lib/dataviewsTranslations.js
-msgid "Reset"
+msgid "Map zoom controls"
 msgstr ""
 
 #: src/admin/components/WorldMap/index.js
@@ -1837,6 +1863,11 @@ msgstr ""
 msgid "No country data available for the selected period."
 msgstr ""
 
+#: src/admin/panels/GeoCountriesPanel.js
+#: src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr ""
+
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 #, js-format
@@ -1863,8 +1894,20 @@ msgstr ""
 msgid "Flag of %s"
 msgstr ""
 
+#. translators: %s: number of countries.
+#: src/admin/panels/GeoCountriesPanel.js
+#, js-format
+msgid "%s country"
+msgid_plural "%s countries"
+msgstr[0] ""
+msgstr[1] ""
+
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
+msgstr ""
+
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "Countries"
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js
@@ -1880,25 +1923,12 @@ msgid "Visitor origin will be available after the local GeoIP database is instal
 msgstr ""
 
 #: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
 msgstr ""
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Loading real-time data…"
 msgstr ""
-
-#: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgid_plural "Visitors"
-msgstr[0] ""
-msgstr[1] ""
 
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
@@ -1908,6 +1938,11 @@ msgstr ""
 #: src/admin/panels/RealtimePanel.js
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen"
+msgstr ""
+
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Recent activity"
 msgstr ""
 
 #: src/admin/panels/RealtimePanel.js
@@ -1996,10 +2031,6 @@ msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Interactions"
-msgstr ""
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Location"
 msgstr ""
 
 #: src/admin/panels/SettingsPanel.js
@@ -2650,10 +2681,6 @@ msgstr ""
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Archives, search, blog home"
-msgstr ""
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Share"
 msgstr ""
 
 #: src/admin/panels/TopPagesListPanel.js

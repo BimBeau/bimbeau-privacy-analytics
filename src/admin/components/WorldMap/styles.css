@@ -45,11 +45,16 @@
   display: block;
 }
 
-.bbpa-world-map .nivo-geo-features path:hover,
-.bbpa-world-map .nivo-geo-features path:focus-visible,
-.bbpa-world-map svg g path:hover,
-.bbpa-world-map svg g path:focus-visible {
-  fill-opacity: 0.5 !important;
+/*
+ * Hovered countries with data take a stronger shade of the data color (no outline); countries
+ * without data keep their neutral fill.
+ */
+.bbpa-world-map .nivo-geo-features path:not([fill="#eeeeee"]):hover,
+.bbpa-world-map .nivo-geo-features path:not([fill="#eeeeee"]):focus-visible,
+.bbpa-world-map svg g path:not([fill="#eeeeee"]):hover,
+.bbpa-world-map svg g path:not([fill="#eeeeee"]):focus-visible {
+  fill: color-mix(in srgb, var(--color-3) 78%, #000) !important;
+  fill-opacity: 1 !important;
 }
 
 .bbpa-world-map__legend {
@@ -140,5 +145,34 @@
   .bbpa-world-map__legend {
     grid-template-columns: repeat(1, minmax(0, 1fr));
     font-size: 11px;
+  }
+}
+
+/* Map with a side column in the same card (Geolocation ranking). */
+.bbpa-world-map__with-aside {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(260px, 1fr);
+  align-items: stretch;
+  min-width: 0;
+}
+
+.bbpa-world-map__with-aside > .bbpa-world-map {
+  min-width: 0;
+}
+
+.bbpa-world-map__aside {
+  min-width: 0;
+  padding: var(--bbpa-gap-md) var(--bbpa-gap-lg);
+  border-left: 1px solid #e0e0e0;
+}
+
+@media (max-width: 960px) {
+  .bbpa-world-map__with-aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bbpa-world-map__aside {
+    border-left: 0;
+    border-top: 1px solid #e0e0e0;
   }
 }

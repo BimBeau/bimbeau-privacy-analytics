@@ -27,3 +27,48 @@
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
+
+/* Map and compact activity timeline side by side; the visits table spans the full width below. */
+.bbpa-realtime-panel__live {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  min-width: 0;
+}
+
+.bbpa-realtime-panel__live--with-timeline {
+  grid-template-columns: minmax(0, 1.75fr) minmax(260px, 1fr);
+}
+
+.bbpa-realtime-panel__timeline {
+  min-width: 0;
+  padding: var(--bbpa-gap-sm) 0 0 var(--bbpa-gap-lg);
+  border-left: 1px solid #e0e0e0;
+}
+
+.bbpa-realtime-panel__timeline-title {
+  margin: 0 0 var(--bbpa-gap-sm);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.bbpa-realtime-panel__card[data-fullscreen-active="true"] .bbpa-realtime-panel__live--with-timeline {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.bbpa-realtime-panel__card[data-fullscreen-active="true"] .bbpa-realtime-panel__timeline {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .bbpa-realtime-panel__live--with-timeline {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bbpa-realtime-panel__timeline {
+    padding: var(--bbpa-gap-md) 0 0;
+    border-left: 0;
+    border-top: 1px solid #e0e0e0;
+  }
+}

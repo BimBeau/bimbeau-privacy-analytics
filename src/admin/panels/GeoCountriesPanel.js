@@ -1,8 +1,11 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import useAdminEndpoint from '../api/useAdminEndpoint';
 import { normalizeAdminReportPayload } from '../api/normalizeReportPayload';
 import GeoCountriesStatusNotice from '../components/GeoCountriesStatusNotice';
+import GeoRankingList from '../components/GeoRankingList';
+import GeoMapSummary from '../components/GeoRankingList/GeoMapSummary';
+import ShareBar from '../components/ShareBar';
 import ReportTableCard from '../widgets/ReportTableCard';
 import WorldMap from '../components/WorldMap';
 import { ADMIN_CONFIG } from '../constants';
@@ -34,6 +37,33 @@ const GeoCountriesPanel = ( { range } ) => {
 	const unknownCountryLabel = __( 'Unknown country', 'bimbeau-privacy-analytics' );
 	const configStatus = data?.configStatus || null;
 	const hasHits = Number( data?.totalVisitors ?? data?.totalHits ?? 0 ) > 0;
+	const totalVisitors = Number( data?.totalVisitors ?? 0 ) || 0;
+	const rankingItems = ( Array.isArray( mapData?.countries ) ? mapData.countries : [] ).map(
+		( country ) => {
+			const code = String( country?.code || country?.country_code || '' );
+			return {
+				id: code,
+				countryCode: code,
+				label: isUnknownCountryCode( code )
+					? unknownCountryLabel
+					: getCountryLabel( code ) || code,
+				value: Number( country?.visitors ?? country?.visits ?? 0 ) || 0,
+			};
+		}
+	);
+	const countryCount = rankingItems.filter( ( item ) => item.value > 0 ).length;
+	const getShare = ( item ) =>
+		totalVisitors > 0
+			? ( Number( item?.visitors ?? item?.visits ?? 0 ) / totalVisitors ) * 100
+			: 0;
+	const shareField = {
+		id: 'share',
+		label: __( 'Share', 'bimbeau-privacy-analytics' ),
+		getValue: getShare,
+		render: ( item, rows = [] ) => (
+			<ShareBar value={ getShare( item ) } shares={ rows.map( getShare ) } />
+		),
+	};
 
 	const renderCountryLabel = ( label, item ) => {
 		const countryCode = item?.code || item?.label || '';
@@ -92,18 +122,34 @@ const GeoCountriesPanel = ( { range } ) => {
 				configStatus={ configStatus }
 				hasHits={ hasHits }
 			/>
-			<div className="bbpa-geo-countries-panel__split">
-				<WorldMap
-					range={ range }
-					emptyLabel={ emptyCountryLabel }
-					emptyStateNoticeStatus="warning"
-					unknownCountryLabel={ unknownCountryLabel }
-					dataOverride={ mapData }
-					isLoadingOverride={ isLoading }
-					errorOverride={ error }
-				/>
+			<WorldMap
+				range={ range }
+				emptyLabel={ emptyCountryLabel }
+				emptyStateNoticeStatus="warning"
+				unknownCountryLabel={ unknownCountryLabel }
+				dataOverride={ mapData }
+				isLoadingOverride={ isLoading }
+				errorOverride={ error }
+				topLeftOverlay={
+					<GeoMapSummary
+						visitors={ totalVisitors }
+						placeLabel={ sprintf(
+							/* translators: %s: number of countries. */
+							_n( '%s country', '%s countries', countryCount, 'bimbeau-privacy-analytics' ),
+							formatNumber( countryCount )
+						) }
+					/>
+				}
+				asideSlot={
+					<GeoRankingList
+						title={ __( 'Top countries', 'bimbeau-privacy-analytics' ) }
+						items={ rankingItems }
+						emptyLabel={ emptyCountryLabel }
+					/>
+				}
+			/>
 				<ReportTableCard
-					title={ __( 'Top countries', 'bimbeau-privacy-analytics' ) }
+					title={ __( 'Countries', 'bimbeau-privacy-analytics' ) }
 					labelHeader={ __( 'Country', 'bimbeau-privacy-analytics' ) }
 					range={ range }
 					endpoint="/geo-countries"
@@ -119,8 +165,8 @@ const GeoCountriesPanel = ( { range } ) => {
 					metricFallbackValueKey="visits"
 					metricFallbackBadgeLabel={ __( 'Legacy visits', 'bimbeau-privacy-analytics' ) }
 					exportReportKey="geo-countries"
+					extraFields={ [ shareField ] }
 				/>
-			</div>
 		</div>
 	);
 };

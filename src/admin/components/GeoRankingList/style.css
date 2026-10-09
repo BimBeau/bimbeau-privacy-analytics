@@ -1,0 +1,82 @@
+/* Compact Geolocation ranking: flag and name on the left, visitors on the right, one line each. */
+.bbpa-geo-ranking__title {
+  margin: 0 0 var(--bbpa-gap-sm);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.bbpa-geo-ranking .dataviews-wrapper {
+  min-height: 0;
+}
+
+.bbpa-geo-ranking .dataviews-view-list__field-wrapper {
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bbpa-gap-md);
+}
+
+.bbpa-geo-ranking .dataviews-view-list__title-field,
+.bbpa-geo-ranking .dataviews-view-list__title-field * {
+  min-width: 0;
+  font-weight: 400;
+}
+
+.bbpa-geo-ranking .dataviews-view-list__fields {
+  flex: none;
+}
+
+.bbpa-geo-ranking .dataviews-view-list__field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.bbpa-geo-ranking__place {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bbpa-gap-xs);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.bbpa-geo-ranking__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bbpa-geo-ranking__value {
+  color: #757575;
+  font-variant-numeric: tabular-nums;
+}
+
+.bbpa-geo-ranking__empty {
+  margin: 0;
+  color: #757575;
+}
+
+/* Map summary in the top-left corner of the Geolocation map. */
+.bbpa-geo-map-summary {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+}
+
+.bbpa-geo-map-summary__value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.bbpa-geo-map-summary__label {
+  font-size: 13px;
+  color: #757575;
+}

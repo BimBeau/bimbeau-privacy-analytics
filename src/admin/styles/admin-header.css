@@ -63,7 +63,7 @@
 }
 
 .bbpa-admin-app .bbpa-period-filter__control .components-button:focus-visible {
-	box-shadow: inset 0 0 0 2px var(--color-3);
+	box-shadow: inset 0 0 0 2px var(--wp-admin-theme-color);
 	outline: none;
 }
 
@@ -83,8 +83,8 @@
 }
 
 .bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step:hover:not(:disabled) {
-	background: color-mix(in srgb, var(--color-3) 10%, #fff);
-	color: var(--color-3);
+	background: color-mix(in srgb, var(--wp-admin-theme-color) 10%, #fff);
+	color: var(--wp-admin-theme-color);
 }
 
 .bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__step:disabled {
@@ -101,13 +101,13 @@
 }
 
 .bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger:hover {
-	background: color-mix(in srgb, var(--color-3) 6%, #fff);
+	background: color-mix(in srgb, var(--wp-admin-theme-color) 6%, #fff);
 	color: #1e1e1e;
 }
 
 .bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger-preset {
-	background: color-mix(in srgb, var(--color-3) 10%, #fff);
-	color: var(--color-3);
+	background: color-mix(in srgb, var(--wp-admin-theme-color) 10%, #fff);
+	color: var(--wp-admin-theme-color);
 	font-weight: 600;
 	border-radius: 3px;
 	padding: 2px 7px;
@@ -130,7 +130,7 @@
 .bbpa-admin-app .bbpa-period-filter__control .bbpa-period-filter__trigger-icon {
 	display: block;
 	margin-left: 2px;
-	color: var(--color-3);
+	color: var(--wp-admin-theme-color);
 	stroke-width: 2.5;
 }
 

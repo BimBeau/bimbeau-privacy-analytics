@@ -104,8 +104,9 @@ msgid "Geolocation"
 msgstr "地理定位"
 
 #: admin/admin.php admin/dashboard-widget.php src/admin/AdminAppCore.js
-#: src/admin/lib/adminConstants.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/GeoRankingList/index.js src/admin/lib/adminConstants.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -760,6 +761,17 @@ msgstr "输入 MaxMind 凭据"
 msgid "Traffic data is pending"
 msgstr "流量数据待处理"
 
+#: src/admin/components/GeoRankingList/GeoMapSummary.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgid_plural "Visitors"
+msgstr[0] "访客"
+
+#: src/admin/components/GeoRankingList/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr "位置"
+
 #: src/admin/components/HourlyHeatmap/index.js
 msgid "No hourly details available for this page."
 msgstr "此页面没有可用的小时详情。"
@@ -783,6 +795,20 @@ msgstr "运行时粒度根据可用粒度报告。"
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Technical state does not prove consent collection validity."
 msgstr "技术状态不能证明同意收集的有效性。"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Page"
+msgstr "页面"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "未知页面"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
+msgstr "最后活动"
 
 #: src/admin/components/ReferrerLabel/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1048,10 +1074,6 @@ msgid "Unidentified robot"
 msgstr "未识别的机器人"
 
 #: src/admin/components/VisitorsDataView/index.js
-msgid "Last activity"
-msgstr "最后活动"
-
-#: src/admin/components/VisitorsDataView/index.js
 msgid "Entry page"
 msgstr "入口页面"
 
@@ -1185,13 +1207,13 @@ msgid "Loading world map"
 msgstr "正在加载世界地图"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "地图缩放控件"
-
-#: src/admin/components/WorldMap/index.js
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Reset"
 msgstr "重置"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map zoom controls"
+msgstr "地图缩放控件"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1706,6 +1728,10 @@ msgstr "选择一个渠道，查看其访问来自何处。"
 msgid "No country data available for the selected period."
 msgstr "所选时间段没有可用的国家/地区数据。"
 
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "占比"
+
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s visitors"
@@ -1729,9 +1755,19 @@ msgstr "未知国家/地区旗帜"
 msgid "Flag of %s"
 msgstr "%s 的旗帜"
 
+#. translators: %s: number of countries.
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "%s country"
+msgid_plural "%s countries"
+msgstr[0] "%s 个国家"
+
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
 msgstr "热门国家/地区"
+
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "Countries"
+msgstr "国家/地区"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
@@ -1746,10 +1782,6 @@ msgid "Visitor origin will be available after the local GeoIP database is instal
 msgstr "从插件的地理位置设置中安装本地 GeoIP 数据库后，即可查看访客来源。"
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "未知页面"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
 msgstr "当前浏览器上下文不支持全屏。"
 
@@ -1758,17 +1790,16 @@ msgid "Loading real-time data…"
 msgstr "正在加载实时数据…"
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgid_plural "Visitors"
-msgstr[0] "访客"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Exit fullscreen"
 msgstr "退出全屏"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen"
 msgstr "全屏"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Recent activity"
+msgstr "最近活动"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
@@ -1853,10 +1884,6 @@ msgstr "显示格式"
 #: src/admin/panels/SettingsPanel.js
 msgid "Interactions"
 msgstr "交互"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Location"
-msgstr "位置"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data scope list"
@@ -2496,10 +2523,6 @@ msgstr "角色"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Archives, search, blog home"
 msgstr "归档、搜索、博客首页"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Share"
-msgstr "占比"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content viewed"

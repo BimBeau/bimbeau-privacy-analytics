@@ -1,13 +1,13 @@
 .bbpa-admin-app {
   display: grid;
   gap: var(--bbpa-gap-lg);
-  --bbpa-calendar-accent: var(--bbpa-color-accent, #0000ff);
-  --bbpa-calendar-bg: var(--bbpa-color-accent-soft, #e7edff);
+  --bbpa-calendar-accent: var(--bbpa-color-accent, #1e1e1e);
+  --bbpa-calendar-bg: var(--bbpa-color-accent-soft, #f0f0f1);
   --bbpa-calendar-accent-dark: var(
     --bbpa-color-accent-dark,
-    #3003e1
+    #000
   );
-  --bbpa-calendar-bg-dark: var(--bbpa-color-accent-darker, #180270);
+  --bbpa-calendar-bg-dark: var(--bbpa-color-accent-darker, #000);
   --bbpa-calendar-selected-color: var(
     --bbpa-color-on-accent,
     #ffffff
@@ -25,7 +25,7 @@
   .components-button.is-pressed:hover:not(:disabled, [aria-disabled="true"]),
 .bbpa-period-filter__popover
   .components-button.is-pressed:not(:disabled, [aria-disabled="true"]) {
-  background: var(--color-3);
+  background: var(--wp-admin-theme-color);
 }
 
 
@@ -54,7 +54,7 @@
 .bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive):hover,
 .bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive):focus,
 .bbpa-admin-app .components-button.is-tertiary:not(.is-pressed):not(.is-destructive):focus-visible {
-  color: var(--color-3);
+  color: var(--wp-admin-theme-color);
 }
 
 .bbpa-admin-app .components-button.is-primary {
@@ -176,7 +176,7 @@
   position: relative;
   margin: 0;
   padding: 0;
-  border-left-color: var(--bbpa-color-accent, #0000ff);
+  border-left-color: var(--bbpa-color-accent, #1e1e1e);
   background: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
@@ -406,7 +406,7 @@
 .bbpa-admin-app .bbpa-geoip-status__badge--info { background: #f0f0f1; color: #1e1e1e; }
 .bbpa-admin-app .bbpa-geoip-technical { margin-top: var(--bbpa-gap-sm); }
 .bbpa-admin-app .bbpa-geoip-technical summary { cursor: pointer; font-weight: 600; padding-block: var(--bbpa-gap-sm); }
-.bbpa-admin-app .bbpa-geoip-technical summary:focus-visible { outline: 2px solid var(--wp-admin-theme-color, #2271b1); outline-offset: 2px; }
+.bbpa-admin-app .bbpa-geoip-technical summary:focus-visible { outline: 2px solid var(--wp-admin-theme-color); outline-offset: 2px; }
 @media (max-width: 600px) { .bbpa-admin-app .bbpa-geoip-status > div { grid-template-columns: minmax(0, 1fr); } }
 
 
@@ -689,7 +689,7 @@
 }
 
 .bbpa-admin-app .bbpa-settings-modal__actions .bbpa-settings-modal__cancel.components-button:focus-visible {
-  outline: 2px solid #2271b1;
+  outline: 2px solid var(--wp-admin-theme-color);
   outline-offset: 2px;
 }
 
@@ -1099,7 +1099,7 @@
 .bbpa-geolocation-tabs .components-tab-panel__tabs .components-button.is-active,
 .bbpa-visitors-tabs .components-tab-panel__tabs .components-button.is-active,
 .bbpa-settings-tabs .components-tab-panel__tabs .components-button.is-active {
-  box-shadow: inset 0 -2px 0 var(--color-3);
+  box-shadow: inset 0 -2px 0 var(--wp-admin-theme-color);
   color: var(--color-1);
 }
 
@@ -1231,7 +1231,7 @@
 }
 
 .bbpa-admin-app .bbpa-report-table.striped > tbody > :nth-child(odd) {
-  background-color: color-mix(in srgb, var(--color-3) 8%, transparent);
+  background-color: color-mix(in srgb, var(--wp-admin-theme-color) 4%, transparent);
 }
 
 .bbpa-admin-app .screen-reader-text {
@@ -1259,7 +1259,7 @@
 .alternate,
 .striped > tbody > :nth-child(odd),
 ul.striped > :nth-child(odd) {
-  background-color: color-mix(in srgb, var(--color-3) 8%, transparent);
+  background-color: color-mix(in srgb, var(--wp-admin-theme-color) 4%, transparent);
 }
 
 .bbpa-report-table--visitors code {

@@ -610,6 +610,43 @@ const resolveCityCoordinates = (
   };
 };
 
+// Real-time markers: a visit seen less than a minute ago is "fresh" (it emits a wave), and older
+// visits fade until REALTIME_MARKER_FADE_SECONDS, never below REALTIME_MARKER_MIN_FRESHNESS.
+const REALTIME_MARKER_FRESH_SECONDS = 60;
+const REALTIME_MARKER_FADE_SECONDS = 420;
+const REALTIME_MARKER_MIN_FRESHNESS = 0.35;
+const REALTIME_MARKER_MIN_RADIUS = 5;
+const REALTIME_MARKER_MAX_RADIUS = 9;
+
+export const getRealtimeMarkerAgeSeconds = (lastViewAt, nowSeconds) => {
+  const timestamp = Number(lastViewAt);
+  if (!Number.isFinite(timestamp) || timestamp <= 0) {
+    return null;
+  }
+
+  const seconds = timestamp > 1e12 ? timestamp / 1000 : timestamp;
+  return Math.max(0, nowSeconds - seconds);
+};
+
+export const getRealtimeMarkerFreshness = (ageSeconds) => {
+  if (!Number.isFinite(ageSeconds)) {
+    return null;
+  }
+
+  return Math.max(
+    REALTIME_MARKER_MIN_FRESHNESS,
+    1 - ageSeconds / REALTIME_MARKER_FADE_SECONDS,
+  );
+};
+
+const getRealtimeMarkerRadius = (hits, maxHits) => {
+  const ratio = maxHits > 0 ? Math.min(1, Math.max(0, hits / maxHits)) : 0;
+  return (
+    REALTIME_MARKER_MIN_RADIUS +
+    (REALTIME_MARKER_MAX_RADIUS - REALTIME_MARKER_MIN_RADIUS) * Math.sqrt(ratio)
+  );
+};
+
 const getCityMarkerRadius = (hits, maxHits) => {
   const sanitizedHits = sanitizeMapValue(hits);
   const sanitizedMaxHits = sanitizeMapValue(maxHits);
@@ -1137,8 +1174,13 @@ export const MarkerMapLayer = ({
                 pointerEvents: "all",
                 "--bbpa-city-marker-opacity": marker.opacity,
                 "--bbpa-city-marker-pulse-scale": marker.pulseScale,
+                ...(Number.isFinite(marker.freshness)
+                  ? { "--bbpa-city-marker-freshness": marker.freshness }
+                  : {}),
               }}
               data-city-marker-id={marker.id}
+              data-fresh={marker.isFresh ? "true" : undefined}
+              data-highlighted={marker.isHighlighted ? "true" : undefined}
               tabIndex={0}
               role="img"
               aria-label={marker.tooltipLabel}
@@ -1410,6 +1452,8 @@ const WorldMap = ({
   topLeftOverlay = null,
   controlsSlot = null,
   showGeolocationHelperMessage = true,
+  highlightedVisitorId = "",
+  asideSlot = null,
 }) => {
   const mapContainerRef = useRef(null);
   const [mapDimensions, setMapDimensions] = useState({
@@ -1979,13 +2023,34 @@ const WorldMap = ({
           city?.currentPageLabel || city?.current_page || "",
         ];
 
+        const isRealtimeMarker = mapMode === "realtime-markers";
+        const ageSeconds = isRealtimeMarker
+          ? getRealtimeMarkerAgeSeconds(
+              city?.last_view_at ?? city?.lastViewAt,
+              Date.now() / 1000,
+            )
+          : null;
+        const markerVisitorIds = String(city?.visitor_ids || city?.visitor_id || "")
+          .split(",")
+          .map((value) => value.trim())
+          .filter(Boolean);
+
         return {
           id: markerIdentityParts.join("|") || `city-${index}`,
           latitude,
           longitude,
           hits,
           color: CITY_MARKER_FILL_COLOR,
-          radius: getCityMarkerRadius(hits, markerMaxHits),
+          radius: isRealtimeMarker
+            ? getRealtimeMarkerRadius(hits, markerMaxHits)
+            : getCityMarkerRadius(hits, markerMaxHits),
+          freshness: getRealtimeMarkerFreshness(ageSeconds),
+          isFresh:
+            Number.isFinite(ageSeconds) &&
+            ageSeconds < REALTIME_MARKER_FRESH_SECONDS,
+          isHighlighted:
+            highlightedVisitorId !== "" &&
+            markerVisitorIds.includes(String(highlightedVisitorId)),
           opacity: getCityMarkerOpacity(hits, markerMaxHits),
           pulseScale: getCityMarkerPulseScale(hits, markerMaxHits),
           label: formattedDisplayLabel,
@@ -2013,7 +2078,7 @@ const WorldMap = ({
         };
       })
       .filter(Boolean);
-  }, [countries, mapMode, countryCenterByCode]);
+  }, [countries, mapMode, countryCenterByCode, highlightedVisitorId]);
   const cityMarkerDiagnostics = useMemo(
     () =>
       isMarkerMapMode(mapMode)
@@ -2723,6 +2788,17 @@ const WorldMap = ({
     setActiveCityTooltip(null);
   }, []);
 
+  // Optional side column in the same card (Geolocation: ranking next to the map).
+  const withMapAside = (mapNode) =>
+    asideSlot ? (
+      <div className="bbpa-world-map__with-aside">
+        {mapNode}
+        <aside className="bbpa-world-map__aside">{asideSlot}</aside>
+      </div>
+    ) : (
+      mapNode
+    );
+
   return (
     <BpaCard
       title={__("World map", "bimbeau-privacy-analytics")}
@@ -2746,6 +2822,7 @@ const WorldMap = ({
                 {noGeolocatedVisitsLabel}
               </p>
             )}
+          {withMapAside(
           <div className="bbpa-world-map">
             {topLeftOverlay ? (
               <div className="bbpa-world-map__overlay bbpa-world-map__overlay--top-left">
@@ -2753,6 +2830,16 @@ const WorldMap = ({
               </div>
             ) : null}
             <div className="bbpa-world-map__controls">
+              <Tooltip text={resetZoomLabel}>
+                <Button
+                  variant="tertiary"
+                  className="bbpa-world-map__reset"
+                  onClick={handleResetViewport}
+                  aria-label={resetZoomLabel}
+                >
+                  {__("Reset", "bimbeau-privacy-analytics")}
+                </Button>
+              </Tooltip>
               <div
                 className="components-button-group"
                 aria-label={__(
@@ -2780,15 +2867,6 @@ const WorldMap = ({
                   >
                     <span aria-hidden="true">+</span>
                     <VisuallyHidden>{zoomInLabel}</VisuallyHidden>
-                  </Button>
-                </Tooltip>
-                <Tooltip text={resetZoomLabel}>
-                  <Button
-                    variant="secondary"
-                    onClick={handleResetViewport}
-                    aria-label={resetZoomLabel}
-                  >
-                    {__("Reset", "bimbeau-privacy-analytics")}
                   </Button>
                 </Tooltip>
               </div>
@@ -2871,7 +2949,8 @@ const WorldMap = ({
                 </div>
               )}
             </div>
-          </div>
+          </div>,
+          )}
         </>
       )}
     </BpaCard>

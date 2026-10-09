@@ -104,8 +104,9 @@ msgid "Geolocation"
 msgstr "Coğrafi konum"
 
 #: admin/admin.php admin/dashboard-widget.php src/admin/AdminAppCore.js
-#: src/admin/lib/adminConstants.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/GeoRankingList/index.js src/admin/lib/adminConstants.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -760,6 +761,17 @@ msgstr "MaxMind kimlik bilgilerini girin"
 msgid "Traffic data is pending"
 msgstr "Trafik verileri beklemede"
 
+#: src/admin/components/GeoRankingList/GeoMapSummary.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgid_plural "Visitors"
+msgstr[0] "Ziyaretçi"
+
+#: src/admin/components/GeoRankingList/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr "Konum"
+
 #: src/admin/components/HourlyHeatmap/index.js
 msgid "No hourly details available for this page."
 msgstr "Bu sayfa için saatlik ayrıntı mevcut değil."
@@ -783,6 +795,20 @@ msgstr "Çalışma zamanı ayrıntı düzeyi, kullanılabilir ayrıntı düzeyle
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Technical state does not prove consent collection validity."
 msgstr "Teknik durum, onay toplamanın geçerliliğini kanıtlamaz."
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Page"
+msgstr "Sayfa"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Bilinmeyen sayfa"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
+msgstr "Son etkinlik"
 
 #: src/admin/components/ReferrerLabel/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1048,10 +1074,6 @@ msgid "Unidentified robot"
 msgstr "Tanımlanmamış robot"
 
 #: src/admin/components/VisitorsDataView/index.js
-msgid "Last activity"
-msgstr "Son etkinlik"
-
-#: src/admin/components/VisitorsDataView/index.js
 msgid "Entry page"
 msgstr "Giriş sayfası"
 
@@ -1185,13 +1207,13 @@ msgid "Loading world map"
 msgstr "Dünya haritası yükleniyor"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "Yakınlaştırma kontrolleri"
-
-#: src/admin/components/WorldMap/index.js
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Reset"
 msgstr "Sıfırla"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map zoom controls"
+msgstr "Yakınlaştırma kontrolleri"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1706,6 +1728,10 @@ msgstr "Ziyaretlerin nereden geldiğini görmek için bir kanal seçin."
 msgid "No country data available for the selected period."
 msgstr "Seçilen dönem için ülke verisi mevcut değil."
 
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "Pay"
+
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s visitors"
@@ -1729,9 +1755,19 @@ msgstr "Bilinmeyen ülke bayrağı"
 msgid "Flag of %s"
 msgstr "%s bayrağı"
 
+#. translators: %s: number of countries.
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "%s country"
+msgid_plural "%s countries"
+msgstr[0] "%s ülke"
+
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
 msgstr "Popüler ülkeler"
+
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "Countries"
+msgstr "Ülkeler"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
@@ -1746,10 +1782,6 @@ msgid "Visitor origin will be available after the local GeoIP database is instal
 msgstr "Ziyaretçi kaynağı, yerel GeoIP veritabanı eklentinin coğrafi konum ayarlarından yüklendikten sonra kullanılabilir."
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Bilinmeyen sayfa"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
 msgstr "Bu tarayıcı bağlamında tam ekran kullanılamıyor."
 
@@ -1758,17 +1790,16 @@ msgid "Loading real-time data…"
 msgstr "Gerçek zamanlı veri yükleniyor…"
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgid_plural "Visitors"
-msgstr[0] "Ziyaretçi"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Exit fullscreen"
 msgstr "Tam ekrandan çık"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen"
 msgstr "Tam ekran"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Recent activity"
+msgstr "Son etkinlik"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
@@ -1853,10 +1884,6 @@ msgstr "Ekran biçimi"
 #: src/admin/panels/SettingsPanel.js
 msgid "Interactions"
 msgstr "Etkileşimler"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Location"
-msgstr "Konum"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data scope list"
@@ -2496,10 +2523,6 @@ msgstr "Rol"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Archives, search, blog home"
 msgstr "Arşivler, arama, blog ana sayfası"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Share"
-msgstr "Pay"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content viewed"

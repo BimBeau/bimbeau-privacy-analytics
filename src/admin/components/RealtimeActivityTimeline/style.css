@@ -1,0 +1,64 @@
+/* Compact real-time timeline: one line per visit (flag and page on the left, time on the right). */
+.bbpa-realtime-timeline .dataviews-wrapper {
+  min-height: 0;
+}
+
+.bbpa-realtime-timeline .dataviews-view-activity__item-content {
+  flex: 1;
+  flex-direction: row !important;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--bbpa-gap-md);
+  min-width: 0;
+}
+
+.bbpa-realtime-timeline .dataviews-view-activity__item-title {
+  min-width: 0;
+  font-weight: 400;
+}
+
+.bbpa-realtime-timeline .dataviews-view-activity__item-fields {
+  flex: none;
+  white-space: nowrap;
+  color: #757575;
+  font-size: 12px;
+}
+
+.bbpa-realtime-timeline .dataviews-view-activity__item-field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.bbpa-realtime-timeline .dataviews-view-activity__item-bullet {
+  background: #949494;
+  border-color: #949494;
+}
+
+.bbpa-realtime-timeline__visit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bbpa-gap-xs);
+  min-width: 0;
+  max-width: 100%;
+  border-radius: 2px;
+}
+
+.bbpa-realtime-timeline__visit:focus-visible {
+  outline: 2px solid var(--wp-admin-theme-color);
+  outline-offset: 2px;
+}
+
+.bbpa-realtime-timeline__page {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bbpa-realtime-timeline__visit .bbpa-country-flag {
+  flex: none;
+}

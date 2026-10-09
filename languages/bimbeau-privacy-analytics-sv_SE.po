@@ -105,8 +105,9 @@ msgid "Geolocation"
 msgstr "Geolokalisering"
 
 #: admin/admin.php admin/dashboard-widget.php src/admin/AdminAppCore.js
-#: src/admin/lib/adminConstants.js src/admin/panels/GeoCountriesPanel.js
-#: src/admin/panels/VisitorsPanel.js src/admin/widgets/OverviewKpis/index.js
+#: src/admin/components/GeoRankingList/index.js src/admin/lib/adminConstants.js
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/VisitorsPanel.js
+#: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
@@ -764,6 +765,18 @@ msgstr "Ange MaxMind-uppgifter"
 msgid "Traffic data is pending"
 msgstr "Trafikdata väntar"
 
+#: src/admin/components/GeoRankingList/GeoMapSummary.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Visitor"
+msgid_plural "Visitors"
+msgstr[0] "Besökare"
+msgstr[1] "Besökare"
+
+#: src/admin/components/GeoRankingList/index.js
+#: src/admin/panels/SettingsPanel.js
+msgid "Location"
+msgstr "Plats"
+
 #: src/admin/components/HourlyHeatmap/index.js
 msgid "No hourly details available for this page."
 msgstr "Inga timvisa detaljer är tillgängliga för den här sidan."
@@ -787,6 +800,20 @@ msgstr "Körningsgranularitet rapporteras från tillgängliga granulariteter."
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Technical state does not prove consent collection validity."
 msgstr "Teknisk status bevisar inte att samtyckesinsamlingen är giltig."
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Page"
+msgstr "Sida"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Okänd sida"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#: src/admin/components/VisitorsDataView/index.js
+msgid "Last activity"
+msgstr "Senaste aktivitet"
 
 #: src/admin/components/ReferrerLabel/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1052,10 +1079,6 @@ msgid "Unidentified robot"
 msgstr "Oidentifierad robot"
 
 #: src/admin/components/VisitorsDataView/index.js
-msgid "Last activity"
-msgstr "Senaste aktivitet"
-
-#: src/admin/components/VisitorsDataView/index.js
 msgid "Entry page"
 msgstr "Ingångssida"
 
@@ -1189,13 +1212,13 @@ msgid "Loading world map"
 msgstr "Laddar världskarta"
 
 #: src/admin/components/WorldMap/index.js
-msgid "Map zoom controls"
-msgstr "Kartans zoomkontroller"
-
-#: src/admin/components/WorldMap/index.js
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Reset"
 msgstr "Återställ"
+
+#: src/admin/components/WorldMap/index.js
+msgid "Map zoom controls"
+msgstr "Kartans zoomkontroller"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Map legend"
@@ -1715,6 +1738,10 @@ msgstr "Välj en kanal för att se var dess besök kommer ifrån."
 msgid "No country data available for the selected period."
 msgstr "Ingen landsdata är tillgänglig för den valda perioden."
 
+#: src/admin/panels/GeoCountriesPanel.js src/admin/panels/TopPagesListPanel.js
+msgid "Share"
+msgstr "Andel"
+
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s visitors"
@@ -1738,9 +1765,20 @@ msgstr "Okänd landsflagga"
 msgid "Flag of %s"
 msgstr "Flagga för %s"
 
+#. translators: %s: number of countries.
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "%s country"
+msgid_plural "%s countries"
+msgstr[0] "%s land"
+msgstr[1] "%s länder"
+
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Top countries"
 msgstr "Toppländer"
+
+#: src/admin/panels/GeoCountriesPanel.js
+msgid "Countries"
+msgstr "Länder"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "Legacy visits"
@@ -1755,10 +1793,6 @@ msgid "Visitor origin will be available after the local GeoIP database is instal
 msgstr "Besökarnas ursprung blir tillgängligt när den lokala GeoIP-databasen har installerats via tilläggets geolokaliseringsinställningar."
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Okänd sida"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
 msgstr "Helskärm är inte tillgängligt i den här webbläsarkontexten."
 
@@ -1767,18 +1801,16 @@ msgid "Loading real-time data…"
 msgstr "Laddar realtidsdata…"
 
 #: src/admin/panels/RealtimePanel.js
-msgid "Visitor"
-msgid_plural "Visitors"
-msgstr[0] "Besökare"
-msgstr[1] "Besökare"
-
-#: src/admin/panels/RealtimePanel.js
 msgid "Exit fullscreen"
 msgstr "Avsluta helskärm"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen"
 msgstr "Helskärm"
+
+#: src/admin/panels/RealtimePanel.js
+msgid "Recent activity"
+msgstr "Senaste aktivitet"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Essential-only scope: enriched visit details and precise map markers are unavailable."
@@ -1863,10 +1895,6 @@ msgstr "Visningsformat"
 #: src/admin/panels/SettingsPanel.js
 msgid "Interactions"
 msgstr "Interaktioner"
-
-#: src/admin/panels/SettingsPanel.js
-msgid "Location"
-msgstr "Plats"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Data scope list"
@@ -2506,10 +2534,6 @@ msgstr "Roll"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Archives, search, blog home"
 msgstr "Arkiv, sökning, bloggens startsida"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Share"
-msgstr "Andel"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content viewed"

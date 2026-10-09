@@ -85,12 +85,12 @@
 }
 
 .bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link:hover {
-	background: color-mix(in srgb, var(--color-3) 10%, #fff);
+	background: color-mix(in srgb, var(--wp-admin-theme-color) 10%, #fff);
 	color: #1e1e1e;
 }
 
 .bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link.is-active {
-	background: var(--color-3);
+	background: var(--wp-admin-theme-color);
 	color: var(--bbpa-color-on-accent, #fff);
 	font-weight: 600;
 }
@@ -106,7 +106,7 @@
 }
 
 .bbpa-period-filter__popover-content .components-button.bbpa-period-filter__preset-link:focus-visible {
-	outline: 2px solid var(--color-3) !important;
+	outline: 2px solid var(--wp-admin-theme-color) !important;
 	outline-offset: -2px !important;
 }
 
@@ -168,12 +168,12 @@
 .bbpa-period-filter__calendar {
 	--rdp-cell-size: 36px;
 	--rdp-caption-font-size: 14px;
-	--rdp-accent-color: var(--color-3);
-	--rdp-background-color: color-mix(in srgb, var(--color-3) 10%, #fff);
-	--rdp-accent-color-dark: var(--color-3);
-	--rdp-background-color-dark: var(--color-3);
-	--rdp-outline: 2px solid var(--color-3);
-	--rdp-outline-selected: 2px solid var(--color-3);
+	--rdp-accent-color: var(--wp-admin-theme-color);
+	--rdp-background-color: color-mix(in srgb, var(--wp-admin-theme-color) 10%, #fff);
+	--rdp-accent-color-dark: var(--wp-admin-theme-color);
+	--rdp-background-color-dark: var(--wp-admin-theme-color);
+	--rdp-outline: 2px solid var(--wp-admin-theme-color);
+	--rdp-outline-selected: 2px solid var(--wp-admin-theme-color);
 	--rdp-selected-color: var(--bbpa-color-on-accent);
 	margin: var(--bbpa-gap-md) var(--bbpa-gap-lg, 16px);
 }
@@ -253,15 +253,15 @@
 .bbpa-period-filter__calendar .rdp-day_selected,
 .bbpa-period-filter__calendar .rdp-day_selected:focus-visible,
 .bbpa-period-filter__calendar .rdp-day_selected:hover {
-	background: color-mix(in srgb, var(--color-3) 10%, #fff);
+	background: color-mix(in srgb, var(--wp-admin-theme-color) 10%, #fff);
 	opacity: 1;
-	color: var(--color-3);
+	color: var(--wp-admin-theme-color);
 }
 
 .bbpa-period-filter__calendar .rdp-day_range_start,
 .bbpa-period-filter__calendar .rdp-day_range_start:hover,
 .bbpa-period-filter__calendar .rdp-day_range_start:focus-visible {
-	background: linear-gradient(to right, transparent 50%, color-mix(in srgb, var(--color-3) 10%, #fff) 50%);
+	background: linear-gradient(to right, transparent 50%, color-mix(in srgb, var(--wp-admin-theme-color) 10%, #fff) 50%);
 	color: var(--bbpa-color-on-accent, #fff);
 	font-weight: 600;
 }
@@ -269,7 +269,7 @@
 .bbpa-period-filter__calendar .rdp-day_range_end,
 .bbpa-period-filter__calendar .rdp-day_range_end:hover,
 .bbpa-period-filter__calendar .rdp-day_range_end:focus-visible {
-	background: linear-gradient(to left, transparent 50%, color-mix(in srgb, var(--color-3) 10%, #fff) 50%);
+	background: linear-gradient(to left, transparent 50%, color-mix(in srgb, var(--wp-admin-theme-color) 10%, #fff) 50%);
 	color: var(--bbpa-color-on-accent, #fff);
 	font-weight: 600;
 }
@@ -280,7 +280,7 @@
 
 /* The single day of a range being drawn is also a start. */
 .bbpa-period-filter__calendar .rdp-day_selected:not(.rdp-day_range_middle)::before {
-	background: var(--color-3);
+	background: var(--wp-admin-theme-color);
 }
 
 .bbpa-period-filter__calendar .rdp-day_selected:not(.rdp-day_range_middle) {
@@ -292,7 +292,7 @@
 }
 
 .bbpa-period-filter__calendar .rdp-button:hover:not([disabled]):not(.rdp-day_selected)::before {
-	box-shadow: inset 0 0 0 1.5px var(--color-3);
+	box-shadow: inset 0 0 0 1.5px var(--wp-admin-theme-color);
 }
 
 .bbpa-period-filter__calendar .rdp-button:focus-visible:not([disabled]) {
@@ -301,7 +301,7 @@
 }
 
 .bbpa-period-filter__calendar .rdp-button:focus-visible:not([disabled])::before {
-	box-shadow: inset 0 0 0 2px var(--color-3);
+	box-shadow: inset 0 0 0 2px var(--wp-admin-theme-color);
 }
 
 .bbpa-period-filter__calendar .rdp-day_today:not(.rdp-day_selected) {
@@ -365,7 +365,7 @@
 }
 
 .bbpa-period-filter__sheet .components-button.bbpa-period-filter__preset-link.is-active {
-	border-color: var(--color-3);
+	border-color: var(--wp-admin-theme-color);
 }
 
 .bbpa-period-filter__sheet .bbpa-period-filter__calendar {
