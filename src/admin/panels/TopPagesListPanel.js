@@ -7,6 +7,7 @@ import { isAdvancedStatsEnabled } from '../lib/adminConstants';
 import { getRangeFromSelection } from '../lib/date';
 import { formatClockDurationMetricValue, formatNumber } from '../lib/formatters';
 import BpaCard from '../components/BpaCard';
+import UserAvatar from '../components/UserAvatar';
 import ShareBar from '../components/ShareBar';
 import ReportTableCard from '../widgets/ReportTableCard';
 import TimeseriesChart from '../widgets/TimeseriesChart';
@@ -147,6 +148,30 @@ const renderTopContentLabel = ( visibleLabel, item ) => {
 	);
 };
 
+// Author avatar in the DataViews media slot: the WordPress avatar when the site shows avatars,
+// else the initials.
+export const AUTHOR_AVATAR_FIELD = {
+	label: __( 'Avatar', 'bimbeau-privacy-analytics' ),
+	round: true,
+	render: ( item ) => (
+		<UserAvatar
+			name={ item?.label }
+			imageUrl={ item?.avatar_url || '' }
+			toneKey={ item?.key }
+			isUnresolved={ item?.key === TOP_CONTENT_UNRESOLVED_KEY }
+		/>
+	),
+};
+
+// Role of the author under the name; the unresolved row says what it gathers.
+export const AUTHOR_DESCRIPTION_FIELD = {
+	label: __( 'Role', 'bimbeau-privacy-analytics' ),
+	render: ( item ) =>
+		item?.key === TOP_CONTENT_UNRESOLVED_KEY
+			? __( 'Archives, search, blog home', 'bimbeau-privacy-analytics' )
+			: item?.role || '',
+};
+
 // Share of the range total, after the main metric.
 const SHARE_FIELD = {
 	id: 'share',
@@ -176,6 +201,8 @@ const TopContentPanel = ( {
 	labelHeader,
 	emptyLabel,
 	footnote = '',
+	mediaField = null,
+	descriptionField = null,
 } ) => (
 	<ReportTableCard
 		withCard={ false }
@@ -214,6 +241,8 @@ const TopContentPanel = ( {
 		getRowClassName={ getTopContentRowClassName }
 		renderLabel={ renderTopContentLabel }
 		footnote={ footnote }
+		mediaField={ mediaField }
+		descriptionField={ descriptionField }
 	/>
 );
 
@@ -239,6 +268,8 @@ const contentTabPanels = {
 		title: __( 'Authors', 'bimbeau-privacy-analytics' ),
 		labelHeader: __( 'Author', 'bimbeau-privacy-analytics' ),
 		emptyLabel: __( 'No authors available.', 'bimbeau-privacy-analytics' ),
+		mediaField: AUTHOR_AVATAR_FIELD,
+		descriptionField: AUTHOR_DESCRIPTION_FIELD,
 	},
 };
 

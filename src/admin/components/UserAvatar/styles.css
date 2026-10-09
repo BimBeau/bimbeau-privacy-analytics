@@ -1,0 +1,46 @@
+/* Avatar (picture or initials); it fills the media box of the DataViews primary column (32px). */
+.bbpa-user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.bbpa-user-avatar--image {
+  object-fit: cover;
+}
+
+.bbpa-user-avatar--tone-0 { background: #e6e8fb; color: #2a3a9f; }
+.bbpa-user-avatar--tone-1 { background: #dff3ea; color: #0b5c3e; }
+.bbpa-user-avatar--tone-2 { background: #fbe9e1; color: #8a3412; }
+.bbpa-user-avatar--tone-3 { background: #f6e8f7; color: #7a2283; }
+.bbpa-user-avatar--tone-4 { background: #fdf1d6; color: #6b4200; }
+.bbpa-user-avatar--tone-5 { background: #e0f1f7; color: #0b5570; }
+
+/* Row without a person ("Unresolved"): an empty dashed circle. */
+.bbpa-user-avatar--empty {
+  box-sizing: border-box;
+  border: 1px dashed #949494;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* People lists: the DataViews media box is round and centered on the title and its second line. */
+.bbpa-report-dataview--round-media .dataviews-column-primary__media,
+.bbpa-report-dataview--round-media .dataviews-column-primary__media::after {
+  border-radius: 50%;
+}
+
+.bbpa-report-dataview--round-media .dataviews-column-primary__media:has(.bbpa-user-avatar--empty)::after {
+  box-shadow: none;
+}
+
+.bbpa-report-dataview--round-media .dataviews-view-table .dataviews-column-primary__media {
+  align-self: center;
+}

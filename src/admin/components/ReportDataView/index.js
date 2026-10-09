@@ -43,6 +43,10 @@ export const PAGE_TITLE_FIELD = 'page_title';
 // Change against the previous period and daily series of the main metric, in their own columns.
 export const CHANGE_FIELD = 'change';
 export const SERIES_FIELD = 'trend';
+// Picture next to the label (an author avatar), in the DataViews media slot of the primary column.
+export const MEDIA_FIELD = 'media';
+// Second line under the label (the role of an author), in the DataViews description slot.
+export const DESCRIPTION_FIELD = 'description';
 
 export const truncateDisplayedLabel = ( value, maxLength ) => {
 	const text = typeof value === 'string' ? value : String( value || '' );
@@ -264,6 +268,11 @@ const ReportDataView = ( {
 	searchInBrowser = false,
 	// Identifier of the saved columns; defaults to one per endpoint (`report_top-pages`).
 	columnsStorageId = '',
+	// Picture before the label: { label, render( item ), round }. The label then becomes the
+	// DataViews title field and the picture its media field (shown or hidden from View options).
+	mediaField = null,
+	// Second line under the label: { label, render( item ) }, the DataViews description field.
+	descriptionField = null,
 } ) => {
 	registerDataViewsTranslations();
 
@@ -756,6 +765,32 @@ const ReportDataView = ( {
 			filterBy: false,
 		} ) );
 
+		const pictureField = mediaField
+			? {
+					id: MEDIA_FIELD,
+					label: mediaField.label,
+					render: ( { item: row } ) => mediaField.render( row.item ),
+					enableHiding: true,
+					enableSorting: false,
+					filterBy: false,
+			  }
+			: null;
+
+		const subtitleField = descriptionField
+			? {
+					id: DESCRIPTION_FIELD,
+					label: descriptionField.label,
+					render: ( { item: row } ) => (
+						<span className="bbpa-report-table__description">
+							{ descriptionField.render( row.item ) }
+						</span>
+					),
+					enableHiding: true,
+					enableSorting: false,
+					filterBy: false,
+			  }
+			: null;
+
 		const openField =
 			showOpenButton && typeof getRowHref === 'function'
 				? {
@@ -788,6 +823,8 @@ const ReportDataView = ( {
 
 		return [
 			labelField,
+			...( pictureField ? [ pictureField ] : [] ),
+			...( subtitleField ? [ subtitleField ] : [] ),
 			...( supportsPageLabelToggle ? [ pageTitleField ] : [] ),
 			metricField,
 			...( changeField ? [ changeField ] : [] ),
@@ -813,6 +850,8 @@ const ReportDataView = ( {
 		isComparisonLoading,
 		labelHeader,
 		maxDisplayedLabelCharacters,
+		descriptionField,
+		mediaField,
 		metricFallbackBadgeLabel,
 		metricFallbackValueKey,
 		metricHelpText,
@@ -836,6 +875,22 @@ const ReportDataView = ( {
 		! view.fields.includes( 'open' )
 			? [ ...view.fields, 'open' ]
 			: view.fields;
+	// With a picture or a second line, they fill the DataViews primary column with the label.
+	const displayedView =
+		mediaField || descriptionField
+			? {
+					...view,
+					titleField: LABEL_FIELD,
+					...( mediaField ? { mediaField: MEDIA_FIELD } : {} ),
+					...( descriptionField
+						? { descriptionField: DESCRIPTION_FIELD }
+						: {} ),
+					fields: viewFields.filter(
+						( id ) =>
+							! [ LABEL_FIELD, MEDIA_FIELD, DESCRIPTION_FIELD ].includes( id )
+					),
+			  }
+			: { ...view, fields: viewFields };
 
 	const onChangeView = ( nextView ) => {
 		let resolvedView = nextView;
@@ -906,7 +961,13 @@ const ReportDataView = ( {
 	);
 
 	return (
-		<div className="bbpa-report-dataview">
+		<div
+			className={
+				mediaField?.round
+					? 'bbpa-report-dataview bbpa-report-dataview--round-media'
+					: 'bbpa-report-dataview'
+			}
+		>
 			{ error ? (
 				<DataState
 					isLoading={ false }
@@ -916,7 +977,7 @@ const ReportDataView = ( {
 				/>
 			) : null }
 			<ListDataViews
-				view={ { ...view, fields: viewFields } }
+				view={ displayedView }
 				onChangeView={ onChangeView }
 				columnsStorageId={ resolvedColumnsStorageId }
 				fields={ fields }

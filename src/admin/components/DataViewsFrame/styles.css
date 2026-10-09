@@ -126,3 +126,13 @@
   color: #1e1e1e;
   font-variant-numeric: tabular-nums;
 }
+
+/*
+ * "Order" arrows of the view options: DataViews draws them at 24px, heavier than the 13px text
+ * of the other options. The icon is reduced, the button keeps its height (aligned with "Sort by").
+ * Not scoped to .bbpa-admin-app: the popover can be rendered outside the app root.
+ */
+.dataviews-view-config__sort-direction .components-toggle-group-control-option-base svg {
+  width: 18px;
+  height: 18px;
+}

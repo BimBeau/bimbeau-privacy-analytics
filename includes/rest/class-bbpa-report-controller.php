@@ -523,7 +523,11 @@ class BBPA_Report_Controller {
                 'search' => $search_term,
                 'excludeZero' => $exclude_zero,
                 'avgTime' => $include_avg_time,
-                // Post type labels, the unresolved label and term names follow the request locale.
+                // Author rows carry the role of the author: cached payloads without it are not reused.
+                'authorRole' => $dimension === 'author',
+                // Author rows carry an avatar URL only while Settings > Discussion shows avatars.
+                'authorAvatars' => $dimension === 'author' && $this->top_content_shows_avatars(),
+                // Post type labels, the unresolved label, term names and role names follow the request locale.
                 'locale' => determine_locale(),
             ]
         );
@@ -568,6 +572,11 @@ class BBPA_Report_Controller {
                 'share' => $total_hits > 0 ? round(((int) $group['hits'] / $total_hits) * 100, 1) : 0,
                 'views_series' => $series_by_key[(string) $group['key']] ?? $empty_series,
             ];
+            if ($dimension === 'author') {
+                $is_unresolved = $group['key'] === self::TOP_CONTENT_UNRESOLVED_KEY;
+                $item['role'] = $is_unresolved ? '' : $this->get_top_content_author_role((int) $group['key']);
+                $item['avatar_url'] = $is_unresolved ? '' : $this->get_top_content_author_avatar_url((int) $group['key']);
+            }
             if ($include_avg_time) {
                 $average_time_ms = $average_times[(string) $group['key']] ?? 0;
                 $item['avg_time_on_page_ms'] = $average_time_ms;
@@ -844,6 +853,47 @@ class BBPA_Report_Controller {
                 cache_users(array_keys($author_ids));
             }
         }
+    }
+
+    /**
+     * Translated name of the first role of an author ("Administrator", "Author"), or an empty string.
+     */
+    private function get_top_content_author_role(int $author_id): string {
+        $author = $author_id > 0 ? get_userdata($author_id) : false;
+        if (!$author instanceof WP_User || !function_exists('wp_roles')) {
+            return '';
+        }
+
+        $role_names = wp_roles()->get_names();
+        foreach ((array) $author->roles as $role) {
+            if (isset($role_names[$role])) {
+                return sanitize_text_field(translate_user_role((string) $role_names[$role]));
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * Whether the site shows avatars (Settings > Discussion), as WordPress does in the admin.
+     */
+    private function top_content_shows_avatars(): bool {
+        return (bool) get_option('show_avatars');
+    }
+
+    /**
+     * Avatar URL of an author as WordPress gives it (Gravatar or a local avatar plugin), or an
+     * empty string when the site does not show avatars. A missing Gravatar answers 404, so the
+     * admin falls back to the initials instead of a generated picture.
+     */
+    private function get_top_content_author_avatar_url(int $author_id): string {
+        if ($author_id <= 0 || !$this->top_content_shows_avatars() || !function_exists('get_avatar_url')) {
+            return '';
+        }
+
+        $url = get_avatar_url($author_id, ['size' => 64, 'default' => '404']);
+
+        return is_string($url) ? esc_url_raw($url) : '';
     }
 
     /**

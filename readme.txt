@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.68.9
+Stable tag: 8.69.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.68.9 =
-* [Fix] The statistics screens keep their own colors whatever admin color scheme is selected in the user profile (or set by an admin theme plugin): buttons, bars and charts no longer turn black, red or brown.
+= 8.69.0 =
+* [Feature] Conversion funnels explain each step: drop-offs or "No drop-off", the share of visits that continue to the next step, and a "Biggest drop-off" tag on the step that loses the most.
+* [Feature] Conversion funnels compare visits entered and conversions with the previous period, warn when the sample is small, and list the results by device next to the channels.
+* [Improvement] In conversion funnels, "New funnel" is the primary button, a "Reset filters" button clears the channel and device filters, and the conversion rate of the lists has a bar.
