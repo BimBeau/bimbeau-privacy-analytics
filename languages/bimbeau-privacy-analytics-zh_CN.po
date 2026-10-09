@@ -88,8 +88,8 @@ msgstr "页面"
 msgid "Acquisition"
 msgstr "获取"
 
-#: admin/admin.php src/admin/lib/adminConstants.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/components/ChannelDetails/index.js
+#: src/admin/lib/adminConstants.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "引荐站点"
@@ -152,8 +152,8 @@ msgstr "时间段：最近 30 天"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "请至少启用一个分析面板，以便在此小工具中显示 KPI 值。"
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/AcquisitionPanel.js
+#: admin/dashboard-widget.php src/admin/components/ChannelDetails/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "访问"
@@ -659,6 +659,74 @@ msgstr "CMP 标记"
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr "法律提示：技术诊断不能证明合法同意。"
 
+#: src/admin/components/ChannelDetails/index.js
+msgid "Search engines"
+msgstr "搜索引擎"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Social networks"
+msgstr "社交网络"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "AI assistants"
+msgstr "AI 助手"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Main sources"
+msgstr "主要来源"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See entry pages"
+msgstr "查看入口页面"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See all referrers"
+msgstr "查看所有引荐网站"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "The sources of this channel could not be loaded."
+msgstr "无法加载此渠道的来源。"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No source was recorded for this channel in this period."
+msgstr "此期间未记录到此渠道的任何来源。"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site"
+msgstr "无引荐网站"
+
+#. translators: %s: number of other sources of the channel.
+#: src/admin/components/ChannelDetails/index.js
+msgid "And %s other source."
+msgid_plural "And %s other sources."
+msgstr[0] "以及另外 %s 个来源。"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Only the referring sites with the most visits are listed."
+msgstr "仅列出带来最多访问的引荐网站。"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Channel details"
+msgstr "渠道详情"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Close channel details"
+msgstr "关闭渠道详情"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Difference"
+msgstr "差值"
+
+#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
+#: src/admin/components/ChannelDetails/index.js
+#: src/admin/components/MetricTrend/index.js
+msgid "Previous period: %1$s (%2$s)"
+msgstr "上一周期：%1$s（%2$s）"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
+msgstr "这些访问没有传递引荐网站：直接输入网址、书签，或从应用、文档或不带 UTM 参数的电子邮件中打开的链接。"
+
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"
 msgstr "同意合规提醒"
@@ -703,11 +771,6 @@ msgstr "按日期和小时显示的全局小时热力图"
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "新增"
-
-#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
-#: src/admin/components/MetricTrend/index.js
-msgid "Previous period: %1$s (%2$s)"
-msgstr "上一周期：%1$s（%2$s）"
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
@@ -1634,6 +1697,10 @@ msgstr "此时间段没有可用的访客画像数据。"
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Total visits: %s"
 msgstr "占总访问量的 %s"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Select a channel to see where its visits come from."
+msgstr "选择一个渠道，查看其访问来自何处。"
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."

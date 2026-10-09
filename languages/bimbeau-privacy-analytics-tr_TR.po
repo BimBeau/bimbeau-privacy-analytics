@@ -88,8 +88,8 @@ msgstr "Sayfalar"
 msgid "Acquisition"
 msgstr "Edinme"
 
-#: admin/admin.php src/admin/lib/adminConstants.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/components/ChannelDetails/index.js
+#: src/admin/lib/adminConstants.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Yönlendiren siteler"
@@ -152,8 +152,8 @@ msgstr "Dönem: son 30 gün"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "Bu bileşende KPI değerlerini göstermek için en az bir analiz panelini etkinleştirin."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/AcquisitionPanel.js
+#: admin/dashboard-widget.php src/admin/components/ChannelDetails/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Ziyaretler"
@@ -659,6 +659,74 @@ msgstr "CMP işaretleri"
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr "Yasal uyarı: teknik tanılar yasal onayı kanıtlamaz."
 
+#: src/admin/components/ChannelDetails/index.js
+msgid "Search engines"
+msgstr "Arama motorları"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Social networks"
+msgstr "Sosyal ağlar"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "AI assistants"
+msgstr "Yapay zekâ asistanları"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Main sources"
+msgstr "Başlıca kaynaklar"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See entry pages"
+msgstr "Giriş sayfalarını gör"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See all referrers"
+msgstr "Tüm yönlendiren siteleri gör"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "The sources of this channel could not be loaded."
+msgstr "Bu kanalın kaynakları yüklenemedi."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No source was recorded for this channel in this period."
+msgstr "Bu dönemde bu kanal için kaynak kaydedilmedi."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site"
+msgstr "Yönlendiren site yok"
+
+#. translators: %s: number of other sources of the channel.
+#: src/admin/components/ChannelDetails/index.js
+msgid "And %s other source."
+msgid_plural "And %s other sources."
+msgstr[0] "Ve %s kaynak daha."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Only the referring sites with the most visits are listed."
+msgstr "Yalnızca en çok ziyaret getiren yönlendiren siteler listelenir."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Channel details"
+msgstr "Kanal ayrıntıları"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Close channel details"
+msgstr "Kanal ayrıntılarını kapat"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Difference"
+msgstr "Fark"
+
+#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
+#: src/admin/components/ChannelDetails/index.js
+#: src/admin/components/MetricTrend/index.js
+msgid "Previous period: %1$s (%2$s)"
+msgstr "Önceki dönem: %1$s (%2$s)"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
+msgstr "Bu ziyaretler için yönlendiren site iletilmez: yazılan adres, yer imi ya da UTM parametresi olmadan bir uygulamadan, belgeden veya e-postadan açılan bağlantı."
+
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"
 msgstr "Onay uyumluluğu hatırlatıcısı"
@@ -703,11 +771,6 @@ msgstr "Gün ve saate göre genel saatlik ısı haritası"
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Yeni"
-
-#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
-#: src/admin/components/MetricTrend/index.js
-msgid "Previous period: %1$s (%2$s)"
-msgstr "Önceki dönem: %1$s (%2$s)"
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
@@ -1634,6 +1697,10 @@ msgstr "Bu dönem için ziyaretçi profili verisi mevcut değil."
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Total visits: %s"
 msgstr "toplam ziyaretlerin %s kadarı"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Select a channel to see where its visits come from."
+msgstr "Ziyaretlerin nereden geldiğini görmek için bir kanal seçin."
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."

@@ -41,3 +41,27 @@ export const getChannelLabel = ( value ) => {
 
 	return key ? CHANNEL_LABELS[ key ] : normalizedValue;
 };
+
+/**
+ * Channel key of a channel name, as the acquisition report builds it on the server
+ * (`sanitize_title()` of the channel): `Organic Search` gives `organic-search`. An empty name is
+ * the `other` channel, like an acquisition row without channel.
+ *
+ * @param {string} value Channel name or key (`source_category` of a referrer row).
+ * @return {string} Channel key.
+ */
+export const getChannelKey = ( value ) => {
+	const normalizedValue = typeof value === 'string' ? value.trim() : '';
+
+	if ( ! normalizedValue ) {
+		return 'other';
+	}
+
+	return (
+		CHANNEL_LABEL_TO_KEY[ normalizedValue ] ||
+		normalizedValue
+			.toLowerCase()
+			.replace( /[^a-z0-9]+/g, '-' )
+			.replace( /^-+|-+$/g, '' )
+	);
+};

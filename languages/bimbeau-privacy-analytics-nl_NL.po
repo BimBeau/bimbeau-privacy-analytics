@@ -89,8 +89,8 @@ msgstr "Pagina's"
 msgid "Acquisition"
 msgstr "Acquisitie"
 
-#: admin/admin.php src/admin/lib/adminConstants.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/components/ChannelDetails/index.js
+#: src/admin/lib/adminConstants.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Verwijzende sites"
@@ -153,8 +153,8 @@ msgstr "Periode: laatste 30 dagen"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "Schakel minstens één analytics-paneel in om KPI-waarden in deze widget weer te geven."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/AcquisitionPanel.js
+#: admin/dashboard-widget.php src/admin/components/ChannelDetails/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Bezoeken"
@@ -662,6 +662,75 @@ msgstr "CMP-markeringen"
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr "Juridische waarschuwing: technische diagnoses bewijzen geen rechtsgeldige toestemming."
 
+#: src/admin/components/ChannelDetails/index.js
+msgid "Search engines"
+msgstr "Zoekmachines"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Social networks"
+msgstr "Sociale netwerken"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "AI assistants"
+msgstr "AI-assistenten"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Main sources"
+msgstr "Belangrijkste bronnen"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See entry pages"
+msgstr "Instappagina’s bekijken"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See all referrers"
+msgstr "Alle verwijzende sites bekijken"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "The sources of this channel could not be loaded."
+msgstr "De bronnen van dit kanaal konden niet worden geladen."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No source was recorded for this channel in this period."
+msgstr "Er is in deze periode geen bron voor dit kanaal geregistreerd."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site"
+msgstr "Geen verwijzende site"
+
+#. translators: %s: number of other sources of the channel.
+#: src/admin/components/ChannelDetails/index.js
+msgid "And %s other source."
+msgid_plural "And %s other sources."
+msgstr[0] "En %s andere bron."
+msgstr[1] "En %s andere bronnen."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Only the referring sites with the most visits are listed."
+msgstr "Alleen de verwijzende sites met de meeste bezoeken worden getoond."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Channel details"
+msgstr "Kanaaldetails"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Close channel details"
+msgstr "Kanaaldetails sluiten"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Difference"
+msgstr "Verschil"
+
+#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
+#: src/admin/components/ChannelDetails/index.js
+#: src/admin/components/MetricTrend/index.js
+msgid "Previous period: %1$s (%2$s)"
+msgstr "Vorige periode: %1$s (%2$s)"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
+msgstr "Voor deze bezoeken wordt geen verwijzende site doorgegeven: ingetypt adres, bladwijzer, of link geopend vanuit een app, een document of een e-mail zonder UTM-parameters."
+
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"
 msgstr "Herinnering voor toestemmingscompliance"
@@ -706,11 +775,6 @@ msgstr "Globale uurlijkse heatmap per dag en uur"
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Nieuw"
-
-#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
-#: src/admin/components/MetricTrend/index.js
-msgid "Previous period: %1$s (%2$s)"
-msgstr "Vorige periode: %1$s (%2$s)"
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
@@ -1642,6 +1706,10 @@ msgstr "Geen bezoekersprofielgegevens beschikbaar voor deze periode."
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Total visits: %s"
 msgstr "%s van alle bezoeken"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Select a channel to see where its visits come from."
+msgstr "Selecteer een kanaal om te zien waar de bezoeken vandaan komen."
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."

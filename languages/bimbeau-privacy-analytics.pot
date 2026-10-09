@@ -97,6 +97,7 @@ msgid "Acquisition"
 msgstr ""
 
 #: admin/admin.php
+#: src/admin/components/ChannelDetails/index.js
 #: src/admin/lib/adminConstants.js
 #: src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -174,6 +175,7 @@ msgid "Enable at least one analytics panel to display KPI values in this widget.
 msgstr ""
 
 #: admin/dashboard-widget.php
+#: src/admin/components/ChannelDetails/index.js
 #: src/admin/free-stubs/OverviewPanel.js
 #: src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
@@ -728,6 +730,77 @@ msgstr ""
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr ""
 
+#: src/admin/components/ChannelDetails/index.js
+msgid "Search engines"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Social networks"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "AI assistants"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Main sources"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See entry pages"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See all referrers"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "The sources of this channel could not be loaded."
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No source was recorded for this channel in this period."
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site"
+msgstr ""
+
+#. translators: %s: number of other sources of the channel.
+#: src/admin/components/ChannelDetails/index.js
+#, js-format
+msgid "And %s other source."
+msgid_plural "And %s other sources."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Only the referring sites with the most visits are listed."
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Channel details"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Close channel details"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Difference"
+msgstr ""
+
+#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
+#: src/admin/components/ChannelDetails/index.js
+#: src/admin/components/MetricTrend/index.js
+#, js-format
+msgid "Previous period: %1$s (%2$s)"
+msgstr ""
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
+msgstr ""
+
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"
 msgstr ""
@@ -771,12 +844,6 @@ msgstr ""
 
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
-msgstr ""
-
-#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
-#: src/admin/components/MetricTrend/index.js
-#, js-format
-msgid "Previous period: %1$s (%2$s)"
 msgstr ""
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
@@ -1760,6 +1827,10 @@ msgstr ""
 #: src/admin/panels/AcquisitionPanel.js
 #, js-format
 msgid "Total visits: %s"
+msgstr ""
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Select a channel to see where its visits come from."
 msgstr ""
 
 #: src/admin/panels/GeoCountriesPanel.js

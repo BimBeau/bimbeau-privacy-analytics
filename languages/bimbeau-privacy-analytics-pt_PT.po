@@ -89,8 +89,8 @@ msgstr "Páginas"
 msgid "Acquisition"
 msgstr "Aquisição"
 
-#: admin/admin.php src/admin/lib/adminConstants.js
-#: src/admin/widgets/OverviewKpis/index.js
+#: admin/admin.php src/admin/components/ChannelDetails/index.js
+#: src/admin/lib/adminConstants.js src/admin/widgets/OverviewKpis/index.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Referring sites"
 msgstr "Sites de referência"
@@ -153,8 +153,8 @@ msgstr "Período: últimos 30 dias"
 msgid "Enable at least one analytics panel to display KPI values in this widget."
 msgstr "Ative pelo menos um painel de analytics para apresentar valores de KPI neste widget."
 
-#: admin/dashboard-widget.php src/admin/free-stubs/OverviewPanel.js
-#: src/admin/panels/AcquisitionPanel.js
+#: admin/dashboard-widget.php src/admin/components/ChannelDetails/index.js
+#: src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js
 msgid "Visits"
 msgstr "Visitas"
@@ -662,6 +662,75 @@ msgstr "Marcadores CMP"
 msgid "Legal caution: technical diagnostics do not establish legal consent."
 msgstr "Aviso legal: os diagnósticos técnicos não comprovam consentimento legal."
 
+#: src/admin/components/ChannelDetails/index.js
+msgid "Search engines"
+msgstr "Motores de pesquisa"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Social networks"
+msgstr "Redes sociais"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "AI assistants"
+msgstr "Assistentes de IA"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Main sources"
+msgstr "Fontes principais"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See entry pages"
+msgstr "Ver páginas de entrada"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "See all referrers"
+msgstr "Ver todos os sites de referência"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "The sources of this channel could not be loaded."
+msgstr "Não foi possível carregar as fontes deste canal."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No source was recorded for this channel in this period."
+msgstr "Nenhuma fonte foi registada para este canal neste período."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site"
+msgstr "Sem site de referência"
+
+#. translators: %s: number of other sources of the channel.
+#: src/admin/components/ChannelDetails/index.js
+msgid "And %s other source."
+msgid_plural "And %s other sources."
+msgstr[0] "E %s outra fonte."
+msgstr[1] "E %s outras fontes."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Only the referring sites with the most visits are listed."
+msgstr "Só são listados os sites de referência com mais visitas."
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Channel details"
+msgstr "Detalhes do canal"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Close channel details"
+msgstr "Fechar os detalhes do canal"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "Difference"
+msgstr "Diferença"
+
+#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
+#: src/admin/components/ChannelDetails/index.js
+#: src/admin/components/MetricTrend/index.js
+msgid "Previous period: %1$s (%2$s)"
+msgstr "Período anterior: %1$s (%2$s)"
+
+#: src/admin/components/ChannelDetails/index.js
+msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
+msgstr "Estas visitas não transmitem nenhum site de referência: endereço escrito, marcador ou ligação aberta a partir de uma aplicação, um documento ou um e-mail sem parâmetros UTM."
+
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"
 msgstr "Lembrete de conformidade do consentimento"
@@ -706,11 +775,6 @@ msgstr "Mapa de calor horário global por dia e hora"
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Novo"
-
-#. translators: 1: Value of the previous period, 2: Difference with the current period (+120).
-#: src/admin/components/MetricTrend/index.js
-msgid "Previous period: %1$s (%2$s)"
-msgstr "Período anterior: %1$s (%2$s)"
 
 #: src/admin/components/PrivacyRuntimeStateNotice/index.js
 msgid "Privacy runtime diagnostics"
@@ -1642,6 +1706,10 @@ msgstr "Nenhum dado de perfil de visitante disponível para este período."
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Total visits: %s"
 msgstr "%s do total de visitas"
+
+#: src/admin/panels/AcquisitionPanel.js
+msgid "Select a channel to see where its visits come from."
+msgstr "Selecione um canal para ver de onde vêm as suas visitas."
 
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "No country data available for the selected period."

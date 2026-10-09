@@ -1,0 +1,242 @@
+/*
+ * Acquisition report: the channel list and, once a channel is selected, its detail panel on the
+ * right. Below about 920px the panel wraps under the list.
+ */
+.bbpa-acquisition-explorer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--bbpa-gap-lg, 16px);
+}
+
+.bbpa-acquisition-explorer > .bbpa-dataviews-card {
+  flex: 999 1 560px;
+  min-width: 0;
+}
+
+/* The channel name is a button that fills its cell, with a chevron at the end. */
+.bbpa-report-dataview--acquisition .dataviews-view-table__primary-column-content:has(.bbpa-acquisition__channel-button) {
+  flex: 1 1 auto;
+  align-self: stretch;
+  min-width: 0;
+}
+
+.bbpa-acquisition__channel-button.dataviews-title-field {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: start;
+}
+
+.bbpa-acquisition__channel-button.dataviews-title-field--clickable:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+.bbpa-acquisition__channel-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--wp-admin-border-width-focus, 2px) var(--wp-admin-theme-color, #3858e9);
+  border-radius: 2px;
+}
+
+.bbpa-acquisition__channel-chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-inline-start: auto;
+  color: #949494;
+}
+
+.bbpa-acquisition__channel-button[aria-pressed="true"] {
+  color: var(--wp-admin-theme-color, #3858e9);
+  font-weight: 600;
+}
+
+.bbpa-acquisition__channel-button[aria-pressed="true"] .bbpa-acquisition__channel-chevron {
+  color: currentColor;
+}
+
+/* Selected row: the colors of a selected DataViews row. */
+.bbpa-report-dataview--acquisition .dataviews-view-table tr:has([aria-pressed="true"]) {
+  background-color: var(
+    --wpds-color-background-interactive-brand-weak-active,
+    color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 12%, white)
+  );
+}
+
+.bbpa-channel-details {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.bbpa-channel-details__body.components-card__body,
+.bbpa-channel-details__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.bbpa-channel-details__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bbpa-channel-details__kicker {
+  margin: 0 0 4px;
+  color: #757575;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.bbpa-channel-details__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.bbpa-channel-details__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.bbpa-channel-details__stats > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: #f6f7f7;
+}
+
+.bbpa-channel-details__stats dt {
+  color: #2c3338;
+  font-size: 12px;
+}
+
+.bbpa-channel-details__stats dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.bbpa-channel-details__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bbpa-channel-details__section .description {
+  margin: 0;
+}
+
+.bbpa-channel-details__subtitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bbpa-channel-details__sources {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bbpa-channel-details__sources li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.bbpa-channel-details__source-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bbpa-channel-details__source-figures {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bbpa-channel-details__source-figures .bbpa-report-table__trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+}
+
+.bbpa-channel-details__source-visits {
+  min-width: 3ch;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.bbpa-channel-details__source-bar {
+  grid-column: 1 / -1;
+  height: 4px;
+  border-radius: 2px;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.bbpa-channel-details__source-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--wp-admin-theme-color, #3858e9);
+}
+
+.bbpa-channel-details__note {
+  margin: 0;
+  padding: 12px;
+  border-radius: 4px;
+  background: #f6f7f7;
+  color: #2c3338;
+  line-height: 1.5;
+}
+
+/* Blue like a link: more specific than the neutral color of the admin app buttons (globals.css). */
+.bbpa-admin-app .bbpa-acquisition-explorer .bbpa-channel-details .bbpa-channel-details__body .bbpa-channel-details__link.components-button.is-link {
+  align-self: flex-start;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0;
+  color: var(--wp-admin-theme-color, #3858e9);
+  white-space: nowrap;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.bbpa-admin-app .bbpa-acquisition-explorer .bbpa-channel-details .bbpa-channel-details__body .bbpa-channel-details__link.components-button.is-link:hover {
+  color: var(--wp-admin-theme-color-darker-10, #183ad6);
+}
+
+.bbpa-channel-details__link.components-button svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
