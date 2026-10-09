@@ -81,6 +81,44 @@
 }
 
 /*
+ * Toolbar icon buttons of the lists (filters, view options, export): one look for all of them, a
+ * neutral outlined square of the size of the DataViews search field. Blue only shows on hover,
+ * keyboard focus and while their menu or the filters are open. The export keeps the WordPress
+ * busy stripes while it runs. The selectors outweigh the generic button colors of globals.css,
+ * which are loaded after this file.
+ */
+.bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy) {
+  justify-content: center;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #dcdcde;
+  color: #1e1e1e;
+  outline: none;
+}
+
+.bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy):not(:disabled):not([aria-disabled="true"]):hover,
+.bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy):is([aria-expanded="true"], .is-pressed) {
+  background: #f0f6fc;
+  background: color-mix(in srgb, var(--wp-admin-theme-color, var(--color-3)) 8%, #fff);
+  box-shadow: inset 0 0 0 1px var(--wp-admin-theme-color, var(--color-3));
+  color: var(--wp-admin-theme-color, var(--color-3));
+}
+
+.bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy):focus-visible {
+  outline: 2px solid var(--wp-admin-theme-color, var(--color-3));
+  outline-offset: 1px;
+}
+
+/* After a download the check stays green, as before (see .is-done in globals.css). */
+.bbpa-admin-app .components-button.bbpa-report-export-action__toggle.is-done:not(.is-primary):not(.is-destructive):not(.is-busy) {
+  color: #008a20;
+}
+
+/*
  * Numbers of the lists (cells aligned to the end) are written in the main text color, with
  * digits of equal width: DataViews draws every column but the first one in a secondary grey.
  */
