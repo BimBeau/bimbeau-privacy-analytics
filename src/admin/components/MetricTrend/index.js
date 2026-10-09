@@ -33,7 +33,9 @@ const MetricTrend = ( { value, previousValue } ) => {
 
 		return (
 			<span className="bbpa-report-table__trend bbpa-report-table__trend--new">
-				{ __( 'New', 'bimbeau-privacy-analytics' ) }
+				<span className="bbpa-report-table__new-badge">
+					{ __( 'New', 'bimbeau-privacy-analytics' ) }
+				</span>
 			</span>
 		);
 	}
