@@ -18,6 +18,7 @@ import { getPreviousRange } from '../../lib/date';
 import { getChannelLabel } from '../../lib/channelLabels';
 import { formatNumber } from '../../lib/formatters';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
+import { CHANNEL_FILTER_ELEMENTS, getViewFilterValue } from '../../lib/listFilters';
 
 /**
  * Visits of a referrer-source row. `hits` holds page views; it is only used for payloads
@@ -41,6 +42,13 @@ export const getReferrerSourcesSortParams = ( view ) => ( {
 	orderby: SORT_KEYS[ view?.sort?.field ] || 'visits',
 	order: view?.sort?.direction === 'asc' ? 'asc' : 'desc',
 } );
+
+// Channel filter of the list => `source_category` of /referrer-sources (applied by the server).
+export const getReferrerSourcesFilterParams = ( view ) => {
+	const channel = getViewFilterValue( view, 'channel' );
+
+	return channel ? { source_category: channel } : {};
+};
 
 const DEFAULT_VIEW = {
 	type: 'table',
@@ -82,10 +90,12 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 	}, [ range.start, range.end, requestParams.page_path ] );
 
 	const search = String( view.search || '' ).trim();
+	const filterParams = getReferrerSourcesFilterParams( view );
 	const listParams = {
 		...range,
 		...requestParams,
 		...getReferrerSourcesSortParams( view ),
+		...filterParams,
 		search,
 	};
 	const { data, isLoading, error } = useAdminEndpoint(
@@ -104,6 +114,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 				per_page: 100,
 				orderby: 'visits',
 				order: 'desc',
+				...filterParams,
 				search,
 			},
 			{ namespace: ADMIN_CONFIG?.settings?.restNamespace }
@@ -199,9 +210,10 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 			id: 'channel',
 			label: __( 'Channel', 'bimbeau-privacy-analytics' ),
 			getValue: ( { item } ) => item.category,
+			elements: CHANNEL_FILTER_ELEMENTS,
+			filterBy: { operators: [ 'is' ] },
 			enableHiding: true,
 			enableSorting: true,
-			filterBy: false,
 		},
 		{
 			id: 'visits',
@@ -236,6 +248,7 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 	const onChangeView = ( nextView ) => {
 		const resetsPage =
 			nextView.search !== view.search ||
+			nextView.filters !== view.filters ||
 			nextView.perPage !== view.perPage ||
 			nextView.sort?.field !== view.sort?.field ||
 			nextView.sort?.direction !== view.sort?.direction;

@@ -10,18 +10,19 @@ import {
 	useReferrerFavicons,
 } from '../ReferrerLabel/faviconCache';
 import ReportExportAction from '../ReportExportAction';
+import useCountryFilterElements from '../../hooks/useCountryFilterElements';
 import BrandIcon from '../icons/BrandIcon';
 import { ADMIN_CONFIG } from '../../constants';
 import {
 	getCountryFlagClass,
-	getCountryLabel,
 	isUnknownCountryCode,
 } from '../../lib/countryNames';
 import { formatScreenResolution } from '../../lib/formatScreenResolution';
 import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../../lib/date';
 import { getLocationLabel } from '../../lib/locationLabel';
 import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
-import { CHANNEL_LABELS, getChannelLabel } from '../../lib/channelLabels';
+import { getChannelLabel } from '../../lib/channelLabels';
+import { CHANNEL_FILTER_ELEMENTS } from '../../lib/listFilters';
 import { formatHiddenPrivateCount } from '../../lib/paginationLabels';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
 
@@ -60,10 +61,6 @@ const SORT_KEYS = {
 
 const DEVICE_FILTER_ELEMENTS = [ 'desktop', 'mobile', 'tablet' ].map(
 	( value ) => ( { value, label: formatDeviceClassLabel( value, value ) } )
-);
-
-const CHANNEL_FILTER_ELEMENTS = Object.entries( CHANNEL_LABELS ).map(
-	( [ value, label ] ) => ( { value, label } )
 );
 
 const formatVisitTime = ( timestamp ) => {
@@ -384,7 +381,7 @@ export const getVisitorFields = ( {
 	);
 
 	if ( canFilterData ) {
-		// A filter-only field: the chip "Data: Consented visitors" stays visible like a primary filter.
+		// A filter-only field, offered from the filter button like the other filters of the lists.
 		fields.push( {
 			id: 'data',
 			label: __( 'Data', 'bimbeau-privacy-analytics' ),
@@ -398,7 +395,7 @@ export const getVisitorFields = ( {
 					label: __( 'Consented visitors', 'bimbeau-privacy-analytics' ),
 				},
 			],
-			filterBy: { operators: [ 'is' ], isPrimary: true },
+			filterBy: { operators: [ 'is' ] },
 		} );
 	}
 
@@ -508,6 +505,8 @@ const getDefaultView = ( { isBotList, showCity, hidePrivateVisitors } ) => ( {
  * @param {string}   props.emptyLabel                  Message without rows.
  * @param {string}   props.loadingLabel                Accessible loading message.
  * @param {string}   props.cardTitle                   Card title shown in the toolbar row (optional).
+ * @param {string}   props.columnsStorageId            Identifier of the saved view (default `visitors` or
+ *                                                     `visitors_bots`).
  */
 const VisitorsDataView = ( {
 	cardTitle = '',
@@ -518,13 +517,15 @@ const VisitorsDataView = ( {
 	onHidePrivateVisitorsChange,
 	emptyLabel = __( 'No visitor data available.', 'bimbeau-privacy-analytics' ),
 	loadingLabel = __( 'Loading visitors…', 'bimbeau-privacy-analytics' ),
+	columnsStorageId: columnsStorageIdProp,
 } ) => {
 	registerDataViewsTranslations();
 
 	const isBotList = requestParams.visitor_type === 'bot';
 	const canFilterData =
 		! isBotList && typeof onHidePrivateVisitorsChange === 'function';
-	const columnsStorageId = isBotList ? 'visitors_bots' : 'visitors';
+	const columnsStorageId =
+		columnsStorageIdProp || ( isBotList ? 'visitors_bots' : 'visitors' );
 	const [ view, setView ] = useState( () => {
 		const defaultView = getInitialListView(
 			columnsStorageId,
@@ -551,34 +552,7 @@ const VisitorsDataView = ( {
 		setView( ( current ) => ( { ...current, page: 1 } ) );
 	}, [ range.start, range.end, requestParams.page_path, requestParams.visitor_type ] );
 
-	const { data: countriesData } = useAdminEndpoint(
-		'/geo-countries',
-		{ ...range, per_page: 250, orderby: 'visitors', order: 'desc' },
-		{
-			namespace: ADMIN_CONFIG?.settings?.restNamespace,
-			enabled: ! isBotList,
-		}
-	);
-	const countries = useMemo( () => {
-		const rows = Array.isArray( countriesData?.items )
-			? countriesData.items
-			: [];
-		const seen = new Set();
-
-		return rows.reduce( ( elements, row ) => {
-			const code = String( row?.country_code || row?.code || '' ).toUpperCase();
-			if ( ! /^[A-Z]{2}$/.test( code ) || seen.has( code ) ) {
-				return elements;
-			}
-			seen.add( code );
-			elements.push( {
-				value: code,
-				label: row?.country || getCountryLabel( code ) || code,
-			} );
-
-			return elements;
-		}, [] );
-	}, [ countriesData ] );
+	const countries = useCountryFilterElements( range, { enabled: ! isBotList } );
 
 	const viewParams = getVisitorRequestParams( view, isBotList );
 	const { data, isLoading, error } = useAdminEndpoint(

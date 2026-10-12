@@ -49,7 +49,6 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						emptyLabel={ __( 'No popular pages available.', 'bimbeau-privacy-analytics' ) }
 						labelFallback="/"
 						supportsPageLabelToggle
-						enableSearch={ false }
 						showOpenButton={ false }
 						showMetricTrend
 						inlineMetricChange
@@ -69,7 +68,6 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						renderLabel={ ( label, item, favicon, fullLabel ) => <ReferrerLabel domain={ item?.label || '' } label={ label } fullLabel={ fullLabel } favicon={ favicon } /> }
 						loadReferrerFavicons
 						metricLabel={ __( 'Visits', 'bimbeau-privacy-analytics' ) }
-						enableSearch={ false }
 						showMetricTrend
 						inlineMetricChange
 					/>

@@ -58,6 +58,7 @@ const DEFAULT_VIEW = {
 	type: 'table',
 	page: 1,
 	perPage: 20,
+	search: '',
 	sort: { field: 'visits', direction: 'desc' },
 	filters: [],
 	fields: [ 'visits', 'change', 'share' ],
@@ -296,9 +297,12 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 			label: __( 'Channel', 'bimbeau-privacy-analytics' ),
 			getValue: ( { item } ) => item.label,
 			render: ChannelLabel,
+			// Filtered and searched in the browser, among the channels of the period.
+			elements: rows.map( ( row ) => ( { value: row.label, label: row.label } ) ),
+			filterBy: { operators: [ 'isAny' ] },
+			enableGlobalSearch: true,
 			enableHiding: false,
 			enableSorting: true,
-			filterBy: false,
 		},
 		{
 			id: 'visits',
@@ -364,6 +368,11 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 		);
 		setView( {
 			...nextView,
+			// A new search or filter starts on the first page.
+			page:
+				nextView.search !== view.search || nextView.filters !== view.filters
+					? 1
+					: nextView.page,
 			// Saved optional columns not loaded yet keep their place for when they are.
 			fields: [
 				...nextFields,
@@ -405,7 +414,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 							renderItemLink={ renderChannelButton }
 							paginationInfo={ paginationInfo }
 							defaultLayouts={ { table: {} } }
-							search={ false }
+							searchLabel={ __( 'Search channels', 'bimbeau-privacy-analytics' ) }
 							config={ { perPageSizes: ACQUISITION_PER_PAGE_SIZES } }
 							empty={
 								<p className="bbpa-report-dataview__empty">

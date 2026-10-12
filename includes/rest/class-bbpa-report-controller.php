@@ -216,7 +216,19 @@ class BBPA_Report_Controller {
                 'permission_callback' => function (WP_REST_Request $request) {
                     return $this->check_permissions_for_panel($request, 'referrers');
                 },
-                'args' => $list_args,
+                'args' => array_merge(
+                    $list_args,
+                    [
+                        // Optional list filter: channel key, as in the Visitors list.
+                        'source_category' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'enum' => array_keys(self::VISITORS_CHANNEL_FILTERS),
+                            'validate_callback' => 'rest_validate_request_arg',
+                            'sanitize_callback' => 'sanitize_key',
+                        ],
+                    ]
+                ),
             ]
         );
 
@@ -1094,7 +1106,13 @@ class BBPA_Report_Controller {
         $page_path = $this->get_page_path_filter($request);
 
         // The cache is read before the source-table detection queries run.
-        $cache_key = $this->get_source_report_cache_key('referrer-sources', $request, $range, $page_path);
+        $cache_key = $this->get_source_report_cache_key(
+            'referrer-sources',
+            $request,
+            $range,
+            $page_path,
+            ['sourceCategory' => $this->get_channel_filter_key($request)]
+        );
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
             $cached['items'] = $this->add_cached_favicons($cached['items'] ?? [], 'referrer_domain');
@@ -1609,6 +1627,15 @@ class BBPA_Report_Controller {
         );
 
         return new WP_REST_Response($payload, 200);
+    }
+
+    /**
+     * Channel key of the optional `source_category` list filter, or '' without a valid key.
+     */
+    private function get_channel_filter_key(WP_REST_Request $request): string {
+        $source_category = sanitize_key((string) $request->get_param('source_category'));
+
+        return isset(self::VISITORS_CHANNEL_FILTERS[$source_category]) ? $source_category : '';
     }
 
     /**
@@ -3138,6 +3165,14 @@ class BBPA_Report_Controller {
             $search_sql = " AND (referrer_domain LIKE %s OR {$source_category_sql} LIKE %s)";
             $search_like = '%' . $wpdb->esc_like($search_term) . '%';
             $search_args = [$search_like, $search_like];
+        }
+
+        // The channel filter shares the search placeholders: both are appended to every WHERE clause.
+        $channel_key = $this->get_channel_filter_key($request);
+        if ($channel_key !== '') {
+            $channel_values = array_merge([$channel_key], self::VISITORS_CHANNEL_FILTERS[$channel_key]);
+            $search_sql .= " AND {$source_category_sql} IN (" . implode(', ', array_fill(0, count($channel_values), '%s')) . ')';
+            $search_args = array_merge($search_args, $channel_values);
         }
 
         if ($is_aggregate_table) {

@@ -82,11 +82,12 @@
 }
 
 /*
- * With a primary filter, DataViews always shows the filter chips and keeps its filter button
- * disabled: it would look like a control that does nothing, so its container is hidden.
+ * Every list has the same toolbar: a list without filters keeps the filter button at its place,
+ * dimmed, with a tooltip saying that nothing can be filtered (ListDataViews).
  */
-.dataviews-filters__container-visibility-toggle:has(> .dataviews-filters__visibility-toggle[aria-disabled="true"]) {
-  display: none;
+.bbpa-admin-app .dataviews-filters__visibility-toggle[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: default;
 }
 
 /*

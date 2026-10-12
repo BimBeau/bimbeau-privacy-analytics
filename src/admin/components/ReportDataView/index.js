@@ -22,6 +22,7 @@ import {
 import useSharedPageLabelDisplay from '../../hooks/useSharedPageLabelDisplay';
 import { decodeHtmlEntities, formatNumber } from '../../lib/formatters';
 import { DATAVIEWS_PER_PAGE_SIZES } from '../../lib/dataviewsConfig';
+import { getViewFilterValue } from '../../lib/listFilters';
 import { formatDateStringForLocale, getPreviousRange } from '../../lib/date';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
 
@@ -115,6 +116,26 @@ export const getReportSortParams = ( view, metricKey, extraSortKeys = [] ) => {
 		order: view?.sort?.direction === 'asc' ? 'asc' : 'desc',
 	};
 };
+
+/**
+ * Request parameters of the server filters of a report list.
+ *
+ * @param {Object}   view         DataViews view.
+ * @param {Object[]} filterFields `filterFields` prop: `{ id, param, elements }`.
+ * @return {Object} `{ [param]: value }` for each filter set to an offered value.
+ */
+export const getReportFilterParams = ( view, filterFields = [] ) =>
+	filterFields.reduce( ( params, filterField ) => {
+		const value = getViewFilterValue( view, filterField.id );
+		if (
+			value &&
+			( filterField.elements || [] ).some( ( element ) => element.value === value )
+		) {
+			params[ filterField.param ] = value;
+		}
+
+		return params;
+	}, {} );
 
 /**
  * Whether a page list shows the address under the page title (View options > URL). Both displays
@@ -236,8 +257,9 @@ const ReportDataView = ( {
 	// More columns after the metric: [ { id, label, getValue( item ), render( item, rows ), sortable } ],
 	// `rows` being the raw items of the displayed page (a share bar scales to the largest one).
 	extraFields = [],
-	// Search in the browser, on the displayed label (formatLabel) and the raw label, for endpoints
-	// that do not filter (countries: names are translated in the browser). Short lists only.
+	// Search and sort by label in the browser, on the displayed label (formatLabel) and the raw label,
+	// for endpoints that only know codes (countries: names are translated in the browser). Short
+	// lists only.
 	searchInBrowser = false,
 	// Identifier of the saved columns; defaults to one per endpoint (`report_top-pages`).
 	columnsStorageId = '',
@@ -246,6 +268,9 @@ const ReportDataView = ( {
 	mediaField = null,
 	// Second line under the label: { label, render( item ) }, the DataViews description field.
 	descriptionField = null,
+	// Filters applied by the server: [ { id, label, elements, param } ]. Each one is a filter-only
+	// field offered from the filter button; its selected value is sent as `param`.
+	filterFields = [],
 } ) => {
 	registerDataViewsTranslations();
 
@@ -305,14 +330,18 @@ const ReportDataView = ( {
 		metricKey,
 		extraFields.filter( ( field ) => field.sortable ).map( ( field ) => field.id )
 	);
+	const filterParams = getReportFilterParams( view, filterFields );
 	const listParams = {
 		...range,
 		...requestParams,
 		...( hideZeroPrimaryRows ? { exclude_zero: true } : {} ),
 		...sortParams,
+		...filterParams,
 		search,
 	};
-	const isBrowserSearch = searchInBrowser && search !== '';
+	const sortsByLabelInBrowser =
+		searchInBrowser && view.sort?.field === LABEL_FIELD;
+	const isBrowserSearch = searchInBrowser && ( search !== '' || sortsByLabelInBrowser );
 	const { data, isLoading, error } = useAdminEndpoint(
 		endpoint,
 		isBrowserSearch
@@ -340,6 +369,7 @@ const ReportDataView = ( {
 				per_page: 100,
 				orderby: metricKey,
 				order: 'desc',
+				...filterParams,
 				search,
 			},
 			{
@@ -391,16 +421,35 @@ const ReportDataView = ( {
 			return null;
 		}
 		const needle = normalizeSearchText( search );
-
-		return ( data?.items || [] ).filter( ( item ) => {
+		const getDisplayedLabel = ( item ) => {
 			const rawLabel = decodeHtmlEntities( item?.label || '' );
-			const displayed = formatLabel ? formatLabel( rawLabel, item ) : rawLabel;
+			return formatLabel ? formatLabel( rawLabel, item ) : rawLabel;
+		};
+		const matches = ( data?.items || [] ).filter( ( item ) =>
+			[ decodeHtmlEntities( item?.label || '' ), getDisplayedLabel( item ) ].some(
+				( value ) => normalizeSearchText( value ).includes( needle )
+			)
+		);
+		if ( ! sortsByLabelInBrowser ) {
+			return matches;
+		}
+		const direction = view.sort?.direction === 'asc' ? 1 : -1;
 
-			return [ rawLabel, displayed ].some( ( value ) =>
-				normalizeSearchText( value ).includes( needle )
-			);
-		} );
-	}, [ data, formatLabel, isBrowserSearch, search ] );
+		return [ ...matches ].sort(
+			( left, right ) =>
+				direction *
+				String( getDisplayedLabel( left ) ).localeCompare(
+					String( getDisplayedLabel( right ) )
+				)
+		);
+	}, [
+		data,
+		formatLabel,
+		isBrowserSearch,
+		search,
+		sortsByLabelInBrowser,
+		view.sort?.direction,
+	] );
 	const rawItems = useMemo( () => {
 		if ( browserSearchMatches ) {
 			const start = ( view.page - 1 ) * view.perPage;
@@ -760,6 +809,17 @@ const ReportDataView = ( {
 				  }
 				: null;
 
+		const filterOnlyFields = filterFields.map( ( filterField ) => ( {
+			id: filterField.id,
+			label: filterField.label,
+			getValue: () => '',
+			render: () => null,
+			elements: filterField.elements || [],
+			filterBy: { operators: [ 'is' ] },
+			enableHiding: false,
+			enableSorting: false,
+		} ) );
+
 		return [
 			labelField,
 			...( pictureField ? [ pictureField ] : [] ),
@@ -771,10 +831,12 @@ const ReportDataView = ( {
 			...additionalFields,
 			...( extraField ? [ extraField ] : [] ),
 			...( openField ? [ openField ] : [] ),
+			...filterOnlyFields,
 		];
 	}, [
 		comparisonValuesByKey,
 		extraFields,
+		filterFields,
 		inlineMetricChange,
 		isComparisonComplete,
 		rawItems,
@@ -852,6 +914,7 @@ const ReportDataView = ( {
 
 		const resetsPage =
 			nextView.search !== view.search ||
+			nextView.filters !== view.filters ||
 			nextView.perPage !== view.perPage ||
 			nextView.sort?.field !== view.sort?.field ||
 			nextView.sort?.direction !== view.sort?.direction;

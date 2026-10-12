@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews';
+import { __ } from '@wordpress/i18n';
+import { Icon, funnel } from '@wordpress/icons';
 
 import useSharedListDensity from '../../hooks/useSharedListDensity';
 import {
@@ -133,6 +135,41 @@ export const getInitialListView = ( listId, defaultView, { perPageSizes, fields 
 	return view;
 };
 
+/**
+ * Whether DataViews offers a filter for at least one field: a field filtered by value lists its
+ * values in `elements` (or `getElements`) and does not opt out with `filterBy: false`.
+ *
+ * @param {Object[]} fields DataViews field definitions.
+ * @return {boolean} Whether the list has a filter.
+ */
+export const hasFilterableField = ( fields ) =>
+	( fields || [] ).some(
+		( field ) =>
+			field.filterBy !== false &&
+			( ( Array.isArray( field.elements ) && field.elements.length > 0 ) ||
+				typeof field.getElements === 'function' )
+	);
+
+// The filter button of a list without filters, disabled, so that every list has the same toolbar.
+// Same classes as the DataViews filter button; the label is its tooltip.
+const NoFiltersButton = () => {
+	const label = __( 'No filter is available for this list', 'bimbeau-privacy-analytics' );
+
+	return (
+		<div className="dataviews-filters__container-visibility-toggle">
+			<button
+				type="button"
+				className="components-button dataviews-filters__visibility-toggle is-compact has-icon"
+				aria-label={ label }
+				title={ label }
+				aria-disabled="true"
+			>
+				<Icon icon={ funnel } />
+			</button>
+		</div>
+	);
+};
+
 const isSameSort = ( first, second ) =>
 	( first?.field || '' ) === ( second?.field || '' ) &&
 	( first?.direction || '' ) === ( second?.direction || '' );
@@ -145,9 +182,10 @@ const isSameSort = ( first, second ) =>
  * `getInitialListView()`; density, applied here (the shared density until the list has its own).
  * Lists without `columnsStorageId` share one density. Same props as DataViews.
  *
- * With `title`, the list heads its card: the title shares the toolbar row with the search, filter,
- * view options and `header` controls, so the card needs no header of its own. `notice` (an error)
- * is shown under that row, or above the list without `title`.
+ * Every list has the same toolbar: the search (unless `search` is false), the filter button
+ * (disabled when no field can be filtered), the view options and the `header` controls. With
+ * `title`, the list heads its card: the title starts that row, so the card needs no header of its
+ * own. `notice` (an error) is shown under that row.
  *
  * @param {Object}   props
  * @param {Object}   props.view             DataViews view.
@@ -243,33 +281,31 @@ const ListDataViews = ( {
 		]
 	);
 
-	if ( ! title ) {
-		return (
-			<>
-				{ notice }
-				<DataViews
-					{ ...props }
-					view={ viewWithDensity }
-					onChangeView={ handleChangeView }
-				/>
-			</>
-		);
-	}
-
-	// The parts of the default DataViews layout, with the title first in the toolbar row.
+	// The parts of the default DataViews layout in the same toolbar for every list: the title (when
+	// the list heads its card), then the search, the filters, the view options and `header`.
 	return (
 		<DataViews
 			{ ...props }
 			view={ viewWithDensity }
 			onChangeView={ handleChangeView }
 		>
-			<div className="dataviews__view-actions bbpa-dataviews-header">
-				<strong className="bbpa-card__title bbpa-dataviews-header__title">
-					{ title }
-				</strong>
+			<div
+				className={ `dataviews__view-actions bbpa-dataviews-header${
+					title ? '' : ' bbpa-dataviews-header--untitled'
+				}` }
+			>
+				{ title ? (
+					<strong className="bbpa-card__title bbpa-dataviews-header__title">
+						{ title }
+					</strong>
+				) : null }
 				<div className="bbpa-dataviews-header__tools">
 					{ search ? <DataViews.Search label={ searchLabel } /> : null }
-					<DataViews.FiltersToggle />
+					{ hasFilterableField( fields ) ? (
+						<DataViews.FiltersToggle />
+					) : (
+						<NoFiltersButton />
+					) }
 					<DataViews.ViewConfig />
 					{ header }
 				</div>

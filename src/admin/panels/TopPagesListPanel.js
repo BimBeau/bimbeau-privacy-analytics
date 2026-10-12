@@ -211,6 +211,8 @@ const TopContentPanel = ( {
 		labelHeader={ labelHeader }
 		range={ range }
 		endpoint="/top-content"
+		// One saved view per tab (content types, categories, authors).
+		columnsStorageId={ `report_top-content_${ dimension }` }
 		requestParams={ {
 			dimension,
 			include_avg_time: isAdvancedStatsEnabled( ADMIN_CONFIG?.settings ) ? 1 : 0,
