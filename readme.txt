@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.73.8
+Stable tag: 8.73.9
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.73.8 =
-* [Fix] Real-time: a long current page address no longer runs over the next columns of the visits list (it ends with an ellipsis), and the light sweep on the current page is back.
+= 8.73.9 =
+* [Fix] Real-time view: the location column shows the place name again, like the Visitors list, instead of an approximate distance such as "Approx. 100 km" when the geolocation database reports a wide accuracy radius. The distance is still shown when no place name is known.

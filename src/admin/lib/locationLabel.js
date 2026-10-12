@@ -1,7 +1,5 @@
 import { __, sprintf } from '@wordpress/i18n';
 
-const CITY_LABEL_MAX_ACCURACY_RADIUS_KM = 100;
-
 const toFiniteNumber = ( value ) => {
 	if ( value === null || value === undefined || value === '' ) {
 		return null;
@@ -31,12 +29,11 @@ export const getLocationLabel = ( location = {} ) => {
 	const accuracyRadius = toFiniteNumber(
 		location?.accuracy_radius ?? location?.accuracyRadius ?? null
 	);
-	const shouldPreferRadius =
-		accuracyRadius !== null && accuracyRadius >= CITY_LABEL_MAX_ACCURACY_RADIUS_KM;
 
+	// A known city always wins over the accuracy radius, whatever the radius:
+	// the Visitors list has no radius and must show the same label.
 	if (
 		city !== '' &&
-		! shouldPreferRadius &&
 		normalizedCity !== 'approximate position' &&
 		normalizedCity !== approximatePositionLabel &&
 		normalizedCity !== 'approximate city' &&
