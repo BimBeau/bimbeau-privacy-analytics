@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import ListDataViews, { getInitialListColumns } from '../../components/ListDataViews';
+import ListDataViews, {
+	getInitialListColumns,
+	getInitialListView,
+} from '../../components/ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../../components/DataState';
@@ -63,7 +66,9 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 	registerDataViewsTranslations();
 
 	const [ view, setView ] = useState( () => ( {
-		...DEFAULT_VIEW,
+		...getInitialListView( 'referrer_sources', DEFAULT_VIEW, {
+			perPageSizes: DATAVIEWS_PER_PAGE_SIZES,
+		} ),
 		fields: getInitialListColumns(
 			'referrer_sources',
 			DEFAULT_VIEW.fields,

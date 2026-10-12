@@ -190,13 +190,17 @@ export const PERIOD_PRESET_OPTIONS = [
 export const PAGE_LABEL_DISPLAY_OPTIONS = [ 'url', 'title', 'title_only' ];
 export const DEFAULT_PAGE_LABEL_DISPLAY = 'url';
 export const PAGE_LABEL_DISPLAY_STORAGE_PREFIX = 'bbpa_page_label_display';
-// Row density of every DataViews list, shared and saved per user (View options > Density).
+// Row density of the DataViews lists (View options > Density). `bbpa_list_density:{userId}` is the
+// density shared by the lists without their own saved view, and the default of the others.
 export const LIST_DENSITY_OPTIONS = [ 'compact', 'balanced', 'comfortable' ];
 export const DEFAULT_LIST_DENSITY = 'compact';
 export const LIST_DENSITY_STORAGE_PREFIX = 'bbpa_list_density';
 // Column order and visibility of a DataViews list, saved per list and per user
 // (`bbpa_list_columns:{listId}:{userId}`, JSON `{ fields, hidden }`).
 export const LIST_COLUMNS_STORAGE_PREFIX = 'bbpa_list_columns';
+// Sort, items per page and density of a DataViews list, saved per list and per user
+// (`bbpa_list_view:{listId}:{userId}`, JSON `{ sort, perPage, density }`).
+export const LIST_VIEW_STORAGE_PREFIX = 'bbpa_list_view';
 export const ADVANCED_CONSENT_LAST_TEST_STORAGE_PREFIX =
 	'bbpa_advanced_consent_last_test';
 export const ADVANCED_CONSENT_LAST_DIAGNOSTIC_STORAGE_PREFIX =

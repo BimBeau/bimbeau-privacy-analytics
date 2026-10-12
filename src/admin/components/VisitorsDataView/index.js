@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import ListDataViews, { getInitialListColumns } from '../ListDataViews';
+import ListDataViews, { getInitialListColumns, getInitialListView } from '../ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import DataState from '../DataState';
@@ -461,6 +461,8 @@ const isDataFilterActive = ( filters = [] ) =>
 				: filter.value === DATA_SCOPE_ENRICHED )
 	);
 
+const VISITORS_PER_PAGE_SIZES = [ 5, 10, 20, 50, 100 ];
+
 const getDefaultView = ( { isBotList, showCity, hidePrivateVisitors } ) => ( {
 	type: 'table',
 	page: 1,
@@ -524,11 +526,15 @@ const VisitorsDataView = ( {
 		! isBotList && typeof onHidePrivateVisitorsChange === 'function';
 	const columnsStorageId = isBotList ? 'visitors_bots' : 'visitors';
 	const [ view, setView ] = useState( () => {
-		const defaultView = getDefaultView( {
-			isBotList,
-			showCity,
-			hidePrivateVisitors: canFilterData && hidePrivateVisitors,
-		} );
+		const defaultView = getInitialListView(
+			columnsStorageId,
+			getDefaultView( {
+				isBotList,
+				showCity,
+				hidePrivateVisitors: canFilterData && hidePrivateVisitors,
+			} ),
+			{ perPageSizes: VISITORS_PER_PAGE_SIZES }
+		);
 
 		return {
 			...defaultView,
@@ -670,7 +676,7 @@ const VisitorsDataView = ( {
 				paginationInfo={ { totalItems, totalPages } }
 				defaultLayouts={ { table: {} } }
 				searchLabel={ __( 'Search visitors', 'bimbeau-privacy-analytics' ) }
-				config={ { perPageSizes: [ 5, 10, 20, 50, 100 ] } }
+				config={ { perPageSizes: VISITORS_PER_PAGE_SIZES } }
 				empty={ <p className="bbpa-visitors-dataview__empty">{ resolvedEmptyLabel }</p> }
 				header={
 					<ReportExportAction

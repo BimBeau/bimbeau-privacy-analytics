@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { filterSortAndPaginate } from '@wordpress/dataviews';
-import ListDataViews, { resolveListColumns } from '../components/ListDataViews';
+import ListDataViews, {
+	getInitialListView,
+	resolveListColumns,
+} from '../components/ListDataViews';
 import { getStoredListColumns } from '../lib/storage';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import {
@@ -48,6 +51,8 @@ const ACQUISITION_COLUMNS_STORAGE_ID = 'acquisition_channels';
 const CHANNEL_DETAILS_ID = 'bbpa-acquisition-channel-details';
 // Referring sites loaded to list the sources of a channel (the maximum page size of the route).
 const CHANNEL_SOURCES_LIMIT = 1000;
+
+const ACQUISITION_PER_PAGE_SIZES = [ 10, 20, 50 ];
 
 const DEFAULT_VIEW = {
 	type: 'table',
@@ -102,7 +107,9 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 		getStoredListColumns( ACQUISITION_COLUMNS_STORAGE_ID )
 	);
 	const [ view, setView ] = useState( () => ( {
-		...DEFAULT_VIEW,
+		...getInitialListView( ACQUISITION_COLUMNS_STORAGE_ID, DEFAULT_VIEW, {
+			perPageSizes: ACQUISITION_PER_PAGE_SIZES,
+		} ),
 		fields: storedColumns
 			? resolveListColumns(
 					storedColumns,
@@ -399,7 +406,7 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 							paginationInfo={ paginationInfo }
 							defaultLayouts={ { table: {} } }
 							search={ false }
-							config={ { perPageSizes: [ 10, 20, 50 ] } }
+							config={ { perPageSizes: ACQUISITION_PER_PAGE_SIZES } }
 							empty={
 								<p className="bbpa-report-dataview__empty">
 									{ __(

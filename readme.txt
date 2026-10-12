@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.73.11
+Stable tag: 8.74.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.73.11 =
-* [Fix] Page lists show each page as its title with its address underneath, in a single column, instead of separate URL and Title columns. The address can be hidden from View options for every page list at once.
+= 8.74.0 =
+* [Feature] Each list of the statistics now remembers its sort, its number of items per page and its density for the current user, separately from the other lists, like its columns.

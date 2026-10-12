@@ -5,6 +5,7 @@ import {
   LIST_COLUMNS_STORAGE_PREFIX,
   LIST_DENSITY_OPTIONS,
   LIST_DENSITY_STORAGE_PREFIX,
+  LIST_VIEW_STORAGE_PREFIX,
   PAGE_LABEL_DISPLAY_OPTIONS,
   PAGE_LABEL_DISPLAY_STORAGE_PREFIX,
   RANGE_PRESET_OPTIONS,
@@ -281,6 +282,92 @@ export const storeListColumns = (listId, columns) => {
     storage.setItem(
       getListColumnsStorageKey(listId),
       JSON.stringify(normalizedColumns),
+    );
+  } catch (error) {
+    // Ignore storage failures (e.g. privacy mode).
+  }
+};
+
+/**
+ * Normalize the saved view options of a list.
+ *
+ * @param {*} value Saved value.
+ * @return {{sort?: {field: string, direction: string}, perPage?: number, density?: string}|null}
+ *         Valid options only, or null.
+ */
+export const normalizeListView = (value) => {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const normalized = {};
+  const sort = value.sort;
+  if (
+    sort &&
+    typeof sort === "object" &&
+    typeof sort.field === "string" &&
+    sort.field !== "" &&
+    (sort.direction === "asc" || sort.direction === "desc")
+  ) {
+    normalized.sort = { field: sort.field, direction: sort.direction };
+  }
+  const perPage = Number(value.perPage);
+  if (Number.isInteger(perPage) && perPage > 0 && perPage <= 1000) {
+    normalized.perPage = perPage;
+  }
+  if (value.density) {
+    const density = normalizeListDensity(value.density);
+    if (density) {
+      normalized.density = density;
+    }
+  }
+
+  return Object.keys(normalized).length ? normalized : null;
+};
+
+export const getListViewStorageKey = (listId) =>
+  getUserScopedStorageKey(`${LIST_VIEW_STORAGE_PREFIX}:${listId}`);
+
+/**
+ * Read the view options (sort, items per page, density) saved for a list by the current user.
+ *
+ * @param {string} listId List identifier.
+ * @return {Object|null} Saved options, or null.
+ */
+export const getStoredListView = (listId) => {
+  const storage = getLocalStorage();
+  if (!storage || !listId) {
+    return null;
+  }
+
+  try {
+    const rawValue = storage.getItem(getListViewStorageKey(listId));
+    return rawValue ? normalizeListView(JSON.parse(rawValue)) : null;
+  } catch (error) {
+    return null;
+  }
+};
+
+/**
+ * Merge view options into those saved for a list by the current user.
+ *
+ * @param {string} listId  List identifier.
+ * @param {Object} options `sort`, `perPage` and/or `density`.
+ */
+export const storeListView = (listId, options) => {
+  const storage = getLocalStorage();
+  const normalizedOptions = normalizeListView({
+    ...(getStoredListView(listId) || {}),
+    ...(options || {}),
+  });
+  if (!storage || !listId || !normalizedOptions) {
+    return;
+  }
+
+  try {
+    storage.setItem(
+      getListViewStorageKey(listId),
+      JSON.stringify(normalizedOptions),
     );
   } catch (error) {
     // Ignore storage failures (e.g. privacy mode).

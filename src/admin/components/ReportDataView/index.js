@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { Button, Tooltip } from '@wordpress/components';
-import ListDataViews, { getInitialListColumns } from '../ListDataViews';
+import ListDataViews, { getInitialListColumns, getInitialListView } from '../ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
 import BrandNotice from '../BrandNotice';
@@ -262,10 +262,14 @@ const ReportDataView = ( {
 	const [ view, setView ] = useState( () => ( {
 		type: 'table',
 		page: 1,
-		perPage: 10,
 		search: '',
-		sort: { field: metricKey, direction: 'desc' },
 		filters: [],
+		// Sort and items per page saved for the list, checked again by `getReportSortParams()`.
+		...getInitialListView(
+			resolvedColumnsStorageId,
+			{ perPage: 10, sort: { field: metricKey, direction: 'desc' } },
+			{ perPageSizes: DATAVIEWS_PER_PAGE_SIZES }
+		),
 		fields: getInitialReportFields( {
 			columnsStorageId: resolvedColumnsStorageId,
 			supportsPageLabelToggle,

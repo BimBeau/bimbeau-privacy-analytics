@@ -1,8 +1,13 @@
-import { useCallback, useMemo } from '@wordpress/element';
+import { useCallback, useMemo, useState } from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews';
 
 import useSharedListDensity from '../../hooks/useSharedListDensity';
-import { getStoredListColumns, storeListColumns } from '../../lib/storage';
+import {
+	getStoredListColumns,
+	getStoredListView,
+	storeListColumns,
+	storeListView,
+} from '../../lib/storage';
 
 /**
  * DataViews adds a column shown again from View options at the end of the table. Put it back at
@@ -95,10 +100,50 @@ export const getInitialListColumns = ( listId, defaultFields, fields ) =>
 	resolveListColumns( getStoredListColumns( listId ), defaultFields, fields );
 
 /**
- * WordPress DataViews with the row density shared by every list of the plugin and saved per user
- * (compact by default), and columns shown again at their default place. With `columnsStorageId`, the
- * column order and visibility chosen by the user (View options, Move left / right, Hide column) are
- * saved per user; the list reads them back with `getInitialListColumns()`. Same props as DataViews.
+ * Initial view of a list: the default view with the sort and the number of items per page saved
+ * for the list by the current user, when they are still offered.
+ *
+ * @param {string}   listId                List identifier used by the `columnsStorageId` prop.
+ * @param {Object}   defaultView           Default DataViews view.
+ * @param {Object}   options
+ * @param {number[]} options.perPageSizes  Items per page offered by the list.
+ * @param {Object[]} options.fields        Field definitions; a saved sort on a field that is
+ *                                         missing or not sortable is ignored (optional).
+ * @return {Object} DataViews view.
+ */
+export const getInitialListView = ( listId, defaultView, { perPageSizes, fields } = {} ) => {
+	const stored = getStoredListView( listId );
+	if ( ! stored ) {
+		return defaultView;
+	}
+	const view = { ...defaultView };
+	if ( stored.perPage && ( perPageSizes || [] ).includes( stored.perPage ) ) {
+		view.perPage = stored.perPage;
+	}
+	if (
+		stored.sort &&
+		( ! Array.isArray( fields ) ||
+			fields.some(
+				( field ) => field.id === stored.sort.field && field.enableSorting !== false
+			) )
+	) {
+		view.sort = stored.sort;
+	}
+
+	return view;
+};
+
+const isSameSort = ( first, second ) =>
+	( first?.field || '' ) === ( second?.field || '' ) &&
+	( first?.direction || '' ) === ( second?.direction || '' );
+
+/**
+ * WordPress DataViews with a row density saved per user (compact by default), and columns shown
+ * again at their default place. With `columnsStorageId`, the appearance chosen by the user is saved
+ * per list and per user: column order and visibility (View options, Move left / right, Hide column),
+ * read back with `getInitialListColumns()`; sort and items per page, read back with
+ * `getInitialListView()`; density, applied here (the shared density until the list has its own).
+ * Lists without `columnsStorageId` share one density. Same props as DataViews.
  *
  * With `title`, the list heads its card: the title shares the toolbar row with the search, filter,
  * view options and `header` controls, so the card needs no header of its own. `notice` (an error)
@@ -120,7 +165,11 @@ const ListDataViews = ( {
 	...props
 } ) => {
 	const { fields, search = true, searchLabel, header } = props;
-	const [ density, setDensity ] = useSharedListDensity();
+	const [ sharedDensity, setSharedDensity ] = useSharedListDensity();
+	const [ listDensity, setListDensity ] = useState(
+		() => ( columnsStorageId && getStoredListView( columnsStorageId )?.density ) || null
+	);
+	const density = listDensity || sharedDensity;
 
 	const viewWithDensity = useMemo(
 		() => ( {
@@ -133,8 +182,25 @@ const ListDataViews = ( {
 	const handleChangeView = useCallback(
 		( nextView ) => {
 			const nextDensity = nextView?.layout?.density;
-			if ( nextDensity && nextDensity !== density ) {
-				setDensity( nextDensity );
+			const densityChanged = Boolean( nextDensity ) && nextDensity !== density;
+			if ( columnsStorageId ) {
+				const changes = {
+					...( densityChanged ? { density: nextDensity } : {} ),
+					...( nextView?.perPage && nextView.perPage !== view?.perPage
+						? { perPage: nextView.perPage }
+						: {} ),
+					...( nextView?.sort?.field && ! isSameSort( nextView.sort, view?.sort )
+						? { sort: nextView.sort }
+						: {} ),
+				};
+				if ( Object.keys( changes ).length ) {
+					storeListView( columnsStorageId, changes );
+				}
+				if ( densityChanged ) {
+					setListDensity( nextDensity );
+				}
+			} else if ( densityChanged ) {
+				setSharedDensity( nextDensity );
 			}
 			if ( onChangeView ) {
 				const nextFields = restoreShownFieldPosition(
@@ -165,7 +231,16 @@ const ListDataViews = ( {
 				);
 			}
 		},
-		[ columnsStorageId, density, fields, onChangeView, setDensity, view?.fields ]
+		[
+			columnsStorageId,
+			density,
+			fields,
+			onChangeView,
+			setSharedDensity,
+			view?.fields,
+			view?.perPage,
+			view?.sort,
+		]
 	);
 
 	if ( ! title ) {

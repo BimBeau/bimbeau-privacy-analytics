@@ -7,7 +7,10 @@ import {
 } from '@wordpress/element';
 import { Button, Notice, Tooltip } from '@wordpress/components';
 import { filterSortAndPaginate } from '@wordpress/dataviews';
-import ListDataViews, { getInitialListColumns } from '../components/ListDataViews';
+import ListDataViews, {
+	getInitialListColumns,
+	getInitialListView,
+} from '../components/ListDataViews';
 import RealtimeActivityTimeline from '../components/RealtimeActivityTimeline';
 import { __, _n } from '@wordpress/i18n';
 
@@ -509,7 +512,9 @@ const RealtimeVisitsDataView = ({ rows, shouldShowCity, visibleColumns }) => {
 	registerDataViewsTranslations();
 
 	const [view, setView] = useState(() => ({
-		...REALTIME_VISITS_DEFAULT_VIEW,
+		...getInitialListView('realtime', REALTIME_VISITS_DEFAULT_VIEW, {
+			perPageSizes: DATAVIEWS_PER_PAGE_SIZES,
+		}),
 		fields: getInitialListColumns(
 			'realtime',
 			REALTIME_VISITS_DEFAULT_VIEW.fields,
