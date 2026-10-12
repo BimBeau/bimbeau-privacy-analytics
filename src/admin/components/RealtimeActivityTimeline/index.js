@@ -1,4 +1,11 @@
-import { createInterpolateElement, useEffect, useMemo, useRef, useState } from '@wordpress/element';
+import {
+	createInterpolateElement,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+} from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -13,8 +20,12 @@ import {
 
 // The clock also drives the recent state of the bullets, so it ticks as often as the real-time poll.
 const TIMELINE_REFRESH_MS = 5000;
-// The real-time snapshot carries the last 20 actions; the feed scrolls inside the height of the map.
+// The real-time snapshot carries the last 20 actions.
 const TIMELINE_DEFAULT_LIMIT = 20;
+// Actions per page until the feed has been measured (and in environments without layout).
+const TIMELINE_DEFAULT_PAGE_SIZE = 6;
+// Height kept for the pagination while it is not displayed, so that showing it never pushes an action out.
+const TIMELINE_FOOTER_FALLBACK_HEIGHT = 41;
 // Same freshness as the map markers: an action stays highlighted during its first minute.
 const RECENT_ACTION_SECONDS = 60;
 
@@ -98,9 +109,45 @@ const getActionDescription = ( item ) => {
 };
 
 /**
+ * Splits the actions into pages that fill the available height: an action with a line underneath is taller.
+ *
+ * @param {Object[]} data    Actions, newest first.
+ * @param {Object}   metrics Measured `listHeight`, `oneLineHeight` and `twoLineHeight`, or null.
+ * @param {number}   size    Actions per page when the feed is not measured.
+ * @return {Object[][]} Pages, never empty.
+ */
+export const paginateByHeight = ( data, metrics, size ) => {
+	const pages = [];
+	if ( ! metrics ) {
+		for ( let index = 0; index < data.length; index += size ) {
+			pages.push( data.slice( index, index + size ) );
+		}
+		return pages.length ? pages : [ [] ];
+	}
+
+	let current = [];
+	let height = 0;
+	data.forEach( ( item ) => {
+		const itemHeight = getActionDescription( item ) ? metrics.twoLineHeight : metrics.oneLineHeight;
+		if ( current.length && height + itemHeight > metrics.listHeight ) {
+			pages.push( current );
+			current = [];
+			height = 0;
+		}
+		current.push( item );
+		height += itemHeight;
+	} );
+	pages.push( current );
+	return pages;
+};
+
+/**
  * Feed of the latest actions next to the real-time map: one line per page view (and, in Premium, per tracked
  * event), newest first. Each line reads as a sentence ("Arrives on Home page"), with the address and the visit
  * source underneath and the elapsed time on the right.
+ *
+ * The feed has the height of the map and never scrolls: its actions are split into pages that fill that height,
+ * browsed with the DataViews pagination.
  *
  * The bullet of an action is blue during its first minute, like the fresh map markers, then grey. An action
  * received after the feed was first displayed also sends one halo from its bullet.
@@ -109,12 +156,23 @@ const getActionDescription = ( item ) => {
  * @param {Object[]} props.items          Activity items of the real-time snapshot (`id`, `type`, `visitor_id`,
  *                                        `country_code`, `timestamp`, `page_path`, `page_title`, `is_entry`,
  *                                        `referrer_domain`, `source_category`, `label`, `trigger_type`).
- * @param {number}   props.limit          Maximum number of actions shown.
+ * @param {number}   props.limit          Maximum number of actions listed.
+ * @param {number}   props.pageSize       Actions per page until the feed height is measured.
  * @param {Function} props.onHoverVisitor Called with the hovered visitor id, or '' on leave.
  */
-const RealtimeActivityTimeline = ( { items = [], limit = TIMELINE_DEFAULT_LIMIT, onHoverVisitor } ) => {
+const RealtimeActivityTimeline = ( {
+	items = [],
+	limit = TIMELINE_DEFAULT_LIMIT,
+	pageSize = TIMELINE_DEFAULT_PAGE_SIZE,
+	onHoverVisitor,
+} ) => {
 	registerDataViewsTranslations();
 	const [ nowSeconds, setNowSeconds ] = useState( () => Date.now() / 1000 );
+	const [ requestedPage, setRequestedPage ] = useState( 1 );
+	const [ metrics, setMetrics ] = useState( null );
+	const rootRef = useRef( null );
+	const footerHeightRef = useRef( TIMELINE_FOOTER_FALLBACK_HEIGHT );
+	const lineHeightsRef = useRef( { oneLine: 0, twoLines: 0 } );
 	const seenIdsRef = useRef( null );
 	const newIdsRef = useRef( new Set() );
 
@@ -223,10 +281,65 @@ const RealtimeActivityTimeline = ( { items = [], limit = TIMELINE_DEFAULT_LIMIT,
 		[ newIds, nowSeconds, onHoverVisitor ]
 	);
 
+	// Measures the room left for the actions (the pagination is always reserved) and the height of a one-line and
+	// a two-line action, after each render. A new value only re-renders when it changes, so the measure settles.
+	useLayoutEffect( () => {
+		const root = rootRef.current;
+		if ( ! root ) {
+			return undefined;
+		}
+
+		const measure = () => {
+			const footer = root.querySelector( '.dataviews-footer' );
+			if ( footer && footer.offsetHeight > 0 ) {
+				footerHeightRef.current = footer.offsetHeight;
+			}
+			root.querySelectorAll( '.dataviews-view-activity__item' ).forEach( ( node ) => {
+				const description = node.querySelector( '.dataviews-view-activity__item-description' );
+				const key = description && description.textContent ? 'twoLines' : 'oneLine';
+				lineHeightsRef.current[ key ] = Math.max( lineHeightsRef.current[ key ], node.offsetHeight );
+			} );
+
+			const listHeight = root.clientHeight - footerHeightRef.current;
+			const { oneLine, twoLines } = lineHeightsRef.current;
+			if ( listHeight <= 0 || ( ! oneLine && ! twoLines ) ) {
+				return;
+			}
+
+			const next = {
+				listHeight,
+				oneLineHeight: oneLine || Math.round( twoLines * 0.6 ),
+				twoLineHeight: twoLines || Math.round( oneLine * 1.65 ),
+			};
+			setMetrics( ( previous ) =>
+				previous &&
+				previous.listHeight === next.listHeight &&
+				previous.oneLineHeight === next.oneLineHeight &&
+				previous.twoLineHeight === next.twoLineHeight
+					? previous
+					: next
+			);
+		};
+
+		measure();
+		if ( typeof ResizeObserver !== 'function' ) {
+			return undefined;
+		}
+		const observer = new ResizeObserver( measure );
+		observer.observe( root );
+		return () => observer.disconnect();
+	} );
+
+	const pages = useMemo( () => paginateByHeight( data, metrics, pageSize ), [ data, metrics, pageSize ] );
+	const totalPages = pages.length;
+	// The feed shrinks as actions leave the activity window: stay on its last page.
+	const page = Math.min( requestedPage, totalPages );
+	const pageData = pages[ page - 1 ];
+
 	const view = {
 		type: 'activity',
-		perPage: limit,
-		page: 1,
+		perPage: Math.max( 1, pages[ 0 ].length ),
+		page,
 		titleField: 'action',
 		descriptionField: 'details',
 		fields: [ 'last_activity' ],
@@ -234,17 +347,18 @@ const RealtimeActivityTimeline = ( { items = [], limit = TIMELINE_DEFAULT_LIMIT,
 	};
 
 	return (
-		<div className="bbpa-realtime-timeline">
+		<div className="bbpa-realtime-timeline" ref={ rootRef }>
 			<DataViews
-				data={ data }
+				data={ pageData }
 				fields={ fields }
 				view={ view }
-				onChangeView={ () => {} }
-				paginationInfo={ { totalItems: data.length, totalPages: 1 } }
+				onChangeView={ ( nextView ) => setRequestedPage( nextView?.page || 1 ) }
+				paginationInfo={ { totalItems: data.length, totalPages } }
 				defaultLayouts={ { activity: {} } }
 				getItemId={ getItemId }
 			>
 				<DataViews.Layout />
+				<DataViews.Footer />
 			</DataViews>
 		</div>
 	);

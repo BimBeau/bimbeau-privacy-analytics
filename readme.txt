@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.77.1
+Stable tag: 8.77.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.77.1 =
-* [Fix] Real-time: the recent activity feed now has the height of the map and scrolls, shows the last 20 actions instead of 10, and no longer leaves a blank space under the map, which is taller.
-* [Fix] Real-time: the light sweep on the current page of each visit now runs at a regular interval, at the same moment on every row.
+= 8.77.2 =
+* [Fix] Real-time: the recent activity feed is paginated instead of scrolled, each page filling the height of the map, so the panel no longer shows several scrollbars.
+* [Fix] Real-time: removed the double vertical line between the map and the recent activity feed.

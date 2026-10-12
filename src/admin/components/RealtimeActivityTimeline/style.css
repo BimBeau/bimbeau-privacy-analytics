@@ -6,6 +6,16 @@
   min-height: 0;
 }
 
+/*
+ * Pagination of the feed, aligned with the actions instead of the wide padding of a full-page list. Its line is
+ * under it, at the bottom of the column, level with the bottom border of the map.
+ */
+.bbpa-realtime-timeline .dataviews-footer {
+  padding: var(--bbpa-gap-sm) 0;
+  border-top: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 .bbpa-realtime-timeline .dataviews-view-activity__item-content {
   display: grid !important;
   flex: 1;
@@ -33,7 +43,9 @@
   display: none;
 }
 
+/* Positioned, so that its visually hidden label stays inside the feed and never extends the panel height. */
 .bbpa-realtime-timeline .dataviews-view-activity__item-fields {
+  position: relative;
   grid-column: 2;
   grid-row: 1;
   flex: none;

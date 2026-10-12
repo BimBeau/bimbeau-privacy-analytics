@@ -41,8 +41,9 @@
 }
 
 /*
- * The feed takes the height of the map (its size is contained, so it never stretches the row and leaves a blank
- * under the map) and scrolls inside it.
+ * The feed takes the height of the map: its size is contained, so it never stretches the row (which left a blank
+ * under the map). It is paginated, not scrolled: the DataViews footer sits at the bottom of the column. The border
+ * of the map card already separates the two columns.
  */
 .bbpa-realtime-panel__timeline {
   display: flex;
@@ -51,25 +52,24 @@
   min-height: 0;
   contain: size;
   padding: var(--bbpa-gap-sm) 0 0 var(--bbpa-gap-lg);
-  border-left: 1px solid #e0e0e0;
 }
 
 .bbpa-realtime-panel__timeline-title {
   flex: none;
 }
 
-/* Taller map next to the feed, so that about a dozen actions are visible before scrolling. */
+/* Taller map next to the feed, so that a page of actions and the pagination fit beside it. */
 .bbpa-realtime-panel__card:not([data-fullscreen-active="true"]) .bbpa-realtime-panel__live--with-timeline .bbpa-world-map__chart {
   min-height: 560px;
   height: 560px;
 }
 
 .bbpa-realtime-panel__timeline .bbpa-realtime-timeline {
+  display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
   min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding-right: var(--bbpa-gap-sm);
+  overflow: hidden;
 }
 
 .bbpa-realtime-panel__timeline-title {
@@ -92,11 +92,10 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* Under the map, the feed keeps a fixed height, filled page by page. */
   .bbpa-realtime-panel__timeline {
-    contain: none;
+    height: 440px;
     padding: var(--bbpa-gap-md) 0 0;
-    border-left: 0;
-    border-top: 1px solid #e0e0e0;
   }
 
   .bbpa-realtime-panel__card:not([data-fullscreen-active="true"]) .bbpa-realtime-panel__live--with-timeline .bbpa-world-map__chart {
@@ -104,7 +103,4 @@
     height: 420px;
   }
 
-  .bbpa-realtime-panel__timeline .bbpa-realtime-timeline {
-    max-height: 420px;
-  }
 }
