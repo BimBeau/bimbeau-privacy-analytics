@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.2
+Stable tag: 8.78.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.2 =
-* [Fix] Lists: the number of active filters now sits inside the filter button instead of covering its outline, the active filters get some space under the list header, "Add filter" is hidden once every filter of the list is shown, and the toolbar buttons are aligned with the search field.
+= 8.78.4 =
+* [Build] Packaging: fixed the admin bundle check that stopped the previous release build after the dashboard cards stopped offering exports.

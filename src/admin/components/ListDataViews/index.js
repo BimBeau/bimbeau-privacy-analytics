@@ -165,11 +165,17 @@ const isSameSort = ( first, second ) =>
  * `title`, the list heads its card: the title starts that row, so the card needs no header of its
  * own. `notice` (an error) is shown under that row.
  *
+ * With `controls={ false }` (a summary card, such as the dashboard ones), the list shows no
+ * search, filters, view options, `header` controls nor pagination: only its title, `titleAction`
+ * (a link to the full report) at the end of that row, and its rows.
+ *
  * @param {Object}   props
  * @param {Object}   props.view             DataViews view.
  * @param {Function} props.onChangeView     DataViews view change handler.
  * @param {string}   props.columnsStorageId Identifier under which the columns are saved (optional).
  * @param {string}   props.title            Title shown at the start of the toolbar (optional).
+ * @param {*}        props.titleAction      Content at the end of the title row, without controls (optional).
+ * @param {boolean}  props.controls         Whether the toolbar controls and pagination are shown.
  * @param {*}        props.notice           Content shown before the list, such as an error (optional).
  */
 const ListDataViews = ( {
@@ -177,6 +183,8 @@ const ListDataViews = ( {
 	onChangeView,
 	columnsStorageId,
 	title,
+	titleAction = null,
+	controls = true,
 	notice = null,
 	...props
 } ) => {
@@ -277,17 +285,23 @@ const ListDataViews = ( {
 						{ title }
 					</strong>
 				) : null }
-				<div className="bbpa-dataviews-header__tools">
-					{ search ? <DataViews.Search label={ searchLabel } /> : null }
-					{ hasFilterableField( fields ) ? <DataViews.FiltersToggle /> : null }
-					<DataViews.ViewConfig />
-					{ header }
-				</div>
+				{ controls ? (
+					<div className="bbpa-dataviews-header__tools">
+						{ search ? <DataViews.Search label={ searchLabel } /> : null }
+						{ hasFilterableField( fields ) ? <DataViews.FiltersToggle /> : null }
+						<DataViews.ViewConfig />
+						{ header }
+					</div>
+				) : (
+					titleAction
+				) }
 			</div>
 			{ notice }
-			<DataViews.FiltersToggled className="dataviews-filters__container" />
+			{ controls ? (
+				<DataViews.FiltersToggled className="dataviews-filters__container" />
+			) : null }
 			<DataViews.Layout />
-			<DataViews.Footer />
+			{ controls ? <DataViews.Footer /> : null }
 		</DataViews>
 	);
 };

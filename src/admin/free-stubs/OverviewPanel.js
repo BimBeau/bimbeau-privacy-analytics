@@ -16,10 +16,7 @@ import ReportTableCard from '../widgets/ReportTableCard';
 import TimeseriesChart from '../widgets/TimeseriesChart';
 import ReferrerLabel from '../components/ReferrerLabel';
 import { isPanelEnabled } from '../constants';
-import { getChannelFilterField, getPageListFilterFields } from '../lib/listFilters';
-
-const TOP_PAGES_FILTER_FIELDS = getPageListFilterFields( { withChannel: true } );
-const REFERRERS_FILTER_FIELDS = [ getChannelFilterField() ];
+import { getAdminPanelUrl } from '../lib/adminUrls';
 
 const OverviewPanel = ( { rangeSelection } ) => {
 	const range = useMemo(
@@ -49,14 +46,14 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						range={ range }
 						endpoint="/top-pages"
 						columnsStorageId="overview_top-pages"
-						exportReportKey="top-pages"
+						viewAllHref={ getAdminPanelUrl( 'top-pages' ) }
+						viewAllLabel={ __( 'See all pages', 'bimbeau-privacy-analytics' ) }
 						emptyLabel={ __( 'No popular pages available.', 'bimbeau-privacy-analytics' ) }
 						labelFallback="/"
 						supportsPageLabelToggle
 						showOpenButton={ false }
 						showMetricTrend
 						inlineMetricChange
-						filterFields={ TOP_PAGES_FILTER_FIELDS }
 					/>
 				) : null }
 				{ isReferrersEnabled ? (
@@ -66,7 +63,8 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						range={ range }
 						endpoint="/referrers"
 						columnsStorageId="overview_referrers"
-						exportReportKey="referrers"
+						viewAllHref={ getAdminPanelUrl( 'referrers' ) }
+						viewAllLabel={ __( 'See all referrers', 'bimbeau-privacy-analytics' ) }
 						emptyLabel={ __( 'No referrers available.', 'bimbeau-privacy-analytics' ) }
 						labelFallback={ __( 'Direct', 'bimbeau-privacy-analytics' ) }
 						maxDisplayedLabelCharacters={ 50 }
@@ -75,7 +73,6 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						metricLabel={ __( 'Visits', 'bimbeau-privacy-analytics' ) }
 						showMetricTrend
 						inlineMetricChange
-						filterFields={ REFERRERS_FILTER_FIELDS }
 					/>
 				) : null }
 				<BpaCard title={ __( 'Hourly heatmap global', 'bimbeau-privacy-analytics' ) }>

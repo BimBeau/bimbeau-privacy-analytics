@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { Button, Tooltip } from '@wordpress/components';
+import { arrowRight } from '@wordpress/icons';
 import ListDataViews, { getInitialListColumns, getInitialListView } from '../ListDataViews';
 
 import useAdminEndpoint from '../../api/useAdminEndpoint';
@@ -26,6 +27,9 @@ import { getViewFilterValue } from '../../lib/listFilters';
 import { formatDateStringForLocale, getPreviousRange } from '../../lib/date';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
 
+
+// Rows of a summary card (`viewAllHref`).
+const SUMMARY_ROWS = 10;
 
 // Rows loaded at once when a list searches in the browser (the API accepts up to 1000).
 const BROWSER_SEARCH_MAX_ITEMS = 1000;
@@ -301,6 +305,10 @@ const ReportDataView = ( {
 	// param } ] applied by the server (the selected value is sent as `param`), or [ { id, label,
 	// elements, matches( item, value ) } ] applied in the browser, with `searchInBrowser` lists only.
 	filterFields = [],
+	// Summary card (dashboard): the first rows only, without search, filters, view options, export
+	// nor pagination, and a `viewAllLabel` link to the full report at `viewAllHref`.
+	viewAllHref = '',
+	viewAllLabel = '',
 } ) => {
 	registerDataViewsTranslations();
 
@@ -325,6 +333,8 @@ const ReportDataView = ( {
 			{ perPage: 10, sort: { field: metricKey, direction: 'desc' } },
 			{ perPageSizes: DATAVIEWS_PER_PAGE_SIZES }
 		),
+		// A summary card has no pagination: the number of rows saved for it no longer applies.
+		...( viewAllHref ? { perPage: SUMMARY_ROWS } : {} ),
 		fields: getInitialReportFields( {
 			columnsStorageId: resolvedColumnsStorageId,
 			supportsPageLabelToggle,
@@ -1006,6 +1016,21 @@ const ReportDataView = ( {
 		>
 			<ListDataViews
 				title={ cardTitle }
+				controls={ ! viewAllHref }
+				titleAction={
+					viewAllHref ? (
+						<Button
+							variant="link"
+							href={ viewAllHref }
+							icon={ arrowRight }
+							iconPosition="right"
+							iconSize={ 16 }
+							className="bbpa-dataviews-header__link"
+						>
+							{ viewAllLabel }
+						</Button>
+					) : null
+				}
 				notice={
 					error ? (
 						<DataState

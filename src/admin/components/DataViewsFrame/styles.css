@@ -58,6 +58,30 @@
   display: flex;
 }
 
+/* Link to the full report at the end of the title row of a summary card (dashboard). */
+.bbpa-admin-app .bbpa-dataviews-header .bbpa-dataviews-header__link.components-button.is-link {
+  gap: 4px;
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 0;
+  color: var(--wp-admin-theme-color, #3858e9);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.bbpa-admin-app .bbpa-dataviews-header .bbpa-dataviews-header__link.components-button.is-link:hover {
+  color: var(--wp-admin-theme-color-darker-10, #183ad6);
+}
+
+.bbpa-dataviews-header__link.components-button svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
 .bbpa-dataviews-header__tools .dataviews-search {
   flex: 0 1 210px;
   min-width: 120px;
@@ -122,8 +146,8 @@
 
 /*
  * Toolbar icon buttons of the lists (filters, view options, export): a square of the size of the
- * DataViews search field. Their outline, fill and hover are the shared icon-button look of
- * styles/icon-buttons.css. The export keeps the WordPress busy stripes while it runs.
+ * DataViews search field. Their borderless look and hover are in styles/icon-buttons.css. The
+ * export keeps the WordPress busy stripes while it runs.
  */
 .bbpa-admin-app .components-button:is(.dataviews-filters__visibility-toggle, .dataviews-view-config__toggle-wrapper > .components-button, .bbpa-report-export-action__toggle):not(.is-primary):not(.is-destructive):not(.is-busy) {
   justify-content: center;
@@ -134,9 +158,9 @@
 }
 
 /*
- * Number of active filters: DataViews draws it as a badge astride the top right corner of a
- * borderless button, where it covers the outline of our square button. The button widens instead
- * and the number sits inside it, after the icon.
+ * Number of active filters: DataViews draws it as a badge astride the top right corner of the
+ * button, where it overflows the toolbar row. The button widens instead and the number sits inside
+ * it, after the icon.
  */
 .bbpa-admin-app .dataviews-filters__container-visibility-toggle:has(.dataviews-filters-toggle__count) .components-button.dataviews-filters__visibility-toggle:not(.is-primary):not(.is-destructive):not(.is-busy) {
   justify-content: flex-start;
