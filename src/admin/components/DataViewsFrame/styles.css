@@ -49,6 +49,15 @@
   margin-left: auto;
 }
 
+/*
+ * The filter and view options buttons sit in inline wrappers whose line box makes them 33px tall:
+ * centered, they ended half a pixel above the search and the export. Flex wrappers fit the button.
+ */
+.bbpa-dataviews-header__tools > :is(.dataviews-filters__container-visibility-toggle, .components-dropdown),
+.bbpa-dataviews-header__tools .dataviews-view-config__toggle-wrapper {
+  display: flex;
+}
+
 .bbpa-dataviews-header__tools .dataviews-search {
   flex: 0 1 210px;
   min-width: 120px;
@@ -122,6 +131,39 @@
   min-width: 32px;
   height: 32px;
   padding: 0;
+}
+
+/*
+ * Number of active filters: DataViews draws it as a badge astride the top right corner of a
+ * borderless button, where it covers the outline of our square button. The button widens instead
+ * and the number sits inside it, after the icon.
+ */
+.bbpa-admin-app .dataviews-filters__container-visibility-toggle:has(.dataviews-filters-toggle__count) .components-button.dataviews-filters__visibility-toggle:not(.is-primary):not(.is-destructive):not(.is-busy) {
+  justify-content: flex-start;
+  width: auto;
+  min-width: 32px;
+  padding: 0 26px 0 4px;
+}
+
+.bbpa-admin-app .dataviews-filters__container-visibility-toggle .dataviews-filters-toggle__count {
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  outline: 0;
+  pointer-events: none;
+}
+
+/*
+ * Active filters under a list that heads its card: DataViews removes their top padding, made for a
+ * toolbar without a divider. Here the card header divider is above them, so they get it back.
+ */
+.bbpa-admin-app .bbpa-dataviews-header ~ .dataviews-filters__container {
+  padding-top: 12px;
+}
+
+/* "Add filter" once every filter of the list is shown: DataViews only disables it, it goes away. */
+.bbpa-admin-app .dataviews-filters__container .dataviews-filters-button[aria-disabled="true"] {
+  display: none;
 }
 
 /*

@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.1
+Stable tag: 8.78.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.1 =
-* [Changed] Real-time map: every point now beats gently, each city at its own pace, and a new action sends a few sharp-edged halo waves from its point for a few seconds, instead of a halo that waved continuously on every point.
+= 8.78.2 =
+* [Fix] Lists: the number of active filters now sits inside the filter button instead of covering its outline, the active filters get some space under the list header, "Add filter" is hidden once every filter of the list is shown, and the toolbar buttons are aligned with the search field.
