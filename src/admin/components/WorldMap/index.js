@@ -617,6 +617,62 @@ const REALTIME_MARKER_FADE_SECONDS = 420;
 const REALTIME_MARKER_MIN_FRESHNESS = 0.35;
 const REALTIME_MARKER_MIN_RADIUS = 5;
 const REALTIME_MARKER_MAX_RADIUS = 9;
+// Every real-time point beats (map-markers.css); each location gets its own offset within the beat, so
+// that the points never beat together.
+const REALTIME_MARKER_BEAT_SECONDS = 2.4;
+// A new action sends waves from its point, up to this multiple of the point radius.
+export const REALTIME_MARKER_HALO_RADIUS_RATIO = 3;
+
+const getRealtimeMarkerPhase = (locationKey) => {
+  let hash = 0;
+  for (let index = 0; index < locationKey.length; index += 1) {
+    hash = (hash * 31 + locationKey.charCodeAt(index)) % 100000;
+  }
+
+  return -((hash % 1000) / 1000) * REALTIME_MARKER_BEAT_SECONDS;
+};
+
+export const getRealtimeMarkerLastViewSeconds = (lastViewAt) => {
+  const timestamp = Number(lastViewAt);
+  if (!Number.isFinite(timestamp) || timestamp <= 0) {
+    return null;
+  }
+
+  return timestamp > 1e12 ? timestamp / 1000 : timestamp;
+};
+
+/**
+ * Marks the real-time markers whose location received an action since the previous data: their `burstKey`
+ * changes, which remounts and replays their halo. The first data only records the locations, so the actions
+ * already there when the map opens send no halo, like the feed bullets.
+ *
+ * @param {Object[]} markers Markers with `locationKey`, `lastViewAt` and `isFresh`.
+ * @param {Object}   state   Mutable state kept between calls: `{ views: Map|null, bursts: Map }`.
+ * @return {Object[]} Markers, with `burstKey` on the fresh ones that received an action.
+ */
+export const applyRealtimeMarkerBursts = (markers, state) => {
+  const isFirstData = state.views === null;
+  const views = state.views || new Map();
+
+  markers.forEach((marker) => {
+    if (!Number.isFinite(marker.lastViewAt) || !marker.locationKey) {
+      return;
+    }
+
+    const previous = views.get(marker.locationKey);
+    if (!isFirstData && marker.isFresh && (previous === undefined || marker.lastViewAt > previous)) {
+      state.bursts.set(marker.locationKey, `${marker.locationKey}@${marker.lastViewAt}`);
+    }
+
+    views.set(marker.locationKey, Math.max(previous || 0, marker.lastViewAt));
+  });
+  state.views = views;
+
+  return markers.map((marker) => {
+    const burstKey = marker.isFresh ? state.bursts.get(marker.locationKey) : undefined;
+    return burstKey ? { ...marker, burstKey } : marker;
+  });
+};
 
 export const getRealtimeMarkerAgeSeconds = (lastViewAt, nowSeconds) => {
   const timestamp = Number(lastViewAt);
@@ -1155,6 +1211,47 @@ export const MarkerMapLayer = ({
           />
         ))}
       </g>
+      {/* Halos of the latest actions, under every point so that a halo never covers a neighbour. */}
+      <g className="bbpa-world-map__city-marker-halos" aria-hidden="true">
+        {cityMarkers.map((marker) => {
+          if (!marker.burstKey) {
+            return null;
+          }
+
+          const point = projection([marker.longitude, marker.latitude]);
+          if (!point || !Number.isFinite(point[0]) || !Number.isFinite(point[1])) {
+            return null;
+          }
+
+          const haloRadius = marker.radius * REALTIME_MARKER_HALO_RADIUS_RATIO;
+          const haloStyle = {
+            "--bbpa-city-marker-halo-start": 1 / REALTIME_MARKER_HALO_RADIUS_RATIO,
+          };
+
+          // Keyed by action: a new action remounts the halo and replays its waves.
+          return (
+            <g key={marker.burstKey} data-city-marker-id={marker.id}>
+              <circle
+                className="bbpa-world-map__city-marker-halo bbpa-world-map__city-marker-halo--disc"
+                cx={point[0]}
+                cy={point[1]}
+                r={haloRadius}
+                fill={marker.color}
+                style={haloStyle}
+              />
+              <circle
+                className="bbpa-world-map__city-marker-halo bbpa-world-map__city-marker-halo--ring"
+                cx={point[0]}
+                cy={point[1]}
+                r={haloRadius}
+                fill="none"
+                stroke={marker.color}
+                style={haloStyle}
+              />
+            </g>
+          );
+        })}
+      </g>
       <g className="bbpa-world-map__city-markers" style={{ pointerEvents: "all" }}>
         {cityMarkers.map((marker) => {
           const point = projection([marker.longitude, marker.latitude]);
@@ -1176,6 +1273,9 @@ export const MarkerMapLayer = ({
                 "--bbpa-city-marker-pulse-scale": marker.pulseScale,
                 ...(Number.isFinite(marker.freshness)
                   ? { "--bbpa-city-marker-freshness": marker.freshness }
+                  : {}),
+                ...(Number.isFinite(marker.beatPhase)
+                  ? { "--bbpa-city-marker-phase": `${marker.beatPhase.toFixed(2)}s` }
                   : {}),
               }}
               data-city-marker-id={marker.id}
@@ -2030,6 +2130,7 @@ const WorldMap = ({
               Date.now() / 1000,
             )
           : null;
+        const locationKey = `${normalizedLatitude},${normalizedLongitude}`;
         const markerVisitorIds = String(city?.visitor_ids || city?.visitor_id || "")
           .split(",")
           .map((value) => value.trim())
@@ -2045,6 +2146,15 @@ const WorldMap = ({
             ? getRealtimeMarkerRadius(hits, markerMaxHits)
             : getCityMarkerRadius(hits, markerMaxHits),
           freshness: getRealtimeMarkerFreshness(ageSeconds),
+          ...(isRealtimeMarker
+            ? {
+                locationKey,
+                lastViewAt: getRealtimeMarkerLastViewSeconds(
+                  city?.last_view_at ?? city?.lastViewAt,
+                ),
+                beatPhase: getRealtimeMarkerPhase(locationKey),
+              }
+            : {}),
           isFresh:
             Number.isFinite(ageSeconds) &&
             ageSeconds < REALTIME_MARKER_FRESH_SECONDS,
@@ -2079,6 +2189,15 @@ const WorldMap = ({
       })
       .filter(Boolean);
   }, [countries, mapMode, countryCenterByCode, highlightedVisitorId]);
+  const realtimeMarkerBurstsRef = useRef({ views: null, bursts: new Map() });
+  const displayedCityMarkers = useMemo(() => {
+    if (mapMode !== "realtime-markers") {
+      realtimeMarkerBurstsRef.current = { views: null, bursts: new Map() };
+      return cityMarkers;
+    }
+
+    return applyRealtimeMarkerBursts(cityMarkers, realtimeMarkerBurstsRef.current);
+  }, [cityMarkers, mapMode]);
   const cityMarkerDiagnostics = useMemo(
     () =>
       isMarkerMapMode(mapMode)
@@ -2900,7 +3019,7 @@ const WorldMap = ({
                 height={choroplethHeight}
                 mapSvgRef={mapSvgRef}
                 mapMode={mapMode}
-                cityMarkers={cityMarkers}
+                cityMarkers={displayedCityMarkers}
                 viewport={viewport}
                 onCityMarkerEnter={updateCityTooltipPosition}
                 onCityMarkerMove={updateCityTooltipPosition}

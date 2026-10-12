@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.0
+Stable tag: 8.78.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,7 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.0 =
-* [Feature] The page lists can be filtered: Top pages by channel and content type, Entry pages and Exit pages by content type.
-* [Feature] The country lists can be filtered by continent, and the dashboard referrers card by channel.
-* [Change] A list with nothing to filter no longer shows a dimmed filter button.
+= 8.78.1 =
+* [Changed] Real-time map: every point now beats gently, each city at its own pace, and a new action sends a few sharp-edged halo waves from its point for a few seconds, instead of a halo that waved continuously on every point.
