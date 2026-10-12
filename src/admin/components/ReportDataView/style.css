@@ -193,23 +193,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Page title with its address underneath (title display without the URL column). */
-.bbpa-report-table__label-stack {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.bbpa-report-dataview .dataviews-view-table .bbpa-report-table__label-path {
-  overflow: hidden;
-  color: #757575;
-  font-size: 12px;
-  font-weight: 400;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 /* Numbers of every list cell line up. */
 .bbpa-admin-app .dataviews-view-table td {
   font-variant-numeric: tabular-nums;
@@ -225,9 +208,17 @@
   width: 100%;
 }
 
-/* Second line under the label (DataViews description field): the role of an author. */
+/* Second line under the label (DataViews description field): the role of an author, the address of a page. */
 .bbpa-report-dataview .bbpa-report-table__description {
   color: #757575;
   font-size: 12px;
   line-height: 1.4;
+}
+
+/* A long address stays on one line inside the column. */
+.bbpa-report-dataview .bbpa-report-table__description--path {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

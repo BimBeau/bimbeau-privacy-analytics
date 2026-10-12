@@ -185,7 +185,9 @@ export const PERIOD_PRESET_OPTIONS = [
 	},
 ];
 
-export const PAGE_LABEL_DISPLAY_OPTIONS = [ 'url', 'title' ];
+// Page lists show the title with its address underneath; `title_only` hides the address. `url`
+// and `title` were saved when the URL and the title were two columns, and still show it.
+export const PAGE_LABEL_DISPLAY_OPTIONS = [ 'url', 'title', 'title_only' ];
 export const DEFAULT_PAGE_LABEL_DISPLAY = 'url';
 export const PAGE_LABEL_DISPLAY_STORAGE_PREFIX = 'bbpa_page_label_display';
 // Row density of every DataViews list, shared and saved per user (View options > Density).

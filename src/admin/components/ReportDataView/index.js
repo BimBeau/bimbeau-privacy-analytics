@@ -17,7 +17,6 @@ import {
 } from '../ReferrerLabel/faviconCache';
 import {
 	ADMIN_CONFIG,
-	DEFAULT_PAGE_LABEL_DISPLAY,
 	normalizeBooleanSetting,
 } from '../../constants';
 import useSharedPageLabelDisplay from '../../hooks/useSharedPageLabelDisplay';
@@ -118,56 +117,38 @@ export const getReportSortParams = ( view, metricKey, extraSortKeys = [] ) => {
 };
 
 /**
- * Page label display ("url" or "title") matching the visible label fields, or null when it
- * does not change.
+ * Whether a page list shows the address under the page title (View options > URL). Both displays
+ * saved when the URL and Title were two columns (`url`, `title`) show it; `title_only` hides it.
  *
- * @param {string[]} visibleFields Visible field ids.
- * @return {string|null} Display mode.
+ * @param {string} pageLabelDisplay Shared page label display.
+ * @return {boolean} Whether the address is shown.
  */
-export const getPageLabelDisplayFromFields = ( visibleFields = [] ) => {
-	const showsUrl = visibleFields.includes( LABEL_FIELD );
-	const showsTitle = visibleFields.includes( PAGE_TITLE_FIELD );
-
-	if ( showsTitle && ! showsUrl ) {
-		return 'title';
-	}
-
-	if ( showsUrl && ! showsTitle ) {
-		return 'url';
-	}
-
-	return null;
-};
+export const showsPagePath = ( pageLabelDisplay ) =>
+	pageLabelDisplay !== 'title_only';
 
 const getVisibleFields = ( {
 	supportsPageLabelToggle,
-	pageLabelDisplay,
 	metricKey,
 	metricColumnIds = [],
 	extraFieldIds = [],
 	extraMetricValueKey,
-} ) => {
-	const labelFields = ! supportsPageLabelToggle
-		? [ LABEL_FIELD ]
-		: [ pageLabelDisplay === 'title' ? PAGE_TITLE_FIELD : LABEL_FIELD ];
-
-	return [
-		...labelFields,
-		metricKey,
-		...metricColumnIds,
-		...extraFieldIds,
-		...( extraMetricValueKey ? [ extraMetricValueKey ] : [] ),
-	];
-};
+} ) => [
+	// A page list shows its title and address in the DataViews primary column instead.
+	...( supportsPageLabelToggle ? [] : [ LABEL_FIELD ] ),
+	metricKey,
+	...metricColumnIds,
+	...extraFieldIds,
+	...( extraMetricValueKey ? [ extraMetricValueKey ] : [] ),
+];
 
 /**
  * Visible columns of a report list: the columns saved by the user (`columnsStorageId`) or the
- * default ones. A page list keeps one label column (URL or title).
+ * default ones. A page list has no label column: its title and address fill the primary column,
+ * and the URL and Title columns saved by an earlier version are dropped.
  *
  * @param {Object}   options
  * @param {string}   options.columnsStorageId        Identifier of the saved columns.
- * @param {boolean}  options.supportsPageLabelToggle Whether the URL and Title columns exist.
- * @param {string}   options.pageLabelDisplay        Shared page label display (`url`, `title`).
+ * @param {boolean}  options.supportsPageLabelToggle Whether the list shows pages (title and URL).
  * @param {string}   options.metricKey               Main metric field id.
  * @param {string[]} options.metricColumnIds         Change and series column ids, when shown.
  * @param {string[]} options.extraFieldIds           Extra column ids.
@@ -178,7 +159,6 @@ const getVisibleFields = ( {
 export const getInitialReportFields = ( {
 	columnsStorageId,
 	supportsPageLabelToggle,
-	pageLabelDisplay,
 	metricKey,
 	metricColumnIds = [],
 	extraFieldIds = [],
@@ -187,32 +167,23 @@ export const getInitialReportFields = ( {
 } ) => {
 	const defaultFields = getVisibleFields( {
 		supportsPageLabelToggle,
-		pageLabelDisplay,
 		metricKey,
 		metricColumnIds,
 		extraFieldIds,
 		extraMetricValueKey,
 	} );
+
 	// Same order and hiding rules as the field definitions of the list.
-	const fields = getInitialListColumns( columnsStorageId, defaultFields, [
-		{ id: LABEL_FIELD, enableHiding: supportsPageLabelToggle },
-		...( supportsPageLabelToggle ? [ { id: PAGE_TITLE_FIELD } ] : [] ),
+	return getInitialListColumns( columnsStorageId, defaultFields, [
+		...( supportsPageLabelToggle
+			? []
+			: [ { id: LABEL_FIELD, enableHiding: false } ] ),
 		{ id: metricKey, enableHiding: false },
 		...metricColumnIds.map( ( id ) => ( { id } ) ),
 		...extraFieldIds.map( ( id ) => ( { id } ) ),
 		...( extraMetricValueKey ? [ { id: extraMetricValueKey } ] : [] ),
 		...( hasOpenField ? [ { id: 'open', enableHiding: false } ] : [] ),
 	] );
-
-	if (
-		supportsPageLabelToggle &&
-		! fields.includes( LABEL_FIELD ) &&
-		! fields.includes( PAGE_TITLE_FIELD )
-	) {
-		return [ defaultFields[ 0 ], ...fields ];
-	}
-
-	return fields;
 };
 
 /**
@@ -298,7 +269,6 @@ const ReportDataView = ( {
 		fields: getInitialReportFields( {
 			columnsStorageId: resolvedColumnsStorageId,
 			supportsPageLabelToggle,
-			pageLabelDisplay,
 			metricKey,
 			metricColumnIds,
 			extraFieldIds: extraFields.map( ( field ) => field.id ),
@@ -324,38 +294,6 @@ const ReportDataView = ( {
 	useEffect( () => {
 		setView( ( current ) => ( { ...current, page: 1 } ) );
 	}, [ range.start, range.end, endpoint, requestParams.dimension, requestParams.page_path ] );
-
-	// The display mode is shared by the page lists: follow a change made in another list.
-	useEffect( () => {
-		if ( ! supportsPageLabelToggle ) {
-			return;
-		}
-
-		setView( ( current ) => {
-			if (
-				getPageLabelDisplayFromFields( current.fields ) === null ||
-				getPageLabelDisplayFromFields( current.fields ) === pageLabelDisplay
-			) {
-				return current;
-			}
-
-			const nextLabel =
-				pageLabelDisplay === 'title' ? PAGE_TITLE_FIELD : LABEL_FIELD;
-			const fields = current.fields.map( ( id ) =>
-				id === LABEL_FIELD || id === PAGE_TITLE_FIELD ? nextLabel : id
-			);
-			const sortField = current.sort?.field;
-
-			return {
-				...current,
-				fields,
-				sort:
-					sortField === LABEL_FIELD || sortField === PAGE_TITLE_FIELD
-						? { ...current.sort, field: nextLabel }
-						: current.sort,
-			};
-		} );
-	}, [ pageLabelDisplay, supportsPageLabelToggle ] );
 
 	const search = enableSearch ? String( view.search || '' ).trim() : '';
 	const sortParams = getReportSortParams(
@@ -527,14 +465,8 @@ const ReportDataView = ( {
 		}
 	}, [ isLoading, error, totalPages, view.page ] );
 
-	// In title mode without the URL column, the address is shown under the title.
-	const showsPathUnderTitle =
-		supportsPageLabelToggle &&
-		view.fields.includes( PAGE_TITLE_FIELD ) &&
-		! view.fields.includes( LABEL_FIELD );
-
 	const fields = useMemo( () => {
-		const renderRowLabel = ( row, fullLabel, path = '' ) => {
+		const renderRowLabel = ( row, fullLabel ) => {
 			const visibleLabel = truncateDisplayedLabel(
 				fullLabel,
 				maxDisplayedLabelCharacters
@@ -556,15 +488,7 @@ const ReportDataView = ( {
 				typeof getRowClassName === 'function'
 					? getRowClassName( row.item ) || ''
 					: '';
-			const pageTitle = <PageTitle title={ fullLabel }>{ content }</PageTitle>;
-			const label = path ? (
-				<span className="bbpa-report-table__label-stack">
-					{ pageTitle }
-					<span className="bbpa-report-table__label-path">{ path }</span>
-				</span>
-			) : (
-				pageTitle
-			);
+			const label = <PageTitle title={ fullLabel }>{ content }</PageTitle>;
 			const cell =
 				! isActionable && ! href ? (
 					label
@@ -597,30 +521,39 @@ const ReportDataView = ( {
 			);
 		};
 
-		const labelField = {
-			id: LABEL_FIELD,
-			label: supportsPageLabelToggle
-				? __( 'URL', 'bimbeau-privacy-analytics' )
-				: labelHeader,
-			getValue: ( { item } ) => item.label,
-			render: ( { item } ) => renderRowLabel( item, item.label ),
-			enableHiding: supportsPageLabelToggle,
-			enableSorting: true,
-			filterBy: false,
-		};
+		// In a page list, the address is the second line under the title (DataViews description
+		// field, shown or hidden from View options); a page without a title shows it as its title.
+		const labelField = supportsPageLabelToggle
+			? {
+					id: LABEL_FIELD,
+					label: __( 'URL', 'bimbeau-privacy-analytics' ),
+					getValue: ( { item } ) => item.label,
+					render: ( { item } ) =>
+						item.pageTitle && item.pageTitle !== item.label ? (
+							<span className="bbpa-report-table__description bbpa-report-table__description--path">
+								{ item.label }
+							</span>
+						) : null,
+					enableHiding: true,
+					enableSorting: true,
+					filterBy: false,
+			  }
+			: {
+					id: LABEL_FIELD,
+					label: labelHeader,
+					getValue: ( { item } ) => item.label,
+					render: ( { item } ) => renderRowLabel( item, item.label ),
+					enableHiding: false,
+					enableSorting: true,
+					filterBy: false,
+			  };
 		const pageTitleField = {
 			id: PAGE_TITLE_FIELD,
 			label: __( 'Title', 'bimbeau-privacy-analytics' ),
 			getValue: ( { item } ) => item.pageTitle || item.label,
 			render: ( { item } ) =>
-				renderRowLabel(
-					item,
-					item.pageTitle || item.label,
-					showsPathUnderTitle && item.pageTitle && item.pageTitle !== item.label
-						? item.label
-						: ''
-				),
-			enableHiding: true,
+				renderRowLabel( item, item.pageTitle || item.label ),
+			enableHiding: false,
 			enableSorting: true,
 			filterBy: false,
 		};
@@ -868,7 +801,6 @@ const ReportDataView = ( {
 		rowActionLabel,
 		showMetricTrend,
 		showOpenButton,
-		showsPathUnderTitle,
 		supportsPageLabelToggle,
 	] );
 
@@ -877,57 +809,50 @@ const ReportDataView = ( {
 		! view.fields.includes( 'open' )
 			? [ ...view.fields, 'open' ]
 			: view.fields;
-	// With a picture or a second line, they fill the DataViews primary column with the label.
-	const displayedView =
-		mediaField || descriptionField
-			? {
-					...view,
-					titleField: LABEL_FIELD,
-					...( mediaField ? { mediaField: MEDIA_FIELD } : {} ),
-					...( descriptionField
-						? { descriptionField: DESCRIPTION_FIELD }
-						: {} ),
-					fields: viewFields.filter(
-						( id ) =>
-							! [ LABEL_FIELD, MEDIA_FIELD, DESCRIPTION_FIELD ].includes( id )
-					),
-			  }
-			: { ...view, fields: viewFields };
+	// With a picture or a second line, they fill the DataViews primary column with the label. A page
+	// list shows its title there, with its address underneath unless hidden from View options.
+	let displayedView = { ...view, fields: viewFields };
+	if ( supportsPageLabelToggle ) {
+		displayedView = {
+			...view,
+			titleField: PAGE_TITLE_FIELD,
+			descriptionField: LABEL_FIELD,
+			showTitle: true,
+			showDescription: showsPagePath( pageLabelDisplay ),
+			fields: viewFields.filter(
+				( id ) => ! [ LABEL_FIELD, PAGE_TITLE_FIELD ].includes( id )
+			),
+		};
+	} else if ( mediaField || descriptionField ) {
+		displayedView = {
+			...view,
+			titleField: LABEL_FIELD,
+			...( mediaField ? { mediaField: MEDIA_FIELD } : {} ),
+			...( descriptionField ? { descriptionField: DESCRIPTION_FIELD } : {} ),
+			fields: viewFields.filter(
+				( id ) =>
+					! [ LABEL_FIELD, MEDIA_FIELD, DESCRIPTION_FIELD ].includes( id )
+			),
+		};
+	}
 
 	const onChangeView = ( nextView ) => {
-		let resolvedView = nextView;
-
-		if ( supportsPageLabelToggle ) {
-			const nextFields = nextView.fields || [];
-			// One label column stays visible: hiding the last one shows the other.
-			if (
-				! nextFields.includes( LABEL_FIELD ) &&
-				! nextFields.includes( PAGE_TITLE_FIELD )
-			) {
-				const otherLabel = view.fields.includes( LABEL_FIELD )
-					? PAGE_TITLE_FIELD
-					: LABEL_FIELD;
-				resolvedView = {
-					...nextView,
-					fields: [ otherLabel, ...nextFields ],
-				};
-			}
-
-			const nextDisplay = getPageLabelDisplayFromFields(
-				resolvedView.fields
-			);
-			if ( nextDisplay && nextDisplay !== pageLabelDisplay ) {
-				setPageLabelDisplay( nextDisplay || DEFAULT_PAGE_LABEL_DISPLAY );
-			}
+		// The address under the title is shown or hidden in every page list at once.
+		if (
+			supportsPageLabelToggle &&
+			typeof nextView.showDescription === 'boolean' &&
+			nextView.showDescription !== showsPagePath( pageLabelDisplay )
+		) {
+			setPageLabelDisplay( nextView.showDescription ? 'title' : 'title_only' );
 		}
 
 		const resetsPage =
-			resolvedView.search !== view.search ||
-			resolvedView.perPage !== view.perPage ||
-			resolvedView.sort?.field !== view.sort?.field ||
-			resolvedView.sort?.direction !== view.sort?.direction;
+			nextView.search !== view.search ||
+			nextView.perPage !== view.perPage ||
+			nextView.sort?.field !== view.sort?.field ||
+			nextView.sort?.direction !== view.sort?.direction;
 
-		setView( resetsPage ? { ...resolvedView, page: 1 } : resolvedView );
+		setView( resetsPage ? { ...nextView, page: 1 } : nextView );
 	};
 
 	let comparisonNote = '';
