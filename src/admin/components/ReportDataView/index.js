@@ -937,7 +937,8 @@ const ReportDataView = ( {
 			titleField: PAGE_TITLE_FIELD,
 			descriptionField: LABEL_FIELD,
 			showTitle: true,
-			showDescription: showsPagePath( pageLabelDisplay ),
+			// A summary card shows the titles only, one line per row like the other cards.
+			showDescription: ! viewAllHref && showsPagePath( pageLabelDisplay ),
 			fields: viewFields.filter(
 				( id ) => ! [ LABEL_FIELD, PAGE_TITLE_FIELD ].includes( id )
 			),
@@ -956,9 +957,11 @@ const ReportDataView = ( {
 	}
 
 	const onChangeView = ( nextView ) => {
-		// The address under the title is shown or hidden in every page list at once.
+		// The address under the title is shown or hidden in every page list at once. A summary card
+		// always hides it and has no view options: it never changes that choice.
 		if (
 			supportsPageLabelToggle &&
+			! viewAllHref &&
 			typeof nextView.showDescription === 'boolean' &&
 			nextView.showDescription !== showsPagePath( pageLabelDisplay )
 		) {
