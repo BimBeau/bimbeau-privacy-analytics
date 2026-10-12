@@ -13,7 +13,8 @@ import {
 
 // The clock also drives the recent state of the bullets, so it ticks as often as the real-time poll.
 const TIMELINE_REFRESH_MS = 5000;
-const TIMELINE_DEFAULT_LIMIT = 10;
+// The real-time snapshot carries the last 20 actions; the feed scrolls inside the height of the map.
+const TIMELINE_DEFAULT_LIMIT = 20;
 // Same freshness as the map markers: an action stays highlighted during its first minute.
 const RECENT_ACTION_SECONDS = 60;
 

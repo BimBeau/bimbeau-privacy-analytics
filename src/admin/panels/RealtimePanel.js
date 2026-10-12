@@ -378,6 +378,25 @@ const formatVisitorHashForTable = (hash) => {
 	return `${normalizedHash.slice(0, 10)}...`;
 };
 
+/**
+ * Starts the light sweep of a current page cell on the document clock, so that every row sweeps at the same
+ * moment, at a regular interval. Without it, each row starts its own cycle when it mounts, and a row is
+ * remounted on every new page view of its visitor (its key holds the last view time).
+ *
+ * @param {HTMLElement|null} node Current page cell.
+ */
+const syncCurrentPageShimmer = (node) => {
+	if (!node || typeof node.getAnimations !== 'function') {
+		return;
+	}
+
+	node.getAnimations({ subtree: true }).forEach((animation) => {
+		if (animation.animationName === 'bbpa-current-page-text-shimmer' && animation.startTime !== 0) {
+			animation.startTime = 0;
+		}
+	});
+};
+
 const buildRealtimeVisitRowKey = (visit, index) => {
 	const visitorId = getRealtimeVisitField(visit, ['visitor_id']);
 	const visitLastViewAt = Number(visit?.last_view_at ?? visit?.lastViewAt ?? 0);
@@ -619,7 +638,7 @@ const RealtimeVisitsDataView = ({ rows, shouldShowCity, visibleColumns }) => {
 				label: VISITOR_TABLE_LABELS.currentPage,
 				getValue: ({ item }) => item?.current_page || '',
 				render: ({ item }) => (
-					<span className="bbpa-realtime-current-page-cell">
+					<span className="bbpa-realtime-current-page-cell" ref={syncCurrentPageShimmer}>
 						<PageTitle>
 							{item?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}
 						</PageTitle>

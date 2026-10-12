@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.77.0
+Stable tag: 8.77.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,11 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.77.0 =
-* [Feature] Every list of the statistics, in the reports and in the dashboard cards, now has the same toolbar: search, filter button, view options and export, in the same order. A list with nothing to filter keeps the filter button, dimmed, with a tooltip.
-* [Feature] Referring sites can be filtered by channel.
-* [Feature] The visitors of a page can be filtered by consented data, like the Visitors report, in addition to country, device and channel.
-* [Feature] The acquisition channels and the funnel breakdowns can be filtered and searched.
-* [Feature] The city lists can be filtered by country and sorted by city name; the countries list sorts by country name.
-* [Fix] Filters always open from the filter button: the Data filter of the visitors and the event filter of the triggered events no longer lock the filter bar open.
-* [Fix] The page details lists and the content tabs keep their own sort, columns and density instead of sharing those of another list.
+= 8.77.1 =
+* [Fix] Real-time: the recent activity feed now has the height of the map and scrolls, shows the last 20 actions instead of 10, and no longer leaves a blank space under the map, which is taller.
+* [Fix] Real-time: the light sweep on the current page of each visit now runs at a regular interval, at the same moment on every row.

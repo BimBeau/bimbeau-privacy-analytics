@@ -40,10 +40,36 @@
   grid-template-columns: minmax(0, 1.75fr) minmax(260px, 1fr);
 }
 
+/*
+ * The feed takes the height of the map (its size is contained, so it never stretches the row and leaves a blank
+ * under the map) and scrolls inside it.
+ */
 .bbpa-realtime-panel__timeline {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  min-height: 0;
+  contain: size;
   padding: var(--bbpa-gap-sm) 0 0 var(--bbpa-gap-lg);
   border-left: 1px solid #e0e0e0;
+}
+
+.bbpa-realtime-panel__timeline-title {
+  flex: none;
+}
+
+/* Taller map next to the feed, so that about a dozen actions are visible before scrolling. */
+.bbpa-realtime-panel__card:not([data-fullscreen-active="true"]) .bbpa-realtime-panel__live--with-timeline .bbpa-world-map__chart {
+  min-height: 560px;
+  height: 560px;
+}
+
+.bbpa-realtime-panel__timeline .bbpa-realtime-timeline {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: var(--bbpa-gap-sm);
 }
 
 .bbpa-realtime-panel__timeline-title {
@@ -67,8 +93,18 @@
   }
 
   .bbpa-realtime-panel__timeline {
+    contain: none;
     padding: var(--bbpa-gap-md) 0 0;
     border-left: 0;
     border-top: 1px solid #e0e0e0;
+  }
+
+  .bbpa-realtime-panel__card:not([data-fullscreen-active="true"]) .bbpa-realtime-panel__live--with-timeline .bbpa-world-map__chart {
+    min-height: 420px;
+    height: 420px;
+  }
+
+  .bbpa-realtime-panel__timeline .bbpa-realtime-timeline {
+    max-height: 420px;
   }
 }
