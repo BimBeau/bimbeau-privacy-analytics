@@ -306,7 +306,8 @@ const ReportDataView = ( {
 	// elements, matches( item, value ) } ] applied in the browser, with `searchInBrowser` lists only.
 	filterFields = [],
 	// Summary card (dashboard): the first rows only, without search, filters, view options, export
-	// nor pagination, and a `viewAllLabel` link to the full report at `viewAllHref`.
+	// nor pagination, and a short "View all" link to the full report at `viewAllHref`, named
+	// `viewAllLabel` for assistive technologies ("See all pages").
 	viewAllHref = '',
 	viewAllLabel = '',
 } ) => {
@@ -1022,12 +1023,13 @@ const ReportDataView = ( {
 						<Button
 							variant="link"
 							href={ viewAllHref }
+							aria-label={ viewAllLabel || undefined }
 							icon={ arrowRight }
 							iconPosition="right"
 							iconSize={ 16 }
 							className="bbpa-dataviews-header__link"
 						>
-							{ viewAllLabel }
+							{ __( 'View all', 'bimbeau-privacy-analytics' ) }
 						</Button>
 					) : null
 				}
