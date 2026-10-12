@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.73.7
+Stable tag: 8.73.8
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.73.7 =
-* [Fix] The period picker uses the blue accent again for the selected days, the range, the active preset and the Apply button.
+= 8.73.8 =
+* [Fix] Real-time: a long current page address no longer runs over the next columns of the visits list (it ends with an ellipsis), and the light sweep on the current page is back.
