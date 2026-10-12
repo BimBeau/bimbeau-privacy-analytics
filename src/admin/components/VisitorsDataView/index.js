@@ -262,7 +262,7 @@ export const getVisitorFields = ( {
 				getValue: ( { item } ) => item.entry_page || '',
 				render: ( { item } ) =>
 					item.entry_page ? (
-						<code>{ item.entry_page }</code>
+						<code title={ item.entry_page }>{ item.entry_page }</code>
 					) : (
 						maybeUnavailable( UNKNOWN_LABEL )
 					),

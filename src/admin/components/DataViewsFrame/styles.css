@@ -196,3 +196,21 @@
   opacity: 1;
   cursor: default;
 }
+
+/*
+ * DataViews puts each cell in a flex row capped at 80ch. A renderer that wraps its text in an element
+ * makes it a flex item that keeps the width of its text by default, so a long address ran over the
+ * next columns. Cell children may shrink (zero specificity: elements that set their own minimum width,
+ * like the change column, keep it), and page and address cells end with an ellipsis.
+ */
+:where(.dataviews-view-table tbody .dataviews-view-table__cell-content-wrapper) > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.dataviews-view-table tbody .dataviews-view-table__cell-content-wrapper > :is(code, .bbpa-realtime-current-page-cell) {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
