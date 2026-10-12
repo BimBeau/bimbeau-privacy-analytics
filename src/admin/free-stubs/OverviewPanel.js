@@ -16,6 +16,10 @@ import ReportTableCard from '../widgets/ReportTableCard';
 import TimeseriesChart from '../widgets/TimeseriesChart';
 import ReferrerLabel from '../components/ReferrerLabel';
 import { isPanelEnabled } from '../constants';
+import { getChannelFilterField, getPageListFilterFields } from '../lib/listFilters';
+
+const TOP_PAGES_FILTER_FIELDS = getPageListFilterFields( { withChannel: true } );
+const REFERRERS_FILTER_FIELDS = [ getChannelFilterField() ];
 
 const OverviewPanel = ( { rangeSelection } ) => {
 	const range = useMemo(
@@ -52,6 +56,7 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						showOpenButton={ false }
 						showMetricTrend
 						inlineMetricChange
+						filterFields={ TOP_PAGES_FILTER_FIELDS }
 					/>
 				) : null }
 				{ isReferrersEnabled ? (
@@ -70,6 +75,7 @@ const OverviewPanel = ( { rangeSelection } ) => {
 						metricLabel={ __( 'Visits', 'bimbeau-privacy-analytics' ) }
 						showMetricTrend
 						inlineMetricChange
+						filterFields={ REFERRERS_FILTER_FIELDS }
 					/>
 				) : null }
 				<BpaCard title={ __( 'Hourly heatmap global', 'bimbeau-privacy-analytics' ) }>

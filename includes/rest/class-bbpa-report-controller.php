@@ -144,6 +144,9 @@ class BBPA_Report_Controller {
                             'default' => true,
                             'sanitize_callback' => 'rest_sanitize_boolean',
                         ],
+                        // Optional list filters: channel key and content type.
+                        'source_category' => $this->get_channel_filter_arg(),
+                        'post_type' => $this->get_post_type_filter_arg(),
                     ]
                 ),
             ]
@@ -202,6 +205,8 @@ class BBPA_Report_Controller {
                             'default' => false,
                             'sanitize_callback' => 'rest_sanitize_boolean',
                         ],
+                        // Optional list filter: channel key, as in the Referring sites list.
+                        'source_category' => $this->get_channel_filter_arg(),
                     ]
                 ),
             ]
@@ -295,7 +300,11 @@ class BBPA_Report_Controller {
                 },
                 'args' => array_merge(
                     $this->get_date_range_args(),
-                    $this->get_pagination_args('entries')
+                    $this->get_pagination_args('entries'),
+                    [
+                        // Optional list filter: content type.
+                        'post_type' => $this->get_post_type_filter_arg(),
+                    ]
                 ),
             ]
         );
@@ -311,7 +320,11 @@ class BBPA_Report_Controller {
                 },
                 'args' => array_merge(
                     $this->get_date_range_args(),
-                    $this->get_pagination_args('exits')
+                    $this->get_pagination_args('exits'),
+                    [
+                        // Optional list filter: content type.
+                        'post_type' => $this->get_post_type_filter_arg(),
+                    ]
                 ),
             ]
         );
@@ -455,7 +468,37 @@ class BBPA_Report_Controller {
      */
     public function get_top_pages(WP_REST_Request $request): WP_REST_Response {
         $table = $this->get_allowed_table('daily');
-        $response = $this->build_list_response($request, $table, 'page_path', 'top-pages');
+        $channel_sql = '';
+        $channel_args = [];
+        $report_filters = [];
+        $channel_key = $this->get_channel_filter_key($request);
+        if ($channel_key !== '') {
+            // Page views by channel are only stored in the source category aggregate; views of
+            // ranges recorded before that table existed are not listed under a channel.
+            $table = $this->get_allowed_table('daily_source_category');
+            $channel_values = array_merge([$channel_key], self::VISITORS_CHANNEL_FILTERS[$channel_key]);
+            $channel_sql = ' AND ' . $this->resolve_source_category_sql_expression(true, true)
+                . ' IN (' . implode(', ', array_fill(0, count($channel_values), '%s')) . ')';
+            $channel_args = $channel_values;
+            $report_filters['sourceCategory'] = $channel_key;
+        }
+        $post_type = $this->get_post_type_filter_key($request);
+        if ($post_type !== '') {
+            $report_filters['postType'] = $post_type;
+        }
+
+        $response = $this->build_list_response(
+            $request,
+            $table,
+            'page_path',
+            'top-pages',
+            'hits',
+            [],
+            'hits',
+            $channel_sql,
+            $channel_args,
+            $report_filters
+        );
         $payload = $response->get_data();
 
         // Raw stored path variants of the returned rows travel with the cached payload for the
@@ -1071,13 +1114,19 @@ class BBPA_Report_Controller {
         $page_path = $this->get_page_path_filter($request);
 
         // The cache is read before the source-table detection queries run.
-        // Only the opt-in adds a key part, so the cache keys of existing requests do not change.
+        // Only the opt-in and the channel filter add key parts, so the cache keys of existing requests
+        // do not change.
+        $cache_extra = rest_sanitize_boolean($request->get_param('count_visits')) ? ['countVisits' => true] : [];
+        $channel_key = $this->get_channel_filter_key($request);
+        if ($channel_key !== '') {
+            $cache_extra['sourceCategory'] = $channel_key;
+        }
         $cache_key = $this->get_source_report_cache_key(
             'referrers',
             $request,
             $range,
             $page_path,
-            rest_sanitize_boolean($request->get_param('count_visits')) ? ['countVisits' => true] : []
+            $cache_extra
         );
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
@@ -1240,7 +1289,8 @@ class BBPA_Report_Controller {
             ],
             'entries',
             $frontend_only_sql,
-            $frontend_only_args
+            $frontend_only_args,
+            $this->get_page_report_filters($request)
         );
     }
 
@@ -1264,8 +1314,20 @@ class BBPA_Report_Controller {
             ],
             'exits',
             $frontend_only_sql,
-            $frontend_only_args
+            $frontend_only_args,
+            $this->get_page_report_filters($request)
         );
+    }
+
+    /**
+     * Filters of the entry and exit page lists applied after the SQL query: the content type.
+     *
+     * @return array<string, string> `postType` when the request filters by a viewable post type.
+     */
+    private function get_page_report_filters(WP_REST_Request $request): array {
+        $post_type = $this->get_post_type_filter_key($request);
+
+        return $post_type !== '' ? ['postType' => $post_type] : [];
     }
 
 
@@ -1718,6 +1780,44 @@ class BBPA_Report_Controller {
      */
     protected function get_date_range_args(): array {
         return BBPA_REST_Query_Helpers::get_date_range_args();
+    }
+
+    /**
+     * Optional `source_category` list filter arg: channel key, as in the Visitors list.
+     */
+    private function get_channel_filter_arg(): array {
+        return [
+            'type' => 'string',
+            'required' => false,
+            'enum' => array_keys(self::VISITORS_CHANNEL_FILTERS),
+            'validate_callback' => 'rest_validate_request_arg',
+            'sanitize_callback' => 'sanitize_key',
+        ];
+    }
+
+    /**
+     * Optional `post_type` list filter arg: post type name (Content type filter of the page lists).
+     */
+    private function get_post_type_filter_arg(): array {
+        return [
+            'type' => 'string',
+            'required' => false,
+            'pattern' => '^[A-Za-z0-9_-]{1,20}$',
+            'validate_callback' => 'rest_validate_request_arg',
+            'sanitize_callback' => 'sanitize_key',
+        ];
+    }
+
+    /**
+     * Post type of the optional `post_type` list filter, or '' when it names no viewable post type.
+     */
+    private function get_post_type_filter_key(WP_REST_Request $request): string {
+        $post_type = sanitize_key((string) $request->get_param('post_type'));
+        if ($post_type === '' || !post_type_exists($post_type) || !is_post_type_viewable($post_type)) {
+            return '';
+        }
+
+        return $post_type;
     }
 
     /**
@@ -2318,6 +2418,10 @@ class BBPA_Report_Controller {
 
     /**
      * Build paginated list response for a given table/label column.
+     *
+     * @param array<string, string> $report_filters List filters of page-path reports: `postType` (content
+     *                                              type, applied to the resolved posts) and `sourceCategory`
+     *                                              (channel key, already in $extra_where_sql; cache key only).
      */
     private function build_list_response(
         WP_REST_Request $request,
@@ -2328,7 +2432,8 @@ class BBPA_Report_Controller {
         array $allowed_orderby = [],
         string $default_orderby = 'hits',
         string $extra_where_sql = '',
-        array $extra_where_args = []
+        array $extra_where_args = [],
+        array $report_filters = []
     ): WP_REST_Response {
         global $wpdb;
 
@@ -2365,20 +2470,23 @@ class BBPA_Report_Controller {
             $allowed_orderby,
             $default_orderby
         );
-        $cache_key = $this->get_cache_key(
-            $cache_id,
-            [
-                'range' => $range,
-                'pagination' => $pagination,
-                'sorting' => $sorting,
-                'search' => $search_term,
-                'excludeZero' => $exclude_zero,
-                'pagePath' => $page_path,
-                'includeViewsSeries' => $cache_id === 'top-pages',
-                'sortVersion' => $cache_id === 'top-pages' ? 5 : 1,
-                'withShare' => in_array($cache_id, self::PAGE_PATH_SHARE_REPORTS, true),
-            ]
-        );
+        $cache_params = [
+            'range' => $range,
+            'pagination' => $pagination,
+            'sorting' => $sorting,
+            'search' => $search_term,
+            'excludeZero' => $exclude_zero,
+            'pagePath' => $page_path,
+            'includeViewsSeries' => $cache_id === 'top-pages',
+            'sortVersion' => $cache_id === 'top-pages' ? 5 : 1,
+            'withShare' => in_array($cache_id, self::PAGE_PATH_SHARE_REPORTS, true),
+        ];
+        if ($report_filters !== []) {
+            // Only filtered requests get the extra key part: unfiltered cache keys do not change.
+            ksort($report_filters);
+            $cache_params['listFilters'] = $report_filters;
+        }
+        $cache_key = $this->get_cache_key($cache_id, $cache_params);
         $cached = $this->get_cached_payload($cache_key);
         if ($cached !== null) {
             return new WP_REST_Response($cached, 200);
@@ -2419,7 +2527,10 @@ class BBPA_Report_Controller {
                     $pagination,
                     $range,
                     $search_term,
-                    $all_rows_cover_range
+                    $all_rows_cover_range,
+                    (string) ($report_filters['postType'] ?? ''),
+                    $extra_where_sql,
+                    $extra_where_args
                 );
             } finally {
                 $this->page_title_lookups_remaining = null;
@@ -2536,6 +2647,9 @@ class BBPA_Report_Controller {
      *
      * @param array<int, array<string, mixed>> $all_rows Grouped rows (`label`, `metric`) of the range.
      * @param bool $all_rows_cover_range Whether $all_rows lists every stored path of the range.
+     * @param string $post_type Content type filter: only rows resolving to a post of this type are kept.
+     * @param string $extra_where_sql Extra WHERE clause of the rows (channel), also applied to the views series.
+     * @param array<int, string> $extra_where_args Placeholder values of $extra_where_sql.
      * @return array{items: array<int, array<string, mixed>>, total: int, variants: array<int, string>}
      */
     private function build_page_path_report_rows(
@@ -2547,7 +2661,10 @@ class BBPA_Report_Controller {
         array $pagination,
         array $range,
         string $search_term,
-        bool $all_rows_cover_range
+        bool $all_rows_cover_range,
+        string $post_type = '',
+        string $extra_where_sql = '',
+        array $extra_where_args = []
     ): array {
         $items = array_map(
             static function (array $row) use ($metric_column): array {
@@ -2591,6 +2708,10 @@ class BBPA_Report_Controller {
             $items = $this->exclude_not_found_page_path_items($items, $range, $metric_column);
         }
 
+        if ($post_type !== '') {
+            $items = $this->filter_page_path_items_by_post_type($items, $post_type, $metric_column);
+        }
+
         $total_items = count($items);
         $items = $this->sort_and_slice_page_path_items(
             $items,
@@ -2616,7 +2737,7 @@ class BBPA_Report_Controller {
         $variants = [];
         if ($cache_id === 'top-pages') {
             $variants = $this->get_page_path_variants_for_items($items, $table, $range, $all_rows_cover_range ? $all_rows : null);
-            $items = $this->append_top_pages_views_series($items, $range, $variants);
+            $items = $this->append_top_pages_views_series($items, $range, $variants, $table, $extra_where_sql, $extra_where_args);
         }
 
         return [
@@ -2624,6 +2745,34 @@ class BBPA_Report_Controller {
             'total' => $total_items,
             'variants' => $variants,
         ];
+    }
+
+    /**
+     * Keep the page-path rows whose WordPress post has the given post type (Content type filter).
+     *
+     * Posts are resolved busiest first, so the lookup limit keeps the busiest rows; paths without a
+     * post (archives, the blog home) and rows beyond the lookup limit are left out.
+     */
+    private function filter_page_path_items_by_post_type(array $items, string $post_type, string $metric_column): array {
+        $candidates = [];
+        foreach ($items as $item) {
+            $candidates[] = [
+                'path' => (string) ($item['_title_path'] ?? ($item['label'] ?? '')),
+                'metric' => (int) ($item[$metric_column] ?? 0),
+            ];
+        }
+        $this->prime_page_titles($candidates);
+
+        return array_values(
+            array_filter(
+                $items,
+                function (array $item) use ($post_type): bool {
+                    $post_id = (int) ($this->resolve_post_id_from_path((string) ($item['_title_path'] ?? ($item['label'] ?? ''))) ?? 0);
+
+                    return $post_id > 0 && get_post_type($post_id) === $post_type;
+                }
+            )
+        );
     }
 
     /**
@@ -2889,7 +3038,14 @@ class BBPA_Report_Controller {
      *
      * @param array<int, string> $page_path_variants Stored page_path values of the returned rows.
      */
-    private function append_top_pages_views_series(array $items, array $range, array $page_path_variants = []): array {
+    private function append_top_pages_views_series(
+        array $items,
+        array $range,
+        array $page_path_variants = [],
+        string $table = '',
+        string $extra_where_sql = '',
+        array $extra_where_args = []
+    ): array {
         global $wpdb;
 
         if ($items === []) {
@@ -2918,7 +3074,10 @@ class BBPA_Report_Controller {
             );
         }
 
-        $table = $this->get_allowed_table('daily');
+        // The series follow the rows: the source category table and channel clause of a channel filter.
+        if ($table === '') {
+            $table = $this->get_allowed_table('daily');
+        }
         $series_by_label = [];
         foreach (array_keys($labels) as $label) {
             $series_by_label[$label] = $empty_series;
@@ -2930,10 +3089,10 @@ class BBPA_Report_Controller {
             $query = $wpdb->prepare(
                 "SELECT date_bucket, page_path, SUM(hits) AS hits
                 FROM {$table}
-                WHERE date_bucket BETWEEN %s AND %s
+                WHERE date_bucket BETWEEN %s AND %s{$extra_where_sql}
                     AND page_path IN (" . $this->build_string_placeholders($page_path_variants) . ")
                 GROUP BY date_bucket, page_path",
-                array_merge([$range['start'], $range['end']], array_values($page_path_variants))
+                array_merge([$range['start'], $range['end']], $extra_where_args, array_values($page_path_variants))
             );
             $rows = $wpdb->get_results($query, ARRAY_A) ?: [];
         }
@@ -3338,6 +3497,19 @@ class BBPA_Report_Controller {
         if ($search_term !== '') {
             $search_sql = ' AND referrer_domain LIKE %s';
             $search_args[] = '%' . $wpdb->esc_like($search_term) . '%';
+        }
+
+        // The channel filter shares the search placeholders, appended to both data sources. Tables
+        // without a stored channel classify the referrer domain, as the Referring sites list does.
+        $channel_key = $this->get_channel_filter_key($request);
+        if ($channel_key !== '') {
+            $source_category_sql = $this->resolve_source_category_sql_expression(
+                $is_aggregate_table,
+                $is_aggregate_table && $this->table_has_column($table, 'source_category')
+            );
+            $channel_values = array_merge([$channel_key], self::VISITORS_CHANNEL_FILTERS[$channel_key]);
+            $search_sql .= " AND {$source_category_sql} IN (" . implode(', ', array_fill(0, count($channel_values), '%s')) . ')';
+            $search_args = array_merge($search_args, $channel_values);
         }
 
         if ($is_aggregate_table) {

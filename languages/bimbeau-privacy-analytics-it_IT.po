@@ -785,10 +785,6 @@ msgstr "Nessun dettaglio orario disponibile per questa pagina."
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Mappa termica oraria globale per giorno e ora"
 
-#: src/admin/components/ListDataViews/index.js
-msgid "No filter is available for this list"
-msgstr "Nessun filtro disponibile per questo elenco"
-
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Nuovo"
@@ -1410,6 +1406,38 @@ msgstr "Assistenti IA"
 msgid "Other"
 msgstr "Altro"
 
+#: src/admin/lib/continents.js
+msgid "Africa"
+msgstr "Africa"
+
+#: src/admin/lib/continents.js
+msgid "North America"
+msgstr "America del Nord"
+
+#: src/admin/lib/continents.js
+msgid "South America"
+msgstr "America del Sud"
+
+#: src/admin/lib/continents.js
+msgid "Antarctica"
+msgstr "Antartide"
+
+#: src/admin/lib/continents.js
+msgid "Asia"
+msgstr "Asia"
+
+#: src/admin/lib/continents.js
+msgid "Europe"
+msgstr "Europa"
+
+#: src/admin/lib/continents.js
+msgid "Oceania"
+msgstr "Oceania"
+
+#: src/admin/lib/continents.js
+msgid "Continent"
+msgstr "Continente"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Columns"
 msgstr "Colonne"
@@ -1727,6 +1755,16 @@ msgstr "Le mappe termiche orarie non sono disponibili perché manca la tabella d
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Le mappe termiche orarie richiedono dati di aggregazione oraria delle pagine per l'origine selezionata."
 
+#: src/admin/lib/listFilters.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr "Canale"
+
+#: src/admin/lib/listFilters.js src/admin/panels/TopPagesListPanel.js
+msgid "Content type"
+msgstr "Tipo di contenuto"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Posizione approssimativa"
@@ -1761,11 +1799,6 @@ msgstr "Pagina iniziale"
 #: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Pagina sconosciuta"
-
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr "Canale"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -2600,10 +2633,6 @@ msgstr "Contenuti visti"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
 msgstr "Tipi di contenuto"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Content type"
-msgstr "Tipo di contenuto"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "No content types available."

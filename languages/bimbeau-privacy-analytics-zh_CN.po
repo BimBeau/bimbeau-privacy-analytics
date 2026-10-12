@@ -780,10 +780,6 @@ msgstr "此页面没有可用的小时详情。"
 msgid "Hourly activity heatmap by day and hour"
 msgstr "按日期和小时显示的全局小时热力图"
 
-#: src/admin/components/ListDataViews/index.js
-msgid "No filter is available for this list"
-msgstr "此列表没有可用的筛选条件"
-
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "新增"
@@ -1405,6 +1401,38 @@ msgstr "AI 助手"
 msgid "Other"
 msgstr "其他"
 
+#: src/admin/lib/continents.js
+msgid "Africa"
+msgstr "非洲"
+
+#: src/admin/lib/continents.js
+msgid "North America"
+msgstr "北美洲"
+
+#: src/admin/lib/continents.js
+msgid "South America"
+msgstr "南美洲"
+
+#: src/admin/lib/continents.js
+msgid "Antarctica"
+msgstr "南极洲"
+
+#: src/admin/lib/continents.js
+msgid "Asia"
+msgstr "亚洲"
+
+#: src/admin/lib/continents.js
+msgid "Europe"
+msgstr "欧洲"
+
+#: src/admin/lib/continents.js
+msgid "Oceania"
+msgstr "大洋洲"
+
+#: src/admin/lib/continents.js
+msgid "Continent"
+msgstr "大洲"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Columns"
 msgstr "列"
@@ -1719,6 +1747,16 @@ msgstr "由于缺少小时聚合表，小时热力图不可用。"
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "小时热力图需要所选来源的页面小时聚合数据。"
 
+#: src/admin/lib/listFilters.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr "渠道"
+
+#: src/admin/lib/listFilters.js src/admin/panels/TopPagesListPanel.js
+msgid "Content type"
+msgstr "内容类型"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "大致位置"
@@ -1751,11 +1789,6 @@ msgstr "首页"
 #: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "未知页面"
-
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr "渠道"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -2588,10 +2621,6 @@ msgstr "浏览的内容"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
-msgstr "内容类型"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Content type"
 msgstr "内容类型"
 
 #: src/admin/panels/TopPagesListPanel.js

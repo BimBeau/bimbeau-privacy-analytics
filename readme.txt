@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.77.2
+Stable tag: 8.78.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.77.2 =
-* [Fix] Real-time: the recent activity feed is paginated instead of scrolled, each page filling the height of the map, so the panel no longer shows several scrollbars.
-* [Fix] Real-time: removed the double vertical line between the map and the recent activity feed.
+= 8.78.0 =
+* [Feature] The page lists can be filtered: Top pages by channel and content type, Entry pages and Exit pages by content type.
+* [Feature] The country lists can be filtered by continent, and the dashboard referrers card by channel.
+* [Change] A list with nothing to filter no longer shows a dimmed filter button.

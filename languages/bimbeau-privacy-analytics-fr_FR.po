@@ -785,10 +785,6 @@ msgstr "Aucun détail horaire disponible pour cette page."
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Carte de chaleur de l’activité horaire par jour et par heure"
 
-#: src/admin/components/ListDataViews/index.js
-msgid "No filter is available for this list"
-msgstr "Aucun filtre disponible pour cette liste"
-
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Nouveau"
@@ -1410,6 +1406,38 @@ msgstr "Assistants IA"
 msgid "Other"
 msgstr "Autre"
 
+#: src/admin/lib/continents.js
+msgid "Africa"
+msgstr "Afrique"
+
+#: src/admin/lib/continents.js
+msgid "North America"
+msgstr "Amérique du Nord"
+
+#: src/admin/lib/continents.js
+msgid "South America"
+msgstr "Amérique du Sud"
+
+#: src/admin/lib/continents.js
+msgid "Antarctica"
+msgstr "Antarctique"
+
+#: src/admin/lib/continents.js
+msgid "Asia"
+msgstr "Asie"
+
+#: src/admin/lib/continents.js
+msgid "Europe"
+msgstr "Europe"
+
+#: src/admin/lib/continents.js
+msgid "Oceania"
+msgstr "Océanie"
+
+#: src/admin/lib/continents.js
+msgid "Continent"
+msgstr "Continent"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Columns"
 msgstr "Colonnes"
@@ -1727,6 +1755,16 @@ msgstr "Les cartes de chaleur horaires sont indisponibles car la table d’agré
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Les cartes de chaleur horaires nécessitent des données d’agrégation horaire des pages pour la source sélectionnée."
 
+#: src/admin/lib/listFilters.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr "Canal"
+
+#: src/admin/lib/listFilters.js src/admin/panels/TopPagesListPanel.js
+msgid "Content type"
+msgstr "Type de contenu"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Position approximative"
@@ -1761,11 +1799,6 @@ msgstr "Page d’accueil"
 #: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Page inconnue"
-
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr "Canal"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -2600,10 +2633,6 @@ msgstr "Contenus vus"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
 msgstr "Types de contenu"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Content type"
-msgstr "Type de contenu"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "No content types available."

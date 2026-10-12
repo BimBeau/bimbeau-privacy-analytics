@@ -785,10 +785,6 @@ msgstr "Δεν υπάρχουν διαθέσιμες ωριαίες λεπτομ
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Καθολικός ωριαίος heatmap ανά ημέρα και ώρα"
 
-#: src/admin/components/ListDataViews/index.js
-msgid "No filter is available for this list"
-msgstr "Δεν υπάρχει διαθέσιμο φίλτρο για αυτήν τη λίστα"
-
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Νέο"
@@ -1410,6 +1406,38 @@ msgstr "Βοηθοί ΤΝ"
 msgid "Other"
 msgstr "Άλλο"
 
+#: src/admin/lib/continents.js
+msgid "Africa"
+msgstr "Αφρική"
+
+#: src/admin/lib/continents.js
+msgid "North America"
+msgstr "Βόρεια Αμερική"
+
+#: src/admin/lib/continents.js
+msgid "South America"
+msgstr "Νότια Αμερική"
+
+#: src/admin/lib/continents.js
+msgid "Antarctica"
+msgstr "Ανταρκτική"
+
+#: src/admin/lib/continents.js
+msgid "Asia"
+msgstr "Ασία"
+
+#: src/admin/lib/continents.js
+msgid "Europe"
+msgstr "Ευρώπη"
+
+#: src/admin/lib/continents.js
+msgid "Oceania"
+msgstr "Ωκεανία"
+
+#: src/admin/lib/continents.js
+msgid "Continent"
+msgstr "Ήπειρος"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Columns"
 msgstr "Στήλες"
@@ -1727,6 +1755,16 @@ msgstr "Οι ωριαίοι heatmaps δεν είναι διαθέσιμοι επ
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Οι ωριαίοι heatmaps απαιτούν δεδομένα ωριαίας συγκέντρωσης σελίδων για την επιλεγμένη πηγή."
 
+#: src/admin/lib/listFilters.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr "Κανάλι"
+
+#: src/admin/lib/listFilters.js src/admin/panels/TopPagesListPanel.js
+msgid "Content type"
+msgstr "Τύπος περιεχομένου"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Κατά προσέγγιση θέση"
@@ -1761,11 +1799,6 @@ msgstr "Αρχική σελίδα"
 #: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Άγνωστη σελίδα"
-
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr "Κανάλι"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -2600,10 +2633,6 @@ msgstr "Περιεχόμενα που προβλήθηκαν"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
 msgstr "Τύποι περιεχομένου"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Content type"
-msgstr "Τύπος περιεχομένου"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "No content types available."

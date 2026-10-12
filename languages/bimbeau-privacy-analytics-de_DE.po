@@ -785,10 +785,6 @@ msgstr "Für diese Seite sind keine stündlichen Details verfügbar."
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Globale stündliche Heatmap nach Tag und Stunde"
 
-#: src/admin/components/ListDataViews/index.js
-msgid "No filter is available for this list"
-msgstr "Für diese Liste ist kein Filter verfügbar"
-
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Neu"
@@ -1410,6 +1406,38 @@ msgstr "KI-Assistenten"
 msgid "Other"
 msgstr "Sonstiges"
 
+#: src/admin/lib/continents.js
+msgid "Africa"
+msgstr "Afrika"
+
+#: src/admin/lib/continents.js
+msgid "North America"
+msgstr "Nordamerika"
+
+#: src/admin/lib/continents.js
+msgid "South America"
+msgstr "Südamerika"
+
+#: src/admin/lib/continents.js
+msgid "Antarctica"
+msgstr "Antarktis"
+
+#: src/admin/lib/continents.js
+msgid "Asia"
+msgstr "Asien"
+
+#: src/admin/lib/continents.js
+msgid "Europe"
+msgstr "Europa"
+
+#: src/admin/lib/continents.js
+msgid "Oceania"
+msgstr "Ozeanien"
+
+#: src/admin/lib/continents.js
+msgid "Continent"
+msgstr "Kontinent"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Columns"
 msgstr "Spalten"
@@ -1727,6 +1755,16 @@ msgstr "Stündliche Heatmaps sind nicht verfügbar, weil die stündliche Aggrega
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Stündliche Heatmaps erfordern stündliche Seitenaggregationsdaten für die ausgewählte Quelle."
 
+#: src/admin/lib/listFilters.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr "Kanal"
+
+#: src/admin/lib/listFilters.js src/admin/panels/TopPagesListPanel.js
+msgid "Content type"
+msgstr "Inhaltstyp"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Ungefähre Position"
@@ -1761,11 +1799,6 @@ msgstr "Startseite"
 #: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Unbekannte Seite"
-
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr "Kanal"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -2600,10 +2633,6 @@ msgstr "Aufgerufene Inhalte"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
 msgstr "Inhaltstypen"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Content type"
-msgstr "Inhaltstyp"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "No content types available."

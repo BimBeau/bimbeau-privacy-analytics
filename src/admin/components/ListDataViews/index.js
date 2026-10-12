@@ -1,7 +1,5 @@
 import { useCallback, useMemo, useState } from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews';
-import { __ } from '@wordpress/i18n';
-import { Icon, funnel } from '@wordpress/icons';
 
 import useSharedListDensity from '../../hooks/useSharedListDensity';
 import {
@@ -150,26 +148,6 @@ export const hasFilterableField = ( fields ) =>
 				typeof field.getElements === 'function' )
 	);
 
-// The filter button of a list without filters, disabled, so that every list has the same toolbar.
-// Same classes as the DataViews filter button; the label is its tooltip.
-const NoFiltersButton = () => {
-	const label = __( 'No filter is available for this list', 'bimbeau-privacy-analytics' );
-
-	return (
-		<div className="dataviews-filters__container-visibility-toggle">
-			<button
-				type="button"
-				className="components-button dataviews-filters__visibility-toggle is-compact has-icon"
-				aria-label={ label }
-				title={ label }
-				aria-disabled="true"
-			>
-				<Icon icon={ funnel } />
-			</button>
-		</div>
-	);
-};
-
 const isSameSort = ( first, second ) =>
 	( first?.field || '' ) === ( second?.field || '' ) &&
 	( first?.direction || '' ) === ( second?.direction || '' );
@@ -183,7 +161,7 @@ const isSameSort = ( first, second ) =>
  * Lists without `columnsStorageId` share one density. Same props as DataViews.
  *
  * Every list has the same toolbar: the search (unless `search` is false), the filter button
- * (disabled when no field can be filtered), the view options and the `header` controls. With
+ * (only when a field can be filtered), the view options and the `header` controls. With
  * `title`, the list heads its card: the title starts that row, so the card needs no header of its
  * own. `notice` (an error) is shown under that row.
  *
@@ -301,11 +279,7 @@ const ListDataViews = ( {
 				) : null }
 				<div className="bbpa-dataviews-header__tools">
 					{ search ? <DataViews.Search label={ searchLabel } /> : null }
-					{ hasFilterableField( fields ) ? (
-						<DataViews.FiltersToggle />
-					) : (
-						<NoFiltersButton />
-					) }
+					{ hasFilterableField( fields ) ? <DataViews.FiltersToggle /> : null }
 					<DataViews.ViewConfig />
 					{ header }
 				</div>

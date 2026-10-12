@@ -14,7 +14,10 @@ import {
 	getCountryLabel,
 	isUnknownCountryCode,
 } from '../lib/countryNames';
+import { getContinentFilterField } from '../lib/continents';
 import { formatNumber } from '../lib/formatters';
+
+const COUNTRIES_FILTER_FIELDS = [ getContinentFilterField() ];
 
 const GeoCountriesPanel = ( { range } ) => {
 	const { data, isLoading, error } = useAdminEndpoint(
@@ -166,6 +169,7 @@ const GeoCountriesPanel = ( { range } ) => {
 					metricFallbackBadgeLabel={ __( 'Legacy visits', 'bimbeau-privacy-analytics' ) }
 					exportReportKey="geo-countries"
 					extraFields={ [ shareField ] }
+					filterFields={ COUNTRIES_FILTER_FIELDS }
 				/>
 		</div>
 	);

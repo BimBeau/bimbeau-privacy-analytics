@@ -2849,6 +2849,8 @@ function bbpa_get_post_types_for_admin(): array
         $formatted[] = [
             'key' => sanitize_key((string) $post_type->name),
             'label' => sanitize_text_field((string) $post_type->labels->singular_name),
+            // Whether the post type has public pages (Content type filter of the page lists).
+            'viewable' => is_post_type_viewable($post_type),
         ];
     }
 

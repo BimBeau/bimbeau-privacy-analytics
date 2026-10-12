@@ -780,10 +780,6 @@ msgstr "Bu sayfa için saatlik ayrıntı mevcut değil."
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Gün ve saate göre genel saatlik ısı haritası"
 
-#: src/admin/components/ListDataViews/index.js
-msgid "No filter is available for this list"
-msgstr "Bu liste için kullanılabilir filtre yok"
-
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "Yeni"
@@ -1405,6 +1401,38 @@ msgstr "Yapay zekâ asistanları"
 msgid "Other"
 msgstr "Diğer"
 
+#: src/admin/lib/continents.js
+msgid "Africa"
+msgstr "Afrika"
+
+#: src/admin/lib/continents.js
+msgid "North America"
+msgstr "Kuzey Amerika"
+
+#: src/admin/lib/continents.js
+msgid "South America"
+msgstr "Güney Amerika"
+
+#: src/admin/lib/continents.js
+msgid "Antarctica"
+msgstr "Antarktika"
+
+#: src/admin/lib/continents.js
+msgid "Asia"
+msgstr "Asya"
+
+#: src/admin/lib/continents.js
+msgid "Europe"
+msgstr "Avrupa"
+
+#: src/admin/lib/continents.js
+msgid "Oceania"
+msgstr "Okyanusya"
+
+#: src/admin/lib/continents.js
+msgid "Continent"
+msgstr "Kıta"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Columns"
 msgstr "Sütunlar"
@@ -1719,6 +1747,16 @@ msgstr "Saatlik toplama tablosu eksik olduğu için saatlik ısı haritaları ku
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Saatlik ısı haritaları seçilen kaynak için saatlik sayfa toplama verisi gerektirir."
 
+#: src/admin/lib/listFilters.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr "Kanal"
+
+#: src/admin/lib/listFilters.js src/admin/panels/TopPagesListPanel.js
+msgid "Content type"
+msgstr "İçerik türü"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Yaklaşık konum"
@@ -1751,11 +1789,6 @@ msgstr "Ana sayfa"
 #: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Bilinmeyen sayfa"
-
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr "Kanal"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -2589,10 +2622,6 @@ msgstr "Görüntülenen içerik"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
 msgstr "İçerik türleri"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Content type"
-msgstr "İçerik türü"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "No content types available."

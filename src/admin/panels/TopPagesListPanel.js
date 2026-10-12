@@ -6,11 +6,15 @@ import { ADMIN_CONFIG } from '../constants';
 import { isAdvancedStatsEnabled } from '../lib/adminConstants';
 import { getRangeFromSelection } from '../lib/date';
 import { formatClockDurationMetricValue, formatNumber } from '../lib/formatters';
+import { getPageListFilterFields } from '../lib/listFilters';
 import BpaCard from '../components/BpaCard';
 import UserAvatar from '../components/UserAvatar';
 import ShareBar from '../components/ShareBar';
 import ReportTableCard from '../widgets/ReportTableCard';
 import TimeseriesChart from '../widgets/TimeseriesChart';
+
+const TOP_PAGES_FILTER_FIELDS = getPageListFilterFields( { withChannel: true } );
+const ENTRY_EXIT_PAGES_FILTER_FIELDS = getPageListFilterFields();
 
 const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 	<ReportTableCard
@@ -30,6 +34,7 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		metricSeriesKey="views_series"
 		extraFields={ [ SHARE_FIELD ] }
 		exportReportKey="top-pages"
+		filterFields={ TOP_PAGES_FILTER_FIELDS }
 		requestParams={ {
 			include_avg_time: isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
 				? 1
@@ -86,6 +91,7 @@ const EntryPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		showOpenButton={ false }
 		extraFields={ [ SHARE_FIELD ] }
 		exportReportKey="entry-pages"
+		filterFields={ ENTRY_EXIT_PAGES_FILTER_FIELDS }
 	/>
 );
 
@@ -107,6 +113,7 @@ const ExitPagesPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		getRowHref={ getRowHref }
 		showOpenButton={ false }
 		exportReportKey="exit-pages"
+		filterFields={ ENTRY_EXIT_PAGES_FILTER_FIELDS }
 	/>
 );
 

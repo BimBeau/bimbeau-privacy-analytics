@@ -118,6 +118,22 @@ export const getReportSortParams = ( view, metricKey, extraSortKeys = [] ) => {
 };
 
 /**
+ * Value of a report list filter, when it is set to one of the offered values.
+ *
+ * @param {Object} view        DataViews view.
+ * @param {Object} filterField Item of the `filterFields` prop.
+ * @return {string} Selected value, or ''.
+ */
+const getOfferedFilterValue = ( view, filterField ) => {
+	const value = getViewFilterValue( view, filterField.id );
+
+	return value &&
+		( filterField.elements || [] ).some( ( element ) => element.value === value )
+		? value
+		: '';
+};
+
+/**
  * Request parameters of the server filters of a report list.
  *
  * @param {Object}   view         DataViews view.
@@ -126,16 +142,29 @@ export const getReportSortParams = ( view, metricKey, extraSortKeys = [] ) => {
  */
 export const getReportFilterParams = ( view, filterFields = [] ) =>
 	filterFields.reduce( ( params, filterField ) => {
-		const value = getViewFilterValue( view, filterField.id );
-		if (
-			value &&
-			( filterField.elements || [] ).some( ( element ) => element.value === value )
-		) {
+		const value = getOfferedFilterValue( view, filterField );
+		if ( value && filterField.param ) {
 			params[ filterField.param ] = value;
 		}
 
 		return params;
 	}, {} );
+
+/**
+ * Browser filters of a report list set to an offered value.
+ *
+ * @param {Object}   view         DataViews view.
+ * @param {Object[]} filterFields `filterFields` prop; browser filters have `matches( item, value )`.
+ * @return {Object[]} `{ matches, value }` for each active browser filter.
+ */
+export const getActiveBrowserFilters = ( view, filterFields = [] ) =>
+	filterFields
+		.filter( ( filterField ) => typeof filterField.matches === 'function' )
+		.map( ( filterField ) => ( {
+			matches: filterField.matches,
+			value: getOfferedFilterValue( view, filterField ),
+		} ) )
+		.filter( ( filter ) => filter.value !== '' );
 
 /**
  * Whether a page list shows the address under the page title (View options > URL). Both displays
@@ -268,8 +297,9 @@ const ReportDataView = ( {
 	mediaField = null,
 	// Second line under the label: { label, render( item ) }, the DataViews description field.
 	descriptionField = null,
-	// Filters applied by the server: [ { id, label, elements, param } ]. Each one is a filter-only
-	// field offered from the filter button; its selected value is sent as `param`.
+	// Filters offered from the filter button, each one a filter-only field: [ { id, label, elements,
+	// param } ] applied by the server (the selected value is sent as `param`), or [ { id, label,
+	// elements, matches( item, value ) } ] applied in the browser, with `searchInBrowser` lists only.
 	filterFields = [],
 } ) => {
 	registerDataViewsTranslations();
@@ -341,7 +371,16 @@ const ReportDataView = ( {
 	};
 	const sortsByLabelInBrowser =
 		searchInBrowser && view.sort?.field === LABEL_FIELD;
-	const isBrowserSearch = searchInBrowser && ( search !== '' || sortsByLabelInBrowser );
+	const browserFilters = useMemo(
+		() =>
+			searchInBrowser
+				? getActiveBrowserFilters( { filters: view.filters }, filterFields )
+				: [],
+		[ filterFields, searchInBrowser, view.filters ]
+	);
+	const isBrowserSearch =
+		searchInBrowser &&
+		( search !== '' || sortsByLabelInBrowser || browserFilters.length > 0 );
 	const { data, isLoading, error } = useAdminEndpoint(
 		endpoint,
 		isBrowserSearch
@@ -425,10 +464,12 @@ const ReportDataView = ( {
 			const rawLabel = decodeHtmlEntities( item?.label || '' );
 			return formatLabel ? formatLabel( rawLabel, item ) : rawLabel;
 		};
-		const matches = ( data?.items || [] ).filter( ( item ) =>
-			[ decodeHtmlEntities( item?.label || '' ), getDisplayedLabel( item ) ].some(
-				( value ) => normalizeSearchText( value ).includes( needle )
-			)
+		const matches = ( data?.items || [] ).filter(
+			( item ) =>
+				browserFilters.every( ( filter ) => filter.matches( item, filter.value ) ) &&
+				[ decodeHtmlEntities( item?.label || '' ), getDisplayedLabel( item ) ].some(
+					( value ) => normalizeSearchText( value ).includes( needle )
+				)
 		);
 		if ( ! sortsByLabelInBrowser ) {
 			return matches;
@@ -443,6 +484,7 @@ const ReportDataView = ( {
 				)
 		);
 	}, [
+		browserFilters,
 		data,
 		formatLabel,
 		isBrowserSearch,

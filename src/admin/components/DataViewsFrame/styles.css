@@ -82,15 +82,6 @@
 }
 
 /*
- * Every list has the same toolbar: a list without filters keeps the filter button at its place,
- * dimmed, with a tooltip saying that nothing can be filtered (ListDataViews).
- */
-.bbpa-admin-app .dataviews-filters__visibility-toggle[aria-disabled="true"] {
-  opacity: 0.4;
-  cursor: default;
-}
-
-/*
  * Toolbar icons: a filled "filter" (three bars) and a "view options" icon made of two sliders,
  * instead of the outlined funnel and cog drawn by @wordpress/dataviews, which takes no icon prop.
  * The SVG of the button is hidden and the icon is drawn as a mask in the text color.

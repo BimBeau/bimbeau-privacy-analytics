@@ -785,10 +785,6 @@ msgstr "No hourly details available for this page."
 msgid "Hourly activity heatmap by day and hour"
 msgstr "Hourly activity heatmap by day and hour"
 
-#: src/admin/components/ListDataViews/index.js
-msgid "No filter is available for this list"
-msgstr "No filter is available for this list"
-
 #: src/admin/components/MetricTrend/index.js
 msgid "New"
 msgstr "New"
@@ -1410,6 +1406,38 @@ msgstr "AI Assistants"
 msgid "Other"
 msgstr "Other"
 
+#: src/admin/lib/continents.js
+msgid "Africa"
+msgstr "Africa"
+
+#: src/admin/lib/continents.js
+msgid "North America"
+msgstr "North America"
+
+#: src/admin/lib/continents.js
+msgid "South America"
+msgstr "South America"
+
+#: src/admin/lib/continents.js
+msgid "Antarctica"
+msgstr "Antarctica"
+
+#: src/admin/lib/continents.js
+msgid "Asia"
+msgstr "Asia"
+
+#: src/admin/lib/continents.js
+msgid "Europe"
+msgstr "Europe"
+
+#: src/admin/lib/continents.js
+msgid "Oceania"
+msgstr "Oceania"
+
+#: src/admin/lib/continents.js
+msgid "Continent"
+msgstr "Continent"
+
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Columns"
 msgstr "Columns"
@@ -1727,6 +1755,16 @@ msgstr "Hourly heatmaps are unavailable because the hourly aggregation table is 
 msgid "Hourly heatmaps require hourly page aggregation data for the selected source."
 msgstr "Hourly heatmaps require hourly page aggregation data for the selected source."
 
+#: src/admin/lib/listFilters.js src/admin/panels/AcquisitionPanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/widgets/ReferrerSourcesTableCard/index.js
+msgid "Channel"
+msgstr "Channel"
+
+#: src/admin/lib/listFilters.js src/admin/panels/TopPagesListPanel.js
+msgid "Content type"
+msgstr "Content type"
+
 #: src/admin/lib/locationLabel.js
 msgid "Approximate position"
 msgstr "Approximate position"
@@ -1761,11 +1799,6 @@ msgstr "Home page"
 #: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
 msgid "Unknown page"
 msgstr "Unknown page"
-
-#: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
-#: src/admin/widgets/ReferrerSourcesTableCard/index.js
-msgid "Channel"
-msgstr "Channel"
 
 #: src/admin/panels/AcquisitionPanel.js
 msgid "Traffic share"
@@ -2600,10 +2633,6 @@ msgstr "Content viewed"
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Content types"
 msgstr "Content types"
-
-#: src/admin/panels/TopPagesListPanel.js
-msgid "Content type"
-msgstr "Content type"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "No content types available."
