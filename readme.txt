@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.6
+Stable tag: 8.78.7
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.6 =
-* [Improvement] Dashboard: the Pages card shows the page titles only, one line per page, at the same height as the referrers card. The full Pages report still shows the address under each title.
+= 8.78.7 =
+* [Improvement] Admin menu: the "Upgrade to Pro" entry shows "Pro" as a small blue badge again, without the look of a WordPress update counter.

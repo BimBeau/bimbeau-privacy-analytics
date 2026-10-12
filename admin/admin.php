@@ -35,7 +35,11 @@ function bbpa_add_admin_menu_icon_styles(): void
     $inline_css = $menu_selector
         . '{content:"";-webkit-mask-image:url("' . $icon_mask_data_url . '");mask-image:url("' . $icon_mask_data_url . '");'
         . '-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;'
-        . '-webkit-mask-size:contain;mask-size:contain;background-color:currentColor;display:block;width:20px;height:20px;margin:0 auto;}';
+        . '-webkit-mask-size:contain;mask-size:contain;background-color:currentColor;display:block;width:20px;height:20px;margin:0 auto;}'
+        // Edition badge of the Free upgrade submenu entry (bbpa_get_upgrade_menu_title()).
+        . '#adminmenu .bbpa-upgrade-badge{display:inline-block;box-sizing:border-box;min-width:18px;height:18px;margin-left:2px;'
+        . 'padding:0 7px;border-radius:9px;background:#3858e9;color:#fff;font-size:11px;font-weight:600;line-height:18px;'
+        . 'text-align:center;vertical-align:1px;}';
 
     wp_register_style('bbpa-admin-menu-icon', false, array(), BBPA_VERSION);
     wp_enqueue_style('bbpa-admin-menu-icon');
@@ -366,10 +370,17 @@ function bbpa_prevent_duplicate_freemius_pricing_render(string $page_hook = ''):
 
 /**
  * Build admin submenu label for the upgrade entry.
+ *
+ * The edition name is a blue badge (bbpa-upgrade-badge, styled with the menu icon CSS). It is
+ * not the WordPress update counter look (update-plugins), which is kept for real counts.
  */
 function bbpa_get_upgrade_menu_title(): string
 {
-    return esc_html__('Upgrade to Pro', 'bimbeau-privacy-analytics');
+    return sprintf(
+        /* translators: %s: Name of the paid edition ("Pro"), shown as a badge in the admin menu. */
+        esc_html__('Upgrade to %s', 'bimbeau-privacy-analytics'),
+        '<span class="bbpa-upgrade-badge">' . esc_html__('Pro', 'bimbeau-privacy-analytics') . '</span>'
+    );
 }
 
 /**
@@ -451,7 +462,7 @@ function bbpa_normalize_free_upgrade_submenu(): void
             bbpa_get_upgrade_menu_title(),
             bbpa_get_panel_capability('pricing'),
             $upgrade_slug,
-            wp_specialchars_decode(bbpa_get_upgrade_menu_title(), ENT_QUOTES),
+            wp_specialchars_decode(wp_strip_all_tags(bbpa_get_upgrade_menu_title()), ENT_QUOTES),
         ];
     }
 
