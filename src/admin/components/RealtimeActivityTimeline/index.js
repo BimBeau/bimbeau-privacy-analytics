@@ -37,6 +37,21 @@ const getActionSentence = ( item ) => {
 		return __( 'Views <target />', 'bimbeau-privacy-analytics' );
 	}
 
+	if ( item?.trigger_type === 'click' ) {
+		/* translators: Recent activity of the real-time panel. <target /> is the name of the tracked click. */
+		return __( 'Clicks <target />', 'bimbeau-privacy-analytics' );
+	}
+
+	if ( item?.trigger_type === 'form_submit' ) {
+		/* translators: Recent activity of the real-time panel. <target /> is the name of the tracked form. */
+		return __( 'Submits <target />', 'bimbeau-privacy-analytics' );
+	}
+
+	if ( item?.trigger_type === 'page_view' ) {
+		/* translators: Recent activity of the real-time panel. <target /> is the name of the tracked page view event. */
+		return __( 'Reaches <target />', 'bimbeau-privacy-analytics' );
+	}
+
 	/* translators: Recent activity of the real-time panel. <target /> is the name of the tracked event. */
 	return __( 'Triggers <target />', 'bimbeau-privacy-analytics' );
 };
@@ -92,7 +107,7 @@ const getActionDescription = ( item ) => {
  * @param {Object}   props
  * @param {Object[]} props.items          Activity items of the real-time snapshot (`id`, `type`, `visitor_id`,
  *                                        `country_code`, `timestamp`, `page_path`, `page_title`, `is_entry`,
- *                                        `referrer_domain`, `source_category`, `label`).
+ *                                        `referrer_domain`, `source_category`, `label`, `trigger_type`).
  * @param {number}   props.limit          Maximum number of actions shown.
  * @param {Function} props.onHoverVisitor Called with the hovered visitor id, or '' on leave.
  */
