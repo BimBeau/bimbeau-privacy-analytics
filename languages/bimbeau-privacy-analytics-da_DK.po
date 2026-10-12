@@ -801,14 +801,41 @@ msgstr "Runtime-granularitet rapporteres ud fra de tilgængelige granulariteter.
 msgid "Technical state does not prove consent collection validity."
 msgstr "Den tekniske tilstand beviser ikke gyldigheden af samtykkeindsamlingen."
 
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
 #: src/admin/components/RealtimeActivityTimeline/index.js
-msgid "Page"
-msgstr "Side"
+msgid "Arrives on <target />"
+msgstr "Lander på <target />"
+
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Views <target />"
+msgstr "Ser <target />"
+
+#. translators: Recent activity of the real-time panel. <target /> is the name of the tracked event.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Triggers <target />"
+msgstr "Udløser <target />"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Ukendt side"
+msgid "an event"
+msgstr "en hændelse"
+
+#. translators: %s: source of the visit (a website, an ad network or a channel).
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "from %s"
+msgstr "via %s"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "direct access"
+msgstr "direkte adgang"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Action"
+msgstr "Handling"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Details"
+msgstr "Detaljer"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1707,6 +1734,14 @@ msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s element"
 msgstr[1] "%s elementer"
+
+#: src/admin/lib/realtimeActivity.js
+msgid "Home page"
+msgstr "Forside"
+
+#: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Ukendt side"
 
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js

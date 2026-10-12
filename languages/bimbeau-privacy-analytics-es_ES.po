@@ -801,14 +801,41 @@ msgstr "La granularidad en ejecución se informa a partir de las granularidades 
 msgid "Technical state does not prove consent collection validity."
 msgstr "El estado técnico no prueba la validez de la recogida de consentimiento."
 
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
 #: src/admin/components/RealtimeActivityTimeline/index.js
-msgid "Page"
-msgstr "Página"
+msgid "Arrives on <target />"
+msgstr "Llega a <target />"
+
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Views <target />"
+msgstr "Consulta <target />"
+
+#. translators: Recent activity of the real-time panel. <target /> is the name of the tracked event.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Triggers <target />"
+msgstr "Activa <target />"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Página desconocida"
+msgid "an event"
+msgstr "un evento"
+
+#. translators: %s: source of the visit (a website, an ad network or a channel).
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "from %s"
+msgstr "desde %s"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "direct access"
+msgstr "acceso directo"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Action"
+msgstr "Acción"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Details"
+msgstr "Detalles"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1707,6 +1734,14 @@ msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s elemento"
 msgstr[1] "%s elementos"
+
+#: src/admin/lib/realtimeActivity.js
+msgid "Home page"
+msgstr "Página de inicio"
+
+#: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Página desconocida"
 
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js

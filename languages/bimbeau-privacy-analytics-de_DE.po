@@ -801,14 +801,41 @@ msgstr "Die Laufzeit-Granularität wird aus den verfügbaren Granularitäten gem
 msgid "Technical state does not prove consent collection validity."
 msgstr "Der technische Status belegt nicht die Gültigkeit der Einwilligungserfassung."
 
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
 #: src/admin/components/RealtimeActivityTimeline/index.js
-msgid "Page"
-msgstr "Seite"
+msgid "Arrives on <target />"
+msgstr "Landet auf <target />"
+
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Views <target />"
+msgstr "Ruft <target /> auf"
+
+#. translators: Recent activity of the real-time panel. <target /> is the name of the tracked event.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Triggers <target />"
+msgstr "Löst <target /> aus"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Unbekannte Seite"
+msgid "an event"
+msgstr "ein Ereignis"
+
+#. translators: %s: source of the visit (a website, an ad network or a channel).
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "from %s"
+msgstr "über %s"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "direct access"
+msgstr "direkter Zugriff"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Action"
+msgstr "Aktion"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Details"
+msgstr "Details"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1707,6 +1734,14 @@ msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s Element"
 msgstr[1] "%s Elemente"
+
+#: src/admin/lib/realtimeActivity.js
+msgid "Home page"
+msgstr "Startseite"
+
+#: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Unbekannte Seite"
 
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js

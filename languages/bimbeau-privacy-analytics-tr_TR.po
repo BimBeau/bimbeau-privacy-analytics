@@ -796,14 +796,41 @@ msgstr "Çalışma zamanı ayrıntı düzeyi, kullanılabilir ayrıntı düzeyle
 msgid "Technical state does not prove consent collection validity."
 msgstr "Teknik durum, onay toplamanın geçerliliğini kanıtlamaz."
 
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
 #: src/admin/components/RealtimeActivityTimeline/index.js
-msgid "Page"
-msgstr "Sayfa"
+msgid "Arrives on <target />"
+msgstr "<target /> sayfasına geliyor"
+
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Views <target />"
+msgstr "<target /> sayfasını görüntülüyor"
+
+#. translators: Recent activity of the real-time panel. <target /> is the name of the tracked event.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Triggers <target />"
+msgstr "<target /> tetikliyor"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
-msgstr "Bilinmeyen sayfa"
+msgid "an event"
+msgstr "bir etkinlik"
+
+#. translators: %s: source of the visit (a website, an ad network or a channel).
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "from %s"
+msgstr "%s üzerinden"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "direct access"
+msgstr "doğrudan erişim"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Action"
+msgstr "Eylem"
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Details"
+msgstr "Ayrıntılar"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
 #: src/admin/components/VisitorsDataView/index.js
@@ -1697,6 +1724,14 @@ msgstr[0] "%s özel gizlendi"
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s öğe"
+
+#: src/admin/lib/realtimeActivity.js
+msgid "Home page"
+msgstr "Ana sayfa"
+
+#: src/admin/lib/realtimeActivity.js src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr "Bilinmeyen sayfa"
 
 #: src/admin/panels/AcquisitionPanel.js src/admin/panels/RealtimePanel.js
 #: src/admin/widgets/ReferrerSourcesTableCard/index.js

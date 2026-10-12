@@ -1,23 +1,41 @@
-/* Compact real-time timeline: one line per visit (flag and page on the left, time on the right). */
+/*
+ * Compact real-time feed: one line per action (flag and sentence on the left, time on the right), the address and
+ * the visit source underneath.
+ */
 .bbpa-realtime-timeline .dataviews-wrapper {
   min-height: 0;
 }
 
 .bbpa-realtime-timeline .dataviews-view-activity__item-content {
+  display: grid !important;
   flex: 1;
-  flex-direction: row !important;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
-  justify-content: space-between;
-  gap: var(--bbpa-gap-md);
+  column-gap: var(--bbpa-gap-md);
+  row-gap: 2px;
   min-width: 0;
 }
 
 .bbpa-realtime-timeline .dataviews-view-activity__item-title {
+  grid-column: 1;
+  grid-row: 1;
   min-width: 0;
   font-weight: 400;
 }
 
+.bbpa-realtime-timeline .dataviews-view-activity__item-description {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+}
+
+.bbpa-realtime-timeline .dataviews-view-activity__item-description:empty {
+  display: none;
+}
+
 .bbpa-realtime-timeline .dataviews-view-activity__item-fields {
+  grid-column: 2;
+  grid-row: 1;
   flex: none;
   white-space: nowrap;
   color: #757575;
@@ -36,6 +54,53 @@
 .bbpa-realtime-timeline .dataviews-view-activity__item-bullet {
   background: #949494;
   border-color: #949494;
+  transition: background-color 1s ease, border-color 1s ease;
+}
+
+/* An action stays blue during its first minute, like the fresh map markers. */
+.bbpa-realtime-timeline .dataviews-view-activity__item:has([data-bbpa-recent="true"]) .dataviews-view-activity__item-bullet {
+  background: var(--color-3, #3858e9);
+  border-color: var(--color-3, #3858e9);
+}
+
+/* An action received while the feed is open sends one halo and fades in. */
+.bbpa-realtime-timeline .dataviews-view-activity__item:has([data-bbpa-new="true"]) .dataviews-view-activity__item-bullet {
+  animation: bbpa-realtime-timeline-halo 1.5s ease-out 1;
+}
+
+.bbpa-realtime-timeline .dataviews-view-activity__item:has([data-bbpa-new="true"]) .dataviews-view-activity__item-content {
+  animation: bbpa-realtime-timeline-enter 0.4s ease-out 1;
+}
+
+@keyframes bbpa-realtime-timeline-halo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 88, 233, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 9px rgba(56, 88, 233, 0);
+  }
+}
+
+@keyframes bbpa-realtime-timeline-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbpa-realtime-timeline .dataviews-view-activity__item-bullet {
+    transition: none;
+  }
+
+  .bbpa-realtime-timeline .dataviews-view-activity__item:has([data-bbpa-new="true"]) .dataviews-view-activity__item-bullet,
+  .bbpa-realtime-timeline .dataviews-view-activity__item:has([data-bbpa-new="true"]) .dataviews-view-activity__item-content {
+    animation: none;
+  }
 }
 
 .bbpa-realtime-timeline__visit {
@@ -52,11 +117,26 @@
   outline-offset: 2px;
 }
 
-.bbpa-realtime-timeline__page {
+.bbpa-realtime-timeline__action {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #757575;
+}
+
+.bbpa-realtime-timeline__target {
+  color: #1e1e1e;
+  font-weight: 600;
+}
+
+.bbpa-realtime-timeline__details {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #757575;
+  font-size: 12px;
 }
 
 .bbpa-realtime-timeline__visit .bbpa-country-flag {

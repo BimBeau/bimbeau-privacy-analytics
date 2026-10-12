@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.74.0
+Stable tag: 8.75.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.74.0 =
-* [Feature] Each list of the statistics now remembers its sort, its number of items per page and its density for the current user, separately from the other lists, like its columns.
+= 8.75.0 =
+* [Feature] Real-time: the recent activity list now reads as sentences, one line per page view ("Arrives on Home page", "Views Le défi des vignes"), with the page title, the address underneath without its ad tracking parameters, and the source of each new visit (Google Ads, a newsletter, a referring site or direct access).
+* [Feature] Real-time: the dot of an action stays blue during its first minute, like the fresh map markers, and an action received while the panel is open sends one halo (no animation when reduced motion is requested).

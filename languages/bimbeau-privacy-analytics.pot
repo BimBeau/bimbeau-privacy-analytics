@@ -871,16 +871,41 @@ msgstr ""
 msgid "Technical state does not prove consent collection validity."
 msgstr ""
 
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
 #: src/admin/components/RealtimeActivityTimeline/index.js
-msgid "Page"
+msgid "Arrives on <target />"
+msgstr ""
+
+#. translators: Recent activity of the real-time panel. <target /> is the page name.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Views <target />"
+msgstr ""
+
+#. translators: Recent activity of the real-time panel. <target /> is the name of the tracked event.
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Triggers <target />"
 msgstr ""
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-#: src/admin/panels/RealtimePanel.js
-msgid "Unknown page"
+msgid "an event"
+msgstr ""
+
+#. translators: %s: source of the visit (a website, an ad network or a channel).
+#: src/admin/components/RealtimeActivityTimeline/index.js
+#, js-format
+msgid "from %s"
+msgstr ""
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "direct access"
+msgstr ""
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Action"
+msgstr ""
+
+#: src/admin/components/RealtimeActivityTimeline/index.js
+msgid "Details"
 msgstr ""
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
@@ -1830,6 +1855,18 @@ msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] ""
 msgstr[1] ""
+
+#: src/admin/lib/realtimeActivity.js
+msgid "Home page"
+msgstr ""
+
+#: src/admin/lib/realtimeActivity.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+#: src/admin/panels/RealtimePanel.js
+msgid "Unknown page"
+msgstr ""
 
 #: src/admin/panels/AcquisitionPanel.js
 #: src/admin/panels/RealtimePanel.js

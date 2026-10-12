@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class BBPA_Admin_Controller extends WP_REST_Controller {
+    /** Maximum number of items in the recent activity feed of the real-time panel. */
+    private const REALTIME_ACTIVITY_LIMIT = 20;
+
     private ?BBPA_Analytics_Repository $analytics_repository = null;
 
     private function analytics_repository(): BBPA_Analytics_Repository {
@@ -1222,6 +1225,10 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             $visits[$visit_index]['page_views'] = max($hit_page_views, $realtime_page_views);
         }
 
+        $activity = $essential_only_mode
+            ? []
+            : $this->build_realtime_activity($realtime_visitors, $hits, $window_start, $now);
+
         // Premium can derive map points while the internal coordinates are still
         // available. The shared controller deliberately has no knowledge of the
         // Premium coordinate service; Free keeps the neutral empty default.
@@ -1337,6 +1344,7 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
                 'consentedMapPoints' => $essential_only_mode ? [] : $points,
                 'countries' => $countries,
                 'visits' => $visits,
+                'activity' => $activity,
                 'generatedAt' => $now,
                 'privacyMode' => 'unknown',
                 'dataScope' => $essential_only_mode ? 'essential_only' : 'standard',
@@ -1344,6 +1352,174 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             200,
             true
         );
+    }
+
+    /**
+     * Build the recent activity feed of the real-time panel: one item per page view, newest first.
+     *
+     * Page views come from the realtime log (one row per enriched hit), or from the raw logs when the realtime
+     * log holds no page. The first page view of a visitor in the window is the visit entry, unless the hit
+     * followed an internal link (the visit started before the window). Premium adds other actions with the
+     * `bbpa_realtime_activity` filter.
+     *
+     * @param array<int, mixed> $realtime_rows Realtime log rows of the window, bots excluded.
+     * @param array<int, mixed> $raw_rows      Raw log rows of the window, bots excluded.
+     * @return array<int, array<string, mixed>>
+     */
+    private function build_realtime_activity(array $realtime_rows, array $raw_rows, int $window_start, int $now): array {
+        $page_views = $this->collect_realtime_page_views($realtime_rows, $window_start, $now);
+        if ($page_views === []) {
+            $page_views = $this->collect_realtime_page_views($raw_rows, $window_start, $now);
+        }
+
+        usort($page_views, static function (array $left, array $right): int {
+            return [$left['timestamp'], $left['order']] <=> [$right['timestamp'], $right['order']];
+        });
+
+        $items = [];
+        $seen_visitors = [];
+        $id_counts = [];
+        foreach ($page_views as $page_view) {
+            $visitor_key = $page_view['visitor_key'];
+            $is_entry = !isset($seen_visitors[$visitor_key]) && !$page_view['internal_navigation'];
+            $seen_visitors[$visitor_key] = true;
+
+            $id = md5($visitor_key . '|' . $page_view['timestamp'] . '|' . $page_view['page_path']);
+            $id_counts[$id] = ($id_counts[$id] ?? 0) + 1;
+            if ($id_counts[$id] > 1) {
+                $id .= '-' . $id_counts[$id];
+            }
+
+            $items[] = [
+                'id' => $id,
+                'type' => 'pageview',
+                'visitor_id' => $page_view['visitor_id'],
+                'country_code' => $page_view['country_code'],
+                'timestamp' => $page_view['timestamp'],
+                'page_path' => $page_view['page_path'],
+                'page_title' => '',
+                'is_entry' => $is_entry,
+                'referrer_domain' => $is_entry ? $page_view['referrer_domain'] : '',
+                'source_category' => $is_entry ? $page_view['source_category'] : '',
+            ];
+        }
+
+        /**
+         * Filters the recent activity feed of the real-time panel.
+         *
+         * Each item has `id` (string, stable across polls), `type` (`pageview` in the Free edition), `visitor_id`
+         * (the `visitor_id` of the matching visit row), `country_code`, `timestamp` (Unix seconds), `page_path`,
+         * `page_title`, `is_entry`, `referrer_domain` and `source_category`; other types may add a `label`.
+         * Items are sorted newest first and capped after this filter.
+         *
+         * @param array<int, array<string, mixed>> $items        Page view items, oldest first.
+         * @param int                              $window_start Start of the activity window (Unix seconds).
+         * @param int                              $now          Current time (Unix seconds).
+         */
+        $items = apply_filters('bbpa_realtime_activity', $items, $window_start, $now);
+        $items = is_array($items) ? array_values(array_filter($items, 'is_array')) : [];
+
+        usort($items, static function (array $left, array $right): int {
+            return (int) ($right['timestamp'] ?? 0) <=> (int) ($left['timestamp'] ?? 0);
+        });
+        $items = array_slice($items, 0, self::REALTIME_ACTIVITY_LIMIT);
+
+        $titles = [];
+        foreach ($items as $index => $item) {
+            $page_path = isset($item['page_path']) ? (string) $item['page_path'] : '';
+            if ($page_path === '' || (isset($item['page_title']) && (string) $item['page_title'] !== '')) {
+                continue;
+            }
+            if (!array_key_exists($page_path, $titles)) {
+                $titles[$page_path] = $this->resolve_realtime_page_title($page_path);
+            }
+            $items[$index]['page_title'] = $titles[$page_path];
+        }
+
+        return $items;
+    }
+
+    /**
+     * Extract the page views of hit log rows within the window.
+     *
+     * @param array<int, mixed> $rows Hit log rows, oldest first.
+     * @return array<int, array<string, mixed>>
+     */
+    private function collect_realtime_page_views(array $rows, int $window_start, int $now): array {
+        $page_views = [];
+        foreach ($rows as $index => $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+
+            $timestamp = $this->normalize_realtime_row_timestamp($row);
+            if ($timestamp < $window_start || $timestamp > $now) {
+                continue;
+            }
+
+            $page_path = isset($row['page_path']) ? bbpa_sanitize_page_path_value((string) $row['page_path']) : '';
+            $visitor_key = $this->resolve_realtime_display_visitor_key($row);
+            if ($page_path === '' || $visitor_key === '') {
+                continue;
+            }
+
+            $visitor_id = $this->resolve_realtime_visitor_bucket_id($row);
+            $internal_referrer_domain = isset($row['internal_referrer_domain'])
+                ? sanitize_text_field((string) $row['internal_referrer_domain'])
+                : '';
+
+            $page_views[] = [
+                'order' => (int) $index,
+                'timestamp' => $timestamp,
+                'visitor_key' => $visitor_key,
+                'visitor_id' => $visitor_id !== '' ? $visitor_id : $visitor_key,
+                'page_path' => $page_path,
+                'country_code' => isset($row['country_code']) ? strtoupper(sanitize_text_field((string) $row['country_code'])) : '',
+                'referrer_domain' => isset($row['referrer_domain']) ? sanitize_text_field((string) $row['referrer_domain']) : '',
+                'source_category' => isset($row['source_category']) ? sanitize_text_field((string) $row['source_category']) : '',
+                'internal_navigation' => $internal_referrer_domain !== ''
+                    && function_exists('bbpa_is_internal_referrer_domain')
+                    && bbpa_is_internal_referrer_domain($internal_referrer_domain),
+            ];
+        }
+
+        return $page_views;
+    }
+
+    /**
+     * Resolve the WordPress title of a stored page path, or '' when the path maps to no post.
+     *
+     * Stored paths keep the install directory, which home_url() already contains. The homepage resolves to the
+     * static front page when one is set.
+     */
+    private function resolve_realtime_page_title(string $page_path): string {
+        $path = trim($page_path);
+        if ($path === '' || $path[0] !== '/') {
+            return '';
+        }
+
+        $home_path = untrailingslashit((string) wp_parse_url(home_url('/'), PHP_URL_PATH));
+        if ($home_path !== '' && strpos($path, $home_path) === 0) {
+            $rest = (string) substr($path, strlen($home_path));
+            if ($rest === '' || strpos('/?#', $rest[0]) !== false) {
+                $path = ($rest === '' || $rest[0] !== '/') ? '/' . $rest : $rest;
+            }
+        }
+
+        $post_id = (int) url_to_postid(home_url($path));
+        if ($post_id <= 0 && (string) strtok($path, '?#') === '/') {
+            $post_id = (int) get_option('page_on_front');
+        }
+        if ($post_id <= 0) {
+            return '';
+        }
+
+        $title = get_the_title($post_id);
+
+        // get_the_title() returns HTML (wptexturize turns ' into &rsquo;): the API returns plain text.
+        return is_string($title)
+            ? sanitize_text_field(html_entity_decode($title, ENT_QUOTES | ENT_HTML5, 'UTF-8'))
+            : '';
     }
 
     /**

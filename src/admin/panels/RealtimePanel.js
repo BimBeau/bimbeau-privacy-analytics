@@ -1047,7 +1047,8 @@ const RealtimePanel = () => {
 		}`;
 
 	// The timeline needs per-visit pages and times, which the essential-only scope does not have.
-	const shouldShowActivityTimeline = !isEssentialOnlyScope && realtimeVisitRows.length > 0;
+	const realtimeActivity = Array.isArray(data?.activity) ? data.activity : [];
+	const shouldShowActivityTimeline = !isEssentialOnlyScope && realtimeActivity.length > 0;
 
 	return (
 		<div className={realtimePanelClassName}>
@@ -1143,7 +1144,7 @@ const RealtimePanel = () => {
 									{__('Recent activity', 'bimbeau-privacy-analytics')}
 								</h3>
 								<RealtimeActivityTimeline
-									rows={realtimeVisitRows}
+									items={realtimeActivity}
 									onHoverVisitor={setHoveredVisitorId}
 								/>
 							</section>

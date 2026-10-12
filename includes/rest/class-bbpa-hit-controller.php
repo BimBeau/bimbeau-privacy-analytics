@@ -1484,7 +1484,8 @@ class BBPA_Hit_Controller {
                 $row['page_path'] = $page_path;
             }
 
-            foreach (['country_code', 'country', 'device_class', 'browser', 'browser_version', 'operating_system', 'screen_resolution', 'referrer_domain', 'source_category'] as $field) {
+            // internal_referrer_domain tells the activity feed that a page view followed an internal link.
+            foreach (['country_code', 'country', 'device_class', 'browser', 'browser_version', 'operating_system', 'screen_resolution', 'referrer_domain', 'source_category', 'internal_referrer_domain'] as $field) {
                 if (!empty($hit[$field])) {
                     $row[$field] = sanitize_text_field((string) $hit[$field]);
                 }
