@@ -83,9 +83,9 @@ function bbpa_register_admin_menu(): void
             continue;
         }
 
-        if ($panel_name === 'realtime') {
-            $panel_title = bbpa_get_realtime_menu_title($panel_title);
-        }
+        // The badge only belongs in the menu label: WordPress builds the browser tab title from the page
+        // title with its tags stripped, which would read "Real-time 11 active visitor" for one visitor.
+        $panel_menu_title = $panel_name === 'realtime' ? bbpa_get_realtime_menu_title($panel_title) : $panel_title;
 
         $panel_slug = $panel_name === $panel_pages[$menu_slug] ? $menu_slug : $menu_slug . '-' . $panel_name;
         $panel_pages[$panel_slug] = $panel_name;
@@ -93,7 +93,7 @@ function bbpa_register_admin_menu(): void
         $submenu_hooks[] = add_submenu_page(
             $menu_slug,
             $panel_title,
-            $panel_title,
+            $panel_menu_title,
             bbpa_get_panel_capability($panel_name),
             $panel_slug,
             'bbpa_render_admin_page'
