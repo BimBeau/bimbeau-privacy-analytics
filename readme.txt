@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.10
+Stable tag: 8.78.11
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,7 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.10 =
-* [Fix] French translation polished after an in-context review of every admin screen: consistent chart legends, setup wizard summary, full month names in email summary dates, dashboard widget title.
-* [Fix] The dashboard widget and the hourly heatmap tooltip separate labels from values with the punctuation of the site language.
-* [Fix] Country names in the world map tooltip follow the site language.
+= 8.78.11 =
+* [Fix] The active time column of the visitors list uses the time units of the site language, like the other durations of the reports (for example "4 s" and "2 min 5 s" in French).

@@ -18,6 +18,7 @@ import {
 	isUnknownCountryCode,
 } from '../../lib/countryNames';
 import { formatScreenResolution } from '../../lib/formatScreenResolution';
+import { formatDurationMetricValue } from '../../lib/formatters';
 import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../../lib/date';
 import { getLocationLabel } from '../../lib/locationLabel';
 import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
@@ -80,20 +81,8 @@ export const formatTimeSpent = ( timeSpentMs ) => {
 	if ( ! Number.isFinite( totalMilliseconds ) || totalMilliseconds <= 0 ) {
 		return __( '0s', 'bimbeau-privacy-analytics' );
 	}
-	const totalSeconds = Math.floor( totalMilliseconds / 1000 );
-	const hours = Math.floor( totalSeconds / 3600 );
-	const minutes = Math.floor( ( totalSeconds % 3600 ) / 60 );
-	const seconds = totalSeconds % 60;
-	if ( hours > 0 ) {
-		return `${ hours }h ${ String( minutes ).padStart( 2, '0' ) }m ${ String(
-			seconds
-		).padStart( 2, '0' ) }s`;
-	}
-	if ( minutes > 0 ) {
-		return `${ minutes }m ${ String( seconds ).padStart( 2, '0' ) }s`;
-	}
 
-	return `${ seconds }s`;
+	return formatDurationMetricValue( totalMilliseconds );
 };
 
 export const formatVisitorHash = ( hash ) => {
