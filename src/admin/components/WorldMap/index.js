@@ -17,6 +17,7 @@ import BpaCard from "../BpaCard";
 import { ADMIN_CONFIG } from "../../constants";
 import {
   getCountryFlagClass,
+  getCountryLabel,
   isUnknownCountryCode,
 } from "../../lib/countryNames";
 import {
@@ -2840,8 +2841,16 @@ const WorldMap = ({
     const flagCode =
       code && code.length === 3 ? isoA3ToA2.get(code) || code : code;
     const isUnknown = !code || isUnknownCountryCode(code);
+    // Country names follow the admin locale, like the country lists; the map file only has English names.
+    const localizedName =
+      !isUnknown && flagCode && flagCode.length === 2
+        ? getCountryLabel(flagCode)
+        : "";
     const countryName = !isUnknown
-      ? feature?.properties?.NAME_EN || feature?.properties?.NAME || ""
+      ? (localizedName && localizedName !== flagCode ? localizedName : "") ||
+        feature?.properties?.NAME_EN ||
+        feature?.properties?.NAME ||
+        ""
       : "";
     const resolvedName = countryName || unknownCountryLabel;
     const hits = !isUnknown && code ? sanitizeMapValue(hitLookup.get(code)) : 0;

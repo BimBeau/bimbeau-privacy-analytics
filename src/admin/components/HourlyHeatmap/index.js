@@ -1,6 +1,6 @@
 import Notice from '../BrandNotice';
 import { useEffect, useMemo, useState } from "@wordpress/element";
-import { __ } from "@wordpress/i18n";
+import { __, sprintf } from "@wordpress/i18n";
 import { ResponsiveHeatMapCanvas } from "@nivo/heatmap";
 
 import ChartFrame from '../ChartFrame';
@@ -235,9 +235,14 @@ const HourlyHeatmap = ({
                       background: cell?.color || heatmapThemeColor,
                     }}
                   />
-                  <span>{`${metricLabel}: ${numberFormatter.format(
-                    value,
-                  )}`}</span>
+                  <span>
+                    {sprintf(
+                      /* translators: 1: Metric label, 2: Metric value. */
+                      __("%1$s: %2$s", "bimbeau-privacy-analytics"),
+                      metricLabel,
+                      numberFormatter.format(value),
+                    )}
+                  </span>
                 </div>
               </div>
             );

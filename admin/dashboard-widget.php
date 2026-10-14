@@ -149,6 +149,23 @@ function bbpa_format_dashboard_widget_date(string $date): string
 }
 
 /**
+ * Format one KPI line of the dashboard widget, with the label separator of the site language.
+ *
+ * @param string $label Translated KPI label.
+ * @param int    $value KPI value.
+ * @return string Escaped HTML.
+ */
+function bbpa_format_dashboard_widget_kpi(string $label, int $value): string
+{
+    return sprintf(
+        /* translators: 1: KPI label, 2: KPI value. */
+        esc_html__('%1$s: %2$s', 'bimbeau-privacy-analytics'),
+        esc_html($label),
+        '<strong>' . esc_html(number_format_i18n($value)) . '</strong>'
+    );
+}
+
+/**
  * Render the BimBeau Privacy Analytics WordPress Dashboard widget content.
  */
 function bbpa_render_dashboard_widget(): void
@@ -213,19 +230,19 @@ function bbpa_render_dashboard_widget(): void
         if ($is_visitors_enabled) {
             // Same human visitors as the Visitors card of the plugin dashboard; visits only when they are unavailable.
             if ($visitor_counts['visitors'] !== null) {
-                echo '<li>' . esc_html__('Visitors', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($visitor_counts['visitors'])) . '</strong></li>';
+                echo '<li>' . bbpa_format_dashboard_widget_kpi(__('Visitors', 'bimbeau-privacy-analytics'), (int) $visitor_counts['visitors']) . '</li>';
             } else {
-                echo '<li>' . esc_html__('Visits', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($visits)) . '</strong></li>';
+                echo '<li>' . bbpa_format_dashboard_widget_kpi(__('Visits', 'bimbeau-privacy-analytics'), $visits) . '</li>';
             }
             if ($visitor_counts['robots'] > 0) {
-                echo '<li>' . esc_html__('Robots excluded', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($visitor_counts['robots'])) . '</strong></li>';
+                echo '<li>' . bbpa_format_dashboard_widget_kpi(__('Robots excluded', 'bimbeau-privacy-analytics'), (int) $visitor_counts['robots']) . '</li>';
             }
         }
         if ($is_top_pages_enabled) {
-            echo '<li>' . esc_html__('Page views', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($page_views)) . '</strong></li>';
+            echo '<li>' . bbpa_format_dashboard_widget_kpi(__('Page views', 'bimbeau-privacy-analytics'), $page_views) . '</li>';
         }
         if ($is_referrers_enabled) {
-            echo '<li>' . esc_html__('Referrers', 'bimbeau-privacy-analytics') . ': <strong>' . esc_html(number_format_i18n($unique_referrers)) . '</strong></li>';
+            echo '<li>' . bbpa_format_dashboard_widget_kpi(__('Referrers', 'bimbeau-privacy-analytics'), $unique_referrers) . '</li>';
         }
         echo '</ul>';
     }

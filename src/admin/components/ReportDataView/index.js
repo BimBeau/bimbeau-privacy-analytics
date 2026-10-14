@@ -611,10 +611,13 @@ const ReportDataView = ( {
 							onRowClick( row.item );
 						} }
 						className="bbpa-report-table__row-action bbpa-text-link"
-						aria-label={ `${
+						aria-label={ sprintf(
+							/* translators: 1: Row action label, 2: Row label. */
+							__( '%1$s: %2$s', 'bimbeau-privacy-analytics' ),
 							rowActionLabel ||
-							__( 'Open details', 'bimbeau-privacy-analytics' )
-						}: ${ fullLabel }` }
+								__( 'Open details', 'bimbeau-privacy-analytics' ),
+							fullLabel
+						) }
 					>
 						{ label }
 					</Button>
