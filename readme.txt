@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.11
+Stable tag: 8.78.12
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.11 =
-* [Fix] The active time column of the visitors list uses the time units of the site language, like the other durations of the reports (for example "4 s" and "2 min 5 s" in French).
+= 8.78.12 =
+* [Fix] The email summaries settings show the next and last send times in the site timezone, like the send time chosen above them, even when the browser is in another timezone.
