@@ -36,12 +36,12 @@ msgstr "BimBeau"
 #, php-format
 msgid "%s active visitor"
 msgid_plural "%s active visitors"
-msgstr[0] "%s visiteur actif"
-msgstr[1] "%s visiteurs actifs"
+msgstr[0] "%s internaute en ligne"
+msgstr[1] "%s internautes en ligne"
 
 #: admin/admin.php
 msgid "Upgrade to Pro"
-msgstr "Passer à Pro"
+msgstr "Passer à la version Pro"
 
 #. translators: %s: Name of the paid edition ("Pro"), shown as a badge in the admin menu.
 #: admin/admin.php
@@ -59,11 +59,11 @@ msgstr "Contact"
 
 #: admin/admin.php
 msgid "You are viewing this page in read-only mode. Contact an administrator to change the license or billing."
-msgstr "Vous consultez cette page en lecture seule. Contactez un administrateur pour modifier la licence ou la facturation."
+msgstr "Vous consultez cette page en lecture seule. Pour modifier la licence ou la facturation, contactez un administrateur ou une administratrice."
 
 #: admin/admin.php
 msgid "The account details cannot be displayed in read-only mode. Contact an administrator."
-msgstr "Les informations du compte ne peuvent pas être affichées en lecture seule. Contactez un administrateur."
+msgstr "Les informations du compte ne peuvent pas être affichées en lecture seule. Contactez un administrateur ou une administratrice."
 
 #: admin/admin.php
 msgid "Base tracking remains active. Enriched tracking is declarable through an external CMP. Data granularity depends on collected signals."
@@ -121,7 +121,7 @@ msgstr "Géolocalisation"
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
-msgstr "Visiteurs"
+msgstr "Internautes"
 
 #: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Devices"
@@ -162,7 +162,7 @@ msgstr "Période : 30 derniers jours"
 
 #: admin/dashboard-widget.php
 msgid "Enable at least one analytics panel to display KPI values in this widget."
-msgstr "Activez au moins un panneau d’analyse pour afficher les indicateurs dans ce widget."
+msgstr "Activez au moins un panneau de statistiques pour afficher les indicateurs dans ce widget."
 
 #: admin/dashboard-widget.php src/admin/components/ChannelDetails/index.js
 #: src/admin/free-stubs/OverviewPanel.js src/admin/panels/AcquisitionPanel.js
@@ -228,11 +228,11 @@ msgstr "Tous les 60 jours"
 
 #: includes/geolocation.php src/admin/panels/SettingsPanel.js
 msgid "Every 3 months"
-msgstr "Tous les 3 mois"
+msgstr "Tous les 3 mois"
 
 #: includes/geolocation.php src/admin/panels/SettingsPanel.js
 msgid "Every 6 months"
-msgstr "Tous les 6 mois"
+msgstr "Tous les 6 mois"
 
 #: includes/geolocation.php src/admin/panels/SettingsPanel.js
 msgid "Every year"
@@ -258,7 +258,7 @@ msgstr "Aucun enregistrement de géolocalisation trouvé pour cette IP."
 #: includes/geolocation.php includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%s)."
-msgstr "Erreur API MaxMind (%s)."
+msgstr "Erreur de l’API MaxMind (%s)."
 
 #: includes/geolocation.php src/admin/panels/SettingsPanel.js
 msgid "Unable to connect to MaxMind."
@@ -266,7 +266,7 @@ msgstr "Impossible de se connecter à MaxMind."
 
 #: includes/geolocation.php
 msgid "Unable to determine the visitor IP."
-msgstr "Impossible de déterminer l’IP du visiteur."
+msgstr "Impossible de déterminer l’adresse IP de l’internaute."
 
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
@@ -280,7 +280,7 @@ msgstr "Connexion à MaxMind réussie."
 #: includes/rest/class-bbpa-admin-controller.php
 #: src/admin/panels/SettingsPanel.js
 msgid "GeoIP database updated successfully."
-msgstr "La base de données GeoIP a été mise à jour avec succès."
+msgstr "La base de données GeoIP a été mise à jour."
 
 #: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is available."
@@ -352,7 +352,7 @@ msgstr "Ce panneau de statistiques n’est pas disponible dans la navigation."
 
 #: includes/rest/class-bbpa-rest-query-helpers.php
 msgid "Authentication is required to access analytics data."
-msgstr "Une authentification est requise pour accéder aux données d’analyse."
+msgstr "Une authentification est requise pour accéder aux statistiques."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Local database mode is required to update the GeoIP database."
@@ -360,7 +360,7 @@ msgstr "Le mode base de données locale est requis pour mettre à jour la base G
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "WordPress cannot write files directly in the uploads directory, so the GeoIP database cannot be stored. Make the uploads directory writable by PHP or define FS_METHOD as \"direct\" in wp-config.php."
-msgstr "WordPress ne peut pas écrire de fichiers directement dans le répertoire des téléversements : la base GeoIP ne peut donc pas être enregistrée. Rendez le répertoire des téléversements accessible en écriture par PHP ou définissez FS_METHOD sur \"direct\" dans wp-config.php."
+msgstr "WordPress ne peut pas écrire de fichiers directement dans le dossier des téléversements : la base GeoIP ne peut donc pas être enregistrée. Rendez le dossier des téléversements accessible en écriture par PHP ou définissez FS_METHOD sur \"direct\" dans wp-config.php."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "Unable to create a temporary file for the GeoIP database download."
@@ -376,7 +376,7 @@ msgstr "Échec du téléchargement de la base GeoIP : %s"
 #: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database download failed with HTTP status %d."
-msgstr "Échec du téléchargement de la base GeoIP avec le statut HTTP %d."
+msgstr "Échec du téléchargement de la base GeoIP avec le code d’état HTTP %d."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database download returned an empty response body."
@@ -400,7 +400,7 @@ msgstr "Échec de la requête du manifeste de la base GeoIP : %s"
 #: includes/services/class-bbpa-geoip-database-updater.php
 #, php-format
 msgid "GeoIP database manifest request failed with HTTP status %d."
-msgstr "La requête du manifeste de la base GeoIP a échoué avec le statut HTTP %d."
+msgstr "La requête du manifeste de la base GeoIP a échoué avec le code d’état HTTP %d."
 
 #: includes/services/class-bbpa-geoip-database-updater.php
 msgid "GeoIP database manifest is not valid JSON."
@@ -475,7 +475,7 @@ msgstr "La dernière mise à jour de la base GeoIP a échoué."
 #: includes/services/class-bbpa-maxmind-service.php
 #, php-format
 msgid "MaxMind API error (%1$s): %2$s."
-msgstr "Erreur API MaxMind (%1$s) : %2$s."
+msgstr "Erreur de l’API MaxMind (%1$s) : %2$s."
 
 #: includes/services/class-bbpa-maxmind-service.php
 msgid "Invalid MaxMind API response."
@@ -483,15 +483,15 @@ msgstr "Réponse de l’API MaxMind invalide."
 
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID is required."
-msgstr "L’ID de compte MaxMind est requis."
+msgstr "L’identifiant de compte MaxMind (Account ID) est requis."
 
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID must be numeric."
-msgstr "L’ID de compte MaxMind doit être numérique."
+msgstr "L’identifiant de compte MaxMind (Account ID) doit être numérique."
 
 #: includes/settings.php src/admin/panels/SettingsPanel.js
 msgid "MaxMind License Key is required."
-msgstr "La clé de licence MaxMind est requise."
+msgstr "La clé de licence MaxMind (License Key) est requise."
 
 #: includes/settings.php
 msgid "MaxMind credentials are required to enable IP geolocation."
@@ -505,19 +505,19 @@ msgstr "Statistiques"
 #: src/admin/AdminAppCore.js
 msgid "%s Visitor"
 msgid_plural "%s Visitors"
-msgstr[0] "%s visiteur"
-msgstr[1] "%s visiteurs"
+msgstr[0] "%s internaute"
+msgstr[1] "%s internautes"
 
 #: src/admin/AdminAppCore.js
 msgid "Real-time visitors"
-msgstr "Visiteurs en temps réel"
+msgstr "Internautes en temps réel"
 
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminAppCore.js
 msgid "%s visitor right now"
 msgid_plural "%s visitors right now"
-msgstr[0] "%s visiteur en ce moment"
-msgstr[1] "%s visiteurs en ce moment"
+msgstr[0] "%s internaute en ce moment"
+msgstr[1] "%s internautes en ce moment"
 
 #: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
@@ -525,7 +525,7 @@ msgstr "Configuration initiale terminée."
 
 #: src/admin/AdminAppCore.js
 msgid "Unable to restart the configuration assistant. Please try again."
-msgstr "Impossible de recommencer l’assistant de configuration. Veuillez réessayer."
+msgstr "Impossible de relancer l’assistant de configuration. Réessayez."
 
 #: src/admin/AdminAppCore.js
 msgid "Missing admin configuration."
@@ -553,7 +553,7 @@ msgstr "Terminer la configuration initiale"
 
 #: src/admin/AdminAppCore.js
 msgid "Finish configuring tracking, local geolocation, and optional referrer favicons."
-msgstr "Terminez la configuration du suivi, de la géolocalisation locale et des favicons facultatifs des sites référents."
+msgstr "Terminez la configuration du suivi, de la géolocalisation locale et, si vous le souhaitez, des favicons des sites référents."
 
 #: src/admin/AdminAppCore.js
 msgid "Resume configuration"
@@ -577,7 +577,7 @@ msgstr "point de terminaison inconnu"
 
 #: src/admin/api/adminEndpointClient.js
 msgid "unknown status"
-msgstr "statut inconnu"
+msgstr "état inconnu"
 
 #: src/admin/api/adminEndpointClient.js
 msgid "The server returned invalid JSON. Check the endpoint response preview for details."
@@ -597,7 +597,7 @@ msgstr "Corps de réponse vide."
 
 #: src/admin/api/adminEndpointClient.js
 msgid "API error"
-msgstr "Erreur API"
+msgstr "Erreur de l’API"
 
 #: src/admin/api/adminEndpointClient.js src/admin/panels/SettingsPanel.js
 msgid "Missing REST configuration."
@@ -642,7 +642,7 @@ msgstr "Diagnostic du suivi enrichi"
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "This diagnostic separates script DOM presence, runtime execution, and enriched payload activity. It never proves user consent."
-msgstr "Ce diagnostic distingue la présence du script dans le DOM, son exécution et l’activité des données enrichies. Il ne permet jamais de prouver le consentement de l’utilisateur."
+msgstr "Ce diagnostic distingue la présence du script dans le DOM, son exécution et l’activité des données enrichies. Il ne prouve en aucun cas le consentement de l’internaute."
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Available granularities"
@@ -737,11 +737,11 @@ msgstr "Écart"
 #: src/admin/components/ChannelDetails/index.js
 #: src/admin/components/MetricTrend/index.js
 msgid "Previous period: %1$s (%2$s)"
-msgstr "Période précédente : %1$s (%2$s)"
+msgstr "Période précédente : %1$s (%2$s)"
 
 #: src/admin/components/ChannelDetails/index.js
 msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
-msgstr "Aucun site d’origine n’est transmis pour ces visites : adresse saisie, favori, ou lien ouvert depuis une application, un document ou un e-mail sans paramètres UTM."
+msgstr "Aucun site d’origine n’est transmis pour ces visites : adresse saisie, favori, ou lien ouvert depuis une application, un document ou un e-mail sans paramètres UTM."
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"
@@ -780,8 +780,8 @@ msgstr "Les données de trafic sont en attente"
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor"
 msgid_plural "Visitors"
-msgstr[0] "Visiteur"
-msgstr[1] "Visiteurs"
+msgstr[0] "Internaute"
+msgstr[1] "Internautes"
 
 #: src/admin/components/GeoRankingList/index.js
 #: src/admin/panels/SettingsPanel.js
@@ -844,7 +844,7 @@ msgstr "Déclenche <target />"
 
 #: src/admin/components/RealtimeActivityTimeline/index.js
 msgid "an event"
-msgstr "un événement"
+msgstr "un évènement"
 
 #. translators: %s: source of the visit (a website, an ad network or a channel).
 #: src/admin/components/RealtimeActivityTimeline/index.js
@@ -927,7 +927,7 @@ msgstr "Rechercher"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to save this choice. Please try again."
-msgstr "Impossible d’enregistrer ce choix. Veuillez réessayer."
+msgstr "Impossible d’enregistrer ce choix. Réessayez."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "The GeoIP database could not be validated after download."
@@ -935,11 +935,11 @@ msgstr "La base de données GeoIP n’a pas pu être validée après le téléch
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to download the GeoIP database. Please try again."
-msgstr "Impossible de télécharger la base de données GeoIP. Veuillez réessayer."
+msgstr "Impossible de télécharger la base de données GeoIP. Réessayez."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Unable to finish configuration. Please try again."
-msgstr "Impossible de terminer la configuration. Veuillez réessayer."
+msgstr "Impossible de terminer la configuration. Réessayez."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Configure analytics tracking"
@@ -964,7 +964,7 @@ msgstr "Étape %1$d sur %2$d"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "BimBeau Privacy Analytics stores analytics data in your WordPress installation. Optional external features remain inactive until you explicitly enable them."
-msgstr "BimBeau Privacy Analytics stocke les données analytiques dans votre installation WordPress. Les fonctionnalités externes facultatives restent inactives jusqu’à ce que vous les activiez explicitement."
+msgstr "BimBeau Privacy Analytics stocke les statistiques dans votre installation WordPress. Les fonctionnalités externes facultatives restent inactives jusqu’à ce que vous les activiez explicitement."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Enable advanced statistics"
@@ -976,7 +976,7 @@ msgstr "Les statistiques avancées ajoutent des détails sur l’appareil, la r�
 
 #: src/admin/components/SetupWizard/index.js
 msgid "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent."
-msgstr "Si votre site web exige un consentement préalable pour les statistiques, votre CMP doit bloquer l’outil de suivi avancé de BimBeau Privacy Analytics jusqu’à ce que le visiteur accepte la catégorie Analyse ou Statistiques. BimBeau Privacy Analytics ne remplace pas votre CMP et n’enregistre pas le consentement des visiteurs."
+msgstr "Si votre site exige un consentement préalable pour les statistiques, votre CMP doit bloquer l’outil de suivi avancé de BimBeau Privacy Analytics jusqu’à ce que l’internaute accepte la catégorie Analyse ou Statistiques. BimBeau Privacy Analytics ne remplace pas votre CMP et n’enregistre pas le consentement des internautes."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Read the CMP documentation."
@@ -984,11 +984,11 @@ msgstr "Consulter la documentation de la CMP."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "The local GeoIP database allows BimBeau Privacy Analytics to display the geographic origin of visitors while performing IP lookups inside your WordPress installation."
-msgstr "La base de données GeoIP locale permet à BimBeau Privacy Analytics d’afficher l’origine géographique des visiteurs tout en recherchant les adresses IP dans votre installation WordPress."
+msgstr "La base de données GeoIP locale permet à BimBeau Privacy Analytics d’afficher l’origine géographique des internautes en effectuant les recherches d’adresses IP dans votre installation WordPress."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Downloading the database contacts the documented BimBeau GeoIP Database Service. The service can receive your server IP address and a technical User-Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
-msgstr "Lors du téléchargement, une requête est envoyée au service BimBeau GeoIP Database Service indiqué dans la documentation. Ce service peut recevoir l’adresse IP de votre serveur ainsi qu’un agent utilisateur technique. Les adresses IP des visiteurs ne sont pas transmises à BimBeau lors des recherches locales."
+msgstr "Lors du téléchargement, une requête est envoyée au service BimBeau GeoIP Database Service indiqué dans la documentation. Ce service peut recevoir l’adresse IP de votre serveur ainsi qu’un agent utilisateur (User-Agent) technique. Les adresses IP des internautes ne sont pas transmises à BimBeau lors des recherches locales."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "BimBeau Privacy Analytics can contact referrer domains to retrieve their icons and cache validated copies inside your WordPress installation."
@@ -996,7 +996,7 @@ msgstr "BimBeau Privacy Analytics peut contacter les domaines référents pour r
 
 #: src/admin/components/SetupWizard/index.js
 msgid "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent."
-msgstr "Les domaines contactés peuvent recevoir l’adresse IP de votre serveur ainsi qu’un agent utilisateur technique générique. Aucune requête n’est envoyée directement depuis le navigateur de l’administrateur et aucune URL du site WordPress n’est incluse dans l’agent utilisateur."
+msgstr "Les domaines contactés peuvent recevoir l’adresse IP de votre serveur ainsi qu’un agent utilisateur (User-Agent) technique générique. Aucune requête n’est envoyée directement depuis le navigateur de la personne qui administre le site et aucune URL du site WordPress n’est incluse dans l’agent utilisateur."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "This feature is visual only and can be disabled later."
@@ -1032,7 +1032,7 @@ msgstr "Mises à jour automatiques de GeoIP :"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Referrer favicons:"
-msgstr "Icônes de référence :"
+msgstr "Favicons des sites référents :"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Other settings use the recommended defaults and can be changed later from the BimBeau Privacy Analytics settings."
@@ -1061,7 +1061,7 @@ msgstr "Continuer sans géolocalisation locale"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Allow referrer favicons and continue"
-msgstr "Autoriser les favicons de référence et continuer"
+msgstr "Autoriser les favicons des sites référents et continuer"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Continue without enabling favicons"
@@ -1081,7 +1081,7 @@ msgstr "Continuer sans géolocalisation ?"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors."
-msgstr "Sans base de données GeoIP locale, BimBeau Privacy Analytics ne sera pas en mesure de déterminer l’origine géographique des visiteurs."
+msgstr "Sans base de données GeoIP locale, BimBeau Privacy Analytics ne pourra pas déterminer l’origine géographique des internautes."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available."
@@ -1089,7 +1089,7 @@ msgstr "Les pages vues, les visites et les sources de trafic continueront d’ê
 
 #: src/admin/components/SetupWizard/index.js
 msgid "You can download the GeoIP database later from the geolocation settings."
-msgstr "Vous pourrez télécharger la base de données GeoIP ultérieurement depuis les paramètres de géolocalisation."
+msgstr "Vous pourrez télécharger la base de données GeoIP ultérieurement depuis les réglages de géolocalisation."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Continue without geolocation"
@@ -1115,7 +1115,7 @@ msgstr "0 s"
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor ID"
-msgstr "ID visiteur"
+msgstr "ID de l’internaute"
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/RealtimePanel.js
@@ -1190,26 +1190,26 @@ msgstr "Données"
 
 #: src/admin/components/VisitorsDataView/index.js
 msgid "Consented visitors"
-msgstr "Visiteurs avec consentement"
+msgstr "Internautes ayant donné leur consentement"
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/VisitorsPanel.js
 msgid "No visitor data available."
-msgstr "Aucune donnée sur les visiteurs n’est disponible."
+msgstr "Aucune donnée disponible sur les internautes."
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/VisitorsPanel.js
 msgid "Loading visitors…"
-msgstr "Chargement des visiteurs…"
+msgstr "Chargement des internautes…"
 
 #: src/admin/components/VisitorsDataView/index.js
 msgid "No visitor with advanced data for this period. Private visitors are hidden."
-msgstr "Aucun visiteur avec des données avancées sur cette période. Les visiteurs privés sont masqués."
+msgstr "Aucun internaute avec des données avancées sur cette période. Les internautes en mode privé sont masqués."
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/RealtimePanel.js
 msgid "Search visitors"
-msgstr "Rechercher des visiteurs"
+msgstr "Rechercher des internautes"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -1217,7 +1217,7 @@ msgstr "Zoomer sur la carte"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom out map"
-msgstr "Dézoomer la carte"
+msgstr "Dézoomer sur la carte"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Reset map zoom"
@@ -1248,12 +1248,12 @@ msgstr "Aucune visite géolocalisée n’est disponible. Vérifiez vos réglages
 #. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visitors"
-msgstr "%s visiteurs"
+msgstr "%s internautes"
 
 #. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
 msgid "%s of total visitors"
-msgstr "%s du total des visiteurs"
+msgstr "%s du total des internautes"
 
 #. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
@@ -1327,7 +1327,7 @@ msgstr "Hier"
 
 #: src/admin/lib/adminConstants.js
 msgid "7d"
-msgstr "7 j"
+msgstr "7 j"
 
 #: src/admin/lib/adminConstants.js
 msgid "7 days"
@@ -1335,7 +1335,7 @@ msgstr "7 jours"
 
 #: src/admin/lib/adminConstants.js
 msgid "30d"
-msgstr "30 j"
+msgstr "30 j"
 
 #: src/admin/lib/adminConstants.js
 msgid "30 days"
@@ -1343,7 +1343,7 @@ msgstr "30 jours"
 
 #: src/admin/lib/adminConstants.js
 msgid "90d"
-msgstr "90 j"
+msgstr "90 j"
 
 #: src/admin/lib/adminConstants.js
 msgid "90 days"
@@ -1351,27 +1351,27 @@ msgstr "90 jours"
 
 #: src/admin/lib/adminConstants.js
 msgid "6m"
-msgstr "6 mois"
+msgstr "6 mois"
 
 #: src/admin/lib/adminConstants.js
 msgid "6 months"
-msgstr "6 mois"
+msgstr "6 mois"
 
 #: src/admin/lib/adminConstants.js
 msgid "12m"
-msgstr "12 mois"
+msgstr "12 mois"
 
 #: src/admin/lib/adminConstants.js
 msgid "12 months"
-msgstr "12 mois"
+msgstr "12 mois"
 
 #: src/admin/lib/adminConstants.js
 msgid "24m"
-msgstr "24 mois"
+msgstr "24 mois"
 
 #: src/admin/lib/adminConstants.js
 msgid "24 months"
-msgstr "24 mois"
+msgstr "24 mois"
 
 #: src/admin/lib/adminConstants.js
 msgid "This month"
@@ -1379,7 +1379,7 @@ msgstr "Ce mois-ci"
 
 #: src/admin/lib/adminConstants.js
 msgid "Last month"
-msgstr "Mois dernier"
+msgstr "Le mois dernier"
 
 #: src/admin/lib/adminConstants.js
 msgid "This year"
@@ -1387,7 +1387,7 @@ msgstr "Cette année"
 
 #: src/admin/lib/adminConstants.js
 msgid "Last year"
-msgstr "Année dernière"
+msgstr "L’année dernière"
 
 #: src/admin/lib/channelLabels.js
 msgid "Organic Search"
@@ -1517,7 +1517,7 @@ msgstr "Filtrer"
 #. translators: %1$s: field label of a list filter.
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Filter by: %1$s"
-msgstr "Filtrer par : %1$s"
+msgstr "Filtrer par : %1$s"
 
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Hide column"
@@ -1550,7 +1550,7 @@ msgstr "Mise en page"
 #. translators: %1$s: field label of a list filter.
 #: src/admin/lib/dataviewsTranslations.js
 msgid "List of: %1$s"
-msgstr "Liste de : %1$s"
+msgstr "Liste de : %1$s"
 
 #: src/admin/lib/dataviewsTranslations.js
 msgid "Move left"
@@ -1639,12 +1639,12 @@ msgstr "(sans titre)"
 #. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
 #: src/admin/lib/dataviewsTranslations.js
 msgid "<Name>%1$s is: </Name><Value>%2$s</Value>"
-msgstr "<Name>%1$s est : </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s est : </Name><Value>%2$s</Value>"
 
 #. translators: 1: filter field label, 2: filter value. Keep the <Name> and <Value> tags.
 #: src/admin/lib/dataviewsTranslations.js
 msgid "<Name>%1$s is not: </Name><Value>%2$s</Value>"
-msgstr "<Name>%1$s n’est pas : </Name><Value>%2$s</Value>"
+msgstr "<Name>%1$s n’est pas : </Name><Value>%2$s</Value>"
 
 #. translators: %d: number of list items.
 #: src/admin/lib/dataviewsTranslations.js
@@ -1795,14 +1795,14 @@ msgstr "Ville approximative"
 #. translators: %d: geolocation accuracy radius in kilometers.
 #: src/admin/lib/locationLabel.js
 msgid "Approx. %d km"
-msgstr "Env. %d km"
+msgstr "Environ %d km"
 
 #. translators: %s: number of private visitors hidden from the table.
 #: src/admin/lib/paginationLabels.js
 msgid "%s private hidden"
 msgid_plural "%s private hidden"
-msgstr[0] "%s privé masqué"
-msgstr[1] "%s privés masqués"
+msgstr[0] "%s profil privé masqué"
+msgstr[1] "%s profils privés masqués"
 
 #. translators: %s: number of rows in the table.
 #: src/admin/lib/paginationLabels.js
@@ -1855,7 +1855,7 @@ msgstr "Part"
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s visitors"
-msgstr "%1$s — %2$s visiteurs"
+msgstr "%1$s — %2$s internautes"
 
 #. translators: 1: country name, 2: no data label.
 #: src/admin/panels/GeoCountriesPanel.js
@@ -1896,11 +1896,11 @@ msgstr "Visites historiques"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin unavailable"
-msgstr "Provenance indisponible"
+msgstr "Provenance des internautes indisponible"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr "La provenance des visiteurs sera disponible après l’installation de la base GeoIP locale depuis les réglages de géolocalisation de l’extension."
+msgstr "La provenance des internautes sera disponible après l’installation de la base GeoIP locale depuis les réglages de géolocalisation de l’extension."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
@@ -2066,7 +2066,7 @@ msgstr "Base de données non téléchargée"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Analytics data purged."
-msgstr "Données d’analyse purgées."
+msgstr "Statistiques purgées."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Error while purging."
@@ -2074,7 +2074,7 @@ msgstr "Erreur lors de la purge."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Aggregated analytics data purged."
-msgstr "Données d’analyse agrégées purgées."
+msgstr "Statistiques agrégées purgées."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Stats"
@@ -2082,7 +2082,7 @@ msgstr "Statistiques"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to dashboards, KPI cards, and analytics reports."
-msgstr "Accès aux tableaux de bord, aux cartes KPI et aux rapports d’analyse."
+msgstr "Accès aux tableaux de bord, aux cartes KPI et aux rapports de statistiques."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to plugin configuration and administration options."
@@ -2098,7 +2098,7 @@ msgstr "Compte"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Access to the plugin Account page: plan, expiry and renewal."
-msgstr "Accès à la page Compte de l’extension : offre, expiration et renouvellement."
+msgstr "Accès à la page Compte de l’extension : offre, expiration et renouvellement."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "General"
@@ -2122,7 +2122,7 @@ msgstr "Accès par rôle"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Administrators keep full access. Select additional roles that can open analytics pages, plugin settings, the Contact page, or the Account page."
-msgstr "Les administrateurs conservent un accès complet. Sélectionnez les rôles supplémentaires pouvant ouvrir les pages d’analyse, les réglages de l’extension, la page Contact ou la page Compte."
+msgstr "Les comptes administrateurs conservent un accès complet. Sélectionnez les rôles supplémentaires qui peuvent ouvrir les pages de statistiques, les réglages de l’extension, la page Contact ou la page Compte."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No additional roles available."
@@ -2138,7 +2138,7 @@ msgstr "Masqué"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "The license key, site keys, billing and invoices stay hidden for these roles. Only administrators can change the license or the plan."
-msgstr "La clé de licence, les clés du site, la facturation et les factures restent masquées pour ces rôles. Seuls les administrateurs peuvent modifier la licence ou l’offre."
+msgstr "La clé de licence, les clés du site, la facturation et les factures restent masquées pour ces rôles. Seuls les comptes administrateurs peuvent modifier la licence ou l’offre."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Configure the geolocation source and GeoIP database updates."
@@ -2162,15 +2162,15 @@ msgstr "La base locale fonctionne sans requête externe pendant le suivi. L’AP
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind Account ID"
-msgstr "ID de compte MaxMind"
+msgstr "Identifiant de compte MaxMind (Account ID)"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Numeric Account ID used for MaxMind API requests."
-msgstr "ID de compte numérique utilisé pour les requêtes API MaxMind."
+msgstr "Identifiant de compte numérique (Account ID) utilisé pour les requêtes à l’API MaxMind."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "MaxMind License Key"
-msgstr "Clé de licence MaxMind"
+msgstr "Clé de licence MaxMind (License Key)"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "A license key is saved. Leave this field empty to keep it or enter a new key to replace it."
@@ -2178,11 +2178,11 @@ msgstr "Une clé de licence est enregistrée. Laissez ce champ vide pour la cons
 
 #: src/admin/panels/SettingsPanel.js
 msgid "License Key used for MaxMind API requests."
-msgstr "Clé de licence utilisée pour les requêtes API MaxMind."
+msgstr "Clé de licence (License Key) utilisée pour les requêtes à l’API MaxMind."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Remove the saved license key"
-msgstr "Supprimer la clé de licence enregistrée"
+msgstr "Retirer la clé de licence enregistrée"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Test MaxMind connection"
@@ -2246,7 +2246,7 @@ msgstr "Source ou service"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "BimBeau GeoIP Database Service"
-msgstr "Service de base de données GeoIP BimBeau"
+msgstr "BimBeau GeoIP Database Service"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Last error code"
@@ -2350,7 +2350,7 @@ msgstr "Qu’est-ce qu’une CMP ?"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent."
-msgstr "Une CMP gère le consentement aux cookies sur votre site web. Elle affiche la bannière de consentement, enregistre les choix des visiteurs et autorise ou bloque les scripts de statistiques selon le consentement."
+msgstr "Une CMP gère le consentement aux cookies sur votre site. Elle affiche la bannière de consentement, enregistre les choix des internautes et autorise ou bloque les scripts de statistiques selon le consentement."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Examples:"
@@ -2370,7 +2370,7 @@ msgstr "Respecter DNT / GPC"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal."
-msgstr "Arrêter la mesure lorsque le navigateur du visiteur envoie un signal Do Not Track ou Global Privacy Control."
+msgstr "Arrêter la mesure lorsque le navigateur de l’internaute envoie un signal Do Not Track ou Global Privacy Control."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Visit measurement"
@@ -2378,15 +2378,15 @@ msgstr "Mesure des visites"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Defines how long visitor activity can remain grouped under the same visitor row before a new row is started after inactivity."
-msgstr "Définit pendant combien de temps l’activité d’un visiteur peut rester regroupée dans un même enregistrement avant qu’un nouvel enregistrement soit créé après une période d’inactivité."
+msgstr "Définit pendant combien de temps l’activité d’un ou d’une internaute peut rester regroupée dans un même enregistrement avant qu’un nouvel enregistrement soit créé après une période d’inactivité."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Visitor activity window"
-msgstr "Fenêtre d’activité du visiteur"
+msgstr "Fenêtre d’activité des internautes"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Defines how long activity from the same visitor can remain grouped into one visitor row. After this period of inactivity, BimBeau Privacy Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 hours)."
-msgstr "Définit pendant combien de temps l’activité d’un même visiteur peut rester regroupée dans un seul enregistrement. Après cette période d’inactivité, BimBeau Privacy Analytics crée un nouvel enregistrement. Plage : de 300 à 86 400 secondes (de 5 minutes à 24 heures)."
+msgstr "Définit pendant combien de temps l’activité d’un ou d’une même internaute peut rester regroupée dans un seul enregistrement. Après cette période d’inactivité, BimBeau Privacy Analytics crée un nouvel enregistrement. Plage : de 300 à 86 400 secondes (de 5 minutes à 24 heures)."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "URLs & campaigns"
@@ -2402,7 +2402,7 @@ msgstr "Nettoyer les paramètres de requête des URL"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Remove query parameters from tracked URLs."
-msgstr "Supprimer les paramètres de requête des URL suivies."
+msgstr "Retirer les paramètres de requête des URL suivies."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Allowed query parameters"
@@ -2418,11 +2418,11 @@ msgstr "Conservation des données"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
-msgstr "Choisissez combien de temps conserver les événements détaillés temporaires, les détails des rapports et les totaux longue durée, puis la fréquence du nettoyage automatique."
+msgstr "Choisissez combien de temps conserver les évènements détaillés temporaires, les détails des rapports et les totaux longue durée, puis la fréquence du nettoyage automatique."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Temporary detailed events retention (days)"
-msgstr "Durée de conservation des événements détaillés temporaires (en jours)"
+msgstr "Durée de conservation des évènements détaillés temporaires (en jours)"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Used mainly for real-time and diagnostics. Not related to Debug mode."
@@ -2434,7 +2434,7 @@ msgstr "Durée de conservation des détails des rapports"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
-msgstr "Conserve les dimensions détaillées des rapports : pages, référents, pays, appareils et détails visiteurs."
+msgstr "Conserve les dimensions détaillées des rapports : pages, sites référents, pays, appareils et détails sur les internautes."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Long-term totals retention"
@@ -2442,7 +2442,7 @@ msgstr "Durée de conservation des totaux à long terme"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire."
-msgstr "Conserve des totaux quotidiens anonymes pour les KPI du tableau de bord et le graphique pages vues/visiteurs après l’expiration des détails."
+msgstr "Conserve des totaux quotidiens anonymes pour les KPI du tableau de bord et le graphique pages vues/internautes après l’expiration des détails."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
@@ -2462,7 +2462,7 @@ msgstr "Exclusions"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Select roles to exclude from tracking. Select all roles to ignore all logged-in users."
-msgstr "Sélectionnez les rôles à exclure du suivi. Sélectionnez tous les rôles pour ignorer tous les utilisateurs connectés."
+msgstr "Sélectionnez les rôles à exclure du suivi. Sélectionnez tous les rôles pour ignorer tous les comptes connectés."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "No roles available."
@@ -2487,11 +2487,11 @@ msgstr "Débogage"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Enable diagnostic output for troubleshooting tracking events, realtime visitor detection, and REST payloads in the browser console and wp-content/debug.log."
-msgstr "Activez les informations de diagnostic pour résoudre les problèmes liés aux événements de suivi, à la détection des visiteurs en temps réel et aux données REST dans la console du navigateur et dans wp-content/debug.log."
+msgstr "Activez les informations de diagnostic pour résoudre les problèmes liés aux évènements de suivi, à la détection des internautes en temps réel et aux données REST dans la console du navigateur et dans wp-content/debug.log."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug mode"
-msgstr "Mode débogage"
+msgstr "Mode de débogage"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Writes detailed diagnostic logs to the console and to wp-content/debug.log when WordPress debug logging is enabled."
@@ -2523,11 +2523,11 @@ msgstr "Actions sensibles"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries."
-msgstr "Supprimer toutes les données agrégées des KPI, les données détaillées sur les visiteurs et les entrées des journaux bruts."
+msgstr "Supprimer toutes les données agrégées des KPI, les données détaillées sur les internautes et les entrées des journaux bruts."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Delete all analytics data"
-msgstr "Supprimer toutes les données d’analyse"
+msgstr "Supprimer toutes les statistiques"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Referring site icons"
@@ -2567,11 +2567,11 @@ msgstr "Confirmer la purge des données"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "This action permanently removes all stored analytics and raw logs. Settings remain unchanged."
-msgstr "Cette action supprime définitivement toutes les analyses stockées et les journaux bruts. Les réglages restent inchangés."
+msgstr "Cette action supprime définitivement toutes les statistiques enregistrées et les journaux bruts. Les réglages restent inchangés."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "I confirm that I want to permanently purge all analytics data."
-msgstr "Je confirme vouloir purger définitivement toutes les données d’analyse."
+msgstr "Je confirme vouloir purger définitivement toutes les statistiques."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Purge now"
@@ -2675,15 +2675,15 @@ msgstr "Un article classé dans plusieurs catégories compte dans chacune d’el
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Authors"
-msgstr "Auteurs"
+msgstr "Auteurs et autrices"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Author"
-msgstr "Auteur"
+msgstr "Auteur ou autrice"
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "No authors available."
-msgstr "Aucun auteur disponible."
+msgstr "Aucun auteur ni aucune autrice disponible."
 
 #: src/admin/panels/TopPagesListPanel.js
 msgid "Entry pages"
@@ -2732,7 +2732,7 @@ msgstr "Grand écran"
 #. translators: %s: share of the previous period, for example 21.9%.
 #: src/admin/widgets/AudienceBreakdownCards/index.js
 msgid "Previous period: %s"
-msgstr "Période précédente : %s"
+msgstr "Période précédente : %s"
 
 #. translators: %s: signed change of a rate, in percentage points (for example +1.2).
 #: src/admin/widgets/AudienceBreakdownCards/index.js
@@ -2821,11 +2821,11 @@ msgstr "Chargement des KPI…"
 #. translators: %s: number of robots detected in the selected period.
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Human visitors only. The robots detected in this period (%s) are excluded from all statistics."
-msgstr "Visiteurs humains uniquement. Les robots détectés sur la période (%s) sont exclus de toutes les statistiques."
+msgstr "Humains uniquement. Les robots détectés sur la période (%s) sont exclus de toutes les statistiques."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."
-msgstr "Le nombre de visiteurs correspond aux enregistrements d’activité délimités sur la période sélectionnée."
+msgstr "Le nombre d’internautes correspond aux enregistrements d’activité délimités sur la période sélectionnée."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Pages / visit"
@@ -2867,7 +2867,7 @@ msgstr "Personnalisé"
 #. translators: %s: date range of the comparison period, e.g. "10/08/26 – 08/09/26".
 #: src/admin/widgets/PeriodFilter/index.js
 msgid "vs %s"
-msgstr "vs %s"
+msgstr "par rapport à %s"
 
 #: src/admin/widgets/PeriodFilter/index.js
 msgid "From"
@@ -2880,7 +2880,7 @@ msgstr "Au"
 #. translators: %s: date range of the comparison period.
 #: src/admin/widgets/PeriodFilter/index.js
 msgid "Compared with %s"
-msgstr "Comparé à %s"
+msgstr "Par rapport à %s"
 
 #: src/admin/widgets/PeriodFilter/index.js
 msgid "Choose the last day of the period."
@@ -2920,7 +2920,7 @@ msgstr "Pages vues précédentes"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous visitors"
-msgstr "Visiteurs précédents"
+msgstr "Internautes (période précédente)"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. page views"
@@ -2928,15 +2928,15 @@ msgstr "Pages vues préc."
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. visitors"
-msgstr "Visiteurs préc."
+msgstr "Internautes (préc.)"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors"
-msgstr "Pages vues et visiteurs quotidiens"
+msgstr "Pages vues et internautes par jour"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors line chart"
-msgstr "Graphique linéaire quotidien des pages vues et des visiteurs"
+msgstr "Graphique linéaire quotidien des pages vues et des internautes"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views"
@@ -2948,23 +2948,23 @@ msgstr "Graphique linéaire quotidien des pages vues"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily visitors"
-msgstr "Visiteurs quotidiens"
+msgstr "Internautes par jour"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily visitors line chart"
-msgstr "Graphique linéaire quotidien des visiteurs"
+msgstr "Graphique linéaire quotidien des internautes"
 
 #. translators: %s: visitors count.
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "%s visitor"
 msgid_plural "%s visitors"
-msgstr[0] "%s visiteur"
-msgstr[1] "%s visiteurs"
+msgstr[0] "%s internaute"
+msgstr[1] "%s internautes"
 
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s"
-msgstr "%1$s : pages vues %2$s, visiteurs %3$s, pages vues précédentes %4$s, visiteurs précédents %5$s"
+msgstr "%1$s : pages vues %2$s, internautes %3$s, pages vues précédentes %4$s, internautes (période précédente) %5$s"
 
 #. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -2984,7 +2984,7 @@ msgstr "Pages vues : %1$s"
 #. translators: 1: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Visitors: %1$s"
-msgstr "Visiteurs : %1$s"
+msgstr "Internautes : %1$s"
 
 #. translators: 1: previous page view count
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -2994,7 +2994,7 @@ msgstr "Pages vues précédentes : %1$s"
 #. translators: 1: previous visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous visitors: %1$s"
-msgstr "Visiteurs précédents : %1$s"
+msgstr "Internautes (période précédente) : %1$s"
 
 #. translators: 1: current metric count
 #: src/admin/widgets/TimeseriesChart/index.js
