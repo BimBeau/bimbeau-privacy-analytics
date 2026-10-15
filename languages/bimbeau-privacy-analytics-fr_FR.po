@@ -36,8 +36,8 @@ msgstr "BimBeau"
 #, php-format
 msgid "%s active visitor"
 msgid_plural "%s active visitors"
-msgstr[0] "%s internaute en ligne"
-msgstr[1] "%s internautes en ligne"
+msgstr[0] "%s visiteur actif"
+msgstr[1] "%s visiteurs actifs"
 
 #: admin/admin.php
 msgid "Upgrade to Pro"
@@ -121,7 +121,7 @@ msgstr "Géolocalisation"
 #: src/admin/widgets/TimeseriesChart/index.js
 #: src/admin/widgets/VisitorsTableCard/index.js
 msgid "Visitors"
-msgstr "Internautes"
+msgstr "Visiteurs"
 
 #: admin/admin.php src/admin/lib/adminConstants.js
 msgid "Devices"
@@ -275,7 +275,7 @@ msgstr "Impossible de se connecter à MaxMind."
 
 #: includes/geolocation.php
 msgid "Unable to determine the visitor IP."
-msgstr "Impossible de déterminer l’adresse IP de l’internaute."
+msgstr "Impossible de déterminer l’adresse IP du visiteur."
 
 #: includes/raw-logs.php
 msgid "BimBeau Privacy Analytics raw log cleanup"
@@ -514,19 +514,19 @@ msgstr "Statistiques"
 #: src/admin/AdminAppCore.js
 msgid "%s Visitor"
 msgid_plural "%s Visitors"
-msgstr[0] "%s internaute"
-msgstr[1] "%s internautes"
+msgstr[0] "%s visiteur"
+msgstr[1] "%s visiteurs"
 
 #: src/admin/AdminAppCore.js
 msgid "Real-time visitors"
-msgstr "Internautes en temps réel"
+msgstr "Visiteurs en temps réel"
 
 #. translators: %s: active real-time visitor count.
 #: src/admin/AdminAppCore.js
 msgid "%s visitor right now"
 msgid_plural "%s visitors right now"
-msgstr[0] "%s internaute en ce moment"
-msgstr[1] "%s internautes en ce moment"
+msgstr[0] "%s visiteur en ce moment"
+msgstr[1] "%s visiteurs en ce moment"
 
 #: src/admin/AdminAppCore.js
 msgid "Initial configuration completed."
@@ -651,7 +651,7 @@ msgstr "Diagnostic du suivi enrichi"
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "This diagnostic separates script DOM presence, runtime execution, and enriched payload activity. It never proves user consent."
-msgstr "Ce diagnostic distingue la présence du script dans le DOM, son exécution et l’activité des données enrichies. Il ne prouve en aucun cas le consentement de l’internaute."
+msgstr "Ce diagnostic distingue la présence du script dans le DOM, son exécution et l’activité des données enrichies. Il ne prouve en aucun cas le consentement du visiteur."
 
 #: src/admin/components/AdvancedConsentTestCard/index.js
 msgid "Available granularities"
@@ -789,8 +789,8 @@ msgstr "Les données de trafic sont en attente"
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor"
 msgid_plural "Visitors"
-msgstr[0] "Internaute"
-msgstr[1] "Internautes"
+msgstr[0] "Visiteur"
+msgstr[1] "Visiteurs"
 
 #: src/admin/components/GeoRankingList/index.js
 #: src/admin/panels/SettingsPanel.js
@@ -985,7 +985,7 @@ msgstr "Les statistiques avancées ajoutent des détails sur l’appareil, la r�
 
 #: src/admin/components/SetupWizard/index.js
 msgid "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent."
-msgstr "Si votre site exige un consentement préalable pour les statistiques, votre CMP doit bloquer l’outil de suivi avancé de BimBeau Privacy Analytics jusqu’à ce que l’internaute accepte la catégorie Analyse ou Statistiques. BimBeau Privacy Analytics ne remplace pas votre CMP et n’enregistre pas le consentement des internautes."
+msgstr "Si votre site exige un consentement préalable pour les statistiques, votre CMP doit bloquer l’outil de suivi avancé de BimBeau Privacy Analytics jusqu’à ce que le visiteur accepte la catégorie Analyse ou Statistiques. BimBeau Privacy Analytics ne remplace pas votre CMP et n’enregistre pas le consentement des visiteurs."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Read the CMP documentation."
@@ -993,11 +993,11 @@ msgstr "Consulter la documentation de la CMP."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "The local GeoIP database allows BimBeau Privacy Analytics to display the geographic origin of visitors while performing IP lookups inside your WordPress installation."
-msgstr "La base de données GeoIP locale permet à BimBeau Privacy Analytics d’afficher l’origine géographique des internautes en effectuant les recherches d’adresses IP dans votre installation WordPress."
+msgstr "La base de données GeoIP locale permet à BimBeau Privacy Analytics d’afficher l’origine géographique des visiteurs en effectuant les recherches d’adresses IP dans votre installation WordPress."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Downloading the database contacts the documented BimBeau GeoIP Database Service. The service can receive your server IP address and a technical User-Agent. Visitor IP addresses are not sent to BimBeau for local lookups."
-msgstr "Lors du téléchargement, une requête est envoyée au service BimBeau GeoIP Database Service indiqué dans la documentation. Ce service peut recevoir l’adresse IP de votre serveur ainsi qu’un agent utilisateur (User-Agent) technique. Les adresses IP des internautes ne sont pas transmises à BimBeau lors des recherches locales."
+msgstr "Lors du téléchargement, une requête est envoyée au service BimBeau GeoIP Database Service indiqué dans la documentation. Ce service peut recevoir l’adresse IP de votre serveur ainsi qu’un agent utilisateur (User-Agent) technique. Les adresses IP des visiteurs ne sont pas transmises à BimBeau lors des recherches locales."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "BimBeau Privacy Analytics can contact referrer domains to retrieve their icons and cache validated copies inside your WordPress installation."
@@ -1090,7 +1090,7 @@ msgstr "Continuer sans géolocalisation ?"
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors."
-msgstr "Sans base de données GeoIP locale, BimBeau Privacy Analytics ne pourra pas déterminer l’origine géographique des internautes."
+msgstr "Sans base de données GeoIP locale, BimBeau Privacy Analytics ne pourra pas déterminer l’origine géographique des visiteurs."
 
 #: src/admin/components/SetupWizard/index.js
 msgid "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available."
@@ -1124,7 +1124,7 @@ msgstr "0 s"
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor ID"
-msgstr "ID de l’internaute"
+msgstr "ID du visiteur"
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/RealtimePanel.js
@@ -1199,26 +1199,26 @@ msgstr "Données"
 
 #: src/admin/components/VisitorsDataView/index.js
 msgid "Consented visitors"
-msgstr "Internautes ayant donné leur consentement"
+msgstr "Visiteurs ayant donné leur consentement"
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/VisitorsPanel.js
 msgid "No visitor data available."
-msgstr "Aucune donnée disponible sur les internautes."
+msgstr "Aucune donnée disponible sur les visiteurs."
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/VisitorsPanel.js
 msgid "Loading visitors…"
-msgstr "Chargement des internautes…"
+msgstr "Chargement des visiteurs…"
 
 #: src/admin/components/VisitorsDataView/index.js
 msgid "No visitor with advanced data for this period. Private visitors are hidden."
-msgstr "Aucun internaute avec des données avancées sur cette période. Les internautes en mode privé sont masqués."
+msgstr "Aucun visiteur avec des données avancées sur cette période. Les visiteurs en mode privé sont masqués."
 
 #: src/admin/components/VisitorsDataView/index.js
 #: src/admin/panels/RealtimePanel.js
 msgid "Search visitors"
-msgstr "Rechercher des internautes"
+msgstr "Rechercher des visiteurs"
 
 #: src/admin/components/WorldMap/index.js
 msgid "Zoom in map"
@@ -1257,12 +1257,12 @@ msgstr "Aucune visite géolocalisée n’est disponible. Vérifiez vos réglages
 #. translators: %s: visitor count.
 #: src/admin/components/WorldMap/index.js
 msgid "%s visitors"
-msgstr "%s internautes"
+msgstr "%s visiteurs"
 
 #. translators: %s: share of total visitors.
 #: src/admin/components/WorldMap/index.js
 msgid "%s of total visitors"
-msgstr "%s du total des internautes"
+msgstr "%s du total des visiteurs"
 
 #. translators: %s: visit count.
 #: src/admin/components/WorldMap/index.js
@@ -1864,7 +1864,7 @@ msgstr "Part"
 #. translators: 1: country name, 2: visitor count.
 #: src/admin/panels/GeoCountriesPanel.js
 msgid "%1$s — %2$s visitors"
-msgstr "%1$s — %2$s internautes"
+msgstr "%1$s — %2$s visiteurs"
 
 #. translators: 1: country name, 2: no data label.
 #: src/admin/panels/GeoCountriesPanel.js
@@ -1905,11 +1905,11 @@ msgstr "Visites historiques"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin unavailable"
-msgstr "Provenance des internautes indisponible"
+msgstr "Provenance des visiteurs indisponible"
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Visitor origin will be available after the local GeoIP database is installed from the plugin geolocation settings."
-msgstr "La provenance des internautes sera disponible après l’installation de la base GeoIP locale depuis les réglages de géolocalisation de l’extension."
+msgstr "La provenance des visiteurs sera disponible après l’installation de la base GeoIP locale depuis les réglages de géolocalisation de l’extension."
 
 #: src/admin/panels/RealtimePanel.js
 msgid "Fullscreen is unavailable in this browser context."
@@ -2359,7 +2359,7 @@ msgstr "Qu’est-ce qu’une CMP ?"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent."
-msgstr "Une CMP gère le consentement aux cookies sur votre site. Elle affiche la bannière de consentement, enregistre les choix des internautes et autorise ou bloque les scripts de statistiques selon le consentement."
+msgstr "Une CMP gère le consentement aux cookies sur votre site. Elle affiche la bannière de consentement, enregistre les choix des visiteurs et autorise ou bloque les scripts de statistiques selon le consentement."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Examples:"
@@ -2379,7 +2379,7 @@ msgstr "Respecter DNT / GPC"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Stop measurement when the visitor’s browser sends a Do Not Track or Global Privacy Control signal."
-msgstr "Arrêter la mesure lorsque le navigateur de l’internaute envoie un signal Do Not Track ou Global Privacy Control."
+msgstr "Arrêter la mesure lorsque le navigateur du visiteur envoie un signal Do Not Track ou Global Privacy Control."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Visit measurement"
@@ -2387,15 +2387,15 @@ msgstr "Mesure des visites"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Defines how long visitor activity can remain grouped under the same visitor row before a new row is started after inactivity."
-msgstr "Définit pendant combien de temps l’activité d’un ou d’une internaute peut rester regroupée dans un même enregistrement avant qu’un nouvel enregistrement soit créé après une période d’inactivité."
+msgstr "Définit pendant combien de temps l’activité d’un visiteur peut rester regroupée dans un même enregistrement avant qu’un nouvel enregistrement soit créé après une période d’inactivité."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Visitor activity window"
-msgstr "Fenêtre d’activité des internautes"
+msgstr "Fenêtre d’activité des visiteurs"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Defines how long activity from the same visitor can remain grouped into one visitor row. After this period of inactivity, BimBeau Privacy Analytics starts a new visitor row. Range: 300 to 86400 seconds (5 minutes to 24 hours)."
-msgstr "Définit pendant combien de temps l’activité d’un ou d’une même internaute peut rester regroupée dans un seul enregistrement. Après cette période d’inactivité, BimBeau Privacy Analytics crée un nouvel enregistrement. Plage : de 300 à 86 400 secondes (de 5 minutes à 24 heures)."
+msgstr "Définit pendant combien de temps l’activité d’un même visiteur peut rester regroupée dans un seul enregistrement. Après cette période d’inactivité, BimBeau Privacy Analytics crée un nouvel enregistrement. Plage : de 300 à 86 400 secondes (de 5 minutes à 24 heures)."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "URLs & campaigns"
@@ -2443,7 +2443,7 @@ msgstr "Durée de conservation des détails des rapports"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keeps detailed report dimensions such as pages, referrers, countries, devices, and visitor details."
-msgstr "Conserve les dimensions détaillées des rapports : pages, sites référents, pays, appareils et détails sur les internautes."
+msgstr "Conserve les dimensions détaillées des rapports : pages, sites référents, pays, appareils et détails sur les visiteurs."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Long-term totals retention"
@@ -2451,7 +2451,7 @@ msgstr "Durée de conservation des totaux à long terme"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Keeps anonymous daily totals for dashboard KPIs and the page views/visitors chart after report details expire."
-msgstr "Conserve des totaux quotidiens anonymes pour les KPI du tableau de bord et le graphique pages vues/internautes après l’expiration des détails."
+msgstr "Conserve des totaux quotidiens anonymes pour les KPI du tableau de bord et le graphique pages vues/visiteurs après l’expiration des détails."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
@@ -2496,7 +2496,7 @@ msgstr "Débogage"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Enable diagnostic output for troubleshooting tracking events, realtime visitor detection, and REST payloads in the browser console and wp-content/debug.log."
-msgstr "Activez les informations de diagnostic pour résoudre les problèmes liés aux évènements de suivi, à la détection des internautes en temps réel et aux données REST dans la console du navigateur et dans wp-content/debug.log."
+msgstr "Activez les informations de diagnostic pour résoudre les problèmes liés aux évènements de suivi, à la détection des visiteurs en temps réel et aux données REST dans la console du navigateur et dans wp-content/debug.log."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Debug mode"
@@ -2532,7 +2532,7 @@ msgstr "Actions sensibles"
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Remove all aggregate KPI analytics, visitor-detail analytics, and raw log entries."
-msgstr "Supprimer toutes les données agrégées des KPI, les données détaillées sur les internautes et les entrées des journaux bruts."
+msgstr "Supprimer toutes les données agrégées des KPI, les données détaillées sur les visiteurs et les entrées des journaux bruts."
 
 #: src/admin/panels/SettingsPanel.js
 msgid "Delete all analytics data"
@@ -2830,11 +2830,11 @@ msgstr "Chargement des KPI…"
 #. translators: %s: number of robots detected in the selected period.
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Human visitors only. The robots detected in this period (%s) are excluded from all statistics."
-msgstr "Humains uniquement. Les robots détectés sur la période (%s) sont exclus de toutes les statistiques."
+msgstr "Visiteurs humains uniquement. Les robots détectés sur la période (%s) sont exclus de toutes les statistiques."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Visitors correspond to bounded visitor activity rows in the selected period."
-msgstr "Le nombre d’internautes correspond aux enregistrements d’activité délimités sur la période sélectionnée."
+msgstr "Le nombre de visiteurs correspond aux enregistrements d’activité délimités sur la période sélectionnée."
 
 #: src/admin/widgets/OverviewKpis/index.js
 msgid "Pages / visit"
@@ -2929,7 +2929,7 @@ msgstr "Pages vues (période précédente)"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous visitors"
-msgstr "Internautes (période précédente)"
+msgstr "Visiteurs (période précédente)"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. page views"
@@ -2937,15 +2937,15 @@ msgstr "Pages vues (préc.)"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Prev. visitors"
-msgstr "Internautes (préc.)"
+msgstr "Visiteurs (préc.)"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors"
-msgstr "Pages vues et internautes par jour"
+msgstr "Pages vues et visiteurs par jour"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views and visitors line chart"
-msgstr "Graphique linéaire quotidien des pages vues et des internautes"
+msgstr "Graphique linéaire quotidien des pages vues et des visiteurs"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily page views"
@@ -2957,23 +2957,23 @@ msgstr "Graphique linéaire quotidien des pages vues"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily visitors"
-msgstr "Internautes par jour"
+msgstr "Visiteurs par jour"
 
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Daily visitors line chart"
-msgstr "Graphique linéaire quotidien des internautes"
+msgstr "Graphique linéaire quotidien des visiteurs"
 
 #. translators: %s: visitors count.
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "%s visitor"
 msgid_plural "%s visitors"
-msgstr[0] "%s internaute"
-msgstr[1] "%s internautes"
+msgstr[0] "%s visiteur"
+msgstr[1] "%s visiteurs"
 
 #. translators: 1: formatted date, 2: current page views count, 3: current visitors count, 4: previous page views count, 5: previous visitors count
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "%1$s: Page views %2$s, Visitors %3$s, Previous page views %4$s, Previous visitors %5$s"
-msgstr "%1$s : pages vues %2$s, internautes %3$s, pages vues (période précédente) %4$s, internautes (période précédente) %5$s"
+msgstr "%1$s : pages vues %2$s, visiteurs %3$s, pages vues (période précédente) %4$s, visiteurs (période précédente) %5$s"
 
 #. translators: 1: formatted date, 2: current metric count, 3: previous metric count
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -2993,7 +2993,7 @@ msgstr "Pages vues : %1$s"
 #. translators: 1: visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Visitors: %1$s"
-msgstr "Internautes : %1$s"
+msgstr "Visiteurs : %1$s"
 
 #. translators: 1: previous page view count
 #: src/admin/widgets/TimeseriesChart/index.js
@@ -3003,7 +3003,7 @@ msgstr "Pages vues (période précédente) : %1$s"
 #. translators: 1: previous visitor count
 #: src/admin/widgets/TimeseriesChart/index.js
 msgid "Previous visitors: %1$s"
-msgstr "Internautes (période précédente) : %1$s"
+msgstr "Visiteurs (période précédente) : %1$s"
 
 #. translators: 1: current metric count
 #: src/admin/widgets/TimeseriesChart/index.js

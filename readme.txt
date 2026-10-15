@@ -4,7 +4,7 @@ Tags: analytics, privacy, statistics, traffic, self-hosted
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.12
+Stable tag: 8.78.13
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.12 =
-* [Fix] The email summaries settings show the next and last send times in the site timezone, like the send time chosen above them, even when the browser is in another timezone.
+= 8.78.13 =
+* [Fix] French translation: site visitors are called "visiteurs" again in reports, charts and settings, the usual term for analytics.
