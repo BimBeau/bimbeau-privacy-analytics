@@ -903,11 +903,37 @@ function bbpa_normalize_source_domain(?string $domain): string
 
 /**
  * Determine whether a normalized domain matches a known domain pattern.
+ *
+ * A pattern that is a domain (`t.co`, `x.com`, `chatgpt.com`) matches that domain or one of its
+ * subdomains only, so `t.co` does not match inside `chatgpt.com` or `microsoft.com`. A pattern
+ * ending with a dot (`google.`, `pinterest.`) matches that label followed by any suffix
+ * (`google.fr`, `news.google.co.uk`). A pattern without a dot (`facebook`, `linkedin`) is a brand
+ * keyword and still matches anywhere, which keeps UTM sources such as `facebook-ads` recognized.
  */
 function bbpa_source_domain_matches(string $domain, array $patterns): bool
 {
+    if ($domain === '') {
+        return false;
+    }
+
     foreach ($patterns as $pattern) {
-        if ($domain === $pattern || str_ends_with($domain, '.' . $pattern) || str_contains($domain, $pattern)) {
+        $pattern = (string) $pattern;
+        if ($pattern === '') {
+            continue;
+        }
+
+        if ($domain === $pattern || str_ends_with($domain, '.' . $pattern)) {
+            return true;
+        }
+
+        if (str_ends_with($pattern, '.')) {
+            if (str_starts_with($domain, $pattern) || str_contains($domain, '.' . $pattern)) {
+                return true;
+            }
+            continue;
+        }
+
+        if (!str_contains($pattern, '.') && str_contains($domain, $pattern)) {
             return true;
         }
     }
@@ -1013,6 +1039,16 @@ function bbpa_get_source_category_from_tracking_context(?string $referrer_domain
         }
     }
 
+    // AI assistants are tested before social sources: ChatGPT adds utm_source=chatgpt.com to its links,
+    // and an AI referrer or source must not fall into the social or campaign channels.
+    $ai_domains = bbpa_get_ai_referrer_domains();
+    if (
+        bbpa_source_domain_matches(bbpa_normalize_source_domain($utm_source), $ai_domains)
+        || bbpa_source_domain_matches($domain, $ai_domains)
+    ) {
+        return 'AI Assistants';
+    }
+
     if (in_array($utm_medium, ['social'], true) || $is_social_source) {
         return 'Organic Social';
     }
@@ -1023,11 +1059,6 @@ function bbpa_get_source_category_from_tracking_context(?string $referrer_domain
 
     if ($domain === '') {
         return 'Direct';
-    }
-
-    $ai_domains = bbpa_get_ai_referrer_domains();
-    if (bbpa_source_domain_matches($domain, $ai_domains)) {
-        return 'AI Assistants';
     }
 
     $search_domains = ['google.', 'bing.com', 'duckduckgo.com', 'yahoo.', 'ecosia.org', 'qwant.com', 'startpage.com', 'baidu.com', 'yandex.', 'naver.com', 'seznam.cz'];

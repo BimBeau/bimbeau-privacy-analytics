@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 const BBPA_SCHEMA_VERSION = '30';
-const BBPA_DB_MIGRATION_VERSION = '1.8.0';
+const BBPA_DB_MIGRATION_VERSION = '1.9.0';
 
 /**
  * Option used as an atomic lock around schema installation, repairs, and data migrations.
@@ -755,6 +755,142 @@ function bbpa_ensure_visitors_source_category_column(): void
 }
 
 /**
+ * Move rows stored as Organic Social with an AI assistant referrer to AI Assistants (migration 1.9.0).
+ *
+ * Before 1.9.0 the social rule matched its patterns anywhere in the source (`t.co` inside `chatgpt.com`)
+ * and ran before the AI rule, so visits from ChatGPT links (`utm_source=chatgpt.com`) were stored as
+ * Organic Social. Rows whose referrer domain is an AI assistant domain are moved to AI Assistants in
+ * `bbpa_hits_daily`, `bbpa_daily_source_category` and `bbpa_visitors`. When an AI Assistants row with the
+ * same key already exists, the counters are added to it and the social row is deleted, so totals do not
+ * change. Rows without a referrer domain cannot be told apart from real social campaign visits and stay
+ * as they are. A second run finds nothing left to move.
+ *
+ * @return bool False when a query failed or rows remain for a later run.
+ */
+function bbpa_reclassify_ai_assistant_rows_stored_as_social(): bool
+{
+    global $wpdb;
+
+    if (!function_exists('bbpa_get_ai_referrer_domains') || !function_exists('bbpa_source_domain_matches')) {
+        return false;
+    }
+
+    $ai_domains = bbpa_get_ai_referrer_domains();
+    $batch_size = 500;
+    $completed = true;
+    $changed = false;
+    $tables = [
+        'bbpa_hits_daily' => ['hits'],
+        'bbpa_daily_source_category' => ['hits', 'visits'],
+        'bbpa_visitors' => [],
+    ];
+
+    foreach ($tables as $suffix => $counter_columns) {
+        $table = $wpdb->prefix . $suffix;
+        if (!bbpa_table_exists($table)) {
+            continue;
+        }
+
+        if ($counter_columns === [] && empty($wpdb->get_var($wpdb->prepare('SHOW COLUMNS FROM %i LIKE %s', $table, 'source_category')))) {
+            continue;
+        }
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-shot data migration.
+        $candidates = $wpdb->get_col($wpdb->prepare(
+            "SELECT DISTINCT referrer_domain FROM %i WHERE source_category = %s AND referrer_domain <> ''",
+            $table,
+            'Organic Social'
+        ));
+        if (!is_array($candidates)) {
+            $completed = false;
+            continue;
+        }
+
+        $domains = array_values(array_filter($candidates, static function ($candidate) use ($ai_domains): bool {
+            return bbpa_source_domain_matches(bbpa_normalize_source_domain((string) $candidate), $ai_domains);
+        }));
+
+        foreach (array_chunk($domains, 50) as $chunk) {
+            $in = implode(', ', array_fill(0, count($chunk), '%s'));
+
+            // Rows without an AI Assistants row of the same key move in place, one atomic statement.
+            $move_sql = $counter_columns === []
+                ? "UPDATE %i SET source_category = %s WHERE source_category = %s AND referrer_domain IN ({$in})"
+                : "UPDATE IGNORE %i SET source_category = %s WHERE source_category = %s AND referrer_domain IN ({$in})";
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Placeholder list built from the chunk size, values bound.
+            $moved = $wpdb->query($wpdb->prepare($move_sql, $table, 'AI Assistants', 'Organic Social', ...$chunk));
+            if ($moved === false) {
+                $completed = false;
+                continue;
+            }
+            if ($moved > 0) {
+                $changed = true;
+            }
+
+            if ($counter_columns === []) {
+                continue;
+            }
+
+            // Rows left collide with an AI Assistants row of the same day, page and referrer: merge their counters.
+            $select_columns = 'date_bucket, page_path, referrer_domain, ' . implode(', ', $counter_columns);
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Fixed column list, placeholder list built from the chunk size.
+            $rows = $wpdb->get_results($wpdb->prepare(
+                "SELECT {$select_columns} FROM %i WHERE source_category = %s AND referrer_domain IN ({$in}) LIMIT %d",
+                $table,
+                'Organic Social',
+                ...array_merge($chunk, [$batch_size])
+            ), ARRAY_A);
+            if (!is_array($rows)) {
+                $completed = false;
+                continue;
+            }
+
+            $set_sql = implode(', ', array_map(static function (string $column): string {
+                return "{$column} = {$column} + %d";
+            }, $counter_columns));
+            $merged_rows = 0;
+
+            foreach ($rows as $row) {
+                $counters = array_map(static function (string $column) use ($row): int {
+                    return (int) ($row[$column] ?? 0);
+                }, $counter_columns);
+                $key = [(string) $row['date_bucket'], (string) $row['page_path'], (string) $row['referrer_domain']];
+
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Fixed counter columns, values bound.
+                $merged = $wpdb->query($wpdb->prepare(
+                    "UPDATE %i SET {$set_sql} WHERE date_bucket = %s AND page_path = %s AND referrer_domain = %s AND source_category = %s",
+                    $table,
+                    ...array_merge($counters, $key, ['AI Assistants'])
+                ));
+                if ($merged !== 1) {
+                    // No exact AI Assistants row (long paths colliding on the indexed prefix): keep the row as is.
+                    continue;
+                }
+
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-shot data migration.
+                $wpdb->query($wpdb->prepare(
+                    'DELETE FROM %i WHERE date_bucket = %s AND page_path = %s AND referrer_domain = %s AND source_category = %s LIMIT 1',
+                    $table,
+                    ...array_merge($key, ['Organic Social'])
+                ));
+                ++$merged_rows;
+                $changed = true;
+            }
+
+            if (count($rows) === $batch_size && $merged_rows > 0) {
+                $completed = false;
+            }
+        }
+    }
+
+    if ($changed && function_exists('bbpa_flush_admin_cache')) {
+        bbpa_flush_admin_cache();
+    }
+
+    return $completed;
+}
+
+/**
  * Seconds a single run may spend on batched data backfills before resuming on a later run.
  */
 function bbpa_get_schema_maintenance_time_budget(): float
@@ -921,6 +1057,9 @@ function bbpa_run_db_migrations(): void
             $completed = false;
         }
         bbpa_ensure_visitors_source_category_column();
+        if (version_compare($installed, '1.9.0', '<') && !bbpa_reclassify_ai_assistant_rows_stored_as_social()) {
+            $completed = false;
+        }
         do_action('bbpa_run_additional_db_migrations');
 
         if ($completed && version_compare($installed, BBPA_DB_MIGRATION_VERSION, '<')) {

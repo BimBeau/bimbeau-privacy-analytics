@@ -1,14 +1,14 @@
 === BimBeau Privacy Analytics ===
 Contributors: BimBeau
-Tags: analytics, privacy, statistics, traffic, self-hosted
+Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.13
+Stable tag: 8.78.14
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-A WordPress analytics plugin you can trust — self-hosted, privacy-conscious insights with your data stored in WordPress.
+Privacy-friendly WordPress analytics: real-time visitor stats, top pages, referrers and countries, stored in your own database. No external account.
 
 == Description ==
 
@@ -215,5 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.13 =
-* [Fix] French translation: site visitors are called "visiteurs" again in reports, charts and settings, the usual term for analytics.
+= 8.78.14 =
+* [Fix] Visits from ChatGPT links (`utm_source=chatgpt.com`) are now counted in the AI Assistants channel instead of Organic Social, and visits already recorded with an AI assistant referrer are moved to AI Assistants when the plugin is updated.
+* [Fix] Social networks are recognized by their exact domain or subdomains: sites such as microsoft.com, netflix.com or dropbox.com are no longer counted as Organic Social.
