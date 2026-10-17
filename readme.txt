@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.15
+Stable tag: 8.78.16
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.15 =
-* [Fix] Admin notices are now one compact tinted line with the plugin mark, the message and its buttons on the right, on every plugin screen and at every screen width.
-* [Fix] The license notice shown when the Pro package is installed but not active is now fully translated and says that statistics and settings are kept.
+= 8.78.16 =
+* [Fix] Every admin notice now has the same layout: plugin mark, title, text and buttons on the right, on one line on wide screens and stacked neatly on phones.
+* [Fix] The license notice shown when the Pro package is installed but not active is shorter and names the product only once.

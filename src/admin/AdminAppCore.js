@@ -555,31 +555,27 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 			{ setupNotice ? <Notice status={ setupNotice.status } isDismissible onRemove={ () => setSetupNotice( false ) }>{ setupNotice.message }</Notice> : null }
 			{ shouldShowMissingGeoIpDatabaseNotice ? (
 				<Notice status="warning" isDismissible={ false }>
-					<div className="bbpa-admin-app__geoip-notice">
-						<div className="bbpa-admin-app__geoip-notice-copy">
-							<strong>
-								{ __(
-									'GeoIP database not installed',
-									'bimbeau-privacy-analytics'
-								) }
-							</strong>
-							<p>
-								{ __(
-									'Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.',
-									'bimbeau-privacy-analytics'
-								) }
-							</p>
-						</div>
-						<Button
-							variant="secondary"
-							href={ geolocationSettingsUrl }
-						>
-							{ __(
-								'Open geolocation settings',
-								'bimbeau-privacy-analytics'
-							) }
-						</Button>
-					</div>
+					<strong>
+						{ __(
+							'GeoIP database not installed',
+							'bimbeau-privacy-analytics'
+						) }
+					</strong>
+					<p>
+						{ __(
+							'Location reports are unavailable until the local GeoIP database has been downloaded. Download it from the Geolocation settings page.',
+							'bimbeau-privacy-analytics'
+						) }
+					</p>
+					<Button
+						variant="secondary"
+						href={ geolocationSettingsUrl }
+					>
+						{ __(
+							'Open geolocation settings',
+							'bimbeau-privacy-analytics'
+						) }
+					</Button>
 				</Notice>
 			) : null }
 			<div className="bbpa-admin-app__body">

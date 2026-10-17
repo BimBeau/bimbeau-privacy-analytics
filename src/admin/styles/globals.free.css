@@ -244,10 +244,12 @@
   height: 18px;
 }
 
-/* Title, text and actions flow on one line and wrap when space runs out; actions go to the right. */
-.bbpa-brand-notice__content,
-.bbpa-brand-notice .bbpa-admin-app__geoip-notice,
-.bbpa-brand-notice .bbpa-admin-app__geoip-notice-copy {
+/*
+ * Every notice reads the same way: title, then the text taking the remaining width, then the actions
+ * on the right, on one line on wide screens. At the WordPress mobile breakpoint (782px) the text takes
+ * its own line and the actions go under it, still on the right.
+ */
+.bbpa-brand-notice__content {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -256,18 +258,35 @@
   min-width: 0;
 }
 
-.bbpa-brand-notice .bbpa-admin-app__geoip-notice-copy {
-  flex: 1 1 320px;
-}
-
-.bbpa-brand-notice__content p,
 .bbpa-brand-notice__content > * {
   margin: 0;
 }
 
-.bbpa-brand-notice__content > .components-button,
-.bbpa-brand-notice .bbpa-admin-app__geoip-notice > .components-button {
+.bbpa-brand-notice__content > strong {
+  flex: 0 0 auto;
+}
+
+.bbpa-brand-notice__content > :is(p, div, ul, ol) {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.bbpa-brand-notice__content > :is(p, div, ul, ol) ~ :is(p, div, ul, ol) {
+  flex-basis: 100%;
+}
+
+.bbpa-brand-notice__content > .components-button {
+  flex: 0 0 auto;
+}
+
+.bbpa-brand-notice__content > .components-button:not(.components-button + .components-button) {
   margin-left: auto;
+}
+
+@media (max-width: 782px) {
+  .bbpa-brand-notice__content > :is(p, div, ul, ol) {
+    flex-basis: 100%;
+  }
 }
 
 .bbpa-admin-app .bbpa-brand-notice.components-notice .components-notice__dismiss {
@@ -286,18 +305,18 @@
   gap: var(--bbpa-gap-sm);
 }
 
-/* WordPress and Freemius notices moved under the plugin header take the same line. */
+/*
+ * WordPress and Freemius notices moved under the plugin header get the same tint and spacing.
+ * Notices of other plugins keep their own markup in block flow (several paragraphs, forms).
+ */
 .bbpa-admin-app .bbpa-admin-app__notices .notice,
 .bbpa-admin-app .bbpa-admin-app__notices .fs-notice {
   position: relative;
-  display: flex !important;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 4px 12px;
+  display: block !important;
   box-sizing: border-box;
   min-height: 48px;
   margin: 0 !important;
-  padding: 8px 48px 8px 14px;
+  padding: 12px 48px 12px 14px;
   border: 0 !important;
   border-radius: var(--bbpa-radius-sm);
   background: var(--bbpa-notice-bg) !important;
@@ -307,7 +326,24 @@
   line-height: 1.5;
 }
 
-.bbpa-admin-app .bbpa-admin-app__notices .notice p,
+.bbpa-admin-app .bbpa-admin-app__notices .notice p {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+
+.bbpa-admin-app .bbpa-admin-app__notices .notice p + p {
+  margin-top: 4px;
+}
+
+/* Freemius notices are the plugin's own: BPA mark, then the message laid out like a plugin notice. */
+.bbpa-admin-app .bbpa-admin-app__notices .fs-notice {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding-block: 8px;
+}
+
 .bbpa-admin-app .bbpa-admin-app__notices .fs-notice .fs-notice-body {
   flex: 1 1 auto;
   min-width: 0;
@@ -321,8 +357,8 @@
   display: none;
 }
 
-/* Freemius notices are the plugin's own: they carry the BPA mark, and their button goes to the right. */
-.bbpa-admin-app .bbpa-admin-app__notices .fs-notice::before {
+.bbpa-admin-app .bbpa-admin-app__notices .fs-notice::before,
+.notice.bbpa-geoip-fallback::before {
   content: "";
   flex: 0 0 18px;
   width: 18px;
@@ -332,15 +368,100 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1500 1500'%3E%3Crect x='275.34' y='190.28' width='160.36' height='320.72' transform='translate(854.86 347.19) rotate(135)'/%3E%3Crect x='1069.09' y='984.02' width='160.36' height='320.72' transform='translate(2771.13 1140.93) rotate(135)'/%3E%3Cpath d='M932.9,567.01c-96.81-96.81-253.78-96.81-350.59,0s-96.81,253.78,0,350.59c96.81,96.81,253.78,96.81,350.59,0s96.81-253.78,0-350.59ZM706.12,793.8c-28.44-28.44-28.44-74.54,0-102.98,28.44-28.44,74.54-28.44,102.98,0,28.44,28.44,28.44,74.54,0,102.98s-74.54,28.44-102.98,0Z'/%3E%3Crect x='982.01' y='154.21' width='160.36' height='567.01' transform='translate(620.62 -622.88) rotate(45)'/%3E%3Crect x='358.35' y='777.87' width='160.36' height='567.01' transform='translate(878.95 .78) rotate(45)'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-.bbpa-admin-app .bbpa-admin-app__notices .fs-notice .fs-notice-body {
+.bbpa-admin-app .bbpa-admin-app__notices .fs-notice .fs-notice-body:has(> a > .button) {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 6px 0.3em;
+  gap: 4px 12px;
 }
 
-.bbpa-admin-app .bbpa-admin-app__notices .fs-notice .fs-notice-body a:has(> .button) {
+.bbpa-admin-app .bbpa-admin-app__notices .fs-notice .fs-notice-body:has(> a > .button) > strong {
+  flex: 0 0 auto;
+}
+
+.bbpa-admin-app .bbpa-admin-app__notices .fs-notice .fs-notice-body > a:has(> .button) {
+  flex: 0 0 auto;
   margin-left: auto !important;
+}
+
+@media (max-width: 782px) {
+  .bbpa-admin-app .bbpa-admin-app__notices .fs-notice .fs-notice-body:has(> a > .button) {
+    flex-wrap: wrap;
+  }
+}
+
+/* GeoIP status fallback (admin/admin.php): one line like the other notices, wherever it is mounted. */
+.notice.bbpa-geoip-fallback,
+.bbpa-admin-app .bbpa-admin-app__notices .notice.bbpa-geoip-fallback {
+  --bbpa-notice-bg: var(--bbpa-color-accent-soft);
+  --bbpa-notice-ink: var(--color-3);
+  position: relative;
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  box-sizing: border-box;
+  min-height: 48px;
+  margin: 0 !important;
+  padding: 8px 14px 8px 44px;
+  border: 0 !important;
+  border-radius: var(--bbpa-radius-sm);
+  background: var(--bbpa-notice-bg) !important;
+  box-shadow: none;
+  color: var(--color-1);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.notice.bbpa-geoip-fallback > p {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+
+.notice.bbpa-geoip-fallback .bbpa-geoip-fallback__title {
+  flex: 0 0 auto;
+}
+
+.notice.bbpa-geoip-fallback .bbpa-geoip-fallback__status {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.notice.bbpa-geoip-fallback > .button {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.notice.bbpa-geoip-fallback .bbpa-geoip-fallback__message {
+  flex-basis: 100%;
+  font-weight: 600;
+}
+
+.notice.bbpa-geoip-fallback .bbpa-geoip-fallback__message:empty {
+  display: none;
+}
+
+.notice.bbpa-geoip-fallback .bbpa-geoip-fallback__message.is-success {
+  color: #087a6b;
+}
+
+.notice.bbpa-geoip-fallback .bbpa-geoip-fallback__message.is-error {
+  color: var(--color-9);
+}
+
+/* The mark sits in its own left column so wrapped lines stay aligned with the title, as in BrandNotice. */
+.notice.bbpa-geoip-fallback::before {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 782px) {
+  .notice.bbpa-geoip-fallback .bbpa-geoip-fallback__status {
+    flex-basis: 100%;
+  }
 }
 
 .bbpa-admin-app .bbpa-admin-app__notices .fs-notice .button-primary {

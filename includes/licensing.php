@@ -403,8 +403,8 @@ function bbpa_register_freemius_text_overrides(): void
             'yee-haw'                  => __('Good news', 'bimbeau-privacy-analytics'),
             /* translators: %s: plan name, for example BimBeau Privacy Analytics Pro. */
             'you-have-x-license'       => __('Your %s license is ready.', 'bimbeau-privacy-analytics'),
-            /* translators: %1$s: product name (unused), %2$s: plan name, %3$s: activation button. Keep %3$s at the end. */
-            'activate-premium-version' => ' ' . __('%2$s is already installed on this site. Activate it to use its features. Your statistics and settings are kept. %3$s', 'bimbeau-privacy-analytics'),
+            /* translators: %1$s, %2$s: product and plan names (unused, the license sentence before already names the plan), %3$s: activation button. Keep %3$s at the end. */
+            'activate-premium-version' => ' ' . __('Activate the extension, already installed: your statistics and settings are kept. %3$s', 'bimbeau-privacy-analytics'),
             'activate-x-features'      => __('Activate the Pro version', 'bimbeau-privacy-analytics'),
         ],
         BBPA_SLUG

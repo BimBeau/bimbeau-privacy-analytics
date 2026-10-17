@@ -2237,22 +2237,16 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
         }
 
         var shell = document.createElement('div');
-        shell.className = 'notice notice-info';
-        shell.style.marginTop = '12px';
+        shell.className = 'notice notice-info bbpa-geoip-fallback';
         shell.setAttribute('data-bbpa-geoip-fallback', 'true');
         shell.setAttribute('data-bbpa-geoip-fallback-mounted', 'true');
 
+        // Same reading order as the other admin notices: title, status, then the button on the right.
         var title = document.createElement('p');
-        title.style.marginBottom = '8px';
+        title.className = 'bbpa-geoip-fallback__title';
         var titleText = document.createElement('strong');
         titleText.textContent = translate('GeoIP database status');
         title.appendChild(titleText);
-
-        var controls = document.createElement('div');
-        controls.style.display = 'flex';
-        controls.style.alignItems = 'center';
-        controls.style.gap = '8px';
-        controls.style.flexWrap = 'wrap';
 
         var button = document.createElement('button');
         button.type = 'button';
@@ -2261,23 +2255,20 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
         button.setAttribute('data-bbpa-geoip-update-button', 'true');
 
         var status = document.createElement('p');
-        status.style.margin = '0';
-        status.style.fontSize = '13px';
-        status.style.lineHeight = '1.5';
+        status.className = 'bbpa-geoip-fallback__status';
         status.setAttribute('data-bbpa-geoip-status', 'true');
         status.setAttribute('role', 'status');
         status.setAttribute('aria-live', 'polite');
         status.textContent = translate('Loading…');
 
-        var notice = document.createElement('div');
-        notice.style.marginTop = '8px';
+        var notice = document.createElement('p');
+        notice.className = 'bbpa-geoip-fallback__message';
         notice.setAttribute('data-bbpa-geoip-notice', 'true');
         notice.setAttribute('aria-live', 'polite');
 
-        controls.appendChild(button);
-        controls.appendChild(status);
         shell.appendChild(title);
-        shell.appendChild(controls);
+        shell.appendChild(status);
+        shell.appendChild(button);
         shell.appendChild(notice);
 
         container.appendChild(shell);
@@ -2313,7 +2304,7 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
             return;
         }
 
-        noticeNode.className = 'notice notice-' + status + ' inline';
+        noticeNode.className = 'bbpa-geoip-fallback__message is-' + status;
         noticeNode.textContent = message;
     };
 
