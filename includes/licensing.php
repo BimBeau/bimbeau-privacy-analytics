@@ -386,6 +386,32 @@ function bbpa_enqueue_freemius_pricing_i18n_adapter(): void
 }
 
 /**
+ * Replace the Freemius wording of the license notices shown when the Pro package is installed but inactive.
+ *
+ * Runs on init, after the plugin text domain is loaded, so the replacements are translated.
+ * Freemius stores sticky notices with their text, so a notice saved before this change keeps its old wording.
+ */
+function bbpa_register_freemius_text_overrides(): void
+{
+    if (!function_exists('fs_override_i18n')) {
+        return;
+    }
+
+    fs_override_i18n(
+        [
+            /* translators: Title of the Freemius license notices; Freemius appends an exclamation mark. */
+            'yee-haw'                  => __('Good news', 'bimbeau-privacy-analytics'),
+            /* translators: %s: plan name, for example BimBeau Privacy Analytics Pro. */
+            'you-have-x-license'       => __('Your %s license is ready.', 'bimbeau-privacy-analytics'),
+            /* translators: %1$s: product name (unused), %2$s: plan name, %3$s: activation button. Keep %3$s at the end. */
+            'activate-premium-version' => ' ' . __('%2$s is already installed on this site. Activate it to use its features. Your statistics and settings are kept. %3$s', 'bimbeau-privacy-analytics'),
+            'activate-x-features'      => __('Activate the Pro version', 'bimbeau-privacy-analytics'),
+        ],
+        BBPA_SLUG
+    );
+}
+
+/**
  * Register BimBeau Privacy Analytics Freemius i18n hooks outside the bundled Freemius SDK.
  */
 function bbpa_register_freemius_i18n_hooks(): void
@@ -396,6 +422,7 @@ function bbpa_register_freemius_i18n_hooks(): void
     }
 
     add_action('admin_enqueue_scripts', 'bbpa_enqueue_freemius_pricing_i18n_adapter');
+    add_action('init', 'bbpa_register_freemius_text_overrides', 1);
 }
 
 bbpa_register_freemius_i18n_hooks();

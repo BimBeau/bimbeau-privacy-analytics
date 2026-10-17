@@ -5,7 +5,8 @@ import {
 	useRef,
 	useState,
 } from '@wordpress/element';
-import { Button, Notice, Tooltip } from '@wordpress/components';
+import { Button, Tooltip } from '@wordpress/components';
+import Notice from '../components/BrandNotice';
 import { filterSortAndPaginate } from '@wordpress/dataviews';
 import ListDataViews, {
 	getInitialListColumns,

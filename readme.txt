@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.14
+Stable tag: 8.78.15
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.14 =
-* [Fix] Visits from ChatGPT links (`utm_source=chatgpt.com`) are now counted in the AI Assistants channel instead of Organic Social, and visits already recorded with an AI assistant referrer are moved to AI Assistants when the plugin is updated.
-* [Fix] Social networks are recognized by their exact domain or subdomains: sites such as microsoft.com, netflix.com or dropbox.com are no longer counted as Organic Social.
+= 8.78.15 =
+* [Fix] Admin notices are now one compact tinted line with the plugin mark, the message and its buttons on the right, on every plugin screen and at every screen width.
+* [Fix] The license notice shown when the Pro package is installed but not active is now fully translated and says that statistics and settings are kept.
