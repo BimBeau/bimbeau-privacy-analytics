@@ -1828,7 +1828,17 @@ function bbpa_get_geolocation_admin_fallback_script(): string
                 ? adminConfig.settings.restNamespace
                 : ''
         );
-        var url = new URL(namespace + path, baseUrl);
+        var url = new URL(baseUrl, window.location.href);
+        var routePath = [namespace.replace(/^\/+|\/+$/g, ''), String(path || '').replace(/^\/+/, '')]
+            .filter(Boolean)
+            .join('/');
+
+        // Plain permalinks expose the REST base as ?rest_route=/ so the route goes in that query arg.
+        if (url.searchParams.has('rest_route')) {
+            url.searchParams.set('rest_route', '/' + routePath);
+        } else {
+            url.pathname = url.pathname.replace(/\/*$/, '/') + routePath;
+        }
 
         Object.keys(params || {}).forEach(function (key) {
             var value = params[key];
@@ -2228,7 +2238,19 @@ function bbpa_get_settings_geolocation_admin_fallback_script(): string
     var buildRestUrl = function (path) {
         var baseUrl = String(adminConfig.restUrl || '');
         var namespace = String(settings.restInternalNamespace || '');
-        return new URL(namespace + path, baseUrl).toString();
+        var url = new URL(baseUrl, window.location.href);
+        var routePath = [namespace.replace(/^\/+|\/+$/g, ''), String(path || '').replace(/^\/+/, '')]
+            .filter(Boolean)
+            .join('/');
+
+        // Plain permalinks expose the REST base as ?rest_route=/ so the route goes in that query arg.
+        if (url.searchParams.has('rest_route')) {
+            url.searchParams.set('rest_route', '/' + routePath);
+        } else {
+            url.pathname = url.pathname.replace(/\/*$/, '/') + routePath;
+        }
+
+        return url.toString();
     };
 
     var createFallbackShell = function (container) {
