@@ -470,7 +470,6 @@ const AcquisitionPanel = ( { rangeSelection } ) => {
 					/>
 				) : null }
 			</div>
-			{  }
 		</div>
 	);
 };

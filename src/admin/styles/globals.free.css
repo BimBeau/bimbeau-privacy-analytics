@@ -113,6 +113,12 @@
 }
 
 
+/* Hand-written WordPress badges: centre the label whatever the version of the wp-components stylesheet
+   (without align-items the text stretches to the 24px badge height and sits at its top). */
+.bbpa-admin-app .components-badge {
+  align-items: center;
+}
+
 .bbpa-admin-app .bbpa-admin-app__realtime-count-badge.components-badge {
   margin-left: 2px;
   min-width: 1.8em;

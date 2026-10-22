@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.78.17
+Stable tag: 8.79.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,10 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.78.17 =
-* [Fix] Settings > Geolocation: the GeoIP database status now loads on sites without pretty permalinks (plain `?rest_route=` REST URLs) instead of showing "Unable to load the GeoIP database status.".
+= 8.79.0 =
+* [Feature] Events: new WooCommerce trigger type. The product viewed, added to cart, checkout started and order placed steps are now events created in Settings → Events, like any other event, and are collected only when their event exists and is enabled.
+* [Feature] Funnels: Add the WooCommerce purchase funnel now creates its four WooCommerce events when they are missing, then the funnel. Funnels saved before this version keep being measured: their WooCommerce events are created during the update.
+* [Change] Acquisition: the purchase journey card is removed. The purchase funnel lives in the Funnels tab of the Events report; the WooCommerce orders, revenue and conversion rate columns stay.
+* [Fix] WooCommerce: the checkout started step is no longer recorded on the order payment page or on the order confirmation page, and custom thank-you pages that carry the WooCommerce order-received endpoint are now recognised for order attribution.
+* [Fix] Admin: badge labels are vertically centred.
+* [Fix] Settings → Events: on phones and small tablets, the Include in KPI and Enable event switches no longer cover the event name.
