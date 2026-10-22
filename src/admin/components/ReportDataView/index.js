@@ -276,6 +276,8 @@ const ReportDataView = ( {
 	extraMetricValueKey = '',
 	formatExtraMetricValue,
 	metricHelpText = '',
+	// Format of the metric cells (an amount in a currency); plain numbers by default.
+	formatMetricValue = formatNumber,
 	metricFallbackValueKey = '',
 	metricFallbackBadgeLabel = '',
 	hideZeroPrimaryRows = false,
@@ -715,7 +717,7 @@ const ReportDataView = ( {
 					return (
 						<div className="bbpa-report-table__metric">
 							<span className="bbpa-report-table__metric-value">
-								{ formatNumber( Number( value ) || 0 ) }
+								{ formatMetricValue( Number( value ) || 0 ) }
 							</span>
 							{ typeof renderMetricAccessory === 'function'
 								? renderMetricAccessory( row.item, row )
@@ -901,6 +903,7 @@ const ReportDataView = ( {
 		extraMetricLabel,
 		favicons,
 		formatExtraMetricValue,
+		formatMetricValue,
 		getComparisonKey,
 		getRowClassName,
 		getRowHref,

@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.79.0
+Stable tag: 8.80.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,10 +215,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.79.0 =
-* [Feature] Events: new WooCommerce trigger type. The product viewed, added to cart, checkout started and order placed steps are now events created in Settings → Events, like any other event, and are collected only when their event exists and is enabled.
-* [Feature] Funnels: Add the WooCommerce purchase funnel now creates its four WooCommerce events when they are missing, then the funnel. Funnels saved before this version keep being measured: their WooCommerce events are created during the update.
-* [Change] Acquisition: the purchase journey card is removed. The purchase funnel lives in the Funnels tab of the Events report; the WooCommerce orders, revenue and conversion rate columns stay.
-* [Fix] WooCommerce: the checkout started step is no longer recorded on the order payment page or on the order confirmation page, and custom thank-you pages that carry the WooCommerce order-received endpoint are now recognised for order attribution.
-* [Fix] Admin: badge labels are vertically centred.
-* [Fix] Settings → Events: on phones and small tablets, the Include in KPI and Enable event switches no longer cover the event name.
+= 8.80.0 =
+* [Feature] E-commerce: new report for WooCommerce stores, right after Acquisition in the Statistics menu. It shows orders, revenue, average order, conversion rate and revenue per visit with their change against the previous period, the revenue per day, the saved purchase funnel, the sales of the five main channels with the orders not attributed, and the products sold. [Pro].
+* [Feature] E-commerce: the products sold list can be searched, sorted, filtered by acquisition channel (including the orders not attributed) and exported as CSV, JSON or Excel. [Pro].
+* [Feature] Settings → General → Enabled panels: the E-commerce report is enabled by default and can be hidden like the other reports. [Pro].
