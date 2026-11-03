@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.81.0
+Stable tag: 8.81.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.81.0 =
-* [Feature] Customize the subject and the title of email summaries, with the {site}, {period} and {visitors} variables [Pro].
-* [UI] Show a whole-month period as the month name, for example "October 2026", in monthly email summaries [Pro].
+= 8.81.1 =
+* [Fix] Updated the bundled country flag icons (flag-icons 7.6.0): corrected flags for Panama, Ethiopia, Yemen, Ivory Coast, New Caledonia, Burkina Faso, Vanuatu and Ascension Island.
