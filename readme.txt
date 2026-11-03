@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.81.1
+Stable tag: 8.82.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,7 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.81.1 =
-* [Fix] Updated the bundled country flag icons (flag-icons 7.6.0): corrected flags for Panama, Ethiopia, Yemen, Ivory Coast, New Caledonia, Burkina Faso, Vanuatu and Ascension Island.
+= 8.82.0 =
+* [Feature] New installations get a clearer default subject and title for email summaries ("Traffic on {site} – {period}: {visitors} visitors", "Your website traffic"); existing sites keep their current texts [Pro].
+* [Feature] Show the default subject and title in grey in the empty fields of the Email summaries settings [Pro].
+* [Feature] Add the {domain} variable (site address) to the email summary subject and title [Pro].
