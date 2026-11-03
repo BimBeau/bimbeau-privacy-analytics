@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.80.0
+Stable tag: 8.81.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,7 +215,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.80.0 =
-* [Feature] E-commerce: new report for WooCommerce stores, right after Acquisition in the Statistics menu. It shows orders, revenue, average order, conversion rate and revenue per visit with their change against the previous period, the revenue per day, the saved purchase funnel, the sales of the five main channels with the orders not attributed, and the products sold. [Pro].
-* [Feature] E-commerce: the products sold list can be searched, sorted, filtered by acquisition channel (including the orders not attributed) and exported as CSV, JSON or Excel. [Pro].
-* [Feature] Settings → General → Enabled panels: the E-commerce report is enabled by default and can be hidden like the other reports. [Pro].
+= 8.81.0 =
+* [Feature] Customize the subject and the title of email summaries, with the {site}, {period} and {visitors} variables [Pro].
+* [UI] Show a whole-month period as the month name, for example "October 2026", in monthly email summaries [Pro].
