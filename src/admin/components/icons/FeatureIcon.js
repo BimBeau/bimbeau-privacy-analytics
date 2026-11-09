@@ -13,6 +13,7 @@ import {
 	LuChevronUp,
 	LuCircleAlert,
 	LuLink,
+	LuMonitorSmartphone,
 	LuSearch,
 	LuEye,
 	LuTimer,
@@ -66,6 +67,7 @@ const FEATURE_ICON_MAP = {
 	trendingDown: LuTrendingDown,
 	info: LuInfo,
 	send: LuSend,
+	devices: LuMonitorSmartphone,
 };
 
 const FeatureIcon = ( { name, className, size = 18 } ) => {

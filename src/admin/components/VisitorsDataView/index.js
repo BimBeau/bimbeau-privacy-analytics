@@ -109,10 +109,34 @@ const PrivateLabel = () => (
 	<span className="bbpa-private-label">{ PRIVATE_LABEL }</span>
 );
 
-/** Wraps a consented-only cell: private visitors show "Private". */
-const consentedOnly = ( render ) => {
-	const ConsentedCell = ( { item } ) =>
-		isPrivateVisitor( item ) ? <PrivateLabel /> : render( item );
+// The other consented cells of a private visitor show a quiet dash, so the
+// row reads "Private" once instead of in every column; screen readers still
+// hear "Private" in each cell.
+const PrivateDash = () => (
+	<>
+		<span className="bbpa-private-dash" aria-hidden="true">
+			–
+		</span>
+		<span className="screen-reader-text">{ PRIVATE_LABEL }</span>
+	</>
+);
+
+/**
+ * Wraps a consented-only cell for private visitors.
+ *
+ * @param {Function} render           Cell of a consented visitor.
+ * @param {Object}   options          Options.
+ * @param {boolean}  options.labelled Show the "Private" label (one column per row) instead of a dash.
+ * @return {Function} Cell component.
+ */
+const consentedOnly = ( render, { labelled = false } = {} ) => {
+	const ConsentedCell = ( { item } ) => {
+		if ( ! isPrivateVisitor( item ) ) {
+			return render( item );
+		}
+
+		return labelled ? <PrivateLabel /> : <PrivateDash />;
+	};
 
 	return ConsentedCell;
 };
@@ -264,7 +288,9 @@ export const getVisitorFields = ( {
 			label: __( 'Country', 'bimbeau-privacy-analytics' ),
 			getValue: ( { item } ) =>
 				String( item.country_code || '' ).toUpperCase(),
-			render: consentedOnly( ( item ) => <CountryCell item={ item } /> ),
+			render: consentedOnly( ( item ) => <CountryCell item={ item } />, {
+				labelled: true,
+			} ),
 			...( countries.length
 				? { elements: countries, filterBy: { operators: [ 'is' ] } }
 				: { filterBy: false } ),

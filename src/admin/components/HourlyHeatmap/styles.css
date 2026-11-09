@@ -9,6 +9,8 @@
 .bbpa-hourly-heatmap__frame {
   position: relative;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .bbpa-hourly-heatmap__grid {
@@ -17,6 +19,39 @@
   border-collapse: separate;
   border-spacing: 2px;
   margin: 0;
+}
+
+/*
+ * When the card is stretched by its row (dashboard grid next to taller
+ * lists), the grid takes the free height instead of leaving it empty under
+ * the legend: the card content, its body and the heatmap become flex columns
+ * and the table grows, its rows sharing the extra height. The frame is capped
+ * so the cells stay cells, not bars. A card that is not stretched keeps the
+ * natural height.
+ */
+.components-card:has(> div > .components-card__body > .bbpa-hourly-heatmap) > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.components-card__body:has(> .bbpa-hourly-heatmap) {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.components-card__body > .bbpa-hourly-heatmap {
+  flex: 1 1 auto;
+}
+
+.components-card__body > .bbpa-hourly-heatmap .bbpa-hourly-heatmap__frame {
+  flex: 1 1 auto;
+  max-height: 380px;
+}
+
+.components-card__body > .bbpa-hourly-heatmap .bbpa-hourly-heatmap__grid {
+  flex: 1 1 auto;
 }
 
 .bbpa-hourly-heatmap__corner,

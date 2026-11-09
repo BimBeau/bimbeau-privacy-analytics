@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.82.2
+Stable tag: 8.82.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,9 +215,12 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.82.2 =
-* [UI] The hourly heatmap (dashboard and page details) shows colour only: no number in each cell any more, the value appears on hover.
-* [UI] A cell without activity stays grey, so it no longer looks like a low value; the colour scale is a square-root scale, so one busy slot does not wash out the rest.
-* [UI] Weekdays are rows and hours columns, labelled every 3 hours (every 6 on phones): the grid fits a phone without horizontal scrolling.
-* [Feature] A legend gives the scale and a sentence names the busiest slot of the week, outlined in the grid.
-* [A11y] The heatmap is a real table with weekday and hour headers: screen readers read every value instead of a canvas.
+= 8.82.3 =
+* [Feature] Page details are grouped in tabs (Overview, Sources, Audience, Visit times, Visitors) under a header that names the page, with Back, View and Open in WordPress [Pro].
+* [Feature] The page details overview shows named key figures (page views with the previous period, average time on page, top source of visits) and a "Key takeaways" card written from the period's data, each sentence linked to its tab [Pro].
+* [UI] Key figures and the daily chart share one card; the typical visitor (country, browser, system, device) moves to the Audience tab [Pro].
+* [UI] Key takeaways get an icon, their leading fact in bold and accent links to the matching tab [Pro].
+* [UI] The hourly heatmap fills the height of its card when the card is stretched by its row, as on the dashboard.
+* [UI] Visitors lists show "Private" once per private visitor (country column) and a quiet dash in its other columns, instead of "Private" in every column.
+* [UI] Referring sites: a visit whose site was not sent shows its channel, for example "Paid Search (site not shared)", instead of "Referrer unavailable".
+* [UI] Page details: the page views per day list shows localized dates (23 Oct 2026) [Pro].

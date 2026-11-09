@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import ListDataViews, {
 	getInitialListColumns,
 	getInitialListView,
@@ -149,7 +149,12 @@ const ReferrerSourcesTableCard = ( { range, requestParams = {} } ) => {
 			item.referrer_domain ||
 			( category === directLabel
 				? directLabel
-				: __( 'Referrer unavailable', 'bimbeau-privacy-analytics' ) );
+				: sprintf(
+						// The browser or app sent no referring site: name the channel the visit was attributed to.
+						/* translators: %s: acquisition channel, such as Paid search. */
+						__( '%s (site not shared)', 'bimbeau-privacy-analytics' ),
+						category
+				  ) );
 
 		return {
 			id: `${ referrer }-${ sourceCategory }-${ index }`,
