@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.82.1
+Stable tag: 8.82.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.82.1 =
-* Bump d3-scale from 4.0.2 to 4.0.3 in the production-dependencies group.
+= 8.82.2 =
+* [UI] The hourly heatmap (dashboard and page details) shows colour only: no number in each cell any more, the value appears on hover.
+* [UI] A cell without activity stays grey, so it no longer looks like a low value; the colour scale is a square-root scale, so one busy slot does not wash out the rest.
+* [UI] Weekdays are rows and hours columns, labelled every 3 hours (every 6 on phones): the grid fits a phone without horizontal scrolling.
+* [Feature] A legend gives the scale and a sentence names the busiest slot of the week, outlined in the grid.
+* [A11y] The heatmap is a real table with weekday and hour headers: screen readers read every value instead of a canvas.

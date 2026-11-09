@@ -1,0 +1,156 @@
+/* Hourly heatmap: weekdays in rows, hours in columns, colour only in the cells. */
+.bbpa-hourly-heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bbpa-gap-md);
+  min-width: 0;
+}
+
+.bbpa-hourly-heatmap__frame {
+  position: relative;
+  min-width: 0;
+}
+
+.bbpa-hourly-heatmap__grid {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 2px;
+  margin: 0;
+}
+
+.bbpa-hourly-heatmap__corner,
+.bbpa-hourly-heatmap__day {
+  width: 44px;
+}
+
+.bbpa-hourly-heatmap.has-long-day-labels .bbpa-hourly-heatmap__corner,
+.bbpa-hourly-heatmap.has-long-day-labels .bbpa-hourly-heatmap__day {
+  width: 78px;
+}
+
+.bbpa-hourly-heatmap__hour {
+  position: relative;
+  height: 18px;
+  padding: 0;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: bottom;
+}
+
+.bbpa-hourly-heatmap__hour-label {
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--bbpa-color-text-muted, #646970);
+  font-variant-numeric: tabular-nums;
+}
+
+.bbpa-hourly-heatmap__day {
+  padding: 0 6px 0 0;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--color-2);
+}
+
+.bbpa-hourly-heatmap__cell {
+  height: 22px;
+  padding: 0;
+  border-radius: 3px;
+  background-color: var(--color-5, #f6f7f7);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.bbpa-hourly-heatmap__cell.is-peak {
+  box-shadow: inset 0 0 0 2px var(--color-1);
+}
+
+.bbpa-hourly-heatmap__cell:hover {
+  box-shadow: inset 0 0 0 2px var(--color-1);
+}
+
+.bbpa-hourly-heatmap__floating {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 6px));
+  white-space: nowrap;
+}
+
+.bbpa-hourly-heatmap__floating.is-near-start {
+  transform: translate(-12px, calc(-100% - 6px));
+}
+
+.bbpa-hourly-heatmap__floating.is-near-end {
+  transform: translate(calc(-100% + 12px), calc(-100% - 6px));
+}
+
+.bbpa-hourly-heatmap__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--bbpa-gap-sm) var(--bbpa-gap-lg);
+}
+
+.bbpa-hourly-heatmap__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bbpa-gap-xs);
+  font-size: 11px;
+  color: var(--bbpa-color-text-muted, #646970);
+  font-variant-numeric: tabular-nums;
+}
+
+.bbpa-hourly-heatmap__legend-title {
+  margin-right: 4px;
+}
+
+.bbpa-hourly-heatmap__legend-swatch {
+  width: 12px;
+  height: 10px;
+  border-radius: 2px;
+  background-color: var(--color-5, #f6f7f7);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.bbpa-hourly-heatmap__legend-scale {
+  width: 120px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.bbpa-hourly-heatmap__peak {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-1);
+}
+
+@media (max-width: 782px) {
+  .bbpa-hourly-heatmap__grid {
+    border-spacing: 1px;
+  }
+
+  .bbpa-hourly-heatmap__corner,
+  .bbpa-hourly-heatmap__day {
+    width: 34px;
+  }
+
+  .bbpa-hourly-heatmap__cell {
+    height: 18px;
+    border-radius: 2px;
+  }
+
+  .bbpa-hourly-heatmap__hour:not(.is-major) .bbpa-hourly-heatmap__hour-label {
+    display: none;
+  }
+
+  .bbpa-hourly-heatmap__legend-scale {
+    width: 80px;
+  }
+}

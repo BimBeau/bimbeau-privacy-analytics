@@ -105,6 +105,30 @@ export const buildHourlyHeatmapData = (items = []) => {
   };
 };
 
+/**
+ * Busiest weekday and hour of a heatmap built by buildHourlyHeatmapData().
+ *
+ * @param {Array} data Rows per hour ({ id, data: [{ x: day key, y: value }] }).
+ * @param {Array} days Day keys, in the order of the row cells.
+ * @return {?Object} { day, hour, value }, the first busiest slot from Monday
+ *                   morning, or null without activity.
+ */
+export const getHourlyHeatmapPeak = (data = [], days = []) => {
+  let peak = null;
+
+  days.forEach((day, dayIndex) => {
+    data.forEach((row, hour) => {
+      const value = Number(row?.data?.[dayIndex]?.y) || 0;
+
+      if (value > 0 && (!peak || value > peak.value)) {
+        peak = { day, hour, value };
+      }
+    });
+  });
+
+  return peak;
+};
+
 export const normalizeHourlyItems = (items) => {
   if (!Array.isArray(items)) {
     return [];
