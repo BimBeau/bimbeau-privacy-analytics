@@ -5,8 +5,8 @@ import { fetchAdminJson } from '../../api/useAdminEndpoint';
 
 const STEPS = [ 'tracking', 'geolocation', 'referrers', 'complete' ];
 const CMP_DOCUMENTATION_URLS = {
-	default: 'https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy/consent-and-cmp/',
-	fr: 'https://bimbeau.fr/bimbeau-privacy-analytics/privacy/consent-and-cmp/',
+	default: 'https://bimbeau-privacy-analytics.com/privacy/consent-and-cmp/',
+	fr: 'https://bimbeau-privacy-analytics.com/fr/privacy/consent-and-cmp/',
 };
 const stepNumber = ( step ) => Math.max( 0, STEPS.indexOf( step ) ) + 1;
 const postWizard = ( action, extra = {} ) => fetchAdminJson( '/admin/setup-wizard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify( { action, ...extra } ) } );

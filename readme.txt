@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.82.3
+Stable tag: 8.82.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,8 +83,8 @@ Depending on the active license, site configuration, consent setup, and availabl
 
 Learn more about Pro:
 
-* [Pro version overview](https://bimbeau.fr/bimbeau-privacy-analytics/en/pro/overview/)
-* [Pro pricing](https://bimbeau.fr/bimbeau-privacy-analytics/en/pricing/)
+* [Pro version overview](https://bimbeau-privacy-analytics.com/pro/overview/)
+* [Pro pricing](https://bimbeau-privacy-analytics.com/pricing/)
 
 The WordPress.org Free package remains fully usable without the Pro edition.
 
@@ -95,8 +95,8 @@ The core analytics reports use data stored in your WordPress installation. A sma
 **BimBeau GeoIP Database Service** — Used to download the optional local database for country-level geolocation. Automatic database downloads are disabled by default. A request is made only after an administrator manually requests a download/update or later enables automatic updates. The service can receive the WordPress server IP address and a technical User-Agent; visitor IP addresses are not sent to BimBeau for local GeoIP lookups.
 
 [BimBeau GeoIP Database Service](https://github.com/BimBeau/bimbeau-geoip-database)
-[BimBeau Terms of Use](https://bimbeau.fr/bimbeau-privacy-analytics/en/legal/terms-of-use/)
-[BimBeau Privacy Policy](https://bimbeau.fr/bimbeau-privacy-analytics/en/privacy-policy/)
+[BimBeau Terms of Use](https://bimbeau-privacy-analytics.com/legal/terms-of-use/)
+[BimBeau Privacy Policy](https://bimbeau-privacy-analytics.com/privacy-policy/)
 
 **Referrer favicons** — When this optional feature is enabled, the WordPress server may contact a referring website to retrieve its icon. The administrator browser uses the locally stored copy rather than requesting the icon directly from the referring website.
 
@@ -112,8 +112,8 @@ The core analytics reports use data stored in your WordPress installation. A sma
 
 = Documentation and support =
 
-* [Official plugin website](https://bimbeau.fr/bimbeau-privacy-analytics/en/)
-* [Getting started guide](https://bimbeau.fr/bimbeau-privacy-analytics/en/getting-started/)
+* [Official plugin website](https://bimbeau-privacy-analytics.com/)
+* [Getting started guide](https://bimbeau-privacy-analytics.com/getting-started/)
 * [Source code on GitHub](https://github.com/BimBeau/bimbeau-privacy-analytics)
 
 = Debug logging =
@@ -215,12 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.82.3 =
-* [Feature] Page details are grouped in tabs (Overview, Sources, Audience, Visit times, Visitors) under a header that names the page, with Back, View and Open in WordPress [Pro].
-* [Feature] The page details overview shows named key figures (page views with the previous period, average time on page, top source of visits) and a "Key takeaways" card written from the period's data, each sentence linked to its tab [Pro].
-* [UI] Key figures and the daily chart share one card; the typical visitor (country, browser, system, device) moves to the Audience tab [Pro].
-* [UI] Key takeaways get an icon, their leading fact in bold and accent links to the matching tab [Pro].
-* [UI] The hourly heatmap fills the height of its card when the card is stretched by its row, as on the dashboard.
-* [UI] Visitors lists show "Private" once per private visitor (country column) and a quiet dash in its other columns, instead of "Private" in every column.
-* [UI] Referring sites: a visit whose site was not sent shows its channel, for example "Paid Search (site not shared)", instead of "Referrer unavailable".
-* [UI] Page details: the page views per day list shows localized dates (23 Oct 2026) [Pro].
+= 8.82.4 =
+* Move the plugin website to bimbeau-privacy-analytics.com.
