@@ -4,7 +4,7 @@ Tags: analytics, statistics, stats, privacy, gdpr
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.83.0
+Stable tag: 8.83.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,5 +215,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.83.0 =
-* [Feature] Events: new "Form submitted successfully" trigger that counts a form only once Contact Form 7, Elementor Pro forms, WPForms, Gravity Forms or Formidable Forms confirm it was sent, with an optional form selector and the `{{form_id}}` and `{{cf7_form_id}}` snippet variables [Pro].
+= 8.83.1 =
+* [Security] Update the bundled Freemius WordPress SDK from 2.13.4 to 2.13.5, a security release: fixes a stored XSS through admin notices, installation metadata readable by logged-in users, and pricing page content altered by URL parameters.
