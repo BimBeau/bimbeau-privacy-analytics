@@ -54,7 +54,7 @@ const getActionSentence = ( item ) => {
 		return __( 'Clicks <target />', 'bimbeau-privacy-analytics' );
 	}
 
-	if ( item?.trigger_type === 'form_submit' ) {
+	if ( item?.trigger_type === 'form_submit' || item?.trigger_type === 'form_success' ) {
 		/* translators: Recent activity of the real-time panel. <target /> is the name of the tracked form. */
 		return __( 'Submits <target />', 'bimbeau-privacy-analytics' );
 	}
