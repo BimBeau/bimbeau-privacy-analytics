@@ -1,10 +1,10 @@
-=== BimBeau Privacy Analytics – Self-Hosted WordPress Stats ===
+=== BimBeau Privacy Analytics – Simple, Private WordPress Statistics ===
 Contributors: BimBeau
-Tags: analytics, statistics, privacy, self-hosted, real-time analytics
+Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.84.1
+Stable tag: 8.84.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,5 +247,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.84.1 =
-* Load the bundled translations before the WordPress.org language pack.
+= 8.84.2 =
+* Manual release metadata update.
