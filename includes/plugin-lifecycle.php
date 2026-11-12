@@ -13,15 +13,35 @@ const BBPA_ACTIVATION_REDIRECT_TRANSIENT = 'bbpa_redirect_after_activation';
 
 
 /**
- * Loads bundled plugin translations from the active package languages directory.
+ * Load the plugin translations, bundled files first.
+ *
+ * The translations shipped in the package follow every release, while the
+ * WordPress.org language pack (wp-content/languages/plugins/) can lag behind
+ * and lacks recent strings. Loading the bundled file first gives it priority;
+ * the language pack is still loaded afterwards and fills any string the bundled
+ * file does not have. Hooked on `init` and `change_locale`.
+ *
+ * @param string|null $locale Locale passed by `change_locale`; the current locale when omitted.
  */
-function bbpa_load_textdomain(): void
+function bbpa_load_textdomain($locale = null): void
 {
-    load_plugin_textdomain(
-        'bimbeau-privacy-analytics',
-        false,
-        dirname(plugin_basename(BBPA_PATH . 'bimbeau-privacy-analytics.php')) . '/languages'
-    );
+    $domain = 'bimbeau-privacy-analytics';
+    $relative_path = dirname(plugin_basename(BBPA_PATH . 'bimbeau-privacy-analytics.php')) . '/languages';
+    if (!is_string($locale) || $locale === '') {
+        $locale = function_exists('determine_locale') ? determine_locale() : get_locale();
+    }
+    $locale = (string) apply_filters('plugin_locale', $locale, $domain);
+    $bundled_mofile = trailingslashit(BBPA_PATH) . 'languages/' . $domain . '-' . $locale . '.mo';
+
+    if (is_readable($bundled_mofile) || is_readable(substr($bundled_mofile, 0, -3) . '.l10n.php')) {
+        // A string translated before `init` loads the language pack first; start again in the right order.
+        if (is_textdomain_loaded($domain)) {
+            unload_textdomain($domain, true);
+        }
+        load_textdomain($domain, $bundled_mofile, $locale);
+    }
+
+    load_plugin_textdomain($domain, false, $relative_path);
 }
 
 

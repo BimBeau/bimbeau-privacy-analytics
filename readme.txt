@@ -1,14 +1,14 @@
-=== BimBeau Privacy Analytics ===
+=== BimBeau Privacy Analytics – Self-Hosted WordPress Stats ===
 Contributors: BimBeau
-Tags: analytics, statistics, privacy, gdpr, self-hosted
+Tags: analytics, statistics, privacy, self-hosted, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.84.0
+Stable tag: 8.84.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Privacy-friendly, self-hosted Google Analytics alternative for WordPress: real-time stats, top pages, referrers and countries. No external account.
+Privacy-friendly WordPress analytics: real-time visitor stats, top pages, referrers and countries, stored in your own database. No external account.
 
 == Description ==
 
@@ -18,7 +18,17 @@ Understand your website traffic directly from WordPress with clear, real-time an
 
 BimBeau Privacy Analytics stores your analytics data in your own WordPress database. No third-party analytics account is required, and your reports are available directly from the WordPress dashboard.
 
-Simple to install, easy to understand, and built for website owners who want useful analytics without depending on a traditional external analytics platform.
+= Why choose BimBeau Privacy Analytics =
+
+* **Your data stays on your website.** Reports are built from your own WordPress database, with no third-party analytics account.
+* **Privacy-conscious by design.** No tracking cookies or cross-site advertising identifiers, and optional Do Not Track and Global Privacy Control handling.
+* **Clear reports where you work.** Real-time visitors, top pages, traffic sources and countries, without leaving WordPress.
+
+= Who is it for? =
+
+* Website owners who want useful statistics without a third-party analytics account.
+* Agencies and freelancers who manage client websites and want each site to keep its own data.
+* Websites in Europe and elsewhere that pay close attention to privacy rules.
 
 = See what matters at a glance =
 
@@ -35,6 +45,8 @@ BimBeau Privacy Analytics gives you the insights you need to understand how peop
 * Visitor activity and engagement insights.
 
 Everything is presented inside a clean WordPress interface, so you can understand your traffic without leaving your site.
+
+Simple to install, easy to understand, and built for website owners who want useful analytics without depending on a traditional external analytics platform.
 
 = Included in the Free plugin =
 
@@ -54,8 +66,6 @@ Two levels of measurement are available:
 
 * **Essential statistics** use the base tracker and are intended for situations where consent exemption applies.
 * **Advanced statistics** use an enriched tracker that may require prior consent depending on local rules and your website configuration.
-
-For consent-based setups, configure your consent management platform (CMP) to block `bbpa-advanced-tracker` / `assets/js/bbpa-advanced-tracker.js` before consent and release it only after the visitor accepts the Analytics / Statistics category.
 
 BimBeau Privacy Analytics does not provide a consent banner, decide whether consent has been granted, or store consent records.
 
@@ -88,6 +98,12 @@ Learn more about Pro:
 
 The WordPress.org Free package remains fully usable without the Pro edition.
 
+= Documentation and support =
+
+* [Official plugin website](https://bimbeau-privacy-analytics.com/)
+* [Getting started guide](https://bimbeau-privacy-analytics.com/getting-started/)
+* [Source code on GitHub](https://github.com/BimBeau/bimbeau-privacy-analytics)
+
 = External services =
 
 The core analytics reports use data stored in your WordPress installation. A small number of optional or account-related features can contact external services when they are explicitly configured or used.
@@ -109,12 +125,6 @@ The core analytics reports use data stored in your WordPress installation. A sma
 
 [Freemius Terms of Service](https://freemius.com/terms/)
 [Freemius Privacy Policy](https://freemius.com/privacy/)
-
-= Documentation and support =
-
-* [Official plugin website](https://bimbeau-privacy-analytics.com/)
-* [Getting started guide](https://bimbeau-privacy-analytics.com/getting-started/)
-* [Source code on GitHub](https://github.com/BimBeau/bimbeau-privacy-analytics)
 
 = Debug logging =
 
@@ -158,6 +168,8 @@ BimBeau Privacy Analytics does not provide a consent banner, decide whether cons
 
 When advanced statistics require prior consent, configure your CMP to control the advanced tracker.
 
+For consent-based setups, configure your consent management platform (CMP) to block `bbpa-advanced-tracker` / `assets/js/bbpa-advanced-tracker.js` before consent and release it only after the visitor accepts the Analytics / Statistics category.
+
 = Can I use BimBeau Privacy Analytics alongside Google Analytics or another analytics tool? =
 
 Yes.
@@ -175,6 +187,26 @@ Role exclusions can be configured so administrators, editors, contributors, or o
 Yes.
 
 Campaign parameters, referrer information, and available acquisition signals can be used to understand traffic from campaigns, search engines, social networks, email, paid traffic, referrals, and other sources.
+
+= Does it slow down my website? =
+
+The essential tracker is a single script of about 8 KB once compressed by the server. It sends page views to your own website through the WordPress REST API, with no request to a third-party analytics service.
+
+= Does it work with page caching and optimization plugins? =
+
+Yes. Visits are recorded by the browser script, so cached pages are still counted. The tracker scripts carry the usual exclusion attributes for optimization plugins. If an optimization plugin still delays or combines them, exclude them as described in the [troubleshooting guide](https://bimbeau-privacy-analytics.com/help/common-issues/).
+
+= Are bots and crawlers counted? =
+
+No. Known crawlers, headless browsers, and automated clients are recognized from their User-Agent and kept out of visit, visitor, and page-view figures.
+
+= Does it work on multisite? =
+
+Yes. The plugin can be activated on each site or for the whole network. Each site keeps its own statistics.
+
+= How long is data kept, and what happens when I uninstall? =
+
+You choose the retention period in the settings, and older data is removed automatically. When you uninstall the plugin, your analytics data is kept unless you enabled **Delete plugin tables on uninstall**.
 
 = What does the Pro edition add? =
 
@@ -215,5 +247,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.84.0 =
-* Ask for a WordPress.org review and sharpen the plugin listing.
+= 8.84.1 =
+* Load the bundled translations before the WordPress.org language pack.
