@@ -58,6 +58,8 @@ add_action('admin_menu', 'bbpa_register_contact_submenu', 100);
 add_action('admin_menu', 'bbpa_register_delegated_account_submenu', PHP_INT_MAX - 1);
 add_action('admin_head', 'bbpa_normalize_free_upgrade_submenu', 1);
 add_action('admin_init', 'bbpa_redirect_disabled_admin_page');
+add_action('admin_init', 'bbpa_handle_review_request_action');
+add_action('admin_notices', 'bbpa_render_review_request_notice');
 add_action('admin_enqueue_scripts', 'bbpa_enqueue_admin_assets');
 // Enqueue the menu icon before admin_print_styles so it is printed in <head>.
 // Color scheme variables are attached by bbpa_enqueue_admin_app_assets().

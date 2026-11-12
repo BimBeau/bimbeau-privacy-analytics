@@ -604,6 +604,11 @@ function bbpa_uninstall_cleanup_current_site(): void
     bbpa_uninstall_clear_cron_events();
     bbpa_uninstall_delete_files();
     bbpa_uninstall_delete_options($wpdb);
+
+    // User meta is shared by every site of a network: clean it once, from the main site.
+    if (!is_multisite() || is_main_site()) {
+        delete_metadata('user', 0, 'bbpa_review_request', '', true);
+    }
 }
 
 /**
