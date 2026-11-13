@@ -1074,6 +1074,24 @@ function bbpa_get_source_category_from_tracking_context(?string $referrer_domain
 }
 
 /**
+ * Return the AI assistant domain named by utm_source, or an empty string.
+ *
+ * ChatGPT adds utm_source=chatgpt.com to its links but its apps often send no referrer. Storing that
+ * domain in place of the missing referrer lets the AI Assistants detail name the assistant instead of
+ * showing the visit without an origin site. Only a hostname matching a known AI assistant is returned.
+ */
+function bbpa_get_ai_source_domain_from_utm(array $utm_params): string
+{
+    $utm_source = isset($utm_params['utm_source']) ? bbpa_normalize_utm_value((string) $utm_params['utm_source']) : '';
+    $domain = bbpa_normalize_source_domain($utm_source);
+    if ($domain === '' || strlen($domain) > 253 || preg_match('/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/', $domain) !== 1) {
+        return '';
+    }
+
+    return bbpa_source_domain_matches($domain, bbpa_get_ai_referrer_domains()) ? $domain : '';
+}
+
+/**
  * Derive a source category for a referrer domain.
  */
 function bbpa_get_source_category_from_referrer(?string $referrer_domain): string

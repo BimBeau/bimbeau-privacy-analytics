@@ -210,6 +210,18 @@ class BBPA_Hit_Controller {
         $utm_params = $this->extract_utm_params($request->get_param('page_path'), $hit);
         $source_category = bbpa_get_source_category_from_tracking_context($hit['referrer_domain'] ?? null, $utm_params);
         $hit['source_category'] = $source_category;
+        // A link from an AI assistant without referrer (utm_source=chatgpt.com) keeps the assistant as its
+        // origin site. Referrer domains are an advanced dimension, so the essential-only scope stays empty.
+        if (
+            $source_category === 'AI Assistants'
+            && (string) ($hit['referrer_domain'] ?? '') === ''
+            && $this->is_advanced_stats_enabled()
+        ) {
+            $ai_source_domain = bbpa_get_ai_source_domain_from_utm($utm_params);
+            if ($ai_source_domain !== '') {
+                $hit['referrer_domain'] = $ai_source_domain;
+            }
+        }
         $this->log_debug('UTM extraction completed for accepted hit.', [
             'utm_param_keys' => array_keys($utm_params),
             'utm_param_count' => count($utm_params),
