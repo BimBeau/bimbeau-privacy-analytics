@@ -148,6 +148,9 @@
       "<Name>%1$s is: </Name><Value>%2$s</Value>": [
         "<Name>%1$s: </Name><Value>%2$s</Value>"
       ],
+      "A CMP is holding the tag, but it is not one this check knows by name.": [
+        "Bir CMP etiketi tutuyor, ancak bu denetimin adıyla tanıdığı CMP'lerden biri değil."
+      ],
       "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent.": [
         "CMP, web sitenizde çerez onayını yönetir. Çerez banner’ını gösterir, ziyaretçi tercihlerini saklar ve onaya göre analiz betiklerine izin verir veya onları engeller."
       ],
@@ -222,6 +225,9 @@
       ],
       "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
         "Gelişmiş istatistikler devre dışı. BimBeau Privacy Analytics yalnızca temel istatistikleri kullanacak."
+      ],
+      "Advanced stats are enabled, but the script tag is nowhere in the home page HTML and no CMP was found that could be holding it. A cache or optimization plugin is removing it.": [
+        "Gelişmiş istatistikler etkin, ancak betik etiketi ana sayfanın HTML'sinde hiçbir yerde yok ve onu tutuyor olabilecek bir CMP bulunamadı. Bir önbellek veya optimizasyon eklentisi etiketi kaldırıyor."
       ],
       "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.": [
         "Gelişmiş istatistikler etkin, ancak betik etiketi sayfa görüntülemelerinin %s oranında eksikti. Bir önbellek, optimizasyon veya onay eklentisi, onaya kadar tutmak yerine etiketi kaldırıyor."

@@ -851,6 +851,10 @@ msgstr "您的 CMP 拦截了高级统计脚本，但在获得同意后从未放�
 msgid "The advanced stats script is missing from your pages"
 msgstr "您的页面中缺少高级统计脚本"
 
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats are enabled, but the script tag is nowhere in the home page HTML and no CMP was found that could be holding it. A cache or optimization plugin is removing it."
+msgstr "高级统计已启用，但首页 HTML 中没有该脚本标签，也未找到可能保留它的 CMP。缓存或优化插件正在将其移除。"
+
 #. translators: %s: share of page views, for example 61%.
 #: src/admin/components/CmpCheckCard/index.js
 msgid "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
@@ -872,6 +876,19 @@ msgstr "访问量尚不足"
 #: src/admin/components/CmpCheckCard/index.js
 msgid "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
 msgstr "检查需要最近 7 天内至少 %1$s 次页面浏览。目前已统计 %2$s 次。"
+
+#. translators: %s: list of CMP names.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP found: %s."
+msgstr "找到 CMP：%s。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "A CMP is holding the tag, but it is not one this check knows by name."
+msgstr "有 CMP 正在保留该标签，但它不是本检查能按名称识别的 CMP。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No known CMP found among active plugins or in the home page HTML."
+msgstr "在已启用的插件或首页 HTML 中未找到已知的 CMP。"
 
 #: src/admin/components/CmpCheckCard/index.js
 msgid "No data yet"
@@ -1027,15 +1044,6 @@ msgstr "HTML 中没有 bbpa-advanced-tracker-js 标签"
 #: src/admin/components/CmpCheckCard/index.js
 msgid "The server could not read the home page. Some hosts block requests from a site to itself."
 msgstr "服务器无法读取首页。部分主机会拦截网站对自身的请求。"
-
-#. translators: %s: list of CMP names.
-#: src/admin/components/CmpCheckCard/index.js
-msgid "CMP found: %s."
-msgstr "找到 CMP：%s。"
-
-#: src/admin/components/CmpCheckCard/index.js
-msgid "No known CMP found among active plugins or in the home page HTML."
-msgstr "在已启用的插件或首页 HTML 中未找到已知的 CMP。"
 
 #: src/admin/components/CmpCheckCard/index.js
 msgid "What to do"

@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.85.2
+Stable tag: 8.85.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,5 +247,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.85.2 =
-* Name the AI assistant of links without referrer (utm_source=chatgpt.com).
+= 8.85.3 =
+* Let the CMP check speak sooner and name the CMP it saw.

@@ -148,6 +148,9 @@
       "<Name>%1$s is: </Name><Value>%2$s</Value>": [
         "<Name>%1$s 是：</Name><Value>%2$s</Value>"
       ],
+      "A CMP is holding the tag, but it is not one this check knows by name.": [
+        "有 CMP 正在保留该标签，但它不是本检查能按名称识别的 CMP。"
+      ],
       "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent.": [
         "CMP 管理网站上的 Cookie 同意。它显示 Cookie 横幅、存储访客选择，并根据同意状态允许或阻止分析脚本。"
       ],
@@ -222,6 +225,9 @@
       ],
       "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
         "高级统计已禁用。BimBeau Privacy Analytics 将仅使用基础统计。"
+      ],
+      "Advanced stats are enabled, but the script tag is nowhere in the home page HTML and no CMP was found that could be holding it. A cache or optimization plugin is removing it.": [
+        "高级统计已启用，但首页 HTML 中没有该脚本标签，也未找到可能保留它的 CMP。缓存或优化插件正在将其移除。"
       ],
       "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.": [
         "高级统计已启用，但在 %s 的页面浏览中缺少脚本标签。缓存、优化或同意插件会将其移除，而不是保留到获得同意后。"

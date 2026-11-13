@@ -85,14 +85,20 @@ const getVerdictCopy = ( verdict ) => {
 					'The advanced stats script is missing from your pages',
 					'bimbeau-privacy-analytics'
 				),
-				text: sprintf(
-					/* translators: %s: share of page views, for example 61%. */
-					__(
-						'Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.',
-						'bimbeau-privacy-analytics'
-					),
-					formatShare( verdict?.absent_share )
-				),
+				text:
+					verdict?.source === 'probe'
+						? __(
+								'Advanced stats are enabled, but the script tag is nowhere in the home page HTML and no CMP was found that could be holding it. A cache or optimization plugin is removing it.',
+								'bimbeau-privacy-analytics'
+						  )
+						: sprintf(
+								/* translators: %s: share of page views, for example 61%. */
+								__(
+									'Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.',
+									'bimbeau-privacy-analytics'
+								),
+								formatShare( verdict?.absent_share )
+						  ),
 			};
 		case 'disabled':
 			return {
@@ -122,6 +128,28 @@ const getVerdictCopy = ( verdict ) => {
 				),
 			};
 	}
+};
+
+const getCmpLine = ( cmps, tagState ) => {
+	if ( cmps.length > 0 ) {
+		return sprintf(
+			/* translators: %s: list of CMP names. */
+			__( 'CMP found: %s.', 'bimbeau-privacy-analytics' ),
+			cmps.join( ', ' )
+		);
+	}
+
+	if ( tagState === 'blocked' ) {
+		return __(
+			'A CMP is holding the tag, but it is not one this check knows by name.',
+			'bimbeau-privacy-analytics'
+		);
+	}
+
+	return __(
+		'No known CMP found among active plugins or in the home page HTML.',
+		'bimbeau-privacy-analytics'
+	);
 };
 
 const getChecks = ( verdict, probe ) => {
@@ -501,6 +529,7 @@ const CmpCheckCard = () => {
 	const probe = report?.probe;
 	const cmps = Array.isArray( probe?.cmps ) ? probe.cmps : [];
 	const tagAttributes = formatTagAttributes( probe?.tag_attributes );
+	const cmpLine = getCmpLine( cmps, probe?.tag_state );
 	const checkedAt = formatCheckedAt( probe?.checked_at, locale );
 
 	return (
@@ -609,21 +638,7 @@ const CmpCheckCard = () => {
 											) }
 										</p>
 									) }
-									<p>
-										{ cmps.length > 0
-											? sprintf(
-													/* translators: %s: list of CMP names. */
-													__(
-														'CMP found: %s.',
-														'bimbeau-privacy-analytics'
-													),
-													cmps.join( ', ' )
-											  )
-											: __(
-													'No known CMP found among active plugins or in the home page HTML.',
-													'bimbeau-privacy-analytics'
-											  ) }
-									</p>
+									<p>{ cmpLine }</p>
 								</div>
 
 								{ todo.length > 0 ? (

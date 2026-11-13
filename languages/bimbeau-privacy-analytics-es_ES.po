@@ -855,6 +855,10 @@ msgstr "Su CMP bloquea el script de estadísticas avanzadas pero nunca lo libera
 msgid "The advanced stats script is missing from your pages"
 msgstr "Falta el script de estadísticas avanzadas en sus páginas"
 
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats are enabled, but the script tag is nowhere in the home page HTML and no CMP was found that could be holding it. A cache or optimization plugin is removing it."
+msgstr "Las estadísticas avanzadas están activadas, pero la etiqueta del script no aparece en el HTML de la página de inicio y no se encontró ningún CMP que pudiera estar reteniéndola. Un plugin de caché u optimización la está eliminando."
+
 #. translators: %s: share of page views, for example 61%.
 #: src/admin/components/CmpCheckCard/index.js
 msgid "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
@@ -876,6 +880,19 @@ msgstr "Aún no hay suficientes visitas"
 #: src/admin/components/CmpCheckCard/index.js
 msgid "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
 msgstr "La comprobación necesita al menos %1$s páginas vistas en los últimos 7 días. De momento se han contado %2$s."
+
+#. translators: %s: list of CMP names.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP found: %s."
+msgstr "CMP encontrado: %s."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "A CMP is holding the tag, but it is not one this check knows by name."
+msgstr "Un CMP está reteniendo la etiqueta, pero no es uno de los que esta comprobación conoce por su nombre."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No known CMP found among active plugins or in the home page HTML."
+msgstr "No se encontró ningún CMP conocido entre los plugins activos ni en el HTML de la página de inicio."
 
 #: src/admin/components/CmpCheckCard/index.js
 msgid "No data yet"
@@ -1031,15 +1048,6 @@ msgstr "No hay etiqueta bbpa-advanced-tracker-js en el HTML"
 #: src/admin/components/CmpCheckCard/index.js
 msgid "The server could not read the home page. Some hosts block requests from a site to itself."
 msgstr "El servidor no pudo leer la página de inicio. Algunos alojamientos bloquean las peticiones de un sitio a sí mismo."
-
-#. translators: %s: list of CMP names.
-#: src/admin/components/CmpCheckCard/index.js
-msgid "CMP found: %s."
-msgstr "CMP encontrado: %s."
-
-#: src/admin/components/CmpCheckCard/index.js
-msgid "No known CMP found among active plugins or in the home page HTML."
-msgstr "No se encontró ningún CMP conocido entre los plugins activos ni en el HTML de la página de inicio."
 
 #: src/admin/components/CmpCheckCard/index.js
 msgid "What to do"

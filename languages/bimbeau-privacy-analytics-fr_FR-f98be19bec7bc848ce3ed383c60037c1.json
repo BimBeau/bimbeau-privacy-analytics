@@ -158,6 +158,9 @@
       "<Name>%1$s is: </Name><Value>%2$s</Value>": [
         "<Name>%1$s est : </Name><Value>%2$s</Value>"
       ],
+      "A CMP is holding the tag, but it is not one this check knows by name.": [
+        "Une CMP retient la balise, mais ce n’est pas une de celles que cette vérification connaît par son nom."
+      ],
       "A CMP manages cookie consent on your website. It shows the cookie banner, stores visitor choices, and allows or blocks analytics scripts based on consent.": [
         "Une CMP gère le consentement aux cookies sur votre site. Elle affiche la bannière de consentement, enregistre les choix des visiteurs et autorise ou bloque les scripts de statistiques selon le consentement."
       ],
@@ -232,6 +235,9 @@
       ],
       "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
         "Les statistiques avancées sont désactivées. BimBeau Privacy Analytics utilisera uniquement les statistiques essentielles."
+      ],
+      "Advanced stats are enabled, but the script tag is nowhere in the home page HTML and no CMP was found that could be holding it. A cache or optimization plugin is removing it.": [
+        "Les statistiques avancées sont activées, mais la balise du script n’est nulle part dans le HTML de la page d’accueil et aucune CMP susceptible de la retenir n’a été trouvée. Une extension de cache ou d’optimisation la retire."
       ],
       "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.": [
         "Les statistiques avancées sont activées, mais la balise du script manquait sur %s des pages vues. Une extension de cache, d’optimisation ou de consentement la retire au lieu de la mettre en attente jusqu’au consentement."

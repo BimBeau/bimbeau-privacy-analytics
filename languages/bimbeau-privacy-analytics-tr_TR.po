@@ -851,6 +851,10 @@ msgstr "CMP'niz gelişmiş istatistik betiğini engelliyor ancak onaydan sonra h
 msgid "The advanced stats script is missing from your pages"
 msgstr "Gelişmiş istatistik betiği sayfalarınızda eksik"
 
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats are enabled, but the script tag is nowhere in the home page HTML and no CMP was found that could be holding it. A cache or optimization plugin is removing it."
+msgstr "Gelişmiş istatistikler etkin, ancak betik etiketi ana sayfanın HTML'sinde hiçbir yerde yok ve onu tutuyor olabilecek bir CMP bulunamadı. Bir önbellek veya optimizasyon eklentisi etiketi kaldırıyor."
+
 #. translators: %s: share of page views, for example 61%.
 #: src/admin/components/CmpCheckCard/index.js
 msgid "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
@@ -872,6 +876,19 @@ msgstr "Henüz yeterli ziyaret yok"
 #: src/admin/components/CmpCheckCard/index.js
 msgid "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
 msgstr "Kontrol için son 7 günde en az %1$s sayfa görüntüleme gerekir. Şu ana kadar %2$s sayıldı."
+
+#. translators: %s: list of CMP names.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP found: %s."
+msgstr "CMP bulundu: %s."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "A CMP is holding the tag, but it is not one this check knows by name."
+msgstr "Bir CMP etiketi tutuyor, ancak bu denetimin adıyla tanıdığı CMP'lerden biri değil."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No known CMP found among active plugins or in the home page HTML."
+msgstr "Etkin eklentiler arasında veya ana sayfanın HTML'sinde bilinen bir CMP bulunamadı."
 
 #: src/admin/components/CmpCheckCard/index.js
 msgid "No data yet"
@@ -1027,15 +1044,6 @@ msgstr "HTML'de bbpa-advanced-tracker-js etiketi yok"
 #: src/admin/components/CmpCheckCard/index.js
 msgid "The server could not read the home page. Some hosts block requests from a site to itself."
 msgstr "Sunucu ana sayfayı okuyamadı. Bazı barındırıcılar bir sitenin kendi kendine yaptığı istekleri engeller."
-
-#. translators: %s: list of CMP names.
-#: src/admin/components/CmpCheckCard/index.js
-msgid "CMP found: %s."
-msgstr "CMP bulundu: %s."
-
-#: src/admin/components/CmpCheckCard/index.js
-msgid "No known CMP found among active plugins or in the home page HTML."
-msgstr "Etkin eklentiler arasında veya ana sayfanın HTML'sinde bilinen bir CMP bulunamadı."
 
 #: src/admin/components/CmpCheckCard/index.js
 msgid "What to do"

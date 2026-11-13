@@ -57,11 +57,14 @@ function bbpa_cmp_check_retention_days(): int
 }
 
 /**
- * Minimum number of page views before a verdict is given.
+ * Minimum number of page views before the counters are allowed to decide.
+ *
+ * The counter rules compare shares (80% never held, 50% absent), so a few dozen page views already separate them
+ * from noise. A higher bar would leave small sites collecting forever, which is where the check is most useful.
  */
 function bbpa_cmp_check_minimum_page_views(): int
 {
-    return (int) apply_filters('bbpa_cmp_check_minimum_page_views', 200);
+    return max(1, (int) apply_filters('bbpa_cmp_check_minimum_page_views', 30));
 }
 
 /**
@@ -215,17 +218,18 @@ function bbpa_cmp_check_sum_series(array $series): array
 }
 
 /**
- * Turn totals into a verdict.
+ * Turn totals, and the home page read when the counters are still too thin, into a verdict.
  *
- * Statuses: `disabled` (advanced stats off), `collecting` (not enough page views), `not_blocked` (the tag is never
- * held by a CMP), `script_missing` (the tag is missing from most pages), `never_released` (held but never released
- * after consent), `ok`.
+ * Statuses: `disabled` (advanced stats off), `collecting` (not enough page views yet), `not_blocked` (the tag is
+ * never held by a CMP), `script_missing` (the tag is missing), `never_released` (held but never released after
+ * consent), `ok`.
  *
- * @param array<string, int> $totals           Totals from bbpa_cmp_check_sum_series().
- * @param bool               $advanced_enabled Whether advanced stats are enabled.
+ * @param array<string, int>        $totals           Totals from bbpa_cmp_check_sum_series().
+ * @param bool                      $advanced_enabled Whether advanced stats are enabled.
+ * @param array<string, mixed>|null $probe            Home page read, when one is available.
  * @return array<string, mixed>
  */
-function bbpa_cmp_check_evaluate(array $totals, bool $advanced_enabled): array
+function bbpa_cmp_check_evaluate(array $totals, bool $advanced_enabled, ?array $probe = null): array
 {
     $page_views = (int) ($totals['page_views'] ?? 0);
     $held = (int) ($totals['held'] ?? 0);
@@ -240,6 +244,7 @@ function bbpa_cmp_check_evaluate(array $totals, bool $advanced_enabled): array
 
     $result = [
         'status' => 'ok',
+        'source' => 'counters',
         'page_views' => $page_views,
         'minimum_page_views' => bbpa_cmp_check_minimum_page_views(),
         'held_share' => $share($held),
@@ -250,14 +255,34 @@ function bbpa_cmp_check_evaluate(array $totals, bool $advanced_enabled): array
 
     if (!$advanced_enabled) {
         $result['status'] = 'disabled';
-    } elseif ($page_views < $result['minimum_page_views']) {
-        $result['status'] = 'collecting';
-    } elseif ($held === 0 && ($ran + $open) >= 0.8 * $page_views) {
-        $result['status'] = 'not_blocked';
-    } elseif ($absent >= 0.5 * $page_views) {
+        $result['source'] = '';
+
+        return $result;
+    }
+
+    if ($page_views >= $result['minimum_page_views']) {
+        if ($held === 0 && ($ran + $open) >= 0.8 * $page_views) {
+            $result['status'] = 'not_blocked';
+        } elseif ($absent >= 0.5 * $page_views) {
+            $result['status'] = 'script_missing';
+        } elseif ($held > 0 && $enriched === 0) {
+            $result['status'] = 'never_released';
+        }
+
+        return $result;
+    }
+
+    $result['status'] = 'collecting';
+
+    // The home page read answers one case on its own, before any visit: the tag is nowhere in the page and no CMP
+    // could have removed it. The other states need the counters, because a CMP may neutralize the tag in the browser.
+    if (is_array($probe)
+        && ($probe['status'] ?? '') === 'ok'
+        && ($probe['tag_state'] ?? '') === 'absent'
+        && (!isset($probe['cmps']) || !is_array($probe['cmps']) || $probe['cmps'] === [])
+    ) {
         $result['status'] = 'script_missing';
-    } elseif ($held > 0 && $enriched === 0) {
-        $result['status'] = 'never_released';
+        $result['source'] = 'probe';
     }
 
     return $result;
@@ -282,8 +307,21 @@ function bbpa_cmp_check_get_verdict(): array
 {
     return bbpa_cmp_check_evaluate(
         bbpa_cmp_check_sum_series(bbpa_cmp_check_get_daily_series(7)),
-        bbpa_cmp_check_is_advanced_enabled()
+        bbpa_cmp_check_is_advanced_enabled(),
+        bbpa_cmp_check_get_cached_probe()
     );
+}
+
+/**
+ * The cached home page read, without ever firing a new request.
+ *
+ * @return array<string, mixed>|null
+ */
+function bbpa_cmp_check_get_cached_probe(): ?array
+{
+    $cached = get_transient(bbpa_cmp_check_probe_transient_name());
+
+    return is_array($cached) && isset($cached['status']) ? $cached : null;
 }
 
 /**
@@ -498,12 +536,13 @@ function bbpa_cmp_check_get_report(bool $refresh = false): array
     $advanced_enabled = bbpa_cmp_check_is_advanced_enabled();
     $series = bbpa_cmp_check_get_daily_series(7);
     $totals = bbpa_cmp_check_sum_series($series);
+    $probe = $advanced_enabled ? bbpa_cmp_check_probe_home($refresh) : null;
 
     return [
         'advanced_enabled' => $advanced_enabled,
-        'verdict' => bbpa_cmp_check_evaluate($totals, $advanced_enabled),
+        'verdict' => bbpa_cmp_check_evaluate($totals, $advanced_enabled, $probe),
         'totals' => $totals,
         'daily' => $series,
-        'probe' => $advanced_enabled ? bbpa_cmp_check_probe_home($refresh) : null,
+        'probe' => $probe,
     ];
 }
