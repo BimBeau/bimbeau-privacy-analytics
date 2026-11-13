@@ -339,6 +339,10 @@ msgid "GeoIP database updated successfully."
 msgstr "GeoIP database updated successfully."
 
 #: includes/rest/class-bbpa-admin-controller.php
+msgid "The CMP check is not available."
+msgstr "The CMP check is not available."
+
+#: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is available."
 msgstr "GeoIP database is available."
 
@@ -798,6 +802,278 @@ msgstr "Previous period: %1$s (%2$s)"
 #: src/admin/components/ChannelDetails/index.js
 msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
 msgstr "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Working"
+msgstr "Working"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not blocked"
+msgstr "Not blocked"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never released"
+msgstr "Never released"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script missing"
+msgstr "Script missing"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not started"
+msgstr "Not started"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Collecting data"
+msgstr "Collecting data"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks advanced stats until consent"
+msgstr "Your CMP blocks advanced stats until consent"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do."
+msgstr "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats start before visitors give consent"
+msgstr "Advanced stats start before visitors give consent"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent."
+msgstr "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats never start, even when visitors accept"
+msgstr "Advanced stats never start, even when visitors accept"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days."
+msgstr "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script is missing from your pages"
+msgstr "The advanced stats script is missing from your pages"
+
+#. translators: %s: share of page views, for example 61%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
+msgstr "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Save the settings to start the check"
+msgstr "Save the settings to start the check"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check starts once advanced stats are enabled and saved."
+msgstr "The check starts once advanced stats are enabled and saved."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not enough visits yet"
+msgstr "Not enough visits yet"
+
+#. translators: 1: minimum number of page views, 2: page views counted so far.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
+msgstr "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No data yet"
+msgstr "No data yet"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted with each page view."
+msgstr "Counted with each page view."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked"
+msgstr "Blocked"
+
+#. translators: %s: share of page views, for example 58%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by the CMP on %s of page views."
+msgstr "Held by the CMP on %s of page views."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never held by a CMP before the page view was sent."
+msgstr "Never held by a CMP before the page view was sent."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not measurable"
+msgstr "Not measurable"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Without blocking, accepting and refusing cannot be told apart."
+msgstr "Without blocking, accepting and refusing cannot be told apart."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted when the advanced stats script starts."
+msgstr "Counted when the advanced stats script starts."
+
+#. translators: %s: share of page views, for example 42%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%s of page views"
+msgstr "%s of page views"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views where the visitor accepted and the script started."
+msgstr "Page views where the visitor accepted and the script started."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by a CMP"
+msgstr "Held by a CMP"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Its type was changed so that it does not run before consent."
+msgstr "Its type was changed so that it does not run before consent."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Executable"
+msgstr "Executable"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it."
+msgstr "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not found"
+msgstr "Not found"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The script tag is not in the home page HTML."
+msgstr "The script tag is not in the home page HTML."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not checked"
+msgstr "Not checked"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page."
+msgstr "The server could not read the home page."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Before consent"
+msgstr "Before consent"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "After consent"
+msgstr "After consent"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Tag on the home page"
+msgstr "Tag on the home page"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category."
+msgstr "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "If the site has no CMP, turn off advanced stats: essential stats keep working without consent."
+msgstr "If the site has no CMP, turn off advanced stats: essential stats keep working without consent."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept."
+msgstr "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then come back tomorrow: the check updates with the visits of the day."
+msgstr "Clear the site cache, then come back tomorrow: the check updates with the visits of the day."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin."
+msgstr "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then check again."
+msgstr "Clear the site cache, then check again."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked by the CMP"
+msgstr "Blocked by the CMP"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script running"
+msgstr "Script running"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Missing from the page"
+msgstr "Missing from the page"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views of the last 7 days, by state of the advanced stats script"
+msgstr "Page views of the last 7 days, by state of the advanced stats script"
+
+#. translators: 1: day, 2: page views, 3: blocked, 4: script running, 5: missing.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing"
+msgstr "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The CMP check could not be loaded."
+msgstr "The CMP check could not be loaded."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP check"
+msgstr "CMP check"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored."
+msgstr "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats tag read on the home page"
+msgstr "Advanced stats tag read on the home page"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No bbpa-advanced-tracker-js tag in the HTML"
+msgstr "No bbpa-advanced-tracker-js tag in the HTML"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page. Some hosts block requests from a site to itself."
+msgstr "The server could not read the home page. Some hosts block requests from a site to itself."
+
+#. translators: %s: list of CMP names.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP found: %s."
+msgstr "CMP found: %s."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No known CMP found among active plugins or in the home page HTML."
+msgstr "No known CMP found among active plugins or in the home page HTML."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "What to do"
+msgstr "What to do"
+
+#. translators: %s: number of page views.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Based on %s page views over the last 7 days."
+msgstr "Based on %s page views over the last 7 days."
+
+#. translators: %s: date and time.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Home page checked on %s."
+msgstr "Home page checked on %s."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Check again"
+msgstr "Check again"
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats."
+msgstr "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats never start: your CMP does not release the script after consent."
+msgstr "Advanced stats never start: your CMP does not release the script after consent."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "The advanced stats script is missing from most pages: advanced stats are incomplete."
+msgstr "The advanced stats script is missing from most pages: advanced stats are incomplete."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Open the CMP check"
+msgstr "Open the CMP check"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"

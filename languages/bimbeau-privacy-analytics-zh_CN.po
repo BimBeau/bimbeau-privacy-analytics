@@ -338,6 +338,10 @@ msgid "GeoIP database updated successfully."
 msgstr "GeoIP 数据库已成功更新。"
 
 #: includes/rest/class-bbpa-admin-controller.php
+msgid "The CMP check is not available."
+msgstr "CMP 检查不可用。"
+
+#: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is available."
 msgstr "GeoIP 数据库可用。"
 
@@ -794,6 +798,278 @@ msgstr "上一周期：%1$s（%2$s）"
 #: src/admin/components/ChannelDetails/index.js
 msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
 msgstr "这些访问没有传递引荐网站：直接输入网址、书签，或从应用、文档或不带 UTM 参数的电子邮件中打开的链接。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Working"
+msgstr "正常运行"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not blocked"
+msgstr "未被拦截"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never released"
+msgstr "从未放行"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script missing"
+msgstr "脚本缺失"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not started"
+msgstr "未启动"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Collecting data"
+msgstr "正在收集数据"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks advanced stats until consent"
+msgstr "您的 CMP 会在获得同意前拦截高级统计"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do."
+msgstr "在访客接受统计 Cookie 之前，高级统计脚本会一直被拦截，之后正常启动。无需任何操作。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats start before visitors give consent"
+msgstr "高级统计在访客同意之前就已启动"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent."
+msgstr "没有 CMP 控制高级统计脚本：它从第一个页面起就运行，早于任何选择。因此会在未经同意的情况下收集详细数据。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats never start, even when visitors accept"
+msgstr "即使访客接受，高级统计也从未启动"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days."
+msgstr "您的 CMP 拦截了高级统计脚本，但在获得同意后从未放行：最近 7 天没有收到任何高级数据。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script is missing from your pages"
+msgstr "您的页面中缺少高级统计脚本"
+
+#. translators: %s: share of page views, for example 61%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
+msgstr "高级统计已启用，但在 %s 的页面浏览中缺少脚本标签。缓存、优化或同意插件会将其移除，而不是保留到获得同意后。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Save the settings to start the check"
+msgstr "保存设置以开始检查"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check starts once advanced stats are enabled and saved."
+msgstr "启用并保存高级统计后，检查将开始。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not enough visits yet"
+msgstr "访问量尚不足"
+
+#. translators: 1: minimum number of page views, 2: page views counted so far.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
+msgstr "检查需要最近 7 天内至少 %1$s 次页面浏览。目前已统计 %2$s 次。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No data yet"
+msgstr "暂无数据"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted with each page view."
+msgstr "每次页面浏览时统计。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked"
+msgstr "已拦截"
+
+#. translators: %s: share of page views, for example 58%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by the CMP on %s of page views."
+msgstr "在 %s 的页面浏览中被 CMP 暂扣。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never held by a CMP before the page view was sent."
+msgstr "在页面浏览发送之前，从未被 CMP 暂扣。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not measurable"
+msgstr "无法衡量"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Without blocking, accepting and refusing cannot be told apart."
+msgstr "没有拦截时，无法区分接受与拒绝。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted when the advanced stats script starts."
+msgstr "在高级统计脚本启动时统计。"
+
+#. translators: %s: share of page views, for example 42%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%s of page views"
+msgstr "%s 的页面浏览"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views where the visitor accepted and the script started."
+msgstr "访客已接受且脚本已启动的页面浏览。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by a CMP"
+msgstr "被 CMP 暂扣"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Its type was changed so that it does not run before consent."
+msgstr "其类型已被更改，因此不会在获得同意前运行。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Executable"
+msgstr "可执行"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it."
+msgstr "HTML 中没有 CMP 属性。在浏览器中拦截脚本的 CMP 仍可能将其暂扣。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not found"
+msgstr "未找到"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The script tag is not in the home page HTML."
+msgstr "首页 HTML 中没有该脚本标签。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not checked"
+msgstr "未检查"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page."
+msgstr "服务器无法读取首页。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Before consent"
+msgstr "同意前"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "After consent"
+msgstr "同意后"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Tag on the home page"
+msgstr "首页上的标签"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category."
+msgstr "在您的 CMP 中，将高级统计脚本（ID bbpa-advanced-tracker-js）添加到被拦截的脚本中，归入统计类别。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "If the site has no CMP, turn off advanced stats: essential stats keep working without consent."
+msgstr "如果网站没有 CMP，请关闭高级统计：基础统计无需同意即可继续运行。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept."
+msgstr "在您的 CMP 中，检查高级统计脚本的类别：必须是访客接受的统计类别。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then come back tomorrow: the check updates with the visits of the day."
+msgstr "清除网站缓存，然后明天再来：检查会根据当天的访问更新。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin."
+msgstr "在缓存或优化插件的 JavaScript 延迟、合并或移除选项中排除 bbpa-advanced-tracker。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then check again."
+msgstr "清除网站缓存，然后重新检查。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked by the CMP"
+msgstr "被 CMP 拦截"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script running"
+msgstr "脚本运行中"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Missing from the page"
+msgstr "页面中缺失"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views of the last 7 days, by state of the advanced stats script"
+msgstr "最近 7 天的页面浏览，按高级统计脚本的状态划分"
+
+#. translators: 1: day, 2: page views, 3: blocked, 4: script running, 5: missing.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing"
+msgstr "%1$s：%2$s 次页面浏览，%3$s 次被拦截，%4$s 次运行中，%5$s 次缺失"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The CMP check could not be loaded."
+msgstr "无法加载 CMP 检查。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP check"
+msgstr "CMP 检查"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored."
+msgstr "每次页面浏览时检查您的 CMP 是否在同意前拦截高级统计脚本，并在同意后放行。仅存储每日合计。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats tag read on the home page"
+msgstr "在首页读取的高级统计标签"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No bbpa-advanced-tracker-js tag in the HTML"
+msgstr "HTML 中没有 bbpa-advanced-tracker-js 标签"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page. Some hosts block requests from a site to itself."
+msgstr "服务器无法读取首页。部分主机会拦截网站对自身的请求。"
+
+#. translators: %s: list of CMP names.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP found: %s."
+msgstr "找到 CMP：%s。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No known CMP found among active plugins or in the home page HTML."
+msgstr "在已启用的插件或首页 HTML 中未找到已知的 CMP。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "What to do"
+msgstr "该怎么做"
+
+#. translators: %s: number of page views.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Based on %s page views over the last 7 days."
+msgstr "基于最近 7 天的 %s 次页面浏览。"
+
+#. translators: %s: date and time.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Home page checked on %s."
+msgstr "首页检查时间：%s。"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Check again"
+msgstr "重新检查"
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats."
+msgstr "高级统计在访客同意之前运行。请在您的 CMP 中拦截该脚本，或关闭高级统计。"
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats never start: your CMP does not release the script after consent."
+msgstr "高级统计从未启动：您的 CMP 在获得同意后不会放行该脚本。"
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "The advanced stats script is missing from most pages: advanced stats are incomplete."
+msgstr "大多数页面缺少高级统计脚本：高级统计数据不完整。"
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Open the CMP check"
+msgstr "打开 CMP 检查"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"

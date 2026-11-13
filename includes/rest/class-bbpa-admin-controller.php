@@ -86,6 +86,23 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
 
         register_rest_route(
             BBPA_REST_INTERNAL_NAMESPACE,
+            '/admin/cmp-check',
+            [
+                'methods' => 'GET',
+                'callback' => [$this, 'get_cmp_check'],
+                'permission_callback' => [$this, 'check_settings_permissions'],
+                'args' => [
+                    'refresh' => [
+                        'required' => false,
+                        'type' => 'boolean',
+                        'sanitize_callback' => 'rest_sanitize_boolean',
+                    ],
+                ],
+            ]
+        );
+
+        register_rest_route(
+            BBPA_REST_INTERNAL_NAMESPACE,
             '/admin/setup-wizard',
             [
                 [
@@ -566,6 +583,21 @@ class BBPA_Admin_Controller extends WP_REST_Controller {
             200,
             true
         );
+    }
+
+    /**
+     * Return the CMP check report: whether the CMP blocks the advanced tracker before consent and releases it after.
+     */
+    public function get_cmp_check(WP_REST_Request $request): WP_REST_Response {
+        if (!function_exists('bbpa_cmp_check_get_report')) {
+            return new WP_REST_Response(['message' => __('The CMP check is not available.', 'bimbeau-privacy-analytics')], 503);
+        }
+
+        $report = bbpa_cmp_check_get_report((bool) rest_sanitize_boolean($request->get_param('refresh')));
+        $response = new WP_REST_Response($report, 200);
+        $response->header('Cache-Control', 'no-store');
+
+        return $response;
     }
 
     /**

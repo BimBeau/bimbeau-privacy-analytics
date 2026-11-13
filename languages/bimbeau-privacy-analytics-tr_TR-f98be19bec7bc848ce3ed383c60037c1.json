@@ -31,6 +31,9 @@
       "%1$s: %2$s": [
         "%1$s: %2$s"
       ],
+      "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing": [
+        "%1$s: %2$s sayfa görüntüleme, %3$s engellendi, %4$s çalışıyor, %5$s eksik"
+      ],
       "%1$s: %2$s visits": [
         "%1$s: %2$s ziyaret"
       ],
@@ -69,6 +72,9 @@
       ],
       "%s item": [
         "%s öğe"
+      ],
+      "%s of page views": [
+        "Sayfa görüntülemelerinin %s"
       ],
       "%s of total visitors": [
         "toplam ziyaretlerin %s kadarı"
@@ -217,11 +223,32 @@
       "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
         "Gelişmiş istatistikler devre dışı. BimBeau Privacy Analytics yalnızca temel istatistikleri kullanacak."
       ],
+      "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.": [
+        "Gelişmiş istatistikler etkin, ancak betik etiketi sayfa görüntülemelerinin %s oranında eksikti. Bir önbellek, optimizasyon veya onay eklentisi, onaya kadar tutmak yerine etiketi kaldırıyor."
+      ],
+      "Advanced stats never start, even when visitors accept": [
+        "Gelişmiş istatistikler, ziyaretçiler kabul etse bile hiç başlamıyor"
+      ],
+      "Advanced stats never start: your CMP does not release the script after consent.": [
+        "Gelişmiş istatistikler hiç başlamıyor: CMP'niz betiği onaydan sonra serbest bırakmıyor."
+      ],
       "Advanced stats require consent": [
         "Gelişmiş istatistikler onay gerektirir"
       ],
+      "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats.": [
+        "Gelişmiş istatistikler, ziyaretçiler onay vermeden önce çalışıyor. Betiği CMP'nizde engelleyin veya gelişmiş istatistikleri kapatın."
+      ],
+      "Advanced stats start before visitors give consent": [
+        "Gelişmiş istatistikler, ziyaretçiler onay vermeden önce başlıyor"
+      ],
+      "Advanced stats tag read on the home page": [
+        "Ana sayfada okunan gelişmiş istatistik etiketi"
+      ],
       "Africa": [
         "Afrika"
+      ],
+      "After consent": [
+        "Onaydan sonra"
       ],
       "Aggregated analytics data purged.": [
         "Toplu analiz verileri temizlendi."
@@ -307,8 +334,14 @@
       "Avg. time on page": [
         "Sayfada ort. süre"
       ],
+      "Based on %s page views over the last 7 days.": [
+        "Son 7 günde %s sayfa görüntülemesine dayanır."
+      ],
       "Based on %s tracked page views in the selected range.": [
         "Seçilen aralıkta izlenen %s sayfa görüntülemesine göre."
+      ],
+      "Before consent": [
+        "Onaydan önce"
       ],
       "BimBeau GeoIP Database Service": [
         "Yerel GeoLite veritabanı kullanılamıyor."
@@ -331,6 +364,12 @@
       "Block the advanced stats script until Statistics / Analytics consent is given.": [
         "Gelişmiş istatistik betiğini İstatistik / Analitik onayı verilene kadar engelleyin."
       ],
+      "Blocked": [
+        "Engellendi"
+      ],
+      "Blocked by the CMP": [
+        "CMP tarafından engellendi"
+      ],
       "Bot": [
         "Bot"
       ],
@@ -345,6 +384,12 @@
       ],
       "Busiest slot: %1$s, %2$s (%3$s)": [
         "En yoğun zaman dilimi: %1$s, %2$s (%3$s)"
+      ],
+      "CMP check": [
+        "CMP kontrolü"
+      ],
+      "CMP found: %s.": [
+        "CMP bulundu: %s."
       ],
       "CMP markers": [
         "CMP işaretleri"
@@ -379,6 +424,12 @@
       "Channel details": [
         "Kanal ayrıntıları"
       ],
+      "Check again": [
+        "Tekrar kontrol et"
+      ],
+      "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored.": [
+        "Her sayfa görüntülemesinde CMP'nizin gelişmiş istatistik betiğini onaydan önce engelleyip sonra serbest bırakıp bırakmadığını kontrol eder. Yalnızca günlük toplamlar saklanır."
+      ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
       ],
@@ -400,11 +451,20 @@
       "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends.": [
         "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
       ],
+      "Clear the site cache, then check again.": [
+        "Site önbelleğini temizleyin, ardından tekrar kontrol edin."
+      ],
+      "Clear the site cache, then come back tomorrow: the check updates with the visits of the day.": [
+        "Site önbelleğini temizleyin ve yarın tekrar gelin: kontrol günün ziyaretleriyle güncellenir."
+      ],
       "Clicks <target />": [
         "<target /> öğesine tıklıyor"
       ],
       "Close channel details": [
         "Kanal ayrıntılarını kapat"
+      ],
+      "Collecting data": [
+        "Veri toplanıyor"
       ],
       "Columns": [
         "Sütunlar"
@@ -480,6 +540,12 @@
       ],
       "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution.": [
         "URL temizleme davranışını kontrol edin ve yalnızca atıf için kullanılabilir kalması gereken kampanya sorgu parametrelerini saklayın."
+      ],
+      "Counted when the advanced stats script starts.": [
+        "Gelişmiş istatistik betiği başladığında sayılır."
+      ],
+      "Counted with each page view.": [
+        "Her sayfa görüntülemesinde sayılır."
       ],
       "Countries": [
         "Ülkeler"
@@ -727,11 +793,17 @@
       "Examples:": [
         "Örnekler:"
       ],
+      "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin.": [
+        "bbpa-advanced-tracker'ı önbellek veya optimizasyon eklentinizin JavaScript geciktirme, birleştirme veya kaldırma seçeneklerinden hariç tutun."
+      ],
       "Excluded paths": [
         "Hariç tutulan yollar"
       ],
       "Exclusions": [
         "Hariç tutmalar"
+      ],
+      "Executable": [
+        "Çalıştırılabilir"
       ],
       "Exit fullscreen": [
         "Tam ekrandan çık"
@@ -802,6 +874,12 @@
       "Global namespaces checked: %s": [
         "Kontrol edilen global ad alanları: %s"
       ],
+      "Held by a CMP": [
+        "Bir CMP tarafından tutuldu"
+      ],
+      "Held by the CMP on %s of page views.": [
+        "Sayfa görüntülemelerinin %s oranında CMP tarafından tutuldu."
+      ],
       "Hidden": [
         "Gizli"
       ],
@@ -810,6 +888,9 @@
       ],
       "Home page": [
         "Ana sayfa"
+      ],
+      "Home page checked on %s.": [
+        "Ana sayfa %s tarihinde kontrol edildi."
       ],
       "Hourly activity heatmap by day and hour": [
         "Gün ve saate göre genel saatlik ısı haritası"
@@ -841,14 +922,23 @@
       "I confirm that I want to purge only data older than the configured retention window.": [
         "Yalnızca yapılandırılmış saklama penceresinden daha eski verileri temizlemek istediğimi onaylıyorum."
       ],
+      "If the site has no CMP, turn off advanced stats: essential stats keep working without consent.": [
+        "Sitede CMP yoksa gelişmiş istatistikleri kapatın: temel istatistikler onay olmadan çalışmaya devam eder."
+      ],
       "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent.": [
         "Web siteniz önceden analitik onayı gerektiriyorsa ziyaretçi Analytics veya İstatistik kategorisini kabul edene kadar CMP'nizin BimBeau Privacy Analytics gelişmiş izleyiciyi engellemesi gerekir. BimBeau Privacy Analytics, CMP'nizin yerine geçmez ve ziyaretçi onayını kaydetmez."
       ],
       "Immediately download the latest GeoLite database.": [
         "Yerel GeoLite veritabanı okunamıyor."
       ],
+      "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category.": [
+        "CMP'nizde gelişmiş istatistik betiğini (ID bbpa-advanced-tracker-js) engellenen betiklere, istatistik kategorisinde ekleyin."
+      ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "CMP’nizde, İstatistik veya Analitik amacı kabul edilene kadar BimBeau Privacy Analytics gelişmiş istatistik betiğini engelleyin."
+      ],
+      "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept.": [
+        "CMP'nizde gelişmiş istatistik betiğinin kategorisini kontrol edin: ziyaretçilerin kabul ettiği istatistik kategorisi olmalıdır."
       ],
       "Initial configuration completed.": [
         "İlk yapılandırma tamamlandı."
@@ -879,6 +969,9 @@
       ],
       "Items per page": [
         "Sayfa başına öğe"
+      ],
+      "Its type was changed so that it does not run before consent.": [
+        "Onaydan önce çalışmaması için türü değiştirildi."
       ],
       "Keep report details for %d days": [
         "Keep report details for %d days"
@@ -1042,6 +1135,9 @@
       "Missing admin configuration.": [
         "Yönetici yapılandırması eksik."
       ],
+      "Missing from the page": [
+        "Sayfada eksik"
+      ],
       "Mobile": [
         "Mobil"
       ],
@@ -1057,6 +1153,12 @@
       "Move right": [
         "Sağa taşı"
       ],
+      "Never held by a CMP before the page view was sent.": [
+        "Sayfa görüntülemesi gönderilmeden önce hiçbir CMP tarafından tutulmadı."
+      ],
+      "Never released": [
+        "Hiç serbest bırakılmadı"
+      ],
       "New": [
         "Yeni"
       ],
@@ -1071,6 +1173,12 @@
       ],
       "Next update": [
         "Sonraki sayfa"
+      ],
+      "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it.": [
+        "HTML'de CMP özniteliği yok. Betikleri tarayıcıda engelleyen bir CMP yine de tutabilir."
+      ],
+      "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent.": [
+        "Hiçbir CMP gelişmiş istatistik betiğini denetlemiyor: ilk sayfadan itibaren, herhangi bir seçimden önce çalışıyor. Bu durumda ayrıntılı veriler onay olmadan toplanır."
       ],
       "No acquisition channel data is available for this period.": [
         "Bu dönem için ziyaretçi profili verisi mevcut değil."
@@ -1093,6 +1201,9 @@
       "No available": [
         "Kullanılabilir değil"
       ],
+      "No bbpa-advanced-tracker-js tag in the HTML": [
+        "HTML'de bbpa-advanced-tracker-js etiketi yok"
+      ],
       "No browser usage available.": [
         "Tarayıcı kullanımı mevcut değil."
       ],
@@ -1113,6 +1224,9 @@
       ],
       "No data available for this period.": [
         "Bu dönem için veri mevcut değil."
+      ],
+      "No data yet": [
+        "Henüz veri yok"
       ],
       "No device data available.": [
         "Cihaz verisi mevcut değil."
@@ -1140,6 +1254,9 @@
       ],
       "No hourly details available for this page.": [
         "Bu sayfa için saatlik ayrıntı mevcut değil."
+      ],
+      "No known CMP found among active plugins or in the home page HTML.": [
+        "Etkin eklentiler arasında veya ana sayfanın HTML'sinde bilinen bir CMP bulunamadı."
       ],
       "No missing pages available.": [
         "Eksik sayfa mevcut değil."
@@ -1201,11 +1318,29 @@
       "North America": [
         "Kuzey Amerika"
       ],
+      "Not blocked": [
+        "Engellenmiyor"
+      ],
+      "Not checked": [
+        "Kontrol edilmedi"
+      ],
+      "Not enough visits yet": [
+        "Henüz yeterli ziyaret yok"
+      ],
+      "Not found": [
+        "Bulunamadı"
+      ],
       "Not identified": [
         "Tanımlanmadı"
       ],
       "Not installed": [
         "Kurulu değil"
+      ],
+      "Not measurable": [
+        "Ölçülemiyor"
+      ],
+      "Not started": [
+        "Başlamadı"
       ],
       "Numeric Account ID used for MaxMind API requests.": [
         "MaxMind API istekleri için kullanılan sayısal Hesap Kimliği."
@@ -1230,6 +1365,9 @@
       ],
       "Open row": [
         "Satırı aç"
+      ],
+      "Open the CMP check": [
+        "CMP kontrolünü aç"
       ],
       "Operating system": [
         "İşletim sistemi"
@@ -1266,6 +1404,12 @@
       ],
       "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page.": [
         "Yayımlanmış bir yazıya veya sayfaya karşılık gelmeyen adreslerin sayfa görüntülemeleri; örneğin arşivler, arama sonuçları veya blog ana sayfası."
+      ],
+      "Page views of the last 7 days, by state of the advanced stats script": [
+        "Son 7 günün sayfa görüntülemeleri, gelişmiş istatistik betiğinin durumuna göre"
+      ],
+      "Page views where the visitor accepted and the script started.": [
+        "Ziyaretçinin kabul ettiği ve betiğin başladığı sayfa görüntülemeleri."
       ],
       "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available.": [
         "Sayfa görüntülemeleri, ziyaretler ve trafik kaynakları ölçülmeye devam edecek ancak ülke, bölge ve şehir bilgileri kullanılamayacak."
@@ -1492,11 +1636,20 @@
       "Save settings": [
         "Ayarları kaydet"
       ],
+      "Save the settings to start the check": [
+        "Kontrolü başlatmak için ayarları kaydedin"
+      ],
       "Script ID:": [
         "Betik kimliği:"
       ],
       "Script handles checked: %s": [
         "Kontrol edilen betik tanıtıcıları: %s"
+      ],
+      "Script missing": [
+        "Betik eksik"
+      ],
+      "Script running": [
+        "Betik çalışıyor"
       ],
       "Script to block:": [
         "Engellenecek betik:"
@@ -1612,6 +1765,9 @@
       "Tablet": [
         "Tablet"
       ],
+      "Tag on the home page": [
+        "Ana sayfadaki etiket"
+      ],
       "Technical details": [
         "Cihaz ayrıntıları"
       ],
@@ -1624,8 +1780,26 @@
       "Test MaxMind connection": [
         "MaxMind bağlantısını test et"
       ],
+      "The CMP check could not be loaded.": [
+        "CMP kontrolü yüklenemedi."
+      ],
       "The GeoIP database could not be validated after download.": [
         "GeoIP veritabanı indirme sonrasında doğrulanamadı."
+      ],
+      "The advanced stats script is missing from most pages: advanced stats are incomplete.": [
+        "Gelişmiş istatistik betiği çoğu sayfada eksik: gelişmiş istatistikler eksik."
+      ],
+      "The advanced stats script is missing from your pages": [
+        "Gelişmiş istatistik betiği sayfalarınızda eksik"
+      ],
+      "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do.": [
+        "Gelişmiş istatistik betiği, ziyaretçi istatistik çerezlerini kabul edene kadar engelli kalır, ardından normal şekilde başlar. Yapmanız gereken bir şey yok."
+      ],
+      "The check needs at least %1$s page views over the last 7 days. %2$s counted so far.": [
+        "Kontrol için son 7 günde en az %1$s sayfa görüntüleme gerekir. Şu ana kadar %2$s sayıldı."
+      ],
+      "The check starts once advanced stats are enabled and saved.": [
+        "Kontrol, gelişmiş istatistikler etkinleştirilip kaydedildiğinde başlar."
       ],
       "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent.": [
         "İletişime geçilen etki alanları, sunucunuzun IP adresini ve genel bir teknik Kullanıcı Aracısını alabilir. Doğrudan yöneticinin tarayıcısından hiçbir istek gönderilmez ve Kullanıcı Aracısına hiçbir WordPress sitesi URL'si dahil edilmez."
@@ -1641,6 +1815,15 @@
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
         "Yerel veritabanı izleme sırasında harici istekler olmadan çalışır. MaxMind API kimlik bilgilerinizi gerektirir."
+      ],
+      "The script tag is not in the home page HTML.": [
+        "Betik etiketi ana sayfanın HTML'sinde yok."
+      ],
+      "The server could not read the home page.": [
+        "Sunucu ana sayfayı okuyamadı."
+      ],
+      "The server could not read the home page. Some hosts block requests from a site to itself.": [
+        "Sunucu ana sayfayı okuyamadı. Bazı barındırıcılar bir sitenin kendi kendine yaptığı istekleri engeller."
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "Sunucu beklenmeyen bir yanıt döndürdü. Ayrıntılar için uç nokta yanıt önizlemesini kontrol edin."
@@ -1828,6 +2011,9 @@
       "What is a CMP?": [
         "CMP nedir?"
       ],
+      "What to do": [
+        "Ne yapmalı"
+      ],
       "When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.": [
         "Devre dışı bırakıldığında, yerel bir genel simge görüntülenir ve sık kullanılan simgeler için hiçbir yönlendiren etki alanıyla bağlantı kurulmaz."
       ],
@@ -1837,8 +2023,14 @@
       "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors.": [
         "Yerel bir GeoIP veritabanı olmadan BimBeau Privacy Analytics, ziyaretçilerin coğrafi kökenini belirleyemeyecektir."
       ],
+      "Without blocking, accepting and refusing cannot be told apart.": [
+        "Engelleme olmadan kabul ve reddetme birbirinden ayırt edilemez."
+      ],
       "WordPress handle:": [
         "WordPress handle’ı:"
+      ],
+      "Working": [
+        "Çalışıyor"
       ],
       "World map": [
         "Dünya haritası"
@@ -1851,6 +2043,12 @@
       ],
       "You can download the GeoIP database later from the geolocation settings.": [
         "GeoIP veritabanını daha sonra coğrafi konum ayarlarından indirebilirsiniz."
+      ],
+      "Your CMP blocks advanced stats until consent": [
+        "CMP'niz, onaya kadar gelişmiş istatistikleri engelliyor"
+      ],
+      "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days.": [
+        "CMP'niz gelişmiş istatistik betiğini engelliyor ancak onaydan sonra hiç serbest bırakmıyor: son 7 günde hiç gelişmiş veri alınmadı."
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "CMP’niz, İstatistik / Analitik onayı verilene kadar bunu engellemelidir."

@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.84.2
+Stable tag: 8.85.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,5 +247,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.84.2 =
-* Manual release metadata update.
+= 8.85.0 =
+* [Feature] Settings → Tracking & privacy now shows a CMP check under the CMP setup: it tells whether your consent tool (CMP) blocks the advanced stats script before consent and releases it after, with the shares over 7 days, a daily chart, the script tag read on the home page and what to do when something is wrong.
+* [Feature] When the check finds a problem (script never released after consent, script not blocked, or script missing from pages), a notice appears on the other plugin screens with a link to the check.

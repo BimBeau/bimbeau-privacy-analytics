@@ -5,6 +5,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import Notice from './components/BrandNotice';
+import CmpCheckNotice from './components/CmpCheckNotice';
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 import { ADMIN_CONFIG, isPanelEnabled } from './constants';
@@ -553,6 +554,11 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 				</Notice>
 			) : null }
 			{ setupNotice ? <Notice status={ setupNotice.status } isDismissible onRemove={ () => setSetupNotice( false ) }>{ setupNotice.message }</Notice> : null }
+			{ ! isAuthRequired && currentPanel !== 'settings' ? (
+				<CmpCheckNotice
+					status={ ADMIN_CONFIG?.settings?.cmpCheckStatus || '' }
+				/>
+			) : null }
 			{ shouldShowMissingGeoIpDatabaseNotice ? (
 				<Notice status="warning" isDismissible={ false }>
 					<strong>

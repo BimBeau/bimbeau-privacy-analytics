@@ -128,6 +128,12 @@ class BBPA_Hit_Controller {
                         'type' => 'string',
                         'sanitize_callback' => 'sanitize_key',
                     ],
+                    // State of the advanced tracker tag on the page (CMP check), sent by the essential tracker.
+                    'advanced_script_state' => [
+                        'required' => false,
+                        'type' => 'string',
+                        'sanitize_callback' => 'sanitize_key',
+                    ],
                 ],
             ]
         );
@@ -183,6 +189,7 @@ class BBPA_Hit_Controller {
 
         $this->log_debug('Hit payload accepted after validation (core ingestion).', $this->build_hit_debug_context($hit));
         $this->log_event_debug('Hit payload accepted after validation (event pipeline).', $hit);
+        $this->record_cmp_check_signals($hit, $request);
 
         if ($this->should_merge_enriched_hit($hit)) {
             $tracked = $this->store_upgrade_event($hit);
@@ -223,6 +230,34 @@ class BBPA_Hit_Controller {
         return new WP_REST_Response(['tracked' => true], 201);
     }
 
+
+    /**
+     * Feed the CMP check counters from an accepted hit.
+     *
+     * Essential page views carry the state of the advanced tracker tag on the page; the first enrichment of a page
+     * by the advanced tracker shows that the CMP released it. Robots are ignored. Only daily totals are stored.
+     */
+    private function record_cmp_check_signals(array $hit, WP_REST_Request $request): void {
+        if (!function_exists('bbpa_cmp_check_record_state') || !$this->is_advanced_stats_enabled()) {
+            return;
+        }
+
+        if (($hit['device_class'] ?? '') === 'bot') {
+            return;
+        }
+
+        $event_name = (string) ($hit['event_name'] ?? '');
+        $granularity = (string) ($hit['granularity'] ?? 'base');
+
+        if ($granularity === 'enriched' && $event_name === 'enrichment_update') {
+            bbpa_cmp_check_record_enrichment();
+            return;
+        }
+
+        if ($granularity === 'base' && ($event_name === '' || $event_name === 'page_view')) {
+            bbpa_cmp_check_record_state($request->get_param('advanced_script_state'));
+        }
+    }
 
     /**
      * Build a skip response with debug-aware status code.

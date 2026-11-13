@@ -31,6 +31,9 @@
       "%1$s: %2$s": [
         "%1$s：%2$s"
       ],
+      "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing": [
+        "%1$s：%2$s 次页面浏览，%3$s 次被拦截，%4$s 次运行中，%5$s 次缺失"
+      ],
       "%1$s: %2$s visits": [
         "%1$s：%2$s 次访问"
       ],
@@ -69,6 +72,9 @@
       ],
       "%s item": [
         "%s 项"
+      ],
+      "%s of page views": [
+        "%s 的页面浏览"
       ],
       "%s of total visitors": [
         "占总访问量的 %s"
@@ -217,11 +223,32 @@
       "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
         "高级统计已禁用。BimBeau Privacy Analytics 将仅使用基础统计。"
       ],
+      "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.": [
+        "高级统计已启用，但在 %s 的页面浏览中缺少脚本标签。缓存、优化或同意插件会将其移除，而不是保留到获得同意后。"
+      ],
+      "Advanced stats never start, even when visitors accept": [
+        "即使访客接受，高级统计也从未启动"
+      ],
+      "Advanced stats never start: your CMP does not release the script after consent.": [
+        "高级统计从未启动：您的 CMP 在获得同意后不会放行该脚本。"
+      ],
       "Advanced stats require consent": [
         "高级统计需要同意"
       ],
+      "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats.": [
+        "高级统计在访客同意之前运行。请在您的 CMP 中拦截该脚本，或关闭高级统计。"
+      ],
+      "Advanced stats start before visitors give consent": [
+        "高级统计在访客同意之前就已启动"
+      ],
+      "Advanced stats tag read on the home page": [
+        "在首页读取的高级统计标签"
+      ],
       "Africa": [
         "非洲"
+      ],
+      "After consent": [
+        "同意后"
       ],
       "Aggregated analytics data purged.": [
         "聚合分析数据已清除。"
@@ -307,8 +334,14 @@
       "Avg. time on page": [
         "页面平均停留时间"
       ],
+      "Based on %s page views over the last 7 days.": [
+        "基于最近 7 天的 %s 次页面浏览。"
+      ],
       "Based on %s tracked page views in the selected range.": [
         "基于所选范围内 %s 次已跟踪页面浏览。"
+      ],
+      "Before consent": [
+        "同意前"
       ],
       "BimBeau GeoIP Database Service": [
         "本地 GeoLite 数据库不可用。"
@@ -331,6 +364,12 @@
       "Block the advanced stats script until Statistics / Analytics consent is given.": [
         "在获得统计/分析同意之前阻止高级统计脚本。"
       ],
+      "Blocked": [
+        "已拦截"
+      ],
+      "Blocked by the CMP": [
+        "被 CMP 拦截"
+      ],
       "Bot": [
         "机器人"
       ],
@@ -345,6 +384,12 @@
       ],
       "Busiest slot: %1$s, %2$s (%3$s)": [
         "最繁忙的时段：%1$s，%2$s（%3$s）"
+      ],
+      "CMP check": [
+        "CMP 检查"
+      ],
+      "CMP found: %s.": [
+        "找到 CMP：%s。"
       ],
       "CMP markers": [
         "CMP 标记"
@@ -379,6 +424,12 @@
       "Channel details": [
         "渠道详情"
       ],
+      "Check again": [
+        "重新检查"
+      ],
+      "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored.": [
+        "每次页面浏览时检查您的 CMP 是否在同意前拦截高级统计脚本，并在同意后放行。仅存储每日合计。"
+      ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
       ],
@@ -400,11 +451,20 @@
       "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends.": [
         "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
       ],
+      "Clear the site cache, then check again.": [
+        "清除网站缓存，然后重新检查。"
+      ],
+      "Clear the site cache, then come back tomorrow: the check updates with the visits of the day.": [
+        "清除网站缓存，然后明天再来：检查会根据当天的访问更新。"
+      ],
       "Clicks <target />": [
         "点击 <target />"
       ],
       "Close channel details": [
         "关闭渠道详情"
+      ],
+      "Collecting data": [
+        "正在收集数据"
       ],
       "Columns": [
         "列"
@@ -480,6 +540,12 @@
       ],
       "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution.": [
         "控制 URL 清理行为，并仅保留需要用于归因的营销活动查询参数。"
+      ],
+      "Counted when the advanced stats script starts.": [
+        "在高级统计脚本启动时统计。"
+      ],
+      "Counted with each page view.": [
+        "每次页面浏览时统计。"
       ],
       "Countries": [
         "国家/地区"
@@ -727,11 +793,17 @@
       "Examples:": [
         "示例："
       ],
+      "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin.": [
+        "在缓存或优化插件的 JavaScript 延迟、合并或移除选项中排除 bbpa-advanced-tracker。"
+      ],
       "Excluded paths": [
         "排除的路径"
       ],
       "Exclusions": [
         "排除项"
+      ],
+      "Executable": [
+        "可执行"
       ],
       "Exit fullscreen": [
         "退出全屏"
@@ -802,6 +874,12 @@
       "Global namespaces checked: %s": [
         "已检查全局命名空间：%s"
       ],
+      "Held by a CMP": [
+        "被 CMP 暂扣"
+      ],
+      "Held by the CMP on %s of page views.": [
+        "在 %s 的页面浏览中被 CMP 暂扣。"
+      ],
       "Hidden": [
         "隐藏"
       ],
@@ -810,6 +888,9 @@
       ],
       "Home page": [
         "首页"
+      ],
+      "Home page checked on %s.": [
+        "首页检查时间：%s。"
       ],
       "Hourly activity heatmap by day and hour": [
         "按日期和小时显示的全局小时热力图"
@@ -841,14 +922,23 @@
       "I confirm that I want to purge only data older than the configured retention window.": [
         "我确认只清除早于配置保留窗口的数据。"
       ],
+      "If the site has no CMP, turn off advanced stats: essential stats keep working without consent.": [
+        "如果网站没有 CMP，请关闭高级统计：基础统计无需同意即可继续运行。"
+      ],
       "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent.": [
         "如果您的网站需要事先获得分析同意，您的 CMP 必须阻止 BimBeau 隐私分析高级跟踪器，直到访问者接受分析或统计类别。 BimBeau Privacy Analytics 不会取代您的 CMP，也不会记录访问者的同意。"
       ],
       "Immediately download the latest GeoLite database.": [
         "无法读取本地 GeoLite 数据库。"
       ],
+      "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category.": [
+        "在您的 CMP 中，将高级统计脚本（ID bbpa-advanced-tracker-js）添加到被拦截的脚本中，归入统计类别。"
+      ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "在你的 CMP 中，在统计或分析目的被接受之前阻止 BimBeau Privacy Analytics 高级统计脚本。"
+      ],
+      "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept.": [
+        "在您的 CMP 中，检查高级统计脚本的类别：必须是访客接受的统计类别。"
       ],
       "Initial configuration completed.": [
         "初始配置完成。"
@@ -879,6 +969,9 @@
       ],
       "Items per page": [
         "每页项目数"
+      ],
+      "Its type was changed so that it does not run before consent.": [
+        "其类型已被更改，因此不会在获得同意前运行。"
       ],
       "Keep report details for %d days": [
         "Keep report details for %d days"
@@ -1042,6 +1135,9 @@
       "Missing admin configuration.": [
         "缺少管理配置。"
       ],
+      "Missing from the page": [
+        "页面中缺失"
+      ],
       "Mobile": [
         "移动设备"
       ],
@@ -1057,6 +1153,12 @@
       "Move right": [
         "右移"
       ],
+      "Never held by a CMP before the page view was sent.": [
+        "在页面浏览发送之前，从未被 CMP 暂扣。"
+      ],
+      "Never released": [
+        "从未放行"
+      ],
       "New": [
         "新增"
       ],
@@ -1071,6 +1173,12 @@
       ],
       "Next update": [
         "下一页"
+      ],
+      "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it.": [
+        "HTML 中没有 CMP 属性。在浏览器中拦截脚本的 CMP 仍可能将其暂扣。"
+      ],
+      "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent.": [
+        "没有 CMP 控制高级统计脚本：它从第一个页面起就运行，早于任何选择。因此会在未经同意的情况下收集详细数据。"
       ],
       "No acquisition channel data is available for this period.": [
         "此时间段没有可用的访客画像数据。"
@@ -1093,6 +1201,9 @@
       "No available": [
         "不可用"
       ],
+      "No bbpa-advanced-tracker-js tag in the HTML": [
+        "HTML 中没有 bbpa-advanced-tracker-js 标签"
+      ],
       "No browser usage available.": [
         "没有可用的浏览器使用数据。"
       ],
@@ -1113,6 +1224,9 @@
       ],
       "No data available for this period.": [
         "此时间段没有可用数据。"
+      ],
+      "No data yet": [
+        "暂无数据"
       ],
       "No device data available.": [
         "没有可用的设备数据。"
@@ -1140,6 +1254,9 @@
       ],
       "No hourly details available for this page.": [
         "此页面没有可用的小时详情。"
+      ],
+      "No known CMP found among active plugins or in the home page HTML.": [
+        "在已启用的插件或首页 HTML 中未找到已知的 CMP。"
       ],
       "No missing pages available.": [
         "没有可用的缺失页面。"
@@ -1201,11 +1318,29 @@
       "North America": [
         "北美洲"
       ],
+      "Not blocked": [
+        "未被拦截"
+      ],
+      "Not checked": [
+        "未检查"
+      ],
+      "Not enough visits yet": [
+        "访问量尚不足"
+      ],
+      "Not found": [
+        "未找到"
+      ],
       "Not identified": [
         "未识别"
       ],
       "Not installed": [
         "未安装"
+      ],
+      "Not measurable": [
+        "无法衡量"
+      ],
+      "Not started": [
+        "未启动"
       ],
       "Numeric Account ID used for MaxMind API requests.": [
         "用于 MaxMind API 请求的数字账户 ID。"
@@ -1230,6 +1365,9 @@
       ],
       "Open row": [
         "打开行"
+      ],
+      "Open the CMP check": [
+        "打开 CMP 检查"
       ],
       "Operating system": [
         "操作系统"
@@ -1266,6 +1404,12 @@
       ],
       "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page.": [
         "与任何已发布文章或页面都不匹配的地址的页面浏览量，例如归档页、搜索结果或博客首页。"
+      ],
+      "Page views of the last 7 days, by state of the advanced stats script": [
+        "最近 7 天的页面浏览，按高级统计脚本的状态划分"
+      ],
+      "Page views where the visitor accepted and the script started.": [
+        "访客已接受且脚本已启动的页面浏览。"
       ],
       "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available.": [
         "页面浏览量、访问量和流量来源将继续进行测量，但国家、地区和城市信息将不可用。"
@@ -1492,11 +1636,20 @@
       "Save settings": [
         "保存设置"
       ],
+      "Save the settings to start the check": [
+        "保存设置以开始检查"
+      ],
       "Script ID:": [
         "脚本 ID："
       ],
       "Script handles checked: %s": [
         "已检查脚本句柄：%s"
+      ],
+      "Script missing": [
+        "脚本缺失"
+      ],
+      "Script running": [
+        "脚本运行中"
       ],
       "Script to block:": [
         "要阻止的脚本："
@@ -1612,6 +1765,9 @@
       "Tablet": [
         "平板设备"
       ],
+      "Tag on the home page": [
+        "首页上的标签"
+      ],
       "Technical details": [
         "设备详情"
       ],
@@ -1624,8 +1780,26 @@
       "Test MaxMind connection": [
         "测试 MaxMind 连接"
       ],
+      "The CMP check could not be loaded.": [
+        "无法加载 CMP 检查。"
+      ],
       "The GeoIP database could not be validated after download.": [
         "下载后无法验证 GeoIP 数据库。"
+      ],
+      "The advanced stats script is missing from most pages: advanced stats are incomplete.": [
+        "大多数页面缺少高级统计脚本：高级统计数据不完整。"
+      ],
+      "The advanced stats script is missing from your pages": [
+        "您的页面中缺少高级统计脚本"
+      ],
+      "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do.": [
+        "在访客接受统计 Cookie 之前，高级统计脚本会一直被拦截，之后正常启动。无需任何操作。"
+      ],
+      "The check needs at least %1$s page views over the last 7 days. %2$s counted so far.": [
+        "检查需要最近 7 天内至少 %1$s 次页面浏览。目前已统计 %2$s 次。"
+      ],
+      "The check starts once advanced stats are enabled and saved.": [
+        "启用并保存高级统计后，检查将开始。"
       ],
       "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent.": [
         "联系的域可以接收您的服务器 IP 地址和通用技术用户代理。管理员的浏览器不会直接发送任何请求，用户代理中也不包含 WordPress 站点 URL。"
@@ -1641,6 +1815,15 @@
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
         "本地数据库在跟踪期间无需外部请求即可工作。MaxMind API 需要您的凭据。"
+      ],
+      "The script tag is not in the home page HTML.": [
+        "首页 HTML 中没有该脚本标签。"
+      ],
+      "The server could not read the home page.": [
+        "服务器无法读取首页。"
+      ],
+      "The server could not read the home page. Some hosts block requests from a site to itself.": [
+        "服务器无法读取首页。部分主机会拦截网站对自身的请求。"
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "服务器返回了意外响应。请查看端点响应预览了解详情。"
@@ -1828,6 +2011,9 @@
       "What is a CMP?": [
         "什么是 CMP？"
       ],
+      "What to do": [
+        "该怎么做"
+      ],
       "When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.": [
         "禁用后，将显示本地通用图标，并且不会为网站图标联系引荐来源网址域。"
       ],
@@ -1837,8 +2023,14 @@
       "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors.": [
         "如果没有本地 GeoIP 数据库，BimBeau Privacy Analytics 将无法确定访问者的地理来源。"
       ],
+      "Without blocking, accepting and refusing cannot be told apart.": [
+        "没有拦截时，无法区分接受与拒绝。"
+      ],
       "WordPress handle:": [
         "WordPress 句柄："
+      ],
+      "Working": [
+        "正常运行"
       ],
       "World map": [
         "世界地图"
@@ -1851,6 +2043,12 @@
       ],
       "You can download the GeoIP database later from the geolocation settings.": [
         "您可以稍后从地理位置设置下载 GeoIP 数据库。"
+      ],
+      "Your CMP blocks advanced stats until consent": [
+        "您的 CMP 会在获得同意前拦截高级统计"
+      ],
+      "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days.": [
+        "您的 CMP 拦截了高级统计脚本，但在获得同意后从未放行：最近 7 天没有收到任何高级数据。"
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "你的 CMP 必须在获得统计/分析同意之前阻止它。"

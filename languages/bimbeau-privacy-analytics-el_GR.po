@@ -339,6 +339,10 @@ msgid "GeoIP database updated successfully."
 msgstr "Η βάση δεδομένων GeoIP ενημερώθηκε με επιτυχία."
 
 #: includes/rest/class-bbpa-admin-controller.php
+msgid "The CMP check is not available."
+msgstr "Ο έλεγχος CMP δεν είναι διαθέσιμος."
+
+#: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is available."
 msgstr "Η βάση δεδομένων GeoIP είναι διαθέσιμη."
 
@@ -798,6 +802,278 @@ msgstr "Προηγούμενη περίοδος: %1$s (%2$s)"
 #: src/admin/components/ChannelDetails/index.js
 msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
 msgstr "Για αυτές τις επισκέψεις δεν μεταδίδεται ιστότοπος παραπομπής: πληκτρολογημένη διεύθυνση, σελιδοδείκτης ή σύνδεσμος από εφαρμογή, έγγραφο ή email χωρίς παραμέτρους UTM."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Working"
+msgstr "Λειτουργεί"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not blocked"
+msgstr "Δεν αποκλείεται"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never released"
+msgstr "Δεν απελευθερώνεται ποτέ"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script missing"
+msgstr "Το script λείπει"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not started"
+msgstr "Δεν έχει ξεκινήσει"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Collecting data"
+msgstr "Συλλογή δεδομένων"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks advanced stats until consent"
+msgstr "Το CMP σας αποκλείει τα προηγμένα στατιστικά μέχρι τη συναίνεση"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do."
+msgstr "Το script των προηγμένων στατιστικών παραμένει αποκλεισμένο μέχρι ο επισκέπτης να αποδεχτεί τα cookies στατιστικών και μετά ξεκινά κανονικά. Δεν χρειάζεται καμία ενέργεια."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats start before visitors give consent"
+msgstr "Τα προηγμένα στατιστικά ξεκινούν πριν οι επισκέπτες δώσουν συναίνεση"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent."
+msgstr "Κανένα CMP δεν ελέγχει το script των προηγμένων στατιστικών: εκτελείται από την πρώτη σελίδα, πριν από οποιαδήποτε επιλογή. Τα αναλυτικά δεδομένα συλλέγονται τότε χωρίς συναίνεση."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats never start, even when visitors accept"
+msgstr "Τα προηγμένα στατιστικά δεν ξεκινούν ποτέ, ακόμη και όταν οι επισκέπτες αποδέχονται"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days."
+msgstr "Το CMP σας αποκλείει το script των προηγμένων στατιστικών αλλά δεν το απελευθερώνει ποτέ μετά τη συναίνεση: δεν ελήφθησαν προηγμένα δεδομένα τις τελευταίες 7 ημέρες."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script is missing from your pages"
+msgstr "Το script των προηγμένων στατιστικών λείπει από τις σελίδες σας"
+
+#. translators: %s: share of page views, for example 61%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
+msgstr "Τα προηγμένα στατιστικά είναι ενεργοποιημένα, αλλά η ετικέτα του script έλειπε στο %s των προβολών σελίδας. Ένα πρόσθετο προσωρινής αποθήκευσης, βελτιστοποίησης ή συναίνεσης την αφαιρεί αντί να την κρατά μέχρι τη συναίνεση."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Save the settings to start the check"
+msgstr "Αποθηκεύστε τις ρυθμίσεις για να ξεκινήσει ο έλεγχος"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check starts once advanced stats are enabled and saved."
+msgstr "Ο έλεγχος ξεκινά μόλις τα προηγμένα στατιστικά ενεργοποιηθούν και αποθηκευτούν."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not enough visits yet"
+msgstr "Δεν υπάρχουν αρκετές επισκέψεις ακόμη"
+
+#. translators: 1: minimum number of page views, 2: page views counted so far.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
+msgstr "Ο έλεγχος χρειάζεται τουλάχιστον %1$s προβολές σελίδας τις τελευταίες 7 ημέρες. Μετρήθηκαν %2$s μέχρι τώρα."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No data yet"
+msgstr "Δεν υπάρχουν δεδομένα ακόμη"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted with each page view."
+msgstr "Μετράται με κάθε προβολή σελίδας."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked"
+msgstr "Αποκλείεται"
+
+#. translators: %s: share of page views, for example 58%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by the CMP on %s of page views."
+msgstr "Κρατήθηκε από το CMP στο %s των προβολών σελίδας."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never held by a CMP before the page view was sent."
+msgstr "Δεν κρατήθηκε ποτέ από CMP πριν σταλεί η προβολή σελίδας."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not measurable"
+msgstr "Δεν μπορεί να μετρηθεί"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Without blocking, accepting and refusing cannot be told apart."
+msgstr "Χωρίς αποκλεισμό, η αποδοχή και η απόρριψη δεν διακρίνονται."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted when the advanced stats script starts."
+msgstr "Μετράται όταν ξεκινά το script των προηγμένων στατιστικών."
+
+#. translators: %s: share of page views, for example 42%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%s of page views"
+msgstr "%s των προβολών σελίδας"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views where the visitor accepted and the script started."
+msgstr "Προβολές σελίδας όπου ο επισκέπτης αποδέχτηκε και το script ξεκίνησε."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by a CMP"
+msgstr "Κρατήθηκε από CMP"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Its type was changed so that it does not run before consent."
+msgstr "Ο τύπος του άλλαξε ώστε να μην εκτελείται πριν από τη συναίνεση."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Executable"
+msgstr "Εκτελέσιμο"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it."
+msgstr "Δεν υπάρχει χαρακτηριστικό CMP στο HTML. Ένα CMP που αποκλείει scripts στον περιηγητή μπορεί και πάλι να το κρατήσει."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not found"
+msgstr "Δεν βρέθηκε"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The script tag is not in the home page HTML."
+msgstr "Η ετικέτα του script δεν υπάρχει στο HTML της αρχικής σελίδας."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not checked"
+msgstr "Δεν ελέγχθηκε"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page."
+msgstr "Ο διακομιστής δεν μπόρεσε να διαβάσει την αρχική σελίδα."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Before consent"
+msgstr "Πριν τη συναίνεση"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "After consent"
+msgstr "Μετά τη συναίνεση"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Tag on the home page"
+msgstr "Ετικέτα στην αρχική σελίδα"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category."
+msgstr "Στο CMP σας, προσθέστε το script των προηγμένων στατιστικών (ID bbpa-advanced-tracker-js) στα αποκλεισμένα scripts, στην κατηγορία στατιστικών."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "If the site has no CMP, turn off advanced stats: essential stats keep working without consent."
+msgstr "Αν ο ιστότοπος δεν έχει CMP, απενεργοποιήστε τα προηγμένα στατιστικά: τα βασικά στατιστικά συνεχίζουν να λειτουργούν χωρίς συναίνεση."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept."
+msgstr "Στο CMP σας, ελέγξτε την κατηγορία του script των προηγμένων στατιστικών: πρέπει να είναι η κατηγορία στατιστικών που αποδέχονται οι επισκέπτες."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then come back tomorrow: the check updates with the visits of the day."
+msgstr "Καθαρίστε την προσωρινή μνήμη του ιστότοπου και ξανάρθετε αύριο: ο έλεγχος ενημερώνεται με τις επισκέψεις της ημέρας."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin."
+msgstr "Εξαιρέστε το bbpa-advanced-tracker από τις επιλογές καθυστέρησης JavaScript, συνδυασμού ή αφαίρεσης του προσθέτου προσωρινής αποθήκευσης ή βελτιστοποίησης."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then check again."
+msgstr "Καθαρίστε την προσωρινή μνήμη του ιστότοπου και ελέγξτε ξανά."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked by the CMP"
+msgstr "Αποκλείεται από το CMP"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script running"
+msgstr "Το script εκτελείται"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Missing from the page"
+msgstr "Λείπει από τη σελίδα"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views of the last 7 days, by state of the advanced stats script"
+msgstr "Προβολές σελίδας των τελευταίων 7 ημερών, ανά κατάσταση του script των προηγμένων στατιστικών"
+
+#. translators: 1: day, 2: page views, 3: blocked, 4: script running, 5: missing.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing"
+msgstr "%1$s: %2$s προβολές σελίδας, %3$s αποκλεισμένες, %4$s σε εκτέλεση, %5$s που λείπουν"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The CMP check could not be loaded."
+msgstr "Δεν ήταν δυνατή η φόρτωση του ελέγχου CMP."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP check"
+msgstr "Έλεγχος CMP"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored."
+msgstr "Ελέγχει σε κάθε προβολή σελίδας αν το CMP σας αποκλείει το script των προηγμένων στατιστικών πριν τη συναίνεση και το απελευθερώνει μετά. Αποθηκεύονται μόνο ημερήσια σύνολα."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats tag read on the home page"
+msgstr "Ετικέτα προηγμένων στατιστικών που διαβάστηκε στην αρχική σελίδα"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No bbpa-advanced-tracker-js tag in the HTML"
+msgstr "Δεν υπάρχει ετικέτα bbpa-advanced-tracker-js στο HTML"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page. Some hosts block requests from a site to itself."
+msgstr "Ο διακομιστής δεν μπόρεσε να διαβάσει την αρχική σελίδα. Ορισμένοι πάροχοι φιλοξενίας αποκλείουν αιτήματα ενός ιστότοπου προς τον εαυτό του."
+
+#. translators: %s: list of CMP names.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP found: %s."
+msgstr "Βρέθηκε CMP: %s."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No known CMP found among active plugins or in the home page HTML."
+msgstr "Δεν βρέθηκε γνωστό CMP στα ενεργά πρόσθετα ή στο HTML της αρχικής σελίδας."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "What to do"
+msgstr "Τι να κάνετε"
+
+#. translators: %s: number of page views.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Based on %s page views over the last 7 days."
+msgstr "Με βάση %s προβολές σελίδας τις τελευταίες 7 ημέρες."
+
+#. translators: %s: date and time.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Home page checked on %s."
+msgstr "Η αρχική σελίδα ελέγχθηκε στις %s."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Check again"
+msgstr "Έλεγχος ξανά"
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats."
+msgstr "Τα προηγμένα στατιστικά εκτελούνται πριν οι επισκέπτες δώσουν συναίνεση. Αποκλείστε το script στο CMP σας ή απενεργοποιήστε τα προηγμένα στατιστικά."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats never start: your CMP does not release the script after consent."
+msgstr "Τα προηγμένα στατιστικά δεν ξεκινούν ποτέ: το CMP σας δεν απελευθερώνει το script μετά τη συναίνεση."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "The advanced stats script is missing from most pages: advanced stats are incomplete."
+msgstr "Το script των προηγμένων στατιστικών λείπει από τις περισσότερες σελίδες: τα προηγμένα στατιστικά είναι ελλιπή."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Open the CMP check"
+msgstr "Άνοιγμα του ελέγχου CMP"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"

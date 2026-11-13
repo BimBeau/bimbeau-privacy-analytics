@@ -1737,6 +1737,11 @@ function bbpa_build_admin_localized_payload(
                 || rest_sanitize_boolean($settings['advanced_stats_enabled']),
             'referrer_favicons_enabled' => isset($settings['referrer_favicons_enabled'])
                 && rest_sanitize_boolean($settings['referrer_favicons_enabled']),
+            // CMP check verdict from the daily counters (no HTTP request), for users who can fix the setup.
+            'cmpCheckStatus' => function_exists('bbpa_cmp_check_get_verdict')
+                && current_user_can(bbpa_get_settings_access_capability())
+                ? sanitize_key((string) (bbpa_cmp_check_get_verdict()['status'] ?? ''))
+                : '',
             'adminCacheVersion' => bbpa_get_admin_cache_version(),
             'slug' => sanitize_key(BBPA_SLUG),
             'pluginLabel' => sanitize_text_field($menu_label),

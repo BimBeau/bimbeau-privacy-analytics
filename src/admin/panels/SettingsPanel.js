@@ -61,6 +61,7 @@ import useAdminEndpoint, {
 import { fetchGeoIpDatabaseStatus } from "../api/geoipDatabaseStatus";
 import DataState from "../components/DataState";
 import BpaCard from "../components/BpaCard";
+import CmpCheckCard from "../components/CmpCheckCard";
 
 
 import { ADMIN_CONFIG, DEFAULT_SETTINGS } from "../constants";
@@ -1992,6 +1993,8 @@ const SettingsPanel = ({
                                   </CardBody>
                                 </Card>
                               )}
+                              {/* Remounted after each save so it reads the saved advanced stats setting. */}
+                              <CmpCheckCard key={adminCacheVersion} />
                             </>
                           ) : (
                             <p>

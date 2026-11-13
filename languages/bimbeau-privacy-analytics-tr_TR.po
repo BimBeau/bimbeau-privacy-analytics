@@ -338,6 +338,10 @@ msgid "GeoIP database updated successfully."
 msgstr "GeoIP veritabanı başarıyla güncellendi."
 
 #: includes/rest/class-bbpa-admin-controller.php
+msgid "The CMP check is not available."
+msgstr "CMP kontrolü kullanılamıyor."
+
+#: includes/rest/class-bbpa-admin-controller.php
 msgid "GeoIP database is available."
 msgstr "GeoIP veritabanı mevcut."
 
@@ -794,6 +798,278 @@ msgstr "Önceki dönem: %1$s (%2$s)"
 #: src/admin/components/ChannelDetails/index.js
 msgid "No referring site is sent for these visits: address typed in, bookmark, or link opened from an app, a document or an email without UTM parameters."
 msgstr "Bu ziyaretler için yönlendiren site iletilmez: yazılan adres, yer imi ya da UTM parametresi olmadan bir uygulamadan, belgeden veya e-postadan açılan bağlantı."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Working"
+msgstr "Çalışıyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not blocked"
+msgstr "Engellenmiyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never released"
+msgstr "Hiç serbest bırakılmadı"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script missing"
+msgstr "Betik eksik"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not started"
+msgstr "Başlamadı"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Collecting data"
+msgstr "Veri toplanıyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks advanced stats until consent"
+msgstr "CMP'niz, onaya kadar gelişmiş istatistikleri engelliyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do."
+msgstr "Gelişmiş istatistik betiği, ziyaretçi istatistik çerezlerini kabul edene kadar engelli kalır, ardından normal şekilde başlar. Yapmanız gereken bir şey yok."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats start before visitors give consent"
+msgstr "Gelişmiş istatistikler, ziyaretçiler onay vermeden önce başlıyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent."
+msgstr "Hiçbir CMP gelişmiş istatistik betiğini denetlemiyor: ilk sayfadan itibaren, herhangi bir seçimden önce çalışıyor. Bu durumda ayrıntılı veriler onay olmadan toplanır."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats never start, even when visitors accept"
+msgstr "Gelişmiş istatistikler, ziyaretçiler kabul etse bile hiç başlamıyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days."
+msgstr "CMP'niz gelişmiş istatistik betiğini engelliyor ancak onaydan sonra hiç serbest bırakmıyor: son 7 günde hiç gelişmiş veri alınmadı."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The advanced stats script is missing from your pages"
+msgstr "Gelişmiş istatistik betiği sayfalarınızda eksik"
+
+#. translators: %s: share of page views, for example 61%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent."
+msgstr "Gelişmiş istatistikler etkin, ancak betik etiketi sayfa görüntülemelerinin %s oranında eksikti. Bir önbellek, optimizasyon veya onay eklentisi, onaya kadar tutmak yerine etiketi kaldırıyor."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Save the settings to start the check"
+msgstr "Kontrolü başlatmak için ayarları kaydedin"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check starts once advanced stats are enabled and saved."
+msgstr "Kontrol, gelişmiş istatistikler etkinleştirilip kaydedildiğinde başlar."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not enough visits yet"
+msgstr "Henüz yeterli ziyaret yok"
+
+#. translators: 1: minimum number of page views, 2: page views counted so far.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The check needs at least %1$s page views over the last 7 days. %2$s counted so far."
+msgstr "Kontrol için son 7 günde en az %1$s sayfa görüntüleme gerekir. Şu ana kadar %2$s sayıldı."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No data yet"
+msgstr "Henüz veri yok"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted with each page view."
+msgstr "Her sayfa görüntülemesinde sayılır."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked"
+msgstr "Engellendi"
+
+#. translators: %s: share of page views, for example 58%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by the CMP on %s of page views."
+msgstr "Sayfa görüntülemelerinin %s oranında CMP tarafından tutuldu."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Never held by a CMP before the page view was sent."
+msgstr "Sayfa görüntülemesi gönderilmeden önce hiçbir CMP tarafından tutulmadı."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not measurable"
+msgstr "Ölçülemiyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Without blocking, accepting and refusing cannot be told apart."
+msgstr "Engelleme olmadan kabul ve reddetme birbirinden ayırt edilemez."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Counted when the advanced stats script starts."
+msgstr "Gelişmiş istatistik betiği başladığında sayılır."
+
+#. translators: %s: share of page views, for example 42%.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%s of page views"
+msgstr "Sayfa görüntülemelerinin %s"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views where the visitor accepted and the script started."
+msgstr "Ziyaretçinin kabul ettiği ve betiğin başladığı sayfa görüntülemeleri."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Held by a CMP"
+msgstr "Bir CMP tarafından tutuldu"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Its type was changed so that it does not run before consent."
+msgstr "Onaydan önce çalışmaması için türü değiştirildi."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Executable"
+msgstr "Çalıştırılabilir"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it."
+msgstr "HTML'de CMP özniteliği yok. Betikleri tarayıcıda engelleyen bir CMP yine de tutabilir."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not found"
+msgstr "Bulunamadı"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The script tag is not in the home page HTML."
+msgstr "Betik etiketi ana sayfanın HTML'sinde yok."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Not checked"
+msgstr "Kontrol edilmedi"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page."
+msgstr "Sunucu ana sayfayı okuyamadı."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Before consent"
+msgstr "Onaydan önce"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "After consent"
+msgstr "Onaydan sonra"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Tag on the home page"
+msgstr "Ana sayfadaki etiket"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category."
+msgstr "CMP'nizde gelişmiş istatistik betiğini (ID bbpa-advanced-tracker-js) engellenen betiklere, istatistik kategorisinde ekleyin."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "If the site has no CMP, turn off advanced stats: essential stats keep working without consent."
+msgstr "Sitede CMP yoksa gelişmiş istatistikleri kapatın: temel istatistikler onay olmadan çalışmaya devam eder."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept."
+msgstr "CMP'nizde gelişmiş istatistik betiğinin kategorisini kontrol edin: ziyaretçilerin kabul ettiği istatistik kategorisi olmalıdır."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then come back tomorrow: the check updates with the visits of the day."
+msgstr "Site önbelleğini temizleyin ve yarın tekrar gelin: kontrol günün ziyaretleriyle güncellenir."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin."
+msgstr "bbpa-advanced-tracker'ı önbellek veya optimizasyon eklentinizin JavaScript geciktirme, birleştirme veya kaldırma seçeneklerinden hariç tutun."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Clear the site cache, then check again."
+msgstr "Site önbelleğini temizleyin, ardından tekrar kontrol edin."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Blocked by the CMP"
+msgstr "CMP tarafından engellendi"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Script running"
+msgstr "Betik çalışıyor"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Missing from the page"
+msgstr "Sayfada eksik"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Page views of the last 7 days, by state of the advanced stats script"
+msgstr "Son 7 günün sayfa görüntülemeleri, gelişmiş istatistik betiğinin durumuna göre"
+
+#. translators: 1: day, 2: page views, 3: blocked, 4: script running, 5: missing.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing"
+msgstr "%1$s: %2$s sayfa görüntüleme, %3$s engellendi, %4$s çalışıyor, %5$s eksik"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The CMP check could not be loaded."
+msgstr "CMP kontrolü yüklenemedi."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP check"
+msgstr "CMP kontrolü"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored."
+msgstr "Her sayfa görüntülemesinde CMP'nizin gelişmiş istatistik betiğini onaydan önce engelleyip sonra serbest bırakıp bırakmadığını kontrol eder. Yalnızca günlük toplamlar saklanır."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Advanced stats tag read on the home page"
+msgstr "Ana sayfada okunan gelişmiş istatistik etiketi"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No bbpa-advanced-tracker-js tag in the HTML"
+msgstr "HTML'de bbpa-advanced-tracker-js etiketi yok"
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "The server could not read the home page. Some hosts block requests from a site to itself."
+msgstr "Sunucu ana sayfayı okuyamadı. Bazı barındırıcılar bir sitenin kendi kendine yaptığı istekleri engeller."
+
+#. translators: %s: list of CMP names.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "CMP found: %s."
+msgstr "CMP bulundu: %s."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "No known CMP found among active plugins or in the home page HTML."
+msgstr "Etkin eklentiler arasında veya ana sayfanın HTML'sinde bilinen bir CMP bulunamadı."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "What to do"
+msgstr "Ne yapmalı"
+
+#. translators: %s: number of page views.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Based on %s page views over the last 7 days."
+msgstr "Son 7 günde %s sayfa görüntülemesine dayanır."
+
+#. translators: %s: date and time.
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Home page checked on %s."
+msgstr "Ana sayfa %s tarihinde kontrol edildi."
+
+#: src/admin/components/CmpCheckCard/index.js
+msgid "Check again"
+msgstr "Tekrar kontrol et"
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats."
+msgstr "Gelişmiş istatistikler, ziyaretçiler onay vermeden önce çalışıyor. Betiği CMP'nizde engelleyin veya gelişmiş istatistikleri kapatın."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Advanced stats never start: your CMP does not release the script after consent."
+msgstr "Gelişmiş istatistikler hiç başlamıyor: CMP'niz betiği onaydan sonra serbest bırakmıyor."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "The advanced stats script is missing from most pages: advanced stats are incomplete."
+msgstr "Gelişmiş istatistik betiği çoğu sayfada eksik: gelişmiş istatistikler eksik."
+
+#: src/admin/components/CmpCheckNotice/index.js
+msgid "Open the CMP check"
+msgstr "CMP kontrolünü aç"
 
 #: src/admin/components/ConsentComplianceNotice/index.js
 msgid "Consent compliance reminder"

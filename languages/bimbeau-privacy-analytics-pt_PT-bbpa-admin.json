@@ -32,6 +32,9 @@
       "%1$s: %2$s": [
         "%1$s: %2$s"
       ],
+      "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing": [
+        "%1$s: %2$s visualizações de página, %3$s bloqueadas, %4$s em execução, %5$s em falta"
+      ],
       "%1$s: %2$s visits": [
         "%1$s: %2$s visitas"
       ],
@@ -75,6 +78,9 @@
       "%s item": [
         "%s item",
         "%s itens"
+      ],
+      "%s of page views": [
+        "%s das visualizações de página"
       ],
       "%s of total visitors": [
         "%s do total de visitas"
@@ -227,11 +233,32 @@
       "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
         "As estatísticas avançadas estão desativadas. O BimBeau Privacy Analytics usará apenas estatísticas essenciais."
       ],
+      "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.": [
+        "As estatísticas avançadas estão ativadas, mas a etiqueta do script estava em falta em %s das visualizações de página. Um plugin de cache, otimização ou consentimento remove-a em vez de a reter até ao consentimento."
+      ],
+      "Advanced stats never start, even when visitors accept": [
+        "As estatísticas avançadas nunca iniciam, mesmo quando os visitantes aceitam"
+      ],
+      "Advanced stats never start: your CMP does not release the script after consent.": [
+        "As estatísticas avançadas nunca iniciam: o seu CMP não liberta o script após o consentimento."
+      ],
       "Advanced stats require consent": [
         "As estatísticas avançadas requerem consentimento"
       ],
+      "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats.": [
+        "As estatísticas avançadas são executadas antes de os visitantes darem consentimento. Bloqueie o script no seu CMP ou desative as estatísticas avançadas."
+      ],
+      "Advanced stats start before visitors give consent": [
+        "As estatísticas avançadas iniciam antes de os visitantes darem consentimento"
+      ],
+      "Advanced stats tag read on the home page": [
+        "Etiqueta das estatísticas avançadas lida na página inicial"
+      ],
       "Africa": [
         "África"
+      ],
+      "After consent": [
+        "Após o consentimento"
       ],
       "Aggregated analytics data purged.": [
         "Dados de analytics agregados purgados."
@@ -318,8 +345,14 @@
       "Avg. time on page": [
         "Tempo médio na página"
       ],
+      "Based on %s page views over the last 7 days.": [
+        "Com base em %s visualizações de página nos últimos 7 dias."
+      ],
       "Based on %s tracked page views in the selected range.": [
         "Com base em %s visualizações de página registadas no intervalo selecionado."
+      ],
+      "Before consent": [
+        "Antes do consentimento"
       ],
       "BimBeau GeoIP Database Service": [
         "A base de dados GeoLite local está indisponível."
@@ -342,6 +375,12 @@
       "Block the advanced stats script until Statistics / Analytics consent is given.": [
         "Bloqueie o script de estatísticas avançadas até ser dado consentimento de Estatísticas / Analytics."
       ],
+      "Blocked": [
+        "Bloqueado"
+      ],
+      "Blocked by the CMP": [
+        "Bloqueado pelo CMP"
+      ],
       "Bot": [
         "Bot"
       ],
@@ -356,6 +395,12 @@
       ],
       "Busiest slot: %1$s, %2$s (%3$s)": [
         "Período mais ativo: %1$s, %2$s (%3$s)"
+      ],
+      "CMP check": [
+        "Verificação do CMP"
+      ],
+      "CMP found: %s.": [
+        "CMP encontrado: %s."
       ],
       "CMP markers": [
         "Marcadores CMP"
@@ -390,6 +435,12 @@
       "Channel details": [
         "Detalhes do canal"
       ],
+      "Check again": [
+        "Verificar novamente"
+      ],
+      "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored.": [
+        "Verifica a cada visualização de página se o seu CMP bloqueia o script das estatísticas avançadas antes do consentimento e o liberta depois. Apenas os totais diários são guardados."
+      ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
       ],
@@ -411,11 +462,20 @@
       "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends.": [
         "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
       ],
+      "Clear the site cache, then check again.": [
+        "Limpe a cache do site e verifique novamente."
+      ],
+      "Clear the site cache, then come back tomorrow: the check updates with the visits of the day.": [
+        "Limpe a cache do site e volte amanhã: a verificação atualiza-se com as visitas do dia."
+      ],
       "Clicks <target />": [
         "Clica em <target />"
       ],
       "Close channel details": [
         "Fechar os detalhes do canal"
+      ],
+      "Collecting data": [
+        "A recolher dados"
       ],
       "Columns": [
         "Colunas"
@@ -491,6 +551,12 @@
       ],
       "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution.": [
         "Controle o comportamento de limpeza de URLs e mantenha apenas os parâmetros de consulta de campanha que devem permanecer disponíveis para atribuição."
+      ],
+      "Counted when the advanced stats script starts.": [
+        "Contado quando o script das estatísticas avançadas inicia."
+      ],
+      "Counted with each page view.": [
+        "Contado a cada visualização de página."
       ],
       "Countries": [
         "Países"
@@ -738,11 +804,17 @@
       "Examples:": [
         "Exemplos:"
       ],
+      "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin.": [
+        "Exclua bbpa-advanced-tracker das opções de atraso de JavaScript, combinação ou remoção do seu plugin de cache ou otimização."
+      ],
       "Excluded paths": [
         "Caminhos excluídos"
       ],
       "Exclusions": [
         "Exclusões"
+      ],
+      "Executable": [
+        "Executável"
       ],
       "Exit fullscreen": [
         "Sair do ecrã inteiro"
@@ -813,6 +885,12 @@
       "Global namespaces checked: %s": [
         "Espaços de nomes globais verificados: %s"
       ],
+      "Held by a CMP": [
+        "Retido por um CMP"
+      ],
+      "Held by the CMP on %s of page views.": [
+        "Retido pelo CMP em %s das visualizações de página."
+      ],
       "Hidden": [
         "Oculto"
       ],
@@ -821,6 +899,9 @@
       ],
       "Home page": [
         "Página inicial"
+      ],
+      "Home page checked on %s.": [
+        "Página inicial verificada em %s."
       ],
       "Hourly activity heatmap by day and hour": [
         "Mapa de calor horário global por dia e hora"
@@ -852,14 +933,23 @@
       "I confirm that I want to purge only data older than the configured retention window.": [
         "Confirmo que pretendo purgar apenas dados mais antigos do que a janela de retenção configurada."
       ],
+      "If the site has no CMP, turn off advanced stats: essential stats keep working without consent.": [
+        "Se o site não tiver CMP, desative as estatísticas avançadas: as estatísticas essenciais continuam a funcionar sem consentimento."
+      ],
       "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent.": [
         "Se o seu site exigir consentimento prévio de análise, seu CMP deverá bloquear o rastreador avançado BimBeau Privacy Analytics até que o visitante aceite a categoria Análise ou Estatística. BimBeau Privacy Analytics não substitui o seu CMP e não registra o consentimento do visitante."
       ],
       "Immediately download the latest GeoLite database.": [
         "Não foi possível ler a base de dados GeoLite local."
       ],
+      "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category.": [
+        "No seu CMP, adicione o script das estatísticas avançadas (ID bbpa-advanced-tracker-js) aos scripts bloqueados, na categoria de estatísticas."
+      ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "Na sua CMP, bloqueie o script de estatísticas avançadas do BimBeau Privacy Analytics até que a finalidade Estatísticas ou Analytics seja aceite."
+      ],
+      "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept.": [
+        "No seu CMP, verifique a categoria do script das estatísticas avançadas: tem de ser a categoria de estatísticas que os visitantes aceitam."
       ],
       "Initial configuration completed.": [
         "Configuração inicial concluída."
@@ -890,6 +980,9 @@
       ],
       "Items per page": [
         "Itens por página"
+      ],
+      "Its type was changed so that it does not run before consent.": [
+        "O seu tipo foi alterado para que não seja executado antes do consentimento."
       ],
       "Keep report details for %d days": [
         "Keep report details for %d days"
@@ -1053,6 +1146,9 @@
       "Missing admin configuration.": [
         "Configuração de administração em falta."
       ],
+      "Missing from the page": [
+        "Em falta na página"
+      ],
       "Mobile": [
         "Telemóvel"
       ],
@@ -1068,6 +1164,12 @@
       "Move right": [
         "Mover para a direita"
       ],
+      "Never held by a CMP before the page view was sent.": [
+        "Nunca retido por um CMP antes de a visualização de página ser enviada."
+      ],
+      "Never released": [
+        "Nunca libertado"
+      ],
       "New": [
         "Novo"
       ],
@@ -1082,6 +1184,12 @@
       ],
       "Next update": [
         "Página seguinte"
+      ],
+      "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it.": [
+        "Sem atributo de CMP no HTML. Um CMP que bloqueia scripts no navegador ainda o pode reter."
+      ],
+      "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent.": [
+        "Nenhum CMP controla o script das estatísticas avançadas: é executado desde a primeira página, antes de qualquer escolha. Os dados detalhados são então recolhidos sem consentimento."
       ],
       "No acquisition channel data is available for this period.": [
         "Nenhum dado de perfil de visitante disponível para este período."
@@ -1104,6 +1212,9 @@
       "No available": [
         "Não disponível"
       ],
+      "No bbpa-advanced-tracker-js tag in the HTML": [
+        "Nenhuma etiqueta bbpa-advanced-tracker-js no HTML"
+      ],
       "No browser usage available.": [
         "Nenhum dado de utilização de navegadores disponível."
       ],
@@ -1124,6 +1235,9 @@
       ],
       "No data available for this period.": [
         "Nenhum dado disponível para este período."
+      ],
+      "No data yet": [
+        "Ainda sem dados"
       ],
       "No device data available.": [
         "Nenhum dado de dispositivo disponível."
@@ -1151,6 +1265,9 @@
       ],
       "No hourly details available for this page.": [
         "Nenhum detalhe horário disponível para esta página."
+      ],
+      "No known CMP found among active plugins or in the home page HTML.": [
+        "Nenhum CMP conhecido encontrado entre os plugins ativos ou no HTML da página inicial."
       ],
       "No missing pages available.": [
         "Nenhuma página em falta disponível."
@@ -1212,11 +1329,29 @@
       "North America": [
         "América do Norte"
       ],
+      "Not blocked": [
+        "Não bloqueado"
+      ],
+      "Not checked": [
+        "Não verificado"
+      ],
+      "Not enough visits yet": [
+        "Ainda não há visitas suficientes"
+      ],
+      "Not found": [
+        "Não encontrado"
+      ],
       "Not identified": [
         "Não identificado"
       ],
       "Not installed": [
         "Não instalado"
+      ],
+      "Not measurable": [
+        "Não mensurável"
+      ],
+      "Not started": [
+        "Não iniciado"
       ],
       "Numeric Account ID used for MaxMind API requests.": [
         "ID numérico da conta usado para pedidos à API MaxMind."
@@ -1241,6 +1376,9 @@
       ],
       "Open row": [
         "Abrir linha"
+      ],
+      "Open the CMP check": [
+        "Abrir a verificação do CMP"
       ],
       "Operating system": [
         "Sistema operativo"
@@ -1277,6 +1415,12 @@
       ],
       "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page.": [
         "Visualizações de página de endereços que não correspondem a nenhum artigo ou página publicados, como arquivos, resultados de pesquisa ou a página inicial do blogue."
+      ],
+      "Page views of the last 7 days, by state of the advanced stats script": [
+        "Visualizações de página dos últimos 7 dias, por estado do script das estatísticas avançadas"
+      ],
+      "Page views where the visitor accepted and the script started.": [
+        "Visualizações de página em que o visitante aceitou e o script iniciou."
       ],
       "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available.": [
         "As visualizações de páginas, visitas e fontes de tráfego continuarão a ser medidas, mas as informações sobre país, região e cidade não estarão disponíveis."
@@ -1503,11 +1647,20 @@
       "Save settings": [
         "Guardar definições"
       ],
+      "Save the settings to start the check": [
+        "Guarde as definições para iniciar a verificação"
+      ],
       "Script ID:": [
         "ID do script:"
       ],
       "Script handles checked: %s": [
         "Identificadores de script verificados: %s"
+      ],
+      "Script missing": [
+        "Script em falta"
+      ],
+      "Script running": [
+        "Script em execução"
       ],
       "Script to block:": [
         "Script a bloquear:"
@@ -1623,6 +1776,9 @@
       "Tablet": [
         "Tablet"
       ],
+      "Tag on the home page": [
+        "Etiqueta na página inicial"
+      ],
       "Technical details": [
         "Detalhes do dispositivo"
       ],
@@ -1635,8 +1791,26 @@
       "Test MaxMind connection": [
         "Testar ligação à MaxMind"
       ],
+      "The CMP check could not be loaded.": [
+        "Não foi possível carregar a verificação do CMP."
+      ],
       "The GeoIP database could not be validated after download.": [
         "A base de dados GeoIP não pôde ser validada após o download."
+      ],
+      "The advanced stats script is missing from most pages: advanced stats are incomplete.": [
+        "O script das estatísticas avançadas está em falta na maioria das páginas: as estatísticas avançadas estão incompletas."
+      ],
+      "The advanced stats script is missing from your pages": [
+        "O script das estatísticas avançadas está em falta nas suas páginas"
+      ],
+      "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do.": [
+        "O script das estatísticas avançadas permanece bloqueado até o visitante aceitar os cookies de estatísticas e depois inicia normalmente. Não tem de fazer nada."
+      ],
+      "The check needs at least %1$s page views over the last 7 days. %2$s counted so far.": [
+        "A verificação precisa de pelo menos %1$s visualizações de página nos últimos 7 dias. Contadas até agora: %2$s."
+      ],
+      "The check starts once advanced stats are enabled and saved.": [
+        "A verificação inicia quando as estatísticas avançadas estiverem ativadas e guardadas."
       ],
       "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent.": [
         "Os domínios contatados podem receber o endereço IP do seu servidor e um User-Agent técnico genérico. Nenhuma solicitação é enviada diretamente do navegador do administrador e nenhuma URL do site WordPress é incluída no User-Agent."
@@ -1652,6 +1826,15 @@
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
         "A base de dados local funciona sem pedidos externos durante o rastreio. A API MaxMind requer as suas credenciais."
+      ],
+      "The script tag is not in the home page HTML.": [
+        "A etiqueta do script não está no HTML da página inicial."
+      ],
+      "The server could not read the home page.": [
+        "O servidor não conseguiu ler a página inicial."
+      ],
+      "The server could not read the home page. Some hosts block requests from a site to itself.": [
+        "O servidor não conseguiu ler a página inicial. Alguns alojamentos bloqueiam pedidos de um site para si próprio."
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "O servidor devolveu uma resposta inesperada. Verifique a pré-visualização da resposta do endpoint para obter detalhes."
@@ -1840,6 +2023,9 @@
       "What is a CMP?": [
         "O que é uma CMP?"
       ],
+      "What to do": [
+        "O que fazer"
+      ],
       "When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.": [
         "Quando desabilitado, um ícone genérico local é exibido e nenhum domínio referenciador é contatado para favicons."
       ],
@@ -1849,8 +2035,14 @@
       "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors.": [
         "Sem uma base de dados GeoIP local, a BimBeau Privacy Analytics não será capaz de determinar a origem geográfica dos visitantes."
       ],
+      "Without blocking, accepting and refusing cannot be told apart.": [
+        "Sem bloqueio, não é possível distinguir aceitar de recusar."
+      ],
       "WordPress handle:": [
         "Handle do WordPress:"
+      ],
+      "Working": [
+        "A funcionar"
       ],
       "World map": [
         "Mapa-mundo"
@@ -1863,6 +2055,12 @@
       ],
       "You can download the GeoIP database later from the geolocation settings.": [
         "Você pode baixar o banco de dados GeoIP posteriormente nas configurações de geolocalização."
+      ],
+      "Your CMP blocks advanced stats until consent": [
+        "O seu CMP bloqueia as estatísticas avançadas até ao consentimento"
+      ],
+      "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days.": [
+        "O seu CMP bloqueia o script das estatísticas avançadas mas nunca o liberta após o consentimento: não foram recebidos dados avançados nos últimos 7 dias."
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "A sua CMP deve bloqueá-lo até ser dado consentimento de Estatísticas / Analytics."

@@ -32,6 +32,9 @@
       "%1$s: %2$s": [
         "%1$s: %2$s"
       ],
+      "%1$s: %2$s page views, %3$s blocked, %4$s running, %5$s missing": [
+        "%1$s: %2$s paginaweergaven, %3$s geblokkeerd, %4$s actief, %5$s ontbrekend"
+      ],
       "%1$s: %2$s visits": [
         "%1$s: %2$s bezoeken"
       ],
@@ -75,6 +78,9 @@
       "%s item": [
         "%s item",
         "%s items"
+      ],
+      "%s of page views": [
+        "%s van de paginaweergaven"
       ],
       "%s of total visitors": [
         "%s van alle bezoeken"
@@ -227,11 +233,32 @@
       "Advanced stats are disabled. BimBeau Privacy Analytics will only use essential stats.": [
         "Geavanceerde statistieken zijn uitgeschakeld. BimBeau Privacy Analytics gebruikt alleen essentiële statistieken."
       ],
+      "Advanced stats are enabled, but the script tag was missing from %s of page views. A cache, optimization or consent plugin removes it instead of holding it until consent.": [
+        "Geavanceerde statistieken zijn ingeschakeld, maar de scripttag ontbrak bij %s van de paginaweergaven. Een cache-, optimalisatie- of toestemmingsplugin verwijdert hem in plaats van hem tot toestemming vast te houden."
+      ],
+      "Advanced stats never start, even when visitors accept": [
+        "Geavanceerde statistieken starten nooit, zelfs niet als bezoekers accepteren"
+      ],
+      "Advanced stats never start: your CMP does not release the script after consent.": [
+        "Geavanceerde statistieken starten nooit: uw CMP geeft het script na toestemming niet vrij."
+      ],
       "Advanced stats require consent": [
         "Geavanceerde statistieken vereisen toestemming"
       ],
+      "Advanced stats run before visitors give consent. Block the script in your CMP or turn off advanced stats.": [
+        "Geavanceerde statistieken draaien voordat bezoekers toestemming geven. Blokkeer het script in uw CMP of schakel geavanceerde statistieken uit."
+      ],
+      "Advanced stats start before visitors give consent": [
+        "Geavanceerde statistieken starten voordat bezoekers toestemming geven"
+      ],
+      "Advanced stats tag read on the home page": [
+        "Tag voor geavanceerde statistieken gelezen op de homepage"
+      ],
       "Africa": [
         "Afrika"
+      ],
+      "After consent": [
+        "Na toestemming"
       ],
       "Aggregated analytics data purged.": [
         "Geaggregeerde analyticsgegevens gewist."
@@ -318,8 +345,14 @@
       "Avg. time on page": [
         "Gem. tijd op pagina"
       ],
+      "Based on %s page views over the last 7 days.": [
+        "Gebaseerd op %s paginaweergaven in de afgelopen 7 dagen."
+      ],
       "Based on %s tracked page views in the selected range.": [
         "Gebaseerd op %s gevolgde paginaweergaven in het geselecteerde bereik."
+      ],
+      "Before consent": [
+        "Vóór toestemming"
       ],
       "BimBeau GeoIP Database Service": [
         "De lokale GeoLite-database is niet beschikbaar."
@@ -342,6 +375,12 @@
       "Block the advanced stats script until Statistics / Analytics consent is given.": [
         "Blokkeer het script voor geavanceerde statistieken totdat toestemming voor Statistieken / Analytics is gegeven."
       ],
+      "Blocked": [
+        "Geblokkeerd"
+      ],
+      "Blocked by the CMP": [
+        "Geblokkeerd door de CMP"
+      ],
       "Bot": [
         "Bot"
       ],
@@ -356,6 +395,12 @@
       ],
       "Busiest slot: %1$s, %2$s (%3$s)": [
         "Drukste tijdvak: %1$s, %2$s (%3$s)"
+      ],
+      "CMP check": [
+        "CMP-controle"
+      ],
+      "CMP found: %s.": [
+        "CMP gevonden: %s."
       ],
       "CMP markers": [
         "CMP-markeringen"
@@ -390,6 +435,12 @@
       "Channel details": [
         "Kanaaldetails"
       ],
+      "Check again": [
+        "Opnieuw controleren"
+      ],
+      "Checks with each page view whether your CMP blocks the advanced stats script before consent and releases it after. Only daily totals are stored.": [
+        "Controleert bij elke paginaweergave of uw CMP het script voor geavanceerde statistieken vóór toestemming blokkeert en erna vrijgeeft. Alleen dagtotalen worden opgeslagen."
+      ],
       "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs.": [
         "Choose how long to keep temporary detailed events, report details, and long-term totals, then how often cleanup runs."
       ],
@@ -411,11 +462,20 @@
       "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends.": [
         "Cleanup permanently removes expired details, while long-term totals remain available until their own retention window ends."
       ],
+      "Clear the site cache, then check again.": [
+        "Leeg de cache van de site en controleer daarna opnieuw."
+      ],
+      "Clear the site cache, then come back tomorrow: the check updates with the visits of the day.": [
+        "Leeg de cache van de site en kom morgen terug: de controle wordt bijgewerkt met de bezoeken van de dag."
+      ],
       "Clicks <target />": [
         "Klikt op <target />"
       ],
       "Close channel details": [
         "Kanaaldetails sluiten"
+      ],
+      "Collecting data": [
+        "Gegevens verzamelen"
       ],
       "Columns": [
         "Kolommen"
@@ -491,6 +551,12 @@
       ],
       "Control URL cleanup behavior and keep only campaign query parameters that should remain available for attribution.": [
         "Beheer het gedrag voor URL-opschoning en bewaar alleen campagne-queryparameters die beschikbaar moeten blijven voor attributie."
+      ],
+      "Counted when the advanced stats script starts.": [
+        "Geteld wanneer het script voor geavanceerde statistieken start."
+      ],
+      "Counted with each page view.": [
+        "Geteld bij elke paginaweergave."
       ],
       "Countries": [
         "Landen"
@@ -738,11 +804,17 @@
       "Examples:": [
         "Voorbeelden:"
       ],
+      "Exclude bbpa-advanced-tracker from the JavaScript delay, combine or removal options of your cache or optimization plugin.": [
+        "Sluit bbpa-advanced-tracker uit van de opties voor JavaScript-vertraging, combineren of verwijderen van uw cache- of optimalisatieplugin."
+      ],
       "Excluded paths": [
         "Uitgesloten paden"
       ],
       "Exclusions": [
         "Uitsluitingen"
+      ],
+      "Executable": [
+        "Uitvoerbaar"
       ],
       "Exit fullscreen": [
         "Volledig scherm verlaten"
@@ -813,6 +885,12 @@
       "Global namespaces checked: %s": [
         "Gecontroleerde globale namespaces: %s"
       ],
+      "Held by a CMP": [
+        "Vastgehouden door een CMP"
+      ],
+      "Held by the CMP on %s of page views.": [
+        "Vastgehouden door de CMP bij %s van de paginaweergaven."
+      ],
       "Hidden": [
         "Verborgen"
       ],
@@ -821,6 +899,9 @@
       ],
       "Home page": [
         "Startpagina"
+      ],
+      "Home page checked on %s.": [
+        "Homepage gecontroleerd op %s."
       ],
       "Hourly activity heatmap by day and hour": [
         "Globale uurlijkse heatmap per dag en uur"
@@ -852,14 +933,23 @@
       "I confirm that I want to purge only data older than the configured retention window.": [
         "Ik bevestig dat ik alleen gegevens wil wissen die ouder zijn dan het geconfigureerde bewaartermijnvenster."
       ],
+      "If the site has no CMP, turn off advanced stats: essential stats keep working without consent.": [
+        "Heeft de site geen CMP, schakel dan geavanceerde statistieken uit: essentiële statistieken blijven zonder toestemming werken."
+      ],
       "If your website requires prior analytics consent, your CMP must block the BimBeau Privacy Analytics advanced tracker until the visitor accepts the Analytics or Statistics category. BimBeau Privacy Analytics does not replace your CMP and does not record visitor consent.": [
         "Als uw website voorafgaande toestemming voor analyse vereist, moet uw CMP de geavanceerde tracker van BimBeau Privacy Analytics blokkeren totdat de bezoeker de categorie Analytics of Statistieken accepteert. BimBeau Privacy Analytics vervangt uw CMP niet en registreert geen toestemming van bezoekers."
       ],
       "Immediately download the latest GeoLite database.": [
         "Kan de lokale GeoLite-database niet lezen."
       ],
+      "In your CMP, add the advanced stats script (ID bbpa-advanced-tracker-js) to the blocked scripts, in the statistics category.": [
+        "Voeg in uw CMP het script voor geavanceerde statistieken (ID bbpa-advanced-tracker-js) toe aan de geblokkeerde scripts, in de categorie statistieken."
+      ],
       "In your CMP, block the BimBeau Privacy Analytics advanced stats script until the Statistics or Analytics purpose is accepted.": [
         "Blokkeer in uw CMP het BimBeau Privacy Analytics-script voor geavanceerde statistieken totdat het doel Statistieken of Analytics is geaccepteerd."
+      ],
+      "In your CMP, check the category of the advanced stats script: it must be the statistics category that visitors accept.": [
+        "Controleer in uw CMP de categorie van het script voor geavanceerde statistieken: het moet de statistiekencategorie zijn die bezoekers accepteren."
       ],
       "Initial configuration completed.": [
         "Initiële configuratie voltooid."
@@ -890,6 +980,9 @@
       ],
       "Items per page": [
         "Items per pagina"
+      ],
+      "Its type was changed so that it does not run before consent.": [
+        "Het type is aangepast zodat het niet vóór toestemming wordt uitgevoerd."
       ],
       "Keep report details for %d days": [
         "Keep report details for %d days"
@@ -1053,6 +1146,9 @@
       "Missing admin configuration.": [
         "Beheerconfiguratie ontbreekt."
       ],
+      "Missing from the page": [
+        "Ontbreekt op de pagina"
+      ],
       "Mobile": [
         "Mobiel"
       ],
@@ -1068,6 +1164,12 @@
       "Move right": [
         "Naar rechts verplaatsen"
       ],
+      "Never held by a CMP before the page view was sent.": [
+        "Nooit vastgehouden door een CMP voordat de paginaweergave werd verzonden."
+      ],
+      "Never released": [
+        "Nooit vrijgegeven"
+      ],
       "New": [
         "Nieuw"
       ],
@@ -1082,6 +1184,12 @@
       ],
       "Next update": [
         "Volgende pagina"
+      ],
+      "No CMP attribute in the HTML. A CMP that blocks scripts in the browser can still hold it.": [
+        "Geen CMP-attribuut in de HTML. Een CMP die scripts in de browser blokkeert, kan het nog steeds vasthouden."
+      ],
+      "No CMP controls the advanced stats script: it runs from the first page, before any choice. Detailed data is then collected without consent.": [
+        "Geen enkele CMP beheert het script voor geavanceerde statistieken: het draait vanaf de eerste pagina, vóór elke keuze. Gedetailleerde gegevens worden dan zonder toestemming verzameld."
       ],
       "No acquisition channel data is available for this period.": [
         "Geen bezoekersprofielgegevens beschikbaar voor deze periode."
@@ -1104,6 +1212,9 @@
       "No available": [
         "Niet beschikbaar"
       ],
+      "No bbpa-advanced-tracker-js tag in the HTML": [
+        "Geen bbpa-advanced-tracker-js-tag in de HTML"
+      ],
       "No browser usage available.": [
         "Geen browsergebruik beschikbaar."
       ],
@@ -1124,6 +1235,9 @@
       ],
       "No data available for this period.": [
         "Geen gegevens beschikbaar voor deze periode."
+      ],
+      "No data yet": [
+        "Nog geen gegevens"
       ],
       "No device data available.": [
         "Geen apparaatgegevens beschikbaar."
@@ -1151,6 +1265,9 @@
       ],
       "No hourly details available for this page.": [
         "Geen uurlijkse details beschikbaar voor deze pagina."
+      ],
+      "No known CMP found among active plugins or in the home page HTML.": [
+        "Geen bekende CMP gevonden onder de actieve plugins of in de HTML van de homepage."
       ],
       "No missing pages available.": [
         "Geen ontbrekende pagina's beschikbaar."
@@ -1212,11 +1329,29 @@
       "North America": [
         "Noord-Amerika"
       ],
+      "Not blocked": [
+        "Niet geblokkeerd"
+      ],
+      "Not checked": [
+        "Niet gecontroleerd"
+      ],
+      "Not enough visits yet": [
+        "Nog niet genoeg bezoeken"
+      ],
+      "Not found": [
+        "Niet gevonden"
+      ],
       "Not identified": [
         "Niet herkend"
       ],
       "Not installed": [
         "Niet geïnstalleerd"
+      ],
+      "Not measurable": [
+        "Niet meetbaar"
+      ],
+      "Not started": [
+        "Niet gestart"
       ],
       "Numeric Account ID used for MaxMind API requests.": [
         "Numeriek account-ID dat wordt gebruikt voor MaxMind API-verzoeken."
@@ -1241,6 +1376,9 @@
       ],
       "Open row": [
         "Rij openen"
+      ],
+      "Open the CMP check": [
+        "CMP-controle openen"
       ],
       "Operating system": [
         "Besturingssysteem"
@@ -1277,6 +1415,12 @@
       ],
       "Page views of addresses that do not match a published post or page, such as archives, search results or the blog home page.": [
         "Paginaweergaven van adressen die niet overeenkomen met een gepubliceerd bericht of een gepubliceerde pagina, zoals archieven, zoekresultaten of de startpagina van de blog."
+      ],
+      "Page views of the last 7 days, by state of the advanced stats script": [
+        "Paginaweergaven van de afgelopen 7 dagen, per status van het script voor geavanceerde statistieken"
+      ],
+      "Page views where the visitor accepted and the script started.": [
+        "Paginaweergaven waarbij de bezoeker accepteerde en het script startte."
       ],
       "Page views, visits, and traffic sources will continue to be measured, but country, region, and city information will not be available.": [
         "Paginaweergaven, bezoeken en verkeersbronnen worden nog steeds gemeten, maar er is geen land-, regio- en stadsinformatie beschikbaar."
@@ -1503,11 +1647,20 @@
       "Save settings": [
         "Instellingen opslaan"
       ],
+      "Save the settings to start the check": [
+        "Sla de instellingen op om de controle te starten"
+      ],
       "Script ID:": [
         "Script-ID:"
       ],
       "Script handles checked: %s": [
         "Gecontroleerde script-handles: %s"
+      ],
+      "Script missing": [
+        "Script ontbreekt"
+      ],
+      "Script running": [
+        "Script actief"
       ],
       "Script to block:": [
         "Te blokkeren script:"
@@ -1623,6 +1776,9 @@
       "Tablet": [
         "Tablet"
       ],
+      "Tag on the home page": [
+        "Tag op de homepage"
+      ],
       "Technical details": [
         "Apparaatdetails"
       ],
@@ -1635,8 +1791,26 @@
       "Test MaxMind connection": [
         "MaxMind-verbinding testen"
       ],
+      "The CMP check could not be loaded.": [
+        "De CMP-controle kon niet worden geladen."
+      ],
       "The GeoIP database could not be validated after download.": [
         "De GeoIP-database kon na het downloaden niet worden gevalideerd."
+      ],
+      "The advanced stats script is missing from most pages: advanced stats are incomplete.": [
+        "Het script voor geavanceerde statistieken ontbreekt op de meeste pagina's: geavanceerde statistieken zijn onvolledig."
+      ],
+      "The advanced stats script is missing from your pages": [
+        "Het script voor geavanceerde statistieken ontbreekt op uw pagina's"
+      ],
+      "The advanced stats script stays blocked until the visitor accepts statistics cookies, then starts normally. Nothing to do.": [
+        "Het script voor geavanceerde statistieken blijft geblokkeerd totdat de bezoeker statistiekcookies accepteert en start daarna normaal. U hoeft niets te doen."
+      ],
+      "The check needs at least %1$s page views over the last 7 days. %2$s counted so far.": [
+        "De controle heeft minstens %1$s paginaweergaven in de afgelopen 7 dagen nodig. Tot nu toe geteld: %2$s."
+      ],
+      "The check starts once advanced stats are enabled and saved.": [
+        "De controle start zodra geavanceerde statistieken zijn ingeschakeld en opgeslagen."
       ],
       "The contacted domains can receive your server IP address and a generic technical User-Agent. No request is sent directly from the administrator's browser, and no WordPress site URL is included in the User-Agent.": [
         "De gecontacteerde domeinen kunnen het IP-adres van uw server en een generieke technische User-Agent ontvangen. Er wordt geen verzoek rechtstreeks vanuit de browser van de beheerder verzonden en er is geen URL van de WordPress-site opgenomen in de User-Agent."
@@ -1652,6 +1826,15 @@
       ],
       "The local database works without external requests during tracking. The MaxMind API requires your credentials.": [
         "De lokale database werkt tijdens tracking zonder externe aanvragen. Voor de MaxMind-API zijn uw referenties vereist."
+      ],
+      "The script tag is not in the home page HTML.": [
+        "De scripttag staat niet in de HTML van de homepage."
+      ],
+      "The server could not read the home page.": [
+        "De server kon de homepage niet lezen."
+      ],
+      "The server could not read the home page. Some hosts block requests from a site to itself.": [
+        "De server kon de homepage niet lezen. Sommige hosts blokkeren verzoeken van een site naar zichzelf."
       ],
       "The server returned an unexpected response. Check the endpoint response preview for details.": [
         "De server gaf een onverwachte respons terug. Controleer de voorbeeldrespons van het endpoint voor details."
@@ -1840,6 +2023,9 @@
       "What is a CMP?": [
         "Wat is een CMP?"
       ],
+      "What to do": [
+        "Wat te doen"
+      ],
       "When disabled, a local generic icon is displayed and no referrer domain is contacted for favicons.": [
         "Indien uitgeschakeld, wordt een lokaal generiek pictogram weergegeven en wordt er geen contact opgenomen met het verwijzende domein voor favicons."
       ],
@@ -1849,8 +2035,14 @@
       "Without a local GeoIP database, BimBeau Privacy Analytics will not be able to determine the geographic origin of visitors.": [
         "Zonder een lokale GeoIP-database kan BimBeau Privacy Analytics de geografische herkomst van bezoekers niet vaststellen."
       ],
+      "Without blocking, accepting and refusing cannot be told apart.": [
+        "Zonder blokkering is accepteren niet van weigeren te onderscheiden."
+      ],
       "WordPress handle:": [
         "WordPress-handle:"
+      ],
+      "Working": [
+        "Werkt"
       ],
       "World map": [
         "Wereldkaart"
@@ -1863,6 +2055,12 @@
       ],
       "You can download the GeoIP database later from the geolocation settings.": [
         "U kunt de GeoIP-database later downloaden via de geolocatie-instellingen."
+      ],
+      "Your CMP blocks advanced stats until consent": [
+        "Uw CMP blokkeert geavanceerde statistieken tot toestemming"
+      ],
+      "Your CMP blocks the advanced stats script but never releases it after consent: no advanced data was received over the last 7 days.": [
+        "Uw CMP blokkeert het script voor geavanceerde statistieken maar geeft het na toestemming nooit vrij: de afgelopen 7 dagen zijn er geen geavanceerde gegevens ontvangen."
       ],
       "Your CMP must block it until Statistics / Analytics consent is given.": [
         "Uw CMP moet dit blokkeren totdat toestemming voor Statistieken / Analytics is gegeven."

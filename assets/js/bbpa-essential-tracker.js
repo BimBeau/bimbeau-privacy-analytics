@@ -707,7 +707,44 @@
         'event_name',
         'temporary_hit_id',
         'idempotency_key',
+        'advanced_script_state',
     ]);
+
+    const ADVANCED_TRACKER_SCRIPT_ID = 'bbpa-advanced-tracker-js';
+    const EXECUTABLE_SCRIPT_TYPES = Object.freeze([
+        '',
+        'text/javascript',
+        'application/javascript',
+        'application/ecmascript',
+        'text/ecmascript',
+        'module',
+    ]);
+
+    // CMP check: report the state of the advanced tracker tag when the page view is sent, so the
+    // site owner can see whether the CMP blocks it before consent. It describes the page, not the visitor.
+    // held: a CMP neutralized the tag (non-executable type); ran: the advanced tracker already ran;
+    // open: the tag is executable but did not run yet; absent: the tag is not in the page.
+    function resolveAdvancedScriptState(settings) {
+        const source = settings || {};
+        if (source.advanced_stats_enabled !== true || !root.document) {
+            return undefined;
+        }
+
+        const runtimeStatus = root.BPARuntimeStatus;
+        if (root.BPAAdvancedTracker || (runtimeStatus && runtimeStatus.advancedLoaded === true)) {
+            return 'ran';
+        }
+
+        const scriptTag = typeof root.document.getElementById === 'function'
+            ? root.document.getElementById(ADVANCED_TRACKER_SCRIPT_ID)
+            : null;
+        if (!scriptTag || typeof scriptTag.getAttribute !== 'function') {
+            return 'absent';
+        }
+
+        const scriptType = String(scriptTag.getAttribute('type') || '').trim().toLowerCase();
+        return EXECUTABLE_SCRIPT_TYPES.indexOf(scriptType) === -1 ? 'held' : 'open';
+    }
 
     // Essential tracker only builds and sends baseline fields.
     // Enriched fields are owned by the advanced tracker runtime.
@@ -746,6 +783,7 @@
             event_name: 'page_view',
             temporary_hit_id: idState.temporary_hit_id,
             idempotency_key: incrementIdempotency(idSeed, 'page_view'),
+            advanced_script_state: resolveAdvancedScriptState(source),
         };
 
         return BASE_ALLOWED_FIELDS.reduce(function (acc, key) {
@@ -879,6 +917,7 @@
         buildRestRouteUrl: buildRestRouteUrl,
         getEndpointUrl: getEndpointUrl,
         resolveEssentialSkipReason: resolveEssentialSkipReason,
+        resolveAdvancedScriptState: resolveAdvancedScriptState,
     };
 
     root.BPAEssentialTracker = publicApi;
