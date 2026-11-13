@@ -161,9 +161,16 @@
 }
 
 .bbpa-hourly-heatmap__peak {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0;
-  font-size: 13px;
-  color: var(--color-1);
+  font-size: 12px;
+  color: #757575;
+}
+
+.bbpa-hourly-heatmap__peak svg {
+  flex: 0 0 auto;
 }
 
 @media (max-width: 782px) {

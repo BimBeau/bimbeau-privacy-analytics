@@ -1,4 +1,5 @@
 import Notice from '../BrandNotice';
+import FeatureIcon from '../icons/FeatureIcon';
 import { useCallback, useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
 
@@ -347,16 +348,19 @@ const HourlyHeatmap = ({
         </div>
         {peak ? (
           <p className="bbpa-hourly-heatmap__peak">
-            {sprintf(
-              /* translators: 1: weekday name, 2: hour such as 13:00, 3: metric label and value such as "Page views: 47". */
-              __(
-                "Busiest slot: %1$s, %2$s (%3$s)",
-                "bimbeau-privacy-analytics",
-              ),
-              dayLabels[peak.day] || peak.day,
-              formatHourlyHeatmapHour(peak.hour),
-              formatValue(peak.value),
-            )}
+            <FeatureIcon name="info" size={16} />
+            <span>
+              {sprintf(
+                /* translators: 1: weekday name, 2: hour such as 13:00, 3: metric label and value such as "Page views: 47". */
+                __(
+                  "Busiest slot: %1$s, %2$s (%3$s)",
+                  "bimbeau-privacy-analytics",
+                ),
+                dayLabels[peak.day] || peak.day,
+                formatHourlyHeatmapHour(peak.hour),
+                formatValue(peak.value),
+              )}
+            </span>
           </p>
         ) : null}
       </div>
