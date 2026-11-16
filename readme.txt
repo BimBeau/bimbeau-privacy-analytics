@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.85.3
+Stable tag: 8.86.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,5 +247,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.85.3 =
-* Let the CMP check speak sooner and name the CMP it saw.
+= 8.86.0 =
+* [Feature] Events: form triggers (form submitted successfully, form submission) give the JavaScript snippet the data typed by the visitor, `{{user_email}}`, `{{user_phone}}`, `{{user_first_name}}` and `{{user_last_name}}`, for enhanced conversions (Google tag, Meta Pixel, LinkedIn Insight Tag). The values are read when the form is sent, normalized (lowercase email, international phone), stay null until the visitor accepts the consent category of the event, and are never sent to the plugin statistics nor stored [Pro].
+* [Feature] Events: optional filling of hidden form fields named gclid, gbraid, wbraid, fbclid, msclkid, ttclid or li_fat_id with the advertising click ID of the page address or of the cookie already set by the advertising tag, with the same consent [Pro].
