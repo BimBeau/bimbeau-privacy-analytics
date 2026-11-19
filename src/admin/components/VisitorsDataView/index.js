@@ -23,6 +23,7 @@ import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../../lib/date'
 import { getLocationLabel } from '../../lib/locationLabel';
 import { formatDeviceClassLabel } from '../../lib/deviceClassLabel';
 import { getChannelLabel } from '../../lib/channelLabels';
+import { getDisplayPagePath } from '../../lib/pagePathDisplay';
 import { CHANNEL_FILTER_ELEMENTS } from '../../lib/listFilters';
 import { formatHiddenPrivateCount } from '../../lib/paginationLabels';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
@@ -269,10 +270,14 @@ export const getVisitorFields = ( {
 				id: 'entry_page',
 				label: __( 'Entry page', 'bimbeau-privacy-analytics' ),
 				enableSorting: false,
-				getValue: ( { item } ) => item.entry_page || '',
+				getValue: ( { item } ) => getDisplayPagePath( item.entry_page || '' ),
 				render: ( { item } ) =>
 					item.entry_page ? (
-						<code title={ item.entry_page }>{ item.entry_page }</code>
+						// The cell shows the address without its campaign and ad click
+						// parameters; the hover title keeps the complete stored address.
+						<code title={ item.entry_page }>
+							{ getDisplayPagePath( item.entry_page ) }
+						</code>
 					) : (
 						maybeUnavailable( UNKNOWN_LABEL )
 					),

@@ -29,6 +29,7 @@ import { getLocationLabel } from '../lib/locationLabel';
 import { formatWpDateTime, normalizeUnixTimestampSeconds } from '../lib/date';
 import { formatDeviceClassLabel } from '../lib/deviceClassLabel';
 import { getChannelLabel } from '../lib/channelLabels';
+import { getDisplayPagePath } from '../lib/pagePathDisplay';
 import { getNumberFormatter } from '../lib/formatters';
 import { isVisitorOriginUnavailable } from '../lib/geoipStatus';
 import { createLogger } from '../logger';
@@ -287,6 +288,7 @@ export const normalizeRealtimeMapItem = (
 			? metricCandidate
 			: 0;
 	const currentPage = resolveRealtimePage(normalizedPoint);
+	const currentPageDisplay = getDisplayPagePath(currentPage);
 
 	return {
 		id:
@@ -298,7 +300,8 @@ export const normalizeRealtimeMapItem = (
 		visits,
 		accuracy_radius: normalizedPoint.accuracy_radius,
 		current_page: currentPage,
-		currentPageLabel: currentPage || __('Unknown page', 'bimbeau-privacy-analytics'),
+		current_page_display: currentPageDisplay,
+		currentPageLabel: currentPageDisplay || __('Unknown page', 'bimbeau-privacy-analytics'),
 		visitor_id: getRealtimeVisitField(normalizedPoint, ['visitor_id', 'visitorId']),
 		visitor_ids: getRealtimeVisitField(normalizedPoint, ['visitor_id', 'visitorId']),
 		last_view_at: Number(normalizedPoint?.last_view_at ?? normalizedPoint?.lastViewAt ?? 0) || 0,
@@ -322,12 +325,18 @@ export const aggregateRealtimeMapVisits = (visits = []) => {
 
 		const existing = visitsByCoordinates.get(coordinateKey);
 		const pages = [...new Set([existing.current_page, item.current_page].filter(Boolean))];
+		const displayPages = [
+			...new Set(
+				[existing.current_page_display, item.current_page_display].filter(Boolean)
+			),
+		];
 		visitsByCoordinates.set(coordinateKey, {
 			...existing,
 			visits: existing.visits + item.visits,
 			current_page: pages.join(', '),
+			current_page_display: displayPages.join(', '),
 			currentPageLabel:
-				pages.join(', ') || __('Unknown page', 'bimbeau-privacy-analytics'),
+				displayPages.join(', ') || __('Unknown page', 'bimbeau-privacy-analytics'),
 			visitor_id: '',
 			visitor_ids: [existing.visitor_ids, item.visitor_ids].filter(Boolean).join(','),
 			last_view_at: Math.max(existing.last_view_at || 0, item.last_view_at || 0),
@@ -637,14 +646,22 @@ const RealtimeVisitsDataView = ({ rows, shouldShowCity, visibleColumns }) => {
 			{
 				id: 'current_page',
 				label: VISITOR_TABLE_LABELS.currentPage,
-				getValue: ({ item }) => item?.current_page || '',
-				render: ({ item }) => (
-					<span className="bbpa-realtime-current-page-cell" ref={syncCurrentPageShimmer}>
-						<PageTitle>
-							{item?.current_page || __('Unknown page', 'bimbeau-privacy-analytics')}
-						</PageTitle>
-					</span>
-				),
+				getValue: ({ item }) => getDisplayPagePath(item?.current_page || ''),
+				render: ({ item }) => {
+					const rawPage = item?.current_page || '';
+					const displayPage = getDisplayPagePath(rawPage);
+
+					return (
+						<span className="bbpa-realtime-current-page-cell" ref={syncCurrentPageShimmer}>
+							<PageTitle
+								title={rawPage || undefined}
+								ariaLabel={displayPage || undefined}
+							>
+								{displayPage || __('Unknown page', 'bimbeau-privacy-analytics')}
+							</PageTitle>
+						</span>
+					);
+				},
 				enableGlobalSearch: true,
 				filterBy: false,
 			},

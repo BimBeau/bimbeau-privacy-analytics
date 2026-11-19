@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.0
+Stable tag: 8.86.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,6 +247,8 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.86.0 =
-* [Feature] Events: form triggers (form submitted successfully, form submission) give the JavaScript snippet the data typed by the visitor, `{{user_email}}`, `{{user_phone}}`, `{{user_first_name}}` and `{{user_last_name}}`, for enhanced conversions (Google tag, Meta Pixel, LinkedIn Insight Tag). The values are read when the form is sent, normalized (lowercase email, international phone), stay null until the visitor accepts the consent category of the event, and are never sent to the plugin statistics nor stored [Pro].
-* [Feature] Events: optional filling of hidden form fields named gclid, gbraid, wbraid, fbclid, msclkid, ttclid or li_fat_id with the advertising click ID of the page address or of the cookie already set by the advertising tag, with the same consent [Pro].
+= 8.86.1 =
+* [UI] The admin shows page addresses without their campaign and advertising click parameters (`utm_*`, `gclid`, `gbraid`, `wbraid`, `msclkid`, `fbclid`, `gad_source`, `gad_campaignid`, `_gl`), as the real-time activity timeline already did: the real-time visits table, the real-time map marker tooltips, the Entry page column of the robots list and the Triggered page column of the events table [Pro]. One page now reads as one address instead of a different line per click identifier.
+* [UI] Every other parameter is kept, because it can name the page itself (internal search, filter, pagination, language). Nothing is removed from the stored data: `current_page`, `entry_page` and `page_path` keep the complete address, which stays available on hover of the cell, in exports and in the REST payloads.
+* [UI] Real-time map markers of the same page merge on the displayed address: two visits with two different `gclid` no longer list two pages in the tooltip.
+* [A11y] `PageTitle` accepts an `ariaLabel` separate from its hover `title`, so screen readers announce the readable address instead of the tracking string. The display logic moves out of `lib/realtimeActivity` into a shared `lib/pagePathDisplay` (`getDisplayPagePath`); `realtimeActivity` re-exports `getActivityDisplayPath` for the timeline. The Top pages, Entry pages and 404 reports are untouched: `BBPA_Report_Controller::normalize_report_page_path()` already cuts the address at the question mark and merges the stored variants server side.

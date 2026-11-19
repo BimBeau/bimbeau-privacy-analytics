@@ -1,42 +1,13 @@
 import { __ } from '@wordpress/i18n';
 
 import { getChannelLabel } from './channelLabels';
-
-/**
- * Query parameters kept in stored page paths for attribution (settings `url_query_allowlist`), hidden from the
- * activity feed: the address shows the page, the source line shows where the visit came from.
- */
-const MARKETING_QUERY_KEY = /^(utm_[a-z_]+|gclid|gbraid|wbraid|msclkid|fbclid|gad_source|gad_campaignid|_gl)$/i;
+import { getDisplayPagePath, splitPagePath } from './pagePathDisplay';
 
 const AD_CLICK_SOURCES = {
 	gclid: 'Google Ads',
 	gbraid: 'Google Ads',
 	wbraid: 'Google Ads',
 	msclkid: 'Microsoft Ads',
-};
-
-const splitPagePath = ( pagePath ) => {
-	const value = typeof pagePath === 'string' ? pagePath.trim() : '';
-	const hashIndex = value.indexOf( '#' );
-	const withoutHash = hashIndex >= 0 ? value.slice( 0, hashIndex ) : value;
-	const queryIndex = withoutHash.indexOf( '?' );
-
-	if ( queryIndex < 0 ) {
-		return { path: withoutHash, params: [] };
-	}
-
-	const params = withoutHash
-		.slice( queryIndex + 1 )
-		.split( '&' )
-		.filter( Boolean )
-		.map( ( pair ) => {
-			const separator = pair.indexOf( '=' );
-			return separator >= 0
-				? [ pair.slice( 0, separator ), pair.slice( separator + 1 ) ]
-				: [ pair, '' ];
-		} );
-
-	return { path: withoutHash.slice( 0, queryIndex ), params };
 };
 
 const decodeQueryValue = ( value ) => {
@@ -48,19 +19,11 @@ const decodeQueryValue = ( value ) => {
 };
 
 /**
- * Address shown under the page title: the stored path without its marketing parameters.
+ * Address shown under the page title in the activity feed.
  *
- * @param {string} pagePath Stored page path (`/offre?utm_source=x&gclid=y&id=3`).
- * @return {string} Display path (`/offre?id=3`).
+ * @see getDisplayPagePath
  */
-export const getActivityDisplayPath = ( pagePath ) => {
-	const { path, params } = splitPagePath( pagePath );
-	const kept = params.filter( ( [ key ] ) => ! MARKETING_QUERY_KEY.test( key ) );
-
-	return kept.length > 0
-		? `${ path }?${ kept.map( ( [ key, value ] ) => ( value === '' ? key : `${ key }=${ value }` ) ).join( '&' ) }`
-		: path;
-};
+export const getActivityDisplayPath = getDisplayPagePath;
 
 /**
  * Name of the page in the feed: its WordPress title, "Home page" for the homepage, or its address.
