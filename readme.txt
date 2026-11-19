@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.1
+Stable tag: 8.86.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,8 +247,6 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.86.1 =
-* [UI] The admin shows page addresses without their campaign and advertising click parameters (`utm_*`, `gclid`, `gbraid`, `wbraid`, `msclkid`, `fbclid`, `gad_source`, `gad_campaignid`, `_gl`), as the real-time activity timeline already did: the real-time visits table, the real-time map marker tooltips, the Entry page column of the robots list and the Triggered page column of the events table [Pro]. One page now reads as one address instead of a different line per click identifier.
-* [UI] Every other parameter is kept, because it can name the page itself (internal search, filter, pagination, language). Nothing is removed from the stored data: `current_page`, `entry_page` and `page_path` keep the complete address, which stays available on hover of the cell, in exports and in the REST payloads.
-* [UI] Real-time map markers of the same page merge on the displayed address: two visits with two different `gclid` no longer list two pages in the tooltip.
-* [A11y] `PageTitle` accepts an `ariaLabel` separate from its hover `title`, so screen readers announce the readable address instead of the tracking string. The display logic moves out of `lib/realtimeActivity` into a shared `lib/pagePathDisplay` (`getDisplayPagePath`); `realtimeActivity` re-exports `getActivityDisplayPath` for the timeline. The Top pages, Entry pages and 404 reports are untouched: `BBPA_Report_Controller::normalize_report_page_path()` already cuts the address at the question mark and merges the stored variants server side.
+= 8.86.2 =
+* PHPStan level 5 rejected `'strlen'` as the second argument of `array_filter()` in `bbpa_sanitize_pro_event_form_user_data_settings()`: the function returns an int, not a bool. The error is not in `tests/phpstan/phpstan-baseline.neon`, so the job was red on every pull request touching the analysed paths.
+* A typed closure replaces it. Behaviour is unchanged: an empty name after `trim()` was already dropped, since `strlen('')` is `0`.
