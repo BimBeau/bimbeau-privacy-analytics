@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.2
+Stable tag: 8.86.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,6 +247,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.86.2 =
-* PHPStan level 5 rejected `'strlen'` as the second argument of `array_filter()` in `bbpa_sanitize_pro_event_form_user_data_settings()`: the function returns an int, not a bool. The error is not in `tests/phpstan/phpstan-baseline.neon`, so the job was red on every pull request touching the analysed paths.
-* A typed closure replaces it. Behaviour is unchanged: an empty name after `trim()` was already dropped, since `strlen('')` is `0`.
+= 8.86.3 =
+* feat: cartouche filaire, ligne d'offre et synchronisation des coupons.
