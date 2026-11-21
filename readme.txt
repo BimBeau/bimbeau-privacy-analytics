@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.3
+Stable tag: 8.86.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,5 +247,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.86.3 =
-* feat: cartouche filaire, ligne d'offre et synchronisation des coupons.
+= 8.86.4 =
+* fix(promos): restreint vraiment les coupons Freemius aux cycles prevus.
