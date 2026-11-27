@@ -4132,7 +4132,13 @@ class BBPA_Report_Controller {
      * AI Assistants, Organic Social, or Referrals in channel reports.
      */
     private function get_source_category_sql_expression(?string $stored_source_category_column): string {
-        $domain_sql = "LOWER(TRIM(LEADING 'www.' FROM referrer_domain))";
+        // `TRIM(LEADING 'www.' FROM …)` is MySQL syntax. A database that does not accept it fails
+        // the whole statement, and every report that classifies a source comes back empty — which
+        // is what the SQLite-backed preview of the WordPress.org listing showed. `SUBSTR` says the
+        // same thing in both dialects, and strips the prefix only where it is really the prefix.
+        $domain_sql = "CASE WHEN LOWER(referrer_domain) LIKE 'www.%%'"
+            . ' THEN SUBSTR(LOWER(referrer_domain), 5)'
+            . ' ELSE LOWER(referrer_domain) END';
         $stored_sql = $stored_source_category_column !== null
             ? "NULLIF({$stored_source_category_column}, '')"
             : 'NULL';
