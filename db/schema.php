@@ -580,6 +580,8 @@ function bbpa_table_exists(string $table): bool
 
     // Captured before the first query: `wpdb::get_var()` clears the last error on its way in.
     $previous_error = $wpdb->last_error;
+    $previous_suppress = $wpdb->suppress_errors(true);
+    $wpdb->last_error = '';
 
     $table_name = $wpdb->get_var(
         $wpdb->prepare(
@@ -587,28 +589,25 @@ function bbpa_table_exists(string $table): bool
             $wpdb->esc_like($table)
         )
     );
+    $statement_failed = $wpdb->last_error !== '';
+    $exists = is_string($table_name) && strcasecmp($table_name, $table) === 0;
 
-    if (is_string($table_name) && strcasecmp($table_name, $table) === 0) {
-        return true;
+    // `SHOW TABLES` is MySQL only, and WordPress.org runs the previews of the plugin directory on SQLite,
+    // where it fails outright. Only then is the table asked directly, which any engine understands. When the
+    // statement runs and simply finds nothing, the table is absent and no second query is sent: a read of a
+    // table that does not exist would be recorded as a database error by the site, which an existence check
+    // has no business doing.
+    if (!$exists && $statement_failed && preg_match('/^[A-Za-z0-9_]+$/', $table)) {
+        $wpdb->last_error = '';
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- the name is restricted to word characters above.
+        $wpdb->get_var("SELECT 1 FROM `{$table}` LIMIT 1");
+        $exists = $wpdb->last_error === '';
     }
-
-    // Asking the table itself, which any engine understands. An empty table answers with no row, so the result
-    // says nothing: only the absence of an error tells it apart from a table that is not there.
-    if (!preg_match('/^[A-Za-z0-9_]+$/', $table)) {
-        return false;
-    }
-
-    $previous_suppress = $wpdb->suppress_errors(true);
-    $wpdb->last_error = '';
-
-    // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- the name is restricted to word characters above.
-    $wpdb->get_var("SELECT 1 FROM `{$table}` LIMIT 1");
-    $readable = $wpdb->last_error === '';
 
     $wpdb->last_error = $previous_error;
     $wpdb->suppress_errors($previous_suppress);
 
-    return $readable;
+    return $exists;
 }
 
 /**
