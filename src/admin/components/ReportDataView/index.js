@@ -26,12 +26,19 @@ import { DATAVIEWS_PER_PAGE_SIZES } from '../../lib/dataviewsConfig';
 import { getViewFilterValue } from '../../lib/listFilters';
 import { formatDateStringForLocale, getPreviousRange } from '../../lib/date';
 import { registerDataViewsTranslations } from '../../lib/dataviewsTranslations';
+import {
+	MIN_METRIC_FOR_RANKING,
+	getChangeSortValue,
+	getChangeThresholdValue,
+	getDurationSortValue,
+	rankReportItems,
+} from '../../lib/reportRanking';
 
 
 // Rows of a summary card (`viewAllHref`).
 const SUMMARY_ROWS = 10;
 
-// Rows loaded at once when a list searches in the browser (the API accepts up to 1000).
+// Rows loaded at once when a list searches or ranks in the browser (the API accepts up to 1000).
 const BROWSER_SEARCH_MAX_ITEMS = 1000;
 
 // Case and accent insensitive comparison for browser searches ("etats" finds "États-Unis").
@@ -120,6 +127,24 @@ export const getReportSortParams = ( view, metricKey, extraSortKeys = [] ) => {
 		order: view?.sort?.direction === 'asc' ? 'asc' : 'desc',
 	};
 };
+
+/**
+ * Columns ranked in the browser, because the endpoints do not sort by them.
+ *
+ * @param {Object}  options                    Options.
+ * @param {boolean} options.showMetricTrend    Whether the list compares with the previous period.
+ * @param {boolean} options.inlineMetricChange Whether the change shares the metric cell (no column).
+ * @param {string}  options.extraMetricKey     Value key of the extra metric column, when shown.
+ * @return {string[]} Field identifiers.
+ */
+export const getBrowserRankedFields = ( {
+	showMetricTrend,
+	inlineMetricChange,
+	extraMetricKey,
+} ) => [
+	...( showMetricTrend && ! inlineMetricChange ? [ CHANGE_FIELD ] : [] ),
+	...( extraMetricKey ? [ extraMetricKey ] : [] ),
+];
 
 /**
  * Value of a report list filter, when it is set to one of the offered values.
@@ -374,11 +399,21 @@ const ReportDataView = ( {
 		extraFields.filter( ( field ) => field.sortable ).map( ( field ) => field.id )
 	);
 	const filterParams = getReportFilterParams( view, filterFields );
+	// Change and average time are ranked in the browser: the rows are asked for by the main metric,
+	// descending, so the capped page holds the rows a ranking can keep (see `reportRanking`).
+	const rankingField = getBrowserRankedFields( {
+		showMetricTrend,
+		inlineMetricChange,
+		extraMetricKey: resolvedExtraMetricKey,
+	} ).includes( view.sort?.field )
+		? view.sort.field
+		: '';
 	const listParams = {
 		...range,
 		...requestParams,
 		...( hideZeroPrimaryRows ? { exclude_zero: true } : {} ),
 		...sortParams,
+		...( rankingField ? { orderby: metricKey, order: 'desc' } : {} ),
 		...filterParams,
 		search,
 	};
@@ -394,12 +429,14 @@ const ReportDataView = ( {
 	const isBrowserSearch =
 		searchInBrowser &&
 		( search !== '' || sortsByLabelInBrowser || browserFilters.length > 0 );
+	// A browser search drops the server search; a ranking keeps it and only lifts the page size.
+	const loadsAllRows = isBrowserSearch || Boolean( rankingField );
 	const { data, isLoading, error } = useAdminEndpoint(
 		endpoint,
-		isBrowserSearch
+		loadsAllRows
 			? {
 					...listParams,
-					search: '',
+					...( isBrowserSearch ? { search: '' } : {} ),
 					page: 1,
 					per_page: BROWSER_SEARCH_MAX_ITEMS,
 			  }
@@ -418,7 +455,11 @@ const ReportDataView = ( {
 				...( comparisonRange || {} ),
 				...requestParams,
 				page: 1,
-				per_page: 100,
+				// Ranking by change needs a previous value for every row of the loaded page.
+				per_page:
+					rankingField === CHANGE_FIELD
+						? BROWSER_SEARCH_MAX_ITEMS
+						: 100,
 				orderby: metricKey,
 				order: 'desc',
 				...filterParams,
@@ -505,14 +546,78 @@ const ReportDataView = ( {
 		sortsByLabelInBrowser,
 		view.sort?.direction,
 	] );
+	// Rows ordered by the ranked column, the ones it leaves out keeping the main metric order.
+	const ranking = useMemo( () => {
+		if ( ! rankingField ) {
+			return null;
+		}
+
+		const items = browserSearchMatches || data?.items || [];
+		const getMetricValue = ( item ) =>
+			item?.[ metricValueKey ] !== undefined
+				? item[ metricValueKey ] ?? 0
+				: ( metricFallbackValueKey && item?.[ metricFallbackValueKey ] ) || 0;
+
+		if ( rankingField === CHANGE_FIELD ) {
+			if ( isComparisonLoading ) {
+				return null;
+			}
+
+			const getPreviousValue = ( item ) => {
+				const key =
+					typeof getComparisonKey === 'function'
+						? getComparisonKey( item )
+						: item?.label || '';
+				if ( comparisonValuesByKey.has( key ) ) {
+					return comparisonValuesByKey.get( key );
+				}
+
+				return isComparisonComplete ? 0 : null;
+			};
+
+			return rankReportItems( {
+				items,
+				direction: view.sort?.direction,
+				getMetricValue,
+				getSortValue: ( item ) =>
+					getChangeSortValue( getMetricValue( item ), getPreviousValue( item ) ),
+				getThresholdValue: ( item ) =>
+					getChangeThresholdValue(
+						getMetricValue( item ),
+						getPreviousValue( item )
+					),
+			} );
+		}
+
+		return rankReportItems( {
+			items,
+			direction: view.sort?.direction,
+			getMetricValue,
+			getSortValue: ( item ) =>
+				getDurationSortValue( item?.[ rankingField ] ),
+		} );
+	}, [
+		browserSearchMatches,
+		comparisonValuesByKey,
+		data,
+		getComparisonKey,
+		isComparisonComplete,
+		isComparisonLoading,
+		metricFallbackValueKey,
+		metricValueKey,
+		rankingField,
+		view.sort?.direction,
+	] );
+
+	const pagedItems = ranking?.items || browserSearchMatches;
 	const rawItems = useMemo( () => {
-		if ( browserSearchMatches ) {
+		if ( pagedItems ) {
 			const start = ( view.page - 1 ) * view.perPage;
-			return browserSearchMatches.slice( start, start + view.perPage );
+			return pagedItems.slice( start, start + view.perPage );
 		}
 
 		return data?.items || [];
-	}, [ browserSearchMatches, data, view.page, view.perPage ] );
+	}, [ pagedItems, data, view.page, view.perPage ] );
 	const faviconsEnabled =
 		loadReferrerFavicons &&
 		normalizeBooleanSetting(
@@ -553,10 +658,10 @@ const ReportDataView = ( {
 		[ metricSeriesKey, rawItems ]
 	);
 
-	const pagination = browserSearchMatches
+	const pagination = pagedItems
 		? {
-				totalItems: browserSearchMatches.length,
-				totalPages: Math.ceil( browserSearchMatches.length / view.perPage ),
+				totalItems: pagedItems.length,
+				totalPages: Math.ceil( pagedItems.length / view.perPage ),
 		  }
 		: data?.pagination || {};
 	const totalItems =
@@ -747,7 +852,8 @@ const ReportDataView = ( {
 						label: __( 'Change', 'bimbeau-privacy-analytics' ),
 						render: ( { item: row } ) => renderChange( row ),
 						enableHiding: true,
-						enableSorting: false,
+						// Ranked in the browser, like the extra metric (see `reportRanking`).
+						enableSorting: true,
 						filterBy: false,
 				  }
 				: null;
@@ -790,8 +896,9 @@ const ReportDataView = ( {
 								: value;
 						},
 						enableHiding: true,
-						// The report endpoints only sort by the label and the main metric.
-						enableSorting: false,
+						// The endpoints only sort by the label and the main metric: this column is
+						// ranked in the browser (see `reportRanking`).
+						enableSorting: true,
 						filterBy: false,
 					},
 					extraMetricHelpText
@@ -1008,6 +1115,50 @@ const ReportDataView = ( {
 				  );
 	}
 
+	// Ranked columns say what the ranking left out: the rows under the threshold, and the rows
+	// beyond the loaded ones on a list longer than one capped page.
+	const rankingNotes = [];
+	if ( ranking?.isThresholdApplied ) {
+		rankingNotes.push(
+			rankingField === CHANGE_FIELD
+				? sprintf(
+						/* translators: 1: Smallest value of the main metric in the previous period, 2: Name of the main metric column. */
+						__(
+							'Rows compared with fewer than %1$s %2$s are not ranked here.',
+							'bimbeau-privacy-analytics'
+						),
+						formatNumber( MIN_METRIC_FOR_RANKING ),
+						metricLabel
+				  )
+				: sprintf(
+						/* translators: 1: Smallest value of the main metric, 2: Name of the main metric column. */
+						__(
+							'Rows under %1$s %2$s are not ranked here.',
+							'bimbeau-privacy-analytics'
+						),
+						formatNumber( MIN_METRIC_FOR_RANKING ),
+						metricLabel
+				  )
+		);
+	}
+	const loadedItemsCount = ( data?.items || [] ).length;
+	const serverTotalItems = Number(
+		data?.pagination?.totalItems ?? data?.pagination?.total_items ?? 0
+	);
+	if ( ranking && serverTotalItems > loadedItemsCount ) {
+		rankingNotes.push(
+			sprintf(
+				/* translators: 1: Number of ranked rows, 2: Name of the main metric column. */
+				__(
+					'Ranking over the first %1$s rows by %2$s.',
+					'bimbeau-privacy-analytics'
+				),
+				formatNumber( loadedItemsCount ),
+				metricLabel
+			)
+		);
+	}
+
 	const emptyContent = emptyStateNoticeStatus ? (
 		<BrandNotice status={ emptyStateNoticeStatus } isDismissible={ false }>
 			<p>{ emptyLabel }</p>
@@ -1075,11 +1226,13 @@ const ReportDataView = ( {
 					) : null
 				}
 			/>
-			{ footnote || comparisonNote ? (
+			{ footnote || comparisonNote || rankingNotes.length > 0 ? (
 				<p className="bbpa-report-table__footnote bbpa-report-dataview__footnote">
 					<FeatureIcon name="info" size={ 16 } />
 					<span>
-						{ [ footnote, comparisonNote ].filter( Boolean ).join( ' ' ) }
+						{ [ footnote, comparisonNote, ...rankingNotes ]
+							.filter( Boolean )
+							.join( ' ' ) }
 					</span>
 				</p>
 			) : null }
