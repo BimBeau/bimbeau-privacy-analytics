@@ -53,9 +53,11 @@ Behavior:
 
 `.wordpress-org/assets/` mirrors the `assets/` directory of the plugin's Subversion repository on WordPress.org. It is not part of any package: nothing in it reaches the plugin zip, and a change there only shows on the listing once the file is committed to Subversion.
 
-`blueprints/blueprint.json` drives the **Live Preview** button of the listing. WordPress.org reads it at `assets/blueprints/blueprint.json` in Subversion, boots a WordPress Playground sandbox with it, and opens the plugin on its Statistics screen. Two manual steps are needed, in this order:
+That mirror has to stay **flat**: BB Release Manager refuses to sync the assets of a plugin whose GitHub assets folder holds a sub-directory (« Le dossier assets GitHub doit etre plat. »). Anything WordPress.org expects in a sub-directory of `assets/` therefore lives next to the mirror instead, not inside it.
 
-1. Commit `.wordpress-org/assets/blueprints/blueprint.json` to `assets/blueprints/blueprint.json` in Subversion.
+`.wordpress-org/blueprints/blueprint.json` drives the **Live Preview** button of the listing. WordPress.org reads it at `assets/blueprints/blueprint.json` in Subversion, boots a WordPress Playground sandbox with it, and opens the plugin on its Statistics screen. Two manual steps are needed, in this order:
+
+1. Commit `.wordpress-org/blueprints/blueprint.json` to `assets/blueprints/blueprint.json` in Subversion. BB Release Manager does not carry it: it only syncs the flat `assets/` mirror.
 2. On <https://wordpress.org/plugins/bimbeau-privacy-analytics/advanced/>, under **Toggle Live Preview**, set the preview to public. Until then the button is shown to committers only, and the page says the blueprint is missing or invalid.
 
 The preview must show the Free plugin as WordPress.org ships it. Never set up a sandbox where Pro features look available.
