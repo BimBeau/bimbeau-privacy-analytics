@@ -589,6 +589,9 @@ function bbpa_table_exists(string $table): bool
             $wpdb->esc_like($table)
         )
     );
+    // `wpdb::get_var()` writes the error on the property that was emptied above; PHPStan cannot see that
+    // side effect and reads the comparison as always false.
+    /** @phpstan-ignore-next-line */
     $statement_failed = $wpdb->last_error !== '';
     $exists = is_string($table_name) && strcasecmp($table_name, $table) === 0;
 
@@ -601,6 +604,7 @@ function bbpa_table_exists(string $table): bool
         $wpdb->last_error = '';
         // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- the name is restricted to word characters above.
         $wpdb->get_var("SELECT 1 FROM `{$table}` LIMIT 1");
+        /** @phpstan-ignore-next-line */
         $exists = $wpdb->last_error === '';
     }
 
