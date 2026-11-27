@@ -49,6 +49,17 @@ Behavior:
 - Publishes extracted package content to branches `bimbeau-privacy-analytics` and `bimbeau-privacy-analytics-pro`.
 - Uploads both generated packages to the matching GitHub Release on tag-triggered runs.
 
+## WordPress.org listing assets
+
+`.wordpress-org/assets/` mirrors the `assets/` directory of the plugin's Subversion repository on WordPress.org. It is not part of any package: nothing in it reaches the plugin zip, and a change there only shows on the listing once the file is committed to Subversion.
+
+`blueprints/blueprint.json` drives the **Live Preview** button of the listing. WordPress.org reads it at `assets/blueprints/blueprint.json` in Subversion, boots a WordPress Playground sandbox with it, and opens the plugin on its Statistics screen. Two manual steps are needed, in this order:
+
+1. Commit `.wordpress-org/assets/blueprints/blueprint.json` to `assets/blueprints/blueprint.json` in Subversion.
+2. On <https://wordpress.org/plugins/bimbeau-privacy-analytics/advanced/>, under **Toggle Live Preview**, set the preview to public. Until then the button is shown to committers only, and the page says the blueprint is missing or invalid.
+
+The preview must show the Free plugin as WordPress.org ships it. Never set up a sandbox where Pro features look available.
+
 ## Historical note
 
 The workflow pair `codex-automerge-label.yml` and `release.yml` is not part of the active release pipeline.

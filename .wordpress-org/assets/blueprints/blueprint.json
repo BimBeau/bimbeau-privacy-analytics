@@ -1,0 +1,32 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
+	"phpExtensionBundles": [
+		"kitchen-sink"
+	],
+	"landingPage": "/wp-admin/admin.php?page=bimbeau-privacy-analytics",
+	"steps": [
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "bimbeau-privacy-analytics"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once '/wordpress/wp-load.php'; if ( function_exists( 'bbpa_fs' ) ) { bbpa_fs()->skip_connection(); } $accounts = get_option( 'fs_accounts', array() ); if ( ! is_array( $accounts ) ) { $accounts = array(); } if ( ! isset( $accounts['plugin_data'] ) || ! is_array( $accounts['plugin_data'] ) ) { $accounts['plugin_data'] = array(); } if ( ! isset( $accounts['plugin_data']['bimbeau-privacy-analytics'] ) || ! is_array( $accounts['plugin_data']['bimbeau-privacy-analytics'] ) ) { $accounts['plugin_data']['bimbeau-privacy-analytics'] = array(); } $accounts['plugin_data']['bimbeau-privacy-analytics']['is_anonymous'] = array( 'is' => true, 'timestamp' => time(), 'version' => '1.0.0' ); update_option( 'fs_accounts', $accounts ); delete_transient( 'bbpa_redirect_after_activation' );"
+		}
+	]
+}

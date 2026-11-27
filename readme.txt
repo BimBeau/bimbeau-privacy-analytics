@@ -1,10 +1,10 @@
 === BimBeau Privacy Analytics – Simple, Private WordPress Statistics ===
 Contributors: BimBeau
-Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
+Tags: analytics, statistics, privacy, web analytics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.7
+Stable tag: 8.86.8
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -245,11 +245,12 @@ More advanced privacy configurations, especially consent-based tracking, should 
 21. Pro — Install and use the standalone PWA Stats App on desktop or mobile.
 22. Pro — Choose visible panels and configure Quick Stats.
 
+== Upgrade Notice ==
+
+= 8.86.8 =
+Fiche WordPress.org : note de mise a jour, changelog lisible et bouton Live Preview.
+
 == Changelog ==
 
-= 8.86.7 =
-* [Feature] An **Author** column in Top pages, between the title and the numbers, with the avatar and the name of the author of the page (variant C of the variants artifact).
-* [Feature] `GET /top-pages` takes `include_author` (boolean, default `false`), adding `author_id`, `author_name` and `author_avatar_url` to each row. The author is read from the `post_id` the row already carries, memoized by the title lookup, so no extra `url_to_postid()` call is made, and the users of the returned page are primed with one `cache_users()` call. Off by default, so the payload of existing consumers and the golden contract fixtures are unchanged.
-* [UI] `ReportDataView` extra columns accept `position: 'before-metric'`, which places a column about the row itself between the label and the main metric and aligns it to the start, like text, instead of to the end like the numbers.
-* The avatar follows **Settings > Discussion** like the Authors tab of the report: when avatars are hidden, or the URL answers 404, `UserAvatar` draws the initials on a colored badge that stays the same for an author from one period to the next. An address that resolves to no post (the blog home, an archive, a row beyond the title lookup limit) shows a dash.
-* The column hides from **View options > Columns** and does not sort: the report endpoints cannot order by author.
+= 8.86.8 =
+* Fiche WordPress.org : note de mise a jour, changelog lisible et bouton Live Preview.
