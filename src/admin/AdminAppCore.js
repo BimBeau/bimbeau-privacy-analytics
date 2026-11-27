@@ -131,7 +131,7 @@ const AdminAppCore = ( { appContext = 'admin', hasPremiumAccess = false, HeaderB
 	// The header names the screen being viewed (Dashboard, Pages…), not the plugin.
 	const headerTitle = currentPanelConfig?.title || pluginLabel;
 	const lookupMode =
-		ADMIN_CONFIG?.settings?.geoip_lookup_mode || 'local_database';
+		ADMIN_CONFIG?.settings?.geoipLookupMode || 'local_database';
 	const geolocationSettingsUrl = useMemo(
 		() =>
 			getAdminPanelUrl( 'settings', {

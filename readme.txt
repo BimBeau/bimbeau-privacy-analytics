@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, web analytics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.10
+Stable tag: 8.86.11
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,10 +247,10 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Upgrade Notice ==
 
-= 8.86.10 =
-Keep the public release note of the WordPress.org listing in English.
+= 8.86.11 =
+Fill the WordPress.org preview with a sample month of traffic.
 
 == Changelog ==
 
-= 8.86.10 =
-* Keep the public release note of the WordPress.org listing in English.
+= 8.86.11 =
+* Fill the WordPress.org preview with a sample month of traffic.

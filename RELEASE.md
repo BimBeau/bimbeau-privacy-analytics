@@ -70,7 +70,16 @@ That mirror has to stay **flat**: BB Release Manager refuses to sync the assets 
 
 `.wordpress-org/blueprints/blueprint.json` drives the **Live Preview** button of the listing. WordPress.org reads it at `assets/blueprints/blueprint.json` in Subversion, boots a WordPress Playground sandbox with it, and opens the plugin on its Statistics screen. Two manual steps are needed, in this order:
 
-1. Commit `.wordpress-org/blueprints/blueprint.json` to `assets/blueprints/blueprint.json` in Subversion. BB Release Manager does not carry it: it only syncs the flat `assets/` mirror.
+1. Commit `.wordpress-org/blueprints/blueprint.json` to `assets/blueprints/blueprint.json` in Subversion, or let BB Release Manager 1.6.1 and later publish it: the path is set per plugin in its settings.
+
+`blueprint.json` is **generated** and should not be edited by hand. Its two sources sit beside it:
+
+- `blueprint.src.json` — the blueprint itself, with a `@@DEMO_DATA_PHP@@` placeholder.
+- `demo-data.php` — the sample month of traffic the preview shows.
+
+Run `npm run blueprint:build` after changing either, and commit the result. `npm run check:blueprint` fails when the committed file is out of date, and is part of `npm run check:wordpress-org-listing`.
+
+The preview boots an empty WordPress, so without that file every report would read zero and a visitor would see the interface with none of its figures. The demo writes directly into the analytics tables, which is why `scripts/__tests__/playground-demo-data.test.js` checks every table and column it names against `db/schema.php`: a schema change that the demo does not follow fails in CI instead of on a visitor. The demo is a throwaway sandbox and never ships inside the plugin package.
 2. On <https://wordpress.org/plugins/bimbeau-privacy-analytics/advanced/>, under **Toggle Live Preview**, set the preview to public. Until then the button is shown to committers only, and the page says the blueprint is missing or invalid.
 
 The preview must show the Free plugin as WordPress.org ships it. Never set up a sandbox where Pro features look available.

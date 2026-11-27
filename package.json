@@ -1,6 +1,6 @@
 {
   "name": "bimbeau-privacy-analytics",
-  "version": "8.86.10",
+  "version": "8.86.11",
   "private": true,
   "license": "GPL-3.0-or-later",
   "description": "BimBeau Privacy Analytics WordPress plugin assets.",
@@ -22,7 +22,9 @@
     "check:docs": "node scripts/check-docs-consistency.js",
     "check:screenshots": "node scripts/check-wordpress-screenshots.js",
     "check:wordpress-readme": "node scripts/check-wordpress-readme.js",
-    "check:wordpress-org-listing": "npm run check:wordpress-readme && node scripts/validate-readme-package-disclosures.js && npm run check:screenshots",
+    "check:wordpress-org-listing": "npm run check:wordpress-readme && node scripts/validate-readme-package-disclosures.js && npm run check:screenshots && npm run check:blueprint",
+    "blueprint:build": "node scripts/build-playground-blueprint.js",
+    "check:blueprint": "node --test scripts/__tests__/playground-demo-data.test.js",
     "check:version-alignment": "node scripts/sync-version-sources.js --check",
     "version:bump": "node scripts/bump-version.js",
     "changelog:sync": "node scripts/sync-readme-changelog.js",
