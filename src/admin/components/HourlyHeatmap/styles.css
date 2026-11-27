@@ -169,6 +169,19 @@
   color: #757575;
 }
 
+/*
+ * In a card, the busiest slot reads like the footnote of the list cards beside it on the
+ * dashboard: its own band at the bottom of the card, under the legend, separated by a rule that
+ * reaches both edges. The -16px undo the padding of the card body, which is the medium CardBody
+ * of BpaCard; the band restores it as its own padding so the text stays aligned with the card.
+ */
+.components-card__body > .bbpa-hourly-heatmap .bbpa-hourly-heatmap__peak {
+  width: 100%;
+  margin: 0 -16px -16px;
+  padding: 12px 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
 .bbpa-hourly-heatmap__peak svg {
   flex: 0 0 auto;
 }

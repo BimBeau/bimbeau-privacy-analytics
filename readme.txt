@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.4
+Stable tag: 8.86.5
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,5 +247,5 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.86.4 =
-* fix(promos): restreint vraiment les coupons Freemius aux cycles prevus.
+= 8.86.5 =
+* [UI] Dashboard: the busiest slot of the hourly heatmap sits in its own band at the bottom of its card, separated by a rule that reaches both edges, like the footnotes of the Pages and Top referrers cards beside it. It used to hang under the legend, inside the card padding and without a rule, so the three cards ended differently.
