@@ -49,6 +49,19 @@ Behavior:
 - Publishes extracted package content to branches `bimbeau-privacy-analytics` and `bimbeau-privacy-analytics-pro`.
 - Uploads both generated packages to the matching GitHub Release on tag-triggered runs.
 
+## The public note of a release is written in English
+
+The version workflow copies the title of the merged pull request into `CHANGELOG.md`, and `sync-readme-changelog.js` copies that entry into the `== Changelog ==` and `== Upgrade Notice ==` sections of `readme.txt`. Those two sections are the listing and the update screen of every site running the Free plugin, and they are in English. This repository is worked in French, so a French pull request title reaches them unless it is rewritten.
+
+`check-wordpress-readme.js` refuses a public note that reads as French, and names the words it counted. Text between quotes or backticks is left out, so an English note may quote a French page title or setting label.
+
+When the check fails on a release:
+
+1. Rewrite the entry of that version in `CHANGELOG.md`, in plain English, for someone who runs the plugin and is deciding whether to update.
+2. Run `npm run changelog:sync -- --sync-current`. It rewrites both sections. A note already written by hand for the current Stable tag is kept.
+
+Giving the pull request an English title avoids the rewrite altogether.
+
 ## WordPress.org listing assets
 
 `.wordpress-org/assets/` mirrors the `assets/` directory of the plugin's Subversion repository on WordPress.org. It is not part of any package: nothing in it reaches the plugin zip, and a change there only shows on the listing once the file is committed to Subversion.
