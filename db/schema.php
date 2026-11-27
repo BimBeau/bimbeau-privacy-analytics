@@ -578,6 +578,9 @@ function bbpa_table_exists(string $table): bool
 {
     global $wpdb;
 
+    // Captured before the first query: `wpdb::get_var()` clears the last error on its way in.
+    $previous_error = $wpdb->last_error;
+
     $table_name = $wpdb->get_var(
         $wpdb->prepare(
             'SHOW TABLES LIKE %s',
@@ -596,7 +599,6 @@ function bbpa_table_exists(string $table): bool
     }
 
     $previous_suppress = $wpdb->suppress_errors(true);
-    $previous_error = $wpdb->last_error;
     $wpdb->last_error = '';
 
     // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- the name is restricted to word characters above.
