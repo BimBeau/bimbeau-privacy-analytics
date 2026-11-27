@@ -567,6 +567,12 @@ function bbpa_table_has_column(string $table, string $column): bool
  *
  * The name is escaped for LIKE (the `_` of the table prefix is a wildcard) and compared case-insensitively, as
  * MySQL reports lowercase names when `lower_case_table_names` is enabled.
+ *
+ * `SHOW TABLES` is MySQL only. WordPress.org runs the previews of the plugin directory on SQLite, where the
+ * statement answers nothing at all: every table would be reported as missing, and the reports that ask before
+ * reading an aggregate table come back empty however much data the site holds. When the statement answers
+ * nothing, the table is therefore asked directly, which any engine understands. On MySQL that second query is
+ * never reached for a table that exists.
  */
 function bbpa_table_exists(string $table): bool
 {
@@ -579,7 +585,28 @@ function bbpa_table_exists(string $table): bool
         )
     );
 
-    return is_string($table_name) && strcasecmp($table_name, $table) === 0;
+    if (is_string($table_name) && strcasecmp($table_name, $table) === 0) {
+        return true;
+    }
+
+    // Asking the table itself, which any engine understands. An empty table answers with no row, so the result
+    // says nothing: only the absence of an error tells it apart from a table that is not there.
+    if (!preg_match('/^[A-Za-z0-9_]+$/', $table)) {
+        return false;
+    }
+
+    $previous_suppress = $wpdb->suppress_errors(true);
+    $previous_error = $wpdb->last_error;
+    $wpdb->last_error = '';
+
+    // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- the name is restricted to word characters above.
+    $wpdb->get_var("SELECT 1 FROM `{$table}` LIMIT 1");
+    $readable = $wpdb->last_error === '';
+
+    $wpdb->last_error = $previous_error;
+    $wpdb->suppress_errors($previous_suppress);
+
+    return $readable;
 }
 
 /**
