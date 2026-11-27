@@ -74,6 +74,31 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Author column: the avatar, round like in the people lists, then the name, which truncates
+   instead of widening the column. */
+.bbpa-report-dataview .bbpa-report-table__author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.bbpa-report-dataview .bbpa-report-table__author .bbpa-user-avatar {
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.bbpa-report-dataview .bbpa-report-table__author-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* An address that resolves to no post has no author. */
+.bbpa-report-dataview .bbpa-report-table__author--none {
+  color: #757575;
+}
+
 .bbpa-report-dataview .bbpa-report-dataview__footnote {
   display: flex;
   align-items: center;

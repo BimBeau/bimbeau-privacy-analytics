@@ -4,7 +4,7 @@ Tags: analytics, statistics, privacy, visitor statistics, real-time analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 8.86.6
+Stable tag: 8.86.7
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,12 +247,9 @@ More advanced privacy configurations, especially consent-based tracking, should 
 
 == Changelog ==
 
-= 8.86.6 =
-* [Feature] Report lists sort by **Change** and by **Avg. time on page**, not by page views alone. Both column menus and the **Sort by** control of **View options** now offer them.
-* [Feature] The endpoints still sort by the label and the main metric only, so these two rankings are built in the browser (`src/admin/lib/reportRanking.js`) over a capped page of the most viewed rows of the period (1,000, the API maximum, as the browser search already does). A note under the list says so when the period holds more rows.
-* [UI] Both rankings leave out the rows measured on too little, which stay after the ranked ones in page-view order:.
-* **Change**: a row compared with fewer than 10 page views in the previous period. A `+600 %` measured against 3 page views says nothing; a page fallen from 200 to 2 page views stays ranked, its `-99 %` being measured against 200. A row absent from the previous period (**New**) is ranked at the top, on its own traffic.
-* **Avg. time on page**: a row under 10 page views, and a row with no measured time (it would otherwise head an ascending ranking with a column of `0:00`).
-* When fewer than 3 rows reach the threshold, the whole list is ranked: a rough ranking beats none.
-* [UI] A footnote under the list states the rule that applied, per column.
-* [Docs] `docs/user/{fr,en}/reports/top-pages.md`: the Sorting section said "Avg. time on page cannot be sorted". Applies to every list built on `ReportDataView`: Top pages, Top content (content types, categories, authors), Acquisition, the dashboard cards, and the Pro lists.
+= 8.86.7 =
+* [Feature] An **Author** column in Top pages, between the title and the numbers, with the avatar and the name of the author of the page (variant C of the variants artifact).
+* [Feature] `GET /top-pages` takes `include_author` (boolean, default `false`), adding `author_id`, `author_name` and `author_avatar_url` to each row. The author is read from the `post_id` the row already carries, memoized by the title lookup, so no extra `url_to_postid()` call is made, and the users of the returned page are primed with one `cache_users()` call. Off by default, so the payload of existing consumers and the golden contract fixtures are unchanged.
+* [UI] `ReportDataView` extra columns accept `position: 'before-metric'`, which places a column about the row itself between the label and the main metric and aligns it to the start, like text, instead of to the end like the numbers.
+* The avatar follows **Settings > Discussion** like the Authors tab of the report: when avatars are hidden, or the URL answers 404, `UserAvatar` draws the initials on a colored badge that stays the same for an author from one period to the next. An address that resolves to no post (the blog home, an archive, a row beyond the title lookup limit) shows a dash.
+* The column hides from **View options > Columns** and does not sort: the report endpoints cannot order by author.

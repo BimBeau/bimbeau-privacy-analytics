@@ -144,6 +144,14 @@ class BBPA_Report_Controller {
                             'default' => true,
                             'sanitize_callback' => 'rest_sanitize_boolean',
                         ],
+                        // Adds author_id, author_name and author_avatar_url to each row; off by
+                        // default to keep the payload unchanged.
+                        'include_author' => [
+                            'required' => false,
+                            'type' => 'boolean',
+                            'default' => false,
+                            'sanitize_callback' => 'rest_sanitize_boolean',
+                        ],
                         // Optional list filters: channel key and content type.
                         'source_category' => $this->get_channel_filter_arg(),
                         'post_type' => $this->get_post_type_filter_arg(),
@@ -516,15 +524,83 @@ class BBPA_Report_Controller {
 
         $include_avg_time = !($request->has_param('include_avg_time'))
             || rest_sanitize_boolean($request->get_param('include_avg_time'));
-        if (!$include_avg_time) {
+        $include_author = rest_sanitize_boolean($request->get_param('include_author'));
+        if (!$include_avg_time && !$include_author) {
             return $response;
         }
 
-        $range = $this->get_day_range($request);
-        $payload['items'] = $this->append_top_pages_average_time($payload['items'], $range, $page_path_variants);
+        if ($include_avg_time) {
+            $range = $this->get_day_range($request);
+            $payload['items'] = $this->append_top_pages_average_time($payload['items'], $range, $page_path_variants);
+        }
+        if ($include_author) {
+            $payload['items'] = $this->append_top_pages_author($payload['items']);
+        }
         $response->set_data($payload);
 
         return $response;
+    }
+
+    /**
+     * Append the author of the post each top-pages row resolves to.
+     *
+     * The rows already carry `post_id`, memoized by the title lookup, so no extra url_to_postid()
+     * call is made and the users of the returned page are primed in one query. A row without a
+     * post (the blog home, an archive, a row beyond the title lookup limit) gets an empty author,
+     * which the admin shows as a dash. The avatar follows Settings > Discussion like the Authors
+     * tab of the report: an empty URL there leaves the initials to the admin.
+     */
+    private function append_top_pages_author(array $items): array {
+        $author_ids = [];
+        foreach ($items as $item) {
+            $author_id = $this->get_page_path_item_author_id($item);
+            if ($author_id > 0) {
+                $author_ids[$author_id] = true;
+            }
+        }
+
+        if ($author_ids !== [] && function_exists('cache_users')) {
+            cache_users(array_keys($author_ids));
+        }
+
+        return array_map(
+            function ($item) {
+                if (!is_array($item)) {
+                    return $item;
+                }
+
+                $author_id = $this->get_page_path_item_author_id($item);
+                $author = $author_id > 0 ? get_userdata($author_id) : false;
+                $is_resolved = $author instanceof WP_User;
+
+                $item['author_id'] = $is_resolved ? $author_id : 0;
+                $item['author_name'] = $is_resolved
+                    ? sanitize_text_field((string) $author->display_name)
+                    : '';
+                $item['author_avatar_url'] = $is_resolved
+                    ? $this->get_top_content_author_avatar_url($author_id)
+                    : '';
+
+                return $item;
+            },
+            $items
+        );
+    }
+
+    /**
+     * Author id of a page-path row, from the post its address resolves to, or 0.
+     *
+     * @param mixed $item Report row.
+     */
+    private function get_page_path_item_author_id($item): int {
+        $post_id = is_array($item) ? (int) ($item['post_id'] ?? 0) : 0;
+        if ($post_id <= 0) {
+            return 0;
+        }
+
+        $post = get_post($post_id);
+
+        return $post instanceof WP_Post ? (int) $post->post_author : 0;
     }
 
     /**

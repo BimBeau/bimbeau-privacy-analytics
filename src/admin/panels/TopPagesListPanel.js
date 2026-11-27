@@ -32,13 +32,14 @@ const TopPagesReportPanel = ( { range, onOpenDetails, getRowHref } ) => (
 		showOpenButton={ false }
 		showMetricTrend
 		metricSeriesKey="views_series"
-		extraFields={ [ SHARE_FIELD ] }
+		extraFields={ [ AUTHOR_FIELD, SHARE_FIELD ] }
 		exportReportKey="top-pages"
 		filterFields={ TOP_PAGES_FILTER_FIELDS }
 		requestParams={ {
 			include_avg_time: isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
 				? 1
 				: 0,
+			include_author: 1,
 		} }
 		extraMetricLabel={
 			isAdvancedStatsEnabled( ADMIN_CONFIG?.settings )
@@ -177,6 +178,36 @@ export const AUTHOR_DESCRIPTION_FIELD = {
 		item?.key === TOP_CONTENT_UNRESOLVED_KEY
 			? __( 'Archives, search, blog home', 'bimbeau-privacy-analytics' )
 			: item?.role || '',
+};
+
+// Author of the page, between the title and the numbers. The avatar follows
+// Settings > Discussion: without it, the initials are drawn from the name. An address that
+// resolves to no post (the blog home, an archive) has no author.
+const AUTHOR_FIELD = {
+	id: 'author',
+	label: __( 'Author', 'bimbeau-privacy-analytics' ),
+	position: 'before-metric',
+	getValue: ( item ) => item?.author_name || '',
+	render: ( item ) =>
+		item?.author_name ? (
+			<span className="bbpa-report-table__author">
+				<UserAvatar
+					name={ item.author_name }
+					imageUrl={ item?.author_avatar_url || '' }
+					toneKey={ item?.author_id || item.author_name }
+				/>
+				<span className="bbpa-report-table__author-name">
+					{ item.author_name }
+				</span>
+			</span>
+		) : (
+			<span
+				className="bbpa-report-table__author bbpa-report-table__author--none"
+				aria-label={ __( 'No author', 'bimbeau-privacy-analytics' ) }
+			>
+				—
+			</span>
+		),
 };
 
 // Share of the range total, after the main metric.

@@ -205,15 +205,21 @@ export const getActiveBrowserFilters = ( view, filterFields = [] ) =>
 export const showsPagePath = ( pageLabelDisplay ) =>
 	pageLabelDisplay !== 'title_only';
 
+// An extra column placed between the label and the metric, about the row rather than its numbers.
+const isLeadingExtraField = ( field ) => field?.position === 'before-metric';
+
 const getVisibleFields = ( {
 	supportsPageLabelToggle,
 	metricKey,
 	metricColumnIds = [],
+	leadingFieldIds = [],
 	extraFieldIds = [],
 	extraMetricValueKey,
 } ) => [
 	// A page list shows its title and address in the DataViews primary column instead.
 	...( supportsPageLabelToggle ? [] : [ LABEL_FIELD ] ),
+	// Columns about the row itself (its author) come before the numbers.
+	...leadingFieldIds,
 	metricKey,
 	...metricColumnIds,
 	...extraFieldIds,
@@ -230,6 +236,7 @@ const getVisibleFields = ( {
  * @param {boolean}  options.supportsPageLabelToggle Whether the list shows pages (title and URL).
  * @param {string}   options.metricKey               Main metric field id.
  * @param {string[]} options.metricColumnIds         Change and series column ids, when shown.
+ * @param {string[]} options.leadingFieldIds         Extra column ids shown before the metric.
  * @param {string[]} options.extraFieldIds           Extra column ids.
  * @param {string}   options.extraMetricValueKey     Extra metric field id, or empty.
  * @param {boolean}  options.hasOpenField            Whether the Open column exists.
@@ -240,6 +247,7 @@ export const getInitialReportFields = ( {
 	supportsPageLabelToggle,
 	metricKey,
 	metricColumnIds = [],
+	leadingFieldIds = [],
 	extraFieldIds = [],
 	extraMetricValueKey,
 	hasOpenField = false,
@@ -248,6 +256,7 @@ export const getInitialReportFields = ( {
 		supportsPageLabelToggle,
 		metricKey,
 		metricColumnIds,
+		leadingFieldIds,
 		extraFieldIds,
 		extraMetricValueKey,
 	} );
@@ -257,6 +266,7 @@ export const getInitialReportFields = ( {
 		...( supportsPageLabelToggle
 			? []
 			: [ { id: LABEL_FIELD, enableHiding: false } ] ),
+		...leadingFieldIds.map( ( id ) => ( { id } ) ),
 		{ id: metricKey, enableHiding: false },
 		...metricColumnIds.map( ( id ) => ( { id } ) ),
 		...extraFieldIds.map( ( id ) => ( { id } ) ),
@@ -316,6 +326,9 @@ const ReportDataView = ( {
 	footnote = '',
 	// More columns after the metric: [ { id, label, getValue( item ), render( item, rows ), sortable } ],
 	// `rows` being the raw items of the displayed page (a share bar scales to the largest one).
+	// `position: 'before-metric'` puts the column between the label and the metric instead, for a
+	// column about the row itself rather than about its numbers (the author of a page); such a
+	// column is aligned to the start, like text.
 	extraFields = [],
 	// Search and sort by label in the browser, on the displayed label (formatLabel) and the raw label,
 	// for endpoints that only know codes (countries: names are translated in the browser). Short
@@ -345,6 +358,9 @@ const ReportDataView = ( {
 		...( showMetricTrend && ! inlineMetricChange ? [ CHANGE_FIELD ] : [] ),
 		...( metricSeriesKey ? [ SERIES_FIELD ] : [] ),
 	];
+	const leadingFieldIds = extraFields
+		.filter( isLeadingExtraField )
+		.map( ( field ) => field.id );
 	const [ pageLabelDisplay, setPageLabelDisplay ] =
 		useSharedPageLabelDisplay();
 	const resolvedColumnsStorageId =
@@ -368,7 +384,10 @@ const ReportDataView = ( {
 			supportsPageLabelToggle,
 			metricKey,
 			metricColumnIds,
-			extraFieldIds: extraFields.map( ( field ) => field.id ),
+			leadingFieldIds,
+			extraFieldIds: extraFields
+				.filter( ( field ) => ! isLeadingExtraField( field ) )
+				.map( ( field ) => field.id ),
 			extraMetricValueKey: resolvedExtraMetricKey,
 			hasOpenField: showOpenButton && typeof getRowHref === 'function',
 		} ),
@@ -378,7 +397,9 @@ const ReportDataView = ( {
 				[ metricKey ]: { align: 'end' },
 				[ CHANGE_FIELD ]: { align: 'end' },
 				...Object.fromEntries(
-					extraFields.map( ( field ) => [ field.id, { align: 'end' } ] )
+					extraFields
+						.filter( ( field ) => ! isLeadingExtraField( field ) )
+						.map( ( field ) => [ field.id, { align: 'end' } ] )
 				),
 				...( resolvedExtraMetricKey
 					? { [ resolvedExtraMetricKey ]: { align: 'end' } }
@@ -905,7 +926,7 @@ const ReportDataView = ( {
 			  )
 			: null;
 
-		const additionalFields = extraFields.map( ( field ) => ( {
+		const buildExtraField = ( field ) => ( {
 			id: field.id,
 			label: field.label,
 			getValue: ( { item: row } ) => field.getValue( row.item ),
@@ -916,7 +937,13 @@ const ReportDataView = ( {
 			enableHiding: true,
 			enableSorting: Boolean( field.sortable ),
 			filterBy: false,
-		} ) );
+		} );
+		const leadingExtraFields = extraFields
+			.filter( isLeadingExtraField )
+			.map( buildExtraField );
+		const additionalFields = extraFields
+			.filter( ( field ) => ! isLeadingExtraField( field ) )
+			.map( buildExtraField );
 
 		const pictureField = mediaField
 			? {
@@ -990,6 +1017,7 @@ const ReportDataView = ( {
 			...( pictureField ? [ pictureField ] : [] ),
 			...( subtitleField ? [ subtitleField ] : [] ),
 			...( supportsPageLabelToggle ? [ pageTitleField ] : [] ),
+			...leadingExtraFields,
 			metricField,
 			...( changeField ? [ changeField ] : [] ),
 			...( seriesField ? [ seriesField ] : [] ),
